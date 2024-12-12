@@ -1,0 +1,93 @@
+
+Running under .NETFramework,Version=v4.8.
+
+VISA.NET Shared Components version 7.2.0.0.
+VISA Shared Components version 7.1.6708.0 detected.
+
+Unhandled Exception: Ivi.Visa.VisaException: Failed to parse tcpip0::192.168.0.144::inst0::instr
+   at Ivi.Visa.GlobalResourceManager.Parse(String resourceName, SrmDictionary srms)
+   at Ivi.Visa.GlobalResourceManager.Parse(String resourceName)
+   at Rohde.IdnQuery.Program.Main(String[] args) in C:\my\lib\vs\io\vi\src\rohde\idn.query\Program.cs:line 76
+
+
+All is well under v8.0
+
+Running under .NETCoreApp,Version=v8.0.
+
+VISA.NET Shared Components version 7.2.0.0.
+VISA Shared Components version 7.1.6708.0 detected.
+Loaded assembly "Keysight VISA.NET".
+
+Executing GlobalResourceManager.Find( "TCPIP?*INSTR"    )
+
+Resource: tcpip0::192.168.0.144::inst0::instr
+IVI GlobalResourceManager ImplementationVersion:7.2.0.0 SpecificationVersion:7.2.0.0
+selected the VISA.NET Implementation by Keysight Technologies, Inc. version 18.2.0.0
+
+Instrument Identification string:
+KEITHLEY INSTRUMENTS,MODEL DMM7510,04051720,1.7.7b
+
+Press any key to finish.
+
+
+Getting an error under v4.8 running under Kelary 7.2
+
+Running under .NETFramework,Version=v4.8.
+
+VISA.NET Shared Components version 7.2.0.0.
+VISA Shared Components version 7.1.6708.0 detected.
+
+Executing GlobalResourceManager.Find( "TCPIP?*INSTR"    )
+
+Error finding resources:
+Failed to find resources matching TCPIP?*INSTR
+Press any key to finish.
+
+
+
+Running under 4.7.2 using direct reference to IVI.Visa.
+
+Running under .NETFramework,Version=v4.7.2.
+
+VISA.NET Shared Components version 5.11.0.0.
+VISA Shared Components version 7.1.6708.0 detected.
+
+Executing GlobalResourceManager.Find( "TCPIP?*INSTR"    )
+
+Resource: tcpip0::192.168.0.144::inst0::instr
+IVI GlobalResourceManager selected the following VISA.NET:
+Manufacturer: Keysight Technologies, Inc.
+Implementation Version: 18.2.0.0
+
+Instrument Identification string:
+KEITHLEY INSTRUMENTS,MODEL DMM7510,04051720,1.7.7b
+
+Press any key to finish.
+
+Running under 4.8 using direct reference to IVI.Visa.
+
+Running under .NETFramework,Version=v4.8.
+
+VISA.NET Shared Components version 5.11.0.0.
+VISA Shared Components version 7.1.6708.0 detected.
+
+Executing GlobalResourceManager.Find( "TCPIP?*INSTR"    )
+
+Resource: tcpip0::192.168.0.144::inst0::instr
+IVI GlobalResourceManager selected the following VISA.NET:
+Manufacturer: Keysight Technologies, Inc.
+Implementation Version: 18.2.0.0
+
+Instrument Identification string:
+KEITHLEY INSTRUMENTS,MODEL DMM7510,04051720,1.7.7b
+
+Press any key to finish.
+
+
+
+
+
+
+
+
+

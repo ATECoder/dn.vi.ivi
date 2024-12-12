@@ -1,0 +1,138 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <EnablePreviewFeatures>true</EnablePreviewFeatures>
+    <TargetFrameworks>net48;net9.0-windows</TargetFrameworks>
+    <OutputType>Library</OutputType>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+
+    <LangVersion>latest</LangVersion>
+
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <!-- Assembly Info -->
+    <RootNamespace>cc.isr.VI.Tsp.K2600</RootNamespace>
+    <AssemblyName>cc.isr.VI.Tsp.K2600.Ttm.Controls</AssemblyName>
+    <ApplicationTitle>cc.isr.VI.Tsp.K2600.Ttm.Controls</ApplicationTitle>
+    <ApplicationId>cc.isr.vi.tsp.k2600.ttm.controls</ApplicationId>
+
+    <GenerateAssemblyVersionAttribute>true</GenerateAssemblyVersionAttribute>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+
+    <!-- Coding -->
+    <OptionExplicit>On</OptionExplicit>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionStrict>On</OptionStrict>
+    <OptionInfer>Off</OptionInfer>
+
+    <!-- Signature -->
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\..\..\items\keyPair.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>false</DelaySign>
+
+    <!-- NuGet -->
+    <IsPackable>true</IsPackable>
+    <PackageId>cc.isr.VI.Tsp.K2600.Ttm.Controls</PackageId>
+    <Description>Keithley 2600 Thermal Transient Meter UI</Description>
+    <PackageTags>VISA Virtual Instruments keithley K2600 Thermal Transient Meter UI</PackageTags>
+    <PackageOutputPath>C:\my\nuget</PackageOutputPath>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+
+    <!-- Documentation -->
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+
+    <GenerateResourceWarnOnBinaryFormatterUse>false</GenerateResourceWarnOnBinaryFormatterUse>
+
+    <!--
+      this maybe a leftover from Visual Basic Trace Event Talker key.
+      Warning (active)	MSB3825
+      Resource "_TTMConfigurationPanel.TraceShowEvent"
+      of type "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      is deserialized via BinaryFormatter at runtime. BinaryFormatter is deprecated due to possible security risks and will be removed with .NET 9.
+      If you wish to continue using it, set property "GenerateResourceWarnOnBinaryFormatterUse" to false.
+      More information: https://aka.ms/msbuild/net8-binaryformatter
+      cc.isr.VI.Tsp.K2600.Ttm.Controls (net9.0-windows)	C:\my\lib\vs\io\vi\src\vi\k2600.ttm\k2600.ttm.controls\UI\MeterView.resx	1	
+    -->
+    
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="readme.md" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+
+  <PropertyGroup>
+    <DefineConstants>$(DefineConstants);MYPROJREF;</DefineConstants>
+  </PropertyGroup>
+
+  <Choose>
+    <When Condition="$(DefineConstants.Contains(';PROJREF;')) OR $(DefineConstants.Contains(';MYPROJREF;'))">
+      <ItemGroup>
+        <ProjectReference Include="..\..\..\..\..\..\core\logging\src\tracelog\tracelog.win.forms\cc.isr.Logging.TraceLog.WinForms.csproj" />
+        <ProjectReference Include="..\..\..\..\..\..\core\tracing\src\win.forms\tracing.win.forms\cc.isr.tracing.WinForms.csproj" />
+        <ProjectReference Include="..\..\..\..\..\..\core\win.controls\src\model.view\model.view\cc.isr.WinControls.ModelView.csproj" />
+        <ProjectReference Include="..\..\..\..\..\..\core\win.controls\src\selectors\selectors\cc.isr.WinControls.Selectors.csproj" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <PackageReference Include="cc.isr.Logging.TraceLog.WinForms" Version="1.0.8119" />
+        <PackageReference Include="cc.isr.Tracing.WinForms" Version="1.0.8110" />
+        <PackageReference Include="cc.isr.WinControls.ModelView" Version="1.0.8110" />
+        <PackageReference Include="cc.isr.WinControls.Selectors" Version="1.0.8122" />
+        <PackageReference Include="cc.isr.VI.Tsp.K2600.Ttm" Version="8.0.8121" />
+        <Content Update="C:\Users\David\.nuget\packages\cc.isr.vi.tsp.k2600.ttm\8.0.8121\contentFiles\any\netstandard2.0\cc.isr.VI.Tsp.K2600.Ttm.Settings.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
+
+  <ItemGroup>
+    <Compile Include="..\..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\..\visual\charting\src\mixed\win.controls\ChartWin.csproj" />
+    <ProjectReference Include="..\ttm\cc.isr.VI.Tsp.K2600.Ttm.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="version.build.props">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>version.build.tt</DependentUpon>
+    </None>
+    <None Update="version.build.tt">
+      <LastGenOutput>version.build.props</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+  </ItemGroup>
+
+  <Import Project="version.build.props" />
+    
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+    
+</Project>

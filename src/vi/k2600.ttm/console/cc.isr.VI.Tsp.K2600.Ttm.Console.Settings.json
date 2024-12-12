@@ -1,0 +1,12 @@
+{
+  "ConsoleSettings": {
+    "Exists": true,
+    "K2600ResourceName": "TCPIP0::192.168.0.050::inst0::INSTR",
+    "K2600ResourceTitle": "TTM 2024",
+    "ResourceNameSelectionTimeout": "00:00:05",
+    "TraceLevel": "Trace",
+    "PingTimeout": "00:00:01.0000000",
+    "PingHops": 2,
+    "ClosedCaption": "closed"
+  }
+}

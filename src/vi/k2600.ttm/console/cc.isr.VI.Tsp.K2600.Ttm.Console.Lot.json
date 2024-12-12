@@ -1,0 +1,19 @@
+{
+  "LotSettings": {
+    "Exists": true,
+    "TraceLogLevel": "Information",
+    "TraceShowLevel": "Information",
+    "AutomaticallyAddPart": false,
+    "DataFolder": "c:\\users\\public\\documents\\ttm",
+    "DeviceEnabled": true,
+    "FtpAddress": "ftp://ttm%40isr.cc:ttm2.2@ftp.isr.cc",
+    "LotNumber": "Lot 1",
+    "MeasurementsFolderName": "measurements",
+    "PartNumber": "Part 1",
+    "PartsFilename": "Part1.csv",
+    "OperatorId": "Operator 1",
+    "ResourceName": "TCPIP0::192.168.0.50::inst0::INSTR",
+    "Setting": "",
+    "TraceFileName": "Trace1.csv"
+  }
+}

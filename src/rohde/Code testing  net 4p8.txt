@@ -1,0 +1,48 @@
+        var framework = Assembly.GetEntryAssembly()?.GetCustomAttribute<TargetFrameworkAttribute>();
+        Console.WriteLine( $"Running under {framework.FrameworkName}." );
+        Console.WriteLine();
+
+        // Get VISA.NET Shared Components version.
+        Version visaNetSharedComponentsVersion = typeof( GlobalResourceManager ).Assembly.GetName().Version;
+        Console.WriteLine( $"VISA.NET Shared Components version {visaNetSharedComponentsVersion}." );
+
+        // Check whether VISA Shared Components is installed before using VISA.NET.
+        // If access VISA.NET without the visaConfMgr.dll library, an unhandled exception will
+        // be thrown during termination process due to a bug in the implementation of the
+        // VISA.NET Shared Components, and the application will crash.
+        try
+        {
+            // Get an available version of the VISA Shared Components.
+            FileVersionInfo visaSharedComponentsInfo = FileVersionInfo.GetVersionInfo( Path.Combine( Environment.SystemDirectory, "visaConfMgr.dll" ) );
+            Console.WriteLine( $"VISA Shared Components version {visaSharedComponentsInfo.ProductVersion} detected." );
+        }
+        catch ( FileNotFoundException )
+        {
+            Console.WriteLine( $"VISA implementation compatible with VISA.NET Shared Components {visaNetSharedComponentsVersion} not found. Please install corresponding vendor-specific VISA implementation first." );
+            return;
+        }
+
+#if NET5_0_OR_GREATER
+        // Preloading installed VISA implementation assemblies for NET 5+
+        GacLoader.LoadInstalledVisaAssemblies();
+#endif
+
+        try
+        {
+
+            string filter = "TCPIP?*INSTR";
+            Console.WriteLine();
+            Console.WriteLine( "Executing GlobalResourceManager.Find( {0} )", "\"" + filter + "\"   " );
+            Console.WriteLine();
+            System.Collections.Generic.IEnumerable<string> resources = GlobalResourceManager.Find( filter );
+
+        }
+        catch ( Exception e )
+        {
+            Console.WriteLine( "Error finding resources:\n{0}", e.Message );
+            Console.WriteLine( "Press any key to finish." );
+            _ = Console.ReadKey();
+            return;
+        }
+
+

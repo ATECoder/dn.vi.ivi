@@ -1,0 +1,75 @@
+<Project>
+
+  <PropertyGroup>
+    <DefineConstants>$(DefineConstants);TRACE;PROJREF_;PACK_;GitHub_;</DefineConstants>
+  </PropertyGroup>
+ 
+  <PropertyGroup Condition="$(DefineConstants.Contains(';PACK;'))" >
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+
+  <ItemGroup Condition="$(DefineConstants.Contains(';PACK;GitHub;'))" >
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(DefineConstants.Contains(';PACK;GitHub_;'))" >
+    <PackageReference Include="Microsoft.SourceLink.Bitbucket.Git" Version="1.1.1" PrivateAssets="All" />
+  </ItemGroup>
+
+  <PropertyGroup Condition="$(DefineConstants.Contains(';GitHub;'))" >
+	<GitRepositoryRemoteName>hub</GitRepositoryRemoteName>
+    <PackageProjectUrl>https://github.com/AteCoder/visa.ni.dn</PackageProjectUrl>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(DefineConstants.Contains(';GitHub_;'))" >
+	<GitRepositoryRemoteName>origin</GitRepositoryRemoteName>
+    <PackageProjectUrl>https://bitbucket.org/davidhary/dn.visa.ni</PackageProjectUrl>
+  </PropertyGroup>
+
+  <PropertyGroup Label="BasePath">
+    <!-- This fixed missing property when using from dotnet cli -->
+    <SolutionDir Condition="'$(SolutionDir)'==''">$(MSBuildThisFileDirectory)..\..\</SolutionDir>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <Datestamp>$([System.DateTime]::UtcNow.ToString("yyyy-MM-dd"))</Datestamp>
+    <Timestamp>$([System.DateTime]::UtcNow.ToString("yyyy-MM-ddHHmm"))</Timestamp>
+    <LangVersion>latest</LangVersion>
+    <Authors>NI Engineering</Authors>
+    <Company>isr.cc</Company>
+    <Copyright>(c) 2012 NI. All rights reserved.</Copyright>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- NuGet -->
+	<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+	<RepositoryUrl>$(PackageProjectUrl)</RepositoryUrl>
+	<RepositoryType>Git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIcon>ms-icon-70x70.png</PackageIcon>
+    <PackageOutputDir>c:\my\nuget</PackageOutputDir>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SourceLink.Copy.PdbFiles" Version="2.8.3" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\items\ms-icon-70x70.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+      <Visible>false</Visible>
+    </None>
+  </ItemGroup>
+  
+  <Import Project="..\items\version.build.props" />
+
+</Project>
+

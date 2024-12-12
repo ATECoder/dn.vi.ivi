@@ -1,0 +1,24 @@
+{
+  "ResourceSettings": {
+    "Exists": true,
+    "PingTimeout": "00:00:01.0000000",
+    "PingHops": 2,
+    "ClosedCaption": "closed",
+    "Language": "TSP",
+    "ResourceName": "TCPIP0::192.168.0.150::inst0::INSTR",
+    "ResourceName2602": "TCPIP0::192.168.0.254::gpib0,26::INSTR",
+    "ResourceName2601A": "TCPIP0::192.168.0.50::inst0::INSTR",
+    "ResourceName2612A": "TCPIP0::192.168.0.150::inst0::INSTR",
+    "ResourceName7510": "TCPIP0::192.168.0.144::inst0::INSTR",
+    "ResourceNames2602": "TCPIP0::192.168.0.254::gpib0,26::INSTR|TCPIP0::192.168.0.156::inst0::INSTR|TCPIP0::10.1.1.25::inst0::INSTR|TCPIP0::10.1.1.26::inst0::INSTR",
+    "ResourceNames2601A": "TCPIP0::192.168.0.50::inst0::INSTR|TCPIP0::192.168.0.156::inst0::INSTR|TCPIP0::10.1.1.25::inst0::INSTR|TCPIP0::10.1.1.26::inst0::INSTR",
+    "ResourceNames2612A": "TCPIP0::192.168.0.150::inst0::INSTR|TCPIP0::192.168.0.156::inst0::INSTR|TCPIP0::10.1.1.25::inst0::INSTR|TCPIP0::10.1.1.26::inst0::INSTR",
+    "ResourcesCount": 2,
+    "TimeZonesCount": 2,
+    "ResourceNamesDelimiter": "|",
+    "ResourceNames": "TCPIP0::192.168.0.150::inst0::INSTR|TCPIP0::192.168.0.156::inst0::INSTR|TCPIP0::10.1.1.25::inst0::INSTR|TCPIP0::10.1.1.26::inst0::INSTR",
+    "ResourceModels": "2601A,2601B,2602A,2602B",
+    "FirmwareRevisions": "2.2.6,4.0.0,2.2.6,4.0.0"
+  }
+
+}

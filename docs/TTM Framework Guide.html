@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+            <html>
+                <head>                    
+                    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+                    <title>TTM Framework Guide.md</title>
+                    <style type="text/css">
+                    /*
+Copyright (c) 2017 Chris Patuzzo
+https://twitter.com/chrispatuzzo
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px;
+  color: #333;
+}
+
+body &gt; *:first-child {
+  margin-top: 0 !important;
+}
+
+body &gt; *:last-child {
+  margin-bottom: 0 !important;
+}
+
+a {
+  color: #4183C4;
+  text-decoration: none;
+}
+
+a.absent {
+  color: #cc0000;
+}
+
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative;
+}
+
+h2:first-child, h1:first-child, h1:first-child + h2, h3:first-child, h4:first-child, h5:first-child, h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  text-decoration: none;
+}
+
+h1 tt, h1 code {
+  font-size: inherit;
+}
+
+h2 tt, h2 code {
+  font-size: inherit;
+}
+
+h3 tt, h3 code {
+  font-size: inherit;
+}
+
+h4 tt, h4 code {
+  font-size: inherit;
+}
+
+h5 tt, h5 code {
+  font-size: inherit;
+}
+
+h6 tt, h6 code {
+  font-size: inherit;
+}
+
+h1 {
+  font-size: 28px;
+  color: black;
+}
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h6 {
+  color: #777777;
+  font-size: 14px;
+}
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0;
+}
+
+/*
+hr {
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0;
+}
+*/
+body &gt; h2:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+body &gt; h1:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+body &gt; h1:first-child + h2 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+body &gt; h3:first-child, body &gt; h4:first-child, body &gt; h5:first-child, body &gt; h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0;
+}
+
+li p.first {
+  display: inline-block;
+}
+
+ul, ol {
+  padding-left: 30px;
+}
+
+ul :first-child, ol :first-child {
+  margin-top: 0;
+}
+
+ul :last-child, ol :last-child {
+  margin-bottom: 0;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  padding: 0;
+  margin: 15px 0 5px;
+}
+
+dl dt:first-child {
+  padding: 0;
+}
+
+dl dt &gt; :first-child {
+  margin-top: 0;
+}
+
+dl dt &gt; :last-child {
+  margin-bottom: 0;
+}
+
+dl dd {
+  margin: 0 0 15px;
+  padding: 0 15px;
+}
+
+dl dd &gt; :first-child {
+  margin-top: 0;
+}
+
+dl dd &gt; :last-child {
+  margin-bottom: 0;
+}
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777;
+}
+
+blockquote &gt; :first-child {
+  margin-top: 0;
+}
+
+blockquote &gt; :last-child {
+  margin-bottom: 0;
+}
+
+table {
+  padding: 0;
+}
+table tr {
+  border-top: 1px solid #cccccc;
+  background-color: white;
+  margin: 0;
+  padding: 0;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+table tr th {
+  font-weight: bold;
+  border: 1px solid #cccccc;
+  text-align: left;
+  margin: 0;
+  padding: 6px 13px;
+}
+
+table tr td {
+  border: 1px solid #cccccc;
+  text-align: left;
+  margin: 0;
+  padding: 6px 13px;
+}
+
+table tr th :first-child, table tr td :first-child {
+  margin-top: 0;
+}
+
+table tr th :last-child, table tr td :last-child {
+  margin-bottom: 0;
+}
+
+img {
+  max-width: 100%;
+}
+
+span.frame {
+  display: block;
+  overflow: hidden;
+}
+
+span.frame &gt; span {
+  border: 1px solid #dddddd;
+  display: block;
+  float: left;
+  overflow: hidden;
+  margin: 13px 0 0;
+  padding: 7px;
+  width: auto;
+}
+
+span.frame span img {
+  display: block;
+  float: left;
+}
+
+span.frame span span {
+  clear: both;
+  color: #333333;
+  display: block;
+  padding: 5px 0 0;
+}
+
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both;
+}
+
+span.align-center &gt; span {
+  display: block;
+  overflow: hidden;
+  margin: 13px auto 0;
+  text-align: center;
+}
+
+span.align-center span img {
+  margin: 0 auto;
+  text-align: center;
+}
+
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both;
+}
+
+span.align-right &gt; span {
+  display: block;
+  overflow: hidden;
+  margin: 13px 0 0;
+  text-align: right;
+}
+
+span.align-right span img {
+  margin: 0;
+  text-align: right;
+}
+
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left;
+}
+
+span.float-left span {
+  margin: 13px 0 0;
+}
+
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right;
+}
+
+span.float-right &gt; span {
+  display: block;
+  overflow: hidden;
+  margin: 13px auto 0;
+  text-align: right;
+}
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+}
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent;
+}
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+pre code, pre tt {
+  background-color: transparent;
+  border: none;
+}
+
+/* Syntax Highlighting */
+
+.plainText {
+ background-color: #FFFFFF;
+ color: #000000;
+}
+.htmlServerSideScript {
+ background-color: #FFFF00;
+}
+.htmlComment {
+ color: #008000;
+}
+.htmlTagDelimiter {
+ color: #0000FF;
+}
+.htmlElementName {
+ color: #A31515;
+}
+.htmlAttributeName {
+ color: #FF0000;
+}
+.htmlAttributeValue {
+ color: #0000FF;
+}
+.htmlOperator {
+ color: #0000FF;
+}
+.comment {
+ color: #008000;
+}
+.xmlDocTag {
+ color: #808080;
+}
+.xmlDocComment {
+ color: #008000;
+}
+.string {
+ color: #A31515;
+}
+.stringCSharpVerbatim {
+ color: #A31515;
+}
+.keyword {
+ color: #0000FF;
+}
+.preprocessorKeyword {
+ color: #0000FF;
+}
+.htmlEntity {
+ color: #FF0000;
+}
+.xmlAttribute {
+ color: #FF0000;
+}
+.xmlAttributeQuotes {
+ color: #000000;
+}
+.xmlAttributeValue {
+ color: #0000FF;
+}
+.xmlCDataSection {
+ color: #808080;
+}
+.xmlComment {
+ color: #008000;
+}
+.xmlDelimiter {
+ color: #0000FF;
+}
+.xmlName {
+ color: #A31515;
+}
+.className {
+ color: #48D1CC;
+}
+.cssSelector {
+ color: #A31515;
+}
+.cssPropertyName {
+ color: #FF0000;
+}
+.cssPropertyValue {
+ color: #0000FF;
+}
+.sqlSystemFunction {
+ color: #FF00FF;
+}
+.powershellAttribute {
+ color: #B0E0E6;
+}
+.powershellOperator {
+ color: #808080;
+}
+.powershellType {
+ color: #008080;
+}
+.powershellVariable {
+ color: #FF4500;
+}
+.type {
+ color: #008080;
+}
+.typeVariable {
+ color: #008080;
+ font-style: italic;
+}
+.namespace {
+ color: #000080;
+}
+.constructor {
+ color: #800080;
+}
+.predefined {
+ color: #000080;
+}
+.pseudoKeyword {
+ color: #000080;
+}
+.stringEscape {
+ color: #808080;
+}
+.controlKeyword {
+ color: #0000FF;
+}
+.number {
+}
+.operator {
+}
+.delimiter {
+}
+.markdownHeader {
+ font-weight: bold;
+}
+.markdownCode {
+ color: #008080;
+}
+.markdownListItem {
+ font-weight: bold;
+}
+.italic {
+ font-style: italic;
+}
+.bold {
+ font-weight: bold;
+}
+
+                    </style>
+                </head>
+                <body style="">
+                <h1 id="0">Thermal Transient Meter™ Framework Guide</h1>
+<h2 id="2">Table of Contents</h2>
+<ul id="4">
+<li id="4"><a href="#Components">Components</a>
+<ul id="5">
+<li id="5"><a href="#Meter">Thermal Transient Meter</a></li>
+<li id="6"><a href="#Loader">Firmware Loader</a></li>
+<li id="7"><a href="#API">Application Programming Interface</a></li>
+<li id="8"><a href="#Tester">Tester</a></li>
+</ul>
+</li>
+<li id="9"><a href="#Terminology">Terminology</a>
+<ul id="10">
+<li id="10"><a href="#Firmware">Firmware</a></li>
+<li id="11"><a href="#Loading">Loading</a></li>
+<li id="12"><a href="#Memory">Memory</a></li>
+<li id="13"><a href="#Startup">Startup</a></li>
+</ul>
+</li>
+<li id="14"><a href="#Using_the_Framework">Using the Framework</a></li>
+<li id="15"><a href="#Requirements_and_Resources">Requirements and Resources</a>
+<ul id="16">
+<li id="16"><a href="#FTP_Site">FTP Site</a></li>
+<li id="17"><a href="#Microsoft_.NET_Framework">Microsoft .NET Framework</a></li>
+<li id="18"><a href="#VISA_Runtime">VISA Runtime</a></li>
+</ul>
+</li>
+<li id="19"><a href="#Attributions">Attributions</a></li>
+</ul>
+<p id="21"><a name="Components"></a></p>
+<h2 id="22">Components</h2>
+<p id="24">The ISR Thermal Transient Meter (TTM) Framework consists of the following components, programs and documents:</p>
+<p id="26"><a name="Meter"></a></p>
+<h3 id="27">Meter</h3>
+<p id="29">The ISR Thermal Transient Meter (TTM) Instrument is at the core of the framework. This instrument measures the thermal transient response of a resistive element to short current pulses. The instrument is capable of applying current pulses over a wide range of current levels and durations. The instrument also measures the resistances before and after applying the current pulse. The instrument displays measurement values and outputs a digital word that can be used for binning the tested device.</p>
+<p id="31">The instrument consists of a Keithley series 2600 instrument and a custom embedded firmware, which extends the capabilities of the instrument for measuring thermal transients.</p>
+<p id="33">The TTM Instrument Guide describes the usage of the TTM as a stand-alone instrument.</p>
+<p id="35"><a name="Loader"></a></p>
+<h3 id="36">Loader</h3>
+<p id="38">The ISR Thermal Transient Meter (TTM) Firmware Loader is a Windows program that loads the custom TTM firmware onto the Keithley 2600 series instrument.</p>
+<p id="40">The TTM Loader Guide describes how to use the TTM Loader program.</p>
+<p id="42"><a name="API"></a></p>
+<h3 id="43">API</h3>
+<p id="45">The ISR Thermal Transient Meter (TTM) Application Programming Interface (API) is a .NET library (ISR.TTM.Driver) that can be used to communicate with the TTM instrument. The library is provided both as a dynamic link library (DLL) and a Visual Studio project with source code.</p>
+<p id="47">The TTM Driver API Guide describes how to use the TTM API to interface with the instrument remotely from a Windows computer.</p>
+<p id="49"><a name="Tester"></a></p>
+<h3 id="50">Tester</h3>
+<p id="52">The ISR Thermal Transient Meter (TTM) Tester (or Driver Tester) is an application program for testing resistive devices using the TTM instrument. The tester is included as part of the TTM Framework both as an application program executable and a Visual Studio project with source code.</p>
+<p id="54">The TTM Tester Guide describes how to use the Tester.</p>
+<p id="56"><a name="Terminology"></a></p>
+<h2 id="57">Terminology</h2>
+<p id="59"><a name="Firmware"></a></p>
+<h3 id="60">Firmware</h3>
+<p id="62">The ISR Thermal Transient Meter is implemented by customizing an off-the-shelf Keithley instrument. This is done by embedding the ISR Thermal Transient Meter firmware--the TTM Firmware--in this instrument. The TTM firmware consists of an embedded program written in the programming language of the instrument.</p>
+<p id="64"><a name="Loading"></a></p>
+<h3 id="65">Loading</h3>
+<p id="67">The ISR Thermal Transient Meter comes already installed with the TTM Firmware. The TTM Loader program is used for updating the embedded TTM firmware. This is done by removing (unloading) the TTM firmware embedded in the instrument and loading (installing) new TTM Firmware.</p>
+<p id="69"><a name="Memory"></a></p>
+<h3 id="70">Memory</h3>
+<p id="72">When updated, the TTM Firmware resides in the instrument volatile memory. Firmware residing in volatile memory is erased when turning off the instrument. The TTM Loader program is capable of saving the TTM Firmware to non-volatile memory. Firmware saved in non-volatile memory persists in the instrument.</p>
+<p id="74"><a name="Startup"></a></p>
+<h3 id="75">Startup</h3>
+<p id="77">When starting the TTM instrument, the instrument panel displays the Thermal Transient Meter welcome message. In addition, the TTM Firmware is initiated to prepare the instrument for measurement. This is done by the <em>TTM Startup</em> or bootstrap firmware. The startup firmware is saved in non-volatile memory during the TTM loading process.</p>
+<p id="79"><a name="Using_the_Framework"></a></p>
+<h2 id="80">Using the Framework</h2>
+<p id="82">The Application programming interface for the latest (2.4.9040) is yet to be released.</p>
+<p id="84">The following information will become relevant once the new framework API and the console are released:</p>
+<h3 id="86">TTM Loader Guide</h3>
+<p id="88">An how to guide for the TTM Loader application</p>
+<h3 id="90">TTM Instrument Guide</h3>
+<p id="92">A user guide for bench testing resistive devices,</p>
+<h3 id="94">TTM Tester Guide</h3>
+<p id="96">A user guide for testing resistive devices from a PC using the TTM Driver Tester application.</p>
+<h3 id="98">TTM Driver API Guide</h3>
+<p id="100">A user guide for writing programs to control the TTM Instrument.</p>
+<p id="102"><a name="Requirements_and_Resources"></a></p>
+<h2 id="103">Requirements and Resources</h2>
+<p id="105"><a name="FTP_Site"></a></p>
+<h3 id="106">FTP Site</h3>
+<p id="108">The latest information about requirements can be found in the program read me file which can be downloaded from the <a href="http://bit.ly/aJgNDP">ISR FTP site</a>.</p>
+<p id="110">The access to the <a href="ftp://ftp.isr.cc">cc.isr.ftp</a> FTP site is protected by a password.</p>
+<p id="112">The user name is: ttm@isr.cc</p>
+<p id="114">The password is: ttm2.2</p>
+<p id="116"><a name="Microsoft_.NET_Framework"></a></p>
+<h3 id="117">Microsoft .NET Framework</h3>
+<p id="119">The TTM applications are based on the Microsoft <a href="https://dotnet.microsoft.com/en-us/download/dotnet/8.0">.NET Framework</a> 8.0.</p>
+<p id="121"><a name="VISA_Runtime"></a></p>
+<h3 id="122">VISA Runtime</h3>
+<p id="124">The TTM applications require the installation of either the <a href="https://www.keysight.com/us/en/lib/software-detail/computer-software/io-libraries-suite-downloads-2175637.html">IO Suite</a> from Keysight or <a href="http://ftp.ni.com/support/softlib/visa/VISA%20Run-Time%20Engine">NI Visa</a> from National Instruments, with support for the IVI Foundation IVI-VISA implementation version 5.7.</p>
+<p id="126">The current TTM software (2.4.9040) was developed and tested using the Keysight <a href="https://www.keysight.com/us/en/lib/software-detail/computer-software/io-libraries-suite-downloads-2175637.html">IO Suite</a> version 18.2.27313, which can be downloaded from the <em>Previous Versions</em> section of the <a href="https://www.keysight.com/us/en/lib/software-detail/computer-software/io-libraries-suite-downloads-2175637.html">IO Suite</a> downloads page. The most recent edition of <a href="http://ftp.ni.com/support/softlib/visa/VISA%20Run-Time%20Engine">NI Visa</a> most likely supports a later version of the IVI-Visa thus requiring an earlier version of <a href="http://ftp.ni.com/support/softlib/visa/VISA%20Run-Time%20Engine">NI Visa</a>.</p>
+<p id="128"><a name="Attributions"></a></p>
+<h2 id="129">Attributions</h2>
+<p id="131">Last Updated 2024-10-09</p>
+<p id="133">© 2011 by Integrated Scientific Resources, Inc.</p>
+<p id="135">This information is provided &quot;AS IS&quot; WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.</p>
+<p id="137">Licensed under <a href="http://www.isr.cc/licenses/Fair%20End%20User%20Use%20License.pdf">The Fair End User</a> and <a href="http://opensource.org/licenses/MIT">MIT</a> Licenses.</p>
+<p id="139">Unless required by applicable law or agreed to in writing, this software is provided &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</p>
+<p id="141">Source code is hosted on <a href="https://bitbucket.org/davidhary">Bit Bucket</a>.</p>
+
+                </body>
+            </html>
+            

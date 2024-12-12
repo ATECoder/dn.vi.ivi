@@ -1,0 +1,100 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Error", 
+      "Microsoft": "Warning" 
+    },
+    "Console": { 
+      "LogLevel": {
+        "Default": "Information", 
+        "Microsoft.Hosting": "Trace"
+      }
+    },
+    "Debug": {
+      "LogLevel": {
+        "Default": "Information",
+        "Microsoft.Hosting": "Trace" 
+      }
+    },
+    "EventSource": { 
+      "LogLevel": {
+        "Default": "Warning"
+      }
+    }
+  },
+  "Serilog": {
+    "LevelSwitches": {
+      "$consoleSwitch": "Verbose",
+      "$debugSwitch": "Verbose",
+      "$traceSwitch": "Verbose",
+      "$fileSwitch": "Verbose"
+    },
+    "MinimumLevel": {
+      "Default": "Debug",
+      "Override": {
+        "Default": "Information",
+        "Microsoft": "Warning",
+        "Microsoft.Hosting.Lifetime": "Information"
+      }
+    },
+    "Using": [ "Serilog.Sinks.Trace", "Serilog.Sinks.Console", "Serilog.Sinks.Debug", "Serilog.Sinks.File" ],
+    "WriteTo": [
+      {
+        "Name": "Trace",
+        "Args": {
+          "levelSwitch": "$traceSwitch",
+          "outputTemplate": "t::{Timestamp:HH:mm:ss.fff zzz}, [{Level:u3}], {Message}{NewLine}{Exception}"
+        }
+      },
+      {
+        "Name": "Console",
+        "Args": {
+          "levelSwitch": "$consoleSwitch",
+          "outputTemplate": "c::{Timestamp:HH:mm:ss.fff zzz}, [{Level:u3}], {Message}{NewLine}{Exception}"
+        }
+      },
+      {
+        "Name": "Debug",
+        "Args": {
+          "levelSwitch": "$debugSwitch",
+          "outputTemplate": "d::{Timestamp:HH:mm:ss.fff zzz}, [{Level:u3}], {Message}{NewLine}{Exception}"
+        }
+      },
+      {
+        "Name": "Async",
+        "Args": {
+          "configure": [
+            {
+              "Name": "File",
+              "Args": {
+                "levelSwitch": "$fileSwitch",
+                "hooks": "cc.isr.Logging.Orlog.SerilogHooks::MyHeaderWriter, cc.isr.Logging.Orlog",
+                "path": "%ProgramData%/Integrated Scientific Resources/isr.VI.Visa.IO.Demo/2.4.7994/%ComputerName%_.log",
+                "outputTemplate": "{Timestamp:HH:mm:ss.fff zzz}, [{Level:u3}], {Message}{NewLine}{Exception}",
+                "rollingInterval": "Day",
+                "retainedFileCountLimit": 7
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "Destructure": [
+      {
+        "Name": "ToMaximumDepth",
+        "Args": { "maximumDestructuringDepth": 4 }
+      },
+      {
+        "Name": "ToMaximumStringLength",
+        "Args": { "maximumStringLength": 100 }
+      },
+      {
+        "Name": "ToMaximumCollectionCount",
+        "Args": { "maximumCollectionCount": 10 }
+      }
+    ],
+    "Properties": {
+      "Application": "isr.VI.Visa.IO.Demo"
+    }
+  }
+}

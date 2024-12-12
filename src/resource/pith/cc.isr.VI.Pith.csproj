@@ -1,0 +1,98 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <!-- Assembly Info -->
+    <RootNamespace>cc.isr.VI</RootNamespace>
+    <AssemblyName>cc.isr.VI.Pith</AssemblyName>
+    <ApplicationTitle>cc.isr.VI.Pith</ApplicationTitle>
+    <ApplicationId>cc.isr.vi.pith</ApplicationId>
+
+    <GenerateAssemblyVersionAttribute>true</GenerateAssemblyVersionAttribute>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+
+    <!-- Coding -->
+    <OptionExplicit>On</OptionExplicit>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionStrict>On</OptionStrict>
+    <OptionInfer>Off</OptionInfer>
+
+    <!-- Signature -->
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\..\items\keyPair.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>false</DelaySign>
+
+    <!-- NuGet -->
+    <IsPackable>true</IsPackable>
+    <PackageId>cc.isr.VI.Pith</PackageId>
+    <Description>Virtual Instrument Pith</Description>
+    <PackageTags>VISA Virtual Instruments</PackageTags>
+    <PackageOutputPath>C:\my\nuget</PackageOutputPath>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+
+    <!-- Documentation -->
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="readme.md" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <DefineConstants>$(DefineConstants);MYPROJREF;</DefineConstants>
+  </PropertyGroup>
+
+  <Choose>
+    <When Condition="$(DefineConstants.Contains(';PROJREF;')) OR $(DefineConstants.Contains(';MYPROJREF;'))">
+      <ItemGroup>
+        <ProjectReference Include="..\..\..\..\..\core\enums\src\enums\enums\cc.isr.Enums.csproj" />
+        <ProjectReference Include="..\..\..\..\..\core\json\src\app.settings\app.settings.view.models\cc.isr.Json.AppSettings.ViewModels.csproj" />
+        <ProjectReference Include="..\..\..\..\..\core\std\src\framework\framework\cc.isr.Std.Framework.csproj" />
+        <ProjectReference Include="..\..\..\..\..\core\std\src\net21\net21\cc.isr.Std.Net21.csproj" />
+        <ProjectReference Include="..\..\..\..\..\core\units.amounts\src\units.amounts\standard.units\cc.isr.UnitsAmounts.StandardUnits.csproj" />
+        <ProjectReference Include="..\..\..\..\..\core\units.amounts\src\units.amounts\units.amounts\cc.isr.UnitsAmounts.csproj" />
+        <ProjectReference Include="..\..\..\..\..\core\logging\src\tracelog\tracelog\cc.isr.Logging.TraceLog.csproj" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+    <ItemGroup>
+        <PackageReference Include="cc.isr.Enums" Version="1.7.8103" />
+        <PackageReference Include="cc.isr.Std.Framework" Version="1.0.8103" />
+    </ItemGroup>
+    </Otherwise>
+  </Choose>
+
+  <ItemGroup>
+    <Compile Include="..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="version.build.props">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>version.build.tt</DependentUpon>
+    </None>
+    <None Update="version.build.tt">
+      <LastGenOutput>version.build.props</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+  </ItemGroup>
+
+  <Import Project="version.build.props" />
+    
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+
+</Project>

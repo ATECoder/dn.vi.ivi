@@ -1,0 +1,16 @@
+{
+  "profiles": {
+    "IviVisaCompatibilityDemo": {
+      "commandName": "Project",
+      "commandLineArgs": "tcpip0::192.168.0.150::inst0::instr"
+      /*
+      "TCPIP::localhost::5025::SOCKET"
+      "tcpip0::192.168.0.050::5025::SOCKET"
+      "commandLineArgs": "tcpip0::192.168.0.254::gpib0,26::instr"
+      "commandLineArgs": "tcpip0::192.168.0.254::gpib0,22::instr"
+      "commandLineArgs": "TCPIP0::192.168.0.144::inst0::INSTR"
+      "commandLineArgs": "tcpip0::192.168.0.144::inst0::instr"
+      */
+    }
+  }
+}

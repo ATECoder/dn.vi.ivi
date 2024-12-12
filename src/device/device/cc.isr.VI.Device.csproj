@@ -1,0 +1,105 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <!-- Assembly Info -->
+    <RootNamespace>cc.isr</RootNamespace>
+    <AssemblyName>cc.isr.VI.Device</AssemblyName>
+    <ApplicationTitle>cc.isr.VI.Device</ApplicationTitle>
+    <ApplicationId>cc.isr.vi.device</ApplicationId>
+
+    <GenerateAssemblyVersionAttribute>true</GenerateAssemblyVersionAttribute>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+
+    <!-- Coding -->
+    <OptionExplicit>On</OptionExplicit>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionStrict>On</OptionStrict>
+    <OptionInfer>Off</OptionInfer>
+
+    <!-- Signature -->
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\..\items\keyPair.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>false</DelaySign>
+
+    <!-- NuGet -->
+    <IsPackable>true</IsPackable>
+    <PackageId>cc.isr.VI.Device</PackageId>
+    <Description>Virtual Instrument Device</Description>
+    <PackageTags>VISA Virtual Instruments</PackageTags>
+    <PackageOutputPath>C:\my\nuget</PackageOutputPath>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+
+    <!-- Documentation -->
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="readme.md" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <DefineConstants>$(DefineConstants);MYPROJREF;</DefineConstants>
+  </PropertyGroup>
+
+  <Choose>
+    <When Condition="$(DefineConstants.Contains(';PROJREF;')) OR $(DefineConstants.Contains(';MYPROJREF;'))">
+      <ItemGroup>
+        <ProjectReference Include="..\..\..\..\..\core\units.amounts\src\units.amounts\standard.units\cc.isr.UnitsAmounts.StandardUnits.csproj" /> 
+        <ProjectReference Include="..\..\..\..\..\core\std\src\binding.lists\binding.lists\cc.isr.Std.BindingLists.csproj" />
+        <ProjectReference Include="..\..\..\..\..\core\std\src\concurrent\concurrent\cc.isr.Std.Concurrent.csproj" />
+        <ProjectReference Include="..\..\..\..\..\core\std\src\notifiers\notifiers\cc.isr.Std.Notifiers.csproj" />
+        <ProjectReference Include="..\..\..\..\..\core\std\src\primitives\primitives\cc.isr.Std.Primitives.csproj" />
+        <ProjectReference Include="..\..\resource\foundation\cc.isr.VI.Foundation.csproj" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+    <ItemGroup>
+        <PackageReference Include="cc.isr.UnitsAmounts.StandardUnits" Version="2.0.8109" />
+        <PackageReference Include="cc.isr.Logging.TraceLog" Version="1.0.8110" />
+        <PackageReference Include="cc.isr.Std.BindingLists" Version="1.0.8103" />
+        <PackageReference Include="cc.isr.Std.Concurrent" Version="1.0.8110" />
+        <PackageReference Include="cc.isr.Std.Notifiers" Version="1.0.8110" />
+        <PackageReference Include="cc.isr.Std.Primitives" Version="1.0.8103" />
+        <PackageReference Include="cc.isr.VI.Foundation" Version="8.0.8120" />
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
+
+  <ItemGroup>
+    <Compile Include="..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
+    <Compile Remove="Extensions\**" />
+    <Compile Remove="Standard\*.cs" Condition="'$(TargetFramework)' == 'netstandard2.1'" />
+    <EmbeddedResource Remove="Extensions\**" />
+    <None Remove="Extensions\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="version.build.props">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>version.build.tt</DependentUpon>
+    </None>
+    <None Update="version.build.tt">
+      <LastGenOutput>version.build.props</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+  </ItemGroup>
+
+  <Import Project="version.build.props" />
+    
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+    
+  <ItemGroup>
+    <Folder Include="VI\Tsp\Syntax\" />
+  </ItemGroup>
+
+</Project>

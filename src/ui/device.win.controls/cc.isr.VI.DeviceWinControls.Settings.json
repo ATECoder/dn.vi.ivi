@@ -1,0 +1,31 @@
+{
+  "Settings": {
+    "MessageDisplayLevel": "Verbose",
+    "StatusReadDelay": 10,
+    "ReadDelay": 10,
+    "MaximumDelay": 1000,
+    "Termination": "\\n",
+    "CharcoalColor": "30, 38, 44",
+    "ResourceTitle": "Facade",
+    "ResourceNameSelectionTimeout": 10000,
+    "NominalResistance": 100,
+    "ResistanceTolerance": 0.01,
+    "OpenLimit": 1000,
+    "PassBitmask": 1,
+    "FailBitmask": 2,
+    "OverflowBitmask": 4,
+    "BinningStrobeDuration": 10,
+    "BufferStreamPollInterval": 50,
+    "DisplayStandardServiceRequests": true,
+    "StreamBufferSenseFunctionMode": "ResistanceFourWire",
+    "ScanCardScanList": "(@1:3)",
+    "ScanCardSampleCount": 3,
+    "StreamTriggerCount": 999,
+    "StreamBufferTriggerSource": "Bus",
+    "StreamBufferArmSource": "Bus",
+    "StrobeLineNumber": 4,
+    "StrobeDuration": 10,
+    "BinLineNumber": 1,
+    "BinDuration": 20
+  }
+}

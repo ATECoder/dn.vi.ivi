@@ -1,0 +1,62 @@
+{
+  "TimingSettings": {
+    "Exists": true,
+    "PingTimeout": "00:00:01.0000000",
+    "PingHops": 2,
+    "ClearRefractoryPeriod": "00:00:00.2000000",
+    "CollectGarbageTimeout": "00:00:00.5000000",
+    "CommunicationTimeout": "00:00:03.0500000",
+    "DeviceClearRefractoryPeriod": "00:00:01.0500000",
+    "InitKnownStateTimeout": "00:00:10",
+    "InterfaceClearRefractoryPeriod": "00:00:01.0500000",
+    "OpenSessionTimeout": "00:00:00.5000000",
+    "OperationCompletionRefractoryPeriod": "00:00:00.1000000",
+    "ReadAfterWriteDelay": "00:00:00.0100000",
+    "ResetRefractoryPeriod": "00:00:00.2000000",
+    "StatusReadDelay": "00:00:00.0100000",
+    "StatusReadTurnaroundTime": "00:00:00.0100000",
+    "SessionMessageNotificationModes": "None"
+  },
+
+  "CommandsSettings": {
+    "Exists": true,
+    "ClearExecutionStateCommand": "_G.status.reset()",
+    "IdentificationQueryCommand": "*IDN?",
+    "OperationCompleteCommand": "_G.opc()",
+    "OperationCompletedQueryCommand": "_G.waitcomplete() print('1') ",
+    "OperationCompletedReplyMessage": "1",
+    "ResetKnowStateCommand": "_G.reset()",
+    "ServiceRequestEnableCommandFormat": "_G.status.request_enable={0}",
+    "ServiceRequestEnableQueryCommand": "_G.print(_G.tostring(_G.status.request_enable))",
+    "StandardEventEnableCommandFormat": "_G.status.standard.enable={0}",
+    "StandardEventEnableQueryCommand": "_G.print(_G.tostring(_G.status.standard.enable))",
+    "StandardEventStatusQueryCommand": "_G.print(_G.tostring(_G.status.standard.event))",
+    "StatusByteQueryCommand": "_G.print(_G.tostring(_G.status.condition))",
+    "WaitToContinueCommand": "_G.waitcomplete()"
+  },
+
+  "RegistersBitmasksSettings": {
+    "Exists": true,
+    "ErrorAvailableBitmask": 4,
+    "MessageAvailableBitmask": 16,
+    "StandardEventSummaryBitmask": 32,
+    "RequestingServiceBitmask": 64,
+    "ServiceRequestEnableOperationCompleteBitmask": 191,
+    "StandardEventEnableOperationCompleteBitmask": 253,
+    "ServiceRequestEnableEventsBitmask": 191,
+    "StandardEventEnableEventsBitmask": 253
+  },
+
+  "ScpiExceptionsSettings": {
+    "Exists": true,
+    "StatusClearDistractive": true,
+    "ClearsDeviceStructures": true,
+    "SplitCommonCommands": true
+  },
+
+  "IOSettings": {
+    "Exists": true,
+    "ReadTerminationEnabled": true,
+    "ReadTerminationCharacter": 10
+  }
+}

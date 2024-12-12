@@ -1,0 +1,128 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net9.0-windows</TargetFrameworks>
+    <OutputType>WinExe</OutputType>
+    <UseWindowsForms>true</UseWindowsForms>
+    <StartupObject>cc.isr.Visa.IO.Demo.Program</StartupObject>
+
+    <LangVersion>latest</LangVersion>
+
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <!-- Assembly Info -->
+    <RootNamespace>cc.isr.Visa.IO.Demo</RootNamespace>
+    <Description>VISA input and output demo</Description>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <ApplicationIcon>..\..\items\favicon.ico</ApplicationIcon>
+
+    <GenerateAssemblyVersionAttribute>true</GenerateAssemblyVersionAttribute>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+
+    <!-- Coding -->
+    <OptionExplicit>On</OptionExplicit>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionStrict>On</OptionStrict>
+    <OptionInfer>Off</OptionInfer>
+
+    <!-- Signature -->
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\..\items\keyPair.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>false</DelaySign>
+
+    <!-- NuGet -->
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <DefineConstants>$(DefineConstants);MYPROJREF;</DefineConstants>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+
+  <Choose>
+    <When Condition="$(DefineConstants.Contains(';PROJREF;')) OR $(DefineConstants.Contains(';MYPROJREF;'))">
+      <ItemGroup>
+        <ProjectReference Include="..\..\..\..\..\core\tracing\src\win.forms\tracing.win.forms\cc.isr.Tracing.WinForms.csproj" />
+        <ProjectReference Include="..\visa.win.controls\cc.isr.Visa.WinControls.csproj" />
+		<ProjectReference Include="..\..\..\..\..\core\json\src\app.settings\app.settings.view.models\cc.isr.Json.AppSettings.ViewModels.csproj" />
+		<ProjectReference Include="..\..\..\..\..\core\json\src\app.settings\app.settings.win.forms\cc.isr.Json.AppSettings.WinForms.csproj" />
+		<ProjectReference Include="..\..\..\..\..\core\logging\src\tracelog\tracelog.win.forms\cc.isr.Logging.TraceLog.WinForms.csproj" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+    <ItemGroup>
+        <PackageReference Include="cc.isr.Json.Settings.WinForms" Version="1.0.8118" />
+        <PackageReference Include="cc.isr.Tracing.WinForms" Version="1.0.8110" />
+      <PackageReference Include="cc.isr.Logging.TraceLog.WinForms" Version="1.0.8119" />
+      <PackageReference Include="cc.isr.Visa.WinControls" Version="5.11.8117" />
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
+
+  <ItemGroup>
+    <Content Include="cc.isr.Visa.IO.Demo.Serilog.json">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>isr.Visa.IO.Demo.SerilogSettings.tt</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Update="cc.isr.Visa.IO.Demo.SerilogSettings.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>isr.Visa.IO.Demo.Serilog.json</LastGenOutput>
+    </None>
+    <Content Include="cc.isr.Visa.IO.Demo.Settings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\visa\cc.isr.Visa.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="version.build.props">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>version.build.tt</DependentUpon>
+    </None>
+    <None Update="version.build.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>version.build.props</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <!-- WiX Toolset; See https://github.com/wixtoolset/issues/issues/5705
+    See also Get Target Path below. -->
+    <_InstallerTargetFramework>net9.0-windows</_InstallerTargetFramework>
+  </PropertyGroup>
+    
+  <Target Name="GetTargetPath" Returns="@(_FakeOutputPath)">
+    <ItemGroup Condition="'$(OutputType)' == 'Library'">
+      <_FakeOutputPath Include="$(MSBuildProjectDirectory)\$(OutputPath)\$(_InstallerTargetFramework)\$(AssemblyName).dll" />
+    </ItemGroup>
+    <ItemGroup Condition="'$(OutputType)' == 'Exe'">
+      <_FakeOutputPath Include="$(MSBuildProjectDirectory)\$(OutputPath)\$(_InstallerTargetFramework)\$(AssemblyName).exe" />
+    </ItemGroup>
+    <ItemGroup Condition="'$(OutputType)' == 'WinExe'">
+      <_FakeOutputPath Include="$(MSBuildProjectDirectory)\$(OutputPath)\$(_InstallerTargetFramework)\$(AssemblyName).exe" />
+    </ItemGroup>
+  </Target>
+
+</Project>

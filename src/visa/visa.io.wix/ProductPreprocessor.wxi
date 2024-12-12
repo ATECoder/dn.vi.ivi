@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Include>
+  <!-- Preprocessor variables used within this product -->
+  <?ifndef ProductName ?>
+    <?define ProductNameBase      = 'isr.Visa.IO' ?>
+    <?if $(var.build) = "rc" ?>
+      <?define ProductDescription = 'ISR VISA IO Release Candidate' ?>
+      <?define ProductName        = '$(var.ProductNameBase).rc' ?>
+      <?define UpgradeCode        = '39d04616-71d0-401d-9fa9-eeb768a3bd5e' ?>
+      <?define BundleCode         = '03774677-0a21-40d8-8e46-9ee50ba2d0cc' ?>
+      <?define CommandLine        = '' ?>
+      <?define BinFolderName      = 'rc' ?>
+    <?else ?>
+      <?define ProductDescription = 'ISR VISA IO' ?>
+      <?define ProductName        = '$(var.ProductNameBase)' ?>
+      <?define UpgradeCode        = '9d462960-50a5-44a3-9056-2d9c7d753be9' ?>
+      <?define BundleCode         = '00de1d3d-c4d3-40ca-9a22-cb9dec2634ff' ?>
+      <?define CommandLine        = '' ?>
+      <?define BinFolderName      = 'rtm' ?>
+    <?endif?>
+    <?define ProductAuthor       = 'Integrated Scientific Resources, Inc.' ?>
+    <?define ProductManufacturer = 'Integrated.Scientific.Resources' ?>
+    <?define ProductVersion      = '!(bind.assemblyVersion.isr.Visa.WinControls.dll)' ?>
+	<!-- awaits VS 2022 WiX tool set fix
+    <?define ProductVersion      = '!(bind.assemblyVersion.fid.isr.Visa.IO.exe)' ?>
+	-->
+    <?define ProductCopyright    = '(c) 2021 by Integrated Scientific Resources, Inc. All rights reserved.' ?>
+    <?define ProductPlatform     = $(var.isr.Visa.IO.Platform) ?>
+    <?define TargetFramework     = 'net8.0-windows' ?>
+    <?define DocsFolderName      = 'Docs' ?>
+    <?define ProductIcon         = '$(var.isr.Visa.IO.ProjectDir)..\..\..\src\items\favicon.ico' ?>
+    <?define ProductLogo         = '$(var.isr.Visa.IO.ProjectDir)..\..\..\src\items\logo48.png' ?>
+    <?define HelpURL             = 'http:\www.integratedscientificresources.com' ?>
+    <?define LicenseFilePath     = '$(var.isr.Visa.IO.ProjectDir)..\..\..\src\items\license.rtf' ?>
+    <?define UpdateBaseURL       = 'ftp://irctt%40integratedscientificresources.com:IrcTT.201x@ftp.integratedscientificresources.com/Taper/' ?>
+    <?define UpdateSetupURL      = '$(var.UpdateBaseURL)$(var.ProductName).Setup.msi' ?>
+    <?define SourceRegistryKey   = 'Software\$(var.ProductManufacturer)\$(var.ProductName)\SourceCodeFile' ?>
+  <?endif?>
+</Include>

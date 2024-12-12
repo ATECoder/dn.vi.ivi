@@ -1,0 +1,154 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net472;net48;net9.0-windows</TargetFrameworks>
+    <OutputType>Library</OutputType>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+
+    <LangVersion>latest</LangVersion>
+
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <!-- Assembly Info -->
+    <RootNamespace>cc.isr.VI</RootNamespace>
+    <AssemblyName>cc.isr.VI.WinControls</AssemblyName>
+    <ApplicationTitle>cc.isr.VI.WinControls</ApplicationTitle>
+    <ApplicationId>cc.isr.vi.win.controls</ApplicationId>
+
+    <GenerateAssemblyVersionAttribute>true</GenerateAssemblyVersionAttribute>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+
+    <!-- Coding -->
+    <OptionExplicit>On</OptionExplicit>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionStrict>On</OptionStrict>
+    <OptionInfer>Off</OptionInfer>
+
+    <!-- Signature -->
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\..\items\keyPair.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>false</DelaySign>
+
+    <!-- NuGet -->
+    <IsPackable>true</IsPackable>
+    <PackageId>cc.isr.VI.WinControls</PackageId>
+    <Description>Visa Session Base Windows controls</Description>
+    <PackageTags>VISA Virtual Session Base Windows Controls</PackageTags>
+    <PackageOutputPath>C:\my\nuget</PackageOutputPath>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+
+    <!-- Documentation -->
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+
+    <GenerateResourceWarnOnBinaryFormatterUse>false</GenerateResourceWarnOnBinaryFormatterUse>
+
+    <!--
+      this maybe a leftover from Visual Basic Trace Event Talker key.
+      Warning (active)	MSB3825
+      Resource "_TTMConfigurationPanel.TraceShowEvent"
+      of type "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      is deserialized via BinaryFormatter at runtime. BinaryFormatter is deprecated due to possible security risks and will be removed with .NET 9.
+      If you wish to continue using it, set property "GenerateResourceWarnOnBinaryFormatterUse" to false.
+      More information: https://aka.ms/msbuild/net8-binaryformatter
+      cc.isr.VI.Tsp.K2600.Ttm.Controls (net9.0-windows)	C:\my\lib\vs\io\vi\src\vi\k2600.ttm\k2600.ttm.controls\UI\MeterView.resx	1	
+    -->
+
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="readme.md" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <DefineConstants>$(DefineConstants);MYPROJREF;</DefineConstants>
+  </PropertyGroup>
+
+  <Choose>
+    <When Condition="$(DefineConstants.Contains(';PROJREF;')) OR $(DefineConstants.Contains(';MYPROJREF;'))">
+      <ItemGroup>
+        <ProjectReference Include="..\..\..\..\..\core\tracing\src\win.forms\tracing.win.forms\cc.isr.Tracing.WinForms.csproj" />
+        <ProjectReference Include="..\..\..\..\..\core\logging\src\tracelog\tracelog.win.forms\cc.isr.Logging.TraceLog.WinForms.csproj" />
+        <ProjectReference Include="..\..\..\..\..\core\win.controls\src\binding\binding\cc.isr.WinControls.Binding.csproj" />
+        <ProjectReference Include="..\..\..\..\..\core\win.controls\src\progress\progress\cc.isr.WinControls.Progress.csproj" />
+        <ProjectReference Include="..\..\..\..\..\core\win.controls\src\selectors\selectors\cc.isr.WinControls.Selectors.csproj" />
+        <ProjectReference Include="..\..\..\..\..\core\win.controls\src\trees\trees\cc.isr.WinControls.Trees.csproj" />
+        <ProjectReference Include="..\..\device\device\cc.isr.VI.Device.csproj" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+    <ItemGroup>
+        <PackageReference Include="cc.isr.Json.Settings.WinForms" Version="1.0.8118" />
+        <PackageReference Include="cc.isr.Tracing.WinForms" Version="1.0.8110" />
+        <PackageReference Include="cc.isr.Logging.TraceLog.WinForms" Version="1.0.8119" />
+        <PackageReference Include="cc.isr.WinControls.Binding" Version="1.0.8104" />
+        <PackageReference Include="cc.isr.WinControls.Progress" Version="1.0.8104" />
+        <PackageReference Include="cc.isr.WinControls.Trees" Version="1.0.8110" />
+        <PackageReference Include="cc.isr.WinControls.ModelView" Version="1.0.8110" />
+        <PackageReference Include="cc.isr.WinControls.Selectors" Version="1.0.8122" />
+        <PackageReference Include="cc.isr.VI.Device" Version="8.0.8120" />
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
+
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="cc.isr.VI.WinControls.Settings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\core\win.controls\src\model.view.logger\model.view.logger\cc.isr.WinControls.ModelViewLogger.csproj" />
+  </ItemGroup>
+ 
+  <ItemGroup>
+    <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
+    <EmbeddedResource Update="properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="version.build.props">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>version.build.tt</DependentUpon>
+    </None>
+    <None Update="version.build.tt">
+      <LastGenOutput>version.build.props</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+  </ItemGroup>
+
+  <Import Project="version.build.props" />
+    
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+    
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+</Project>

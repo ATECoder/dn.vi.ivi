@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?include ProductPreprocessor.wxi ?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="*"
+           Name='$(var.ProductName)'
+           Language="1033"
+         Version='$(var.ProductVersion)'
+           Manufacturer='$(var.ProductManufacturer)'
+           UpgradeCode='$(var.UpgradeCode)'>
+		<Package InstallerVersion="200"
+             Compressed="yes"
+             InstallScope="perMachine" />
+
+    <!-- Icon id must end with .ico or .exe -->
+    <Icon Id='Product.ico' SourceFile='$(var.ProductIcon)' />
+
+    <!-- The AllowSameVersionUpgrade option causes warning LGHT1076: ICE61: 
+             This product should remove only older versions of itself. The Maximum version is not less than the current product...
+             Without this option, Without this option (defaults to 'no'), the control panel will have multiple entries if installing the same product version.  
+             with a new product ID but the same version. 
+             I prefer removing the last revision even if it has the same version. -->
+    <MajorUpgrade DowngradeErrorMessage='A newer version of $(var.ProductName) is already installed; please uninstall it and re-run setup.'
+                  AllowSameVersionUpgrades='yes' />
+
+    <Feature Id="ProductFeature" Title='$(var.ProductName) Installer' Description='$(var.ProductName) Installer'
+             Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+      <ComponentRef Id='cid.RemoveAdminMenuDir' Primary='yes' />
+      <ComponentRef Id='cid.RemoveProductMenuDir' Primary='yes' />
+      <ComponentRef Id='cid.RemoveCompanyMenuDir' Primary='yes' />
+    </Feature>
+
+    <!-- Properties -->
+    <Property Id='ARPPRODUCTICON' Value='Product.ico' />
+    <Property Id='PREVIOUSVERSIONSINSTALLED' Secure='yes' />
+
+    <Property Id='WIXUI_INSTALLDIR' Value='APPLICATIONFOLDER' />
+
+    <!-- WiX Install Dir GUI -->
+    <UIRef Id='WixUI_InstallDir'/>
+
+    <!-- WiX GUI -->
+    <WixVariable Id='WixUILicenseRtf' Value='$(var.LicenseFilePath)' />
+
+  </Product>
+
+  <!--
+    Duplicate
+  <Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLFOLDER" Name="SetupProject1" />
+			</Directory>
+		</Directory>
+	</Fragment>
+  -->
+
+  <Fragment>
+    <DirectoryRef Id='APPLICATIONFOLDER' DiskId='1' >
+      <Directory Id='BinDir' Name ='$(var.BinFolderName)'/>
+    </DirectoryRef>
+
+    <DirectoryRef Id='CompanyMenuDir' DiskId='1' >
+      <Directory Id='AdminMenuDir' Name='Admin' >
+        <Component Id='cid.RemoveAdminMenuDir' Guid='*'>
+          <RegistryKey Root="HKCU" Key="Software\$(var.ProductManufacturer)\$(var.ProductName)\RemoveAdminMenuDir">
+            <RegistryValue Value='1' Type='integer' KeyPath='yes' />
+          </RegistryKey>
+          <RemoveFolder Id='Remove.AdminMenuDir' On='uninstall' />
+        </Component>
+      </Directory>
+    </DirectoryRef>
+  </Fragment>
+
+  <Fragment>
+		<ComponentGroup Id="ProductComponents" Directory='BinDir' Source='$(var.isr.Visa.IO.TargetDir)' >
+
+      <?if $(var.TargetFramework) = "net5.0-windows" or $(var.TargetFramework) = "net8.0-windows" ?>
+
+        <Component Id='cid.isr.Visa.IO.Program' Guid='*' >
+          <File Id='fid.isr.Visa.IO.exe' Name='$(var.isr.Visa.IO.TargetFileName)'
+                Source='$(var.isr.Visa.IO.TargetPath)' KeyPath='yes' DiskId='1' >
+            <Shortcut Id='scid.isr.Visa.IO.exe' Directory='ProductMenuDir'
+                      WorkingDirectory='BinDir' Name='$(var.isr.Visa.IO.TargetName)'
+                      Icon='Product.ico' Advertise='yes'  />
+            <!-- Arguments='$(var.CommandLine)' -->
+          </File>
+        </Component>
+
+      <?else ?>
+
+        <Component Id='cid.isr.Visa.IO.Program' Guid='*' >
+          <File Id='fid.isr.Visa.IO.exe' Name='$(var.isr.Visa.IO.TargetFileName)'
+                Source='$(var.isr.Visa.IO.TargetPath)' KeyPath='yes' DiskId='1'
+                Assembly='.net' AssemblyApplication='fid.isr.Visa.IO.exe' AssemblyManifest='fid.isr.Visa.IO.exe' >
+            <Shortcut Id='scid.isr.Visa.IO.exe' Directory='ProductMenuDir'
+                      WorkingDirectory='BinDir' Name='$(var.isr.Visa.IO.TargetName)'
+                      Icon='Product.ico' Advertise='yes'  />
+            <!-- Arguments='$(var.CommandLine)' -->
+          </File>
+        </Component>
+
+      <?endif?>
+
+      <?if $(var.TargetFramework) = "net8.0-windows" ?>
+        <Component Id='cid.isr.Visa.IO.deps.json' Guid='*'>
+          <File Name='isr.Visa.IO.deps.json' KeyPath='yes' DiskId='1'/>
+        </Component>
+        <Component Id='cid.isr.Visa.IO.runtimeconfig.json' Guid='*'>
+          <File Name='isr.Visa.IO.runtimeconfig.json' KeyPath='yes' DiskId='1'/>
+        </Component>
+      <?else ?>
+      <?endif?>
+
+      <?if $(var.TargetFramework) = "net5.0-windows" ?>
+        <Component Id='cid.isr.Visa.IO.deps.json' Guid='*'>
+          <File Name='isr.Visa.IO.deps.json' KeyPath='yes' DiskId='1'/>
+        </Component>
+        <Component Id='cid.isr.Visa.IO.runtimeconfig.dev.json' Guid='*'>
+          <File Name='isr.Visa.IO.runtimeconfig.dev.json' KeyPath='yes' DiskId='1'/>
+        </Component>
+        <Component Id='cid.isr.Visa.IO.runtimeconfig.json' Guid='*'>
+          <File Name='isr.Visa.IO.runtimeconfig.json' KeyPath='yes' DiskId='1'/>
+        </Component>
+      <?else ?>
+      <?endif?>
+
+      <Component Id='cid.isr.Visa.WinControls.dll' Guid='*'>
+        <File Name='isr.Visa.WinControls.dll' KeyPath='yes' DiskId='1'
+              Assembly='.net' AssemblyManifest='isr.Visa.WinControls.dll' AssemblyApplication='isr.Visa.WinControls.dll' />
+      </Component>
+      <Component Id='cid.isr.Visa.WinControls.pdb' Guid='*'>
+        <File Name='isr.Visa.WinControls.pdb' KeyPath='yes' DiskId='1'/>
+      </Component>
+      <Component Id='cid.Ivi.Visa.dll' Guid='*'>
+        <File Name='Ivi.Visa.dll' KeyPath='yes' DiskId='1'
+              Assembly='.net' AssemblyManifest='Ivi.Visa.dll' AssemblyApplication='Ivi.Visa.dll' />
+      </Component>
+      <Component Id='cid.isr.Visa.dll' Guid='*'>
+        <File Name='isr.Visa.dll' KeyPath='yes' DiskId='1'
+              Assembly='.net' AssemblyManifest='isr.Visa.dll' AssemblyApplication='isr.Visa.dll' />
+      </Component>
+      <Component Id='cid.isr.Visa.pdb' Guid='*'>
+        <File Name='isr.Visa.pdb' KeyPath='yes' DiskId='1'/>
+      </Component>
+      <?if $(var.TargetFramework) = "net472" ?>
+      <?else ?>
+        <Component Id='cid.Ivi.Visa.pdb' Guid='*'>
+          <File Name='Ivi.Visa.pdb' KeyPath='yes' DiskId='1'/>
+        </Component>
+        <Component Id='cid.Keysight.Visa.dll' Guid='*'>
+          <File Name='Keysight.Visa.dll' KeyPath='yes' DiskId='1'
+                Assembly='.net' AssemblyManifest='Keysight.Visa.dll' AssemblyApplication='Keysight.Visa.dll' />
+        </Component>
+        <Component Id='cid.Keysight.Visa.pdb' Guid='*'>
+          <File Name='Keysight.Visa.pdb' KeyPath='yes' DiskId='1'/>
+        </Component>
+        <Component Id='cid.NationalInstruments.Visa.dll' Guid='*'>
+          <File Name='NationalInstruments.Visa.dll' KeyPath='yes' DiskId='1'
+                Assembly='.net' AssemblyManifest='NationalInstruments.Visa.dll' AssemblyApplication='NationalInstruments.Visa.dll' />
+        </Component>
+        <Component Id='cid.NationalInstruments.Visa.pdb' Guid='*'>
+          <File Name='NationalInstruments.Visa.pdb' KeyPath='yes' DiskId='1'/>
+        </Component>
+      <?endif?>
+    </ComponentGroup>
+	</Fragment>
+</Wix>

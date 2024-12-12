@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?include ProductPreprocessor.wxi ?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+	  <ComponentGroup Id="ProductComponents" Directory='BinDir' Source='$(var.isr.Visa.IO.Demo.TargetDir)' >
+	  
+      <?if $(var.TargetFramework) = "net5.0-windows" or $(var.TargetFramework) = "net8.0-windows" ?>
+
+        <Component Id='cid.isr.Visa.IO.Demo.Program' Guid='*' >
+          <File Id='fid.isr.Visa.IO.Demo.exe' Name='$(var.isr.Visa.IO.Demo.TargetFileName)'
+                Source='$(var.isr.Visa.IO.Demo.TargetPath)' KeyPath='yes' DiskId='1' >
+            <Shortcut Id='scid.isr.Visa.IO.Demo.exe' Directory='ProductMenuDir'
+                      WorkingDirectory='BinDir' Name='$(var.isr.Visa.IO.Demo.TargetName)'
+                      Icon='Product.ico' Advertise='yes'  />
+            <!-- Arguments='$(var.CommandLine)' -->
+          </File>
+        </Component>
+
+      <?else ?>
+
+        <Component Id='cid.isr.Visa.IO.Demo.Program' Guid='*' >
+          <File Id='fid.isr.Visa.IO.Demo.exe' Name='$(var.isr.Visa.IO.Demo.TargetFileName)'
+                Source='$(var.isr.Visa.IO.Demo.TargetPath)' KeyPath='yes' DiskId='1'
+                Assembly='.net' AssemblyApplication='fid.isr.Visa.IO.Demo.exe' AssemblyManifest='fid.isr.Visa.IO.Demo.exe' >
+            <Shortcut Id='scid.isr.Visa.IO.Demo.exe' Directory='ProductMenuDir'
+                      WorkingDirectory='BinDir' Name='$(var.isr.Visa.IO.Demo.TargetName)'
+                      Icon='Product.ico' Advertise='yes'  />
+            <!-- Arguments='$(var.CommandLine)' -->
+          </File>
+        </Component>
+
+      <?endif?>
+	  
+      <?if $(var.TargetFramework) = "net8.0-windows" ?>
+        <Component Id='cid.isr.Visa.IO.Demo.deps.json' Guid='*'>
+          <File Name='isr.Visa.IO.Demo.deps.json' KeyPath='yes' DiskId='1'/>
+        </Component>
+        <Component Id='cid.isr.Visa.IO.Demo.runtimeconfig.json' Guid='*'>
+          <File Name='isr.Visa.IO.Demo.runtimeconfig.json' KeyPath='yes' DiskId='1'/>
+        </Component>
+      <?else ?>
+      <?endif?>
+	  
+      <?if $(var.TargetFramework) = "net5.0-windows" ?>
+        <Component Id='cid.isr.Visa.IO.Demo.deps.json' Guid='*'>
+          <File Name='isr.Visa.IO.Demo.deps.json' KeyPath='yes' DiskId='1'/>
+        </Component>
+        <Component Id='cid.isr.Visa.IO.Demo.runtimeconfig.dev.json' Guid='*'>
+          <File Name='isr.Visa.IO.Demo.runtimeconfig.dev.json' KeyPath='yes' DiskId='1'/>
+        </Component>
+        <Component Id='cid.isr.Visa.IO.Demo.runtimeconfig.json' Guid='*'>
+          <File Name='isr.Visa.IO.Demo.runtimeconfig.json' KeyPath='yes' DiskId='1'/>
+        </Component>
+      <?else ?>
+      <?endif?>
+	  
+        <Component Id='cid.isr.Visa.IO.Demo.pdb' Guid='*'>
+        <File Name='isr.Visa.IO.Demo.pdb' KeyPath='yes' DiskId='1'/>
+      </Component>
+      <Component Id='cid.isr.Visa.IO.Demo.SerilogSettings.json' Guid='*'>
+        <File Name='isr.Visa.IO.Demo.SerilogSettings.json' KeyPath='yes' DiskId='1'/>
+      </Component>
+      <Component Id='cid.isr.Visa.IO.Demo.Settings.json' Guid='*'>
+        <File Name='isr.Visa.IO.Demo.Settings.json' KeyPath='yes' DiskId='1'/>
+      </Component>
+      <Component Id='cid.isr.Json.Settings.dll' Guid='*'>
+        <File Name='isr.Json.Settings.dll' KeyPath='yes' DiskId='1'
+              Assembly='.net' AssemblyManifest='isr.Json.Settings.dll' AssemblyApplication='isr.Json.Settings.dll' />
+      </Component>
+      <Component Id='cid.isr.Json.Settings.pdb' Guid='*'>
+        <File Name='isr.Json.Settings.pdb' KeyPath='yes' DiskId='1'/>
+      </Component>
+      <Component Id='cid.isr.Logging.dll' Guid='*'>
+        <File Name='isr.Logging.dll' KeyPath='yes' DiskId='1'
+              Assembly='.net' AssemblyManifest='isr.Logging.dll' AssemblyApplication='isr.Logging.dll' />
+      </Component>
+      <Component Id='cid.isr.Logging.pdb' Guid='*'>
+        <File Name='isr.Logging.pdb' KeyPath='yes' DiskId='1'/>
+      </Component>
+      <Component Id='cid.isr.Logging.TraceLog.dll' Guid='*'>
+        <File Name='isr.Logging.TraceLog.dll' KeyPath='yes' DiskId='1'
+              Assembly='.net' AssemblyManifest='isr.Logging.TraceLog.dll' AssemblyApplication='isr.Logging.TraceLog.dll' />
+      </Component>
+      <Component Id='cid.isr.Logging.TraceLog.pdb' Guid='*'>
+        <File Name='isr.Logging.TraceLog.pdb' KeyPath='yes' DiskId='1'/>
+      </Component>
+      <Component Id='cid.isr.Logging.TraceLog.WinForms.dll' Guid='*'>
+        <File Name='isr.Logging.TraceLog.WinForms.dll' KeyPath='yes' DiskId='1'
+              Assembly='.net' AssemblyManifest='isr.Logging.TraceLog.WinForms.dll' AssemblyApplication='isr.Logging.TraceLog.WinForms.dll' />
+      </Component>
+      <Component Id='cid.isr.Logging.TraceLog.WinForms.pdb' Guid='*'>
+        <File Name='isr.Logging.TraceLog.WinForms.pdb' KeyPath='yes' DiskId='1'/>
+      </Component>
+      <Component Id='cid.isr.Tracing.dll' Guid='*'>
+        <File Name='isr.Tracing.dll' KeyPath='yes' DiskId='1'
+              Assembly='.net' AssemblyManifest='isr.Tracing.dll' AssemblyApplication='isr.Tracing.dll' />
+      </Component>
+      <Component Id='cid.isr.Json.Settings.WinForms.dll' Guid='*'>
+        <File Name='isr.Json.Settings.WinForms.dll' KeyPath='yes' DiskId='1'
+              Assembly='.net' AssemblyManifest='isr.Json.Settings.WinForms.dll' AssemblyApplication='isr.Json.Settings.WinForms.dll' />
+      </Component>
+      <Component Id='cid.isr.Json.Settings.WinForms.pdb' Guid='*'>
+        <File Name='isr.Json.Settings.WinForms.pdb' KeyPath='yes' DiskId='1'/>
+      </Component>
+      <Component Id='cid.isr.Tracing.WinForms.dll' Guid='*'>
+        <File Name='isr.Tracing.WinForms.dll' KeyPath='yes' DiskId='1'
+              Assembly='.net' AssemblyManifest='isr.Tracing.WinForms.dll' AssemblyApplication='isr.Tracing.WinForms.dll' />
+      </Component>
+      <Component Id='cid.isr.Tracing.WinForms.pdb' Guid='*'>
+        <File Name='isr.Tracing.WinForms.pdb' KeyPath='yes' DiskId='1'/>
+      </Component>
+      <Component Id='cid.isr.Tracing.pdb' Guid='*'>
+        <File Name='isr.Tracing.pdb' KeyPath='yes' DiskId='1'/>
+      </Component>
+	  
+      <Component Id='cid.isr.Visa.WinControls.dll' Guid='*'>
+        <File Name='isr.Visa.WinControls.dll' KeyPath='yes' DiskId='1'
+              Assembly='.net' AssemblyManifest='isr.Visa.WinControls.dll' AssemblyApplication='isr.Visa.WinControls.dll' />
+      </Component>
+      <Component Id='cid.isr.Visa.WinControls.pdb' Guid='*'>
+        <File Name='isr.Visa.WinControls.pdb' KeyPath='yes' DiskId='1'/>
+      </Component>
+      <Component Id='cid.Ivi.Visa.dll' Guid='*'>
+        <File Name='Ivi.Visa.dll' KeyPath='yes' DiskId='1'
+              Assembly='.net' AssemblyManifest='Ivi.Visa.dll' AssemblyApplication='Ivi.Visa.dll' />
+      </Component>
+      <Component Id='cid.isr.Visa.dll' Guid='*'>
+        <File Name='isr.Visa.dll' KeyPath='yes' DiskId='1'
+              Assembly='.net' AssemblyManifest='isr.Visa.dll' AssemblyApplication='isr.Visa.dll' />
+      </Component>
+      <Component Id='cid.isr.Visa.pdb' Guid='*'>
+        <File Name='isr.Visa.pdb' KeyPath='yes' DiskId='1'/>
+      </Component>
+      <?if $(var.TargetFramework) = "net472" ?>
+      <?else ?>
+        <Component Id='cid.Ivi.Visa.pdb' Guid='*'>
+          <File Name='Ivi.Visa.pdb' KeyPath='yes' DiskId='1'/>
+        </Component>
+        <Component Id='cid.Keysight.Visa.dll' Guid='*'>
+          <File Name='Keysight.Visa.dll' KeyPath='yes' DiskId='1'
+                Assembly='.net' AssemblyManifest='Keysight.Visa.dll' AssemblyApplication='Keysight.Visa.dll' />
+        </Component>
+        <Component Id='cid.Keysight.Visa.pdb' Guid='*'>
+          <File Name='Keysight.Visa.pdb' KeyPath='yes' DiskId='1'/>
+        </Component>
+        <Component Id='cid.NationalInstruments.Visa.dll' Guid='*'>
+          <File Name='NationalInstruments.Visa.dll' KeyPath='yes' DiskId='1'
+                Assembly='.net' AssemblyManifest='NationalInstruments.Visa.dll' AssemblyApplication='NationalInstruments.Visa.dll' />
+        </Component>
+        <Component Id='cid.NationalInstruments.Visa.pdb' Guid='*'>
+          <File Name='NationalInstruments.Visa.pdb' KeyPath='yes' DiskId='1'/>
+        </Component>
+      <?endif?>	  
+
+      <!-- FRAMEWORK  -->
+      <?if $(var.TargetFramework) = "net5.0-windows" or $(var.TargetFramework) = "net8.0-windows" ?>
+      <?else ?>
+        <Component Id='cid.System.Runtime.CompilerServices.Unsafe.dll' Guid='*'>
+          <File Name='System.Runtime.CompilerServices.Unsafe.dll' KeyPath='yes' DiskId='1'
+                Assembly='.net' AssemblyManifest='System.Runtime.CompilerServices.Unsafe.dll' AssemblyApplication='System.Runtime.CompilerServices.Unsafe.dll' />
+        </Component>
+      <?endif?>
+
+      <!-- MICROSOFT SETTINGS JSON & TRACE LOG -->
+      <?if $(var.TargetFramework) = "net5.0-windows" or $(var.TargetFramework) = "net8.0-windows" ?>
+      <?else ?>
+        <Component Id='cid.Microsoft.Bcl.AsyncInterfaces.dll' Guid='*'>
+          <File Name='Microsoft.Bcl.AsyncInterfaces.dll' KeyPath='yes' DiskId='1'
+                Assembly='.net' AssemblyManifest='Microsoft.Bcl.AsyncInterfaces.dll' AssemblyApplication='Microsoft.Bcl.AsyncInterfaces.dll' />
+        </Component>
+      <?endif?>
+
+      <Component Id='cid.Microsoft.Extensions.Configuration.Abstractions.dll' Guid='*'>
+        <File Name='Microsoft.Extensions.Configuration.Abstractions.dll' KeyPath='yes' DiskId='1'
+              Assembly='.net' AssemblyManifest='Microsoft.Extensions.Configuration.Abstractions.dll' AssemblyApplication='Microsoft.Extensions.Configuration.Abstractions.dll' />
+      </Component>
+      <Component Id='cid.Microsoft.Extensions.Configuration.Binder.dll' Guid='*'>
+        <File Name='Microsoft.Extensions.Configuration.Binder.dll' KeyPath='yes' DiskId='1'
+              Assembly='.net' AssemblyManifest='Microsoft.Extensions.Configuration.Binder.dll' AssemblyApplication='Microsoft.Extensions.Configuration.Binder.dll' />
+      </Component>
+      <Component Id='cid.Microsoft.Extensions.Configuration.dll' Guid='*'>
+        <File Name='Microsoft.Extensions.Configuration.dll' KeyPath='yes' DiskId='1'
+              Assembly='.net' AssemblyManifest='Microsoft.Extensions.Configuration.dll' AssemblyApplication='Microsoft.Extensions.Configuration.dll' />
+      </Component>
+      <Component Id='cid.Microsoft.Extensions.Configuration.FileExtensions.dll' Guid='*'>
+        <File Name='Microsoft.Extensions.Configuration.FileExtensions.dll' KeyPath='yes' DiskId='1'
+              Assembly='.net' AssemblyManifest='Microsoft.Extensions.Configuration.FileExtensions.dll' AssemblyApplication='Microsoft.Extensions.Configuration.FileExtensions.dll' />
+      </Component>
+      <Component Id='cid.Microsoft.Extensions.Configuration.Json.dll' Guid='*'>
+        <File Name='Microsoft.Extensions.Configuration.Json.dll' KeyPath='yes' DiskId='1'
+              Assembly='.net' AssemblyManifest='Microsoft.Extensions.Configuration.Json.dll' AssemblyApplication='Microsoft.Extensions.Configuration.Json.dll' />
+      </Component>
+      <Component Id='cid.Microsoft.Extensions.FileProviders.Abstractions.dll' Guid='*'>
+        <File Name='Microsoft.Extensions.FileProviders.Abstractions.dll' KeyPath='yes' DiskId='1'
+              Assembly='.net' AssemblyManifest='Microsoft.Extensions.FileProviders.Abstractions.dll' AssemblyApplication='Microsoft.Extensions.FileProviders.Abstractions.dll' />
+      </Component>
+      <Component Id='cid.Microsoft.Extensions.FileProviders.Physical.dll' Guid='*'>
+        <File Name='Microsoft.Extensions.FileProviders.Physical.dll' KeyPath='yes' DiskId='1'
+              Assembly='.net' AssemblyManifest='Microsoft.Extensions.FileProviders.Physical.dll' AssemblyApplication='Microsoft.Extensions.FileProviders.Physical.dll' />
+      </Component>
+      <Component Id='cid.Microsoft.Extensions.FileSystemGlobbing.dll' Guid='*'>
+        <File Name='Microsoft.Extensions.FileSystemGlobbing.dll' KeyPath='yes' DiskId='1'
+              Assembly='.net' AssemblyManifest='Microsoft.Extensions.FileSystemGlobbing.dll' AssemblyApplication='Microsoft.Extensions.FileSystemGlobbing.dll' />
+      </Component>
+      <Component Id='cid.Microsoft.Extensions.Primitives.dll' Guid='*'>
+        <File Name='Microsoft.Extensions.Primitives.dll' KeyPath='yes' DiskId='1'
+              Assembly='.net' AssemblyManifest='Microsoft.Extensions.Primitives.dll' AssemblyApplication='Microsoft.Extensions.Primitives.dll' />
+      </Component>
+      <Component Id='cid.Newtonsoft.Json.dll' Guid='*'>
+        <File Name='Newtonsoft.Json.dll' KeyPath='yes' DiskId='1'
+              Assembly='.net' AssemblyManifest='Newtonsoft.Json.dll' AssemblyApplication='Newtonsoft.Json.dll' />
+      </Component>
+
+      <?if $(var.TargetFramework) = "net5.0-windows" or $(var.TargetFramework) = "net8.0-windows" ?>
+      <?else ?>
+        <Component Id='cid.System.Buffers.dll' Guid='*'>
+          <File Name='System.Buffers.dll' KeyPath='yes' DiskId='1'
+                Assembly='.net' AssemblyManifest='System.Buffers.dll' AssemblyApplication='System.Buffers.dll' />
+        </Component>
+        <Component Id='cid.System.Memory.dll' Guid='*'>
+          <File Name='System.Memory.dll' KeyPath='yes' DiskId='1'
+                Assembly='.net' AssemblyManifest='System.Memory.dll' AssemblyApplication='System.Memory.dll' />
+        </Component>
+        <Component Id='cid.System.Numerics.Vectors.dll' Guid='*'>
+          <File Name='System.Numerics.Vectors.dll' KeyPath='yes' DiskId='1'
+                Assembly='.net' AssemblyManifest='System.Numerics.Vectors.dll' AssemblyApplication='System.Numerics.Vectors.dll' />
+        </Component>
+        <Component Id='cid.System.Text.Encodings.Web.dll' Guid='*'>
+          <File Name='System.Text.Encodings.Web.dll' KeyPath='yes' DiskId='1'
+                Assembly='.net' AssemblyManifest='System.Text.Encodings.Web.dll' AssemblyApplication='System.Text.Encodings.Web.dll' />
+        </Component>
+        <Component Id='cid.System.Text.Json.dll' Guid='*'>
+          <File Name='System.Text.Json.dll' KeyPath='yes' DiskId='1'
+                Assembly='.net' AssemblyManifest='System.Text.Json.dll' AssemblyApplication='System.Text.Json.dll' />
+        </Component>
+        <Component Id='cid.System.Threading.Tasks.Extensions.dll' Guid='*'>
+          <File Name='System.Threading.Tasks.Extensions.dll' KeyPath='yes' DiskId='1'
+                Assembly='.net' AssemblyManifest='System.Threading.Tasks.Extensions.dll' AssemblyApplication='System.Threading.Tasks.Extensions.dll' />
+        </Component>
+        <Component Id='cid.System.ValueTuple.dll' Guid='*'>
+          <File Name='System.ValueTuple.dll' KeyPath='yes' DiskId='1'
+                Assembly='.net' AssemblyManifest='System.ValueTuple.dll' AssemblyApplication='System.ValueTuple.dll' />
+        </Component>
+      <?endif?>
+
+      <!-- MICROSOFT TRACE LOG  -->
+      <!--
+      <Component Id='cid.Microsoft.DotNet.PlatformAbstractions.dll' Guid='*'>
+        <File Name='Microsoft.DotNet.PlatformAbstractions.dll' KeyPath='yes' DiskId='1'
+              Assembly='.net' AssemblyManifest='Microsoft.DotNet.PlatformAbstractions.dll' AssemblyApplication='Microsoft.DotNet.PlatformAbstractions.dll' />
+      </Component>
+      -->
+      <Component Id='cid.Microsoft.Extensions.DependencyInjection.Abstractions.dll' Guid='*'>
+        <File Name='Microsoft.Extensions.DependencyInjection.Abstractions.dll' KeyPath='yes' DiskId='1'
+              Assembly='.net' AssemblyManifest='Microsoft.Extensions.DependencyInjection.Abstractions.dll' AssemblyApplication='Microsoft.Extensions.DependencyInjection.Abstractions.dll' />
+      </Component>
+      <Component Id='cid.Microsoft.Extensions.DependencyInjection.dll' Guid='*'>
+        <File Name='Microsoft.Extensions.DependencyInjection.dll' KeyPath='yes' DiskId='1'
+              Assembly='.net' AssemblyManifest='Microsoft.Extensions.DependencyInjection.dll' AssemblyApplication='Microsoft.Extensions.DependencyInjection.dll' />
+      </Component>
+      <Component Id='cid.Microsoft.Extensions.DependencyModel.dll' Guid='*'>
+        <File Name='Microsoft.Extensions.DependencyModel.dll' KeyPath='yes' DiskId='1'
+              Assembly='.net' AssemblyManifest='Microsoft.Extensions.DependencyModel.dll' AssemblyApplication='Microsoft.Extensions.DependencyModel.dll' />
+      </Component>
+      <Component Id='cid.Microsoft.Extensions.Logging.Abstractions.dll' Guid='*'>
+        <File Name='Microsoft.Extensions.Logging.Abstractions.dll' KeyPath='yes' DiskId='1'
+              Assembly='.net' AssemblyManifest='Microsoft.Extensions.Logging.Abstractions.dll' AssemblyApplication='Microsoft.Extensions.Logging.Abstractions.dll' />
+      </Component>
+      <Component Id='cid.Microsoft.Extensions.Logging.Configuration.dll' Guid='*'>
+        <File Name='Microsoft.Extensions.Logging.Configuration.dll' KeyPath='yes' DiskId='1'
+              Assembly='.net' AssemblyManifest='Microsoft.Extensions.Logging.Configuration.dll' AssemblyApplication='Microsoft.Extensions.Logging.Configuration.dll' />
+      </Component>
+      <Component Id='cid.Microsoft.Extensions.Logging.Console.dll' Guid='*'>
+        <File Name='Microsoft.Extensions.Logging.Console.dll' KeyPath='yes' DiskId='1'
+              Assembly='.net' AssemblyManifest='Microsoft.Extensions.Logging.Console.dll' AssemblyApplication='Microsoft.Extensions.Logging.Console.dll' />
+      </Component>
+      <Component Id='cid.Microsoft.Extensions.Logging.Debug.dll' Guid='*'>
+        <File Name='Microsoft.Extensions.Logging.Debug.dll' KeyPath='yes' DiskId='1'
+              Assembly='.net' AssemblyManifest='Microsoft.Extensions.Logging.Debug.dll' AssemblyApplication='Microsoft.Extensions.Logging.Debug.dll' />
+      </Component>
+      <Component Id='cid.Microsoft.Extensions.Logging.dll' Guid='*'>
+        <File Name='Microsoft.Extensions.Logging.dll' KeyPath='yes' DiskId='1'
+              Assembly='.net' AssemblyManifest='Microsoft.Extensions.Logging.dll' AssemblyApplication='Microsoft.Extensions.Logging.dll' />
+      </Component>
+      <Component Id='cid.Microsoft.Extensions.Logging.TraceSource.dll' Guid='*'>
+        <File Name='Microsoft.Extensions.Logging.TraceSource.dll' KeyPath='yes' DiskId='1'
+              Assembly='.net' AssemblyManifest='Microsoft.Extensions.Logging.TraceSource.dll' AssemblyApplication='Microsoft.Extensions.Logging.TraceSource.dll' />
+      </Component>
+      <Component Id='cid.Microsoft.Extensions.Options.ConfigurationExtensions.dll' Guid='*'>
+        <File Name='Microsoft.Extensions.Options.ConfigurationExtensions.dll' KeyPath='yes' DiskId='1'
+              Assembly='.net' AssemblyManifest='Microsoft.Extensions.Options.ConfigurationExtensions.dll' AssemblyApplication='Microsoft.Extensions.Options.ConfigurationExtensions.dll' />
+      </Component>
+      <Component Id='cid.Microsoft.Extensions.Options.dll' Guid='*'>
+        <File Name='Microsoft.Extensions.Options.dll' KeyPath='yes' DiskId='1'
+              Assembly='.net' AssemblyManifest='Microsoft.Extensions.Options.dll' AssemblyApplication='Microsoft.Extensions.Options.dll' />
+      </Component>
+      <?if $(var.TargetFramework) = "net5.0-windows" or $(var.TargetFramework) = "net8.0-windows" ?>
+      <?else ?>
+        <Component Id='cid.System.Diagnostics.DiagnosticSource.dll' Guid='*'>
+          <File Name='System.Diagnostics.DiagnosticSource.dll' KeyPath='yes' DiskId='1'
+                Assembly='.net' AssemblyManifest='System.Diagnostics.DiagnosticSource.dll' AssemblyApplication='System.Diagnostics.DiagnosticSource.dll' />
+        </Component>
+      <?endif?>
+    
+ 	    <!-- SERILOG  TRACE LOG-->
+      <Component Id='cid.Serilog.dll' Guid='*'>
+        <File Name='Serilog.dll' KeyPath='yes' DiskId='1'
+              Assembly='.net' AssemblyManifest='Serilog.dll' AssemblyApplication='Serilog.dll' />
+      </Component>
+      <Component Id='cid.Serilog.Enrichers.Demystify.dll' Guid='*'>
+        <File Name='Serilog.Enrichers.Demystify.dll' KeyPath='yes' DiskId='1'
+              Assembly='.net' AssemblyManifest='Serilog.Enrichers.Demystify.dll' AssemblyApplication='Serilog.Enrichers.Demystify.dll' />
+      </Component>
+      <Component Id='cid.Serilog.Enrichers.Demystify.pdb' Guid='*'>
+        <File Name='Serilog.Enrichers.Demystify.pdb' KeyPath='yes' DiskId='1'/>
+      </Component>
+      <Component Id='cid.Serilog.Extensions.Logging.dll' Guid='*'>
+        <File Name='Serilog.Extensions.Logging.dll' KeyPath='yes' DiskId='1'
+              Assembly='.net' AssemblyManifest='Serilog.Extensions.Logging.dll' AssemblyApplication='Serilog.Extensions.Logging.dll' />
+      </Component>
+      <Component Id='cid.Serilog.Settings.Configuration.dll' Guid='*'>
+        <File Name='Serilog.Settings.Configuration.dll' KeyPath='yes' DiskId='1'
+              Assembly='.net' AssemblyManifest='Serilog.Settings.Configuration.dll' AssemblyApplication='Serilog.Settings.Configuration.dll' />
+      </Component>
+      <Component Id='cid.Serilog.Sinks.Async.dll' Guid='*'>
+        <File Name='Serilog.Sinks.Async.dll' KeyPath='yes' DiskId='1'
+              Assembly='.net' AssemblyManifest='Serilog.Sinks.Async.dll' AssemblyApplication='Serilog.Sinks.Async.dll' />
+      </Component>
+      <Component Id='cid.Serilog.Sinks.Console.dll' Guid='*'>
+        <File Name='Serilog.Sinks.Console.dll' KeyPath='yes' DiskId='1'
+              Assembly='.net' AssemblyManifest='Serilog.Sinks.Console.dll' AssemblyApplication='Serilog.Sinks.Console.dll' />
+      </Component>
+      <Component Id='cid.Serilog.Sinks.Debug.dll' Guid='*'>
+        <File Name='Serilog.Sinks.Debug.dll' KeyPath='yes' DiskId='1'
+              Assembly='.net' AssemblyManifest='Serilog.Sinks.Debug.dll' AssemblyApplication='Serilog.Sinks.Debug.dll' />
+      </Component>
+      <Component Id='cid.Serilog.Sinks.File.dll' Guid='*'>
+        <File Name='Serilog.Sinks.File.dll' KeyPath='yes' DiskId='1'
+              Assembly='.net' AssemblyManifest='Serilog.Sinks.File.dll' AssemblyApplication='Serilog.Sinks.File.dll' />
+      </Component>
+      <Component Id='cid.Serilog.Sinks.Trace.dll' Guid='*'>
+        <File Name='Serilog.Sinks.Trace.dll' KeyPath='yes' DiskId='1'
+              Assembly='.net' AssemblyManifest='Serilog.Sinks.Trace.dll' AssemblyApplication='Serilog.Sinks.Trace.dll' />
+      </Component>
+      <Component Id='cid.Serilog.Sinks.Trace.pdb' Guid='*'>
+        <File Name='Serilog.Sinks.Trace.pdb' KeyPath='yes' DiskId='1'/>
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

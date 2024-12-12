@@ -1,0 +1,543 @@
+<html>
+<head>
+<meta name="generator" content="TreePad, http://www.treepad.com">
+<title>TTM Console Guide</title>
+</head>
+<!-- HTML created by TreePad (http://www.treepad.com) -->
+<body>
+<pre>
+</pre>
+
+<DL>
+
+<DT><a name="A840DB17CF75552EF91A248962D555810EA14D15"></a><h3>TTM Console Guide</h3></DT>
+
+<DD>
+
+<div ALIGN="CENTER"><FONT FACE="trebuchet ms" SIZE=3>Thermal Transient Meter</FONT></div>
+<div ALIGN="CENTER"><FONT FACE="trebuchet ms" SIZE=3>TTM Console User's Guide</FONT></div>
+<div><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">Table of Contents</FONT></div>
+<div><a href="#DEAE2F14DB124103BACC49F88B2C1AA8A12CD188"><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">Description</FONT></A></div>
+<div><a href="#4FCE2A5D805D497B8485E4B0F2F9ADD9AACD03BA"><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">Terminology</FONT></A></div>
+<div><a href="#2B581BEAF9771F6256DFA6868BBEA5979ED65AC8"><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">Requirements</FONT></A></div>
+<div><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </FONT><a href="#150B230B07131BF26096EE847B5456281B5DC76C"><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">Microsoft .NET Framework</FONT></A></div>
+<div><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </FONT><a href="#52F1B22C9E19A014BA8355F1A8E98274228FCF42"><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">NI-VISA Runtime</FONT></A></div>
+<div><a href="#853004BEA30FFE196B886455EB08F203A3F7A410"><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">Preparations</FONT></A></div>
+<div><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </FONT><a href="#6656CBEB5E030CDB83432241D8756A30453E0F23"><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">Wiring the Device Under Test</FONT></A></div>
+<div><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </FONT><a href="#3DD4F8CE4DCAB7C9212155984B91699EF07B8BE4"><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">Connecting the Instrument</FONT></A></div>
+<div><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </FONT><a href="#D5B09FE33B09B71D6A376EF817CF2A6C0F93C844"><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">Launching the ISR TTM Console</FONT></A></div>
+<div><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </FONT><a href="#64FBA99F2375800EE6D4404369750053DE0E18B5"><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">Connecting to the instrument</FONT></A></div>
+<div><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </FONT><a href="#4DE0BE2C5A206089E06808C1494635CD8B611066"><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">Selecting the instrument Resource Name</FONT></A></div>
+<div><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </FONT><a href="#34540E32B5611A6B15D3620EFF664B743ED12FBE"><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">A Note on Connecting</FONT></A></div>
+<div><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </FONT><a href="#E8BE66B4774948225DFA21C136E795109477E600"><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">Clearing the instrument State</FONT></A></div>
+<div><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </FONT><a href="#776005067687CDCD0F9A726DDD3B35D0949348EA"><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">Loading the Firmware</FONT></A></div>
+<div><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </FONT><a href="#4262E86852A8239960BABA052642576B9E250FF9"><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">Notes</FONT></A></div>
+<div><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </FONT><a href="#6A8945E40ED8310DF47F28871C9347F0E4F8BE23"><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">Updating the Firmware</FONT></A></div>
+<div><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </FONT><a href="#E9D1DD6FC70F84B6642F4B1D4CA67D1D93CA1931"><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">Unload Existing Firmware</FONT></A></div>
+<div><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </FONT><a href="#A3F35BAA3957F6F429E977CEF4AE7E6C636E0BB0"><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">Load New Firmware</FONT></A></div>
+<div><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </FONT><a href="#6425F608520C1641A24C51AD134432398E71A9E6"><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">Save to Non Volatile Memory</FONT></A></div>
+<div><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </FONT><a href="#06DFD47FE4CAF007F13799481222314CCC323576"><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">Testing Persistence of Firmware</FONT></A></div>
+<div><a href="#E9D33ACDED3EDA88D8403B9C26909ED42F956F99"><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">Testing</FONT></A></div>
+<div><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </FONT><a href="#DE7B69F98C937975E0F3FCE413966C5BB189A1C5"><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">Configuring a TTM Test</FONT></A></div>
+<div><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </FONT><a href="#0E66F9D77239D130AF90100CF4E805E12AB68987"><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">Measuring Initial and Final Resistances and Thermal Transients</FONT></A></div>
+<div><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </FONT><a href="#21A5F6602B103D1A64B2592519AA898BF8D8C97D"><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">Automatically Measuring Initial and Final Resistances and Thermal Transients</FONT></A></div>
+<div><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </FONT><a href="#56EB56B04C3F09EC067248BD1682ACE686187A7C"><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">Reading and Saving the Thermal Transient Trace</FONT></A></div>
+<div><a href="#F70110B4343B0987A9CAEA515F1782152F039609"><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">Listing and Saving Part Measurements</FONT></A></div>
+<div><a href="#40EBDDEF0B69BF9D11699E0092DF589FA716F146"><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">Alerts and Messages</FONT></A></div>
+<div><a href="#F443EF91DC11D0727A20D886211D8E8FAEDDEF0D"><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">Program Log</FONT></A></div>
+<div><a href="#CA482FF97D19010B8022CE2C8082ADEDBF9C015A"><FONT FACE="trebuchet ms" SIZE=3 COLOR="#0000FF">Attributions</FONT></A></div>
+<FONT FACE="trebuchet ms" SIZE=3></FONT>
+
+<DL>
+
+<DT><a name="DEAE2F14DB124103BACC49F88B2C1AA8A12CD188"></a><h3>Description</h3></DT>
+
+<DD>
+
+<div><FONT FACE="trebuchet ms" SIZE=3>The ISR Thermal Transient Meter (TTM) Console measures Thermal Transients. The </FONT><FONT FACE="trebuchet ms" SIZE=3>transients are measured using the ISR TTM Driver. This instrument is based on the </FONT><FONT FACE="trebuchet ms" SIZE=3>Keithley Instruments 2600A series instruments and uses scripts embedded in the </FONT><FONT FACE="trebuchet ms" SIZE=3>instrument to perform the measurements. Thermal Transients can be also measured </FONT><FONT FACE="trebuchet ms" SIZE=3>using the ISR TTM Instrument as a stand-alone device. </FONT></div>
+<FONT FACE="trebuchet ms" SIZE=3></FONT>
+
+  </DD>
+
+</DL>
+
+<DL>
+
+<DT><a name="4FCE2A5D805D497B8485E4B0F2F9ADD9AACD03BA"></a><h3>Terminology</h3></DT>
+
+<DD>
+
+<div><u><FONT FACE="trebuchet ms" SIZE=3>TTM Firmware and Scripts</FONT></u></div>
+<div><FONT FACE="trebuchet ms" SIZE=3>The ISR Thermal Transient Meter is a implemented by customizing an off-the-shelf </FONT><FONT FACE="trebuchet ms" SIZE=3>Keithley Driver. This is done by embedding custom firmware--the TTM </FONT><FONT FACE="trebuchet ms" SIZE=3>Firmware--in this Driver.&nbsp; The TTM firmware consists of scripts written in the </FONT><FONT FACE="trebuchet ms" SIZE=3>programming language of the Driver. </FONT></div>
+<div>&nbsp;</div>
+<FONT FACE="trebuchet ms" SIZE=3></FONT><div><u><FONT FACE="trebuchet ms" SIZE=3>Unloading (Deleting removing) and Uploading (Installing) Firmware</FONT></u></div>
+<div><FONT FACE="trebuchet ms" SIZE=3>The ISR Thermal Transient Meter comes already installed with the TTM Firmware. The </FONT><FONT FACE="trebuchet ms" SIZE=3>TTM Console is capable of updating the embedded TTM firmware. This is done by </FONT><FONT FACE="trebuchet ms" SIZE=3>removing (unloading) the TTM firmware embedded in the instrument and uploading </FONT><FONT FACE="trebuchet ms" SIZE=3>(installing) new TTM Firmware. </FONT></div>
+<div>&nbsp;</div>
+<FONT FACE="trebuchet ms" SIZE=3></FONT><div><u><FONT FACE="trebuchet ms" SIZE=3>Saving and Volatile and Non-Volatile Memory</FONT></u></div>
+<div><FONT FACE="trebuchet ms" SIZE=3>When updated, the TTM Firmware exists in the instrument volatile memory. Scripts </FONT><FONT FACE="trebuchet ms" SIZE=3>residing in volatile memory are erased when turning off the Driver. The TTM </FONT><FONT FACE="trebuchet ms" SIZE=3>Console is capable of saving the TTM Firmware in non-volatile memory. Scripts saved in </FONT><FONT FACE="trebuchet ms" SIZE=3>non-volatile memory persist in the Driver.</FONT></div>
+<div>&nbsp;</div>
+<FONT FACE="trebuchet ms" SIZE=3></FONT><div><u><FONT FACE="trebuchet ms" SIZE=3>Startup (boot) Firmware</FONT></u></div>
+<div><FONT FACE="trebuchet ms" SIZE=3>When starting the TTM instrument, the instrument panel displays the Thermal </FONT><FONT FACE="trebuchet ms" SIZE=3>Transient Meter 'welcome message. In addition, the TTM Firmware is initiated to </FONT><FONT FACE="trebuchet ms" SIZE=3>prepare the instrument for measurement. This is done by the TTM Startup or bootstrap </FONT><FONT FACE="trebuchet ms" SIZE=3>script. The startup script is saved in non-volatile memory when saving the TTM </FONT><FONT FACE="trebuchet ms" SIZE=3>Firmware to non-volatile memory.<br>
+</FONT></div>
+<FONT FACE="trebuchet ms" SIZE=3></FONT>
+
+  </DD>
+
+</DL>
+
+<DL>
+
+<DT><a name="2B581BEAF9771F6256DFA6868BBEA5979ED65AC8"></a><h3>Requirements</h3></DT>
+
+<DD>
+
+<div><FONT FACE="trebuchet ms" SIZE=3>The latest information about requirement can be found in the program read me file </FONT><FONT FACE="trebuchet ms" SIZE=3>which can be downloaded from the ISR FTP site:</FONT></div>
+<div>&nbsp;</div>
+<FONT FACE="trebuchet ms" SIZE=3></FONT><div><FONT FACE="trebuchet ms" SIZE=3>http://bit.ly/aJgNDP</FONT></div>
+<FONT FACE="trebuchet ms" SIZE=3></FONT>
+
+<DL>
+
+<DT><a name="150B230B07131BF26096EE847B5456281B5DC76C"></a><h3>Microsoft .NET Framework</h3></DT>
+
+<DD>
+
+<div><FONT FACE="trebuchet ms" SIZE=3>The TTM console requires the installation of Microsoft .NET Framework 4.0. This is a </FONT><FONT FACE="trebuchet ms" SIZE=3>one-time installation. </FONT></div>
+<div>&nbsp;</div>
+<FONT FACE="trebuchet ms" SIZE=3></FONT><div><FONT FACE="trebuchet ms" SIZE=3>The installation program can be downloaded from the following location:</FONT></div>
+<div>&nbsp;</div>
+<FONT FACE="trebuchet ms" SIZE=3></FONT><div><FONT FACE="trebuchet ms" SIZE=3>http://www.microsoft.com/en-us/download/details.aspx?id=17851<br>
+</FONT><FONT FACE="trebuchet ms" SIZE=3><br>
+</FONT><FONT FACE="trebuchet ms" SIZE=3>To download, enter the link in the address bar of your browser.</FONT></div>
+
+
+  </DD>
+
+</DL>
+
+<DL>
+
+<DT><a name="52F1B22C9E19A014BA8355F1A8E98274228FCF42"></a><h3>NI-VISA Runtime</h3></DT>
+
+<DD>
+
+<div><FONT FACE="trebuchet ms" SIZE=3>The TTM console requires the installation of VISA runtime support from National </FONT><FONT FACE="trebuchet ms" SIZE=3>Instruments.&nbsp; This is a one-time installation. The VISA run time can be downloaded </FONT><FONT FACE="trebuchet ms" SIZE=3>from the National Instrument FTP site:<br>
+</FONT></div>
+<div><FONT FACE="trebuchet ms" SIZE=3>http://ftp.ni.com/support/softlib/visa/VISA%20Run-Time%20Engine</FONT></div>
+<div><FONT FACE="trebuchet ms" SIZE=3><br>
+</FONT><FONT FACE="trebuchet ms" SIZE=3>To download, enter the above link in the address bar of your browser.</FONT></div>
+
+
+  </DD>
+
+</DL>
+
+  </DD>
+
+</DL>
+
+<DL>
+
+<DT><a name="853004BEA30FFE196B886455EB08F203A3F7A410"></a><h3>Preparations</h3></DT>
+
+<DD>
+
+
+
+<DL>
+
+<DT><a name="6656CBEB5E030CDB83432241D8756A30453E0F23"></a><h3>Wiring the Device Under Test</h3></DT>
+
+<DD>
+
+<div><FONT FACE="trebuchet ms" SIZE=3>The device under test must be connected to the TTM Instrument using four-wires:</FONT></div>
+<div><FONT FACE="trebuchet ms" SIZE=3><IMG BORDER="0" SRC="images/E0858D6A252214FCA9C71A26247867F77B3F3C44.PNG" WIDTH="280" HEIGHT="258"/></FONT></div>
+<FONT FACE="trebuchet ms" SIZE=3></FONT>
+
+  </DD>
+
+</DL>
+
+<DL>
+
+<DT><a name="3DD4F8CE4DCAB7C9212155984B91699EF07B8BE4"></a><h3>Connecting the Instrument</h3></DT>
+
+<DD>
+
+<div><FONT FACE="trebuchet ms" SIZE=3>The TTM Console connects to the instrument using with USB, Ethernet or GPIB </FONT><FONT FACE="trebuchet ms" SIZE=3>(IEEE-488).</FONT></div>
+<div>&nbsp;</div>
+<FONT FACE="trebuchet ms" SIZE=3></FONT><div><FONT FACE="trebuchet ms" SIZE=3>The instrument address on the GPIB bus is displayed when the instrument is started.&nbsp; </FONT><FONT FACE="trebuchet ms" SIZE=3>Otherwise, the GPIB must be enabled from the instrument front panel as described in </FONT><FONT FACE="trebuchet ms" SIZE=3>the Interface Configuration chapter of the Getting Started section of the Series 2600 </FONT><FONT FACE="trebuchet ms" SIZE=3>Reference Manual. </FONT></div>
+
+
+  </DD>
+
+</DL>
+
+<DL>
+
+<DT><a name="D5B09FE33B09B71D6A376EF817CF2A6C0F93C844"></a><h3>Launching the ISR TTM Console</h3></DT>
+
+<DD>
+
+<div><FONT FACE="trebuchet ms" SIZE=3>Start the TTM Console from Start, Programs, ISR, isr.TTM.2014, Programs, Console </FONT></div>
+
+
+  </DD>
+
+</DL>
+
+<DL>
+
+<DT><a name="64FBA99F2375800EE6D4404369750053DE0E18B5"></a><h3>Connecting to the instrument</h3></DT>
+
+<DD>
+
+<div><FONT FACE="trebuchet ms" SIZE=2>Connect the program to the instrument by clicking the </FONT><i><FONT FACE="trebuchet ms" SIZE=2>connect</FONT></i><FONT FACE="trebuchet ms" SIZE=2> (</FONT><FONT FACE="trebuchet ms" SIZE=2><IMG BORDER="0" SRC="images/19221B6DFE1C51ED94C19701061E63E636D8A72C.jpg" WIDTH="16" HEIGHT="16"/></FONT><FONT FACE="trebuchet ms" SIZE=2>) button from the </FONT><i><FONT FACE="trebuchet ms" SIZE=2>FIND, SELECT AND CONNECT</FONT></i><FONT FACE="trebuchet ms" SIZE=2> selector. </FONT><FONT FACE="trebuchet ms" SIZE=2>This assumes the instrument resource name is correctly entered (see </FONT><a href="#4DE0BE2C5A206089E06808C1494635CD8B611066"><FONT FACE="trebuchet ms" SIZE=2>Selecting the instrument Resource Name</FONT></A><FONT FACE="trebuchet ms" SIZE=2> below).&nbsp; The </FONT><FONT FACE="trebuchet ms" SIZE=2>selector displays the default resource name or the name last used. The resource name defaults to board 0 and instrument at </FONT><FONT FACE="trebuchet ms" SIZE=2>address 26, e.g., GPIB0::26::INSTR.&nbsp; Once connected, the program enables measurement if firmware is already loaded (see </FONT><a href="#776005067687CDCD0F9A726DDD3B35D0949348EA"><FONT FACE="trebuchet ms" SIZE=2>Loading the Firmware</FONT></A><FONT FACE="trebuchet ms" SIZE=2> below). </FONT></div>
+<FONT FACE="trebuchet ms" SIZE=2></FONT>
+
+<DL>
+
+<DT><a name="4DE0BE2C5A206089E06808C1494635CD8B611066"></a><h3>Selecting the instrument Resource Name</h3></DT>
+
+<DD>
+
+<ul><li><FONT FACE="trebuchet ms" SIZE=2>Click the </FONT><i><FONT FACE="trebuchet ms" SIZE=2>search</FONT></i><FONT FACE="trebuchet ms" SIZE=2> (</FONT><FONT FACE="trebuchet ms" SIZE=2><IMG BORDER="0" SRC="images/33117E4ECF87EC555A90AD1203684CE4284D74EB.jpg" WIDTH="16" HEIGHT="16"/></FONT><FONT FACE="trebuchet ms" SIZE=2>) button from the </FONT><i><FONT FACE="trebuchet ms" SIZE=2>FIND, SELECT AND CONNECT</FONT></i><FONT FACE="trebuchet ms" SIZE=2> selector in the </FONT><i><FONT FACE="trebuchet ms" SIZE=2>CONNECT</FONT></i><FONT FACE="trebuchet ms" SIZE=2> tab.</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=2>The selector will display the list of available VISA resources connected to the computer.</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=2>Select the resource name of the Keithley 2600A instrument, e.g., GPIB0::26::INSTR. </FONT></li>
+</ul>
+<FONT FACE="trebuchet ms" SIZE=2></FONT>
+
+  </DD>
+
+</DL>
+
+<DL>
+
+<DT><a name="34540E32B5611A6B15D3620EFF664B743ED12FBE"></a><h3>A Note on Connecting</h3></DT>
+
+<DD>
+
+<div><FONT FACE="trebuchet ms" SIZE=2>At times, especially when using a USB GPIB adaptor, VISA loses track of the available resources. In this case, the </FONT><i><FONT FACE="trebuchet ms" SIZE=2>FIND, </FONT></i><i><FONT FACE="trebuchet ms" SIZE=2>SELECT AND CONNECT</FONT></i><FONT FACE="trebuchet ms" SIZE=2> selector will show no resources in the resource list. A Workaround that most often resolves this is </FONT><FONT FACE="trebuchet ms" SIZE=2>disconnecting and then reconnecting the USB-GPIB adapter.</FONT></div>
+<FONT FACE="trebuchet ms" SIZE=2></FONT>
+
+  </DD>
+
+</DL>
+
+<DL>
+
+<DT><a name="E8BE66B4774948225DFA21C136E795109477E600"></a><h3>Clearing the instrument State</h3></DT>
+
+<DD>
+
+<ul><li><FONT FACE="trebuchet ms" SIZE=2>The instrument state is reset to its initial known state when first connected. </FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=2>The instrument can be reset to its know state by selecting the </FONT><i><FONT FACE="trebuchet ms" SIZE=2>clear </FONT></i><FONT FACE="trebuchet ms" SIZE=2>button (</FONT><FONT FACE="trebuchet ms" SIZE=2><IMG BORDER="0" SRC="images/7CF0788D23466967AB36581D11243F70F6F039EE.jpg" WIDTH="16" HEIGHT="16"/></FONT><FONT FACE="trebuchet ms" SIZE=2>) from the </FONT><i><FONT FACE="trebuchet ms" SIZE=2>FIND, SELECT AND CONNECT</FONT></i><FONT FACE="trebuchet ms" SIZE=2> </FONT><FONT FACE="trebuchet ms" SIZE=2>selector.</FONT></li>
+</ul>
+<FONT FACE="trebuchet ms" SIZE=2></FONT>
+
+  </DD>
+
+</DL>
+
+  </DD>
+
+</DL>
+
+<DL>
+
+<DT><a name="776005067687CDCD0F9A726DDD3B35D0949348EA"></a><h3>Loading the Firmware</h3></DT>
+
+<DD>
+
+
+
+<DL>
+
+<DT><a name="4262E86852A8239960BABA052642576B9E250FF9"></a><h3>Notes</h3></DT>
+
+<DD>
+
+<ul><li><FONT FACE="trebuchet ms" SIZE=3>When connecting, the program queries the instrument for the current firmware </FONT><FONT FACE="trebuchet ms" SIZE=3>revision and displays the firmware status under the </FONT><i><FONT FACE="trebuchet ms" SIZE=3>FIRMWARE</FONT></i><FONT FACE="trebuchet ms" SIZE=3> tab.</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>The TTM firmware can be unloaded (removed from the instrument), loaded, and </FONT><FONT FACE="trebuchet ms" SIZE=3>saved to permanent memory from the </FONT><i><FONT FACE="trebuchet ms" SIZE=3>FIRMWARE</FONT></i><FONT FACE="trebuchet ms" SIZE=3> tab.</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>A good practice when updating firmware is to disconnect and toggle the instrument </FONT><FONT FACE="trebuchet ms" SIZE=3>power after deleting scripts.</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Firmware resides in volatile memory after it is loaded using the </FONT><i><FONT FACE="trebuchet ms" SIZE=3>LOAD FIRMWARE</FONT></i><FONT FACE="trebuchet ms" SIZE=3> </FONT><FONT FACE="trebuchet ms" SIZE=3>button. Firmware residing in volatile memory is cleared when the instrument is </FONT><FONT FACE="trebuchet ms" SIZE=3>turned off. </FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>For using the instrument in its stand alone mode, save the firmware into </FONT><FONT FACE="trebuchet ms" SIZE=3>permanent (non-volatile) memory after loading.</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Once the firmware is loaded, the program enables the measurement controls on </FONT><FONT FACE="trebuchet ms" SIZE=3>the </FONT><i><FONT FACE="trebuchet ms" SIZE=3>Measurement</FONT></i><FONT FACE="trebuchet ms" SIZE=3> Tab.</FONT></li>
+</ul>
+<FONT FACE="trebuchet ms" SIZE=3></FONT>
+
+  </DD>
+
+</DL>
+
+<DL>
+
+<DT><a name="6A8945E40ED8310DF47F28871C9347F0E4F8BE23"></a><h3>Updating the Firmware</h3></DT>
+
+<DD>
+
+
+
+<DL>
+
+<DT><a name="E9D1DD6FC70F84B6642F4B1D4CA67D1D93CA1931"></a><h3>Unload Existing Firmware</h3></DT>
+
+<DD>
+
+<ul><li><FONT FACE="trebuchet ms" SIZE=3>Connect to the instrument from the CONNECT tab;</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Select the </FONT><i><FONT FACE="trebuchet ms" SIZE=3>FIRMWARE</FONT></i><FONT FACE="trebuchet ms" SIZE=3> tab;</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Click the </FONT><i><FONT FACE="trebuchet ms" SIZE=3>UNLOAD FIRMWARE</FONT></i><FONT FACE="trebuchet ms" SIZE=3> button. This unloads the firmware from the </FONT><FONT FACE="trebuchet ms" SIZE=3>instrument;</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Close the TTM Console program;</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Toggle the instrument power.</FONT></li>
+</ul>
+
+
+  </DD>
+
+</DL>
+
+<DL>
+
+<DT><a name="A3F35BAA3957F6F429E977CEF4AE7E6C636E0BB0"></a><h3>Load New Firmware</h3></DT>
+
+<DD>
+
+<ul><li><FONT FACE="trebuchet ms" SIZE=3>Start the TTM Console program;</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Connect to the instrument from the CONNECT tab;</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Select the </FONT><i><FONT FACE="trebuchet ms" SIZE=3>FIRMWARE</FONT></i><FONT FACE="trebuchet ms" SIZE=3> tab;</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Click the </FONT><i><FONT FACE="trebuchet ms" SIZE=3>LOAD FIRMWARE</FONT></i><FONT FACE="trebuchet ms" SIZE=3> button;</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Allow time for the firmware to load. </FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Once loaded, the current version of the firmware will be displayed in the </FONT><i><FONT FACE="trebuchet ms" SIZE=3>INSTALLED VERSION </FONT></i><FONT FACE="trebuchet ms" SIZE=3>text box. This version should match the version listed in the </FONT><i><FONT FACE="trebuchet ms" SIZE=3>RELEASED VERSION</FONT></i><FONT FACE="trebuchet ms" SIZE=3> text box. At this point, the firmware resides in volatile memory </FONT><FONT FACE="trebuchet ms" SIZE=3>and will be cleared when the instrument is turned off;</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Also, the </FONT><i><FONT FACE="trebuchet ms" SIZE=3>SAVE FIRMWARE</FONT></i><FONT FACE="trebuchet ms" SIZE=3> button will be enabled.</FONT></li>
+</ul>
+
+
+  </DD>
+
+</DL>
+
+<DL>
+
+<DT><a name="6425F608520C1641A24C51AD134432398E71A9E6"></a><h3>Save to Non Volatile Memory</h3></DT>
+
+<DD>
+
+<ul><li><FONT FACE="trebuchet ms" SIZE=3>Click </FONT><i><FONT FACE="trebuchet ms" SIZE=3>SAVE FIRMWARE</FONT></i><FONT FACE="trebuchet ms" SIZE=3>. This will save the firmware in non-volatile memory. </FONT><FONT FACE="trebuchet ms" SIZE=3>Firmware residing in non-volatile memory persists after the instrument power is </FONT><FONT FACE="trebuchet ms" SIZE=3>toggled;</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Allow time for the firmware to be saved into non-volatile memory;</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>You can now proceed with measurements.</FONT></li>
+</ul>
+
+
+  </DD>
+
+</DL>
+
+<DL>
+
+<DT><a name="06DFD47FE4CAF007F13799481222314CCC323576"></a><h3>Testing Persistence of Firmware</h3></DT>
+
+<DD>
+
+<div><FONT FACE="trebuchet ms" SIZE=3>Testing Persistence of Firmware</FONT></div>
+<ul><li><FONT FACE="trebuchet ms" SIZE=3>Disconnect the instrument by clicking the </FONT><i><FONT FACE="trebuchet ms" SIZE=3>connect</FONT></i><FONT FACE="trebuchet ms" SIZE=3> (</FONT><FONT FACE="trebuchet ms" SIZE=3><IMG BORDER="0" SRC="images/19221B6DFE1C51ED94C19701061E63E636D8A72C.jpg" WIDTH="16" HEIGHT="16"/></FONT><FONT FACE="trebuchet ms" SIZE=3>) button from the </FONT><i><FONT FACE="trebuchet ms" SIZE=3>FIND, </FONT></i><i><FONT FACE="trebuchet ms" SIZE=3>SELECT AND CONNECT</FONT></i><FONT FACE="trebuchet ms" SIZE=3> selector of the </FONT><i><FONT FACE="trebuchet ms" SIZE=3>CONNECT</FONT></i><FONT FACE="trebuchet ms" SIZE=3> tab. </FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Close the TTM Console program;</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Toggle the instrument power;</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Start the TTM Console program;</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Connect the instrument from the CONNECT tab;;</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Select the </FONT><i><FONT FACE="trebuchet ms" SIZE=3>FIRMWARE</FONT></i><FONT FACE="trebuchet ms" SIZE=3> tab;</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Verify that the installed version matches the released version.</FONT></li>
+</ul>
+
+
+  </DD>
+
+</DL>
+
+  </DD>
+
+</DL>
+
+  </DD>
+
+</DL>
+
+  </DD>
+
+</DL>
+
+<DL>
+
+<DT><a name="E9D33ACDED3EDA88D8403B9C26909ED42F956F99"></a><h3>Testing</h3></DT>
+
+<DD>
+
+
+
+<DL>
+
+<DT><a name="DE7B69F98C937975E0F3FCE413966C5BB189A1C5"></a><h3>Configuring a TTM Test</h3></DT>
+
+<DD>
+
+<ul><li><FONT FACE="trebuchet ms" SIZE=3>Select the </FONT><i><FONT FACE="trebuchet ms" SIZE=3>CONFIGURE</FONT></i><FONT FACE="trebuchet ms" SIZE=3> tab.</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Enter the operator and lot identification numbers in the relevant boxes;</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Enter the part number in the </FONT><i><FONT FACE="trebuchet ms" SIZE=3>PART NUMBER</FONT></i><FONT FACE="trebuchet ms" SIZE=3> box;</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Select the time between the thermal transient test and final resistance in the </FONT><i><FONT FACE="trebuchet ms" SIZE=3>POST </FONT></i><i><FONT FACE="trebuchet ms" SIZE=3>TTM DELAY</FONT></i><FONT FACE="trebuchet ms" SIZE=3> box;</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Enter the current level and voltage limit for the cold (low-current) resistance </FONT><FONT FACE="trebuchet ms" SIZE=3>measurements;</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Enter the current level and the maximum expected voltage change for the thermal </FONT><FONT FACE="trebuchet ms" SIZE=3>transient measurement;</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>C heck or uncheck the option to </FONT><i><FONT FACE="trebuchet ms" SIZE=3>CHECK CONTACTS BEFORE INITIAL RESISTANCE;</FONT></i></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Click </FONT><i><FONT FACE="trebuchet ms" SIZE=3>APPLY</FONT></i><FONT FACE="trebuchet ms" SIZE=3> to accept the new settings and send them to the instrument;</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>To ignore changes made in the </FONT><i><FONT FACE="trebuchet ms" SIZE=3>CONFIGURE</FONT></i><FONT FACE="trebuchet ms" SIZE=3> panel, click </FONT><i><FONT FACE="trebuchet ms" SIZE=3>RESTORE</FONT></i><FONT FACE="trebuchet ms" SIZE=3>. This cancels </FONT><FONT FACE="trebuchet ms" SIZE=3>changes made and displays the current part settings;</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Once applied, the new settings become the default settings, which will be displayed </FONT><FONT FACE="trebuchet ms" SIZE=3>the next time the program is launched.</FONT></li>
+<div><FONT FACE="trebuchet ms" SIZE=3></FONT></div>
+</ul>
+<div><u><FONT FACE="trebuchet ms" SIZE=3>Important Note about Noise and Current Range</FONT></u></div>
+<div><FONT FACE="trebuchet ms" SIZE=3>Thermal transient noise level depends on the source current range. The current range </FONT><FONT FACE="trebuchet ms" SIZE=3>setting change based on the decimal point. Thus, setting the current range to 1.0A </FONT><FONT FACE="trebuchet ms" SIZE=3>yields a significantly larger noise level than setting the current range to 0.999A.</FONT></div>
+
+
+  </DD>
+
+</DL>
+
+<DL>
+
+<DT><a name="0E66F9D77239D130AF90100CF4E805E12AB68987"></a><h3>Measuring Initial and Final Resistances and Thermal Transients</h3></DT>
+
+<DD>
+
+<ul><li><FONT FACE="trebuchet ms" SIZE=3>Select the </FONT><i><FONT FACE="trebuchet ms" SIZE=3>MEASURE</FONT></i><FONT FACE="trebuchet ms" SIZE=3> tab;</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Connect a device to the instrument;</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Set the part serial number in the </FONT><i><FONT FACE="trebuchet ms" SIZE=3>SERIAL NUMBER</FONT></i><FONT FACE="trebuchet ms" SIZE=3> box;</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Click </FONT><i><FONT FACE="trebuchet ms" SIZE=3>CLEAR MEASUREMENTS</FONT></i><FONT FACE="trebuchet ms" SIZE=3> to clear data of the previous part;</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Click </FONT><i><FONT FACE="trebuchet ms" SIZE=3>INITIAL RESISTANCE</FONT></i><FONT FACE="trebuchet ms" SIZE=3> to measure initial resistance;</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Notice that the measurement is displayed on the instrument panel;</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>If contact check failed, the </FONT><i><FONT FACE="trebuchet ms" SIZE=3>CONTACT CHECK FAILED</FONT></i><FONT FACE="trebuchet ms" SIZE=3> message is displayed;</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>The measurement is also displayed in the top panel of the program window under </FONT><i><FONT FACE="trebuchet ms" SIZE=3>INITIAL R;</FONT></i></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Click </FONT><i><FONT FACE="trebuchet ms" SIZE=3>THERMAL TRANSIENT</FONT></i><FONT FACE="trebuchet ms" SIZE=3> to measure the thermal transient (</FONT><i><FONT FACE="trebuchet ms" SIZE=3>TRANSIENT V</FONT></i><FONT FACE="trebuchet ms" SIZE=3>) and </FONT><FONT FACE="trebuchet ms" SIZE=3>thermal resistance&nbsp; (</FONT><i><FONT FACE="trebuchet ms" SIZE=3>TRANSIENT R</FONT></i><FONT FACE="trebuchet ms" SIZE=3>) ;</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Click </FONT><i><FONT FACE="trebuchet ms" SIZE=3>FINAL RESISTANCE</FONT></i><FONT FACE="trebuchet ms" SIZE=3> to measure final resistance (</FONT><i><FONT FACE="trebuchet ms" SIZE=3>FINAL R;</FONT></i><FONT FACE="trebuchet ms" SIZE=3>)</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Success is designated by a green emoticon;</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>A failed measurement is designated on the instrument panel by a blinking prefix. </FONT><FONT FACE="trebuchet ms" SIZE=3>For example, if Initial Resistance failed, the R preceding the measured value will </FONT><FONT FACE="trebuchet ms" SIZE=3>blink with changing intensity.</FONT></li>
+</ul>
+
+
+  </DD>
+
+</DL>
+
+<DL>
+
+<DT><a name="21A5F6602B103D1A64B2592519AA898BF8D8C97D"></a><h3>Automatically Measuring Initial and Final Resistances and Thermal Transients</h3></DT>
+
+<DD>
+
+<ul><li><FONT FACE="trebuchet ms" SIZE=3>Select the </FONT><i><FONT FACE="trebuchet ms" SIZE=3>MEASURE</FONT></i><FONT FACE="trebuchet ms" SIZE=3> tab;</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Connect a device to the instrument;</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Set the part serial number in the </FONT><i><FONT FACE="trebuchet ms" SIZE=3>SERIAL NUMBER</FONT></i><FONT FACE="trebuchet ms" SIZE=3> box;</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Click </FONT><i><FONT FACE="trebuchet ms" SIZE=3>CLEAR MEASUREMENTS</FONT></i><FONT FACE="trebuchet ms" SIZE=3> to clear data of the previous part;</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Check </FONT><i><FONT FACE="trebuchet ms" SIZE=3>AUTOMATICALLY ADD PART</FONT></i><FONT FACE="trebuchet ms" SIZE=3> if you wish to add the part to the parts list </FONT><FONT FACE="trebuchet ms" SIZE=3>automatically upon completion of all measurements on this part.</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Click </FONT><i><FONT FACE="trebuchet ms" SIZE=3>START</FONT></i><FONT FACE="trebuchet ms" SIZE=3> under the </FONT><i><FONT FACE="trebuchet ms" SIZE=3>MEASURE ALL</FONT></i><FONT FACE="trebuchet ms" SIZE=3> box.</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Measurements will proceed as indicated in the progress bar at the bottom of the </FONT><FONT FACE="trebuchet ms" SIZE=3>program window. When ended, a new part will be added to the part list and new </FONT><FONT FACE="trebuchet ms" SIZE=3>values displayed on the top header.</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Click </FONT><i><FONT FACE="trebuchet ms" SIZE=3>ABORT</FONT></i><FONT FACE="trebuchet ms" SIZE=3> to abort the measurement.</FONT></li>
+</ul>
+
+
+  </DD>
+
+</DL>
+
+<DL>
+
+<DT><a name="56EB56B04C3F09EC067248BD1682ACE686187A7C"></a><h3>Reading and Saving the Thermal Transient Trace</h3></DT>
+
+<DD>
+
+<ul><li><FONT FACE="trebuchet ms" SIZE=3>Make a thermal transient measurement;</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Select the </FONT><i><FONT FACE="trebuchet ms" SIZE=3>TRACE</FONT></i><FONT FACE="trebuchet ms" SIZE=3> tab;</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Click </FONT><i><FONT FACE="trebuchet ms" SIZE=3>READ TRACE</FONT></i><FONT FACE="trebuchet ms" SIZE=3> to read the trace from the instrument and display the trace in </FONT><FONT FACE="trebuchet ms" SIZE=3>the list view;</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Click </FONT><i><FONT FACE="trebuchet ms" SIZE=3>SAVE TRACE</FONT></i><FONT FACE="trebuchet ms" SIZE=3> to save the list to a file. </FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Click </FONT><i><FONT FACE="trebuchet ms" SIZE=3>CLEAR TRACE</FONT></i><FONT FACE="trebuchet ms" SIZE=3> to clear the list.</FONT></li>
+</ul>
+
+
+  </DD>
+
+</DL>
+
+  </DD>
+
+</DL>
+
+<DL>
+
+<DT><a name="F70110B4343B0987A9CAEA515F1782152F039609"></a><h3>Listing and Saving Part Measurements</h3></DT>
+
+<DD>
+
+<ul><li><FONT FACE="trebuchet ms" SIZE=3>Select the </FONT><i><FONT FACE="trebuchet ms" SIZE=3>PARTS</FONT></i><FONT FACE="trebuchet ms" SIZE=3> tab.</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>The </FONT><i><FONT FACE="trebuchet ms" SIZE=3>ADD</FONT></i><FONT FACE="trebuchet ms" SIZE=3> button is enabled if all measurements completed successfully.</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Click </FONT><i><FONT FACE="trebuchet ms" SIZE=3>ADD</FONT></i><FONT FACE="trebuchet ms" SIZE=3> to add the last measurement to the list of measurements.</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Repeat measuring another device and adding it to the list.</FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Click </FONT><i><FONT FACE="trebuchet ms" SIZE=3>SAVE</FONT></i><FONT FACE="trebuchet ms" SIZE=3> to save the list to a file. </FONT></li>
+<li><FONT FACE="trebuchet ms" SIZE=3>Click </FONT><i><FONT FACE="trebuchet ms" SIZE=3>CLEAR</FONT></i><FONT FACE="trebuchet ms" SIZE=3> to remove all measurements from the list.&nbsp; This starts a new sample </FONT><FONT FACE="trebuchet ms" SIZE=3>count. </FONT></li>
+</ul>
+
+
+  </DD>
+
+</DL>
+
+<DL>
+
+<DT><a name="40EBDDEF0B69BF9D11699E0092DF589FA716F146"></a><h3>Alerts and Messages</h3></DT>
+
+<DD>
+
+<div><FONT FACE="trebuchet ms" SIZE=3>The </FONT><i><FONT FACE="trebuchet ms" SIZE=3>ALERTS</FONT></i><FONT FACE="trebuchet ms" SIZE=3> tab displays error and warnings.&nbsp; The </FONT><i><FONT FACE="trebuchet ms" SIZE=3>MESSAGES</FONT></i><FONT FACE="trebuchet ms" SIZE=3> tab displays information </FONT><FONT FACE="trebuchet ms" SIZE=3>messages.&nbsp; Whenever alerts are added to the </FONT><i><FONT FACE="trebuchet ms" SIZE=3>ALERTS</FONT></i><FONT FACE="trebuchet ms" SIZE=3> tab, the program displays an </FONT><i><FONT FACE="trebuchet ms" SIZE=3>ALERTS</FONT></i><FONT FACE="trebuchet ms" SIZE=3> enunciator on the top header. The enunciator is cleared when the </FONT><i><FONT FACE="trebuchet ms" SIZE=3>ALERTS</FONT></i><FONT FACE="trebuchet ms" SIZE=3> tab </FONT><FONT FACE="trebuchet ms" SIZE=3>is selected.</FONT></div>
+<div>&nbsp;</div>
+<FONT FACE="trebuchet ms" SIZE=3></FONT><div><FONT FACE="trebuchet ms" SIZE=3>The tab label shows the number of new messages in parentheses thus indicating the </FONT><FONT FACE="trebuchet ms" SIZE=3>existence of new information. Selecting the tab clears the count of new messages and </FONT><FONT FACE="trebuchet ms" SIZE=3>hides the enunciator. Both the </FONT><i><FONT FACE="trebuchet ms" SIZE=3>ALERTS</FONT></i><FONT FACE="trebuchet ms" SIZE=3> and </FONT><i><FONT FACE="trebuchet ms" SIZE=3>MESSAGES</FONT></i><FONT FACE="trebuchet ms" SIZE=3> tabs display the last message at </FONT><FONT FACE="trebuchet ms" SIZE=3>the top of the list.</FONT></div>
+
+
+  </DD>
+
+</DL>
+
+<DL>
+
+<DT><a name="F443EF91DC11D0727A20D886211D8E8FAEDDEF0D"></a><h3>Program Log</h3></DT>
+
+<DD>
+
+<div><FONT FACE="trebuchet ms" SIZE=3>The program log messages to a log file. The log file name changes every day. The </FONT><FONT FACE="trebuchet ms" SIZE=3>location of the log file is displayed in the </FONT><i><FONT FACE="trebuchet ms" SIZE=3>MESSAGES</FONT></i><FONT FACE="trebuchet ms" SIZE=3> tab when the program starts.</FONT></div>
+
+
+  </DD>
+
+</DL>
+
+<DL>
+
+<DT><a name="CA482FF97D19010B8022CE2C8082ADEDBF9C015A"></a><h3>Attributions</h3></DT>
+
+<DD>
+
+<div><FONT FACE="trebuchet ms" SIZE=3 COLOR="#869AA8">Last Updated 12-30-2013</FONT></div>
+<div><FONT FACE="trebuchet ms" SIZE=3 COLOR="#869AA8">Copyright 2011 by Integrated Scientific Resources, Inc.<br>
+</FONT><FONT FACE="trebuchet ms" SIZE=3 COLOR="#869AA8">This information is provided &quot;AS IS&quot; WITHOUT WARRANTIES OR CONDITIONS OF ANY </FONT><FONT FACE="trebuchet ms" SIZE=3 COLOR="#869AA8">KIND, EITHER EXPRESS OR IMPLIED.</FONT></div>
+<div>&nbsp;</div>
+<FONT FACE="trebuchet ms" SIZE=3 COLOR="#869AA8"></FONT><div><FONT FACE="trebuchet ms" SIZE=3 COLOR="#869AA8">Licensed under the </FONT><A HREF="http://bit.ly/FairEndUserUseLicense"><FONT FACE="trebuchet ms" SIZE=3 COLOR="#869AA8">ISR Fair End User Use License</FONT></A><FONT FACE="trebuchet ms" SIZE=3 COLOR="#869AA8">, Version 1.0 (the &quot;ISR License&quot;). You </FONT><FONT FACE="trebuchet ms" SIZE=3 COLOR="#869AA8">may obtain a copy of the ISR License at Unless required by applicable law or agreed to </FONT><FONT FACE="trebuchet ms" SIZE=3 COLOR="#869AA8">in writing, software distributed under the ISR License is distributed on an &quot;AS IS&quot; BASIS, </FONT><FONT FACE="trebuchet ms" SIZE=3 COLOR="#869AA8">WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the </FONT><FONT FACE="trebuchet ms" SIZE=3 COLOR="#869AA8">ISR License for the specific language governing permissions and limitations under the </FONT><FONT FACE="trebuchet ms" SIZE=3 COLOR="#869AA8">ISR License.</FONT></div>
+
+
+  </DD>
+
+</DL>
+
+  </DD>
+
+</DL>
+
+<pre>
+ 
+</pre>
+</body>
+</html>
+

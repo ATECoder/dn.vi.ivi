@@ -1,0 +1,141 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <EnablePreviewFeatures>true</EnablePreviewFeatures>
+    <TargetFrameworks>net472;net48;net9.0-windows</TargetFrameworks>
+    <OutputType>Library</OutputType>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+
+    <LangVersion>latest</LangVersion>
+
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <!-- Assembly Info -->
+    <RootNamespace>cc.isr.VI.DeviceWinControls</RootNamespace>
+    <AssemblyName>cc.isr.VI.DeviceWinControls</AssemblyName>
+    <ApplicationTitle>cc.isr.VI.DeviceWinControls</ApplicationTitle>
+    <ApplicationId>cc.isr.vi.device.win.controls</ApplicationId>
+
+    <GenerateAssemblyVersionAttribute>true</GenerateAssemblyVersionAttribute>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+
+    <!-- Coding -->
+    <OptionExplicit>On</OptionExplicit>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionStrict>On</OptionStrict>
+    <OptionInfer>Off</OptionInfer>
+
+    <!-- Signature -->
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\..\items\keyPair.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>false</DelaySign>
+
+    <!-- NuGet -->
+    <IsPackable>true</IsPackable>
+    <PackageId>cc.isr.VI.DeviceWinControls</PackageId>
+    <Description>Visa Device Windows controls</Description>
+    <PackageTags>VISA Virtual Instruments Windows Controls</PackageTags>
+    <PackageOutputPath>C:\my\nuget</PackageOutputPath>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+
+    <!-- Documentation -->
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+
+    <GenerateResourceWarnOnBinaryFormatterUse>false</GenerateResourceWarnOnBinaryFormatterUse>
+
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="readme.md" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <DefineConstants>$(DefineConstants);MYPROJREF;</DefineConstants>
+  </PropertyGroup>
+
+  <Choose>
+    <When Condition="$(DefineConstants.Contains(';PROJREF;')) OR $(DefineConstants.Contains(';MYPROJREF;'))">
+      <ItemGroup>
+        <ProjectReference Include="..\..\..\..\..\core\enums\src\win.controls\win.controls\cc.isr.Enums.WinControls.csproj" />
+        <ProjectReference Include="..\..\..\..\..\core\json\src\app.settings\app.settings.win.forms\cc.isr.Json.AppSettings.WinForms.csproj" />
+        <ProjectReference Include="..\..\..\..\..\core\logging\src\tracelog\tracelog.win.forms\cc.isr.Logging.TraceLog.WinForms.csproj" />
+        <ProjectReference Include="..\..\..\..\..\core\tracing\src\win.forms\tracing.win.forms\cc.isr.Tracing.WinForms.csproj" />
+        <ProjectReference Include="..\..\..\..\..\core\win.forms\src\model.view.form\model.view.form\cc.isr.WinForms.ModelViewForm.csproj" />
+        <ProjectReference Include="..\win.controls\cc.isr.VI.WinControls.csproj" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+    <ItemGroup>
+        <PackageReference Include="cc.isr.Enums.WinControls" Version="1.0.8103" />
+        <PackageReference Include="cc.isr.Json.Settings.WinForms" Version="1.0.8118" />
+        <PackageReference Include="cc.isr.Logging.TraceLog.WinForms" Version="1.0.8119" />
+        <PackageReference Include="cc.isr.Tracing.WinForms" Version="1.0.8110" />
+        <PackageReference Include="cc.isr.WinForms.ModelViewForm" Version="1.0.8127" />
+        <PackageReference Include="cc.isr.VI.WinControls" Version="8.0.8123" />
+        <Content Update="C:\Users\David\.nuget\packages\cc.isr.vi.wincontrols\8.0.8123\contentFiles\any\net472\cc.isr.VI.WinControls.Settings.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
+
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="cc.isr.VI.DeviceWinControls.Settings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
+    <Compile Update="properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Update="properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="version.build.props">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>version.build.tt</DependentUpon>
+    </None>
+    <None Update="version.build.tt">
+      <LastGenOutput>version.build.props</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+  </ItemGroup>
+
+  <Import Project="version.build.props" />
+    
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+    
+  <ItemGroup>
+    <Folder Include="Temp\" />
+  </ItemGroup>
+    
+
+</Project>

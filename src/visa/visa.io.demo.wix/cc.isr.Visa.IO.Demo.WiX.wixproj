@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" InitialTargets="EnsureWixToolsetInstalled" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
+    <ProductVersion>3.10</ProductVersion>
+    <ProjectGuid>9905682e-6252-422d-ba12-4621ad818c81</ProjectGuid>
+    <SchemaVersion>2.0</SchemaVersion>
+    <OutputName>isr.Visa.IO.Demo.rtm.setup</OutputName>
+    <OutputType>Package</OutputType>
+    <Name>isr.Visa.IO.Demo.WiX</Name>
+    <IncludeSearchPaths>..\..\..\..\..\..\Libraries\VS\Core\WiX\DirectoryTree\;.\</IncludeSearchPaths>
+    <_InstallerVersionFramework>net472</_InstallerVersionFramework>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+    <DefineConstants>Debug</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <DefineConstants>Debug;build=rtm</DefineConstants>
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
+    <SuppressIces>ICE61</SuppressIces>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <DefineConstants>build=rtm</DefineConstants>
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\..\..\..\..\..\..\Libraries\VS\Core\WiX\DirectoryTree\ProductMenuFolder.wxs">
+      <Link>Shared\ProductMenuFolder.wxs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\..\..\Libraries\VS\Core\WiX\DirectoryTree\ProductProgramFolder.wxs">
+      <Link>Shared\ProductProgramFolder.wxs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\..\..\Libraries\VS\Core\WiX\DotNet\CheckFramework461.wxs">
+      <Link>Shared\CheckFramework461.wxs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\..\..\Libraries\VS\Core\WiX\Fragments\MsiPublishAssemblies.wxs">
+      <Link>Shared\MsiPublishAssemblies.wxs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\..\..\Libraries\VS\Core\WiX\ManufacturerInfo\IntegratedScientificResourcesInfo.wxs">
+      <Link>Shared\IntegratedScientificResourcesInfo.wxs</Link>
+    </Compile>
+    <Compile Include="Product.wxs" />
+    <Compile Include="ProductComponents.wxs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Shared\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WixExtension Include="WixTagExtension">
+      <HintPath>$(WixExtDir)\WixTagExtension.dll</HintPath>
+      <Name>WixTagExtension</Name>
+    </WixExtension>
+    <WixExtension Include="WixUtilExtension">
+      <HintPath>$(WixExtDir)\WixUtilExtension.dll</HintPath>
+      <Name>WixUtilExtension</Name>
+    </WixExtension>
+    <WixExtension Include="WixUIExtension">
+      <HintPath>$(WixExtDir)\WixUIExtension.dll</HintPath>
+      <Name>WixUIExtension</Name>
+    </WixExtension>
+    <WixExtension Include="WixNetFxExtension">
+      <HintPath>$(WixExtDir)\WixNetFxExtension.dll</HintPath>
+      <Name>WixNetFxExtension</Name>
+    </WixExtension>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\..\..\..\..\..\Libraries\VS\Core\WiX\DirectoryTree\ProductFoldersPreprocessor.wxi">
+      <Link>Shared\ProductFoldersPreprocessor.wxi</Link>
+    </Content>
+    <Content Include="ProductPreprocessor.wxi" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\visa.io.demo\isr.Visa.IO.Demo.csproj">
+      <Name>isr.Visa.IO.Demo</Name>
+      <Project>{6dac3956-d8b1-4dba-829d-759555c1689c}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(WixTargetsPath)" Condition=" '$(WixTargetsPath)' != '' " />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets" Condition=" '$(WixTargetsPath)' == '' AND Exists('$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets') " />
+  <Target Name="EnsureWixToolsetInstalled" Condition=" '$(WixTargetsImported)' != 'true' ">
+    <Error Text="The WiX Toolset v3.11 (or newer) build tools must be installed to build this project. To download the WiX Toolset, see http://wixtoolset.org/releases/" />
+  </Target>
+  <Target Name="AfterBuild">
+    <GetAssemblyIdentity AssemblyFiles="$(ProjectDir)..\Visa.IO.Demo\bin\$(Configuration)\$(_InstallerVersionFramework)\isr.Visa.IO.Demo.exe">
+      <Output TaskParameter="Assemblies" ItemName="AssemblyVersions" />
+    </GetAssemblyIdentity>
+    <CreateProperty Value="%(AssemblyVersions.Version)">
+      <Output TaskParameter="Value" PropertyName="AssyVersion" />
+    </CreateProperty>
+    <CreateProperty Value="$(AssyVersion.Split('.')[0]).$(AssyVersion.Split('.')[1]).$(AssyVersion.Split('.')[2])">
+      <Output TaskParameter="Value" PropertyName="AssyShortVersion" />
+    </CreateProperty>
+    <Copy SourceFiles="$(TargetPath)" DestinationFiles="C:\My\Builds\Apps\VI.Visa.IO\$(TargetFramework)\$(OutputName)-$(AssyShortVersion).msi" />
+  </Target>
+  <!--
+	To modify your build process, add your task inside one of the targets below and uncomment it.
+	Other similar extension points exist, see Wix.targets.
+	<Target Name="BeforeBuild">
+	</Target>
+	<Target Name="AfterBuild">
+	</Target>
+	-->
+</Project>

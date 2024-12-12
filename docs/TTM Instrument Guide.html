@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+            <html>
+                <head>                    
+                    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+                    <title>TTM Instrument Guide.md</title>
+                    <style type="text/css">
+                    /*
+Copyright (c) 2017 Chris Patuzzo
+https://twitter.com/chrispatuzzo
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px;
+  color: #333;
+}
+
+body &gt; *:first-child {
+  margin-top: 0 !important;
+}
+
+body &gt; *:last-child {
+  margin-bottom: 0 !important;
+}
+
+a {
+  color: #4183C4;
+  text-decoration: none;
+}
+
+a.absent {
+  color: #cc0000;
+}
+
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative;
+}
+
+h2:first-child, h1:first-child, h1:first-child + h2, h3:first-child, h4:first-child, h5:first-child, h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  text-decoration: none;
+}
+
+h1 tt, h1 code {
+  font-size: inherit;
+}
+
+h2 tt, h2 code {
+  font-size: inherit;
+}
+
+h3 tt, h3 code {
+  font-size: inherit;
+}
+
+h4 tt, h4 code {
+  font-size: inherit;
+}
+
+h5 tt, h5 code {
+  font-size: inherit;
+}
+
+h6 tt, h6 code {
+  font-size: inherit;
+}
+
+h1 {
+  font-size: 28px;
+  color: black;
+}
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h6 {
+  color: #777777;
+  font-size: 14px;
+}
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0;
+}
+
+/*
+hr {
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0;
+}
+*/
+body &gt; h2:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+body &gt; h1:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+body &gt; h1:first-child + h2 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+body &gt; h3:first-child, body &gt; h4:first-child, body &gt; h5:first-child, body &gt; h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0;
+}
+
+li p.first {
+  display: inline-block;
+}
+
+ul, ol {
+  padding-left: 30px;
+}
+
+ul :first-child, ol :first-child {
+  margin-top: 0;
+}
+
+ul :last-child, ol :last-child {
+  margin-bottom: 0;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  padding: 0;
+  margin: 15px 0 5px;
+}
+
+dl dt:first-child {
+  padding: 0;
+}
+
+dl dt &gt; :first-child {
+  margin-top: 0;
+}
+
+dl dt &gt; :last-child {
+  margin-bottom: 0;
+}
+
+dl dd {
+  margin: 0 0 15px;
+  padding: 0 15px;
+}
+
+dl dd &gt; :first-child {
+  margin-top: 0;
+}
+
+dl dd &gt; :last-child {
+  margin-bottom: 0;
+}
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777;
+}
+
+blockquote &gt; :first-child {
+  margin-top: 0;
+}
+
+blockquote &gt; :last-child {
+  margin-bottom: 0;
+}
+
+table {
+  padding: 0;
+}
+table tr {
+  border-top: 1px solid #cccccc;
+  background-color: white;
+  margin: 0;
+  padding: 0;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+table tr th {
+  font-weight: bold;
+  border: 1px solid #cccccc;
+  text-align: left;
+  margin: 0;
+  padding: 6px 13px;
+}
+
+table tr td {
+  border: 1px solid #cccccc;
+  text-align: left;
+  margin: 0;
+  padding: 6px 13px;
+}
+
+table tr th :first-child, table tr td :first-child {
+  margin-top: 0;
+}
+
+table tr th :last-child, table tr td :last-child {
+  margin-bottom: 0;
+}
+
+img {
+  max-width: 100%;
+}
+
+span.frame {
+  display: block;
+  overflow: hidden;
+}
+
+span.frame &gt; span {
+  border: 1px solid #dddddd;
+  display: block;
+  float: left;
+  overflow: hidden;
+  margin: 13px 0 0;
+  padding: 7px;
+  width: auto;
+}
+
+span.frame span img {
+  display: block;
+  float: left;
+}
+
+span.frame span span {
+  clear: both;
+  color: #333333;
+  display: block;
+  padding: 5px 0 0;
+}
+
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both;
+}
+
+span.align-center &gt; span {
+  display: block;
+  overflow: hidden;
+  margin: 13px auto 0;
+  text-align: center;
+}
+
+span.align-center span img {
+  margin: 0 auto;
+  text-align: center;
+}
+
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both;
+}
+
+span.align-right &gt; span {
+  display: block;
+  overflow: hidden;
+  margin: 13px 0 0;
+  text-align: right;
+}
+
+span.align-right span img {
+  margin: 0;
+  text-align: right;
+}
+
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left;
+}
+
+span.float-left span {
+  margin: 13px 0 0;
+}
+
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right;
+}
+
+span.float-right &gt; span {
+  display: block;
+  overflow: hidden;
+  margin: 13px auto 0;
+  text-align: right;
+}
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+}
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent;
+}
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+pre code, pre tt {
+  background-color: transparent;
+  border: none;
+}
+
+/* Syntax Highlighting */
+
+.plainText {
+ background-color: #FFFFFF;
+ color: #000000;
+}
+.htmlServerSideScript {
+ background-color: #FFFF00;
+}
+.htmlComment {
+ color: #008000;
+}
+.htmlTagDelimiter {
+ color: #0000FF;
+}
+.htmlElementName {
+ color: #A31515;
+}
+.htmlAttributeName {
+ color: #FF0000;
+}
+.htmlAttributeValue {
+ color: #0000FF;
+}
+.htmlOperator {
+ color: #0000FF;
+}
+.comment {
+ color: #008000;
+}
+.xmlDocTag {
+ color: #808080;
+}
+.xmlDocComment {
+ color: #008000;
+}
+.string {
+ color: #A31515;
+}
+.stringCSharpVerbatim {
+ color: #A31515;
+}
+.keyword {
+ color: #0000FF;
+}
+.preprocessorKeyword {
+ color: #0000FF;
+}
+.htmlEntity {
+ color: #FF0000;
+}
+.xmlAttribute {
+ color: #FF0000;
+}
+.xmlAttributeQuotes {
+ color: #000000;
+}
+.xmlAttributeValue {
+ color: #0000FF;
+}
+.xmlCDataSection {
+ color: #808080;
+}
+.xmlComment {
+ color: #008000;
+}
+.xmlDelimiter {
+ color: #0000FF;
+}
+.xmlName {
+ color: #A31515;
+}
+.className {
+ color: #48D1CC;
+}
+.cssSelector {
+ color: #A31515;
+}
+.cssPropertyName {
+ color: #FF0000;
+}
+.cssPropertyValue {
+ color: #0000FF;
+}
+.sqlSystemFunction {
+ color: #FF00FF;
+}
+.powershellAttribute {
+ color: #B0E0E6;
+}
+.powershellOperator {
+ color: #808080;
+}
+.powershellType {
+ color: #008080;
+}
+.powershellVariable {
+ color: #FF4500;
+}
+.type {
+ color: #008080;
+}
+.typeVariable {
+ color: #008080;
+ font-style: italic;
+}
+.namespace {
+ color: #000080;
+}
+.constructor {
+ color: #800080;
+}
+.predefined {
+ color: #000080;
+}
+.pseudoKeyword {
+ color: #000080;
+}
+.stringEscape {
+ color: #808080;
+}
+.controlKeyword {
+ color: #0000FF;
+}
+.number {
+}
+.operator {
+}
+.delimiter {
+}
+.markdownHeader {
+ font-weight: bold;
+}
+.markdownCode {
+ color: #008080;
+}
+.markdownListItem {
+ font-weight: bold;
+}
+.italic {
+ font-style: italic;
+}
+.bold {
+ font-weight: bold;
+}
+
+                    </style>
+                </head>
+                <body style="">
+                <h1 id="0">Thermal Transient Meter™ Instrument User's Guide</h1>
+<h2 id="2">Table of Contents</h2>
+<ul id="4">
+<li id="4"><a href="#Guide">This Guide</a></li>
+<li id="5"><a href="#Preparations">Preparations</a>
+<ul id="6">
+<li id="6"><a href="#Wiring">Wiring the Device Under Test</a></li>
+<li id="7"><a href="#Loading">Loading the TTM Firmware</a></li>
+<li id="8"><a href="#Local">Taking the instrument from Remote to Local Modes</a></li>
+<li id="9"><a href="#Starting">Starting TTM from the Front Panel</a></li>
+<li id="10"><a href="#Exiting">Exiting from TTM Front Panel Mode</a></li>
+<li id="11"><a href="#Parameters">Setup of Measurement Parameters</a>
+<ul id="12">
+<li id="12"><a href="#Resistance">Resistance</a>
+<ul id="13">
+<li id="13"><a href="#Source">Source</a></li>
+<li id="14"><a href="#Level">Level</a></li>
+<li id="15"><a href="#Limit">Limit</a></li>
+<li id="16"><a href="#Aperture">Aperture</a></li>
+<li id="17"><a href="#Limits">Limits</a>
+<ul id="18">
+<li id="18"><a href="#Low_Limit">Low Limit</a></li>
+<li id="19"><a href="#High_Limit">High Limit</a></li>
+</ul>
+</li>
+<li id="20"><a href="#Leads">Leads</a></li>
+<li id="21"><a href="#Status">Status</a></li>
+</ul>
+</li>
+<li id="22"><a href="#Transient">Transient</a>
+<ul id="23">
+<li id="23"><a href="#Source_Current">Source Current</a></li>
+<li id="24"><a href="#Maximum_Voltage">Maximum Voltage</a></li>
+<li id="25"><a href="#Transient_Aperture">Aperture</a></li>
+<li id="26"><a href="#Points">Points</a></li>
+<li id="27"><a href="#Period">Period</a></li>
+<li id="28"><a href="#Delay">Delay</a></li>
+<li id="29"><a href="#Transient_Limits">Limits</a>
+<ul id="30">
+<li id="30"><a href="#Transient_Low_Limit">Low Limit</a></li>
+<li id="31"><a href="#Transient_High_LImit">High Limit</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li id="32"><a href="#Measuring_Using_the_Front_Panel">Measuring Using the Front Panel</a></li>
+<li id="33"><a href="#Measuring_Using_the_TRG_command">Measuring Using the *TRG command</a></li>
+<li id="34"><a href="#Measuring_Using_Digital_Input">Measuring Using Digital Input</a>
+<ul id="35">
+<li id="35"><a href="#Digital_IO">Digital I/O</a></li>
+<li id="36"><a href="#Triggering">Triggering</a></li>
+<li id="37"><a href="#Reading">Reading the Outcome</a></li>
+</ul>
+</li>
+<li id="38"><a href="#Specifications">Specifications</a>
+<ul id="39">
+<li id="39"><a href="#Thermal_Transient_Response">Thermal Transient Response</a>
+<ul id="40">
+<li id="40"><a href="#Initial_And_Final_Resistance">Initial And Final Resistance</a></li>
+<li id="41"><a href="#Cold_Resistance_Default_Settings">Cold Resistance Default Settings</a>
+<ul id="42">
+<li id="42"><a href="#Cold_Resistance_Voltage_Source">Cold Resistance Voltage Source</a></li>
+<li id="43"><a href="#Cold_Resistance_Current_Source">old Resistance Current Source</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li id="44"><a href="#Thermal_Transient_Default_Settings">Thermal Transient Default Settings</a></li>
+</ul>
+</li>
+<li id="45"><a href="#Attributions">Attributions</a></li>
+</ul>
+<p id="47"><a name="Guid"></a></p>
+<h2 id="48">Guide</h2>
+<p id="50">This guide describes how to use the TTM instrument as a stand-along bench or production line device.</p>
+<p id="52">First time readers should start by reading the <a href="TTM%20Framework%20Guide.md">TTM Framework Guide</a>.</p>
+<p id="54"><a name="Preparations"></a></p>
+<h2 id="55">Preparations</h2>
+<p id="57"><a name="Wiring"></a></p>
+<h3 id="58">Wiring the Device Under Test</h3>
+<p id="60">The device under test must be connected to the TTM Instrument using four-wires:</p>
+<p id="62"><img src="KelvinDiagram.jpg" alt="" /></p>
+<p id="64"><a name="Loading"></a></p>
+<h3 id="65">Loading the TTM Firmware</h3>
+<p id="67">Use the TTM Loader to update the TTM Firmware as described in the <a href="TTM%20Loader%20Guide.md">TTM Loader Guide</a>.</p>
+<p id="69"><a name="Remote/Local"></a></p>
+<h3 id="70">Taking the instrument from Remote to Local Modes</h3>
+<p id="72">When controlling the instrument from an application program, such as the Loader or Driver Tester, the instrument goes into Remote mode. Press the <em>EXIT</em> button on the instrument panel to go into local mode.</p>
+<p id="74"><a name="Starting"></a>#</p>
+<h2 id="75">Starting TTM from the Front Panel</h2>
+<p id="77">When running TTM the instrument panel display the instrument opening screen, such as 'Therm. Trans. Meter', or the last measurement, such as 'R: 2.0016..'. Otherwise, TTM needs to be loaded and run as follows:</p>
+<ul id="79">
+<li id="79">From the instrument front panel press <em>LOAD</em>;</li>
+<li id="80">Select <em>USER</em> from the menu and press <em>Enter</em>;</li>
+<li id="81">Select <em>TTM</em> and press <em>Enter</em>;</li>
+<li id="82">From the instrument front panel press <em>LOAD</em>;</li>
+<li id="83">From the instrument front panel press <em>RUN</em>;</li>
+<li id="84">The instrument opening screen, such as 'Therm. Trans. Meter', should be displayed.</li>
+</ul>
+<p id="86"><a name="Exiting"></a></p>
+<h3 id="87">Exiting from TTM Front Panel Mode</h3>
+<p id="89">Click the <em>RUN</em> button to exit from the run loop.</p>
+<p id="91"><a name="Parameters"></a></p>
+<h2 id="92">Setup of Measurement Parameters</h2>
+<ul id="94">
+<li id="94">Select <em>Menu</em> from the instrument panel to configure the instrument.</li>
+<li id="95">Follow the prompts from the instrument menu screens.</li>
+<li id="96">See <a href="#Specifications">Specifications</a> for parameter ranges.</li>
+</ul>
+<p id="98"><a name="Resistance"></a></p>
+<h3 id="99">Resistance</h3>
+<p id="101">Select <em>Resistance</em> from the <em>TTM Main Menu</em> to alter the settings of the initial and final cold resistance (bridge wire resistance at low current level).</p>
+<p id="103"><a name="Source"></a></p>
+<h4 id="104">Source</h4>
+<p id="106">Either a Voltage or a Current source can be selected to force voltage or current, respectively for measuremnt the cold resistance.</p>
+<ul id="108">
+<li id="108">Select <em>Source</em> from the <em>Cold Resistance</em> menu;</li>
+<li id="109">The <em>Voltage</em> and <em>Current</em> options will display;</li>
+<li id="110">Rotate the thumb wheel to highlight either <em>Voltage</em> or <em>Current</em>;</li>
+<li id="111">Press <em>Enter</em> to accept or <em>Exit</em> to cancel the selection.</li>
+</ul>
+<p id="113"><a name="Level"></a></p>
+<h4 id="114">Level</h4>
+<p id="116">The source level is the voltage (if using a Voltage Source) or current (if using a current source) for measuring the cold resistance.</p>
+<p id="118">The selected level is forced by the TTM instrument onto or through  the bridgewire to measure the bridge wire resistance. This forcing level must be small so as not to trip or ecessively heat the bridgewire.</p>
+<ul id="120">
+<li id="120">Select <em>Level</em> from the <em>Cold Resistance</em> menu;</li>
+<li id="121">The <em>Level</em> prompt will display showing the source voltage or current that was last set;</li>
+<li id="122">Press the thumb wheel to select and then increase or decrease the value;</li>
+<li id="123">Press <em>Enter</em> to accept or <em>Exit</em> to cancel the changes.</li>
+</ul>
+<p id="125"><a name="Limit"></a></p>
+<h4 id="126">Limit</h4>
+<p id="128">The maximum voltage is the limit set by the instrument for the maximum voltage that could develop on the bridge wire during the cold resistance test. This limit will be reach if the bridge wire is open or exhibits a very high resistance.</p>
+<ul id="130">
+<li id="130">Select <em>Voltage</em> from the <em>Cold Resistance</em> menu;</li>
+<li id="131">The <em>Maximum Voltage</em> prompt will display showing the voltage that was last set in volts.</li>
+<li id="132">Press the thumb wheel to select and then increase or decrease the value.</li>
+<li id="133">Press <em>Enter</em> to accept or <em>Exit</em> to cancel the changes.</li>
+</ul>
+<p id="135"><a name="Aperture"></a></p>
+<h4 id="136">Aperture</h4>
+<p id="138">The aperture (integration period) defines the duration and accuracy of the cold resistance measurement. This value is defined in multiples or fractions of power line cycles (PLC). 1 PLC equals to 1/60th of a second in the US. At 1 PLC the measurement accuracy exceeds 0.01%.</p>
+<ul id="140">
+<li id="140">Select <em>Aperture</em> from the <em>Cold Resistance</em> menu;</li>
+<li id="141">The <em>Integration Period</em> prompt will display showing the number of power line cycles was last set in PLC;</li>
+<li id="142">Press the thumb wheel to select and then increase or decrease the value;</li>
+<li id="143">Press <em>Enter</em> to accept or <em>Exit</em> to cancel the changes.</li>
+</ul>
+<p id="145"><a name="Limits"></a></p>
+<h4 id="146">Limits</h4>
+<p id="148">Limits are used to determine if the measured value is within range (pass) or out of range (fail).</p>
+<p id="150">The intial and final cold resistnaces are checked againstthe limits and the measurement outcome is set to High or Low if the values are out of range.</p>
+<p id="152">If the initial resistnace measurement fails, the measured value is displayed along with the outcome status (see <a href="#Status">Status</a> below).</p>
+<ul id="154">
+<li id="154">Select <em>Limits</em> from the <em>Cold Resistance</em> menu to alter the limits.</li>
+</ul>
+<p id="156"><a name="Low_Limit"></a></p>
+<h5 id="157">Low Limit</h5>
+<ul id="159">
+<li id="159">Select <em>Low</em> from the <em>Limits</em> menu;</li>
+<li id="160">The <em>Low Limit</em> prompt will display showing the last value that was set in ohms;</li>
+<li id="161">Press the thumb wheel to select and then increase or decrease the value.</li>
+<li id="162">Press <em>Enter</em> to accept or <em>Exit</em> to cancel the changes.</li>
+</ul>
+<p id="164"><a name="High_Limit"></a></p>
+<h5 id="165">High Limit</h5>
+<ul id="167">
+<li id="167">Select <em>High</em> from the <em>Limits</em> menu;</li>
+<li id="168">The <em>High Limit</em> prompt will display showing the last value that was set in ohms;</li>
+<li id="169">Press the thumb wheel to select and then increase or decrease the value.</li>
+<li id="170">Press <em>Enter</em> to accept or <em>Exit</em> to cancel the changes.</li>
+</ul>
+<p id="172"><a name="Leads"></a></p>
+<h4 id="173">Leads</h4>
+<p id="175">The contact check function prevents measurements that may be in error due to excessive resistance in the force or sense leads when making remotely sensed (Kelvin) measurements. Potential sources for this resistance include poor contact at the device under test (DUT), failing relay contacts on a switching card, and wires that are too long or thin.</p>
+<p id="177">The contact check function also detects an open circuit that may occur when a four-point probe is misplaced or misaligned. This relationship is shown schematically in the figure below, where R<sub>C</sub> is the resistance of the mechanical contact at the DUT, and R<sub>S</sub> is the series resistance of cables and any series relays.</p>
+<p id="179">The leads contacts are checked if the maximum leads resistance (see below) is set to a non-zero positive value. Contacts are measured before taking the initial resistance measurement. The measurement is aborted and the lead resistances are displayed if the measured lead resistances exceeds the maximum limit.</p>
+<p id="181"><img src="ContactCheckDiagram.png" alt="" /></p>
+<p id="183">To enable and set the maximum allowed leads resistance:</p>
+<ul id="185">
+<li id="185">Select <em>Leads</em> from the <em>Cold Resistance</em> menu;</li>
+<li id="186">The <em>Max Resistance</em> prompt will display showing the maximum resistance in Ohms or 0 if contact check is to be skipped when making the initial resistance measurement;</li>
+<li id="187">Press the thumb wheel to select and then increase or decrease the value;</li>
+<li id="188">Press <em>Enter</em> to accept or <em>Exit</em> to cancel the changes.</li>
+</ul>
+<p id="190"><a name="Status"></a></p>
+<h4 id="191">Status</h4>
+<p id="193">In addition to measuring the cold resistance, the instrument reports a <em>Buffer Status</em> byte where each bit represents a specific setting or outcome as follows:</p>
+<table id="195">
+<thead>
+<tr id="195">
+<th id="195">Bit</th>
+<th id="195">Name</th>
+<th id="195">Hex Value</th>
+<th id="195">Decimal Value</th>
+<th id="195">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="197">
+<td id="197">B0</td>
+<td id="197">Reserved</td>
+<td id="197">0x01</td>
+<td id="197">1</td>
+<td id="197">Reserved for future use</td>
+</tr>
+<tr id="198">
+<td id="198">B1</td>
+<td id="198">Overtemp</td>
+<td id="198">0x02</td>
+<td id="198">2</td>
+<td id="198">Overtemperature condition</td>
+</tr>
+<tr id="199">
+<td id="199">B2</td>
+<td id="199">AutoRangeMeas</td>
+<td id="199">0x04</td>
+<td id="199">4</td>
+<td id="199">Measure range was autoranged</td>
+</tr>
+<tr id="200">
+<td id="200">B3</td>
+<td id="200">AutoRangeSrc</td>
+<td id="200">0x08</td>
+<td id="200">8</td>
+<td id="200">Source range was autoranged</td>
+</tr>
+<tr id="201">
+<td id="201">B4</td>
+<td id="201">4Wire</td>
+<td id="201">0x10</td>
+<td id="201">16</td>
+<td id="201">4-wire (remote) sense mode was enabled</td>
+</tr>
+<tr id="202">
+<td id="202">B5</td>
+<td id="202">Rel</td>
+<td id="202">0x20</td>
+<td id="202">32</td>
+<td id="202">Relative offset was applied to a reading</td>
+</tr>
+<tr id="203">
+<td id="203">B6</td>
+<td id="203">Compliance</td>
+<td id="203">0x40</td>
+<td id="203">64</td>
+<td id="203">Source function was in compliance</td>
+</tr>
+<tr id="204">
+<td id="204">B7</td>
+<td id="204">Filtered</td>
+<td id="204">0x80</td>
+<td id="204">128</td>
+<td id="204">Reading was filtered</td>
+</tr>
+</tbody>
+</table>
+<p id="206">The Status settings of the Thermal Transient Meter is provided to allow the operator to select what status values to be interpreted as a failed measurement. By default, both  Overtemp and Compliance are taken to indicate a failure. However, the operator may chose to take a measurement under complaince condition. For example, the operator may choose to apply a voltage of 100 mV but limit the current at 20 mA. When making this measurement on a 2 Ohm bridgewire, the instrument will <em>hit compliance</em>. The the measurement accuracy will still be acceptible. In the case, the operator will set the Status settings to 2 instread of the default of 66.</p>
+<p id="208">The measurement outcome and status are displayed along with the bridgewire resistance and low or high indication if the initial cold resistnace measurment failed. Typically a status value of 28 will display indicating that a 4-wire measurment was taken under auto range conditions.</p>
+<ul id="210">
+<li id="210">Select <em>Status</em> from the <em>Cold Resistance</em> menu;</li>
+<li id="211">The <em>Fail Status Compliance 64 Overtemp 2</em> prompt will display showing the status bitmask that is to indicate a failed cold resistance measurement;</li>
+<li id="212">Press the thumb wheel to select and then increase or decrease the value;</li>
+<li id="213">Press <em>Enter</em> to accept or <em>Exit</em> to cancel the changes.</li>
+</ul>
+<p id="215"><a name="Transient"></a></p>
+<h3 id="216">Transient</h3>
+<p id="218">Use <em>Transient</em> menu items to set the test parameters of the thermal transient forcing and measurement parameters.</p>
+<ul id="220">
+<li id="220">Select <em>Transient</em> from the <em>TTM Main Menu</em> to alter the settings of the thermal transient response measurement of the bridge wire.</li>
+</ul>
+<p id="222"><a name="Source_Current"></a></p>
+<h4 id="223">Source Current</h4>
+<p id="225">The source current is the current that is forced by the TTM instrument through the bridge wire to measure the bridge wire thermal transient response. This current is pulsed through the bridge wire for a very short duration determined by the period times points (see below).</p>
+<ul id="227">
+<li id="227">Select <em>Current</em> from the <em>Thermal Transient</em> menu;</li>
+<li id="228">The <em>Source Current</em> prompt will display showing the source current that was last set in milli Amperes.</li>
+<li id="229">Press the thumb wheel to select and then increase or decrease the value.</li>
+<li id="230">Press <em>Enter</em> to accept or <em>Exit</em> to cancel the changes.</li>
+</ul>
+<p id="232"><a name="Maximum_Voltage"></a></p>
+<h4 id="233">Maximum Voltage</h4>
+<p id="235">The maximum voltage is the limit set by the instrument for the maximum voltage that could develop on the bridge wire during the thermal transient test. This limit will be reached if the bridge wire is open or exhibits a very high resistance.</p>
+<ul id="237">
+<li id="237">Select <em>Voltage</em> from the <em>Thermal Transient</em> menu;</li>
+<li id="238">The <em>Maximum Voltage</em> prompt will display showing the voltage that was last set in volts.</li>
+<li id="239">Press the thumb wheel to select and then increase or decrease the value.</li>
+<li id="240">Press <em>Enter</em> to accept or <em>Exit</em> to cancel the changes.</li>
+</ul>
+<p id="242"><a name="Transient_Aperture"></a></p>
+<h4 id="243">Aperture</h4>
+<p id="245">The aperture (integration period) defines the duration and accuracy of the thermal transient measurement. This value is defined in multiples or fractions of power line cycles (PLC). 1 PLC equals to 1/60th of a second in the US. Thermal transients are measured during a very short pulse period. Therefore, a very small integration period is allowed for the thermal transient.</p>
+<ul id="247">
+<li id="247">Select <em>Aperture</em> from the <em>Thermal Transient</em> menu;</li>
+<li id="248">The <em>Integration Period</em> prompt will display showing the number of power line cycles was last set in PLC.</li>
+<li id="249">Press the thumb wheel to select and then increase or decrease the value.</li>
+<li id="250">Press <em>Enter</em> to accept or <em>Exit</em> to cancel the changes.</li>
+</ul>
+<p id="252"><a name="Points"></a></p>
+<h4 id="253">Points</h4>
+<p id="255">During the thermal transient test a current pulse is applied to the bridge wire. The pulse duration is determined by the period (see below) times the Points value.</p>
+<ul id="257">
+<li id="257">Select <em>Points</em> from the <em>Thermal Transient</em> menu;</li>
+<li id="258">The <em>Data Points</em> prompt will display showing the last settings.</li>
+<li id="259">Press the thumb wheel to select and then increase or decrease the value.</li>
+<li id="260">Press <em>Enter</em> to accept or <em>Exit</em> to cancel the changes.</li>
+</ul>
+<p id="262"><a name="Period"></a></p>
+<h4 id="263">Period</h4>
+<p id="265">The duration of the thermal transient current pulse equals the period times points (see above).</p>
+<ul id="267">
+<li id="267">Select <em>Period</em> from the <em>Thermal Transient</em> menu;</li>
+<li id="268">The <em>Sampling Interval</em> prompt will display showing the last settings in micro seconds.</li>
+<li id="269">Press the thumb wheel to select and then increase or decrease the value.</li>
+<li id="270">Press <em>Enter</em> to accept or <em>Exit</em> to cancel the changes.</li>
+</ul>
+<p id="272"><a name="Delay"></a></p>
+<h4 id="273">Delay</h4>
+<p id="275">Delay sets the time the instrument will pause between the thermal transient measurement and the final resistance measurement. This time is designed to allow the bridge wire to cool down before making the final resistance measurement.</p>
+<ul id="277">
+<li id="277">Select <em>Delay</em> from the <em>Thermal Transient</em> menu;</li>
+<li id="278">The <em>Final Cold Resistance Delay</em> prompt will display showing the last settings in mill seconds.</li>
+<li id="279">Press the thumb wheel to select and then increase or decrease the value.</li>
+<li id="280">Press <em>Enter</em> to accept or <em>Exit</em> to cancel the changes.</li>
+</ul>
+<p id="282"><a name="Transient_Limits"></a></p>
+<h4 id="283">Limits</h4>
+<p id="285">Limits are used to determine if the thermal transient measurement is within range (pass) or out of range (fail).</p>
+<ul id="287">
+<li id="287">Select <em>Limits</em> from the <em>Thermal Transient</em> menu to alter the limits.</li>
+</ul>
+<p id="289"><a name="Transient_Low_Limit"></a></p>
+<h5 id="290">Low Limit</h5>
+<ul id="292">
+<li id="292">Select <em>Low</em> from the <em>Limits</em> menu;</li>
+<li id="293">The <em>Low Limit</em> prompt will display showing the last value that was set in milli volts.</li>
+<li id="294">Press the thumb wheel to select and then increase or decrease the value.</li>
+<li id="295">Press <em>Enter</em> to accept or <em>Exit</em> to cancel the changes.</li>
+</ul>
+<p id="297"><a name="Transient_High_Limit"></a></p>
+<h5 id="298">High Limit</h5>
+<ul id="300">
+<li id="300">Select <em>High</em> from the <em>Limits</em> menu;</li>
+<li id="301">The <em>High Limit</em> prompt will display showing the last value that was set in milli volts.</li>
+<li id="302">Press the thumb wheel to select and then increase or decrease the value.</li>
+<li id="303">Press <em>Enter</em> to accept or <em>Exit</em> to cancel the changes.</li>
+</ul>
+<p id="305"><a name="Measuring_Using_the_Front_Panel"></a></p>
+<h2 id="306">Measuring Using the Front Panel</h2>
+<p id="308">The instrument takes a new measurement when triggered.</p>
+<p id="310">Triggering form the front panel of the instrument is done as follows:</p>
+<ul id="312">
+<li id="312">Start the instrument.</li>
+<li id="313">Press the <em>Run</em> button on the instrument front panel.</li>
+<li id="314">Press the <em>Trig</em> button to obtain new measurements.</li>
+</ul>
+<p id="316">Note that the instrument scripts must be loaded and verified first using the TTM Console application. Otherwise, the scripts will not run and the front panel will display R: 0.0000 with a blinking R:.</p>
+<p id="318">A failed measurement is designated on the instrument panel by a blinking prefix character. For example, if Final Resistance failed, the R preceding the measured value will blink with changing intensity. Upon a failure of the initial resistance measurement the instrument display the resistance, the high or low indication, the outcome value and status (see <a href="#191">status</a> above}.</p>
+<p id="320">To exit from the <em><TRIG MENU RUN></em> mode, press the <em>RUN</em> key.</p>
+<p id="322"><a href="#375">Reading the Outcome</a></p>
+<p id="324">The measurement outcomes can be read from the digital I/O.</p>
+<p id="326"><a name="Measuring_Using_the_TRG_Command"></a></p>
+<h2 id="327">Measuring Using the *TRG command</h2>
+<p id="329">The instrument takes a new measurement when triggered.</p>
+<p id="331">The instrument *TRG command can be used to trigger a measurement as follows:</p>
+<ul id="333">
+<li id="333">Start the instrument;</li>
+<li id="334">Connect the instrument using an external interface such as GPIB or Ethernet;</li>
+<li id="335">Send the *TRG command.</li>
+</ul>
+<p id="337">A failed measurement is designated on the instrument panel by a blinking prefix character. For example, if Initial Resistance failed, the R preceding the measured value will blink with changing intensity.</p>
+<p id="339"><a href="#375">Reading the Outcome</a></p>
+<p id="341">The measurement outcomes can be read from the digital I/O.</p>
+<p id="343"><a name="Measuring_Using_Digital_Input"></a></p>
+<h2 id="344">Measuring Using a Digital Input</h2>
+<p id="346">Measurements can be triggered and outcomes read using the instrument <a href="#349">Digital I/O</a> port.</p>
+<p id="348"><a name="Digita_IO"></a></p>
+<h2 id="349">Digital I/O</h2>
+<p id="351">Digital I/O Interface:</p>
+<ul id="353">
+<li id="353">Connector: 25-pin female D</li>
+<li id="354">I/O Pins: 14 open drain I/O Bits</li>
+<li id="355">Absolute Maximum Voltage: 5.25V</li>
+<li id="356">Absolute Minimum Voltage: -0.25V</li>
+<li id="357">Maximum Logic Low Input Voltage: 0.7V @ +850µA</li>
+<li id="358">Minimum Logic High Input Voltage: 2.1V @ +570µA</li>
+<li id="359">Maximum Source Current (flowing out of digital I/O bit): +960µA</li>
+<li id="360">Absolute Maximum Sink Current (flowing into digital I/O bit): -11.0mA</li>
+<li id="361">Maximum Sink Current: -5.0mA @ 0.7V</li>
+</ul>
+<p id="363"><img src="TriggerDiagram.png" alt="" /></p>
+<p id="365"><a name="Triggering"></a></p>
+<h2 id="366">Triggering</h2>
+<p id="368">The instrument provides full hand shake for controlling the measurement by way of the <a href="#F186A3EE9ED4B6DB25D2650896E4DA3333AE075B">Digital I/O</a> port:</p>
+<ul id="370">
+<li id="370">Trigger a measurement by taking line 1 of the digital I/O port from low to high.</li>
+<li id="371">The instrument responds by taking line 2 high. Line 3 goes low as well as the pass/fail lines 4 through 7.</li>
+<li id="372">Line 3 goes high when the measurement completes at which time the measurement outcomes are available on lines 4 through 7.</li>
+</ul>
+<p id="374"><a name="Reading_the_Outcome"></a></p>
+<h2 id="375">Reading the Outcome</h2>
+<p id="377">Measurement outcomes are signaled by lines 4 through 6 of the digital I/O. Values are valid once line 3 goes high:</p>
+<ul id="379">
+<li id="379">Line 4: Initial resistance pass (high) or fail (low);</li>
+<li id="380">Line 5: Final resistance pass (high) or fail (low);</li>
+<li id="381">Line 6: Thermal Transient in range (high) or out of range (low);</li>
+<li id="382">Line 7: All above tests passed (high) or one of them failed (low);</li>
+</ul>
+<p id="384"><a name="Outcome_Values"></a></p>
+<h3 id="385">Outcome values</h3>
+<p id="387">Upon a failure of the initial resistance measurement the instrument display the resistance, the high or low indication, the outcome value and status (see <a href="#191">status</a> above}. The outcome bit values are:</p>
+<table id="389">
+<thead>
+<tr id="389">
+<th id="389">Bit</th>
+<th id="389">Name</th>
+<th id="389">Hex Value</th>
+<th id="389">Decimal Value</th>
+<th id="389">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr id="391">
+<td id="391">B0</td>
+<td id="391">badStatus</td>
+<td id="391">0x01</td>
+<td id="391">1</td>
+<td id="391">Sampling returned bad status from the buffer</td>
+</tr>
+<tr id="392">
+<td id="392">B1</td>
+<td id="392">badTimeStamps</td>
+<td id="392">0x02</td>
+<td id="392">2</td>
+<td id="392">Sampling returned bad time stamps</td>
+</tr>
+<tr id="393">
+<td id="393">B2</td>
+<td id="393">configFailed</td>
+<td id="393">0x04</td>
+<td id="393">4</td>
+<td id="393">Configuration failed</td>
+</tr>
+<tr id="394">
+<td id="394">B3</td>
+<td id="394">initiationFailed</td>
+<td id="394">0x08</td>
+<td id="394">8</td>
+<td id="394">Pulse initiation failed</td>
+</tr>
+<tr id="395">
+<td id="395">B4</td>
+<td id="395">loadFailed</td>
+<td id="395">0x10</td>
+<td id="395">16</td>
+<td id="395">Scripts not loaded completely</td>
+</tr>
+<tr id="396">
+<td id="396">B5</td>
+<td id="396">notMeasured</td>
+<td id="396">0x20</td>
+<td id="396">32</td>
+<td id="396">Measurement not completed</td>
+</tr>
+<tr id="397">
+<td id="397">B6</td>
+<td id="397">measurementFailed</td>
+<td id="397">0x40</td>
+<td id="397">64</td>
+<td id="397">Measurement failed (e.g., infinite reading due to open sense lines)</td>
+</tr>
+<tr id="398">
+<td id="398">B7</td>
+<td id="398">openLeads</td>
+<td id="398">0x80</td>
+<td id="398">128</td>
+<td id="398">open leads</td>
+</tr>
+</tbody>
+</table>
+<p id="400"><a name="Specifications"></a></p>
+<h2 id="401">Specifications</h2>
+<p id="403"><a name="Thermal_Transient_Response"></a></p>
+<h3 id="404">Thermal Transient Response</h3>
+<ul id="406">
+<li id="406">Aperture: 0.001 - 0.01 Power Line Cycles.</li>
+<li id="407">Current Level: 10 - 999 mA</li>
+<li id="408">Maximum Voltage: 40 V</li>
+<li id="409">Transient Voltage: 1 mV - 1 V</li>
+<li id="410">Pulse Width: 10-1000 ms</li>
+<li id="411">Accuracy: 0.3 mV RMS</li>
+<li id="412">Current Source Noise: 150 uA RMS at 100-999 mA current level.</li>
+<li id="413">Post Transient Delay: 1 ms - 10 s</li>
+<li id="414">Median Filter Length: 3-9</li>
+<li id="415">Trace Points: 10 - 10000</li>
+<li id="416">Voltage Limit: 0.01 - 9.99 V</li>
+</ul>
+<p id="418"><a name="Initial_And_Final_Resistance"></a></p>
+<h3 id="419">Initial And Final Resistance</h3>
+<ul id="421">
+<li id="421">Current Level: 0.1-10 mA.</li>
+<li id="422">Measurement Duration: 0.01 to 10 power line cycles.</li>
+<li id="423">Accuracy: Depends on power line cycle and current level.</li>
+<li id="424">Typical accuracy at 10 - 100 mA current range:
+<ul id="425">
+<li id="425">1% at 0.01 Power Line Cycles.</li>
+<li id="426">0.01% at 1 Power Line Cycle.</li>
+</ul>
+</li>
+</ul>
+<p id="428"><a name="Cold_Resistance_Default_Settings"></a></p>
+<h3 id="429">Cold Resistance Default Settings</h3>
+<p id="431"><a name="Cold_Resistance_Voltage_Source"></a></p>
+<h4 id="432">Cold Resistance Voltage Source</h4>
+<ul id="434">
+<li id="434">Voltage Level: 20 mV</li>
+<li id="435">Aperture: 1 power line cycles (16.7 ms)</li>
+<li id="436">Current Limit: 40 mA</li>
+</ul>
+<p id="438"><a name="Cold_Resistance_Current_Source"></a></p>
+<h4 id="439">Cold Resistance Current Source</h4>
+<ul id="441">
+<li id="441">Current Level: 20 mA</li>
+<li id="442">Aperture: 1 power line cycles (16.7 ms)</li>
+<li id="443">Voltage Limit: 100 mV</li>
+</ul>
+<p id="445"><a name="Thermal_Transient_Default_Settings"></a></p>
+<h3 id="446">Thermal Transient Default Settings</h3>
+<ul id="448">
+<li id="448">Aperture: 0.004 power line cycles.</li>
+<li id="449">Current Level: 270 mA</li>
+<li id="450">Voltage Change: 0.099 V</li>
+<li id="451">Pulse Width: 10 ms</li>
+<li id="452">Trace Points: 100</li>
+<li id="453">Median Filter Length: 3</li>
+<li id="454">Voltage Limit: 0.99 V</li>
+<li id="455">Delay time between thermal transient and final resistance measurement: 500 ms</li>
+</ul>
+<p id="457"><a name="Attributions"></a></p>
+<h2 id="458">Attributions</h2>
+<p id="460">Last Updated 2024-10-10</p>
+<p id="462">© 2011 by Integrated Scientific Resources, Inc.</p>
+<p id="464">This information is provided &quot;AS IS&quot; WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.</p>
+<p id="466">Licensed under <a href="http://www.isr.cc/licenses/Fair%20End%20User%20Use%20License.pdf">The Fair End User</a> and <a href="http://opensource.org/licenses/MIT">MIT</a> Licenses.</p>
+<p id="468">Unless required by applicable law or agreed to in writing, this software is provided &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</p>
+<p id="470">Source code is hosted on <a href="https://bitbucket.org/davidhary">Bit Bucket</a>.</p>
+
+                </body>
+            </html>
+            

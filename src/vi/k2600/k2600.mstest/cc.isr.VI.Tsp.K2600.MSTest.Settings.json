@@ -1,0 +1,113 @@
+{
+  "DummySettings": {
+    "CheckUnpublishedMessageLogFileSize": false,
+    "Dummy": "Dummy"
+  },
+
+  "TestSiteSettings": {
+    "Exists": true,
+    "Enabled": true,
+    "TraceLevel": "Verbose",
+    "All": true,
+    "IPv4Prefixes": "192.168|10.1",
+    "TimeZones": "Pacific Standard Time|Central Standard Time",
+    "TimeZoneOffsets": "-8|-6"
+  },
+
+  "ResourceSettings": {
+    "Exists": true,
+    "ResourceModel": "2601B",
+    "FirmwareRevision": "3.0.1",
+    "ResourceName": "TCPIP0::192.168.0.150::inst0::INSTR",
+    "2602": "1.4.2.4 TCPIP0::192.168.0.254::gpib0,26::INSTR",
+    "2601A": "2.2.6   TCPIP0::192.168.0.50::inst0::INSTR",
+    "2601B": "3.0.1   TCPIP0::192.168.0.150::inst0::INSTR",
+    "2612A": "2.2.6   TCPIP0::192.168.0.150::inst0::INSTR",
+    "7510": "4.0.0   TCPIP0::192.168.0.144::inst0::INSTR",
+    "ClosedCaption": "closed",
+    "Language": "TSP",
+    "PingTimeout": "00:00:01.0000000",
+    "PingHops": 2
+  },
+
+  "DeviceErrorsSettings": {
+    "Exists": true,
+    "ErroneousCommand": "*CLL",
+    "ErrorAvailableMillisecondsDelay": 100,
+    "ExpectedCompoundErrorMessage": "-285,TSP Syntax Error at line 1: unexpected symbol near `*',level=20",
+    "ExpectedErrorNumber": -285,
+    "ExpectedErrorMessage": "TSP Syntax error at line 1: unexpected symbol near `*'",
+    "ExpectedErrorLevel": 20
+  },
+
+  "SubsystemsSettings": {
+    "Exists": true,
+    "_VISA_SESSION_": "",
+    "KeepAliveQueryCommand": "*OPC?",
+    "KeepAliveCommand": "*OPC",
+    "ReadTerminationEnabled": true,
+    "ReadTerminationCharacter": 10,
+    "_INITIAL_MEASURE_VALUES_": "",
+    "InitialPowerLineCycles": 1,
+    "InitialAutoZeroEnabled": true,
+    "InitialAutoRangeEnabled": true,
+    "InitialSenseFunction": "CurrentDC",
+    "InitialRemoteSenseSelected": false,
+    "_SMU_SETTINGS_": "",
+    "LineFrequency": 60,
+    "MaximumOutputPower": 22,
+    "_INITIAL_SOURCE_VALUES_": "",
+    "InitialFrontTerminalsSelected": true,
+    "InitialSourceFunction": "VoltageDC",
+    "InitialAutoDelayEnabled": true,
+    "InitialSourceLevel": 0,
+    "InitialSourceLimit": 0.000105,
+    "_DEVICE_ERRORS_": "",
+    "ErroneousCommand": "*CLL",
+    "_140_ms_does_not_work_": "",
+    "ErrorAvailableMillisecondsDelay": 100,
+    "ExpectedCompoundErrorMessage": "-285,TSP Syntax Error at line 1: unexpected symbol near `*',level=20",
+    "ExpectedErrorNumber": -285,
+    "ExpectedErrorMessage": "TSP Syntax error at line 1: unexpected symbol near `*'",
+    "ExpectedErrorLevel": 20,
+    "_DIGITAL_IO_VALUES_": "",
+    "DigitalOutputLineNumber": 1,
+    "DigitalInputLineNumber": 2,
+    "DigitalLineCount": 6
+  },
+
+  "ResistanceSettings": {
+    "Exists": true,
+    "_MEASUREMENT_SETTINGS_": "",
+    "AutoZeroEnabled": true,
+    "AutoRangeEnabled": true,
+    "SenseFunction": "Resistance",
+    "PowerLineCycles": 1,
+    "_SOURCE_SETTINGS_": "",
+    "FrontTerminalsSelected": true,
+    "RemoteSenseSelected": true,
+    "SourceFunction": "CurrentDC",
+    "SourceLevel": 0.02,
+    "_EXPECTED_VALUES_": "",
+    "ExpectedResistance": 100,
+    "ResistanceTolerance": 0.01
+  },
+
+  "CurrentSourceSettings": {
+    "Exists": true,
+    "_MEASUREMENT_SETTINGS_": "",
+    "AutoZeroEnabled": true,
+    "AutoRangeEnabled": true,
+    "SenseFunction": "VoltageDC",
+    "PowerLineCycles": 1,
+    "_CURRENT_SOURCE_SETTINGS_": "",
+    "FrontTerminalsSelected": true,
+    "RemoteSenseSelected": true,
+    "SourceReadBackEnabled": true,
+    "SourceFunction": "CurrentDC",
+    "SourceLevel": 0.01,
+    "_LOAD_VALUE_": "",
+    "LoadResistance": 100,
+    "MeasurementTolerance": 0.01
+  }
+}

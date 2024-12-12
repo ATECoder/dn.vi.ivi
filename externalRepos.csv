@@ -1,0 +1,11 @@
+RemoteRepoName,LocalRepoName,RemoteRepoURL,TargetDirectory
+arebis.UnitsAmounts,units.amounts,https://github.com/AteCoder/units-amounts.git,lib\vs\core
+dn.enums,enums,https://git@bitbucket.org/davidhary/dn.enums.git,lib\vs\core
+dn.json,json,https://git@bitbucket.org/davidhary/dn.json.git,lib\vs\core
+dn.logging,tracing,https://git@bitbucket.org/davidhary/dn.logging.git,lib\vs\core
+dn.std,std,https://git@bitbucket.org/davidhary/dn.std.git,lib\vs\core
+dn.tracing,tracing,https://git@bitbucket.org/davidhary/dn.tracing.git,lib\vs\core
+dn.vi.ivi,vi,https://github.com/ATECoder/dn.vi.ivi.git,lib\vs\vi
+dn.visa,visa,https://git@bitbucket.org/davidhary/dn.visa.git,lib\vs\io
+vs.ide,ide,https://git@bitbucket.org/davidhary/vs.ide.git,libraries\vs\core
+vs.wix,wix,https://git@bitbucket.org/davidhary/vs.wix.git,libraries\vs\core
