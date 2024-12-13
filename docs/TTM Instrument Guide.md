@@ -566,11 +566,12 @@ Licensed under [The Fair End User] and [MIT] Licenses.
 
 Unless required by applicable law or agreed to in writing, this software is provided "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 
-Source code is hosted on [Bit Bucket].
+Source code is hosted on [Bit Bucket].and [Github]
 
 [The Fair End User]: http://www.isr.cc/licenses/Fair%20End%20User%20Use%20License.pdf
 [MIT]: http://opensource.org/licenses/MIT
-[Bit Bucket]: https://bitbucket.org/davidhary
+[Bit Bucket].: https://www.bitbucket.org/davidhary
+[GitHub].: https://www.github.com/ATECoder
 [TTM Framework Guide]: TTM%20Framework%20Guide.md
 [TTM Loader Guide]: TTM%20Loader%20Guide.md
 [TTM API Guide]: TTM%20API%20Guide.md

@@ -27,6 +27,6 @@ The main types provided by this library are:
 cc.isr.Visa.MSTest is released as open source under the MIT license.
 Bug reports and contributions are welcome at the [VI Repository].
 
-[VI Repository]: https://bitbucket.org/davidhary/dn.vi
-[cc.isr.Visa.MSTest]: https://bitbucket.org/davidhary/dn.vi/src/visa/visa.mstest
+[VI Repository]: https://www.github.com/atecoder/ds.vi.ivi
+[cc.isr.Visa.MSTest]: https://github.com/atecoder/dn.vi.ivi/src/visa/visa.mstest
 

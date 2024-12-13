@@ -19,4 +19,4 @@ to send commands, such as "*IDN?\n", to your instrument.
 NI.SimpleReadWrite is released as open source under the MIT license.
 Bug reports and contributions are welcome at the [VI Repository].
 
-[VI Repository]: https://bitbucket.org/davidhary/dn.vi
+[VI Repository]: https://www.github.com/atecoder/ds.vi.ivi

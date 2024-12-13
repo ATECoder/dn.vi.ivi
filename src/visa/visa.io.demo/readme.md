@@ -22,6 +22,6 @@ Upon opening the program, a [VISA Win Controls] tree panel viewer control displa
 [cc.isr.Visa.IO.Demo] is released as open source under the MIT license.
 Bug reports and contributions are welcome at the [VI Repository].
 
-[VI Repository]: https://bitbucket.org/davidhary/dn.vi
-[cc.isr.Visa.IO.Demo]: https://bitbucket.org/davidhary/dn.vi/src/visa/visa.io.demo
-[VISA Win Controls]: https://bitbucket.org/davidhary/dn.vi/src/visa/visa.win.controls
+[VI Repository]: https://www.github.com/atecoder/ds.vi.ivi
+[cc.isr.Visa.IO.Demo]: https://github.com/atecoder/dn.vi.ivi/src/visa/visa.io.demo
+[VISA Win Controls]: https://github.com/atecoder/dn.vi.ivi/src/visa/visa.win.controls

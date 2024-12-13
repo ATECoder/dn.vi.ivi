@@ -13,5 +13,5 @@ Select List All from teh Implementation menu to list all the VISA implementation
 cc.isr.Visa.ResourceExplorer is released as open source under the MIT license.
 Bug reports and contributions are welcome at the [VI Repository].
 
-[VI Repository]: https://bitbucket.org/davidhary/dn.vi
+[VI Repository]: https://www.github.com/atecoder/ds.vi.ivi
 

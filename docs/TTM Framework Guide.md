@@ -139,11 +139,12 @@ Licensed under [The Fair End User] and [MIT] Licenses.
 
 Unless required by applicable law or agreed to in writing, this software is provided "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 
-Source code is hosted on [Bit Bucket].
+Source code is hosted on [Bit Bucket].and [Github]
 
 [The Fair End User]: http://www.isr.cc/licenses/Fair%20End%20User%20Use%20License.pdf
 [MIT]: http://opensource.org/licenses/MIT
-[Bit Bucket]: https://bitbucket.org/davidhary
+[Bit Bucket].: https://www.bitbucket.org/davidhary
+[GitHub].: https://www.github.com/ATECoder
 [IO Suite]: https://www.keysight.com/us/en/lib/software-detail/computer-software/io-libraries-suite-downloads-2175637.html
 [NI Visa]: http://ftp.ni.com/support/softlib/visa/VISA%20Run-Time%20Engine
 [.NET Framework]: https://dotnet.microsoft.com/en-us/download/dotnet/8.0

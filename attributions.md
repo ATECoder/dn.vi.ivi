@@ -23,9 +23,10 @@
 * [Stack overflow] - Joel Spolsky  
 * [.Net Foundation] - The .NET Foundation
 
-[VI Libraries]: https://www.bitbucket.org/davidhary/dn.vi
+[VI Libraries]: https://www.github.com/atecoder/dn.vi.ivi
 [VISA Libraries]: https://www.bitbucket.org/davidhary/dn.visa
-[Lua Global Support Libraries]: https://bitbucket.org/davidhary/tsp.core
+[TSP Support Framework]: https://www.github.com/atecoder/tsp.1.core
+[TSP TTM Framework]: https://www.github.com/atecoder/tsp.1.ttm
 
 [IVI Foundation]: https://www.ivifoundation.org
 [IVI Foundation]: http://www.ivifoundation.org

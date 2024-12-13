@@ -335,18 +335,19 @@ Licensed under [Creative Commons Attribution 4.0 International Public License] a
 
 Unless required by applicable law or agreed to in writing, this software is provided "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 
-Source code is hosted on [Bit Bucket].
+Source code is hosted on [Bit Bucket].and [Github]
 
 [Creative Commons Attribution 4.0 International Public License]: https://bitbucket.org/davidhary//dn.vi.git/license
 [MIT]: https://bitbucket.org/davidhary//dn.vi.git/license-code
-[TTM Driver 4 API Guide]: https://bitbucket.org/davidhary//dn.vi.git/src/vi/k2600.ttmware/docs/TTM%20Driver%204%20API%20Guide.md
-[TTM Firmware Guide]: https://bitbucket.org/davidhary//dn.vi.git/src/vi/k2600.ttmware/docs/TTM%20Firmware%20Guide.md
-[TTM Framework Guide]: https://bitbucket.org/davidhary//dn.vi.git/src/vi/k2600.ttmware/docs/TTM%20Framework%20Guide.md
-[TTM Instrument Guide]: https://bitbucket.org/davidhary//dn.vi.git/src/vi/k2600.ttmware/docs/TTM%20Instrument%20Guide.md
-[TTM Leaflet]: https://bitbucket.org/davidhary//dn.vi.git/src/vi/k2600.ttmware/docs/TTM%20Leaflet.md
-[TTM Loader Guide]: https://bitbucket.org/davidhary//dn.vi.git/src/vi/k2600.ttmware/docs/TTM%20Loader%20Guide.md
-[TTM Manual Test Guide]: https://bitbucket.org/davidhary//dn.vi.git/src/vi/k2600.ttmware/docs/TTM%20Manual%20Test%20Guide.md
+[TTM Driver 4 API Guide]: https://github.com/atecoder/dn.vi.ivi.git/src/docs/TTM%20Driver%204%20API%20Guide.md
+[TTM Firmware Guide]: https://github.com/atecoder/dn.vi.ivi.git/src/docs/TTM%20Firmware%20Guide.md
+[TTM Framework Guide]: https://github.com/atecoder/dn.vi.ivi.git/src/docs/TTM%20Framework%20Guide.md
+[TTM Instrument Guide]: https://github.com/atecoder/dn.vi.ivi.git/src/docs/TTM%20Instrument%20Guide.md
+[TTM Leaflet]: https://github.com/atecoder/dn.vi.ivi.git/src/docs/TTM%20Leaflet.md
+[TTM Loader Guide]: https://github.com/atecoder/dn.ttmware.git/src/docs/TTM%20Loader%20Guide.md
+[TTM Manual Test Guide]: https://github.com/atecoder/dn.vi.ivi.git/src/docs/TTM%20Manual%20Test%20Guide.md
 [The Fair End User]: http://www.isr.cc/licenses/Fair%20End%20User%20Use%20License.pdf
-[Bit Bucket]: https://bitbucket.org/davidhary
+[Bit Bucket].: https://www.bitbucket.org/davidhary
+[GitHub].: https://www.github.com/ATECoder
 [Lua](https://www.lua.org)
 [Keithley]: (https://www.keithley.com)

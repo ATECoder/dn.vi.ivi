@@ -164,6 +164,6 @@ which has issued a defect report.
 
 &copy; 2012 Integrated Scientific Resources, Inc. All rights reserved.
 
-[8.1.9111]: https://www.bitbucket.org/davidhary/dn.vi.core
-[vs.VI]: https://www.bitbucket.org/davidhary/vs.vi.core
+[8.1.9111]: https://www.github.com/atecoder/dn.vi.ivi
+[vs.VI]: https://www.github.com/atecoder/dn.vi.ivi
 [vs.Visa]: https://bitbucket.org/davidhary/vs.io.visa

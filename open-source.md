@@ -12,7 +12,7 @@ following sites:
 [Std Libraries]  
 [Units Amounts]  
 [VISA Libraries]  
-[Lua Global Support Libraries]
+[TSP Support Framework]
 
 <a name="Closed-software"></a>
 #### Closed software
@@ -33,10 +33,11 @@ the following sites:
 [Win Libraries]: https://bitbucket.org/davidhary/dn.win
 [Win Controls Libraries]: https://bitbucket.org/davidhary/dn.win.controls
 [Win Forms Libraries]: https://bitbucket.org/davidhary/dn.win.forms
-[Units Amounts]: https://bitbucket.org/davidhary/cc.isr.UnitsAmounts
-[VI Libraries]: https://www.bitbucket.org/davidhary/dn.vi
+[Units Amounts]: https://www.github.com/atrcoder/units-amounts
+[VI Libraries]: https://www.github.com/atecoder/dn.vi.ivi
 [VISA Libraries]: https://www.bitbucket.org/davidhary/dn.visa
-[Lua Global Support Libraries]: https://bitbucket.org/davidhary/tsp.core
+[TSP Support Framework]: https://www.github.com/atecoder/tsp.1.core
+[TSP TTM Framework]: https://www.github.com/atecoder/tsp.1.ttm
 
 [IVI Foundation]: https://www.ivifoundation.org
 [IVI Foundation]: http://www.ivifoundation.org

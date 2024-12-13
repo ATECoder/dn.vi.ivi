@@ -35,7 +35,7 @@ git clone git@bitbucket.org:davidhary/dn.automata.git
 git clone git@bitbucket.org:davidhary/cc.isr.UnitsAmounts
 git clone git@bitbucket.org:davidhary/vs.ide.git
 git clone git@bitbucket.org:davidhary/vs.wix.git
-git clone git@bitbucket.org:davidhary/dn.vi.git
+git clone https://github.com/atecoder/dn.vi.ivi.git
 git clone git@bitbucket.org:davidhary/dn.visa.git
 ```
 
@@ -52,8 +52,8 @@ Clone the repositories into the following folders (parents of the .git folder):
 %dnlib%\core\win.forms
 %vslib%\core\ide
 %vslib%\core\wix
-%dnlib%\io\vi
-%dnlib%\io\visa
+%dnlib%\vi\vi
+%dnlib%\vi\visa
 ```
 where %dnlib% and %vslib% are  the root folders of the .NET libraries, e.g., %my%\lib\vs 
 and %my%\libraries\vs, respectively, and %my% is the root folder of the .NET solutions
@@ -105,10 +105,12 @@ private [MEGA packages folder].
 [Win Libraries]: https://bitbucket.org/davidhary/dn.win
 [Win Controls Libraries]: https://bitbucket.org/davidhary/dn.win.controls
 [Win Forms Libraries]: https://bitbucket.org/davidhary/dn.win.forms
-[Units Amounts]: https://bitbucket.org/davidhary/cc.isr.UnitsAmounts
-[VI Libraries]: https://www.bitbucket.org/davidhary/dn.vi
+[Units Amounts]: https://www.github.com/atrcoder/units-amounts
+[VI Libraries]: https://www.github.com/atecoder/dn.vi.ivi
 [VISA Libraries]: https://www.bitbucket.org/davidhary/dn.visa
-[Lua Global Support Libraries]: https://bitbucket.org/davidhary/tsp.core
+[TSP Support Framework]: https://www.github.com/atecoder/tsp.1.core
+[TSP TTM Framework]: https://www.github.com/atecoder/tsp.1.ttm
+[TSP Support Framework]: https://www.github.com/atecoder/tsp.1.core
 
 [IVI Foundation]: https://www.ivifoundation.org
 [IVI Foundation]: http://www.ivifoundation.org

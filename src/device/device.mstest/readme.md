@@ -15,6 +15,6 @@ The [cc.isr.VI.Pith] tests do not require an active VISA device. These tests are
 [cc.isr.VI.Device.MSTest] is released as open source under the MIT license.
 Bug reports and contributions are welcome at the [VI Repository].
 
-[VI Repository]: https://bitbucket.org/davidhary/dn.vi
-[cc.isr.VI.Device.MSTest]: https://bitbucket.org/davidhary/dn.vi/src/device/device.mstest/
-[cc.isr.VI.Pith]: https://bitbucket.org/davidhary/dn.vi/src/resource/pith/
+[VI Repository]: https://www.github.com/atecoder/ds.vi.ivi
+[cc.isr.VI.Device.MSTest]: https://github.com/atecoder/dn.vi.ivi/src/device/device.mstest/
+[cc.isr.VI.Pith]: https://github.com/atecoder/dn.vi.ivi/src/resource/pith/

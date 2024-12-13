@@ -20,4 +20,4 @@ returns a handle that you can use to check the progress of the operation.
 NI.SimpleAsynchronousReadWrite is released as open source under the MIT license.
 Bug reports and contributions are welcome at the [VI Repository].
 
-[VI Repository]: https://bitbucket.org/davidhary/dn.vi
+[VI Repository]: https://www.github.com/atecoder/ds.vi.ivi

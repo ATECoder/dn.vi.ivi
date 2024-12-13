@@ -23,7 +23,7 @@ The main types provided by this library are:
 [cc.isr.Visa] is released as open source under the MIT license.
 Bug reports and contributions are welcome at the [VI Repository].
 
-[VI Repository]: https://bitbucket.org/davidhary/dn.vi
-[cc.isr.Visa]: https://bitbucket.org/davidhary/dn.vi/src/visa
+[VI Repository]: https://www.github.com/atecoder/ds.vi.ivi
+[cc.isr.Visa]: https://github.com/atecoder/dn.vi.ivi/src/visa
 [Kelary.Ivi.Visa]: https://www.nuget.org/packages/Kelary.Ivi.Visa
 

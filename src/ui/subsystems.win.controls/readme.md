@@ -23,6 +23,6 @@ The main types provided by this library are:
 [cc.isr.VI.SubsystemsWinControls] is released as open source under the MIT license.
 Bug reports and contributions are welcome at the [VI Repository].
 
-[VI Repository]: https://bitbucket.org/davidhary/dn.vi
-[cc.isr.VI.SubsystemsWinControls]: https://bitbucket.org/davidhary/dn.vi/src/ui/
+[VI Repository]: https://www.github.com/atecoder/ds.vi.ivi
+[cc.isr.VI.SubsystemsWinControls]: https://github.com/atecoder/dn.vi.ivi/src/ui/
 

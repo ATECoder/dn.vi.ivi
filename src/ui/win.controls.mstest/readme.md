@@ -13,6 +13,6 @@ The [cc.isr.VI.WinControls] tests do not require an active VISA device. These te
 [cc.isr.VI.WinControls.MSTest] is released as open source under the MIT license.
 Bug reports and contributions are welcome at the [VI Repository].
 
-[VI Repository]: https://bitbucket.org/davidhary/dn.vi
-[cc.isr.VI.WinControls.MSTest]: https://bitbucket.org/davidhary/dn.vi/src/ui/win.controls.mstest/
-[cc.isr.VI.WinControls]: https://bitbucket.org/davidhary/dn.vi/src/ui/win.controls/
+[VI Repository]: https://www.github.com/atecoder/ds.vi.ivi
+[cc.isr.VI.WinControls.MSTest]: https://github.com/atecoder/dn.vi.ivi/src/ui/win.controls.mstest/
+[cc.isr.VI.WinControls]: https://github.com/atecoder/dn.vi.ivi/src/ui/win.controls/

@@ -49,5 +49,5 @@ Keithley Instruments Inc., Model 2612A, 1214466, 2.2.6
 IviVisaComparibilityDemo is released as open source under the MIT license.
 Bug reports and contributions are welcome at the [VI Repository].
 
-[VI Repository]: https://bitbucket.org/davidhary/dn.vi
+[VI Repository]: https://www.github.com/atecoder/ds.vi.ivi
 
