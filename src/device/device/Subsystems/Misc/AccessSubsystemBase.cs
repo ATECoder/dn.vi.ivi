@@ -53,35 +53,81 @@ public abstract class AccessSubsystemBase( StatusSubsystemBase statusSubsystem )
         protected set => this.SetProperty( ref this._certified, value );
     }
 
-    /// <summary>   Certifies. </summary>
-    /// <remarks>   2024-11-21. </remarks>
-    /// <param name="value">    The value. </param>
-    /// <param name="details">  [out] The details. </param>
-    /// <returns>
-    /// <c>null</c> if not known; <c>true</c> if certified on; otherwise, <c>false</c>.
-    /// </returns>
-    public abstract bool Certify( string value, out string details );
-
-    /// <summary>   Queries if the instrument is certified for Api access. </summary>
+    /// <summary>   Certifies this instrument for Api access if it is registered. </summary>
     /// <remarks>   2024-08-24. </remarks>
-    /// <param name="serialNumber"> The serial number. </param>
     /// <param name="details">      [out] The details. </param>
     /// <returns>   <c>true</c> if the instrument is certified; otherwise, false. </returns>
-    public abstract bool IsCertified( string serialNumber, out string details );
+    public abstract bool CertifyIfRegistered( out string details );
 
-    /// <summary>   Registers the controller instrument. </summary>
+    /// <summary>   Registers this controller instrument and certifies is for API access. </summary>
     /// <remarks>   2024-08-24. </remarks>
+    /// <param name="details">      [out] The details. </param>
+    /// <returns>   True if it succeeds, false if it fails. </returns>
+    public bool RegisterAndCertify( out string details )
+    {
+        details = "Supported only by DAICEL MESA";
+        return false;
+    }
+
+    /// <summary>
+    /// Decertifies this instrument. This does not remove the instrument from the registration
+    /// dictionary.
+    /// </summary>
+    /// <remarks>   2024-12-09. </remarks>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <param name="details">                      [out] The details. </param>
+    /// <returns>   True if it succeeds, false if it fails. </returns>
+    public abstract bool Decertify( out string details );
+
+    /// <summary>   Registers an instrument with the specified serial number. </summary>
+    /// <remarks>   2024-12-12. </remarks>
     /// <param name="serialNumber"> The serial number. </param>
     /// <param name="details">      [out] The details. </param>
     /// <returns>   True if it succeeds, false if it fails. </returns>
-    public abstract bool Register( string serialNumber, out string details );
+    public bool Register( string serialNumber, out string details )
+    {
+        details = $"{serialNumber} Supported only by DAICEL MESA";
+        return false;
+    }
 
-    /// <summary>   Queries if the controller instrument is registered. </summary>
+    /// <summary>   Registers this instrument. </summary>
+    /// <remarks>   2024-12-12. </remarks>
+    /// <param name="details">      [out] The details. </param>
+    /// <returns>   True if it succeeds, false if it fails. </returns>
+    public bool Register( out string details )
+    {
+        details = "Supported only by DAICEL MESA";
+        return false;
+    }
+
+    /// <summary>
+    /// Deregisters an instrument with the specified serial number removing this instrument from the
+    /// registration list but not removing the API access code from the current instrument.
+    /// </summary>
+    /// <remarks>   2024-12-12. </remarks>
+    /// <param name="serialNumber"> The serial number. </param>
+    /// <param name="details">      [out] The details. </param>
+    /// <returns>   True if it succeeds, false if it fails. </returns>
+    public abstract bool Deregister( string serialNumber, out string details );
+
+    /// <summary>   Deregisters this instrument. </summary>
+    /// <remarks>   2024-12-12. </remarks>
+    /// <param name="details">      [out] The details. </param>
+    public abstract bool Deregister( out string details );
+
+    /// <summary>   Queries an instrument with the specified serial number is registered. </summary>
     /// <remarks>   2024-08-24. </remarks>
     /// <param name="serialNumber"> The serial number. </param>
     /// <param name="details">      [out] The details. </param>
     /// <returns>   <c>true</c> if the instrument is certified; otherwise, false. </returns>
     public abstract bool IsRegistered( string serialNumber, out string details );
+
+    /// <summary>   Queries if the controller instrument is registered. </summary>
+    /// <remarks>   2024-08-24. </remarks>
+    /// <param name="details">      [out] The details. </param>
+    /// <returns>   <c>true</c> if the instrument is certified; otherwise, false. </returns>
+    public abstract bool IsRegistered( out string details );
 
     /// <summary> Checks if the custom scripts were loaded successfully. </summary>
     /// <returns> <c>true</c> if loaded; otherwise, <c>false</c>. </returns>

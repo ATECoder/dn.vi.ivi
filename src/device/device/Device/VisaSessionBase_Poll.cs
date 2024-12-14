@@ -189,7 +189,7 @@ public partial class VisaSessionBase
                         // handling the service request. Possibly to handle an error reading,
                         // which is now handled as the code changed to read the status byte and handle
                         // an error if necessary.
-                        // _ = this.Session.Delay Read Status Register();
+                        // _ = this.Session.Delay Read Status Register;
                     }
 
                     this.PollMessageAvailable = true;

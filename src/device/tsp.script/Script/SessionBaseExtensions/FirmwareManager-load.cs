@@ -6,6 +6,26 @@ namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
 public static partial class FirmwareManager
 {
+    /// <summary>   A Pith.SessionBase? extension method that loads script file. </summary>
+    /// <remarks>   2024-12-12. </remarks>
+    /// <param name="session">      The session. </param>
+    /// <param name="scriptName">   Contains the script name. </param>
+    /// <param name="filePath">     Full pathname of the file. </param>
+    public static bool LoadScriptFile( this Pith.SessionBase? session, string scriptName, string filePath )
+    {
+        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
+        if ( scriptName is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
+        if ( filePath is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( filePath ) );
+
+        // read the script source from file.
+        string? scriptSource = FirmwareScriptBase.ReadScript( filePath );
+        if ( string.IsNullOrWhiteSpace( scriptSource ) ) throw new ArgumentNullException( $"Failed reading script source from {filePath}" );
+
+        // This reads the entire source from the file and then loads the file line by line as source code or Binary
+        (bool timedOut, _, _) = session.LoadScriptSource( scriptName, scriptSource! );
+        return !timedOut;
+    }
+
     /// <summary>   Loads the script embedded in the string array and issues a wait complete. </summary>
     /// <remarks>   2024-09-05. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
@@ -16,7 +36,7 @@ public static partial class FirmwareManager
     public static void LoadScript( this Pith.SessionBase? session, string scriptName, string[] scriptLines )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
-        if ( scriptName is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( session ) );
+        if ( scriptName is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
         if ( scriptLines is null ) throw new ArgumentNullException( nameof( scriptLines ) );
 
         string firstLine = scriptLines[0];

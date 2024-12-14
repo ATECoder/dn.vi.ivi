@@ -233,7 +233,7 @@ public enum OperationEventBits
     [System.ComponentModel.Description( "User Register" )]
     UserRegister = 0x1000,
 
-    /// <summary>User Register.</summary>
+    /// <summary>Instrument summary. </summary>
     [System.ComponentModel.Description( "Instrument summary" )]
     InstrumentSummary = 0x2000,
 
