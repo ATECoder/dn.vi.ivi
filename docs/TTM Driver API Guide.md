@@ -56,11 +56,12 @@ This document describes how to control the instrument remotely.
 
 ## Changes[](#){name=Changes}
 
-### Revision 3.1[](#){name=Revision_3.1]
+### Revision 3.0[](#){name=Revision_3.1}
+
+### Revision 4.0[](#){name=Revision_4.0}
 
 The meter must be reset and reconfigured when switching between shunt and thermal transient measurements.
 
-### Revision 4.0[](#){name=Revision_4.0}
 
 The driver library (isr.VI.Tsp.K2600.Ttm) version 4.x breaks compatibility with Driver 3.x. Driver 3.x is still provided for backward compatibility. The following major changes where introduced:
 

@@ -1,0 +1,69 @@
+<!DOCTYPE html []>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="author" content="MarkdownViewer++" />
+    <title>TTM Manual Test Guide.md</title>
+    <style type="text/css">
+            
+/* Avoid page breaks inside the most common attributes, especially for exports (i.e. PDF) */
+td, h1, h2, h3, h4, h5, p, ul, ol, li {
+    page-break-inside: avoid; 
+}
+
+        </style>
+  </head>
+  <body>
+    <h1 id="thermal-transient-metertm-manual-test-guide">Thermal Transient Meter™ Manual Test Guide</h1>
+    <h2 id="startup">Startup</h2>
+    <ul>
+      <li>Turn the instrument on.</li>
+      <li>Press the <strong>Run</strong> button.</li>
+    </ul>
+    <p>
+      <a name="Thermal-Transient-Test"></a>
+    </p>
+    <h2 id="thermal-transient-test">Thermal Transient Test</h2>
+    <ul>
+      <li>Press the <strong>Trig</strong> button.</li>
+      <li>The instrument display the initial resistance, thermal transient and final resistance values.</li>
+    </ul>
+    <p>
+      <a name="Toggle-The-Source"></a>
+    </p>
+    <h2 id="toggle-the-source">Toggle the source</h2>
+    <ul>
+      <li>Press the <strong>Menu</strong> button.</li>
+      <li>Select the <strong>Resistance</strong> menu.</li>
+      <li>Select the <strong>Source</strong> menu.</li>
+      <li>Change the source from <strong>Voltage</strong> to <strong>Current</strong> or vice versa.</li>
+      <li>Select the <strong>Level</strong> menu.</li>
+      <li>Verify that a voltage level is specified for a Voltage source or current level for a Current souce.</li>
+      <li>Repeat the <a href="#Thermal-Transient-Test">test</a>.</li>
+    </ul>
+    <p>
+      <a name="Open-Leads-Test"></a>
+    </p>
+    <h2 id="open-leads-test">Open leads test</h2>
+    <ul>
+      <li>Run an open leads test with contact check enabled.
+<ul><li>Verify open leads display.</li></ul></li>
+      <li>Run an open leads and open DUT test.
+<ul><li>Verify open leads display.</li></ul></li>
+      <li>Turn off contact check.
+<ul><li>Run an open leads test -- should overflow.</li><li>Run a normal test.</li></ul></li>
+      <li>Restore contact check settings.
+<ul><li>Restart the instrument and validate contact check settings.</li></ul></li>
+    </ul>
+    <p>
+      <a name="Compliance-Test"></a>
+    </p>
+    <h2 id="compliance-test">Compliance Test</h2>
+    <ul>
+      <li>Change voltage or current settings to force compliance.</li>
+      <li>Run a <a href="#Thermal-Transient-Test">test</a>. The test should fail.</li>
+      <li>Change the Status settings from 66 to 2.</li>
+      <li>The <a href="#Thermal-Transient-Test">test</a> should no longer fail.</li>
+    </ul>
+  </body>
+</html>

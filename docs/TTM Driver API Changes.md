@@ -24,7 +24,7 @@ The `Setting Assembly Member Type` tells the `Meter` class where to look for the
 
 ## Legacy Device Methods[](#){name=Legacy_Device_Methods}
 
-|Name|Associated Object|Name|Description|
+|Name | Associated Object | Name | Description|
 |----|----|----|----|
 | AbortMeasurement | Meter | AbortMeasurement | Aborts the measurements by issuing a trigger if awaiting a trigger | 
 | ColdResistanceVoltageApertureSetter | Meter.InitialResistance | WriteCurrentLevel | Sets the aperture for measuring the initial resistance | 
