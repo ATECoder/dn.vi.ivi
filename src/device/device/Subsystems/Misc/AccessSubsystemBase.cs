@@ -63,9 +63,9 @@ public abstract class AccessSubsystemBase( StatusSubsystemBase statusSubsystem )
     /// <remarks>   2024-08-24. </remarks>
     /// <param name="details">      [out] The details. </param>
     /// <returns>   True if it succeeds, false if it fails. </returns>
-    public bool RegisterAndCertify( out string details )
+    public virtual bool RegisterAndCertify( out string details )
     {
-        details = "Supported only by DAICEL MESA";
+        details = "Please contact the developer to request support for this feature.";
         return false;
     }
 
@@ -85,9 +85,9 @@ public abstract class AccessSubsystemBase( StatusSubsystemBase statusSubsystem )
     /// <param name="serialNumber"> The serial number. </param>
     /// <param name="details">      [out] The details. </param>
     /// <returns>   True if it succeeds, false if it fails. </returns>
-    public bool Register( string serialNumber, out string details )
+    public virtual bool Register( string serialNumber, out string details )
     {
-        details = $"{serialNumber} Supported only by DAICEL MESA";
+        details = $"{serialNumber} Please contact the developer to request support for this feature.";
         return false;
     }
 
@@ -95,9 +95,9 @@ public abstract class AccessSubsystemBase( StatusSubsystemBase statusSubsystem )
     /// <remarks>   2024-12-12. </remarks>
     /// <param name="details">      [out] The details. </param>
     /// <returns>   True if it succeeds, false if it fails. </returns>
-    public bool Register( out string details )
+    public virtual bool Register( out string details )
     {
-        details = "Supported only by DAICEL MESA";
+        details = "Please contact the developer to request support for this feature.";
         return false;
     }
 

@@ -37,33 +37,13 @@ Sort File Names=0
 Sort Ascending=1
 Append to output file=0
 [Search]
-9100
+9111
 [Replace]
 9111
 [Search]
-9110
-[Replace]
-9111
-[Search]
-.30562<
-[Replace]
 .101<
-[Search]
-.34936<
-[Replace]
-.101<
-[Search]
-.36241<
-[Replace]
-.101<
-[Search]
-.36096<
-[Replace]
-.101<
-[Search]
-.36233<
 [Replace]
 .101<
 [Path]
-C:\my\lib\vs\io\vi\src\*.props
+C:\my\lib\vs\vi\vi\src\*.props
 [End of Search and Replace Script]
