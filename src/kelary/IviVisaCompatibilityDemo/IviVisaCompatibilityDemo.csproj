@@ -15,6 +15,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="cmds\test.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="version.build.props">
       <DependentUpon>version.build.tt</DependentUpon>
       <DesignTime>True</DesignTime>

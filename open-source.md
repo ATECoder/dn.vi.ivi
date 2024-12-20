@@ -1,4 +1,4 @@
-### Open Source
+# Open Source
 
 Virtual Instruments (VI) libraries using the [IVI Foundation] VISA.
 
@@ -6,7 +6,7 @@ Virtual Instruments (VI) libraries using the [IVI Foundation] VISA.
 * [Closed Software](#Closed-software)
 
 <a name="Open-Source"></a>
-#### Open source
+## Open source
 Open source used by this software is described and licensed at the
 following sites:  
 [Std Libraries]  
@@ -15,7 +15,7 @@ following sites:
 [TSP Support Framework]
 
 <a name="Closed-software"></a>
-#### Closed software
+## Closed software
 Closed software used by this software are described and licensed on
 the following sites:  
 [Std Libraries]

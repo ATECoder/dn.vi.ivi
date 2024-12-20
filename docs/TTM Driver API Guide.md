@@ -50,15 +50,19 @@ Applicable Virtual Instrument (VI) Framework version: 8.1.x
     - [isr.TMM.Driver Files](#isr.TMM.Driver_Files)
 - [Attributions](#Attributions)
 
-## This Guide[](#){name=This_Guide}
+<a name="This_Guide"></a>
+## This Guide
 
 This document describes how to control the instrument remotely.
 
-## Changes[](#){name=Changes}
+<a name="Changes"></a>
+## Changes
 
-### Revision 3.0[](#){name=Revision_3.1}
+<a name="Revision_3.1"></a>
+### Revision 3.0
 
-### Revision 4.0[](#){name=Revision_4.0}
+<a name="Revision_4.0"></a>
+### Revision 4.0
 
 The meter must be reset and reconfigured when switching between shunt and thermal transient measurements.
 
@@ -71,7 +75,8 @@ The driver library (isr.VI.Tsp.K2600.Ttm) version 4.x breaks compatibility with 
 - Additional objects were defined to handle other subsystems such as Display and Status.
 - The Source Measure, Display and Status subsystems are encapsulated in the Master Device object, which represents a Test Script Processor instrument such as the 2600 Meter.
 
-## API Changes[](#){name=API_Changes}
+<a name="API_Changes"></a>
+## API Changes
 
 - The thermal transient elements include additional configuration settings.
 - The API implement equality functions that allow to determine changes in configuration settings.
@@ -80,9 +85,11 @@ The driver library (isr.VI.Tsp.K2600.Ttm) version 4.x breaks compatibility with 
 - The measure command clears the execution state.
 - New API elements allow detecting changed configurations and applying only new configuration values. Note that before measuring shunt resistance after measuring thermal transient, all configuration values must be applied.
 
-### Code Breaking Chances[](#){name=Code_Breaking_Chances}
+<a name="Code_Breaking_Chances"></a>
+### Code Breaking Chances
  
-#### Trace Messages[](#){name=Trace_Messages}
+<a name="Trace_Messages"></a>
+#### Trace Messages
 
 The driver uses new TraceMessage and TraceMessageEventArgs classes instead of the MessageEventArgs class. Specifically, the following changes are called for:
 
@@ -120,7 +127,8 @@ The driver uses new TraceMessage and TraceMessageEventArgs classes instead of th
 #End Region
 ```
 
-#### Return Values[](#){name=Return_Values}
+<a name="Return_Values"></a>
+#### Return Values
 
 The uses exceptions rather than return values to signal failures of operations.For example, the OpenSession command may raise the ArgumentNullException or OperationFailedException exceptions and could be handled as follows:
 
@@ -148,35 +156,43 @@ Catch ex As Exception
 End Try
 ```
 
-#### Connect using the Open Session Method[](#){name=Connect_using_Open_Session}
+<a name="Connect_using_Open_Session"></a>
+#### Connect using the Open Session Method
 
 Connecting to and disconnecting from the instrument is done using _MasterDevice_ Open and Close session methods.
 
-## Testing the Library[](#){name=Testing_the_Library}
+<a name="Testing_the_Library"></a>
+## Testing the Library
 
 Use the TTM Driver Tester program and TTM Tester Guide to study and test the TTM API.
 
-## Using the API[](#){name=Using_the_API}
+<a name="Using_the_API"></a>
+## Using the API
 
-### Developer Source Code[](#){name=Developer_Source_Code}
+<a name="Developer_Source_Code"></a>
+### Developer Source Code
 
 The source code for the API and Tester application are included with this distribution. Source code is installed in the user folder, e.g., c:\\Users\\<_user_name_\>/ISR/LIBRARIES/VS/VI/TTM.4.x.
 
 The TTM Driver source code includes the driver library (_isr.Driver.Library_) project and the driver tester program (_isr.Driver.Tester_) projects.
 
-### Compiling the developer source code[](#){name=Compiling_the_developer_source_code}
+<a name="Compiling_the_developer_source_code"></a>
+### Compiling the developer source code
 
 It is recommended that you compile the developer source code using you current version of the National Instruments VISA drivers.
 
-### Addressing the Driver[](#){name=Addressing_the_Driver}
+<a name="Addressing_the_Driver"></a>
+### Addressing the Driver
 
 The driver can be addressed by adding the driver source code to a Visual Studio project (recommended) or by referencing the driver DLL.
 
-### Recommended[](#){name=Recommended}
+<a name="Recommended"></a>
+### Recommended
 
 Adding the driver source code to your project is the preferred way because the code is less likely to conflict with dynamic link libraries that might be used by your main code. Specifically, the driver uses a particular National Instruments VISA library, which might conflict with the VISA library installed on your computer. By adding the driver source code library to your project you will be compiling the driver to use the same VISA link library as your code.
 
-### Adding the source code[](#){name=Adding_the_source_code}
+<a name="Adding_the_source_code"></a>
+### Adding the source code
 
 You can add a copy of the source code to your solution. Otherwise, you could add the code from where the source code solution was installed on your computer.
 
@@ -190,13 +206,15 @@ This adds a reference to the TTM driver library to your project and adds the dri
 
 It is recommended that commit the code as first installed into your version control system thus having access to the original source code.
 
-### Adding a Reference to the DLL[](#){name=Adding_Reference_to_the_DLL}
+<a name="Adding_Reference_to_the_DLL"></a>
+### Adding a Reference to the DLL
 
 Alternatively, you could use the driver link library as is by adding a reference to the DLL:
 
 From the Add Reference dialog of the Visual Studio project, browse to the location of the compiled driver (see [Compiling the developer source code](#1290D547A9826AD34FA430E0DA0231FE0DCC4013)) and select the driver DLL: _isr.VI.Tsp.K2600.Ttm.dll_. This will add the _isr.VI.Tsp.K2600.Ttm_ reference to your project.
 
-### Instantiating the Interface[](#){name=Instantiating_the_Interface}
+<a name="Instantiating_the_Interface"></a>
+### Instantiating the Interface
 
 Instantiate the ISR TTM Driver as follows:
 
@@ -206,7 +224,8 @@ Dim meter As New Device()
 
 This instantiates the meter.
 
-### Trace Message Handling[](#){name=Trace_Message_Handling}
+<a name="Trace_Message_Handling"></a>
+### Trace Message Handling
 
 The driver sends messages the TraceMessageEvent events (see [Trace Messages](#325F86AB501EC8B8FB113943848FEE6E22358F45)). These events can be handled as follows:
 
@@ -242,7 +261,8 @@ The driver sends messages the TraceMessageEvent events (see [Trace Messages](#32
 #End Region
 ```
 
-### Connecting to the Instrument[](#){name=Trace_Message_Handling}
+<a name="Trace_Message_Handling"></a>
+### Connecting to the Instrument
 
 Use the OpenSession method to Connect the meter:
 
@@ -260,10 +280,11 @@ End Try
 
 This connects the meter to the device connected to the GPIB Board 0 at address 26.
 
-### Configuring the Measurement[](#){name=Configuring_the_Measurement}
+<a name="Configuring_the_Measurement"></a>
+### Configuring the Measurement
 
-
-#### The Part Element[](#){name=The_Part_Element}
+<a name="The_Part_Element"></a>
+#### The Part Element
 
 Configuration parameters and measurement values use both part and meter elements.
 
@@ -276,7 +297,8 @@ The meter elements use the same class to hold their test parameters. Moreover, w
 Private WithEvents _Part As Part
 ```
 
-#### TTM Measurements[](#){name=TTM_Measurements}
+<a name="TTM_Measurements"></a>
+#### TTM Measurements
 
 ```
 ' Set the current to 10mA
@@ -322,7 +344,8 @@ Catch ex As Exception
 End Try
 ```
 
-#### Shunt Measurement[](#){name=Shunt_Measurement}
+<a name="Shunt_Measurement"></a>
+#### Shunt Measurement
 
 As with the thermal transient measurement, the configuration parameters are set in the part element which is updated by the meter element and can be used with binding to update the user interface.
 
@@ -356,9 +379,11 @@ Catch ex As Exception
 End Try
 ```
 
-#### Making Measurements[](#){name=Making_Measurements}
+<a name="Making_Measurements"></a>
+#### Making Measurements
 
-##### Initial Resistance[](#){name=Initial_Resistance}
+<a name="Initial_Resistance"></a>
+##### Initial Resistance
 
 The following commands measure the initial resistance.
 
@@ -371,7 +396,8 @@ Catch ex As Exception
 End Try
 ```
 
-##3## Thermal Transient[](#){name=Thermal_Transient}
+<a name="Thermal_Transient"></a>
+##3## Thermal Transient
 
 The following commands measure the thermal transient.
 
@@ -383,7 +409,8 @@ Catch ex As Exception
 End Try
 ```
 
-##### Final Resistance[](#){name=Final_Resistance}
+<a name="Final_Resistance"></a>
+##### Final Resistance
 
 The following commands measure the final resistance.
 ```
@@ -394,7 +421,8 @@ Catch ex As Exception
 End Try
 ```
 
-##### Shunt Resistance[](#){name=Shunt_Resistance}
+<a name="Shunt_Resistance"></a>
+##### Shunt Resistance
 
 The following commands measure the shunt resistance.
 
@@ -406,7 +434,8 @@ Catch ex As Exception
 End Try
 ```
 
-#### Updating Display Values[](#){name=">Updating_Display_Values</a>
+<a name="">Updating_Display_Values</a>
+#### Updating Display Values
 
 Display values could be updated by binding or by directly handling the property changed events of the elements as follows:
 
@@ -582,9 +611,11 @@ Me._ThermalTransientVoltageTextBox = New System.Windows.Forms.TextBox()
 #End Region
 ```
 
-### Making Triggered Measurements[](#){name=Making_Triggered_Measurements}
+<a name="Making_Triggered_Measurements"></a>
+### Making Triggered Measurements
 
-### Priming[](#){name=Priming}
+<a name="Priming"></a>
+### Priming
 
 The following command prepares the instrument to wait for an external trigger.
 
@@ -597,7 +628,8 @@ Catch ex As Exception
 End Try
 ```
 
-### Triggering[](#){name=Triggering}
+<a name="Triggering"></a>
+### Triggering
 
 The instrument provides full hand shake for controlling the measurement by way of thedigital I/O:
 
@@ -607,7 +639,8 @@ The instrument provides full hand shake for controlling the measurement by way o
 
 See the TTM Instrument User's Guide for more information on the digital I/O
 
-### Reading[](#){name=Reading}
+<a name="Reading"></a>
+### Reading
 
 The following commands wait for measurement completion and then reads the measured data. The property changed handlers (see [Updating Display Values](#Updating_Display_Values)) will update the values.
 
@@ -624,13 +657,15 @@ Do Until done
 Loop
 ```
 
-### Installing the Library with Your Project[](#){name=Installing}
+<a name="Installing"></a>
+### Installing the Library with Your Project
 
 Include the ISR TTM Driver library and referenced libraries ([isr.TMM.Driver Files](#3C4ED0823B469B1F9FB83D4ED6EC3AE865949AB7)) with your project.
 
 Check the ISR TTM Driver read me file for additional pre-requisites.
 
-### isr.TMM.Driver Files[](#){name=isr.TMM.Driver Files}
+<a name="isr.TMM.Driver Files"></a>
+### isr.TMM.Driver Files
 
 The ISR TTM driver includes the following files:
 
@@ -645,7 +680,8 @@ Additional Required Installations:
 - NI VISA runtime
 - .NET 2010
 
-### Attributions[](#){name=Attributions}
+<a name="Attributions"></a>
+### Attributions
 
 Last Updated 2024-10-09
 

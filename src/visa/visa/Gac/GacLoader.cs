@@ -163,8 +163,9 @@ public static class GacLoader
         {
             try
             {
-                System.Reflection.Assembly inst = GacLoader.Load( new System.Reflection.AssemblyName( visaLibrary.Location.Substring( visaLibrary.Location.IndexOf( "," ) + 1 ) ) );
-                Console.WriteLine( $"{nameof( GacLoader )}: Loaded {inst.FullName}." );
+                // load the installed VISA assembly.
+                System.Reflection.Assembly visaAssembly = GacLoader.Load( new System.Reflection.AssemblyName( visaLibrary.Location.Substring( visaLibrary.Location.IndexOf( "," ) + 1 ) ) );
+                Console.WriteLine( $"{nameof( GacLoader )}: Loaded {visaAssembly.FullName}." );
                 GacLoader.LoadedImplementation = visaLibrary;
             }
             catch ( Exception exception )

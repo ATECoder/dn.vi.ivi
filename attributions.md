@@ -1,10 +1,10 @@
-### Attributions
+# Attributions
 
 * [Facilitated By](#Facilitated-By)
 * [Acknowledgments](#Acknowledgments)
 
-<a name="FacilitatedBy"></a>
-#### Facilitated By
+<a name="Facilitated-By"></a>
+## Facilitated By
 * [Visual Studio]
 * [Jarte RTF Editor]
 * [Wix Toolset]
@@ -17,7 +17,7 @@
 * [NI VISA] - NI Visa Libraries
 
 <a name="Acknowledgments"></a>
-#### Acknowledgments
+## Acknowledgments
 * [Its all a remix] -- we are but a spec on the shoulders of giants  
 * [John Simmons] - outlaw programmer  
 * [Stack overflow] - Joel Spolsky  

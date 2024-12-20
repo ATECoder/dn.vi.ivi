@@ -1,20 +1,20 @@
-### Simple Read/Write  
+# Simple Read/Write  
 
-#### Category: VISA  
+## Category: VISA  
 
-#### Description:
+## Description:
 
 This example demonstrates how to use the IVI-VISA .NET Library to 
 perform simple synchronous I/O operations.  You can use this example 
 to send commands, such as "*IDN?\n", to your instrument.  
 
-#### Language: C#  
+## Language: C#  
 
-#### Required Software: IVI-VISA  
+## Required Software: IVI-VISA  
 
-#### Required Hardware: Any message-based device
+## Required Hardware: Any message-based device
 
-### Feedback
+# Feedback
 
 NI.SimpleReadWrite is released as open source under the MIT license.
 Bug reports and contributions are welcome at the [VI Repository].

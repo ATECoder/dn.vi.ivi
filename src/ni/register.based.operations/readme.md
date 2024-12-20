@@ -1,18 +1,18 @@
-### Register Based Operations
+# Register Based Operations
 
-#### Category: VISA
+## Category: VISA
 
-#### Description:
+## Description:
 This application illustrates how to use In/Out/MoveIn/MoveOut on register-based
 sessions.
 
-#### Language: C#  
+## Language: C#  
 
-#### Required Software: IVI-VISA  
+## Required Software: IVI-VISA  
 
-#### Required Hardware: Any message-based device
+## Required Hardware: Any message-based device
 
-### Feedback
+# Feedback
 
 NI.RegisterBasedOperations is released as open source under the MIT license.
 Bug reports and contributions are welcome at the [VI Repository].

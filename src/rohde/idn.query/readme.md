@@ -18,7 +18,7 @@ property _ResourceName_ contains the resource name selected in Resource Tree Vie
        1. TCPIP0::192:168:0:144::inst0::INSTR
        1. TCPIP0::192:168:0:50::inst0::INSTR
 
-### Note
+# Note
 The list of resources consists of the resources that are explicitly defined in the VISA vendor's (e.g., Keysight) resource manager. The Keysight resource manager stores the resource information are stored in a locked SQLite local database. The National Instruments resource manager stores the resource information in an INI type file under the common program data folder (e.g., `c:\program data\national instruments`). The Rohde & Schwarz resources are stored in a CSV type file under the common program data folder.
 
 ## Specifications
@@ -28,7 +28,7 @@ The list of resources consists of the resources that are explicitly defined in t
 
 ## Outputs
 
-### .NET 9.0
+# .NET 9.0
 ```
 Running under .NETCoreApp,Version=v9.0.
 VISA.NET Shared Components version 7.2.0.0.

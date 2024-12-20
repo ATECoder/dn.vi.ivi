@@ -5,13 +5,15 @@
 * [Legacy Device Methods](#name=Legacy_Device_Methods)
 * [Legacy Device Properties](#Legacy_Device_Properties)
 
-## Description[](#){name=Description}
+<a name="Description"></a>
+## Description
 
 The ISR Thermal Transient Meter framework includes a new set of classes to replace the legacy `isr.TTM` device and the associated configuration classes. 
 
 This document includes a dictionary for replacing the legacy device driver calls with the new Meter class.e capabilities.
 
-## Namespaces and Construction[](#){name=Namespaces_Construction}
+<a name="Namespaces_Construction"></a>
+## Namespaces and Construction
 
 * Name: `Meter`
 
@@ -22,7 +24,8 @@ This document includes a dictionary for replacing the legacy device driver calls
 
 The `Setting Assembly Member Type` tells the `Meter` class where to look for the `JSon` settings file. For instance, if constructing the `Meter` from a Console class, this argument becomes `this.GetType()` in C#.
 
-## Legacy Device Methods[](#){name=Legacy_Device_Methods}
+<a name="Legacy_Device_Methods"></a>
+## Legacy Device Methods
 
 |Name | Associated Object | Name | Description|
 |----|----|----|----|
@@ -57,7 +60,8 @@ The `Setting Assembly Member Type` tells the `Meter` class where to look for the
 | IsContactChecks    | cc.isr.VI.Tsp.K2600.ContactSubsystem or Firmware 2.4.x | TBD | Determines whether contact resistances are below the specified threshold. |
 | TriggerMeasurement | cc.isr.VI.Tsp.K2600.TriggerSubsystem | TBD | Sends a signal to trigger a measurement. |
 
-## Legacy Device Properties[](#){name=Legacy_Device_Properties}
+<a name="Legacy_Device_Properties"></a>
+## Legacy Device Properties
 
 |Name|Associated Object|Name|Description|
 |----|----|----|----|
@@ -76,7 +80,8 @@ The `Setting Assembly Member Type` tells the `Meter` class where to look for the
 | ThermalTransientConfig | Meter.ConfigInfo | ThermalTransient | Defines the attributes of the thermal transient measurements |
 | ThermalTransient       | Meter | ThermalTransient | Defines the attributes of the thermal transient measurements |
 
-## New Device Methods[](#){name=New_Device_Methods}
+<a name="New_Device_Methods"></a>
+## New Device Methods
 
 |Name|Associated Object|Name|Description|
 |----|----|----|----|
@@ -85,7 +90,8 @@ The `Setting Assembly Member Type` tells the `Meter` class where to look for the
 | Set Contact Threshold | Meter.MeterMain | WriteContactLimit | Sets the threshold for detecting an open leads contact | 
 | Get Contact Threshold | Meter.MeterMain | QueryContactLimit | Gets the threshold for detecting an open leads contact | 
 
-## New Device Properties[](#){name=New_Device_Properties}
+<a name="New_Device_Properties"></a>
+## New Device Properties
 
 |Name|Associated Object|Name|Description|
 |----|----|----|----|

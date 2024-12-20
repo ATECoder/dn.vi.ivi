@@ -1,14 +1,14 @@
-### Find Resources
+# Find Resources
 
-#### Category: VISA
+## Category: VISA
 
-#### Description
+## Description
 This application shows how to use the IVI Global ResourceManager to
 find all of the available resources on their system. The example
 allows selecting several filters to narrow the list. The Public
 property _ResourceName_ contains the resource name selected in Resource Tree View.
 
-#### Directions
+## Directions
 
 1. Running the program opens the Available _Resource List form_.
 1. Select a _Filter String_, e.g., `*?`;
@@ -18,16 +18,16 @@ property _ResourceName_ contains the resource name selected in Resource Tree Vie
        1. TCPIP0::192:168:0:144::inst0::INSTR
        1. TCPIP0::192:168:0:50::inst0::INSTR
 
-##### Note
+### Note
 The list of resources consists of the resources that are explicitly defined in the VISA vendor's (e.g., Keysight) resource manager. The Keysight resource manager stores the resource information are stored in a locked SQLite local database. The National Instruments resource manager stores the resource information in an INI type file under the common program data folder (e.g., `c:\program data\national instruments`). The Rohde Schwarz resources are stored in a CSV type file under the common program data folder.
 
-#### Language: C#  
+## Language: C#  
 
-#### Required Software: IVI-VISA  
+## Required Software: IVI-VISA  
 
-#### Required Hardware: Any message-based device
+## Required Hardware: Any message-based device
 
-### Feedback
+# Feedback
 
 NI.FindResources is released as open source under the MIT license.
 Bug reports and contributions are welcome at the [VI Repository].

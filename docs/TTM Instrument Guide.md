@@ -448,7 +448,7 @@ Measurement outcomes are signaled by lines 4 through 6 of the digital I/O. Value
 <a name="Outcome_Values"></a>
 ### Outcome values
 
-Upon a failure of the initial resistance measurement the instrument display the resistance, the high or low indication, the outcome value and status (see [status] above}. The outcome bit values are:
+Upon a failure of the initial resistance measurement the instrument display the resistance, the high or low indication, the outcome value and status (see [status] above"></a>. The outcome bit values are:
 
 |Bit|Name|Hex Value|Decimal Value|Description|
 |----|----|----|----|

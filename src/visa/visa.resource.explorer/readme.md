@@ -1,14 +1,14 @@
-### About
+# About
 
 cc.isr.Visa.ResourceExplorer Windows form applications adresses the VISA resource manager.
 
-### How to Use
+# How to Use
 
-#### Implementations
+## Implementations
 
 Select List All from teh Implementation menu to list all the VISA implementations that are installed on this computer.
 
-### Feedback
+# Feedback
 
 cc.isr.Visa.ResourceExplorer is released as open source under the MIT license.
 Bug reports and contributions are welcome at the [VI Repository].

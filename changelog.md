@@ -4,6 +4,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 Current overall binaries revision: 8.1.9111
 
+## [8.1.9119] - 2024-12-19
+* IVI Visa Compatibility Demo: Add command file.
+
 ## [8.1.9112] - 2024-12-12
 Cloned from https://www.bitbucket.org/davidhary/dn.vi.git
 
@@ -164,6 +167,6 @@ which has issued a defect report.
 
 &copy; 2012 Integrated Scientific Resources, Inc. All rights reserved.
 
-[8.1.9111]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9119]: https://www.github.com/atecoder/dn.vi.ivi
 [vs.VI]: https://www.github.com/atecoder/dn.vi.ivi
 [vs.Visa]: https://bitbucket.org/davidhary/vs.io.visa

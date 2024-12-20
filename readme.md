@@ -1,4 +1,4 @@
-### VI Core libraries
+# VI Core libraries
 
 Virtual Instruments (VI) libraries using the [IVI Foundation] VISA.
 
@@ -48,7 +48,7 @@ Virtual Instruments (VI) libraries using the [IVI Foundation] VISA.
 [ATE Coder]
 
 <a name="Authors"></a>
-# Authors
+## Authors
 * [ATE Coder]  
 
 <a name="legal-notices"></a>
@@ -67,7 +67,7 @@ Integrated Scientific Resources, Inc., and any contributors reserve all other ri
 [dn.core]: https://www.bitbucket.org/davidhary/dn.core
 
 <a name="Supported-Dot-Net-Frameworks"></a>
-# Supported .NET Frameworks
+## Supported .NET Frameworks
 
 The following [Microsoft .NET Framework] are supported:
 * .NET Standard 2.0;
@@ -77,9 +77,9 @@ The following [Microsoft .NET Framework] are supported:
 * .NET 5.0 and above.
 
 <a name="Runtime-Pre-Requisites"></a>
-# Runtime Pre-Requisites
+## Runtime Pre-Requisites
 
-## IVI Visa
+### IVI Visa
 [IVI Foundation] 5.11 and above is required for accessing devices.
 The IVI VISA implementation can be obtained from either one of the following vendors: 
 * Compiled using VISA Shared Components version: 5.12.0

@@ -1,12 +1,15 @@
-### Cloning
+# Cloning
 
 * [Source Code](#Source-Code)
+* [Repositories](#Repositories)
+* [Packages](#Packages)
+* [Facilitated By](#Facilitated-By)
 
 <a name="Source-Code"></a>
-#### Source Code
+## Source Code
 Clone the repository along with its requisite repositories to their respective relative path.
 
-##### Repositories
+### Repositories
 The repositories listed in [external repositories] are required:
 * [Enums Libraries] - .NET Standard libraries
 * [Json Libraries] - .NET Standard libraries
@@ -58,7 +61,7 @@ Clone the repositories into the following folders (parents of the .git folder):
 where %dnlib% and %vslib% are  the root folders of the .NET libraries, e.g., %my%\lib\vs 
 and %my%\libraries\vs, respectively, and %my% is the root folder of the .NET solutions
 
-###### Global Configuration Files
+## Global Configuration Files
 ISR libraries use a global editor configuration file and a global test run settings file. 
 These files can be found in the [IDE Repository].
 
@@ -75,15 +78,15 @@ xcopy /Y %vslib%\core\ide\code\.runsettings %userprofile%\.runsettings
 ```
 where %userprofile% is the root user folder.
 
-###### Packages
+## Packages
 Presently, packages are consumed from a _source feed_ residing in a local folder, e.g., _%my%\nuget\packages_. 
 The packages are 'packed', using the _Pack_ command from each packable project,
 into the _%my%\nuget_ folder as specified in the project file and then
 added to the source feed. Alternatively, the packages can be downloaded from the 
 private [MEGA packages folder].
 
-<a name="FacilitatedBy"></a>
-#### Facilitated By
+<a name="Facilitated-By"></a>
+## Facilitated By
 * [Visual Studio]
 * [Jarte RTF Editor]
 * [Wix Toolset]

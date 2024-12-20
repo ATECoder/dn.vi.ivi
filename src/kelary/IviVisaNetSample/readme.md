@@ -1,6 +1,6 @@
-### IVI Visa Net Sample
+# IVI Visa Net Sample
 
-#### Directions
+## Directions
 
 1. Edit the command line using the instrument TcpIP resource name;
 1. Turn on the instrument;
