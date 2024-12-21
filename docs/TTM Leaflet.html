@@ -1,0 +1,56 @@
+<!DOCTYPE html []>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="author" content="MarkdownViewer++" />
+    <title>TTM Leaflet.md</title>
+    <style type="text/css">
+            
+/* Avoid page breaks inside the most common attributes, especially for exports (i.e. PDF) */
+td, h1, h2, h3, h4, h5, p, ul, ol, li {
+    page-break-inside: avoid; 
+}
+
+        </style>
+  </head>
+  <body>
+    <h1 id="thermal-transient-metertm-leaflet">Thermal Transient Meter™ Leaflet</h1>
+    <h2 id="system-description">System Description:</h2>
+    <p>cc.isr.TTM.2600 is a Thermal Transient Meter (TTM) for non-destructively testing airbag ignitors (squibs). The TTM measures the ignitor resistance before and after measuring the ignitor thermal transient response to a brief current pulse. The test is used to determine the fitness of the ignitor. Testing can be initiated from the instrument front panel, by external triggering, or from  Microsoft Windows applications.</p>
+    <h2 id="system-components">System Components:</h2>
+    <p>The TTM consists of the following parts:</p>
+    <ul>
+      <li>A Keithley Source Meter (currently the 2601B).</li>
+      <li>The <code>cc.isr.TTM.Firmware</code>, which is embedded in the source meter for making the thermal transient measurements.</li>
+      <li>The <code>cc.isr.VI.Tsp.K2600.Ttmware.Loader</code> application for loading or updating the embedded firmware.</li>
+      <li>The <code>cc.isr.VI.Tsp.K2600.Ttm</code> Application Programming Interface (API) for communicating with the instrument by way of the <code>cc.isr.TTM.Firmware</code>.</li>
+      <li>The <code>cc.isr.VI.Tsp.K2600.Ttm.Console</code> program for conducting ignitor tests from the desktop.</li>
+      <li>The <code>cc.isr.VI.Tsp.K2600.Ttm</code> Application Programming Interface (API) for communicating with the instrument by way of the <code>cc.isr.TTM.Firmware</code>.</li>
+      <li>The <code>cc.isr.VI.Tsp.K2600.Ttm.Legacy</code> Application Programming Interface (API) that is compatible with earlier applications of the TTM system.</li>
+      <li>The <code>cc.isr.VI.Tsp.K2600.Ttm.Legacy.Console</code> program for conducting ignitor tests from the desktop using the legacy API.</li>
+    </ul>
+    <h2 id="system-features">System Features</h2>
+    <ul>
+      <li>Instrument front panel, externally triggered, or Microsoft Windows testing.</li>
+      <li>Microsoft Windows based monitoring and data logging.</li>
+    </ul>
+    <h2 id="thermal-transient-specifications">Thermal Transient Specifications</h2>
+    <ul>
+      <li>Cold Resistance Current: 1 - 100 mA.</li>
+      <li>Transient Source Current: 0.1 - 1 Ampere.</li>
+      <li>Transient Pulse Duration: 10 ms and up.</li>
+      <li>Maximum Voltage: 40 V</li>
+      <li>Equivalent Noise: 0.1 mA RMS</li>
+      <li>Contact checking</li>
+    </ul>
+    <h2 id="licenses">Licenses</h2>
+    <p>The system comes with the following licenses:</p>
+    <ul>
+      <li>
+        <a href="https://docs.google.com/document/d/1873_SHHYkyg_qMJ4Gp6BrXX5hfXCLOAuWs3A3-gYXO0/edit?hl=en&amp;pli=1&amp;tab=t.0">Fair End User License Agreement for embedded software</a> for all users.</li>
+      <li>
+        <a href="https://www.lua.org/license.html">The MIT License</a> for the Windows Based applications.</li>
+      <li>The <a href="https://creativecommons.org/licenses/by/4.0/legalcode">Creative Commons Attribution 4.0 International Public License</a>  for the open source Windows Based applications and libraries.</li>
+    </ul>
+  </body>
+</html>

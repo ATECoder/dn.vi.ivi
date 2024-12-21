@@ -2,27 +2,42 @@
 
 ## System Description:
 
-isr.TTM.2601B is a stand-alone Thermal Transient Meter for single device testing. Part testing is initiated from the instrument front panel, by external triggering, or from a PC-based program.
+cc.isr.TTM.2600 is a Thermal Transient Meter (TTM) for non-destructively testing airbag ignitors (squibs). The TTM measures the ignitor resistance before and after measuring the ignitor thermal transient response to a brief current pulse. The test is used to determine the fitness of the ignitor. Testing can be initiated from the instrument front panel, by external triggering, or from  Microsoft Windows applications.
 
 ## System Components:
 
-The Meter comes with the following parts:
+The TTM consists of the following parts:
 
-- Keithley 2601B Source Meter to make the measurements;
-- isr.TTM.Meter Embedded program to make thermal transient measurements using the Keithley 2600 series instruments.
-- isr.TTM.Console PC-Based program for data logging of test results. The program allows the operator to change test parameters from the PC screen, run tests, review and save test data to disk.
+- A Keithley Source Meter (currently the 2601B).
+- The `cc.isr.TTM.Firmware`, which is embedded in the source meter for making the thermal transient measurements.
+- The `cc.isr.VI.Tsp.K2600.Ttmware.Loader` application for loading or updating the embedded firmware.
+- The `cc.isr.VI.Tsp.K2600.Ttm` Application Programming Interface (API) for communicating with the instrument by way of the `cc.isr.TTM.Firmware`.
+- The `cc.isr.VI.Tsp.K2600.Ttm.Console` program for conducting ignitor tests from the desktop.
+- The `cc.isr.VI.Tsp.K2600.Ttm` Application Programming Interface (API) for communicating with the instrument by way of the `cc.isr.TTM.Firmware`.
+- The `cc.isr.VI.Tsp.K2600.Ttm.Legacy` Application Programming Interface (API) that is compatible with earlier applications of the TTM system.
+- The `cc.isr.VI.Tsp.K2600.Ttm.Legacy.Console` program for conducting ignitor tests from the desktop using the legacy API.
 
 ## System Features
 
-- Instrument front panel, externally triggered, or PC-based testing.
-- PC-based monitoring and data logging.
+- Instrument front panel, externally triggered, or Microsoft Windows testing.
+- Microsoft Windows based monitoring and data logging.
 
 ## Thermal Transient Specifications
 
-- Source Current: 0.1 - 1A.
-- Maximum Voltage: 40V
-- Equivalent Noise: 0.1mA RMS
+- Cold Resistance Current: 1 - 100 mA.
+- Transient Source Current: 0.1 - 1 Ampere.
+- Transient Pulse Duration: 10 ms and up.
+- Maximum Voltage: 40 V
+- Equivalent Noise: 0.1 mA RMS
+- Contact checking
 
-## System License
+## Licenses
 
-The system comes with a Fair End User License Agreement for embedded software (www.bit.ly/FairLicenseEmbedded.)
+The system comes with the following licenses:
+- [Fair End User License Agreement for embedded software] for all users.
+- [The MIT License] for the Windows Based applications.
+- The [Creative Commons Attribution 4.0 International Public License]  for the open source Windows Based applications and libraries.
+
+[Fair End User License Agreement for embedded software]: https://docs.google.com/document/d/1873_SHHYkyg_qMJ4Gp6BrXX5hfXCLOAuWs3A3-gYXO0/edit?hl=en&pli=1&tab=t.0
+[The MIT License]: https://www.lua.org/license.html
+[Creative Commons Attribution 4.0 International Public License]: https://creativecommons.org/licenses/by/4.0/legalcode
