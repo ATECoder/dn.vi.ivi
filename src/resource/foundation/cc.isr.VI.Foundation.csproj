@@ -40,6 +40,7 @@
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
 
   </PropertyGroup>
+
   <ItemGroup>
     <Compile Include="..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
   </ItemGroup>

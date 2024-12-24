@@ -27,14 +27,28 @@ Enter the following command:
 cc.isr.Visa.Compatibility.Tester
 ```
 
+or
+
+```
+.\cmds\check.bat
+```
+
 The following outcome:
 ```
+Checking IVI VISA Compatibility
+
+IviVisaCompatibilityTester, Version=7.2.9111.101, Culture=neutral, PublicKeyToken=456c916a0c4a68ef
+Running under .NETCoreApp,Version=v9.0.
+VISA.NET Shared Components version 7.2.0.0.
+VISA Shared Components version 7.2.7619.0 detected.
+Loaded Keysight.Visa, Version=18.4.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73.
 ```
 
 Shows that the program found a compatible implementation.
 
 The following outcome:
 ```
+TBD
 ```
 
 Shows that the program failed to find a compatible implementation 
@@ -44,25 +58,55 @@ Shows that the program failed to find a compatible implementation
 
 Enter the following command:
 ```
-cc.isr.Visa.Compatibility.Tester -r TCPIP::192.168.0.150:inst0:INSTR
+cc.isr.Visa.Compatibility.Tester TCPIP::192.168.0.150:inst0:INSTR
 ```
+
+or
+
+```
+.\cmds\identify.bat
+```
+
 
 The following outcome:
 ```
+Checking IVI VISA Compatibility
+Command: tcpip0::192.168.0.150::inst0::instr;
+
+Make sure that the instrument at tcpip0::192.168.0.150::inst0::instr is turned on.
+
+IviVisaCompatibilityTester, Version=7.2.9111.101, Culture=neutral, PublicKeyToken=456c916a0c4a68ef
+Running under .NETCoreApp,Version=v9.0.
+VISA.NET Shared Components version 7.2.0.0.
+VISA Shared Components version 7.2.7619.0 detected.
+Loaded Keysight.Visa, Version=18.4.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73.
+Instrument found at '192.168.0.150'.
+ID: Keithley Instruments Inc., Model 2612A, 1214466, 2.2.6
 ```
 
 Shows that the program found the instrument with the specified resources name.
 
 Enter the following command:
 ```
-cc.isr.Visa.Compatibility.Tester -r TCPIP::192.168.1.150:inst0:INSTR
+cc.isr.Visa.Compatibility.Tester TCPIP::192.168.1.150:inst0:INSTR
 ```
 
 The following outcome:
 ```
-```
-Shows that the program could not find the instrument with the specified resources name.
+Checking IVI VISA Compatibility
+Command: tcpip0::192.168.1.150::inst0::instr;
 
+Make sure that the instrument at tcpip0::192.168.1.150::inst0::instr is turned on.
+
+IviVisaCompatibilityTester, Version=7.2.9111.101, Culture=neutral, PublicKeyToken=456c916a0c4a68ef
+Running under .NETCoreApp,Version=v9.0.
+VISA.NET Shared Components version 7.2.0.0.
+VISA Shared Components version 7.2.7619.0 detected.
+Loaded Keysight.Visa, Version=18.4.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73.
+Attempt Ping instrument at '192.168.1.150' failed.
+```
+
+Shows that the program could not find the instrument with the specified resources name.
 
 <a name="VISA_Runtime"></a>
 ## VISA Runtime
@@ -74,22 +118,20 @@ The current TTM software was developed based on version 7.2.0.0 of [IVI VISA]. A
 <a name="Attributions"></a>
 ## Attributions
 
-Last Updated 2024-12-21 12:57:26
+Last Updated 2024-12-23 18:14:13
 
 &copy; 2011 by Integrated Scientific Resources, Inc.  
 
 This information is provided "AS IS" WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
 
-Licensed under [The Fair End User] and [MIT] Licenses.
+Licensed under [MIT] License.
 
 Unless required by applicable law or agreed to in writing, this software is provided "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 
-Source code is hosted on [Bit Bucket].and [Github]
+Source code is hosted on [Github]
 
-[The Fair End User]: http://www.isr.cc/licenses/Fair%20End%20User%20Use%20License.pdf
 [MIT]: http://opensource.org/licenses/MIT
-[Bit Bucket].: https://www.bitbucket.org/davidhary
-[GitHub].: https://www.github.com/ATECoder
+[GitHub]: https://www.github.com/ATECoder
 [IVI VISA]: https://www,ivi.org
 [IVI FOUNDATION]: https://www,ivi.org
 [IO Suite]: https://www.keysight.com/us/en/lib/software-detail/computer-software/io-libraries-suite-downloads-2175637.html
@@ -99,10 +141,4 @@ Source code is hosted on [Bit Bucket].and [Github]
 [cc.isr.ftp]: ftp://ftp.isr.cc
 [Microsoft .NET]: https://en.wikipedia.org/wiki/.NET_Framework
 [Microsoft .NET Standard]: https://learn.microsoft.com/en-us/dotnet/standard/net-standard?tabs=net-standard-1-0
-[TTM Framework Guide]: ./TTM%20Framework%20Guide.html
-[TTM Firmware Upgrade Guide]: ./TTM%20Firmware%20Upgrade%20Guide.html
-[TTM Firmware API Guide]: ./TTM%20Firmware%20API%20Guide.html
-[TTM Driver API Guide]: ./TTM%20Driver%20API%20Guide.html
-[TTM Driver API Upgrade Guide]: ./TTM%20Driver%20API%20Upgrade%20Guide.html
-[TTM Instrument Guide]: ./TTM%20Instrument%20Guide.html
 [VISA Compatibility Tester Guide]: ./Visa20Compatibility20Tester%20Guide.html

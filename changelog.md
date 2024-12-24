@@ -4,6 +4,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 Current overall binaries revision: 8.1.9111
 
+## [8.1.9124] - 2024-12-24
+* Kelary: Add IVI Visa Compatibility Test.
+* Kelary: Sign the IVI Visa Compatibility library.
+* Docs: Update compatibility user guide.
+* Directory Build: Point to the git hub origin repository.
+
 ## [8.1.9119] - 2024-12-19
 * IVI Visa Compatibility Demo: Add command file.
 

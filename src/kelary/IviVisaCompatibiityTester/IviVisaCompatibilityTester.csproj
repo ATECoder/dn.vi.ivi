@@ -1,0 +1,78 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <InvariantGlobalization>true</InvariantGlobalization>
+
+    <PublishAot>false</PublishAot>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+
+    <!-- Signature -->
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\..\items\keyPair.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>false</DelaySign>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
+
+    <!-- Pacakge -->
+    <Description>Checks for IVI VISA implementation and compatibility thereof</Description>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <PackageTags>IVI;VISA</PackageTags>
+    <PackageReleaseNotes>First release</PackageReleaseNotes>
+
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\..\..\docs\VISA Compatibility Tester Guide.html" Link="docs\VISA Compatibility Tester Guide.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="favicon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\IviVisaCompatibility\IviVisaCompatibility.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="cmds\identify.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="cmds\check.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="readme.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Update="version.build.props">
+      <DependentUpon>version.build.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </None>
+    <None Update="version.build.tt">
+      <LastGenOutput>version.build.props</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+  </ItemGroup>
+
+  <Import Project="version.build.props" />
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="docs\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\docs\VISA Compatibility Tester Guide.md" Link="docs\VISA Compatibility Tester Guide.md" />
+  </ItemGroup>
+
+</Project>

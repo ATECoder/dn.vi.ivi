@@ -9,7 +9,16 @@
     <GenerateAssemblyVersionAttribute>true</GenerateAssemblyVersionAttribute>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 
+    <!-- Signature -->
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\..\items\keyPair.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>false</DelaySign>
+
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Kelary.Ivi.Visa" Version="7.2.0" />

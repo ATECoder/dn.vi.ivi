@@ -1,7 +1,7 @@
 <Project>
 
   <PropertyGroup>
-    <DefineConstants>$(DefineConstants);TRACE;PROJREF_;PACK_;GitHub_;</DefineConstants>
+    <DefineConstants>$(DefineConstants);TRACE;PROJREF_;PACK_;GitHub;</DefineConstants>
   </PropertyGroup>
  
   <PropertyGroup Condition="$(DefineConstants.Contains(';PACK;'))" >
@@ -18,8 +18,8 @@
   </ItemGroup>
 
   <PropertyGroup Condition="$(DefineConstants.Contains(';GitHub;'))" >
-	<GitRepositoryRemoteName>hub</GitRepositoryRemoteName>
-    <PackageProjectUrl>https://github.com/AteCoder/vi.dn</PackageProjectUrl>
+	<GitRepositoryRemoteName>origin</GitRepositoryRemoteName>
+    <PackageProjectUrl>https://github.com/ATECoder/dn.vi.ivi</PackageProjectUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="$(DefineConstants.Contains(';GitHub_;'))" >
