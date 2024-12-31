@@ -54,13 +54,13 @@ __TTM Main Menu__ with the following options:
 |--------|-------------|
 | [Meter](#Meter-Menu) | Selects the Meter Menu |
 | [Resistance](#Resistance-Menu) | Selects the resistance Menu |
-| [Transient](#Thermal-Transient-Menu) | Selects the thermal Thermal Transient Menu |
+| [Transient](#Thermal-Thermal-Transient-Menu) | Selects the Thermal Thermal Transient Menu |
 
 with the [Meter](#Meter-Menu) option blinking.
 
 The _Navigation Wheel_ or the _Cursor Keys_ move the between the menu items.
 
-Pressing the _Navigation wheel_ or the _ENTER_ button selects a menu item.
+Pressing the _Navigation wheel_ or the `ENTER` button selects a menu item.
 
 <a name="Meter-Menu"></a>
 ### Meter Menu
@@ -79,46 +79,46 @@ Selecting _Meter_ from the [Main Menu](#Main-Menu) displays the [Meter Menu](#Me
 
 Selecting _Channel_ from the [Meter Menu](#Meter-Menu) displays the [Channel Menu](#Channel-Menu):
 
-- Title: __SMU: smua__
-- Options: __smua__ __smub__
+- Title: __SMU: smua__.
+- Options: __smua__ __smub__.
 
-indicating that the current Source Meter Unit (SMU) channel is `a`.
+indicating that the current Source Meter Unit (SMU) channel is `smua`.
 
-Navigating to `smub` and pressing the _Navigation Wheel_ selects the `b` channel.
+Navigating to `smub` and pressing the _Navigation Wheel_ or `ENTER` selects the `smub` channel.
 
 <a name="Driver-Menu"></a>
 #### Driver Menu
 
 Selecting _Driver_ from the [Meter Menu](#Meter-Menu) displays the [Driver Menu](#Driver-Menu):
 
-- Title: __01__
-- Description: _Legacy (1) or new (0)_
+- Title: __01__.
+- Description: _Legacy (1) or new (0)_.
 
-Moving the cursor over the 1, the number blinks. Pressing the _Wheel_ or _ENTER_ and turning the _Wheel_ changes the value between 0 and 1. Pressing the _Wheel_ or _ENTER_ selects the new value.
+Moving the cursor over the 1, the number blinks. Pressing the _Wheel_ or `ENTER` and turning the _Wheel_ changes the value between 0 and 1. Pressing the _Wheel_ or `ENTER` selects the new value.
 
 <a name="Leads-Menu"></a>
 #### Leads Menu
 
 Selecting _Leads_ from the [Meter Menu](#Meter-Menu) displays the [Leads Menu](#Leads-Menu):
 
-- Title: __100 Ω__
-- Description: _Max Resistance_
+- Title: __100 Ω__.
+- Description: _Max Resistance_.
 
 This sets the maximum allowed open leads resistance. Any leads resistance above this value will abort the measurement.
 
-Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or _ENTER_ and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or _ENTER_ selects the new value.
+Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or `ENTER` and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or `ENTER` selects the new value.
 
 <a name="Checks-Menu"></a>
 #### Checks Menu
 
 Selecting _Checks_ from the [Meter Menu](#Meter-Menu) displays the [Checks Menu](#Checks-Menu):
 
-- Title: __01__
-- Description: _Pre IR[1]+TR[2]+FR[3]_
+- Title: __01__.
+- Description: _Pre IR[1]+TR[2]+FR[3]_.
 
 This sets bit values that toggle the contact check for Initial Resistance (IR) (1), Thermal Transient (TR) (2) or Final Resistance (FR) (4). For example, setting the value to 1, enables contact check before the Initial and Final Resistance measurements.
 
-Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or _ENTER_ and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or _ENTER_ selects the new value.
+Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or `ENTER` and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or `ENTER` selects the new value.
 
 <a name="Resistance-Menu"></a>
 ### Resistance Menu
@@ -144,49 +144,49 @@ Selecting _Source_ from the [Resistance Menu](#Resistance-Menu) displays the [So
 | Voltage | Selects the source modality as voltage |
 | Current | Selects the source modality as current |
 
-Moving the cursor over an option and pressing the _Wheel_ or _ENTER_ selects this option. Pressing _EXIT_ returns to the [Resistance Menu](#Resistance-Menu).
+Moving the cursor over an option and pressing the _Wheel_ or `ENTER` selects this option. Pressing `EXIT` returns to the [Resistance Menu](#Resistance-Menu).
 
 <a name="Level-Menu"></a>
 #### Level Menu
 
 Selecting _Level_ from the [Resistance Menu](#Resistance-Menu) displays the [Level Menu](#Level-Menu). This menu sets the level of the source modality. The display depends on the [Source Menu](#Source-Menu) option. For _Voltage_ the display is:
 
-- Title: __0010 mV__
-- Description: _Source Voltage_
+- Title: __0010 mV__.
+- Description: _Source Voltage_.
 
 For _Current_ the display is:
 
-- Title: __0010 mA__
-- Description: _Source Current_
+- Title: __0010 mA__.
+- Description: _Source Current_.
 
-Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or _ENTER_ and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or _ENTER_ selects the new value.
+Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or `ENTER` and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or `ENTER` selects the new value.
 
 <a name="Limit-Menu"></a>
 #### Limit Menu
 
 Selecting _Limit_ from the [Resistance Menu](#Resistance-Menu) displays the [Limit Menu](#Limit-Menu). This menu sets the Limit of the sense modality. The display depends on the [Source Menu](#Source-Menu) option. For _Voltage_ the display is:
 
-- Title: __050 mA__
-- Description: _Current Limit_
+- Title: __050 mA__.
+- Description: _Current Limit_.
 
 For _Current_ the display is:
 
-- Title: __010 mV__
-- Description: _Voltage Limit_
+- Title: __010 mV__.
+- Description: _Voltage Limit_.
 
-Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or _ENTER_ and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or _ENTER_ selects the new value.
+Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or `ENTER` and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or `ENTER` selects the new value.
 
 <a name="Aperture-Menu"></a>
 #### Aperture Menu
 
 Selecting _Aperture_ from the [Resistance Menu](#Resistance-Menu) displays the [Aperture Menu](#Aperture-Menu). This menu sets the Aperture, or duration, of the applied source level. The front panel displays:
 
-- Title: __01.000 PLC__
-- Description: _Integration Period_
+- Title: __01.000 PLC__.
+- Description: _Integration Period_.
 
 This menu sets the duration of the measurement in power line cycles (PLC).
 
-Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or _ENTER_ and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or _ENTER_ selects the new value.
+Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or `ENTER` and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or `ENTER` selects the new value.
 
 <a name="Limits-Menu"></a>
 #### Limits Menu
@@ -198,148 +198,170 @@ Selecting _Limits_ from the [Resistance Menu](#Resistance-Menu) displays the [Li
 | Low | Selects the [Low Limit Menu](#Low-Limit-Menu) |
 | High | Selects the [High Limit Menu](#High-Limit-Menu) |
 
-Moving the cursor over an option and pressing the _Wheel_ or _ENTER_ selects this option. Pressing _EXIT_ returns to the [Resistance Menu](#Resistance-Menu).
+Moving the cursor over an option and pressing the _Wheel_ or `ENTER` selects this option. Pressing `EXIT` returns to the [Resistance Menu](#Resistance-Menu).
 
 <a name="Low-Limit-Menu"></a>
 ##### Low Limit  Menu
 
 Selecting _Low_ from the [Limits Menu](#Limits-Menu) displays the [Low Limit Menu](#Low-Limit-Menu). This menu sets the low limit of the measurement in Ohms. The front panel displays:
 
-- Title: __01.920 Ω__
-- Description: _Low Limit_
+- Title: __01.920 Ω__.
+- Description: _Low Limit_.
 
-Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or _ENTER_ and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or _ENTER_ selects the new value.
+The range is: 0.1 - 10 Ω.
+
+Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or `ENTER` and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or `ENTER` selects the new value.
 
 <a name="High-Limit-Menu"></a>
 ##### High Limit  Menu
 
 Selecting _High_ from the [Limits Menu](#Limits-Menu) displays the [High Limit Menu](#High-Limit-Menu). This menu sets the High limit of the measurement in Ohms. The front panel displays:
 
-- Title: __02.160 Ω__
-- Description: _High Limit_
+- Title: __02.160 Ω__.
+- Description: _High Limit_.
 
-Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or _ENTER_ and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or _ENTER_ selects the new value.
+The range is: 0.1 - 10 Ω.
+
+Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or `ENTER` and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or `ENTER` selects the new value.
 
 <a name="Status-Menu"></a>
 #### Status Menu
 
 Selecting _Status_ from the [Resistance Menu](#Resistance-Menu) displays the [Status Menu](#Status-Menu):
 
-- Title: __002__
-- Description: _66=compliance 64 or over-temp 2_
+- Title: __002__.
+- Description: _66=compliance 64 or over-temp 2_.
+
+The expected range are: 2, 64, 66.
 
 This sets bit values that toggle the over-temperature failure condition (2) or compliance failure condition (64). For example, setting the value to 2 the instrument will fail under an over-temperature condition but will not fail if the sense current or voltage reaches the limit set with the [Limit Menu](#Limit-Menu).
 
-Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or _ENTER_ and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or _ENTER_ selects the new value.
+Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or `ENTER` and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or `ENTER` selects the new value.
 
-<a name="Thermal-Transient-Menu"></a>
+<a name="Thermal-Thermal-Transient-Menu"></a>
 ### Thermal Transient Menu
 
-Selecting _Transient_ from the [Main Menu](#Main-Menu) displays the [Thermal Transient Menu](#Thermal-Transient-Menu):
+Selecting _Transient_ from the [Main Menu](#Main-Menu) displays the [Thermal Transient Menu](#Thermal-Thermal-Transient-Menu):
 
 | Option | Description |
 |--------|-------------|
-| [Current](#Current-Menu) | Selects the current menu |
-| [Voltage](#Voltage-Menu) | Selects the voltage menu |
-| [Aperture](#Transient-Aperture-Menu) | Sets the sense duration |
-| [Points](#Points-Menu) | Sets the number of points to acquire |
-| [Period](#Period-Menu) | Selects the [Period](#Period-Menu) |
-| [Delay](#Delay-Menu) | Selects the [Delay](#Delay-Menu) |
-| [Limits](#Transient-Limits-Menu) | Selects the [Limits](#Transient-Limits-Menu) |
+| [Current](#Source_Current-Menu) | Selects the current menu |
+| [Voltage](#Maximum_Voltage-Menu) | Selects the voltage menu |
+| [Aperture](#Transient_Aperture-Menu) | Sets the sense duration |
+| [Points](#Transient_Points-Menu) | Sets the number of points to acquire |
+| [Period](#Transient_Period-Menu) | Selects the [Period](#Transient_Period-Menu) |
+| [Delay](#Post_Transient_Delay-Menu) | Selects the [Delay](#Post_Transient_Delay-Menu) |
+| [Limits](#Transient_Limits-Menu) | Selects the [Limits](#Transient_Limits-Menu) |
 
-<a name="Current-Menu"></a>
-#### Current Menu
+<a name="Source_Current-Menu"></a>
+#### Thermal Transient Source Current Menu
 
-Selecting _Current_ from the [Transient Menu](#Transient-Menu) displays the [Current Menu](#Current-Menu). This menu sets the Current of the source modality:
+Selecting _Current_ from the [Thermal Transient Menu](#Thermal-Transient-Menu) displays the [Source Current Menu](#Source_Current-Menu). This menu sets the Current of the source modality:
 
-- Title: __297 mA__
-- Description: _Source Current_
+- Title: __297 mA__.
+- Description: _Source Current_.
 
-Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or _ENTER_ and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or _ENTER_ selects the new value.
+The range is: 10 - 999 mA.
 
-<a name="Voltage-Menu"></a>
-#### Voltage Menu
+Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or `ENTER` and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or `ENTER` selects the new value.
 
-Selecting _Voltage_ from the [Transient Menu](#Transient-Menu) displays the [Voltage Menu](#Voltage-Menu). This menu sets the Voltage limit of the sense modality:
+<a name="Maximum_Voltage-Menu"></a>
+#### Thermal Transient Maximum Voltage Menu
 
-- Title: __0.990 V__
-- Description: _Voltage Limit_
+Selecting _Voltage_ from the [Thermal Transient Menu](#Thermal-Transient-Menu) displays the [Maximum Voltage Menu](#Maximum_Voltage-Menu). This menu sets the Voltage limit of the sense modality:
 
-Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or _ENTER_ and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or _ENTER_ selects the new value.
+- Title: __0.990 V__.
+- Description: _Voltage Limit_.
 
-<a name="Transient-Aperture-Menu"></a>
-#### Transient Aperture Menu
+The range is: 10 - 999 mV.
 
-Selecting _Aperture_ from the [Transient Menu](#Transient-Menu) displays the [Transient Aperture Menu](#Transient-Aperture-Menu). This menu sets the Aperture, or duration, of each measurement of the current pulse point:
+Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or `ENTER` and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or `ENTER` selects the new value.
 
-- Title: __0.004 PLC__
-- Description: _Integration Period_
+<a name="Transient_Aperture-Menu"></a>
+#### Thermal Transient Aperture Menu
+
+Selecting _Aperture_ from the [Thermal Transient Menu](#Thermal-Transient-Menu) displays the [Transient Aperture Menu](#Transient_Aperture-Menu). This menu sets the Aperture, or duration, of each measurement of the current pulse point:
+
+- Title: __0.004 PLC__.
+- Description: _Integration Period_.
+
+The range is: 0.001 - 0.01.
 
 This menu sets the duration of the measurement in power line cycles (PLC).
 
-Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or _ENTER_ and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or _ENTER_ selects the new value.
+Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or `ENTER` and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or `ENTER` selects the new value.
 
-<a name="Points-Menu"></a>
-#### Points Menu
+<a name="Transient_Points-Menu"></a>
+#### Thermal Transient Points Menu
 
-Selecting _Points_ from the [Transient Menu](#Transient-Menu) displays the [Points Menu](#Points-Menu). This menu sets the number of points of the current pulse applied during the thermal transient measurement:
+Selecting _Points_ from the [Thermal Transient Menu](#Thermal-Transient-Menu) displays the [Thermal Transient Points Menu](#Transient_Points-Menu). This menu sets the number of points of the current pulse applied during the thermal transient measurement:
 
-- Title: __00100__
-- Description: _Data Points_
+- Title: __00100__.
+- Description: _Data Points_.
 
-Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or _ENTER_ and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or _ENTER_ selects the new value.
+The range is: 10 - 10000.
 
-<a name="Period-Menu"></a>
-#### Period Menu
+Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or `ENTER` and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or `ENTER` selects the new value.
 
-Selecting _Period_ from the [Transient Menu](#Transient-Menu) displays the [Period Menu](#Period-Menu). This menu sets the duration of each point of the current pulse applied during the thermal transient measurement:
+<a name="Transient_Period-Menu"></a>
+#### Thermal Transient Period Menu
 
-- Title: __00100 µS__
-- Description: _Sampling Interval_
+Selecting _Period_ from the [Thermal Transient Menu](#Thermal-Transient-Menu) displays the [Period Menu](#Transient_Period-Menu). This menu sets the duration of each point of the current pulse applied during the thermal transient measurement:
 
-Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or _ENTER_ and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or _ENTER_ selects the new value.
+- Title: __00100 µS__.
+- Description: _Sampling Interval_.
 
-<a name="Delay-Menu"></a>
-#### Delay Menu
+The range is: 80 - 1000 µS.
 
-Selecting _Delay_ from the [Transient Menu](#Transient-Menu) displays the [Delay Menu](#Delay-Menu). This menu sets the delay time between the end of the thermal transient measurement and the beginning of the final resistance measurement:
+Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or `ENTER` and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or `ENTER` selects the new value.
 
-- Title: __00011 mS__
-- Description: _Final Cold Resistance Delay_
+<a name="Post_Transient_Delay-Menu"></a>
+#### Post Thermal Transient Delay Menu
 
-Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or _ENTER_ and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or _ENTER_ selects the new value.
+Selecting _Delay_ from the [Thermal Transient Menu](#Thermal-Transient-Menu) displays the [Delay Menu](#Post_Transient_Delay-Menu). This menu sets the delay time between the end of the thermal transient measurement and the beginning of the final resistance measurement:
 
-<a name="Transient-Limits-Menu"></a>
-#### Transient Limits Menu
+- Title: __00011 mS__.
+- Description: _Final Cold Resistance Delay_.
 
-Selecting _Limits_ from the [Transient Menu](#Transient-Menu) displays the [Transient Limits Menu](#Transient-Limits-Menu). The front panel displays __Limits__ with the following options: 
+The range is: 1 - 10000 mS.
+
+Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or `ENTER` and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or `ENTER` selects the new value.
+
+<a name="Transient_Limits-Menu"></a>
+#### Thermal Transient Limits Menu
+
+Selecting _Limits_ from the [Thermal Transient Menu](#Thermal-Transient-Menu) displays the [Thermal Transient Limits Menu](#Transient_Limits-Menu). The front panel displays __Limits__ with the following options: 
 
 | Option | Description |
 |--------|-------------|
-| Low | Selects the [Low transient Voltage Limit Menu](#Low-Transient-Voltage-Limit-Menu) |
-| High | Selects the [High transient Voltage Limit Menu](#High-Transient-Voltage-Limit-Menu) |
+| Low | Selects the [Thermal Transient Low Limit Menu](#Transient_Low_Limit-Menu) |
+| High | Selects the [Thermal Transient High Limit Menu](#Transient_High_Limit-Menu) |
 
-Moving the cursor over an option and pressing the _Wheel_ or _ENTER_ selects this option. Pressing _EXIT_ returns to the [Transient Menu](#Transient-Menu).
+Moving the cursor over an option and pressing the _Wheel_ or `ENTER` selects this option. Pressing `EXIT` returns to the [Thermal Transient Menu](#Thermal-Transient-Menu).
 
-<a name="Low-Transient-Voltage-Limit-Menu"></a>
-##### Low Transient Voltage Limit  Menu
+<a name="Transient_Low_Limit-Menu"></a>
+##### Thermal Transient Low Limit Menu
 
-Selecting _Low_ from the [Limits Menu](#Limits-Menu) displays the [Low Transient Voltage Limit Menu](#Low-Transient-Voltage-Limit-Menu). This menu sets the low Transient Voltage Limit of the measurement in Voltage. The front panel displays:
+Selecting _Low_ from the [Limits Menu](#Transient_Limits-Menu) displays the [Thermal Transient Low Limit Menu](#Transient_Low_Limit-Menu). This menu sets the low limit for the measured thermal transient voltage. The front panel displays:
 
-- Title: __005.4 mV__
-- Description: _Low Limit_
+- Title: __005.4 mV__.
+- Description: _Low Limit_.
 
-Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or _ENTER_ and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or _ENTER_ selects the new value.
+The range is: 1 - 999 mV.
 
-<a name="High-Transient-Voltage-Limit-Menu"></a>
-##### High Transient Voltage Limit  Menu
+Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or `ENTER` and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or `ENTER` selects the new value.
 
-Selecting _High_ from the [Transient Limits Menu](#Transient-Limits-Menu) displays the [High Transient Voltage Limit Menu](#High-Transient-Voltage-Limit-Menu). This menu sets the High Transient Voltage Limit of the measurement in volts. The front panel displays:
+<a name="Transient_High_Limit-Menu"></a>
+##### Thermal Transient High Maximum Voltage Limit  Menu
+
+Selecting _High_ from the [Thermal Transient Limits Menu](#Transient_Limits-Menu) displays the [Thermal Transient High Limit Menu](#Transient_High_Limit-Menu). This menu sets the high limit for the measured thermal transient voltage. The front panel displays:
 
 - Title: __076.0 mV__
 - Description: _High Limit_
 
-Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or _ENTER_ and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or _ENTER_ selects the new value.
+The range is: 1 - 999 mV.
+
+Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or `ENTER` and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or `ENTER` selects the new value.
 
 
 

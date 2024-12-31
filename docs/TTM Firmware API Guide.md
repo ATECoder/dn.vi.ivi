@@ -335,7 +335,7 @@ Licensed under [Creative Commons Attribution 4.0 International Public License] a
 
 Unless required by applicable law or agreed to in writing, this software is provided "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 
-Source code is hosted on [Bit Bucket].and [Github]
+Source code is hosted on [GitHub]
 
 [Creative Commons Attribution 4.0 International Public License]: https://bitbucket.org/davidhary//dn.vi.git/license
 [MIT]: https://bitbucket.org/davidhary//dn.vi.git/license-code
@@ -347,7 +347,6 @@ Source code is hosted on [Bit Bucket].and [Github]
 [TTM Loader Guide]: https://github.com/atecoder/dn.ttmware.git/src/docs/TTM%20Loader%20Guide.md
 [TTM Manual Test Guide]: https://github.com/atecoder/dn.vi.ivi.git/src/docs/TTM%20Manual%20Test%20Guide.md
 [The Fair End User]: http://www.isr.cc/licenses/Fair%20End%20User%20Use%20License.pdf
-[Bit Bucket].: https://www.bitbucket.org/davidhary
-[GitHub].: https://www.github.com/ATECoder
-[Lua](https://www.lua.org)
-[Keithley]: (https://www.keithley.com)
+[GitHub]: https://www.github.com/ATECoder
+[Lua]: https://www.lua.org
+[Keithley]: https://www.keithley.com

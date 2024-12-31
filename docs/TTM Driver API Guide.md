@@ -85,6 +85,16 @@ The driver library (isr.VI.Tsp.K2600.Ttm) version 4.x breaks compatibility with 
 - The measure command clears the execution state.
 - New API elements allow detecting changed configurations and applying only new configuration values. Note that before measuring shunt resistance after measuring thermal transient, all configuration values must be applied.
 
+<a name="Legacy_Support"></a>
+### Legacy Support
+
+The TTM firmware is is compatibly with earlier versions of TTM Visual Basic drivers released before 2024 (e.g., 3.2.5367, 2.3.4077).
+
+The firmware uses a `MeterDefaults.legacyDriver` and `MeterValues.legacyDriver` flags that is set to 1 for use with the legacy Visual Basic drivers. 
+
+The `MeterValues.legacyDriver` is persistent and can be set from the instrument menu or by the `legacyDriverSetter()` function call.
+
+
 <a name="Code_Breaking_Chances"></a>
 ### Code Breaking Chances
  
@@ -693,12 +703,11 @@ Licensed under [The Fair End User] and [MIT] Licenses.
 
 Unless required by applicable law or agreed to in writing, this software is provided "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 
-Source code is hosted on [Bit Bucket].and [Github]
+Source code is hosted on [GitHub]
 
 [The Fair End User]: http://www.isr.cc/licenses/Fair%20End%20User%20Use%20License.pdf
 [MIT]: http://opensource.org/licenses/MIT
-[Bit Bucket].: https://www.bitbucket.org/davidhary
-[GitHub].: https://www.github.com/ATECoder
+[GitHub]: https://www.github.com/ATECoder
 [TTM Framework Guide]: TTM%20Framework%20Guide.md
 [TTM Loader Guide]: TTM%20Loader%20Guide.md
 [TTM API Guide]: TTM%20API%20Guide.md

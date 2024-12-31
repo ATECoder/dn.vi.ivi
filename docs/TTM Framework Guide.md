@@ -23,7 +23,7 @@
 <a name="Components"></a>
 ## Components
 
-The ISR Thermal Transient Meter (TTM) Framework consists of the following components, programs and documents:
+The ISR Thermal Transient Meter&trade; (TTM) Framework consists of the following components, programs and documents:
 
 - [Meter](#Meter) - The ISR Thermal Transient Meter (TTM) Instrument
 - [Loader](#Loader) - An application that loads the custom TTM firmware onto the Keithley 2600 series instruments.
@@ -140,12 +140,11 @@ Licensed under [The Fair End User] and [MIT] Licenses.
 
 Unless required by applicable law or agreed to in writing, this software is provided "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 
-Source code is hosted on [Bit Bucket].and [Github]
+Source code is hosted on [GitHub]
 
 [The Fair End User]: http://www.isr.cc/licenses/Fair%20End%20User%20Use%20License.pdf
 [MIT]: http://opensource.org/licenses/MIT
-[Bit Bucket].: https://www.bitbucket.org/davidhary
-[GitHub].: https://www.github.com/ATECoder
+[GitHub]: https://www.github.com/ATECoder
 [IVI VISA]: https://www,ivi.org
 [IVI FOUNDATION]: https://www,ivi.org
 [IO Suite]: https://www.keysight.com/us/en/lib/software-detail/computer-software/io-libraries-suite-downloads-2175637.html
@@ -162,3 +161,4 @@ Source code is hosted on [Bit Bucket].and [Github]
 [TTM Driver API Upgrade Guide]: ./TTM%20Driver%20API%20Upgrade%20Guide.html
 [TTM Instrument Guide]: ./TTM%20Instrument%20Guide.html
 [VISA Compatibility Tester Guide]: ./Visa20Compatibility20Tester%20Guide.html
+[TTM Console Guide]: ./TTM%20Console%20Guide.html

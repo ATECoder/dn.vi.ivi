@@ -6,34 +6,36 @@
 - [Preparations](#Preparations)
   - [Wiring the Device Under Test](#Wiring)
   - [Loading the TTM Firmware](#Loading)
-  - [Taking the instrument from Remote to Local Modes](#Local)
+  - [Taking the instrument from Remote to Local Mode](#Remote-Local)
   - [Starting TTM from the Front Panel](#Starting)
   - [Exiting from TTM Front Panel Mode](#Exiting)
-  - [Setup of Measurement Parameters](#Parameters)
-	- [Meter](#Meter)
-	  - [SMU](#SMU)
-	  - [Driver](#Driver)
-	  - [Leads](#Leads)
-	  - [Contacts](#Contacts)
-	- [Resistance](#Resistance)
-	  - [Source](#Source)
-	  - [Level](#Level)
-	  - [Limit](#Limit)
-	  - [Aperture](#Aperture)
-	  - [Limits](#Limits)
-		- [Low Limit](#Low_Limit)
-		- [High Limit](#High_Limit)
-	  - [Status](#Status)
-	- [Transient](#Transient)
-	  - [Source Current](#Source_Current)
-	  - [Maximum Voltage](#Maximum_Voltage)
-	  - [Aperture](#Transient_Aperture)
-	  - [Points](#Points)
-	  - [Period](#Period)
-	  - [Delay](#Delay)
-	  - [Limits](#Transient_Limits)
-		- [Low Limit](#Transient_Low_Limit)
-		- [High Limit](#Transient_High_LImit)
+  - [Setup of Measurement Parameters](#Main-Menu)
+	- [Meter Menu](#Meter-Menu)
+	  - [Channel Menu](#Channel-Menu)
+	  - [Driver Menu](#Driver-Menu)
+	  - [Leads Menu](#Leads-Menu)
+	  - [Contact Checks Menu](#Contacts-Check-Menu)
+	- [Resistance Menu](#Resistance-Menu)
+	  - [Source Menu](#Source-Menu)
+	  - [Level Menu](#Level-Menu)
+	  - [Limit Menu](#Limit-Menu)
+	    -[Voltage Source Current Limit](#Voltage-Source-Current-Limit)
+	    -[Current Source Voltage Limit](#Current-Source-Voltage-Limit)
+	  - [Aperture Menu](#Aperture-Menu)
+	  - [Limits Menu](#Limits-Menu)
+		- [Low Limit Menu](#Low_Limit-Menu)
+		- [High Limit Menu](#High_Limit-Menu)
+	  - [Status Menu](#Status-Menu)
+	- [Thermal Transient Menu](#Thermal-Transient-Menu)
+	  - [Source Current Menu](#Source_Current-Menu)
+	  - [Maximum Voltage Menu](#Maximum_Voltage-Menu)
+	  - [Thermal Transient Aperture Menu](#Transient_Aperture-Menu)
+	  - [Thermal Transient Points Menu](#Transient_Points-Menu)
+	  - [Thermal Transient Period Menu](#Transient_Period-Menu)
+	  - [Post Thermal Transient Delay Menu](#Post_Transient_Delay-Menu)
+	  - [Thermal Transient Limits Menu](#Transient_Limits-Menu)
+		- [Thermal Transient Low Limit Menu](#Transient_Low_Limit-Menu)
+		- [Thermal Transient High Limit Menu](#Transient_High_LImit-Menu)
 - [Measuring Using the Front Panel](#Measuring_Using_the_Front_Panel)
 - [Measuring Using the \*TRG command](#Measuring_Using_the_TRG_command)
 - [Measuring Using Digital Input](#Measuring_Using_Digital_Input)
@@ -46,7 +48,7 @@
     - [Initial And Final Resistance](#Initial_And_Final_Resistance)
     - [Cold Resistance Default Settings](#Cold_Resistance_Default_Settings)
       - [Cold Resistance Voltage Source](#Cold_Resistance_Voltage_Source)
-      - [old Resistance Current Source](#Cold_Resistance_Current_Source)
+      - [Cold Resistance Current Source](#Cold_Resistance_Current_Source)
   - [Thermal Transient Default Settings](#Thermal_Transient_Default_Settings)
 - [Attributions](#Attributions)
 
@@ -55,16 +57,7 @@
 
 This guide describes how to use the TTM instrument as a stand-along bench or production line device.
 
-First time readers should start by reading the [TTM Framework Guide].
-
-<a name="Legacy_Support"></a>
-## Legacy Support
-
-The TTM firmware is is compatibly with earlier versions of TTM Visual Basic drivers released before 2024 (e.g., 3.2.5367, 2.3.4077).
-
-The firmware uses a `MeterDefaults.legacyDriver` and `MeterValues.legacyDriver` flags that is set to 1 for use with the legacy Visual Basic drivers. 
-
-The `MeterValues.legacyDriver` is persistent and can be set from the instrument menu or by the `legacyDriverSetter()` function call.
+The TTM Instrument is part of the ISR TTM Framework as described in the [TTM Framework Guide].
 
 <a name="Preparations"></a>
 ## Preparations
@@ -72,7 +65,7 @@ The `MeterValues.legacyDriver` is persistent and can be set from the instrument 
 <a name="Wiring"></a>
 ### Wiring the Device Under Test
 
-The device under test must be connected to the TTM Instrument using four-wires:
+The device under test must be connected to the TTM Instrument using a [Four-Terminal Sensing] circuit:
 
 ![](KelvinDiagram.jpg)
 
@@ -81,65 +74,140 @@ The device under test must be connected to the TTM Instrument using four-wires:
 
 Use the TTM Loader to update the TTM Firmware as described in the [TTM Loader Guide].
 
-<a name="Remote/Local"></a>
-### Taking the instrument from Remote to Local Modes
+<a name="Remote-Local"></a>
+### Taking the instrument from Remote to Local Mode
 
-When controlling the instrument from an application program, such as the Loader or Driver Tester, the instrument goes into Remote mode. Press the _EXIT_ button on the instrument panel to go into local mode.
+When controlling the instrument from an application program, such as the Loader or Driver Tester, the instrument goes into Remote mode.
+
+Pressing the `EXIT` button on the instrument panel changes the instrument access mode to local where the instrument is controlled from the front panel rather than from an external program.
 
 <a name="Starting"></a>
 ## Starting TTM from the Front Panel
 
-When running TTM the instrument panel display the instrument opening screen, such as 'Therm. Trans. Meter', or the last measurement, such as 'R: 2.0016..'. Otherwise, TTM needs to be loaded and run as follows:
+<a name="Starting-from-Off-State"></a>
+### Starting from the Off State
 
-- From the instrument front panel press _LOAD_;
-- Select _USER_ from the menu and press _Enter_;
-- Select _TTM_ and press _Enter_;
-- From the instrument front panel press _LOAD_;
-- From the instrument front panel press _RUN_;
-- The instrument opening screen, such as 'Therm. Trans. Meter', should be displayed.
+- Turn the instrument on.
+  - The instrument runs self check and loads the TTM Firmware.
+  - The instrument goes into its [Idle State](#Starting-from-the-Idle-State).
+
+<a name="Starting-from-the-Idle-State"></a>
+### Starting from the Idle State
+  
+When Idle, the instrument display the TTM starting screen:
+
+'''
+TTM 2.4.9111
+Integrated Scientific Resources
+'''
+
+Where 2.4.9111 is the current version of the TTM firmware. 
+
+- Press the _`RUN`_ button.
+  - This opens the [Action Panel](#Action-Panel).
+
+
+<a name="Action-Panel"></a>
+### Action Panel
+
+When at the Action state, the instrument displays the framework title, copyrights and menu options:
+```
+Therm. Trans. Meter.
+(c)2011 ISR <TRIG MENU RUN>
+```
+
+<a name="Starting-from-the-Source-Measure-State"></a>
+### Starting from the Source/Measure State
+  
+When in its Source/Measure State, the instrument displays the default measurement information, such as,
+```
+----.00mV
+SrcA:+000.0000mV LimA:1.00000 A
+```
+
+- Press the _`RUN`_ button.
+  - This opens the [Action Panel](#Action-Panel).
+  - otherwise, the firmware needs to be loaded (see [Loading the Firmware](#Loading).
+
+<a name="Loading"></a>
+### Loading the Firmware
+
+Follow these steps to load and run the firmware:
+
+- From the instrument front panel press the _LOAD_ button.
+- Select _USER_ from the menu and press `ENTER`.
+- Select _TTM_ and press `ENTER`.
+- Press _LOAD_.
+- Press `RUN`.
+- This opens the [Action Panel](#Action-Panel).
 
 <a name="Exiting"></a>
 ### Exiting from TTM Front Panel Mode
 
-Click the _RUN_ button to exit from the run loop.
+Click the `RUN` button to exit from the run loop.
 
-<a name="Parameters"></a>
+<a name="Main-Menu"></a>
 ## Setup of Measurement Parameters
 
-- Select _Menu_ from the instrument panel to configure the instrument.
-- Follow the prompts from the instrument menu screens.
-- See [Specifications](#Specifications) for parameter ranges.
+Press `MENU` from the instrument panel to configure the instrument. This opens the TTM [Main Menu](#Main-menu). The font panel displays 
+`TTM Main Menu` with the [Meter](#Meter-Menu) option blinking:
 
-<a name="Meter"></a>
-### Meter
+| Option | Description |
+|--------|-------------|
+| [Meter](#Meter-Menu) | Selects the [Meter](#Meter-Menu) Menu |
+| [Resistance](#Resistance-Menu) | Selects the [Resistance](#Resistance-Menu) Menu |
+| [Transient](#Thermal-Transient-Menu) | Selects the Thermal [Transient](#Thermal-Transient-Menu) Menu |
 
-Select _Meter_ from the _TTM Main Menu_ to alter the settings of the meter.
+### Menu Actions
+- Use the _Navigation Wheel_ or the _Cursor Keys_ to move the between the menu items.
+- Press the _Navigation wheel_ or the `ENTER` button to select a menu item.
+- Press `EXIT` to cancel a selection.
 
-<a name="SMU"></a>
-#### SMU
+### Parameter Ranges
+See [Specifications](#Specifications) for parameter ranges.
 
-This option allows the operator to selected _SMUA_ or _SMUB_ for instruments with dual source meter units. This setting is turned of for instruments with a single source measure unit.
+<a name="Meter-Menu"></a>
+### Meter Menu
 
-- Select _SMU_ from the _Meter_ menu;
-- The _SMU_ prompt will display showing the current value, `smua` or `smub'.
-- Press the thumb wheel to select and then set the value top `smua` or `smub`;
-- Press _Enter_ to accept or _Exit_ to cancel the changes.
+Selecting _Meter_ from the [Main Menu](#Main-Menu) displays the [Meter Menu](#Meter-Menu). The front panel displays __Meter__ with the following options: 
 
-<a name="Driver"></a>
-#### Driver
+| Option | Description |
+|--------|-------------|
+| [Channel](#Channel-Menu) | Selects the source channel (only for meters with dual source channels ) |
+| [Driver](#Driver-Menu) | Selects compatibility with the legacy TTM drivers.
+| [Leads](#Leads-Menu) | Sets the leads resistance for contact check.
+| [Checks](#Checks-Menu) | Sets the contact checks options.
 
-Set the legacy driver option `1`. Set to `0` if using software that is compatible with the new features of the firmware.
+<a name="Channel-Menu"></a>
+#### Channel Menu
 
-- Select _Driver_ from the _Meter_ menu;
-- The _Legacy Driver_ prompt will display showing the current value, such as `1` for using legacy Visual Basic drivers;
-- Press the thumb wheel to select and then set the value to `1` for supporting the the legacy Visual Basic software or `0` otherwise;
-- Press _Enter_ to accept or _Exit_ to cancel the changes.
+The channel menu selects either `smua` or `smub` as the active source meter for instruments with dual source meter units. This setting is enabled (turned on) only for instruments with a two source measure units.
 
+Selecting _Channel_ from the [Meter Menu](#Meter-Menu) displays the [Channel Menu](#Channel-Menu) showing the current value, `smua` or `smub` (`smua` in this case):
 
-<a name="Leads"></a>
-#### Leads
+- Title: __SMU: smua__.
+- Options: __smua__ __smub__.
 
-The contact check function prevents measurements that may be in error due to excessive resistance in the force or sense leads when making remotely sensed (Kelvin) measurements. Potential sources for this resistance include poor contact at the device under test (DUT), failing relay contacts on a switching card, and wires that are too long or thin.
+Navigating to `smub` and pressing the _Navigation Wheel_ or `ENTER` selects the `smub` channel.
+
+<a name="Driver-Menu"></a>
+#### Driver Menu
+
+Selecting _Driver_ from the [Meter Menu](#Meter-Menu) displays the [Driver Menu](#Driver-Menu):
+
+- Title: __01__.
+- Description: _Legacy (1) or new (0)_.
+
+Moving the cursor over the 1, the number blinks. Pressing the _Wheel_ or `ENTER` and turning the _Wheel_ changes the value between 0 and 1. Pressing the _Wheel_ or `ENTER` selects the new value. Pressing `EXIT` cancels the selection.
+
+Set the driver option to `1` if using the meter with the legacy Visual Basic Driver that supported versions 2.3.4009 or earlier of the TTM Meter as used by the ISR TTM Driver version 2.3.4063. Set the value to `0` to use the Meter with software that supports the new features of the firmware.
+
+<a name="Leads-Menu"></a>
+#### Leads Menu
+
+The [Leads Menu](#Leads-Menu) sets the maximum allowed open leads resistance. The measurement will be aborted after a contact check if leads resistance exceeds above this value.
+
+The contact check function prevents measurements that may be in error due to excessive resistance in the force or sense leads when making remotely sensed (Kelvin) measurements. Potential sources for this resistance include poor contact at the device under test (DUT), failing relay contacts on a switching card or wires that are too long or thin.
 
 The contact check function also detects an open circuit that may occur when a four-point probe is misplaced or misaligned. This relationship is shown schematically in the figure below, where R~C~ is the resistance of the mechanical contact at the DUT, and R~S~ is the series resistance of cables and any series relays.
 
@@ -149,106 +217,190 @@ The leads contacts are checked if the maximum leads resistance (see below) is se
 
 To enable and set the maximum allowed leads resistance:
 
-- Select _Leads_ from the _Meter_ menu;
-- The _Max Resistance_ prompt will display showing the maximum resistance in Ohms between 10 and 999;
-- Press the thumb wheel to select and then increase or decrease the value;
-- Press _Enter_ to accept or _Exit_ to cancel the changes.
+Selecting _Leads_ from the [Meter Menu](#Meter-Menu) displays the [Leads Menu](#Leads-Menu) displaying the maximum resistance beyond which the leads are taken as open. The resistance is in Ohms between 10 and 999:
 
-<a name="Contacts"></a>
-#### Contacts
+- Title: __100 Ω__.
+- Description: _Max Resistance_.
 
-The _Contacts_ menu selects when contact checks are to be performed
+The range is: 10 - 999.
+
+Moving the cursor over the digits, the digit blinks. Pressing the _Wheel_ or `ENTER` and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or `ENTER` selects the new value.
+
+<a name="Contacts-Check-Menu"></a>
+#### Contacts Check Menu
+
+Selecting _Checks_ from the [Meter Menu](#Meter-Menu) displays the [Checks Menu](#Checks-Menu). This menu selects when contact checks are to be performed. This is done by setting a bit value that toggles the contact check for Initial Resistance (IR) (binary 001), Thermal Transient (TR) (binary 010) or Final Resistance (FR) (binary 100). For example, setting the value to 5 (binary 101), enables contact checks before the Initial and Final Resistance measurements whereas setting the value to 7 (binary 111 or 1+2+4), enables contact checks before the initial, final, and thermal transient measurements.
 
 |Bit|Name|Hex Value|Decimal Value|Description|
 |----|----|----|----|
-|B0|Pre-Initial-Resistance|0x01|1|Always 1|
+|B0|Pre-Initial-Resistance|0x01|1|Check contacts before making the initial cold resistance measurement. This value is always set.|
 |B1|Pre-Thermal-Transient|0x02|2|Check contacts before making the thermal transient measurement|
 |B2|Pre-Final-Resistance|0x04|4|Check contacts before making the final cold resistance measurement|
 
-- Select _Contacts_ from the _Meter_ menu;
-- The _Contacts_ prompt will display showing the current value;
-- Press the thumb wheel to select and then set the value;
-- For example, set the value to `7` (1+2+4) for checking contacts before the initial, final, and thermal transient measurements;
-- Press _Enter_ to accept or _Exit_ to cancel the changes.
+- Title: __01__.
+- Description: _Pre IR[1]+TR[2]+FR[3]_.
 
-Note that the program forces the 1 bit thus forcing a contact check before each initial resistance measurement.
+The expected range are: 1, 3, 5, 7.
 
-<a name="Resistance"></a>
-### Resistance
+Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or `ENTER` and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or `ENTER` selects the new value.
 
-Select _Resistance_ from the _TTM Main Menu_ to alter the settings of the initial and final cold resistance (bridge wire resistance at low current level).
+<a name="Resistance-Menu"></a>
+### Resistance Menu
 
-<a name="Source"></a>
-#### Source
+Selecting _Resistance_ from the [Main Menu](#Main-Menu) displays the [Resistance Menu](#Resistance-Menu), which is used to set the parameters for the initial and final cold resistance measurements. The front panel displays __Cold Resistance__ with the following options: 
 
-Either a Voltage or a Current source can be selected to force voltage or current, respectively for measuremnt the cold resistance.
+| Option | Description |
+|--------|-------------|
+| [Source](#Source-Menu) | Selects the source modality as current or voltage |
+| [Level](#Level-Menu) | Selects source level |
+| [Limit](#Limit-Menu) | Sets the sense limit |
+| [Aperture](#Aperture-Menu) | Sets the duration that the source is applied to the device under test |
+| [Limits](#Limits-Menu) | Selects the [Limits](#Limits-Menu). |
+| [Status](#Status-Menu) | Selects the [Status](#Status-Menu) condition menu. |
 
-- Select _Source_ from the _Cold Resistance_ menu;
-- The _Voltage_ and _Current_ options will display;
-- Rotate the thumb wheel to highlight either _Voltage_ or _Current_;
-- Press _Enter_ to accept or _Exit_ to cancel the selection.
+<a name="Source-Menu"></a>
+#### Source Menu
 
-<a name="Level"></a>
-#### Level
+Selecting _Source_ from the [Resistance Menu](#Resistance-Menu) displays the [Source Menu](#Source-Menu). The front panel displays __Source: Voltage__ or __Source: Current__ with the following options:
 
-The source level is the voltage (if using a Voltage Source) or current (if using a current source) for measuring the cold resistance.
+| Option | Description |
+|--------|-------------|
+| Voltage | Selects the source modality as voltage |
+| Current | Selects the source modality as current |
 
-The selected level is forced by the TTM instrument onto or through  the bridge-wire to measure the bridge wire resistance. This forcing level must be small so as not to trip or ecessively heat the bridge-wire.
+Either a Voltage or a Current source can be selected to force voltage or current, respectively for measuring the cold resistance.
 
-- Select _Level_ from the _Cold Resistance_ menu;
-- The _Level_ prompt will display showing the source voltage or current that was last set;
-- Press the thumb wheel to select and then increase or decrease the value;
-- Press _Enter_ to accept or _Exit_ to cancel the changes.
+Moving the cursor over an option and pressing the _Wheel_ or `ENTER` selects this option. Pressing `EXIT` returns to the [Resistance Menu](#Resistance-Menu).
 
-<a name="Limit"></a>
-#### Limit
+<a name="Level-Menu"></a>
+#### Level Menu
 
-The maximum voltage is the limit set by the instrument for the maximum voltage that could develop on the bridge wire during the cold resistance test. This limit will be reach if the bridge wire is open or exhibits a very high resistance.
+Selecting _Level_ from the [Resistance Menu](#Resistance-Menu) displays the [Level Menu](#Level-Menu). This menu sets the level of the source modality. The selected level is forced by the TTM instrument onto (Voltage) or through (Current) the bridge-wire when measuring the bridge-wire resistance. This forcing level must be small so as not to trip or excessively heat the bridge-wire.
 
-- Select _Voltage_ from the _Cold Resistance_ menu;
-- The _Maximum Voltage_ prompt will display showing the voltage that was last set in volts.
-- Press the thumb wheel to select and then increase or decrease the value.
-- Press _Enter_ to accept or _Exit_ to cancel the changes.
+The display depends on the [Source Menu](#Source-Menu) option. For _Voltage_ the display is:
 
-<a name="Aperture"></a>
-#### Aperture
+- Title: __0010 mV__.
+- Description: _Source Voltage_.
 
-The aperture (integration period) defines the duration and accuracy of the cold resistance measurement. This value is defined in multiples or fractions of power line cycles (PLC). 1 PLC equals to 1/60th of a second in the US. At 1 PLC the measurement accuracy exceeds 0.01%.
+The range is: 1 - 999 mV.
 
-- Select _Aperture_ from the _Cold Resistance_ menu;
-- The _Integration Period_ prompt will display showing the number of power line cycles was last set in PLC;
-- Press the thumb wheel to select and then increase or decrease the value;
-- Press _Enter_ to accept or _Exit_ to cancel the changes.
+For _Current_ the display is:
 
-<a name="Limits"></a>
-#### Limits
+- Title: __0010 mA__.
+- Description: _Source Current_.
+
+The range is: 1 - 50 mA
+
+Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or `ENTER` and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or `ENTER` selects the new value.
+
+<a name="Limit-Menu"></a>
+#### Limit Menu
+
+Selecting _Limit_ from the [Resistance Menu](#Resistance-Menu) displays the [Limit Menu](#Limit-Menu). This menu sets the Limit of the sense modality. The display depends on the [Source Menu](#Source-Menu) option.
+
+<a name="Voltage-Source-Current-Limit"></a>
+##### Voltage Source Current Limit
+
+For _Voltage_ the display is:
+
+- Title: __050 mA__.
+- Description: _Current Limit_.
+
+The range is: 1 - 50 mA
+
+The [Voltage Source Current Limit](#Voltage-Source-Current-Limit) is the highest current that the instrument would allow to flow through the bridge-wire when forcing voltage across the bridge-wire. This limit will be reached if the bridge-wire exhibits a low resistance at which point the measurement is said to hit [Compliance](#Compliance).
+
+<a name="Current-Source-Voltage-Limit"></a>
+##### Current Source Voltage Limit
+
+For _Current_ the display is:
+
+- Title: __010 mV__.
+- Description: _Voltage Limit_.
+
+The range is: 1 - 999 mV.
+
+The [Current Source Voltage Limit](#Current-Source-Voltage-Limit) is the highest voltage that the instrument would allow over the bridge-wire when forcing current through the bridge-wire. This limit will be reached if the bridge-wire is open or exhibits a very high resistance at which point the measurement is said to hit [Compliance](#Compliance).
+
+<a name="Compliance"></a>
+##### Compliance
+
+The measurement is said to hit [Compliance](#Compliance) if the measurement forcing modality, e.g., voltage or current, caused the measured modality, e.g, current or voltage respectively, to reach the limit set by the [Limit Menu](#Limit-Menu). At compliance, the forced modality reaches a level that is lower than the level set in the [Level Menu](#Level-Menu) thus protecting the bridge-wire from over voltage or current.
+
+<a name="Aperture-Menu"></a>
+#### Aperture Menu
+
+Selecting _Aperture_ from the [Resistance Menu](#Resistance-Menu) displays the [Aperture Menu](#Aperture-Menu). This menu sets the Aperture, or duration, of the applied source level. The front panel displays:
+
+- Title: __01.000 PLC__.
+- Description: _Integration Period_.
+
+The range is: 0.001 - 20.
+
+This menu sets the duration of the measurement in power line cycles (PLC).
+
+Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or `ENTER` and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or `ENTER` selects the new value.
+
+The aperture (integration period) defines the duration and, thereby the accuracy, of the cold resistance measurement. This value is defined in multiples or fractions of power line cycles (PLC). one (1) PLC equals to 1/60th of a second in the US. At 1 PLC the measurement accuracy exceeds 0.01%.
+
+<a name="Limits-Menu"></a>
+#### Limits Menu
+
+Selecting _Limits_ from the [Resistance Menu](#Resistance-Menu) displays the [Limits Menu](#Limits-Menu). The front panel displays __Limits__ with the following options: 
+
+| Option | Description |
+|--------|-------------|
+| Low | Selects the [Low Limit Menu](#Low-Limit-Menu) |
+| High | Selects the [High Limit Menu](#High-Limit-Menu) |
+
+Moving the cursor over an option and pressing the _Wheel_ or `ENTER` selects this option. Pressing `EXIT` returns to the [Resistance Menu](#Resistance-Menu).
 
 Limits are used to determine if the measured value is within range (pass) or out of range (fail). 
 
-The initial and final cold resistances are checked against the limits and the measurement outcome is set to High or Low if the values are out of range. 
+The initial and final cold resistances are checked against the limits and the measurement outcome is set to __High__ or __Low__ if the values are out of range. 
 
 If the initial resistance measurement fails, the measured value is displayed along with the outcome status (see [Status](#Status) below).
 
-- Select _Limits_ from the _Cold Resistance_ menu to alter the limits.
+<a name="Low-Limit-Menu"></a>
+##### Low Limit  Menu
 
-<a name="Low_Limit"></a>
-##### Low Limit
+Selecting _Low_ from the [Limits Menu](#Limits-Menu) displays the [Low Limit Menu](#Low-Limit-Menu). This menu sets the low limit of the measurement in Ohms. The front panel displays:
 
-- Select _Low_ from the _Limits_ menu;
-- The _Low Limit_ prompt will display showing the last value that was set in ohms;
-- Press the thumb wheel to select and then increase or decrease the value.
-- Press _Enter_ to accept or _Exit_ to cancel the changes.
+- Title: __01.920 Ω__.
+- Description: _Low Limit_.
 
-<a name="High_Limit"></a>
-##### High Limit
+The range is: 0.1 - 10 Ω.
 
-- Select _High_ from the _Limits_ menu;
-- The _High Limit_ prompt will display showing the last value that was set in ohms;
-- Press the thumb wheel to select and then increase or decrease the value.
-- Press _Enter_ to accept or _Exit_ to cancel the changes.
+Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or `ENTER` and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or `ENTER` selects the new value.
 
-<a name="Status"></a>
-#### Status
+<a name="High-Limit-Menu"></a>
+##### High Limit  Menu
+
+Selecting _High_ from the [Limits Menu](#Limits-Menu) displays the [High Limit Menu](#High-Limit-Menu). This menu sets the High limit of the measurement in Ohms. The front panel displays:
+
+- Title: __02.160 Ω__.
+- Description: _High Limit_.
+
+The range is: 0.1 - 10 Ω.
+
+Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or `ENTER` and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or `ENTER` selects the new value.
+
+<a name="Status-Menu"></a>
+#### Status Menu
+
+Selecting _Status_ from the [Resistance Menu](#Resistance-Menu) displays the [Status Menu](#Status-Menu):
+
+- Title: __002__.
+- Description: _66=compliance 64 or over-temp 2_.
+
+The expected range are: 2, 64, 66.
+
+This sets bit values that toggle the over-temperature failure condition (2) or compliance failure condition (64). For example, setting the value to 2 the instrument will fail under an over-temperature condition but will not fail if the sense current or voltage reaches the limit set with the [Limit Menu](#Limit-Menu).
+
+Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or `ENTER` and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or `ENTER` selects the new value.
+
+<a name="Buffer-Status"></a>
+##### Buffer Status
 
 In addition to measuring the cold resistance, the instrument reports a _Buffer Status_ byte where each bit represents a specific setting or outcome as follows:
 
@@ -266,106 +418,157 @@ In addition to measuring the cold resistance, the instrument reports a _Buffer S
 - Select _Status_ from the _Cold Resistance_ menu;
 - The _Fail Status Compliance 64 Over-temp 2_ prompt will display showing the status bitmask that is to indicate a failed cold resistance measurement;
 - Press the thumb wheel to select and then increase or decrease the value;
-- Press _Enter_ to accept or _Exit_ to cancel the changes.
+- Press `ENTER` to accept or `EXIT` to cancel the changes.
 
-The Status settings of the Thermal Transient Meter allows the operator to select what status values are interpreted as a failed measurement.
+The [Status Menu](#Status-Menu) settings of the Thermal Transient Meter allows the operator to select what status values are interpreted as a failed measurement.
 
-With the 4009 of the TTM firmware both over-temp and compliance were taken to indicate a failure. With the new firmware, the operator can choose accept a measurement under compliance condition. For example, the operator may choose to apply a voltage of 100 mV but limit the current at 20 mA. When making this measurement on a 2 Ohm bridge-wire, the instrument will _hit compliance_. The measurement accuracy will still be acceptable. In the case, the operator will set the Status settings to 2 instead of the default of 66.
+The legacy revisions of the TTM firmware prior to and including 2.3.4009 has taken either or both the over-temp and compliance status bits to indicate a failure. With the new firmware, the operator can choose to accept a measurement that hits a [Compliance](#Compliance) condition. For example, the operator may choose to apply a voltage of 100 mV but limit the current at 20 mA. When making this measurement on a 2 Ohm bridge-wire, the instrument will _hit compliance_. The measurement accuracy will still be acceptable. In the case, the operator will set the Status settings to 2 instead of the default of 66.
 
 The measurement outcome and status are displayed along with the bridge-wire resistance and low or high indication if the initial cold resistance measurement failed. Typically a status value of 28 will display indicating that a 4-wire measurement was taken under auto range conditions.
 
 ##### Legacy support
-In order to support the legacy Visual Basic software the status settings defaults to over-temp only.
+In order to support the legacy Visual Basic software the status settings defaults to over-temp only. This way, the instrument can be set to source voltage using the [Source-Menu](#Source-Menu) while still using the legacy current source settings which would cause the instrument to hit [Compliance](#Compliance).
 
-<a name="Transient"></a>
-### Transient
+<a name="Thermal-Transient-Menu"></a>
+### Thermal Transient Menu
 
-Use _Transient_ menu items to set the test parameters of the thermal transient forcing and measurement parameters.
+Selecting _Transient_ from the [Main Menu](#Main-Menu) displays the [Thermal Transient Menu](#Thermal-Transient-Menu):
 
-- Select _Transient_ from the _TTM Main Menu_ to alter the settings of the thermal transient response measurement of the bridge wire.
+| Option | Description |
+|--------|-------------|
+| [Current](#Source_Current-Menu) | Selects the [Source Current Menu](#Source_Current-Menu). |
+| [Voltage](#Maximum_Voltage-Menu) | Selects the [Maximum Voltage Menu](#Maximum_Voltage-Menu). |
+| [Aperture](#Transient_Aperture-Menu) | Sets the duration of each measurement point of the thermal transient pulse. |
+| [Points](#Transient_Points-Menu) | Sets the number of points to acquire during the thermal transient pulse. |
+| [Period](#Transient_Period-Menu) | Sets the repetition period of the thermal transient pulse points. |
+| [Delay](#Port_Transient_Delay-Menu) | Sets the time between the thermal transient and the final cold resistance measurement. |
+| [Limits](#Transient_Limits-Menu) | Sets the limits of the maximum thermal transient response voltage. |
 
-<a name="Source_Current"></a>
-#### Source Current
+Use [Thermal Transient Menu](#Thermal-Transient-Menu) items to set the test parameters of the thermal transient forcing and measurement parameters.
 
-The source current is the current that is forced by the TTM instrument through the bridge wire to measure the bridge wire thermal transient response. This current is pulsed through the bridge wire for a very short duration determined by the period times points (see below).
+<a name="Source_Current-Menu"></a>
+#### Source Current Menu
 
-- Select _Current_ from the _Thermal Transient_ menu;
-- The _Source Current_ prompt will display showing the source current that was last set in milli Amperes.
-- Press the thumb wheel to select and then increase or decrease the value.
-- Press _Enter_ to accept or _Exit_ to cancel the changes.
+Selecting _Current_ from the [Thermal Transient Menu](#Thermal-Transient-Menu) displays the [Source Current Menu](#Source_Current-Menu). This menu sets the current level of the thermal transient pulse:
 
-<a name="Maximum_Voltage"></a>
-#### Maximum Voltage
+- Title: __297 mA__.
+- Description: _Source Current_.
 
-The maximum voltage is the limit set by the instrument for the maximum voltage that could develop on the bridge wire during the thermal transient test. This limit will be reached if the bridge wire is open or exhibits a very high resistance.
+The range is: 10 - 999 mA.
 
-- Select _Voltage_ from the _Thermal Transient_ menu;
-- The _Maximum Voltage_ prompt will display showing the voltage that was last set in volts.
-- Press the thumb wheel to select and then increase or decrease the value.
-- Press _Enter_ to accept or _Exit_ to cancel the changes.
+Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or `ENTER` and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or `ENTER` selects the new value.
 
-<a name="Transient_Aperture"></a>
-#### Aperture
+The source current is the current that is forced by the TTM instrument through the bridge-wire to measure the bridge-wire thermal transient response. This current is pulsed through the bridge-wire for a very short duration determined by the [Period Menu](#Transient_Period-Menu) value times the [Thermal Transient Points Menu](#Transient_Points-Menu) value.
 
-The aperture (integration period) defines the duration and accuracy of the thermal transient measurement. This value is defined in multiples or fractions of power line cycles (PLC). 1 PLC equals to 1/60th of a second in the US. Thermal transients are measured during a very short pulse period. Therefore, a very small integration period is allowed for the thermal transient.
+<a name="Maximum_Voltage-Menu"></a>
+#### Maximum Voltage Menu
 
-- Select _Aperture_ from the _Thermal Transient_ menu;
-- The _Integration Period_ prompt will display showing the number of power line cycles was last set in PLC.
-- Press the thumb wheel to select and then increase or decrease the value.
-- Press _Enter_ to accept or _Exit_ to cancel the changes.
+Selecting _Voltage_ from the [Thermal Transient Menu](#Thermal-Transient-Menu) displays the [Maximum Voltage Menu](#Maximum_Voltage-Menu). This menu sets the Voltage limit of the sense modality:
 
-<a name="Points"></a>
-#### Points
+- Title: __0.990 V__.
+- Description: _Voltage Limit_.
 
-During the thermal transient test a current pulse is applied to the bridge wire. The pulse duration is determined by the period (see below) times the Points value.
+The range is: 10 - 999 mV.
 
-- Select _Points_ from the _Thermal Transient_ menu;
-- The _Data Points_ prompt will display showing the last settings.
-- Press the thumb wheel to select and then increase or decrease the value.
-- Press _Enter_ to accept or _Exit_ to cancel the changes.
+Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or `ENTER` and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or `ENTER` selects the new value.
 
-<a name="Period"></a>
-#### Period
+The maximum voltage is the limit set by the instrument for the maximum voltage that could develop on the bridge-wire during the thermal transient test. This limit will be reached if the bridge-wire is open or exhibits a very high resistance.
 
-The duration of the thermal transient current pulse equals the period times points (see above).
+<a name="Transient_Aperture-Menu"></a>
+#### Thermal Transient Aperture Menu
 
-- Select _Period_ from the _Thermal Transient_ menu;
-- The _Sampling Interval_ prompt will display showing the last settings in micro seconds.
-- Press the thumb wheel to select and then increase or decrease the value.
-- Press _Enter_ to accept or _Exit_ to cancel the changes.
+Selecting _Aperture_ from the [Thermal Transient Menu](#Thermal-Transient-Menu) displays the [Thermal Transient Aperture Menu](#Transient_Aperture-Menu). This menu sets the Aperture, or duration, of each measurement of the current pulse point:
 
-<a name="Delay"></a>
-#### Delay
+- Title: __0.004 PLC__.
+- Description: _Integration Period_.
 
-Delay sets the time the instrument will pause between the thermal transient measurement and the final resistance measurement. This time is designed to allow the bridge wire to cool down before making the final resistance measurement.
+The range is: 0.001 - 0.01.
 
-- Select _Delay_ from the _Thermal Transient_ menu;
-- The _Final Cold Resistance Delay_ prompt will display showing the last settings in mill seconds.
-- Press the thumb wheel to select and then increase or decrease the value.
-- Press _Enter_ to accept or _Exit_ to cancel the changes.
+This menu sets the duration of the measurement in power line cycles (PLC).
 
-<a name="Transient_Limits"></a>
-#### Limits
+Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or `ENTER` and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or `ENTER` selects the new value.
 
-Limits are used to determine if the thermal transient measurement is within range (pass) or out of range (fail).
+The aperture (integration period) defines the duration and accuracy of the thermal transient measurement. This value is defined in multiples or fractions of power line cycles (PLC). One (1) PLC equals to 1/60th of a second in the US. Thermal transients are measured during a very short pulse period. Therefore, a very small integration period is allowed for the thermal transient.
 
-- Select _Limits_ from the _Thermal Transient_ menu to alter the limits.
+<a name="Transient_Points-Menu"></a>
+#### Thermal Transient Points Menu
 
-<a name="Transient_Low_Limit"></a>
-##### Low Limit
+Selecting _Points_ from the [Thermal Transient Menu](#Thermal-Transient-Menu) displays the [Thermal Transient Points Menu](#Transient_Points-Menu). This menu sets the number of points of the current pulse applied during the thermal transient measurement:
 
-- Select _Low_ from the _Limits_ menu;
-- The _Low Limit_ prompt will display showing the last value that was set in milli volts.
-- Press the thumb wheel to select and then increase or decrease the value.
-- Press _Enter_ to accept or _Exit_ to cancel the changes.
+- Title: __00100__.
+- Description: _Data Points_.
 
-<a name="Transient_High_Limit"></a>
-##### High Limit
+The range is: 10 - 10000.
 
-- Select _High_ from the _Limits_ menu;
-- The _High Limit_ prompt will display showing the last value that was set in milli volts.
-- Press the thumb wheel to select and then increase or decrease the value.
-- Press _Enter_ to accept or _Exit_ to cancel the changes.
+Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or `ENTER` and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or `ENTER` selects the new value.
+
+During the thermal transient test a current pulse is applied to the bridge-wire. The pulse duration is determined by the [Period](#Transient_Period-Menu) times the [Points](#Transient_Points-Menu) values.
+
+<a name="Transient_Period-Menu"></a>
+#### Thermal Transient Period Menu
+
+Selecting _Period_ from the [Thermal Transient Menu](#Thermal-Transient-Menu) displays the [Period Menu](#Transient_Period-Menu). This menu sets the duration of each point of the current pulse applied during the thermal transient measurement:
+
+- Title: __00100 µS__.
+- Description: _Sampling Interval_.
+
+The range is: 80 - 1000 µS.
+
+Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or `ENTER` and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or `ENTER` selects the new value.
+
+The total duration of the thermal transient pulse equals the [Period](#Transient_Period-Menu) times the [Points](#Transient_Points-Menu) values.
+
+<a name="Post_Transient_Delay-Menu"></a>
+#### Post Thermal Transient Delay Menu
+
+Selecting _Delay_ from the [Thermal Transient Menu](#Thermal-Transient-Menu) displays the [Delay Menu](#Post_Transient_Delay-Menu). This menu sets the delay time between the end of the thermal transient measurement and the beginning of the final resistance measurement:
+
+- Title: __00011 mS__.
+- Description: _Final Cold Resistance Delay_.
+
+The range is: 1 - 10000 mS.
+
+Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or `ENTER` and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or `ENTER` selects the new value.
+
+The delay sets the time the instrument will pause between the thermal transient measurement and the final resistance measurement. This time is designed to allow the bridge-wire to cool down before making the final resistance measurement.
+
+<a name="Transient_Limits-Menu"></a>
+#### Thermal Transient Limits Menu
+
+Selecting _Limits_ from the [Thermal Transient Menu](#Thermal-Transient-Menu) displays the [Thermal Transient Limits Menu](#Transient_Limits-Menu). The front panel displays __Limits__ with the following options: 
+
+| Option | Description |
+|--------|-------------|
+| Low | Selects the [Thermal Transient Low Limit Menu](#Transient_Low_Limit-Menu) |
+| High | Selects the [Thermal Transient High Limit Menu](#Transient_High_Limit-Menu) |
+
+Moving the cursor over an option and pressing the _Wheel_ or `ENTER` selects this option. Pressing `EXIT` returns to the [Thermal Transient Menu](#Thermal-Transient-Menu).
+
+The limits are used to determine if the thermal transient measurement is within range (pass) or out of range (fail).
+
+<a name="Transient_Low_Limit-Menu"></a>
+##### Thermal Transient Low Limit Menu
+
+Selecting _Low_ from the [Limits Menu](#Transient_Limits-Menu) displays the [Thermal Transient Low Limit Menu](#Transient_Low_Limit-Menu). This menu sets the low limit for the measured thermal transient voltage. The front panel displays:
+
+- Title: __005.4 mV__.
+- Description: _Low Limit_.
+
+The range is: 1 - 999 mV.
+
+Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or `ENTER` and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or `ENTER` selects the new value.
+
+<a name="Transient_High_Limit-Menu"></a>
+##### Thermal Transient High Limit Menu
+
+Selecting _High_ from the [Thermal Transient Limits Menu](#Transient_Limits-Menu) displays the [Thermal Transient High Limit Menu](#Transient_High_Limit-Menu). This menu sets the high limit for the measured thermal transient voltage. The front panel displays:
+
+- Title: __076.0 mV__
+- Description: _High Limit_
+
+The range is: 1 - 999 mV.
+
+Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or `ENTER` and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or `ENTER` selects the new value.
 
 <a name="Measuring_Using_the_Front_Panel"></a>
 ## Measuring Using the Front Panel
@@ -374,36 +577,30 @@ The instrument takes a new measurement when triggered.
 
 Triggering form the front panel of the instrument is done as follows:
 
-- Start the instrument.
-- Press the _Run_ button on the instrument front panel.
-- Press the _Trig_ button to obtain new measurements.
+- [Start](#Starting) the instrument.
+- Wait for the [Action Panel](#Action-Panel).
+- Press the `TRIG` button to obtain new measurements.
+- [Read](#Reading_the_Outcome) the outcome from the digital I/O.
 
 Note that the instrument scripts must be loaded and verified first using the TTM Console application. Otherwise, the scripts will not run and the front panel will display R: 0.0000 with a blinking R:.
 
-A failed measurement is designated on the instrument panel by a blinking prefix character. For example, if Final Resistance failed, the R preceding the measured value will blink with changing intensity. Upon a failure of the initial resistance measurement the instrument display the resistance, the high or low indication, the outcome value and status (see [status] above}.
+A failed measurement is designated on the instrument panel by a blinking prefix character. For example, if Final Resistance failed, the R preceding the measured value will blink with changing intensity. Upon a failure of the initial resistance measurement the instrument displays the resistance, the high or low indication, the outcome value and status (see [status] above}.
 
-To exit from the _<TRIG MENU RUN>_ mode, press the _RUN_ key.
-
-[Reading the Outcome]
-
-The measurement outcomes can be read from the digital I/O.
+To exit from the [Action Panel](#Action-Panel) mode, press the `RUN` key.
 
 <a name="Measuring_Using_the_TRG_Command"></a>
-## Measuring Using the \*TRG command
+## Measuring Using the `*TRG` command
 
 The instrument takes a new measurement when triggered.
 
-The instrument \*TRG command can be used to trigger a measurement as follows:
+The instrument `*TRG` command can be used to trigger a measurement as follows:
 
 - Start the instrument;
 - Connect the instrument using an external interface such as GPIB or Ethernet;
-- Send the \*TRG command.
+- Send the `*TRG` command.
+- [Read](#Reading_the_Outcome) the outcome from the digital I/O.
 
 A failed measurement is designated on the instrument panel by a blinking prefix character. For example, if Initial Resistance failed, the R preceding the measured value will blink with changing intensity.
-
-[Reading the Outcome]
-
-The measurement outcomes can be read from the digital I/O.
 
 <a name="Measuring_Using_Digital_Input"></a>
 ## Measuring Using a Digital Input
@@ -466,7 +663,7 @@ Upon a failure of the initial resistance measurement the instrument display the 
 Upon clear, which is issued before each measurement, the outcome is set to 0 (Okay) 
 
 #### Legacy Support
-The outcome value is set to `nil` upon clear.
+The internal outcome value of the instrument is set to the `Lua` `nil` value upon clear. 
 The outcome status bit is set if the contact check failed. 
 
 <a name="Measurement_Readings"></a>
@@ -499,6 +696,14 @@ The following Special readings might be output (SCPI-Standard Commands for Progr
 
 <a name="Specifications"></a>
 ## Specifications
+
+<a name="Meter-Settings"></a>
+### Meter Settings
+
+- Channel: `smua` or `smub`.
+- Driver: 0 or 1.
+- Leads Maximum Resistance: 10 - 999.
+- Contact Checks: 1, 3, 5, or 7.
 
 <a name="Thermal_Transient_Response"></a>
 ### Thermal Transient Response
@@ -567,12 +772,12 @@ Licensed under [The Fair End User] and [MIT] Licenses.
 
 Unless required by applicable law or agreed to in writing, this software is provided "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 
-Source code is hosted on [Bit Bucket].and [Github]
+Source code is hosted on [GitHub]
 
 [The Fair End User]: http://www.isr.cc/licenses/Fair%20End%20User%20Use%20License.pdf
 [MIT]: http://opensource.org/licenses/MIT
-[Bit Bucket].: https://www.bitbucket.org/davidhary
-[GitHub].: https://www.github.com/ATECoder
-[TTM Framework Guide]: TTM%20Framework%20Guide.md
-[TTM Loader Guide]: TTM%20Loader%20Guide.md
-[TTM API Guide]: TTM%20API%20Guide.md
+[GitHub]: https://www.github.com/ATECoder
+[TTM Framework Guide]: ./TTM%20Framework%20Guide.html
+[TTM Loader Guide]: ./TTM%20Loader%20Guide.html
+[Four-Terminal Sensing]: https://en.wikipedia.org/wiki/Four-terminal_sensing
+[Lua]: https://www.lua.org
