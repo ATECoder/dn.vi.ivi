@@ -768,6 +768,6 @@ Source code is hosted on [GitHub]
 [The Fair End User]: http://www.isr.cc/licenses/Fair%20End%20User%20Use%20License.pdf
 [MIT]: http://opensource.org/licenses/MIT
 [GitHub]: https://www.github.com/ATECoder
-[TTM Framework Guide]: https://github.com/ATECoder/dn.vi.ivi.git/docs/TTM%20Framework%20Guide.html
+[TTM Framework Guide]: https://github.com/ATECoder/dn.vi.ivi.git/docs/ttm/TTM%20Framework%20Guide.html
 [Four-Terminal Sensing]: https://en.wikipedia.org/wiki/Four-terminal_sensing
 [Lua]: https://www.lua.org

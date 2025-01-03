@@ -9,7 +9,6 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Legacy;
 /// <remarks>   2024-11-07. </remarks>
 public partial class LegacyDevice : CommunityToolkit.Mvvm.ComponentModel.ObservableObject, IDevice
 {
-
     #region " construction and cleanup "
 
     private readonly Type _settingAssemblyMemberType;

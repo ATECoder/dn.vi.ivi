@@ -1,4 +1,4 @@
-# Thermal Transient Meter&trade; API Guide
+# Thermal Transient Meter&trade; Driver API Guide
 
 Application programming interface for the Thermal Transient Meter&trade;
 
@@ -9,8 +9,11 @@ Applicable Virtual Instrument (VI) Framework version: 8.1.x
 
 - [Description](#Description)
 - [Changes](#Changes)
-  - [Revision 3.1](#Revision_3.1)
-  - [Revision 4.0](#Revision_4.0)
+  - [TTM_Library](#TTM_Library)
+  - [Settings Files](#Settings_Files)
+	- [Unit Tests](#Unit_Tests)
+  - [Legacy Driver](#Legacy_Deriver)
+  - [Meter Driver](#Meter_Driver)
     - [Code Breaking Chances](#Code_Breaking_Chances)
       - [Trace Messages](#Trace_Messages)
       - [Return Values](#Return_Values)
@@ -55,23 +58,61 @@ Applicable Virtual Instrument (VI) Framework version: 8.1.x
 
 This document describes how to control the instrument remotely.
 
+<a name="Drivers"></a>
+## Drivers
+
+The TTM Framework API consists of two drivers_
+
+- A [Legacy Driver](#Legacy_Deriver), which requires minimal changes from the original TTM driver (rev. 2.3.x), and
+- A [Meter Driver](#Meter_Deriver), which breaks compatibility with the original TTM driver (rev. 2.3.x).
+
+For drivers are based on [.NET Framework] version 9.0 targeting the [Microsoft .NET Standard] 2.0, which means that the can be called from earlier releases of the [.NET Framework], such as 4.7.2 or 4.8.
+
 <a name="Changes"></a>
 ## Changes
 
-<a name="Revision_3.1"></a>
-### Revision 3.0
+<a name="TTM_Library"></a>
+### TTM_Library
 
-<a name="Revision_4.0"></a>
-### Revision 4.0
+Both the [Legacy Driver](#Legacy_Deriver) and [Meter Driver](#Meter_Deriver) use the [TTM Library Project] to access the TTM Instrument.
 
-The meter must be reset and reconfigured when switching between shunt and thermal transient measurements.
+<a name="Settings_Files"></a>
+### Settings Files
 
+Both the [Legacy Driver](#Legacy_Deriver) and [Meter Driver](#Meter_Deriver) as well as the [TTM Library Project] use JSon settings files to define logging, timing settings, and default configuration settings for Cold Resistance and Thermal Transient configurations. Samples of these settings files are includes in the corresponding unit tests projects [Legacy Driver Unit Tests] and [Meter Driver Unit Tests].
+ 
+<a name="Unit_Tests"></a>
+#### Unit Tests
 
-The driver library (isr.VI.Tsp.K2600.Ttm) version 4.x breaks compatibility with Driver 3.x. Driver 3.x is still provided for backward compatibility. The following major changes where introduced:
+Both the [Legacy Driver](#Legacy_Deriver) and [Meter Driver](#Meter_Deriver) as well as the [TTM Library Project] come with unit tests project. In addition to providing sample JSon settings files, the corresponding unit tests projects [Legacy Driver Unit Tests] and [Meter Driver Unit Tests] are a good reference for understanding how to use the Legacy and the Meter API.
 
-- Three objects encapsulate the part information: Cold Resistance, Thermal Transient and Shun Resistance. These include both configuration settings and measurement results;
-- Three objects encapsulate the thermal transient API: Meter Cold Resistance, Meter Thermal Transient and Thermal Transient Estimator. These include both the configuration and measurement commands and properties.
-- The shunt resistance API is encapsulated in new Source Measure Unit system and subsystems: Source Measure Unit Current Source and Source Measure Unit Measure.
+<a name="Legacy_Deriver"></a>
+### Legacy Driver
+
+The new legacy driver `cc.isr.VI.Tsp.K2600.Ttm.Legacy` implementation entails the following changes:
+- Targets the [Microsoft .NET Standard] 2.0.
+- Targets [IVI VISA] 7.2.0 thus requiring the installations compatible editions of the [Keysight IO Suite] (e.g., version 21.1.47) or [NI Visa].
+- Uses a Message-Based session rather than a GPIB session to access the instrument. Thus, the driver can access a GPIB device by way of a USB-GPIB or TCP/IP-GPIB adapters.
+- Uses a `cc` prefix to precede the `isr` namespace such as `cc.isr.Ttm.Device` instead of `isr.Ttm.Device`, which is commensurate with the registered `isr.cc` domain of Integrated Scientific Resources, Inc.
+- Targets either the legacy TTM Firmware version 2.3.4009 or the Firmware version 2.4.9111 and above.
+- Omits the Shunt features, which has not been implemented in production by users of the TTM Framework.
+- Omits the Contact Check methods, which have not been implemented in production by users of the TTM Framework.
+- Uses two objects to encapsulate the test configuration: Cold Resistance Config and Thermal Transient Config.
+- Uses two objects encapsulate the test results: Cold Resistance and Thermal Transient.
+
+<a name="Meter_Driver"></a>
+### Meter Driver
+
+The new meter driver `cc.isr.VI.Tsp.K2600.Ttm` implementation entails the following changes:
+- Targets the [Microsoft .NET Standard] 2.0.
+- Targets [IVI VISA] 7.2.0 thus requiring the installations compatible editions of the [Keysight IO Suite] (e.g., version 21.1.47) or [NI Visa].
+- Uses a Message-Based session rather than a GPIB session to access the instrument. Thus, the driver can access a GPIB device by way of a USB-GPIB or TCP/IP-GPIB adapters.
+- Uses a `cc` prefix to precede the `isr` namespace such as `cc.isr.Ttm.Device` instead of `isr.Ttm.Device`, which is commensurate with the registered `isr.cc` domain of Integrated Scientific Resources, Inc.
+- Targets the new TTM Firmware version 2.4.9111 and above.
+- Uses Contact Check methods that have been embedded in the new TTM Firmware.
+- The meter must be reset and reconfigured when switching between shunt and thermal transient measurements.
+- Uses three objects encapsulate the device under test: Cold Resistance, Thermal Transient and Shunt Resistance. These include both configuration settings and measurement results;
+- Uses three objects encapsulate the thermal transient API: Meter Cold Resistance, Meter Thermal Transient and Thermal Transient Estimator. These include both the configuration and measurement commands and properties.
 - Additional objects were defined to handle other subsystems such as Display and Status.
 - The Source Measure, Display and Status subsystems are encapsulated in the Master Device object, which represents a Test Script Processor instrument such as the 2600 Meter.
 
@@ -79,8 +120,8 @@ The driver library (isr.VI.Tsp.K2600.Ttm) version 4.x breaks compatibility with 
 ## API Changes
 
 - The thermal transient elements include additional configuration settings.
-- The API implement equality functions that allow to determine changes in configuration settings.
-- The API include reset and clear function that clears or resets the execution state of the instrument to known values.
+- The API implements equality functions that allow to determine changes in configuration settings.
+- The API includes reset and clear functions that clear or reset the execution state of the instrument to known values.
 - Default execution state values are defined in the TTM Instrument namespace.
 - The measure command clears the execution state.
 - New API elements allow detecting changed configurations and applying only new configuration values. Note that before measuring shunt resistance after measuring thermal transient, all configuration values must be applied.
@@ -88,9 +129,11 @@ The driver library (isr.VI.Tsp.K2600.Ttm) version 4.x breaks compatibility with 
 <a name="Legacy_Support"></a>
 ### Legacy Support
 
-The TTM firmware is is compatibly with earlier versions of TTM Visual Basic drivers released before 2024 (e.g., 3.2.5367, 2.3.4077).
+The TTM Firmware as described in the [TTM Firmware API Guide] is compatible with earlier versions of TTM Visual Basic drivers released before 2024 (e.g., 3.2.5367, 2.3.4077).
 
-The firmware uses a `MeterDefaults.legacyDriver` and `MeterValues.legacyDriver` flags that is set to 1 for use with the legacy Visual Basic drivers. 
+The firmware uses `MeterDefaults.legacyDriver` and `MeterValues.legacyDriver` flags that are set to 1 when accessed by with the legacy Visual Basic drivers. 
+
+Optionally, the [Legacy Driver](#Legacy_Deriver) can also set these optional values, which has been used to verify that the new firmware is compatible with the legacy drivers.
 
 The `MeterValues.legacyDriver` is persistent and can be set from the instrument menu or by the `legacyDriverSetter()` function call.
 
@@ -140,7 +183,7 @@ The driver uses new TraceMessage and TraceMessageEventArgs classes instead of th
 <a name="Return_Values"></a>
 #### Return Values
 
-The uses exceptions rather than return values to signal failures of operations.For example, the OpenSession command may raise the ArgumentNullException or OperationFailedException exceptions and could be handled as follows:
+The new drivers use exceptions rather than return values to signal failures of operations. For example, the `OpenSession` command may raise the `ArgumentNullException` or `OperationFailedException` exceptions and could be handled as follows:
 
 ```
 Try
@@ -708,6 +751,14 @@ Source code is hosted on [GitHub]
 [The Fair End User]: http://www.isr.cc/licenses/Fair%20End%20User%20Use%20License.pdf
 [MIT]: http://opensource.org/licenses/MIT
 [GitHub]: https://www.github.com/ATECoder
-[TTM Framework Guide]: TTM%20Framework%20Guide.md
-[TTM Loader Guide]: TTM%20Loader%20Guide.md
-[TTM API Guide]: TTM%20API%20Guide.md
+[.NET Framework]: https://dotnet.microsoft.com/en-us/learn/dotnet/what-is-dotnet-framework
+[Microsoft .NET Standard]: https://learn.microsoft.com/en-us/dotnet/standard/net-standard?tabs=net-standard-1-0
+[IVI VISA]: https://www.ivi.org
+[Keysight IO Suite]: https://www.keysight.com/us/en/lib/software-detail/computer-software/io-libraries-suite-downloads-2175637.html
+[NI Visa]: http://ftp.ni.com/support/softlib/visa/VISA%20Run-Time%20Engine
+[TTM Framework Guide]: https://github.com/ATECoder/dn.vi.ivi.git/docs/ttm/TTM%20Framework%20Guide.html
+[TTM Firmware API Guide]: https://github.com/ATECoder/dn.vi.ivi.git/docs/ttm/TTM%20Firmware%20API%20Guide.html
+[Legacy Driver Unit Tests]: https://github.com/ATECoder/dn.vi.ivi.git/src/vi/k2600.ttm/legacy.mstest
+[Meter Driver Unit Tests]: https://github.com/ATECoder/dn.vi.ivi.git/src/vi/k2600.ttm/mstest
+[TTM Library Project]: https://github.com/ATECoder/dn.vi.ivi.git/src/vi/k2600.ttm/ttm
+

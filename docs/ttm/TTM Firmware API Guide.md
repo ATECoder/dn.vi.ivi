@@ -2,22 +2,39 @@
 
 The guide contains the Firmware level application programming interface for the Thermal Transient Meter&trade;
 
+## Work In Progress
+
+This document includes a partial description of the TTM firmware and is work in progress. 
+
 ## Contents
 
 - [Description](#Description)
+- [ISR Support](#isr_support)
+- [ISR TTM](#isr_ttm)
+  - [The TTM Namespace](#TTM_Namespace)
+  - [Cold Resistance](#Cold_Resistance)
+    - [Cold Resistance Methods](#Cold_Resistance_Methods)
+  - [Trace](#Trace)
+    - [Trace Methods](#Trace_Methods)
+  - [Meter](#Meter)
+  - [Sequencer](#Sequencer)
+  - [User Interface](#User interface)
+  - [Measurement Sequence](#Measurement_Sequence)
+- [ISR TTM BOOT](#isr_ttm_boot)
+- [Meter Script](#Meter_Script)
+  - [Outcome values](#Outcome_Values)
+  - [Buffer Status](#Buffer_Status)
+- [Notes](#Notes)
+  - [N1](#N1)
 - [Attributions](#Attributions)
+
 
 <a name="Description"></a>
 ## Description
 
 The TTM firmware is based on the Test Script Processing (TSP) firmware incorporated in the [Keithley] 2600 instruments. TSP is based on the [Lua] programming language.
 
-The TTM firmware consists of a main [isr_ttm] script, a support [isr_support] script and a startup [isr_ttm_boot] script. These scripts are loaded and saved in the instrument using a loader program described in the [TTM Loader Guide], which is part of the TTM Framework described in the [TTM Framework Guide],
-
-### Status
-
-This document includes a partial description of the TTM firmware and is work in progress. 
-
+The TTM firmware consists of a main [isr_ttm] script, a support [isr_support] script and a startup [isr_ttm_boot] script. These scripts are loaded and saved in the instrument using a loader program, which is part of the TTM Framework described in the [TTM Framework Guide].
 
 <a name="isr_support"></a>
 ## ISR Support
@@ -31,6 +48,7 @@ The [isr_ttm] script is the core script of the TTM framework for taking the Ther
 
 The [isr_ttm] scripts consists of three Lua classes, [Cold Resistance], [Trace] and [Estimator]. These classes are organized as a [Meter] to implement a sequence of measurements orchestrated by a [sequencer] and set up by a [user interface]. The entire system 
 
+<a name="TTM_Namespace"></a>
 ### The TTM Namespace
 
 The Thermal Transient Meter namespace is set to `isr.meters.thermalTransient`, The [startup](#isr_ttm_boot) script aliases the name space as `ttm`.
@@ -65,10 +83,11 @@ In addition, the [sequencer](#sequencer) script initializes the following instan
 
 The [Cold Resistance] class controls the measurement of the initial and final resistances. The two instances of the [Cold Resistance] class are accessible as `ttm.ir` and `ttm.fr` corresponding to the initial and final resistances. The `isr.meters.thermalTransient` namespace is assigned to `ttm` in the [startup](#isr_ttm_boot) script:
 
+<a name="Cold_Resistance_Methods"></a>
 #### Cold Resistance Methods
 
 Note: the `x` in the method and property names listed below stands for `i` (initial) or `f` final resistance instance of the [cold resistance] class. 
-:
+
 ##### `ttm.xr:init()`
 
 * Initializes this class setting all properties to their cached values. This method executed when the class is instantiated..
@@ -103,7 +122,8 @@ The following values are initialized by the `ttm.ir:Clear()` and `ttm.fr:Clear()
 
 The [Trace] class controls the measurement of the thermal transient. The instance of the [Trace] class is accessible as `ttm.tr`.
 
-#### Cold Resistance Methods
+<a name="Trace_Methods"></a>
+#### Trace Methods
 
 Note: the `x` in the method and property names listed below stands for `i` (initial) or `f` final resistance instance of the [cold resistance] class.
 
@@ -176,8 +196,8 @@ The following values are initialized by the `ttm.est:Clear()`, which is called p
 <a name="User interface"></a>
 ### User Interface
 
-<a name="Measurement"></a>
-### Measurement
+<a name="Measurement_Sequence"></a>
+### Measurement Sequence
 
 The thermal transient measurement sequence is as follows:
 
@@ -272,11 +292,10 @@ Otherwise, the resistance is set to [NaN] and the outcome bit [measurement faile
 
 The [isr_ttm_boot] script starts when the instrument is powered up. This script runs the framework scripts, which are then ready to accept trigger or user interface commands.
 
+<a name="Meter_Script"></a>
+## Meter Script
 
-<a name="Meter"></a>
-## Meter
-
-The [Meter] script holds the Meter-level settings and enumerations of the TTM framework/
+The [Meter] script holds the Meter-level settings and enumerations of the TTM framework.
 
 <a name="Outcome_Values"></a>
 ### Outcome values
@@ -312,8 +331,6 @@ Upon reading the resistance, the cold resistance class fetches a _Buffer Status_
 |B6|Compliance|0x40|64|Source function was in compliance|
 |B7|Filtered|0x80|128|Reading was filtered|
 
-
-
 <a name="Notes"></a>
 ## Notes
 
@@ -339,14 +356,12 @@ Source code is hosted on [GitHub]
 
 [Creative Commons Attribution 4.0 International Public License]: https://bitbucket.org/davidhary//dn.vi.git/license
 [MIT]: https://bitbucket.org/davidhary//dn.vi.git/license-code
-[TTM Driver 4 API Guide]: https://github.com/atecoder/dn.vi.ivi.git/src/docs/TTM%20Driver%204%20API%20Guide.md
-[TTM Firmware Guide]: https://github.com/atecoder/dn.vi.ivi.git/src/docs/TTM%20Firmware%20Guide.md
-[TTM Framework Guide]: https://github.com/atecoder/dn.vi.ivi.git/src/docs/TTM%20Framework%20Guide.md
-[TTM Instrument Guide]: https://github.com/atecoder/dn.vi.ivi.git/src/docs/TTM%20Instrument%20Guide.md
-[TTM Leaflet]: https://github.com/atecoder/dn.vi.ivi.git/src/docs/TTM%20Leaflet.md
-[TTM Loader Guide]: https://github.com/atecoder/dn.ttmware.git/src/docs/TTM%20Loader%20Guide.md
-[TTM Manual Test Guide]: https://github.com/atecoder/dn.vi.ivi.git/src/docs/TTM%20Manual%20Test%20Guide.md
-[The Fair End User]: http://www.isr.cc/licenses/Fair%20End%20User%20Use%20License.pdf
 [GitHub]: https://www.github.com/ATECoder
 [Lua]: https://www.lua.org
 [Keithley]: https://www.keithley.com
+[The Fair End User License]: http://www.isr.cc/licenses/Fair%20End%20User%20Use%20License.pdf
+[TTM Driver API Guide]: https://github.com/atecoder/dn.vi.ivi.git/docs/ttm/TTM%20Driver%20API%20Guide.md
+[TTM Firmware API Guide]: https://github.com/atecoder/dn.vi.ivi.git/docs/ttm/TTM%20Firmware%20API%20Guide.md
+[TTM Framework Guide]: https://github.com/atecoder/dn.vi.ivi.git/docs/ttm/TTM%20Framework%20Guide.md
+[TTM Instrument Guide]: https://github.com/atecoder/dn.vi.ivi.git/docs/ttm/TTM%20Instrument%20Guide.md
+[TTM Leaflet]: https://github.com/atecoder/dn.vi.ivi.git/docs/ttm/TTM%20Leaflet.md

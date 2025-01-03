@@ -93,5 +93,4 @@ public partial class LegacyDevice : CommunityToolkit.Mvvm.ComponentModel.Observa
     }
 
     #endregion
-
 }

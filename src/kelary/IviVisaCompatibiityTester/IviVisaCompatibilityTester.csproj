@@ -29,7 +29,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="..\..\..\docs\VISA Compatibility Tester Guide.html" Link="docs\VISA Compatibility Tester Guide.html">
+    <None Include="..\..\..\docs\kelary\VISA Compatibility Tester Guide.md" Link="docs\VISA Compatibility Tester Guide.md" />
+    <Content Include="..\..\..\docs\kelary\VISA Compatibility Tester Guide.html" Link="docs\VISA Compatibility Tester Guide.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="favicon.ico" />
@@ -69,10 +70,6 @@
 
   <ItemGroup>
     <Folder Include="docs\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="..\..\..\docs\VISA Compatibility Tester Guide.md" Link="docs\VISA Compatibility Tester Guide.md" />
   </ItemGroup>
 
 </Project>

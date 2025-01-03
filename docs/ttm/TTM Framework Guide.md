@@ -112,7 +112,6 @@ When starting the TTM instrument, the instrument panel displays the Thermal Tran
 
 The TTM Framework comes with the following guides:
 - [TTM Framework Guide]: This guide.
-- [TTM Firmware Upgrade Guide]: Describes how to upgrade the firmware.
 - [TTM Firmware API Guide]: Describe how to interact with the Firmware by wat of TCP/IP, USB or GPIB using [IVI VISA].
 - [TTM Driver API Guide]: Describes how to use the ISR TTM Driver.
 - [TTM Driver API Upgrade Guide]: Describes how to upgrade software using the legacy ISR TTM driver.
@@ -141,9 +140,9 @@ The TTM applications are based on the Microsoft [.NET Framework] 9.0 and [Micros
 <a name="VISA_Runtime"></a>
 ### VISA Runtime
 
-The TTM Framework [Microsoft .NET] API uses the Virtual Instruments (VISA) framework from the [IVI Foundation] for communicating with the TTM instrument. [IVI VISA] is installed by members of the [IVI Foundation] such as Keysight, Rohde-Schwartz and NI (former National Instruments). Implementations such as the [IO Suite] from Keysight or [NI Visa] from NI must be installed for running applications based on [IVI VISA].
+The TTM Framework [Microsoft .NET] API uses the Virtual Instruments (VISA) framework from the [IVI Foundation] for communicating with the TTM instrument. [IVI VISA] is installed by members of the [IVI Foundation] such as Keysight, Rohde-Schwartz and NI (former National Instruments). Implementations such as the [Keysight IO Suite] or [NI Visa] must be installed for running applications based on [IVI VISA].
 
-The current TTM software was developed based on version 7.2.0.0 of [IVI VISA]. Any VISA implementation, such as [IO Suite] version 21.1.47 is compatible with the ISR TTM API.
+The current TTM software was developed based on version 7.2.0.0 of [IVI VISA]. Any VISA implementation, such as [Keysight IO Suite] version 21.1.47 is compatible with the ISR TTM API.
 
 <a name="Attributions"></a>
 ## Attributions
@@ -163,21 +162,20 @@ Source code is hosted on [GitHub]
 [The Fair End User]: http://www.isr.cc/licenses/Fair%20End%20User%20Use%20License.pdf
 [MIT]: http://opensource.org/licenses/MIT
 [GitHub]: https://www.github.com/ATECoder
-[IVI VISA]: https://www,ivi.org
-[IVI FOUNDATION]: https://www,ivi.org
-[IO Suite]: https://www.keysight.com/us/en/lib/software-detail/computer-software/io-libraries-suite-downloads-2175637.html
+[IVI VISA]: https://www.ivi.org
+[IVI FOUNDATION]: https://www.ivi.org
+[Keysight IO Suite]: https://www.keysight.com/us/en/lib/software-detail/computer-software/io-libraries-suite-downloads-2175637.html
 [NI Visa]: http://ftp.ni.com/support/softlib/visa/VISA%20Run-Time%20Engine
-[.NET Framework]: https://dotnet.microsoft.com/en-us/download/dotnet/8.0
+[.NET Framework]: https://dotnet.microsoft.com/en-us/download/dotnet/9.0
 [ISR FTP Site]: http://bit.ly/aJgNDP
 [cc.isr.ftp]: ftp://ftp.isr.cc
-[Microsoft .NET]: https://en.wikipedia.org/wiki/.NET_Framework
+[Microsoft .NET]: https://dotnet.microsoft.com/en-us/learn/dotnet/what-is-dotnet-framework
 [Microsoft .NET Standard]: https://learn.microsoft.com/en-us/dotnet/standard/net-standard?tabs=net-standard-1-0
 [Keithley series 2600]: https://www.tek.com/en/products/keithley/source-measure-units/2600b-series-sourcemeter
-[TTM Framework Guide]: https://github.com/ATECoder/dn.vi.ivi.git/docs/TTM%20Framework%20Guide.html
-[TTM Firmware Upgrade Guide]: https://github.com/ATECoder/dn.vi.ivi.git/docs/TTM%20Firmware%20Upgrade%20Guide.html
-[TTM Firmware API Guide]: https://github.com/ATECoder/dn.vi.ivi.git/docs/TTM%20Firmware%20API%20Guide.html
-[TTM Driver API Guide]: https://github.com/ATECoder/dn.vi.ivi.git/docs/TTM%20Driver%20API%20Guide.html
-[TTM Driver API Upgrade Guide]: https://github.com/ATECoder/dn.vi.ivi.git/docs/TTM%20Driver%20API%20Upgrade%20Guide.html
-[TTM Instrument Guide]: https://github.com/ATECoder/dn.vi.ivi.git/docs/TTM%20Instrument%20Guide.html
-[VISA Compatibility Tester Guide]: https://github.com/ATECoder/dn.vi.ivi.git/docs/Visa%20Compatibility%20Tester%20Guide.html
-[TTM Console Guide]: https://github.com/ATECoder/dn.vi.ivi.git/docs/TTM%20Console%20Guide.html
+[TTM Framework Guide]: https://github.com/ATECoder/dn.vi.ivi.git/docs/ttm/TTM%20Framework%20Guide.html
+[TTM Firmware API Guide]: https://github.com/ATECoder/dn.vi.ivi.git/docs/ttm/TTM%20Firmware%20API%20Guide.html
+[TTM Driver API Guide]: https://github.com/ATECoder/dn.vi.ivi.git/docs/ttm/TTM%20Driver%20API%20Guide.html
+[TTM Driver API Upgrade Guide]: https://github.com/ATECoder/dn.vi.ivi.git/docs/ttm/TTM%20Driver%20API%20Upgrade%20Guide.html
+[TTM Instrument Guide]: https://github.com/ATECoder/dn.vi.ivi.git/docs/ttm/TTM%20Instrument%20Guide.html
+[VISA Compatibility Tester Guide]: https://github.com/ATECoder/dn.vi.ivi.git/docs/kelary/Visa%20Compatibility%20Tester%20Guide.html
+[TTM Console Guide]: https://github.com/ATECoder/dn.vi.ivi.git/docs/ttm/TTM%20Console%20Guide.html

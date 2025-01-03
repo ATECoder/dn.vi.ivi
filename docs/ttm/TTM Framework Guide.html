@@ -104,7 +104,7 @@ td, h1, h2, h3, h4, h5, p, ul, ol, li {
     <h3 id="meter">Meter</h3>
     <p>The ISR Thermal Transient Meter (TTM) Instrument is at the core of the framework. This instrument measures the thermal transient response of a resistive element to short current pulses. The instrument is capable of applying current pulses over a wide range of current levels and pulse widths. The instrument also measures the resistances before and after applying the current pulse. The instrument displays measurement values and outputs a digital word that can be used for binning the tested device.</p>
     <p>The instrument consists of a <a href="https://www.tek.com/en/products/keithley/source-measure-units/2600b-series-sourcemeter">Keithley series 2600</a> instrument and a custom embedded <a href="#TTM-Firmware">TTM Firmware</a>, which extends the capabilities of the instrument for measuring thermal transients.</p>
-    <p>The <a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/TTM%20Instrument%20Guide.html">TTM Instrument Guide</a> describes the usage of the TTM as a stand-alone instrument.</p>
+    <p>The <a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/ttm/TTM%20Instrument%20Guide.html">TTM Instrument Guide</a> describes the usage of the TTM as a stand-alone instrument.</p>
     <p>
       <a name="TTM-Firmware"></a>
     </p>
@@ -120,18 +120,18 @@ td, h1, h2, h3, h4, h5, p, ul, ol, li {
     </p>
     <h3 id="api">API</h3>
     <p>The ISR Thermal Transient Meter (TTM) Application Programming Interface (API) is a .NET library (also called Driver) that can be used to communicate with the TTM instrument. The library is provided both as a dynamic link library (DLL) and a Visual Studio project with source code.</p>
-    <p>The <a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/TTM%20Driver%20API%20Guide.html">TTM Driver API Guide</a> describes how to use the TTM API to interface with the instrument remotely from a Windows computer.</p>
+    <p>The <a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/ttm/TTM%20Driver%20API%20Guide.html">TTM Driver API Guide</a> describes how to use the TTM API to interface with the instrument remotely from a Windows computer.</p>
     <p>
       <a name="Console"></a>
     </p>
     <h3 id="console">Console</h3>
     <p>The ISR Thermal Transient Meter (TTM) Console (or Driver Console) is an application program for testing resistive devices using the TTM instrument. The Console is included as part of the TTM Framework both as an application program executable and a Visual Studio project with source code.</p>
-    <p>The <a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/TTM%20Console%20Guide.html">TTM Console Guide</a> describes how to use the Console.</p>
+    <p>The <a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/ttm/TTM%20Console%20Guide.html">TTM Console Guide</a> describes how to use the Console.</p>
     <p>
       <a name="Visa-Compatibility-Tester"></a>
     </p>
     <h3 id="visa-compatibility-tester">VISA Compatibility Tester</h3>
-    <p>The TTM Framework <a href="https://en.wikipedia.org/wiki/.NET_Framework">Microsoft .NET</a> API uses the Virtual Instruments (VISA) framework from the <a href="https://www,ivi.org">IVI Foundation</a> for communicating with the TTM instrument. The <a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/Visa%20Compatibility%20Tester%20Guide.html">VISA Compatibility Tester Guide</a> describes how to use the Visa Compatibility Tester to determine if <a href="https://www,ivi.org">IVI VISA</a> is installed on the computer and is compatible with the TTM .NET libraries and applications.</p>
+    <p>The TTM Framework <a href="https://en.wikipedia.org/wiki/.NET_Framework">Microsoft .NET</a> API uses the Virtual Instruments (VISA) framework from the <a href="https://www,ivi.org">IVI Foundation</a> for communicating with the TTM instrument. The <a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/kelary/Visa%20Compatibility%20Tester%20Guide.html">VISA Compatibility Tester Guide</a> describes how to use the Visa Compatibility Tester to determine if <a href="https://www,ivi.org">IVI VISA</a> is installed on the computer and is compatible with the TTM .NET libraries and applications.</p>
     <p>
       <a name="Revisions"></a>
     </p>
@@ -199,21 +199,21 @@ td, h1, h2, h3, h4, h5, p, ul, ol, li {
     <p>The TTM Framework comes with the following guides:</p>
     <ul>
       <li>
-        <a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/TTM%20Framework%20Guide.html">TTM Framework Guide</a>: This guide.</li>
+        <a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/ttm/TTM%20Framework%20Guide.html">TTM Framework Guide</a>: This guide.</li>
       <li>
-        <a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/TTM%20Firmware%20Upgrade%20Guide.html">TTM Firmware Upgrade Guide</a>: Describes how to upgrade the firmware.</li>
+        <a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/ttm/TTM%20Firmware%20Upgrade%20Guide.html">TTM Firmware Upgrade Guide</a>: Describes how to upgrade the firmware.</li>
       <li>
-        <a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/TTM%20Firmware%20API%20Guide.html">TTM Firmware API Guide</a>: Describe how to interact with the Firmware by wat of TCP/IP, USB or GPIB using <a href="https://www,ivi.org">IVI VISA</a>.</li>
+        <a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/ttm/TTM%20Firmware%20API%20Guide.html">TTM Firmware API Guide</a>: Describe how to interact with the Firmware by wat of TCP/IP, USB or GPIB using <a href="https://www,ivi.org">IVI VISA</a>.</li>
       <li>
-        <a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/TTM%20Driver%20API%20Guide.html">TTM Driver API Guide</a>: Describes how to use the ISR TTM Driver.</li>
+        <a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/ttm/TTM%20Driver%20API%20Guide.html">TTM Driver API Guide</a>: Describes how to use the ISR TTM Driver.</li>
       <li>
-        <a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/TTM%20Driver%20API%20Upgrade%20Guide.html">TTM Driver API Upgrade Guide</a>: Describes how to upgrade software using the legacy ISR TTM driver.</li>
+        <a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/ttm/TTM%20Driver%20API%20Upgrade%20Guide.html">TTM Driver API Upgrade Guide</a>: Describes how to upgrade software using the legacy ISR TTM driver.</li>
       <li>
-        <a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/TTM%20Instrument%20Guide.html">TTM Instrument Guide</a>: Describes how to use the TTM Instrument manually or from application programs.</li>
+        <a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/ttm/TTM%20Instrument%20Guide.html">TTM Instrument Guide</a>: Describes how to use the TTM Instrument manually or from application programs.</li>
       <li>
-        <a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/TTM%20Console%20Guide.html">TTM Console Guide</a>: Describes how to take measurement using the TTM Console application.</li>
+        <a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/ttm/TTM%20Console%20Guide.html">TTM Console Guide</a>: Describes how to take measurement using the TTM Console application.</li>
       <li>
-        <a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/Visa%20Compatibility%20Tester%20Guide.html">VISA Compatibility Tester Guide</a>: how to use the Visa Compatibility Tester to determine if <a href="https://www,ivi.org">IVI VISA</a> is installed on the computer and is compatible with the TTM .NET libraries and applications.</li>
+        <a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/kelary/Visa%20Compatibility%20Tester%20Guide.html">VISA Compatibility Tester Guide</a>: how to use the Visa Compatibility Tester to determine if <a href="https://www,ivi.org">IVI VISA</a> is installed on the computer and is compatible with the TTM .NET libraries and applications.</li>
     </ul>
     <p>
       <a name="Requirements_and_Resources"></a>
