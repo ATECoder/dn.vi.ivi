@@ -5,7 +5,6 @@
 - [This Guide](#Guide)
 - [Preparations](#Preparations)
   - [Wiring the Device Under Test](#Wiring)
-  - [Loading the TTM Firmware](#Loading)
   - [Taking the instrument from Remote to Local Mode](#Remote-Local)
   - [Starting TTM from the Front Panel](#Starting)
   - [Exiting from TTM Front Panel Mode](#Exiting)
@@ -69,15 +68,10 @@ The device under test must be connected to the TTM Instrument using a [Four-Term
 
 ![](KelvinDiagram.jpg)
 
-<a name="Loading"></a>
-### Loading the TTM Firmware
-
-Use the TTM Loader to update the TTM Firmware as described in the [TTM Loader Guide].
-
 <a name="Remote-Local"></a>
 ### Taking the instrument from Remote to Local Mode
 
-When controlling the instrument from an application program, such as the Loader or Driver Tester, the instrument goes into Remote mode.
+When controlling the instrument from an application program the instrument goes into Remote mode.
 
 Pressing the `EXIT` button on the instrument panel changes the instrument access mode to local where the instrument is controlled from the front panel rather than from an external program.
 
@@ -127,7 +121,6 @@ SrcA:+000.0000mV LimA:1.00000 A
 
 - Press the _`RUN`_ button.
   - This opens the [Action Panel](#Action-Panel).
-  - otherwise, the firmware needs to be loaded (see [Loading the Firmware](#Loading).
 
 <a name="Loading"></a>
 ### Loading the Firmware
@@ -582,8 +575,6 @@ Triggering form the front panel of the instrument is done as follows:
 - Press the `TRIG` button to obtain new measurements.
 - [Read](#Reading_the_Outcome) the outcome from the digital I/O.
 
-Note that the instrument scripts must be loaded and verified first using the TTM Console application. Otherwise, the scripts will not run and the front panel will display R: 0.0000 with a blinking R:.
-
 A failed measurement is designated on the instrument panel by a blinking prefix character. For example, if Final Resistance failed, the R preceding the measured value will blink with changing intensity. Upon a failure of the initial resistance measurement the instrument displays the resistance, the high or low indication, the outcome value and status (see [status] above}.
 
 To exit from the [Action Panel](#Action-Panel) mode, press the `RUN` key.
@@ -777,7 +768,6 @@ Source code is hosted on [GitHub]
 [The Fair End User]: http://www.isr.cc/licenses/Fair%20End%20User%20Use%20License.pdf
 [MIT]: http://opensource.org/licenses/MIT
 [GitHub]: https://www.github.com/ATECoder
-[TTM Framework Guide]: ./TTM%20Framework%20Guide.html
-[TTM Loader Guide]: ./TTM%20Loader%20Guide.html
+[TTM Framework Guide]: https://github.com/ATECoder/dn.vi.ivi.git/docs/TTM%20Framework%20Guide.html
 [Four-Terminal Sensing]: https://en.wikipedia.org/wiki/Four-terminal_sensing
 [Lua]: https://www.lua.org

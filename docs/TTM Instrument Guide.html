@@ -22,7 +22,6 @@ td, h1, h2, h3, h4, h5, p, ul, ol, li {
 <li><a href="#Preparations">Preparations</a>
 <ul>
 <li><a href="#Wiring">Wiring the Device Under Test</a></li>
-<li><a href="#Loading">Loading the TTM Firmware</a></li>
 <li><a href="#Remote-Local">Taking the instrument from Remote to Local Mode</a></li>
 <li><a href="#Starting">Starting TTM from the Front Panel</a></li>
 <li><a href="#Exiting">Exiting from TTM Front Panel Mode</a></li>
@@ -104,19 +103,16 @@ td, h1, h2, h3, h4, h5, p, ul, ol, li {
 <p><a name="Guide"></a></p>
 <h2 id="guide">Guide</h2>
 <p>This guide describes how to use the TTM instrument as a stand-along bench or production line device.</p>
-<p>The TTM Instrument is part of the ISR TTM Framework as described in the <a href="./TTM%20Framework%20Guide.html">TTM Framework Guide</a>.</p>
+<p>The TTM Instrument is part of the ISR TTM Framework as described in the <a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/TTM%20Framework%20Guide.html">TTM Framework Guide</a>.</p>
 <p><a name="Preparations"></a></p>
 <h2 id="preparations">Preparations</h2>
 <p><a name="Wiring"></a></p>
 <h3 id="wiring-the-device-under-test">Wiring the Device Under Test</h3>
 <p>The device under test must be connected to the TTM Instrument using a <a href="https://en.wikipedia.org/wiki/Four-terminal_sensing">Four-Terminal Sensing</a> circuit:</p>
 <p><img src="KelvinDiagram.jpg" alt="" /></p>
-<p><a name="Loading"></a></p>
-<h3 id="loading-the-ttm-firmware">Loading the TTM Firmware</h3>
-<p>Use the TTM Loader to update the TTM Firmware as described in the <a href="./TTM%20Loader%20Guide.html">TTM Loader Guide</a>.</p>
 <p><a name="Remote-Local"></a></p>
 <h3 id="taking-the-instrument-from-remote-to-local-mode">Taking the instrument from Remote to Local Mode</h3>
-<p>When controlling the instrument from an application program, such as the Loader or Driver Tester, the instrument goes into Remote mode.</p>
+<p>When controlling the instrument from an application program the instrument goes into Remote mode.</p>
 <p>Pressing the <code>EXIT</code> button on the instrument panel changes the instrument access mode to local where the instrument is controlled from the front panel rather than from an external program.</p>
 <p><a name="Starting"></a></p>
 <h2 id="starting-ttm-from-the-front-panel">Starting TTM from the Front Panel</h2>
@@ -161,7 +157,6 @@ SrcA:+000.0000mV LimA:1.00000 A
 <li>Press the <em><code>RUN</code></em> button.
 <ul>
 <li>This opens the <a href="#Action-Panel">Action Panel</a>.</li>
-<li>otherwise, the firmware needs to be loaded (see <a href="#Loading">Loading the Firmware</a>.</li>
 </ul>
 </li>
 </ul>
@@ -719,7 +714,6 @@ SrcA:+000.0000mV LimA:1.00000 A
 <li>Press the <code>TRIG</code> button to obtain new measurements.</li>
 <li><a href="#Reading_the_Outcome">Read</a> the outcome from the digital I/O.</li>
 </ul>
-<p>Note that the instrument scripts must be loaded and verified first using the TTM Console application. Otherwise, the scripts will not run and the front panel will display R: 0.0000 with a blinking R:.</p>
 <p>A failed measurement is designated on the instrument panel by a blinking prefix character. For example, if Final Resistance failed, the R preceding the measured value will blink with changing intensity. Upon a failure of the initial resistance measurement the instrument displays the resistance, the high or low indication, the outcome value and status (see [status] above}.</p>
 <p>To exit from the <a href="#Action-Panel">Action Panel</a> mode, press the <code>RUN</code> key.</p>
 <p><a name="Measuring_Using_the_TRG_Command"></a></p>

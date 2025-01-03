@@ -4,10 +4,12 @@
 
 - [Components](#Components)
   - [Meter](#Meter)
+  - [TTM-Firmware](#TTM Firmware)
   - [Loader](#Loader)
   - [API](#API)
   - [Console](#Console)
   - [VISA Compatibility Tester](#Visa-Compatibility-Tester)
+- [Revisions](#Revisions)
 - [Terminology](#Terminology)
   - [Firmware](#Firmware)
   - [Loading](#Loading)
@@ -25,8 +27,9 @@
 
 The ISR Thermal Transient Meter&trade; (TTM) Framework consists of the following components, programs and documents:
 
-- [Meter](#Meter) - The ISR Thermal Transient Meter (TTM) Instrument
-- [Loader](#Loader) - An application that loads the custom TTM firmware onto the Keithley 2600 series instruments.
+- [Meter](#Meter) - The ISR Thermal Transient Meter (TTM) Instrument.
+- [TTM Firmware](#TTM-Firmware) - The ISR Thermal Transient Meter (TTM) [Firmware] that is loaded onto the [Meter](#Meter).
+- [Loader](#Loader) - An application that loads the custom TTM firmware onto the [Keithley series 2600] instruments.
 - [API](#API) - A [Microsoft .NET] library for communicating with the instrument over TCP/IP, USB or GPIB interfaces.
 - [Console](#Console) - A stand-alone [Microsoft .NET] application for making Thermal Transient measurements.
 - [VISA Compatibility Tester](#VISA-Compatibility-Tester) - A stand-alone [Microsoft .NET] application for looking for and checking the compatibility of the [IVI VISA] implementation on this computer.
@@ -34,37 +37,52 @@ The ISR Thermal Transient Meter&trade; (TTM) Framework consists of the following
 <a name="Meter"></a>
 ### Meter
 
-The ISR Thermal Transient Meter (TTM) Instrument is at the core of the framework. This instrument measures the thermal transient response of a resistive element to short current pulses. The instrument is capable of applying current pulses over a wide range of current levels and durations. The instrument also measures the resistances before and after applying the current pulse. The instrument displays measurement values and outputs a digital word that can be used for binning the tested device.
+The ISR Thermal Transient Meter (TTM) Instrument is at the core of the framework. This instrument measures the thermal transient response of a resistive element to short current pulses. The instrument is capable of applying current pulses over a wide range of current levels and pulse widths. The instrument also measures the resistances before and after applying the current pulse. The instrument displays measurement values and outputs a digital word that can be used for binning the tested device.
 
-The instrument consists of a Keithley series 2600 instrument and a custom embedded firmware, which extends the capabilities of the instrument for measuring thermal transients.
+The instrument consists of a [Keithley series 2600] instrument and a custom embedded [TTM Firmware](#TTM-Firmware), which extends the capabilities of the instrument for measuring thermal transients.
 
 The [TTM Instrument Guide] describes the usage of the TTM as a stand-alone instrument.
+
+<a name="TTM-Firmware"></a>
+### TTM Firmware
+
+The ISR Thermal Transient Meter (TTM) [Firmware] is loaded is a custom embedded firmware, which extends the capabilities of the native [Keithley series 2600] meter for measuring thermal transients.
 
 <a name="Loader"></a>
 ### Loader
 
-The ISR Thermal Transient Meter (TTM) Firmware Loader is a Windows program that loads the custom TTM firmware onto the Keithley 2600 series instrument.
-
-The TTM Loader Guide describes how to use the TTM Loader program.
+The ISR Thermal Transient Meter (TTM) Firmware Loader is a Windows program that loads the custom TTM firmware onto the [Keithley series 2600] instrument.
 
 <a name="API"></a>
 ### API
 
-The ISR Thermal Transient Meter (TTM) Application Programming Interface (API) is a .NET library (ISR.TTM.Driver) that can be used to communicate with the TTM instrument. The library is provided both as a dynamic link library (DLL) and a Visual Studio project with source code.
+The ISR Thermal Transient Meter (TTM) Application Programming Interface (API) is a .NET library (also called Driver) that can be used to communicate with the TTM instrument. The library is provided both as a dynamic link library (DLL) and a Visual Studio project with source code.
 
-The TTM Driver API Guide describes how to use the TTM API to interface with the instrument remotely from a Windows computer.
+The [TTM Driver API Guide] describes how to use the TTM API to interface with the instrument remotely from a Windows computer.
 
 <a name="Console"></a>
 ### Console
 
 The ISR Thermal Transient Meter (TTM) Console (or Driver Console) is an application program for testing resistive devices using the TTM instrument. The Console is included as part of the TTM Framework both as an application program executable and a Visual Studio project with source code.
 
-The TTM Console Guide describes how to use the Console.
+The [TTM Console Guide] describes how to use the Console.
 
 <a name="Visa-Compatibility-Tester"></a>
 ### VISA Compatibility Tester
 
-The TTM Framework [Microsoft .NET] API uses the Virtual Instruments (VISA) framework from the [IVI Foundation] for communicating with the TTM instrument. This Guide describes how to use the Visa Compatibility Tesre to determine if [IVI VISA] is installed on the computer and is compatible with the TTM .NET libraries and applications. 
+The TTM Framework [Microsoft .NET] API uses the Virtual Instruments (VISA) framework from the [IVI Foundation] for communicating with the TTM instrument. The [VISA Compatibility Tester Guide] describes how to use the Visa Compatibility Tester to determine if [IVI VISA] is installed on the computer and is compatible with the TTM .NET libraries and applications. 
+
+<a name="Revisions"></a>
+## Revisions
+
+The TTM Framework has undergone a few revisions since it's inception in 2005. The following table attempts to provide the relationships between the various components and revisions that have been actively employed.
+
+| Component | 2011 | 2025 |
+|--------|-------------|-------------|
+| Firmware | 2.3.4009 | 2.4.9111 |
+| Loader | isr.Ttm.Loader 2.3.4049 | cc.isr.VI.Tsp.K2600.Ttmware.Loader 8.1.9210 |
+| Driver | isr.Ttm.Driver 2.3.4077 | TBA |
+| VISA | NI-VISA NS 8.1.20 | IVI-VISA 7.2.0 |
 
 <a name="Terminology"></a>
 ## Terminology
@@ -72,16 +90,15 @@ The TTM Framework [Microsoft .NET] API uses the Virtual Instruments (VISA) frame
 <a name="Firmware"></a>
 ### Firmware
 
-The ISR Thermal Transient Meter is implemented by customizing an off-the-shelf Keithley instrument. This is done by embedding the ISR Thermal Transient Meter firmware--the TTM Firmware--in this instrument. The TTM firmware consists of an embedded program written in the programming language of the instrument.
+The ISR Thermal Transient Meter is implemented by customizing an off-the-shelf [Keithley series 2600] instrument. This is done by embedding the ISR Thermal Transient Meter firmware--the TTM Firmware--in this instrument. The TTM firmware consists of an embedded program written in the programming language of the instrument.
 
 <a name="Loading"></a>
 ### Loading
 
-The ISR Thermal Transient Meter comes already installed with the TTM Firmware. A stand-alone TTM Loader program (see [TTM Firmware Upgrade Guide]) is used for updating the embedded TTM firmware. This is done by removing (unloading) the TTM firmware embedded in the instrument and loading (installing) new TTM Firmware.
+The ISR Thermal Transient Meter comes already installed with the TTM Firmware. A stand-alone TTM Loader program is used for updating the embedded TTM firmware. This is done by removing (unloading) the TTM firmware embedded in the instrument and loading (installing) new TTM Firmware.
 
 <a name="Memory"></a>
 ### Memory
-
 
 When updated, the TTM Firmware resides in the instrument volatile memory. Firmware residing in volatile memory does not persist after restarting the instrument. During installation, the TTM Loader program saves the TTM Firmware to non-volatile memory. Firmware saved in non-volatile memory persists after the instrument power is toggled.
 
@@ -101,6 +118,7 @@ The TTM Framework comes with the following guides:
 - [TTM Driver API Upgrade Guide]: Describes how to upgrade software using the legacy ISR TTM driver.
 - [TTM Instrument Guide]: Describes how to use the TTM Instrument manually or from application programs.
 - [TTM Console Guide]: Describes how to take measurement using the TTM Console application.
+- [VISA Compatibility Tester Guide]: how to use the Visa Compatibility Tester to determine if [IVI VISA] is installed on the computer and is compatible with the TTM .NET libraries and applications.
 
 <a name="Requirements_and_Resources"></a>
 ## Requirements and Resources
@@ -154,11 +172,12 @@ Source code is hosted on [GitHub]
 [cc.isr.ftp]: ftp://ftp.isr.cc
 [Microsoft .NET]: https://en.wikipedia.org/wiki/.NET_Framework
 [Microsoft .NET Standard]: https://learn.microsoft.com/en-us/dotnet/standard/net-standard?tabs=net-standard-1-0
-[TTM Framework Guide]: ./TTM%20Framework%20Guide.html
-[TTM Firmware Upgrade Guide]: ./TTM%20Firmware%20Upgrade%20Guide.html
-[TTM Firmware API Guide]: ./TTM%20Firmware%20API%20Guide.html
-[TTM Driver API Guide]: ./TTM%20Driver%20API%20Guide.html
-[TTM Driver API Upgrade Guide]: ./TTM%20Driver%20API%20Upgrade%20Guide.html
-[TTM Instrument Guide]: ./TTM%20Instrument%20Guide.html
-[VISA Compatibility Tester Guide]: ./Visa20Compatibility20Tester%20Guide.html
-[TTM Console Guide]: ./TTM%20Console%20Guide.html
+[Keithley series 2600]: https://www.tek.com/en/products/keithley/source-measure-units/2600b-series-sourcemeter
+[TTM Framework Guide]: https://github.com/ATECoder/dn.vi.ivi.git/docs/TTM%20Framework%20Guide.html
+[TTM Firmware Upgrade Guide]: https://github.com/ATECoder/dn.vi.ivi.git/docs/TTM%20Firmware%20Upgrade%20Guide.html
+[TTM Firmware API Guide]: https://github.com/ATECoder/dn.vi.ivi.git/docs/TTM%20Firmware%20API%20Guide.html
+[TTM Driver API Guide]: https://github.com/ATECoder/dn.vi.ivi.git/docs/TTM%20Driver%20API%20Guide.html
+[TTM Driver API Upgrade Guide]: https://github.com/ATECoder/dn.vi.ivi.git/docs/TTM%20Driver%20API%20Upgrade%20Guide.html
+[TTM Instrument Guide]: https://github.com/ATECoder/dn.vi.ivi.git/docs/TTM%20Instrument%20Guide.html
+[VISA Compatibility Tester Guide]: https://github.com/ATECoder/dn.vi.ivi.git/docs/Visa%20Compatibility%20Tester%20Guide.html
+[TTM Console Guide]: https://github.com/ATECoder/dn.vi.ivi.git/docs/TTM%20Console%20Guide.html

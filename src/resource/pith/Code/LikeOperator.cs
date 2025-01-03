@@ -880,8 +880,8 @@ public sealed class LikeOperator
             }
         }
 #else
-		internal int StringPatternStart { get; set; }
-		internal int StringPatternEnd  { get; set; }
+        internal int StringPatternStart { get; set; }
+        internal int StringPatternEnd { get; set; }
 #endif
 
 #if DEBUG
@@ -902,7 +902,7 @@ public sealed class LikeOperator
             }
         }
 #else
-		internal MinSourceIndex  { get; set; }
+        internal int MinSourceIndex { get; set; }
 #endif
 
 #if DEBUG
@@ -940,7 +940,7 @@ public sealed class LikeOperator
             }
         }
 #else
-		internal List(Of Range)  RangeList { get; set; }
+        internal List<Range> RangeList { get; set; }
 #endif
         public int StartIndexOfPossibleMatch { get; set; }
     }
