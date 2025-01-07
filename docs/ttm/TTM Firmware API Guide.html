@@ -1,0 +1,580 @@
+<!DOCTYPE html []>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="author" content="MarkdownViewer++" />
+    <title>TTM Firmware API Guide.md</title>
+    <style type="text/css">
+            
+/* Avoid page breaks inside the most common attributes, especially for exports (i.e. PDF) */
+td, h1, h2, h3, h4, h5, p, ul, ol, li {
+    page-break-inside: avoid; 
+}
+
+        </style>
+  </head>
+  <body>
+    <h1 id="thermal-transient-metertm-ttm-firmware-api-guide">Thermal Transient Meter™ (TTM) Firmware API Guide</h1>
+    <p>The guide contains the Firmware level application programming interface for the Thermal Transient Meter™</p>
+    <h2 id="work-in-progress">Work In Progress</h2>
+    <p>This document includes a partial description of the TTM firmware and is work in progress.</p>
+    <h2 id="contents">Contents</h2>
+    <ul>
+      <li>
+        <a href="#Description">Description</a>
+      </li>
+      <li>
+        <a href="#isr_support">ISR Support</a>
+      </li>
+      <li>
+        <a href="#isr_ttm">ISR TTM</a>
+        <ul>
+          <li>
+            <a href="#TTM_Namespace">The TTM Namespace</a>
+          </li>
+          <li>
+            <a href="#Cold_Resistance">Cold Resistance</a>
+            <ul>
+              <li>
+                <a href="#Cold_Resistance_Methods">Cold Resistance Methods</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="#Trace">Trace</a>
+            <ul>
+              <li>
+                <a href="#Trace_Methods">Trace Methods</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="#Meter">Meter</a>
+          </li>
+          <li>
+            <a href="#Sequencer">Sequencer</a>
+          </li>
+          <li>
+            <a href="#user-interface">User Interface</a>(#User interface)</li>
+          <li>
+            <a href="#Measurement_Sequence">Measurement Sequence</a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a href="#isr_ttm_boot">ISR TTM BOOT</a>
+      </li>
+      <li>
+        <a href="#Meter_Script">Meter Script</a>
+        <ul>
+          <li>
+            <a href="#Outcome_Values">Outcome values</a>
+          </li>
+          <li>
+            <a href="#Buffer_Status">Buffer Status</a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a href="#Notes">Notes</a>
+        <ul>
+          <li>
+            <a href="#N1">N1</a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a href="#Attributions">Attributions</a>
+      </li>
+    </ul>
+    <p>
+      <a name="Description"></a>
+    </p>
+    <h2 id="description">Description</h2>
+    <p>The TTM firmware is based on the Test Script Processing (TSP) firmware incorporated in the <a href="https://www.keithley.com">Keithley</a> 2600 instruments. TSP is based on the <a href="https://www.lua.org">Lua</a> programming language.</p>
+    <p>The TTM firmware consists of a main [isr_ttm] script, a support [isr_support] script and a startup [isr_ttm_boot] script. These scripts are loaded and saved in the instrument using a loader program, which is part of the TTM Framework described in the <a href="https://github.com/atecoder/dn.vi.ivi.git/docs/ttm/TTM%20Framework%20Guide.md">TTM Framework Guide</a>.</p>
+    <p>
+      <a name="isr_support"></a>
+    </p>
+    <h2 id="isr-support">ISR Support</h2>
+    <p>The TTM firmware is based on a set of [TSP] and <a href="https://www.lua.org">Lua</a> script files that make the [isr_support] script.</p>
+    <p>
+      <a name="isr_ttm"></a>
+    </p>
+    <h2 id="isr-ttm">ISR TTM</h2>
+    <p>The [isr_ttm] script is the core script of the TTM framework for taking the Thermal Transient set of measurements.</p>
+    <p>The [isr_ttm] scripts consists of three Lua classes, <a href="#cold-resistance">Cold Resistance</a>, <a href="#trace">Trace</a> and <a href="#estimator">Estimator</a>. These classes are organized as a <a href="#meter">Meter</a> to implement a sequence of measurements orchestrated by a <a href="#sequencer">sequencer</a> and set up by a <a href="#user-interface">user interface</a>. The entire system</p>
+    <p>
+      <a name="TTM_Namespace"></a>
+    </p>
+    <h3 id="the-ttm-namespace">The TTM Namespace</h3>
+    <p>The Thermal Transient Meter namespace is set to <code>isr.meters.thermalTransient</code>, The <a href="#isr_ttm_boot">startup</a> script aliases the name space as <code>ttm</code>.</p>
+    <pre>
+      <code>local ttm = _G.isr.meters.thermalTransient
+</code>
+    </pre>
+    <p>In addition, the <a href="#sequencer">sequencer</a> script initializes the following instances of the TTM classes:</p>
+    <ul>
+      <li>
+        <code>ttm.ir</code> - the initial resistance instance of the <a href="#cold-resistance">cold resistance</a> class.</li>
+      <li>
+        <code>ttm.fr</code> - the final resistance instance of the <a href="#cold-resistance">cold resistance</a> class.</li>
+      <li>
+        <code>ttm.tr</code> - the thermal transient trace instance of the <a href="#trace">trace</a> class.</li>
+      <li>
+        <code>ttm.est</code> - the thermal transient trace estimator instance of the <a href="#estimator">estimator</a> class.</li>
+    </ul>
+    <pre>
+      <code>  --- &lt;summary&gt; Global instance of the initial resistance with its default settings. &lt;/summary&gt;
+  ir = coldResistance:new()
+
+  --- &lt;summary&gt; Global instance of the final resistance with its default settings. &lt;/summary&gt;
+  fr = coldResistance:new()
+
+  --- &lt;summary&gt; Global instance of the thermal transient trace with its default settings. &lt;/summary&gt;
+  tr = trace:new()
+
+  --- &lt;summary&gt; Global instance of the thermal transient estimator with its default settings. &lt;/summary&gt;
+  est = estimator:new()
+</code>
+    </pre>
+    <p>
+      <a name="Cold_Resistance"></a>
+    </p>
+    <h3 id="cold-resistance">Cold Resistance</h3>
+    <p>The <a href="#cold-resistance">Cold Resistance</a> class controls the measurement of the initial and final resistances. The two instances of the <a href="#cold-resistance">Cold Resistance</a> class are accessible as <code>ttm.ir</code> and <code>ttm.fr</code> corresponding to the initial and final resistances. The <code>isr.meters.thermalTransient</code> namespace is assigned to <code>ttm</code> in the <a href="#isr_ttm_boot">startup</a> script:</p>
+    <p>
+      <a name="Cold_Resistance_Methods"></a>
+    </p>
+    <h4 id="cold-resistance-methods">Cold Resistance Methods</h4>
+    <p>Note: the <code>x</code> in the method and property names listed below stands for <code>i</code> (initial) or <code>f</code> final resistance instance of the <a href="#cold-resistance">cold resistance</a> class.</p>
+    <h5 id="ttm.xrinit">
+      <code>ttm.xr:init()</code>
+    </h5>
+    <ul>
+      <li>Initializes this class setting all properties to their cached values. This method executed when the class is instantiated..</li>
+      <li>Returns: true.</li>
+    </ul>
+    <h5 id="ttm.xrreset">
+      <code>ttm.xr:reset()</code>
+    </h5>
+    <ul>
+      <li>Resets all properties to their default values.</li>
+      <li>Returns: true.</li>
+    </ul>
+    <h5 id="ttm.xrclear">
+      <code>ttm.xr:clear()</code>
+    </h5>
+    <ul>
+      <li>Clears measurement and calculated values.</li>
+      <li>Returns: true.</li>
+    </ul>
+    <p>The following values are initialized by the <code>ttm.ir:Clear()</code> and <code>ttm.fr:Clear()</code> methods, which are called from <code>ttm.clearMeasurements()</code>, prior to each measurement sequence.</p>
+    <ul>
+      <li>
+        <code>ttm.xr.low</code>
+        <sup>
+          <a href="#N1">1</a>
+        </sup> (<code>nil</code>) - true if the measured value is lower than the set [cold resistance low limit].</li>
+      <li>
+        <code>ttm.xr.high</code>
+        <sup>
+          <a href="#N1">1</a>
+        </sup> (<code>nil</code>) - true if the measured value is higher than the set [cold resistance high limit].</li>
+      <li>
+        <code>ttm.xr.pass</code> (<code>nil</code>) - true if the the measured value is withing the [[cold resistance high limit],[cold resistance high limit]] range.</li>
+      <li>
+        <code>ttm.xr.current</code> (<code>nil</code>, Amperes) - the measured current as read from the current buffer.</li>
+      <li>
+        <code>ttm.xr.voltage</code> (<code>nil</code>, Volts) - the measured voltage as read from the voltage buffer.</li>
+      <li>
+        <code>ttm.xr.resistance</code> (<code>nil</code>, Ohms) - the resistance calculated by dividing the measured voltage by the measured current.</li>
+      <li>
+        <code>ttm.xr.status</code> (<code>nil</code>) - the <a href="#Buffer_Status">Buffer Status</a></li>
+      <li>
+        <code>ttm.xr.outcome</code> (<code>nil</code>) - the <a href="#Outcome_Values">Outcome</a> of the <a href="#cold-resistance">Cold Resistance</a> measurement.</li>
+      <li>
+        <code>ttm.xr.highContact</code>
+        <sup>
+          <a href="#N1">1</a>
+        </sup> (<code>nil</code>) - the contact resistance of the failed high leads or 0 if contact check passed.</li>
+      <li>
+        <code>ttm.xr.lowContact</code>
+        <sup>
+          <a href="#N1">1</a>
+        </sup> (<code>nil</code>) - the contact resistance of the failed low leads or 0 if contact check passed.</li>
+      <li>
+        <code>ttm.xr.contactsOkay</code>
+        <sup>
+          <a href="#N1">1</a>
+        </sup> (<code>nil</code>) - the outcome of the contact check.</li>
+    </ul>
+    <p>
+      <a name="Trace"></a>
+    </p>
+    <h3 id="trace">Trace</h3>
+    <p>The <a href="#trace">Trace</a> class controls the measurement of the thermal transient. The instance of the <a href="#trace">Trace</a> class is accessible as <code>ttm.tr</code>.</p>
+    <p>
+      <a name="Trace_Methods"></a>
+    </p>
+    <h4 id="trace-methods">Trace Methods</h4>
+    <p>Note: the <code>x</code> in the method and property names listed below stands for <code>i</code> (initial) or <code>f</code> final resistance instance of the <a href="#cold-resistance">cold resistance</a> class.</p>
+    <h5 id="ttm.trinit">
+      <code>ttm.tr:init()</code>
+    </h5>
+    <ul>
+      <li>Initializes this class setting all properties to their cached values. This method executed when the class is instantiated..</li>
+      <li>Returns: true.</li>
+    </ul>
+    <h5 id="ttm.trreset">
+      <code>ttm.tr:reset()</code>
+    </h5>
+    <ul>
+      <li>Resets all properties to their default values.</li>
+      <li>Returns: true.</li>
+    </ul>
+    <h5 id="ttm.trclear">
+      <code>ttm.tr:clear()</code>
+    </h5>
+    <ul>
+      <li>Clears measurement and calculated values.</li>
+      <li>Returns: true.</li>
+    </ul>
+    <p>The following values are initialized by the <code>ttm.tr:Clear()</code> method, which is called prior to each measurement sequence.</p>
+    <ul>
+      <li>
+        <code>ttm.tr.low</code>
+        <sup>
+          <a href="#N1">1</a>
+        </sup> (<code>nil</code>) - true if the measured value is lower than the set [voltage change low limit].</li>
+      <li>
+        <code>ttm.tr.high</code>
+        <sup>
+          <a href="#N1">1</a>
+        </sup> (<code>nil</code>) - true if the measured value is higher than the set [voltage change high limit].</li>
+      <li>
+        <code>ttm.tr.pass</code> (<code>nil</code>) - true if the the measured value is withing the [[voltage change high limit],[voltage change high limit]] range.</li>
+      <li>
+        <code>ttm.tr.voltageChange</code> (<code>nil</code>, Volts) - the voltage changed estimated from the measured thermal transient trace.</li>
+      <li>
+        <code>ttm.tr.outcome</code> (<code>nil</code>) - the <a href="#Outcome_Values">Outcome</a> of the [Voltage Change] measurement.</li>
+      <li>
+        <code>ttm.xr.highContact</code>
+        <sup>
+          <a href="#N1">1</a>
+        </sup> (<code>nil</code>) - the contact resistance of the failed high leads or 0 if contact check passed.</li>
+      <li>
+        <code>ttm.xr.lowContact</code>
+        <sup>
+          <a href="#N1">1</a>
+        </sup> (<code>nil</code>) - the contact resistance of the failed low leads or 0 if contact check passed.</li>
+      <li>
+        <code>ttm.xr.contactsOkay</code>
+        <sup>
+          <a href="#N1">1</a>
+        </sup> (<code>nil</code>) - the outcome of the contact check.</li>
+      <li>
+        <code>ttm.xr.status</code> (<code>nil</code><sup><a href="#N1">1</a></sup>) - the <a href="#Buffer_Status">Buffer Status</a> derived from all status values of the voltage or current buffers.</li>
+    </ul>
+    <p>
+      <a name="Estimator"></a>
+    </p>
+    <h3 id="estimator">Estimator</h3>
+    <p>The <a href="#estimator">Estimator</a> class estimates the parameters of the Thermal Transient. The instance of the <a href="#estimator">Estimator</a> is accessible as <code>ttm.est</code>.</p>
+    <h5 id="ttm.estinitalpha">
+      <code>ttm.est:init(alpha)</code>
+    </h5>
+    <ul>
+      <li>Initializes this class setting all properties to their cached values. This method executed when the class is instantiated..</li>
+      <li>
+        <code>alpha</code> - Specifies the temperature coefficient of resistivity in <sup>o</sup>C<sup>-1</sup>.</li>
+      <li>Returns: true.</li>
+    </ul>
+    <h5 id="ttm.estreset1">
+      <code>ttm.est:reset()</code>
+      <sup>
+        <a href="#N1">1</a>
+      </sup>
+    </h5>
+    <ul>
+      <li>Resets all properties to their default values.</li>
+      <li>Returns: true.</li>
+    </ul>
+    <h5 id="ttm.estclear">
+      <code>ttm.est:clear()</code>
+    </h5>
+    <ul>
+      <li>Clears measurement and calculated values.</li>
+      <li>Returns: true.</li>
+    </ul>
+    <p>The following values are initialized by the <code>ttm.est:Clear()</code>, which is called prior to each measurement sequence.</p>
+    <ul>
+      <li>
+        <code>ttm.est.thermalCoefficient</code> (<code>0.0005</code>) - estimated initial voltage.</li>
+      <li>
+        <code>ttm.est.initialVoltage</code> (<code>nil</code>) - estimated initial voltage.</li>
+      <li>
+        <code>ttm.est.finalVoltage</code> (<code>nil</code>) - estimated final voltage.</li>
+      <li>
+        <code>ttm.est.voltageChange</code> (<code>nil</code>) - estimated voltage change.</li>
+      <li>
+        <code>ttm.est.temperatureChange</code> (<code>nil</code>) - net relative voltage change (change minus cold resistance voltage divided by the initial voltage) divided by temperature coefficient.</li>
+      <li>
+        <code>ttm.est.thermalConductance</code> (<code>nil</code>) - dissipated power divided by the temperature change.</li>
+      <li>
+        <code>ttm.est.thermalTimeConstant</code> (<code>nil</code>) - estimated from the thermal transient trace and the half voltage change.</li>
+      <li>
+        <code>ttm.est.thermalCapacitance</code> (<code>nil</code>) - thermal conductance times thermal time constant.</li>
+      <li>
+        <code>ttm.est.outcome</code> (<code>nil</code>) - the outcome of the estimate. Set to 0 (Okay) when estimating the voltage change.</li>
+    </ul>
+    <p>
+      <a name="Meter"></a>
+    </p>
+    <h3 id="meter">Meter</h3>
+    <p>
+      <a name="Sequencer"></a>
+    </p>
+    <h3 id="sequencer">Sequencer</h3>
+    <p>
+      <a name="User interface"></a>
+    </p>
+    <h3 id="user-interface">User Interface</h3>
+    <p>
+      <a name="Measurement_Sequence"></a>
+    </p>
+    <h3 id="measurement-sequence">Measurement Sequence</h3>
+    <p>The thermal transient measurement sequence is as follows:</p>
+    <h4 id="initial-contact-check">(1) Initial Contact check</h4>
+    <p>A contact check measurement is initiated upon receiving the measurement trigger. The [contactsOkay] value is set to true if the contact check passed. Otherwise, the value is set to false and the [highContact] and [lowContact] resistances of the high and low leads are measured and set.</p>
+    <h5 id="initial-contact-check-passed">Initial Contact check passed</h5>
+    <p>The measurement sequence proceeds to measure the initial cold resistance.</p>
+    <h5 id="initial-contact-check-failed">Initial Contact check failed</h5>
+    <p>The initial cold resistance outcome is set to [Failed Contacts].</p>
+    <h6 id="initial-contact-check-failed-legacy-option">Initial Contact check failed - Legacy option</h6>
+    <ul>
+      <li>The outcome [bad status] bit is set.</li>
+      <li>The initial resistance is set to [NaN] = 9.91e+37.</li>
+    </ul>
+    <h4 id="initial-cold-resistance">(2) Initial Cold Resistance</h4>
+    <p>A constant current or a constant voltage is applied and the resistance is estimated based on the ratio of voltage to current.</p>
+    <p>The outcome is set per the following criteria:</p>
+    <p>If both voltage and current are positive, the resistance is estimated and the resistance [low], [high], and [pass] outcomes are determined.</p>
+    <p>Otherwise, the resistance is set to [NaN] and the outcome bit [measurement failed] is set.  The [Bad Status] bit is set if the legacy option is turned on.</p>
+    <h4 id="optional-pre-trace-contact-check">(3) (optional) Pre-Trace Contact check</h4>
+    <p>A contact check measurement is initiated if the initial resistance measurement passed. The [contactsOkay] value is set to true if the contact check passed. Otherwise, the value is set to false and the [highContact] and [lowContact] resistances of the high and low leads are measured and set.</p>
+    <h5 id="pre-trace-contact-check-passed">Pre-Trace Contact check passed</h5>
+    <p>The measurement sequence proceeds to acquire the thermal transient trace.</p>
+    <h5 id="pre-trace-contact-check-failed">Pre-Trace Contact check failed</h5>
+    <p>The <a href="#trace">Trace</a> outcome is set to [Failed Contacts].</p>
+    <h6 id="pre-trace-contact-check-failed-legacy-option">Pre-Trace Contact check failed - Legacy option</h6>
+    <ul>
+      <li>The outcome [bad status] bit is set.</li>
+      <li>The voltage change is set to 0.001 * [NaN] = 9.91e+34.</li>
+    </ul>
+    <h4 id="thermal-transient-trace">(4) Thermal Transient Trace</h4>
+    <p>A constant current pulse is applied for a brief duration and the current and voltage values are measured at a high rate for a specified point count.</p>
+    <p>The trace thus acquired is used by the estimator to estimate the voltage change relative to the equivalent voltage estimated across an initial resistance value.</p>
+    <p>The outcome is set per the following criteria:</p>
+    <ul>
+      <li>if</li>
+      <li>Otherwise, the transient voltage is set to 0.001 * [NaN] and the outcome bit [measurement failed] is set.  The [Bad Status] bit is set if the legacy option is turned on.</li>
+    </ul>
+    <h4 id="optional-final-contact-check">(5) (optional) Final Contact check</h4>
+    <p>A contact check measurement is initiated if the thermal transient trace measurement passed. The [contactsOkay] value is set to true if the contact check passed. Otherwise, the value is set to false and the [highContact] and [lowContact] resistances of the high and low leads are measured and set.</p>
+    <h5 id="final-contact-check-passed">Final Contact check passed</h5>
+    <p>The measurement sequence proceeds to measure the final resistance.</p>
+    <h5 id="final-contact-check-failed">Final Contact check failed</h5>
+    <p>The <a href="#trace">Trace</a> outcome is set to [Failed Contacts].</p>
+    <h6 id="final-contact-check-failed-legacy-option">Final Contact check failed - Legacy option</h6>
+    <p>The final cold resistance outcome is set to [Failed Contacts].</p>
+    <h6 id="final-contact-check-failed-legacy-option-1">Final Contact check failed - Legacy option</h6>
+    <ul>
+      <li>The outcome [bad status] bit is set.</li>
+      <li>The final resistance is set to [NaN] = 9.91e+37.</li>
+    </ul>
+    <h4 id="final-cold-resistance">(6) Final Cold Resistance</h4>
+    <p>A constant current or a constant voltage is applied and the resistance is estimated based on the ratio of voltage to current.</p>
+    <p>The outcome is set per the following criteria:</p>
+    <p>If both voltage and current are positive, the resistance is estimated and the resistance [low], [high], and [pass] outcomes are determined.</p>
+    <p>Otherwise, the resistance is set to [NaN] and the outcome bit [measurement failed] is set.  The [Bad Status] bit is set if the legacy option is turned on.</p>
+    <p>
+      <a name="isr_ttm_boot"></a>
+    </p>
+    <h2 id="isr-ttm-boot">ISR TTM BOOT</h2>
+    <p>The [isr_ttm_boot] script starts when the instrument is powered up. This script runs the framework scripts, which are then ready to accept trigger or user interface commands.</p>
+    <p>
+      <a name="Meter_Script"></a>
+    </p>
+    <h2 id="meter-script">Meter Script</h2>
+    <p>The <a href="#meter">Meter</a> script holds the Meter-level settings and enumerations of the TTM framework.</p>
+    <p>
+      <a name="Outcome_Values"></a>
+    </p>
+    <h3 id="outcome-values">Outcome values</h3>
+    <p>An outcome property is used by the <a href="#cold-resistance">Cold Resistance</a>, <a href="#trace">Trace</a> and <a href="#estimator">Estimator</a> classes to denote any measurement failures.</p>
+    <p>The bit values of the Cold Resistance outcome are:</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Bit</th>
+          <th>Name</th>
+          <th>Hex Value</th>
+          <th>Decimal Value</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>B0</td>
+          <td>badStatus</td>
+          <td>0x01</td>
+          <td>1</td>
+          <td>Sampling returned bad status from the buffer</td>
+        </tr>
+        <tr>
+          <td>B1</td>
+          <td>badTimeStamps</td>
+          <td>0x02</td>
+          <td>2</td>
+          <td>Sampling returned bad time stamps</td>
+        </tr>
+        <tr>
+          <td>B2</td>
+          <td>configFailed</td>
+          <td>0x04</td>
+          <td>4</td>
+          <td>Configuration failed</td>
+        </tr>
+        <tr>
+          <td>B3</td>
+          <td>initiationFailed</td>
+          <td>0x08</td>
+          <td>8</td>
+          <td>Pulse initiation failed</td>
+        </tr>
+        <tr>
+          <td>B4</td>
+          <td>loadFailed</td>
+          <td>0x10</td>
+          <td>16</td>
+          <td>Scripts not loaded completely</td>
+        </tr>
+        <tr>
+          <td>B5</td>
+          <td>notMeasured</td>
+          <td>0x20</td>
+          <td>32</td>
+          <td>Measurement not completed</td>
+        </tr>
+        <tr>
+          <td>B6</td>
+          <td>measurementFailed</td>
+          <td>0x40</td>
+          <td>64</td>
+          <td>Measurement failed (e.g., infinite reading due to open sense lines)</td>
+        </tr>
+        <tr>
+          <td>B7</td>
+          <td>openLeads</td>
+          <td>0x80</td>
+          <td>128</td>
+          <td>open leads</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      <a name="Buffer_Status"></a>
+    </p>
+    <h3 id="buffer-status">Buffer Status</h3>
+    <p>Upon reading the resistance, the cold resistance class fetches a <em>Buffer Status</em> byte where each bit represents a specific setting or outcome as follows:</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Bit</th>
+          <th>Name</th>
+          <th>Hex Value</th>
+          <th>Decimal Value</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>B0</td>
+          <td>Reserved</td>
+          <td>0x01</td>
+          <td>1</td>
+          <td>Reserved for future use</td>
+        </tr>
+        <tr>
+          <td>B1</td>
+          <td>Over-temp</td>
+          <td>0x02</td>
+          <td>2</td>
+          <td>Over temperature condition</td>
+        </tr>
+        <tr>
+          <td>B2</td>
+          <td>AutoRangeMeas</td>
+          <td>0x04</td>
+          <td>4</td>
+          <td>Measure range was auto ranged</td>
+        </tr>
+        <tr>
+          <td>B3</td>
+          <td>AutoRangeSrc</td>
+          <td>0x08</td>
+          <td>8</td>
+          <td>Source range was auto ranged</td>
+        </tr>
+        <tr>
+          <td>B4</td>
+          <td>4Wire</td>
+          <td>0x10</td>
+          <td>16</td>
+          <td>4-wire (remote) sense mode was enabled</td>
+        </tr>
+        <tr>
+          <td>B5</td>
+          <td>Rel</td>
+          <td>0x20</td>
+          <td>32</td>
+          <td>Relative offset was applied to a reading</td>
+        </tr>
+        <tr>
+          <td>B6</td>
+          <td>Compliance</td>
+          <td>0x40</td>
+          <td>64</td>
+          <td>Source function was in compliance</td>
+        </tr>
+        <tr>
+          <td>B7</td>
+          <td>Filtered</td>
+          <td>0x80</td>
+          <td>128</td>
+          <td>Reading was filtered</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      <a name="Notes"></a>
+    </p>
+    <h2 id="notes">Notes</h2>
+    <p>
+      <a name="N1"></a>
+    </p>
+    <h3 id="n1">N1</h3>
+    <p>Firmware version 2.4 and up.</p>
+    <p>
+      <a name="Attributions"></a>
+    </p>
+    <h2 id="attributions">Attributions</h2>
+    <p>Last Updated 2024-10-30</p>
+    <p>© 2011 by Integrated Scientific Resources, Inc.</p>
+    <p>This information is provided "AS IS" WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.</p>
+    <p>Licensed under <a href="https://bitbucket.org/davidhary//dn.vi.git/license">Creative Commons Attribution 4.0 International Public License</a> and <a href="https://bitbucket.org/davidhary//dn.vi.git/license-code">MIT</a> Licenses.</p>
+    <p>Unless required by applicable law or agreed to in writing, this software is provided "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</p>
+    <p>Source code is hosted on <a href="https://www.github.com/ATECoder">GitHub</a></p>
+  </body>
+</html>

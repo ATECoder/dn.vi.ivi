@@ -1,0 +1,430 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="author" content="MarkdownViewer++" />
+        <title>TTM Driver API Upgrader Guide.md</title>
+        <style type="text/css">
+            
+/* Avoid page breaks inside the most common attributes, especially for exports (i.e. PDF) */
+td, h1, h2, h3, h4, h5, p, ul, ol, li {
+    page-break-inside: avoid; 
+}
+
+        </style>
+      </head>
+    <body>
+        <h1 id="isr-thermal-transient-metertm-driver-api-changes">ISR Thermal Transient Meter<sup>™</sup> Driver API Changes</h1>
+<ul>
+<li><a href="#Description">Description</a></li>
+<li><a href="#Namespaces_Construction">Namespaces and Construction</a></li>
+<li><a href="#name=Legacy_Device_Methods">Legacy Device Methods</a></li>
+<li><a href="#Legacy_Device_Properties">Legacy Device Properties</a></li>
+</ul>
+<p><a name="Description"></a></p>
+<h2 id="description">Description</h2>
+<p>The ISR Thermal Transient Meter framework includes a new set of classes to replace the legacy <code>isr.TTM</code> device and the associated configuration classes.</p>
+<p>This document includes a dictionary for replacing the legacy device driver calls with the new Meter class.e capabilities.</p>
+<p><a name="Namespaces_Construction"></a></p>
+<h2 id="namespaces-and-construction">Namespaces and Construction</h2>
+<ul>
+<li>Name: <code>Meter</code></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>type</th>
+<th>Legacy Name</th>
+<th>New Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>using / Imports</td>
+<td>isr.Ttm.Driver</td>
+<td>cc.isr.VI.Tsp.K2600.Ttm.Meter</td>
+<td>Imports all the types from a single namespace</td>
+</tr>
+<tr>
+<td>construction</td>
+<td>Dim ttm As New Device</td>
+<td>Dim ttm As New Meter( <Setting Assembly Member Type> )</td>
+<td>Constructs an instance of the device class</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>Setting Assembly Member Type</code> tells the <code>Meter</code> class where to look for the <code>JSon</code> settings file. For instance, if constructing the <code>Meter</code> from a Console class, this argument becomes <code>this.GetType()</code> in C#.</p>
+<p><a name="Legacy_Device_Methods"></a></p>
+<h2 id="legacy-device-methods">Legacy Device Methods</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Associated Object</th>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AbortMeasurement</td>
+<td>Meter</td>
+<td>AbortMeasurement</td>
+<td>Aborts the measurements by issuing a trigger if awaiting a trigger</td>
+</tr>
+<tr>
+<td>ColdResistanceVoltageApertureSetter</td>
+<td>Meter.InitialResistance</td>
+<td>WriteCurrentLevel</td>
+<td>Sets the aperture for measuring the initial resistance</td>
+</tr>
+<tr>
+<td></td>
+<td>Meter.FinalResistance</td>
+<td>WriteCurrentLevel</td>
+<td>Sets the aperture for measuring the final resistance</td>
+</tr>
+<tr>
+<td>ColdResistanceVoltageHighLimitSetter</td>
+<td>Meter.InitialResistance</td>
+<td>WriteHighLimit</td>
+<td>Sets the high limit for measuring the initial resistance</td>
+</tr>
+<tr>
+<td></td>
+<td>Meter.FinalResistance</td>
+<td>WriteHighLimit</td>
+<td>Sets the high limit for measuring the final resistance</td>
+</tr>
+<tr>
+<td>ColdResistanceVoltageLowLimitSetter</td>
+<td>Meter.InitialResistance</td>
+<td>WriteLowLimit</td>
+<td>Sets the low limit for measuring the initial resistance</td>
+</tr>
+<tr>
+<td></td>
+<td>Meter.FinalResistance</td>
+<td>WriteLowLimit</td>
+<td>Sets the low limit for measuring the final resistance</td>
+</tr>
+<tr>
+<td>ColdResistanceCurrentLevelSetter</td>
+<td>Meter.InitialResistance</td>
+<td>WriteCurrentLevel</td>
+<td>Sets the current level for measuring the initial resistance</td>
+</tr>
+<tr>
+<td></td>
+<td>Meter.FinalResistance</td>
+<td>WriteCurrentLevel</td>
+<td>Sets the current level for measuring the final resistance</td>
+</tr>
+<tr>
+<td>ColdResistanceVoltageLimitSetter</td>
+<td>Meter.InitialResistance</td>
+<td>WriteVoltageLimit</td>
+<td>Sets the voltage limit for measuring the initial resistance</td>
+</tr>
+<tr>
+<td></td>
+<td>Meter.FinalResistance</td>
+<td>WriteVoltageLimit</td>
+<td>Sets the voltage limit for measuring the final resistance</td>
+</tr>
+<tr>
+<td>Connect</td>
+<td>Meter.TspDevice</td>
+<td>TryOpenSession</td>
+<td>Opens a VISA session</td>
+</tr>
+<tr>
+<td>FlushRead</td>
+<td>N/A</td>
+<td>N/A</td>
+<td>Clears the instrument output buffer</td>
+</tr>
+<tr>
+<td>IsMeasurementCompleted</td>
+<td>Meter.TspDevice.Session</td>
+<td>IsMessageAvailableBitSet</td>
+<td>Reads the status byte and returns true if the message available bit is set.</td>
+</tr>
+<tr>
+<td>Measure</td>
+<td>TBD</td>
+<td>TBD</td>
+<td>Takes initial resistance thermal transient and final resistance measurements.</td>
+</tr>
+<tr>
+<td>MeasureFinalResistance</td>
+<td>Meter.FinalResistance</td>
+<td>TBD</td>
+<td>Measures the final resistance</td>
+</tr>
+<tr>
+<td>MeasureInitialResistance</td>
+<td>Meter.InitialResistance</td>
+<td>TBD</td>
+<td>Measures the initial resistance</td>
+</tr>
+<tr>
+<td>MeasureShuntResistance</td>
+<td>Meter.ShuntResistance</td>
+<td>TBD</td>
+<td>Measures the shunt resistance</td>
+</tr>
+<tr>
+<td>MeasureThermalTransientResistance</td>
+<td>Meter.ThermalTransient</td>
+<td>TBD</td>
+<td>Measures the thermal transient</td>
+</tr>
+<tr>
+<td>PrepareForTrigger</td>
+<td>Meter</td>
+<td>PrepareForTrigger</td>
+<td>Tells the firmware to wait for a trigger</td>
+</tr>
+<tr>
+<td>ReadMeasurements</td>
+<td>TBD</td>
+<td>TBD</td>
+<td>Reads initial resistance, final resistance and thermal transient measurements.</td>
+</tr>
+<tr>
+<td>ClearDisplayMeasurement</td>
+<td>cc.isr.VI.Tsp.K2600.DisplaySubsystem</td>
+<td>ClearDisplayMeasurement</td>
+<td>Clears the display if not in measurement mode and set measurement mode</td>
+</tr>
+<tr>
+<td>DisplayCharacter</td>
+<td>cc.isr.VI.Tsp.K2600.DisplaySubsystem</td>
+<td>DisplayCharacter</td>
+<td>Displays the character</td>
+</tr>
+<tr>
+<td>DisplayLine</td>
+<td>cc.isr.VI.Tsp.K2600.DisplaySubsystem</td>
+<td>DisplayLine</td>
+<td>Displays message on the display</td>
+</tr>
+<tr>
+<td>RestoreDisplay</td>
+<td>cc.isr.VI.Tsp.K2600.DisplaySubsystem</td>
+<td>RestoreDisplay</td>
+<td>Restores the instrument display to its main mode</td>
+</tr>
+<tr>
+<td>ConfigureColdResistance</td>
+<td>TBD</td>
+<td>TBD</td>
+<td>Configures the Thermal Transient Meter for making Cold Resistance measurements</td>
+</tr>
+<tr>
+<td>ConfigureShuntResistance</td>
+<td>TBD</td>
+<td>TBD</td>
+<td>Configures the Thermal Transient Meter for making Shunt Resistance measurements</td>
+</tr>
+<tr>
+<td>ConfigureThermalTransient</td>
+<td>TBD</td>
+<td>TBD</td>
+<td>Configures the Thermal Transient Meter for making Thermal Transient  measurements</td>
+</tr>
+<tr>
+<td>IsContactChecks</td>
+<td>cc.isr.VI.Tsp.K2600.ContactSubsystem or Firmware 2.4.x</td>
+<td>TBD</td>
+<td>Determines whether contact resistances are below the specified threshold.</td>
+</tr>
+<tr>
+<td>TriggerMeasurement</td>
+<td>cc.isr.VI.Tsp.K2600.TriggerSubsystem</td>
+<td>TBD</td>
+<td>Sends a signal to trigger a measurement.</td>
+</tr>
+</tbody>
+</table>
+<p><a name="Legacy_Device_Properties"></a></p>
+<h2 id="legacy-device-properties">Legacy Device Properties</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Associated Object</th>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IsConnected</td>
+<td>Meter</td>
+<td>IsSessionOpen</td>
+<td>Returns true if a VISA session is open</td>
+</tr>
+<tr>
+<td>ContactResistances</td>
+<td>cc.isr.VI.Tsp.K2600.ContactSubsystem or Firmware 2.4.x</td>
+<td>TBD</td>
+<td>Gets the contact resistances</td>
+</tr>
+<tr>
+<td>ColdResistanceConfig</td>
+<td>Meter.ConfigInfo</td>
+<td>ColdResistance</td>
+<td>Defines the attributes of the cold resistance measurements</td>
+</tr>
+<tr>
+<td>FinalResistance</td>
+<td>Meter.ConfigInfo</td>
+<td>FinalResistance</td>
+<td>Defines the attributes of the final resistance measurements</td>
+</tr>
+<tr>
+<td>FirmwareReleasedVersion</td>
+<td>TBD</td>
+<td>TBD</td>
+<td>Holds the firmware version</td>
+</tr>
+<tr>
+<td>Identity</td>
+<td>TBD</td>
+<td>TBD</td>
+<td>Holds the instrument identity string</td>
+</tr>
+<tr>
+<td>InitialResistance</td>
+<td>Meter.ConfigInfo</td>
+<td>InitialResistance</td>
+<td>Defines the attributes of the initial resistance measurements</td>
+</tr>
+<tr>
+<td>PostTransientDelayConfig</td>
+<td>Meter.ConfigInfo</td>
+<td>MeterMain</td>
+<td>Defines global meter attributes</td>
+</tr>
+<tr>
+<td>PostTransientDelay</td>
+<td>Meter</td>
+<td>MeterMain</td>
+<td>Defines global meter attributes</td>
+</tr>
+<tr>
+<td>ShuntResistanceConfig</td>
+<td>Meter.ConfigInfo</td>
+<td>ShuntResistance</td>
+<td>Defines the attributes of the shunt resistance measurements</td>
+</tr>
+<tr>
+<td>ShuntResistance</td>
+<td>Meter</td>
+<td>ShuntResistance</td>
+<td>Defines the attributes of the shunt resistance measurements</td>
+</tr>
+<tr>
+<td>Synchronizer</td>
+<td>TBD</td>
+<td>TBD</td>
+<td>Gets or sets the ISynchronizeInvoke object for marshaling synchronization events.</td>
+</tr>
+<tr>
+<td>ThermalTransientConfig</td>
+<td>Meter.ConfigInfo</td>
+<td>ThermalTransient</td>
+<td>Defines the attributes of the thermal transient measurements</td>
+</tr>
+<tr>
+<td>ThermalTransient</td>
+<td>Meter</td>
+<td>ThermalTransient</td>
+<td>Defines the attributes of the thermal transient measurements</td>
+</tr>
+</tbody>
+</table>
+<p><a name="New_Device_Methods"></a></p>
+<h2 id="new-device-methods">New Device Methods</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Associated Object</th>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Set Source Meter Name</td>
+<td>Meter.MeterMain</td>
+<td>WriteSmuName</td>
+<td>Sets the name and select the source measure unit for all measurements</td>
+</tr>
+<tr>
+<td>Get Source Meter Name</td>
+<td>Meter.MeterMain</td>
+<td>QuerySmuName</td>
+<td>Gets the name of the source measure unit that is used for all measurements</td>
+</tr>
+<tr>
+<td>Set Contact Threshold</td>
+<td>Meter.MeterMain</td>
+<td>WriteContactLimit</td>
+<td>Sets the threshold for detecting an open leads contact</td>
+</tr>
+<tr>
+<td>Get Contact Threshold</td>
+<td>Meter.MeterMain</td>
+<td>QueryContactLimit</td>
+<td>Gets the threshold for detecting an open leads contact</td>
+</tr>
+</tbody>
+</table>
+<p><a name="New_Device_Properties"></a></p>
+<h2 id="new-device-properties">New Device Properties</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Associated Object</th>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Low Contact Resistance</td>
+<td>Meter.InitialResistance</td>
+<td>LowLeadsResistance</td>
+<td>The contact resistance of the low leads as measured before taking the initial resistance reading.</td>
+</tr>
+<tr>
+<td></td>
+<td>Meter.FinalResistance</td>
+<td>LowLeadsResistance</td>
+<td>The contact resistance of the low leads as measured before taking the final resistance reading.</td>
+</tr>
+<tr>
+<td></td>
+<td>Meter.ThermalTransient</td>
+<td>LowLeadsResistance</td>
+<td>The contact resistance of the low leads as measured before taking the final resistance reading.</td>
+</tr>
+<tr>
+<td>High Contact Resistance</td>
+<td>Meter.InitialResistance</td>
+<td>HighLeadsResistance</td>
+<td>The contact resistance of the high leads as measured before taking the initial resistance reading.</td>
+</tr>
+</tbody>
+</table>
+
+    </body>
+</html>
+            

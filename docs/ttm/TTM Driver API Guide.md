@@ -18,6 +18,9 @@ Applicable Virtual Instrument (VI) Framework version: 8.1.x
       - [Trace Messages](#Trace_Messages)
       - [Return Values](#Return_Values)
       - [Connect using Open Session](#Connect_using_Open_Session)
+- [Using the API](#Using_the_API)
+  - [Developer Source Code](#Developer_Source_Code
+  - [IVI Visa](#IVI_Visa)
 - [Testing the Library](#Testing_the_Library)
   - [Launch](#Launch)
   - [Connect](#Connect)
@@ -49,8 +52,6 @@ Applicable Virtual Instrument (VI) Framework version: 8.1.x
     - [Priming](#Priming)
     - [Triggering](#Triggering)
     - [Reading](#Reading)
-  - [Installing the Library with Your Project](#Installing_the_Library_with_Your_Project)
-    - [isr.TMM.Driver Files](#isr.TMM.Driver_Files)
 - [Attributions](#Attributions)
 
 <a name="This_Guide"></a>
@@ -114,7 +115,7 @@ The new meter driver `cc.isr.VI.Tsp.K2600.Ttm` implementation entails the follow
 - Uses three objects encapsulate the device under test: Cold Resistance, Thermal Transient and Shunt Resistance. These include both configuration settings and measurement results;
 - Uses three objects encapsulate the thermal transient API: Meter Cold Resistance, Meter Thermal Transient and Thermal Transient Estimator. These include both the configuration and measurement commands and properties.
 - Additional objects were defined to handle other subsystems such as Display and Status.
-- The Source Measure, Display and Status subsystems are encapsulated in the Master Device object, which represents a Test Script Processor instrument such as the 2600 Meter.
+- The Source Measure, Display and Status subsystems are encapsulated in the Master Device object, which represents a Test Script Processor instrument such as the 2600 meter.
 
 <a name="API_Changes"></a>
 ## API Changes
@@ -131,12 +132,7 @@ The new meter driver `cc.isr.VI.Tsp.K2600.Ttm` implementation entails the follow
 
 The TTM Firmware as described in the [TTM Firmware API Guide] is compatible with earlier versions of TTM Visual Basic drivers released before 2024 (e.g., 3.2.5367, 2.3.4077).
 
-The firmware uses `MeterDefaults.legacyDriver` and `MeterValues.legacyDriver` flags that are set to 1 when accessed by with the legacy Visual Basic drivers. 
-
-Optionally, the [Legacy Driver](#Legacy_Deriver) can also set these optional values, which has been used to verify that the new firmware is compatible with the legacy drivers.
-
-The `MeterValues.legacyDriver` is persistent and can be set from the instrument menu or by the `legacyDriverSetter()` function call.
-
+The firmware uses a persistent `MeterValues.legacyDriver` flag, which can be set from the instrument `MENU` or from [Legacy Driver](#Legacy_Deriver) API by the `legacyDriverSetter()` function call. When set to 1, the firmware is fully compatible with the legacy Visual Basic drivers. This option has been used to verify that the new firmware is compatible with the legacy drivers.
 
 <a name="Code_Breaking_Chances"></a>
 ### Code Breaking Chances
@@ -187,23 +183,23 @@ The new drivers use exceptions rather than return values to signal failures of o
 
 ```
 Try
-  Me.Meter.MasterDevice.OpenSession(resourceName)
+  meter.TspDevice.OpenSession(resourceName)
 Catch ex As ArgumentNullException
   MessageBox.Show("Connection Failed")
   Try
-    Me.Meter.MasterDevice.CloseSession()
+    meter.TspDevice.CloseSession()
   Finally
   End Try
 Catch ex As OperationFailedException
   MessageBox.Show("Connection Failed")
   Try
-    Me.Meter.MasterDevice.CloseSession()
+    meter.TspDevice.CloseSession()
   Finally
   End Try
 Catch ex As Exception
   MessageBox.Show("Connection Failed")
   Try
-    Me.Meter.MasterDevice.CloseSession()
+    meter.TspDevice.CloseSession()
   Finally
   End Try
 End Try
@@ -212,12 +208,12 @@ End Try
 <a name="Connect_using_Open_Session"></a>
 #### Connect using the Open Session Method
 
-Connecting to and disconnecting from the instrument is done using _MasterDevice_ Open and Close session methods.
+See [Connecting to the Instrument](#Connecting).
 
 <a name="Testing_the_Library"></a>
 ## Testing the Library
 
-Use the TTM Driver Tester program and TTM Tester Guide to study and test the TTM API.
+Use the [Legacy Driver Unit Tests] and [Meter Driver Unit Tests] unit test projects and the [TTM Console], which are included in the [TTM Solution], to test the library.
 
 <a name="Using_the_API"></a>
 ## Using the API
@@ -225,46 +221,54 @@ Use the TTM Driver Tester program and TTM Tester Guide to study and test the TTM
 <a name="Developer_Source_Code"></a>
 ### Developer Source Code
 
-The source code for the API and Tester application are included with this distribution. Source code is installed in the user folder, e.g., c:\\Users\\<_user_name_\>/ISR/LIBRARIES/VS/VI/TTM.4.x.
+The open source code for the TTM Visual Studio Framework is included in the [TTM Repository]. The [TTM Firmware Private Repository] includes the closed source code for the TTM firmware. 
 
-The TTM Driver source code includes the driver library (_isr.Driver.Library_) project and the driver tester program (_isr.Driver.Tester_) projects.
+<a name="IVI_Visa"></a>
+### IVI VISA
+
+Adding the driver source code to your project is the preferred way because the code is less likely to conflict with dynamic link libraries that might be used by your main code. Specifically, the driver uses a particular version of the [IVI VISA], which might conflict with the VISA library installed on your computer. By adding the driver source code library to your project you will be compiling the driver to use the same VISA link library as your code. This may require to change the `Kelary.Ivi.Visa` package reference of the `cc.isr.Visa` and the `IviCompatibility` projects.
 
 <a name="Compiling_the_developer_source_code"></a>
 ### Compiling the developer source code
 
-It is recommended that you compile the developer source code using you current version of the National Instruments VISA drivers.
+Compile the the developer source code after updating the [IVI Visa](#IVI_VISA).
 
 <a name="Addressing_the_Driver"></a>
 ### Addressing the Driver
 
-The driver can be addressed by adding the driver source code to a Visual Studio project (recommended) or by referencing the driver DLL.
-
-<a name="Recommended"></a>
-### Recommended
-
-Adding the driver source code to your project is the preferred way because the code is less likely to conflict with dynamic link libraries that might be used by your main code. Specifically, the driver uses a particular National Instruments VISA library, which might conflict with the VISA library installed on your computer. By adding the driver source code library to your project you will be compiling the driver to use the same VISA link library as your code.
+The driver can be addressed by adding the driver source code to a Visual Studio project or by referencing the driver DLL.
 
 <a name="Adding_the_source_code"></a>
 ### Adding the source code
 
 You can add a copy of the source code to your solution. Otherwise, you could add the code from where the source code solution was installed on your computer.
 
-Once you add the project to your solution, add a reference to the Driver to you project:
+Once you add the project to your solution, add a reference to the TTM
+```
+<ItemGroup>
+  <ProjectReference Include="..\ttm\cc.isr.VI.Tsp.K2600.Ttm.csproj" />
+</ItemGroup>
+```
 
-- isr.TTM.Driver.4.x.Library
+or legacy projects
+```
+<ItemGroup>
+  <ProjectReference Include="..\Legacy\cc.isr.VI.Tsp.K2600.Ttm.Legacy.csproj" />
+</ItemGroup>
+```
 
-This adds a reference to the TTM driver library to your project and adds the driver dynamic link libraries to the project binaries.
-
-**Note!**
-
-It is recommended that commit the code as first installed into your version control system thus having access to the original source code.
+to your project.
 
 <a name="Adding_Reference_to_the_DLL"></a>
 ### Adding a Reference to the DLL
 
 Alternatively, you could use the driver link library as is by adding a reference to the DLL:
 
-From the Add Reference dialog of the Visual Studio project, browse to the location of the compiled driver (see [Compiling the developer source code](#1290D547A9826AD34FA430E0DA0231FE0DCC4013)) and select the driver DLL: _isr.VI.Tsp.K2600.Ttm.dll_. This will add the _isr.VI.Tsp.K2600.Ttm_ reference to your project.
+- From the Add Reference dialog of the Visual Studio project, browse to the location of the compiled driver (see [Compiling the developer source code](#Compiling_the_developer_source_code)
+- Select the driver DLL
+  - `isr.VI.Tsp.K2600.Ttm.dll` or
+  - `isr.VI.Tsp.K2600.Ttm.Legacy.dll`.
+- This will add the `isr.VI.Tsp.K2600.Ttm` or `isr.VI.Tsp.K2600.Ttm.Legacy` reference to your project.
 
 <a name="Instantiating_the_Interface"></a>
 ### Instantiating the Interface
@@ -272,15 +276,19 @@ From the Add Reference dialog of the Visual Studio project, browse to the locati
 Instantiate the ISR TTM Driver as follows:
 
 ```
-Dim meter As New Device()
+Dim meter As New cc.isr.VI.Tsp.K2600.Ttm.Meter( Me.)
 ```
 
-This instantiates the meter.
+or
+
+```
+Dim legacyDevice As New cc.isr.VI.Tsp.K2600.Ttm.Legacy.LegacyDevice( Me.GetType(), ".Driver")
+```
 
 <a name="Trace_Message_Handling"></a>
 ### Trace Message Handling
 
-The driver sends messages the TraceMessageEvent events (see [Trace Messages](#325F86AB501EC8B8FB113943848FEE6E22358F45)). These events can be handled as follows:
+The driver sends messages the TraceMessageEvent events (see [Trace Messages](#Trace_Messages). These events can be handled as follows:
 
 ```
 #Region " TRACE MESSAGES "
@@ -314,18 +322,82 @@ The driver sends messages the TraceMessageEvent events (see [Trace Messages](#32
 #End Region
 ```
 
-<a name="Trace_Message_Handling"></a>
+<a name="Connecting"></a>
 ### Connecting to the Instrument
 
 Use the OpenSession method to Connect the meter:
 
 ```
+Dim resourceName As String
+resourceName = "TCPIP::192.168.0.150::inst0::INSTR"
 Try
-    Me.Meter.MasterDevice.OpenSession("GPIB0::26::INSTR")
+  Dim meter As New cc.isr.VI.Tsp.K2600.Ttm.Meter( Me.)
+  meter.TspDevice.OpenSession(resourceName)
+  
+  Dim session As Pith.SessionBase session
+  session = meter.TspDevice.Session
+
+  session.ClearActiveState()
+  session.ThrowDeviceExceptionIfError()
+
+  session.ResetKnownState()
+  session.ThrowDeviceExceptionIfError()
+
+  session.ClearExecutionState()
+  session.ThrowDeviceExceptionIfError()
+
+  session.InitKnownState();
+
+  meter.PresetKnownState();
+  
+  Dim deviceUnderTest As DeviceUnderTest
+  deviceUnderTest = meter.ConfigInfo
+  deviceUnderTest.ClearPartInfo()
+  deviceUnderTest.ClearMeasurements()
+
+  deviceUnderTest.PartNumber = "part number"
+  deviceUnderTest.LotId = "lot id"
+  deviceUnderTest.OperatorId = "operator id"
+  meter.Part = deviceUnderTest
+ 
 Catch ex As Exception
   MessageBox.Show("Connection Failed")
   Try
-    Me.Meter.MasterDevice.CloseSession()
+    meter?.TspDevice?.CloseSession()
+  Finally
+  End Try
+End Try
+```
+or,
+```
+Dim resourceName As String
+resourceName = "TCPIP::192.168.0.150::inst0::INSTR"
+Try
+  Dim legacyDevice As New cc.isr.VI.Tsp.K2600.Ttm.Legacy.LegacyDevice( Me.GetType(), ".Driver")
+  legacyDevice.Connect( resourceName )
+  legacyDevice.ResetAndClear()
+  
+  Dim session As Pith.SessionBase session
+  session = meter.TspDevice.Session
+
+  session.InitKnownState();
+
+  meter.PresetKnownState();
+  
+  Dim deviceUnderTest As DeviceUnderTest
+  deviceUnderTest = meter.ConfigInfo
+  deviceUnderTest.ClearPartInfo()
+  deviceUnderTest.ClearMeasurements()
+
+  deviceUnderTest.PartNumber = "part number"
+  deviceUnderTest.LotId = "lot id"
+  deviceUnderTest.OperatorId = "operator id"
+  meter.Part = deviceUnderTest
+  
+Catch ex As Exception
+  MessageBox.Show("Connection Failed")
+  Try
+    legacyDevice?.meter?.TspDevice?.CloseSession()
   Finally
   End Try
 End Try
@@ -348,6 +420,7 @@ The meter elements use the same class to hold their test parameters. Moreover, w
 ```
 ' Define a part to hold the current settings of the part or user interface.
 Private WithEvents _Part As Part
+_Part = meter.Part
 ```
 
 <a name="TTM_Measurements"></a>
@@ -383,18 +456,72 @@ _Part.ThermalTransient.LowLimit = 0.006
 
 Try
     Me.OnTraceMessageAvailable(TraceEventType.Verbose, "Configuring Thermal Transient;. ")
-    If Me.Meter.IsDeviceOpen Then
-        Meter.ResetKnownState()
-        Meter.ClearExecutionState()
-        Me.Meter.InitialResistance.Configure(Me._Part.InitialResistance)
-        Me.Meter.FinalResistance.Configure(Me._Part.FinalResistance)
-        Me.Meter.ThermalTransient.Configure(Me._Part.ThermalTransient)
+    If meter.IsDeviceOpen Then
+        meter.ResetKnownState()
+        meter.ClearExecutionState()
+        meter.InitialResistance.Configure(Me._Part.InitialResistance)
+        meter.FinalResistance.Configure(Me._Part.FinalResistance)
+        meter.ThermalTransient.Configure(Me._Part.ThermalTransient)
     Else
         Me.OnTraceMessageAvailable(TraceEventType.Warning, "Meter not connected;. ")
     End If
 Catch ex As Exception
     Me.OnTraceMessageAvailable(TraceEventType.Error, "Exception occurred configuring Thermal Transient;. Details: {0}", ex)
 End Try
+```
+
+or,
+
+```
+Meter meter = legacyDevice.Meter;
+Pith.SessionBase session = legacyDevice.meter.TspDevice.Session;
+
+if ( !legacyDevice.ColdResistanceSourceOutputGetter( out SourceOutputOption initialSourceOutputOption ) )
+{
+	if ( !legacyDevice.ColdResistanceSourceOutputSetter( initialSourceOutputOption ) )
+		throw new InvalidOperationException( "Failed setting the initial source output option." );
+}
+
+SourceOutputOption alternateOption = Ttm.MeterSubsystem.LegacyFirmware
+	? SourceOutputOption.Current
+	: initialSourceOutputOption == SourceOutputOption.Current
+		? SourceOutputOption.Voltage
+		: SourceOutputOption.Current;
+
+float value = 0.01f;
+legacyDevice.ColdResistanceConfig.CurrentLevel = value;
+legacyDevice.ColdResistanceCurrentLevelSetter( value );
+value = 0.02f;
+legacyDevice.ColdResistanceConfig.VoltageLimit = value;
+legacyDevice.ColdResistanceVoltageLimitSetter( value );
+
+value = 2.6f;
+legacyDevice.ColdResistanceConfig.HighLimit = value;
+legacyDevice.ColdResistanceHighLimitSetter( value );
+
+value = 1.8f;
+legacyDevice.ColdResistanceConfig.LowLimit = value;
+legacyDevice.ColdResistanceLowLimitSetter( value );
+
+value = 0.01f;
+legacyDevice.PostTransientDelayConfig = value;
+legacyDevice.PostTransientDelaySetter( value );
+
+value = 0.27f;
+legacyDevice.ThermalTransientConfig.CurrentLevel = value;
+legacyDevice.ThermalTransientCurrentLevelSetter( value );
+
+value = 0.099f;
+legacyDevice.ThermalTransientConfig.AllowedVoltageChange = value;
+legacyDevice.ThermalTransientVoltageChangeSetter( value );
+
+value = 0.19f;
+legacyDevice.ThermalTransientConfig.HighLimit = value;
+legacyDevice.ThermalTransientHighLimitSetter( value );
+
+value = 0.006f;
+legacyDevice.ThermalTransientConfig.LowLimit = value;
+legacyDevice.ThermalTransientLowLimitSetter( value );
 ```
 
 <a name="Shunt_Measurement"></a>
@@ -418,11 +545,11 @@ _part.ShuntResistance.LowLimit = 1050
 
 Try
     Me.OnTraceMessageAvailable(TraceEventType.Verbose, "Configuring Shunt Resistance;. ")
-    If Me.Meter.IsDeviceOpen Then
-        Me.Meter.ResetKnownState()
-        Me.Meter.ClearExecutionState()
+    If meter.IsDeviceOpen Then
+        meter.ResetKnownState()
+        meter.ClearExecutionState()
         Me.OnTraceMessageAvailable(TraceEventType.Verbose, "Sending Shunt resistance configuration settings to the meter;. ")
-        Me.Meter.ConfigureShuntResistance(Me._Part.ShuntResistance)
+        meter.ConfigureShuntResistance(Me._Part.ShuntResistance)
         Me.OnTraceMessageAvailable(TraceEventType.Verbose, "Shunt resistance measurement configured successfully;. ")
     Else
         Me.OnTraceMessageAvailable(TraceEventType.Warning, "Meter not connected;. ")
@@ -442,8 +569,8 @@ The following commands measure the initial resistance.
 
 ```
 Try
-    Me.Meter.MasterDevice.DisplaySubsystem.ClearDisplayMeasurement()
-    Me.Meter.InitialResistance.Measure()
+    meter.TspDevice.DisplaySubsystem.ClearDisplayMeasurement()
+    meter.InitialResistance.Measure()
 Catch ex As Exception
     Me.OnTraceMessageAvailable(TraceEventType.Error, "Failed Measuring Initial Resistance;. Details: {0}", ex)
 End Try
@@ -456,7 +583,7 @@ The following commands measure the thermal transient.
 
 ```
 Try
-    Me.Meter.ThermalTransient.Measure()
+    meter.ThermalTransient.Measure()
 Catch ex As Exception
     Me.OnTraceMessageAvailable(TraceEventType.Error, "Failed Measuring Thermal Transient;. Details: {0}", ex)
 End Try
@@ -468,7 +595,7 @@ End Try
 The following commands measure the final resistance.
 ```
 Try
-    Me.Meter.FinalResistance.Measure()
+    meter.FinalResistance.Measure()
 Catch ex As Exception
     Me.OnTraceMessageAvailable(TraceEventType.Error, "Failed Measuring Final Resistance;. Details: {0}", ex)
 End Try
@@ -481,7 +608,7 @@ The following commands measure the shunt resistance.
 
 ```
 Try
-    Me.Meter.MeasureShuntResistance(Me._ShuntResistance)
+    meter.MeasureShuntResistance(Me._ShuntResistance)
 Catch ex As Exception
     Me.OnTraceMessageAvailable(TraceEventType.Error, "Failed Measuring Shunt Resistance;. Details: {0}", ex)
 End Try
@@ -674,7 +801,7 @@ The following command prepares the instrument to wait for an external trigger.
 
 ```
 Try
-  Me.Meter.PrepareForTrigger()
+  meter.PrepareForTrigger()
   Me.OnTraceMessageAvailable(TraceEventType.Verbose, "Monitoring instrument for measurements;. ")
 Catch ex As Exception
   Me.OnTraceMessageAvailable(TraceEventType.Warning, "Failed preparing instrument for waiting for trigger;. ")
@@ -710,29 +837,6 @@ Do Until done
 Loop
 ```
 
-<a name="Installing"></a>
-### Installing the Library with Your Project
-
-Include the ISR TTM Driver library and referenced libraries ([isr.TMM.Driver Files](#3C4ED0823B469B1F9FB83D4ED6EC3AE865949AB7)) with your project.
-
-Check the ISR TTM Driver read me file for additional pre-requisites.
-
-<a name="isr.TMM.Driver Files"></a>
-### isr.TMM.Driver Files
-
-The ISR TTM driver includes the following files:
-
-- isr.VI.Tsp.K2600.Ttm.dll
-- isr.Algorithms.Optima.dll
-- NationalInstruments.Common.dll  
-    Installed in the GAC with other National Instruments files when installing NI VISA runtime)
-- NationalInstruments.VisaNS.dll
-
-Additional Required Installations:
-
-- NI VISA runtime
-- .NET 2010
-
 <a name="Attributions"></a>
 ### Attributions
 
@@ -761,4 +865,7 @@ Source code is hosted on [GitHub]
 [Legacy Driver Unit Tests]: https://github.com/ATECoder/dn.vi.ivi.git/src/vi/k2600.ttm/legacy.mstest
 [Meter Driver Unit Tests]: https://github.com/ATECoder/dn.vi.ivi.git/src/vi/k2600.ttm/mstest
 [TTM Library Project]: https://github.com/ATECoder/dn.vi.ivi.git/src/vi/k2600.ttm/ttm
-
+[TTM Solution]: https://github.com/ATECoder/dn.vi.ivi.git/src/cc.isr.vi.2600.ttm.sln
+[TTM Console]: https://github.com/ATECoder/dn.vi.ivi.git/src/vi/k2600.ttm/console
+[TTM Repository]: https://github.com/ATECoder/dn.vi.ivi.git
+[TTM Firmware Private Repository]: https://github.com/ATECoder/dn.ttmware.git
