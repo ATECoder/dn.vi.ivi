@@ -114,7 +114,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             // 
             // _abortSequenceToolStripMenuItem
             // 
-            _abortSequenceToolStripMenuItem.Image = ( System.Drawing.Bitmap ) Ttm.Controls.Properties.Resources.ResourceManager.GetObject( nameof( Ttm.Controls.Properties.Resources.media_playback_stop_2 ));
+            _abortSequenceToolStripMenuItem.Image = ( System.Drawing.Bitmap ) Ttm.Controls.Properties.Resources.ResourceManager.GetObject( "media-playback-stop-2" );
             _abortSequenceToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             _abortSequenceToolStripMenuItem.Name = "_abortSequenceToolStripMenuItem";
             _abortSequenceToolStripMenuItem.Size = new System.Drawing.Size(223, 38);
@@ -123,7 +123,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             // 
             // _measureAllToolStripMenuItem
             // 
-            _measureAllToolStripMenuItem.Image = ( System.Drawing.Bitmap ) Ttm.Controls.Properties.Resources.ResourceManager.GetObject( nameof( Ttm.Controls.Properties.Resources.arrow_right_double ));
+            _measureAllToolStripMenuItem.Image = ( System.Drawing.Bitmap ) Ttm.Controls.Properties.Resources.ResourceManager.GetObject( "arrow-right-double" );
             _measureAllToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             _measureAllToolStripMenuItem.Name = "_MeasureAllToolStripMenuItem";
             _measureAllToolStripMenuItem.Size = new System.Drawing.Size(223, 38);
@@ -132,7 +132,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             // 
             // _finalResistanceToolStripMenuItem
             // 
-            _finalResistanceToolStripMenuItem.Image = ( System.Drawing.Bitmap ) Ttm.Controls.Properties.Resources.ResourceManager.GetObject( nameof( Ttm.Controls.Properties.Resources.arrow_right_2 ));
+            _finalResistanceToolStripMenuItem.Image = ( System.Drawing.Bitmap ) Ttm.Controls.Properties.Resources.ResourceManager.GetObject( "arrow-right-2" );
             _finalResistanceToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             _finalResistanceToolStripMenuItem.Name = "_FinalResistanceToolStripMenuItem";
             _finalResistanceToolStripMenuItem.Size = new System.Drawing.Size(223, 38);
@@ -141,7 +141,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             // 
             // _thermalTransientToolStripMenuItem
             // 
-            _thermalTransientToolStripMenuItem.Image = ( System.Drawing.Bitmap ) Ttm.Controls.Properties.Resources.ResourceManager.GetObject( nameof( Ttm.Controls.Properties.Resources.arrow_right_2 ));
+            _thermalTransientToolStripMenuItem.Image = ( System.Drawing.Bitmap ) Ttm.Controls.Properties.Resources.ResourceManager.GetObject( "arrow-right-2" );
             _thermalTransientToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             _thermalTransientToolStripMenuItem.Name = "_ThermalTransientToolStripMenuItem";
             _thermalTransientToolStripMenuItem.Size = new System.Drawing.Size(223, 38);
@@ -150,7 +150,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             // 
             // _initialResistanceToolStripMenuItem
             // 
-            _initialResistanceToolStripMenuItem.Image = ( System.Drawing.Bitmap ) Ttm.Controls.Properties.Resources.ResourceManager.GetObject( nameof( Ttm.Controls.Properties.Resources.arrow_right_2 ));
+            _initialResistanceToolStripMenuItem.Image = ( System.Drawing.Bitmap ) Ttm.Controls.Properties.Resources.ResourceManager.GetObject( "arrow-right-2" );
             _initialResistanceToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             _initialResistanceToolStripMenuItem.Name = "_InitialResistanceToolStripMenuItem";
             _initialResistanceToolStripMenuItem.Size = new System.Drawing.Size(223, 38);
@@ -159,7 +159,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             // 
             // _clearToolStripMenuItem
             // 
-            _clearToolStripMenuItem.Image = ( System.Drawing.Bitmap ) Ttm.Controls.Properties.Resources.ResourceManager.GetObject( nameof( Ttm.Controls.Properties.Resources.edit_clear_2 ));
+            _clearToolStripMenuItem.Image = ( System.Drawing.Bitmap ) Ttm.Controls.Properties.Resources.ResourceManager.GetObject( "edit-clear-2" );
             _clearToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             _clearToolStripMenuItem.Name = "_ClearToolStripMenuItem";
             _clearToolStripMenuItem.Size = new System.Drawing.Size(223, 38);
@@ -193,7 +193,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             // _waitForTriggerToolStripMenuItem
             // 
             _waitForTriggerToolStripMenuItem.CheckOnClick = true;
-            _waitForTriggerToolStripMenuItem.Image = ( System.Drawing.Bitmap ) Ttm.Controls.Properties.Resources.ResourceManager.GetObject( nameof( Ttm.Controls.Properties.Resources.view_refresh_7 ));
+            _waitForTriggerToolStripMenuItem.Image = ( System.Drawing.Bitmap ) Ttm.Controls.Properties.Resources.ResourceManager.GetObject( "view-refresh-7" );
             _waitForTriggerToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             _waitForTriggerToolStripMenuItem.Name = "_WaitForTriggerToolStripMenuItem";
             _waitForTriggerToolStripMenuItem.Size = new System.Drawing.Size(179, 38);
@@ -203,7 +203,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             // _assertTriggerToolStripMenuItem
             // 
             _assertTriggerToolStripMenuItem.Enabled = false;
-            _assertTriggerToolStripMenuItem.Image = ( System.Drawing.Bitmap ) Ttm.Controls.Properties.Resources.ResourceManager.GetObject( nameof( Ttm.Controls.Properties.Resources.edit_add ));
+            _assertTriggerToolStripMenuItem.Image = ( System.Drawing.Bitmap ) Ttm.Controls.Properties.Resources.ResourceManager.GetObject( "edit-add" );
             _assertTriggerToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             _assertTriggerToolStripMenuItem.Name = "_assertTriggerToolStripMenuItem";
             _assertTriggerToolStripMenuItem.Size = new System.Drawing.Size(179, 38);
@@ -212,7 +212,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             // 
             // _abortToolStripMenuItem
             // 
-            _abortToolStripMenuItem.Image = ( System.Drawing.Bitmap ) Ttm.Controls.Properties.Resources.ResourceManager.GetObject( nameof( Ttm.Controls.Properties.Resources.process_stop ));
+            _abortToolStripMenuItem.Image = ( System.Drawing.Bitmap ) Ttm.Controls.Properties.Resources.ResourceManager.GetObject( "process-stop" );
             _abortToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             _abortToolStripMenuItem.Name = "_abortToolStripMenuItem";
             _abortToolStripMenuItem.Size = new System.Drawing.Size(179, 38);
@@ -243,7 +243,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             // 
             // _modelTraceToolStripMenuItem
             // 
-            _modelTraceToolStripMenuItem.Image = ( System.Drawing.Bitmap ) Ttm.Controls.Properties.Resources.ResourceManager.GetObject( nameof( Ttm.Controls.Properties.Resources.games_solve ));
+            _modelTraceToolStripMenuItem.Image = ( System.Drawing.Bitmap ) Ttm.Controls.Properties.Resources.ResourceManager.GetObject( "games-solve" );
             _modelTraceToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             _modelTraceToolStripMenuItem.Name = "_ModelTraceToolStripMenuItem";
             _modelTraceToolStripMenuItem.Size = new System.Drawing.Size(148, 38);
@@ -252,7 +252,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             // 
             // _saveTraceToolStripMenuItem
             // 
-            _saveTraceToolStripMenuItem.Image = ( System.Drawing.Bitmap ) Ttm.Controls.Properties.Resources.ResourceManager.GetObject( nameof( Ttm.Controls.Properties.Resources.document_export ));
+            _saveTraceToolStripMenuItem.Image = ( System.Drawing.Bitmap ) Ttm.Controls.Properties.Resources.ResourceManager.GetObject( "document-export" );
             _saveTraceToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             _saveTraceToolStripMenuItem.Name = "_SaveTraceToolStripMenuItem";
             _saveTraceToolStripMenuItem.Size = new System.Drawing.Size(148, 38);
@@ -261,7 +261,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             // 
             // _clearTraceToolStripMenuItem
             // 
-            _clearTraceToolStripMenuItem.Image = ( System.Drawing.Bitmap ) Ttm.Controls.Properties.Resources.ResourceManager.GetObject( nameof( Ttm.Controls.Properties.Resources.edit_clear_2 ));
+            _clearTraceToolStripMenuItem.Image = ( System.Drawing.Bitmap ) Ttm.Controls.Properties.Resources.ResourceManager.GetObject( "edit-clear-2" );
             _clearTraceToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             _clearTraceToolStripMenuItem.Name = "_ClearTraceToolStripMenuItem";
             _clearTraceToolStripMenuItem.Size = new System.Drawing.Size(148, 38);
@@ -270,7 +270,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             // 
             // _readTraceToolStripMenuItem
             // 
-            _readTraceToolStripMenuItem.Image = ( System.Drawing.Bitmap ) Ttm.Controls.Properties.Resources.ResourceManager.GetObject( nameof( Ttm.Controls.Properties.Resources.view_object_histogram_logarithmic ));
+            _readTraceToolStripMenuItem.Image = ( System.Drawing.Bitmap ) Ttm.Controls.Properties.Resources.ResourceManager.GetObject( "view-object-histogram-logarithmic" );
             _readTraceToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             _readTraceToolStripMenuItem.Name = "_ReadTraceToolStripMenuItem";
             _readTraceToolStripMenuItem.Size = new System.Drawing.Size(148, 38);

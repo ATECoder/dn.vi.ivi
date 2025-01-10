@@ -230,7 +230,8 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             // _passFailToolStripButton
             // 
             _passFailToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            _passFailToolStripButton.Image = ( System.Drawing.Bitmap ) Ttm.Controls.Properties.Resources.ResourceManager.GetObject( nameof( Ttm.Controls.Properties.Resources.Good ) );
+            // _passFailToolStripButton.Image = new System.Drawing.Bitmap(  new System.IO.MemoryStream( Properties.Resources.Good ) );
+            _passFailToolStripButton.Image = ( System.Drawing.Bitmap ) Properties.Resources.ResourceManager.GetObject( "Good" );
             _passFailToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             _passFailToolStripButton.Name = "_PassFailToolStripButton";
             _passFailToolStripButton.Size = new System.Drawing.Size(23, 22);

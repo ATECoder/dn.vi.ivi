@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <EnablePreviewFeatures>true</EnablePreviewFeatures>
-    <TargetFrameworks>net48;net9.0-windows</TargetFrameworks>
+    <TargetFrameworks>net9.0-windows</TargetFrameworks>
     <OutputType>Library</OutputType>
     <UseWindowsForms>true</UseWindowsForms>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
@@ -14,7 +14,7 @@
     <Nullable>enable</Nullable>
 
     <!-- Assembly Info -->
-    <RootNamespace>cc.isr.VI.Tsp.K2600</RootNamespace>
+    <RootNamespace>cc.isr.VI.Tsp.K2600.Ttm.Controls</RootNamespace>
     <AssemblyName>cc.isr.VI.Tsp.K2600.Ttm.Controls</AssemblyName>
     <ApplicationTitle>cc.isr.VI.Tsp.K2600.Ttm.Controls</ApplicationTitle>
     <ApplicationId>cc.isr.vi.tsp.k2600.ttm.controls</ApplicationId>
@@ -64,7 +64,6 @@
     <None Include="readme.md" Pack="true" PackagePath="" />
   </ItemGroup>
 
-
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);MYPROJREF;</DefineConstants>
   </PropertyGroup>
@@ -103,11 +102,6 @@
 
   <ItemGroup>
     <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
-    <Compile Update="Properties\Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -115,6 +109,11 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -134,5 +133,5 @@
   <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
   </ItemGroup>
-    
+   
 </Project>

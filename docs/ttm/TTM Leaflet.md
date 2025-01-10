@@ -40,4 +40,4 @@ The system comes with the following licenses:
 
 [Fair End User License Agreement for embedded software]: https://docs.google.com/document/d/1873_SHHYkyg_qMJ4Gp6BrXX5hfXCLOAuWs3A3-gYXO0/edit?hl=en&pli=1&tab=t.0
 [The MIT License]: https://www.lua.org/license.html
-[Creative Commons Attribution 4.0 International Public License]: https://creativecommons.org/licenses/by/4.0/legalcode
+[Creative Commons Attribution 4.0 International Public License]: https://github.com/ATECoder/dn.vi.ivi/blob/main/license

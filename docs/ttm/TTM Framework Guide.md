@@ -159,7 +159,7 @@ Unless required by applicable law or agreed to in writing, this software is prov
 
 Source code is hosted on [GitHub]
 
-[The Fair End User]: http://www.isr.cc/licenses/Fair%20End%20User%20Use%20License.pdf
+[The Fair End User]: https://github.com/ATECoder/dn.vi.ivi.git/docs/ttm/Fair%20End%20User%20License.html
 [MIT]: http://opensource.org/licenses/MIT
 [GitHub]: https://www.github.com/ATECoder
 [IVI VISA]: https://www.ivi.org

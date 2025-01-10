@@ -116,7 +116,6 @@ private [MEGA packages folder].
 [TSP Support Framework]: https://www.github.com/atecoder/tsp.1.core
 
 [IVI Foundation]: https://www.ivifoundation.org
-[IVI Foundation]: http://www.ivifoundation.org
 [Keysight I/O Suite]: https://www.keysight.com/en/pd-1985909/io-libraries-suite
 [NI VISA]: https://www.ni.com/en-us/support/downloads/drivers/download.ni-visa.html#346210
 [Test Script Builder]: https://www.tek.com/keithley-test-script-builder

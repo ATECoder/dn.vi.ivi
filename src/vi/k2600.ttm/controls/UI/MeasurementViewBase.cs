@@ -29,6 +29,10 @@ public partial class MeasurementViewBase : cc.isr.WinControls.ModelViewBase
     protected MeasurementViewBase() : base()
     {
         this.InitializeComponent();
+
+        if ( this._chart is not null && !this._splitContainer.Panel1.Controls.Contains( this._chart ) )
+            this._splitContainer.Panel1.Controls.Add( this._chart );
+
         this._ttmMeasureControlsToolStrip.Enabled = false;
     }
 

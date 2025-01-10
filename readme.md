@@ -52,19 +52,13 @@ Virtual Instruments (VI) libraries using the [IVI Foundation] VISA.
 * [ATE Coder]  
 
 <a name="legal-notices"></a>
-# Legal Notices
+## Legal Notices
 
-Integrated Scientific Resources, Inc., and any contributors grant you a license to the documentation and other content in this repository under the [Creative Commons Attribution 4.0 International Public License], see the [LICENSE](./LICENSE) file, and grant you a license to any code in the repository under the [MIT License], see the [LICENSE-CODE](./LICENSE-CODE) file.
+Integrated Scientific Resources, Inc., and any contributors grant you a license to the documentation and other content in this repository under the [Creative Commons Attribution 4.0 International Public License] and grant you a license to any code in the repository under the [MIT License].
 
 Integrated Scientific Resources, Inc., and/or other Integrated Scientific Resources, Inc., products and services referenced in the documentation may be either trademarks or registered trademarks of Integrated Scientific Resources, Inc., in the United States and/or other countries. The licenses for this project do not grant you rights to use any Integrated Scientific Resources, Inc., names, logos, or trademarks.
 
 Integrated Scientific Resources, Inc., and any contributors reserve all other rights, whether under their respective copyrights, patents, or trademarks, whether by implication, estoppel or otherwise.
-
-[Creative Commons Attribution 4.0 International Public License]: https://creativecommons.org/licenses/by/4.0/legalcode
-[MIT License]: https://opensource.org/licenses/MIT
- 
-[ATE Coder]: https://www.IntegratedScientificResources.com
-[dn.core]: https://www.bitbucket.org/davidhary/dn.core
 
 <a name="Supported-Dot-Net-Frameworks"></a>
 ## Supported .NET Frameworks
@@ -92,8 +86,12 @@ The [Keysight I/O Suite] version 18.1 and above is recommended.
 * [NI VISA] revision 19.0 and above can be used.
 * Tested with [NI VISA] 20.0 and 21.0.
 
+[Creative Commons Attribution 4.0 International Public License]: https://github.com/ATECoder/dn.vi.ivi/blob/main/license
+[MIT License]: https://github.com/ATECoder/dn.vi.ivi/blob/main/license-code
+[ATE Coder]: https://www.IntegratedScientificResources.com
+[dn.core]: https://www.bitbucket.org/davidhary/dn.core
+
 [IVI Foundation]: https://www.ivifoundation.org
-[IVI Foundation]: http://www.ivifoundation.org
 [Keysight I/O Suite]: https://www.keysight.com/en/pd-1985909/io-libraries-suite
 [NI VISA]: https://www.ni.com/en-us/support/downloads/drivers/download.ni-visa.html#346210
 [Test Script Builder]: https://www.tek.com/keithley-test-script-builder

@@ -66,6 +66,24 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="..\..\..\..\docs\ttm\TTM Console Guide.html" Link="docs\TTM Console Guide.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\..\..\docs\ttm\TTM Driver API Guide.html" Link="docs\TTM Driver API Guide.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\..\..\docs\ttm\TTM Driver API Upgrade Guide.html" Link="docs\TTM Driver API Upgrade Guide.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\..\..\docs\ttm\TTM Firmware API Guide.html" Link="docs\TTM Firmware API Guide.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\..\..\docs\ttm\TTM Framework Guide.html" Link="docs\TTM Framework Guide.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\..\..\docs\ttm\TTM Instrument Guide.html" Link="docs\TTM Instrument Guide.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <Content Include="cc.isr.VI.Tsp.K2600.Ttm.Console.Lot.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -97,6 +115,10 @@
 
   <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="docs\" />
   </ItemGroup>
 
 </Project>

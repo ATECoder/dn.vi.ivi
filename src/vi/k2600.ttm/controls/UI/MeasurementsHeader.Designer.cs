@@ -148,7 +148,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             // 
             _outcomePictureBox.BackColor = System.Drawing.Color.Black;
             _outcomePictureBox.Dock = System.Windows.Forms.DockStyle.Top;
-            _outcomePictureBox.Image = ( System.Drawing.Bitmap ) Ttm.Controls.Properties.Resources.ResourceManager.GetObject( nameof( Ttm.Controls.Properties.Resources.Good ));
+            _outcomePictureBox.Image = ( System.Drawing.Bitmap ) Ttm.Controls.Properties.Resources.ResourceManager.GetObject( "Good" );
             _outcomePictureBox.Location = new System.Drawing.Point(936, 24);
             _outcomePictureBox.Name = "_OutcomePictureBox";
             _outcomePictureBox.Size = new System.Drawing.Size(29, 28);
@@ -159,7 +159,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             // 
             _alertsPictureBox.BackColor = System.Drawing.Color.Black;
             _alertsPictureBox.Dock = System.Windows.Forms.DockStyle.Top;
-            _alertsPictureBox.Image = ( System.Drawing.Bitmap ) Ttm.Controls.Properties.Resources.ResourceManager.GetObject( nameof( Ttm.Controls.Properties.Resources.Bad ));
+            _alertsPictureBox.Image = ( System.Drawing.Bitmap ) Ttm.Controls.Properties.Resources.ResourceManager.GetObject( "Bad" );
             _alertsPictureBox.Location = new System.Drawing.Point(3, 24);
             _alertsPictureBox.Name = "_alertsPictureBox";
             _alertsPictureBox.Size = new System.Drawing.Size(27, 28);
