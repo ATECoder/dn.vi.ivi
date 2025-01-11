@@ -12,7 +12,7 @@
     <Nullable>enable</Nullable>
 
     <!-- Assembly Info -->
-    <RootNamespace>cc.isr.VI</RootNamespace>
+    <RootNamespace>cc.isr.VI.WinControls</RootNamespace>
     <AssemblyName>cc.isr.VI.WinControls</AssemblyName>
     <ApplicationTitle>cc.isr.VI.WinControls</ApplicationTitle>
     <ApplicationId>cc.isr.vi.win.controls</ApplicationId>

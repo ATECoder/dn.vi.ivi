@@ -12,7 +12,7 @@
     <Nullable>enable</Nullable>
 
     <!-- Assembly Info -->
-    <RootNamespace>cc.isr.VI</RootNamespace>
+    <RootNamespace>cc.isr.VI.SubsystemsWinControls</RootNamespace>
     <AssemblyName>cc.isr.VI.SubsystemsWinControls</AssemblyName>
     <ApplicationTitle>cc.isr.VI.SubsystemsWinControls</ApplicationTitle>
     <ApplicationId>cc.isr.vi.subsystems.win.controls</ApplicationId>
@@ -122,6 +122,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+  </ItemGroup>
+    
+  <ItemGroup>
+    <Folder Include="Views\" />
   </ItemGroup>
     
 </Project>

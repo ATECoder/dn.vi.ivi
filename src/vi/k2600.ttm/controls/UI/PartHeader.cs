@@ -55,22 +55,22 @@ public partial class PartHeader : cc.isr.WinControls.ModelViewBase
 
     #region " dut "
 
-    private DeviceUnderTest? _deviceUnderTestInternal;
-
+    /// <summary>   Gets or sets the device under test internal. </summary>
+    /// <value> The device under test internal. </value>
     private DeviceUnderTest? DeviceUnderTestInternal
     {
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
-        get => this._deviceUnderTestInternal;
+        get;
 
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( this._deviceUnderTestInternal is not null )
-                this._deviceUnderTestInternal.PropertyChanged -= this.DeviceUnderTest_PropertyChanged;
+            if ( field is not null )
+                field.PropertyChanged -= this.DeviceUnderTest_PropertyChanged;
 
-            this._deviceUnderTestInternal = value;
-            if ( this._deviceUnderTestInternal is not null )
-                this._deviceUnderTestInternal.PropertyChanged += this.DeviceUnderTest_PropertyChanged;
+            field = value;
+            if ( field is not null )
+                field.PropertyChanged += this.DeviceUnderTest_PropertyChanged;
         }
     }
 

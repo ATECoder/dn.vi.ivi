@@ -31,7 +31,6 @@ public class Settings : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
     private static Settings CreateInstance()
     {
         Settings ti = new();
-        AppSettingsScribe.ReadSettings( Settings.SettingsFileInfo.AllUsersAssemblyFilePath!, nameof( Settings ), ti );
         return ti;
     }
 
@@ -43,77 +42,42 @@ public class Settings : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
 
     #endregion
 
-    #region " assembly settings file information "
+    #region " scribe "
 
-    /// <summary>
-    /// Creates an instance of the settings <see cref="AssemblyFileInfo"/>. This restores the
-    /// application context settings to both the user and all user files.
-    /// </summary>
-    /// <remarks>   2024-07-18. </remarks>
-    /// <returns>   The new settings file information. </returns>
-    private static AssemblyFileInfo CreateSettingsFileInfo()
+    /// <summary>   Gets or sets the scribe. </summary>
+    /// <value> The scribe. </value>
+    [JsonIgnore]
+    public AppSettingsScribe? Scribe { get; set; }
+
+    /// <summary>   Initializes and reads the settings. </summary>
+    /// <remarks>   2024-08-05. </remarks>
+    /// <param name="callingEntity">        The calling entity. </param>
+    /// <param name="settingsFileSuffix">   The suffix of the assembly settings file, e.g.,
+    ///                                     '.session' in
+    ///                                     'cc.isr.VI.Tsp.K2600.Device.MSTest.Session.JSon' where
+    ///                                     cc.isr.VI.Tsp.K2600.Device.MSTest is the assembly name. </param>
+    public void Initialize( System.Type callingEntity, string settingsFileSuffix )
     {
-        // get assembly files using the .Logging suffix.
-
-        AssemblyFileInfo ai = new( typeof( Settings ).Assembly, null, ".Settings", ".json" );
+        AssemblyFileInfo ai = new( callingEntity.Assembly, null, settingsFileSuffix, ".json" );
 
         // must copy application context settings here to clear any bad settings files.
-
         AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.AllUsersAssemblyFilePath! );
         AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.ThisUserAssemblyFilePath! );
 
-        return ai;
-    }
-
-    [JsonIgnore]
-    private static AssemblyFileInfo SettingsFileInfo => _settingsFileInfo.Value;
-
-    private static readonly Lazy<AssemblyFileInfo> _settingsFileInfo = new( CreateSettingsFileInfo, true );
-
-    #endregion
-
-    #region " settings scribe "
-
-    /// <summary>
-    /// Creates an instance of the <see cref="Settings"/> after restoring the application context
-    /// settings to both the user and all user files.
-    /// </summary>
-    /// <remarks>   2023-05-15. </remarks>
-    /// <returns>   The new instance. </returns>
-    private static AppSettingsScribe CreateScribe()
-    {
-        // get an instance of the settings file info first.
-        AssemblyFileInfo settingsFileInfo = Settings.SettingsFileInfo;
-
-        AppSettingsScribe scribe = new( [Settings.Instance],
-            settingsFileInfo.AppContextAssemblyFilePath!, settingsFileInfo.AllUsersAssemblyFilePath! )
+        this.Scribe = new( [_instance.Value], ai.AppContextAssemblyFilePath!, ai.AllUsersAssemblyFilePath! )
         {
-            AllUsersSettingsPath = settingsFileInfo.AllUsersAssemblyFilePath,
-            ThisUserSettingsPath = settingsFileInfo.ThisUserAssemblyFilePath
+            AllUsersSettingsPath = ai.AllUsersAssemblyFilePath,
+            ThisUserSettingsPath = ai.ThisUserAssemblyFilePath
         };
-        scribe.ReadSettings();
-
-        return scribe;
+        this.Scribe.ReadSettings();
     }
-
-    /// <summary>   Gets the <see cref="AppSettingsScribe">settings reader and writer</see>. </summary>
-    /// <value> The scribe. </value>
-    [JsonIgnore]
-    public static AppSettingsScribe Scribe => _scribe.Value;
-
-    private static readonly Lazy<AppSettingsScribe> _scribe = new( CreateScribe, true );
-
-    /// <summary>   Gets the full pathname of the settings file. </summary>
-    /// <value> The full pathname of the settings file. </value>
-    [JsonIgnore]
-    public static string FilePath => Settings.Scribe.UserSettingsPath;
 
     /// <summary>   Check if the settings file exits. </summary>
     /// <remarks>   2024-07-06. </remarks>
     /// <returns>   True if it the settings file exists; otherwise false. </returns>
-    public static bool Exists()
+    public bool Exists()
     {
-        return System.IO.File.Exists( Settings.FilePath );
+        return this.Scribe is not null && System.IO.File.Exists( this.Scribe.UserSettingsPath );
     }
 
     #endregion

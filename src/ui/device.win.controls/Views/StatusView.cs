@@ -1510,6 +1510,8 @@ public partial class StatusView : cc.isr.WinControls.ModelViewBase
     }
 
     /// <summary> Base settings menu item click. </summary>
+    /// <remarks>   David, 2021-12-08. <para>
+    /// The settings <see cref="Properties.Settings.Initialize(Type, string)"/></para> must be called before attempting to edit the settings. </remarks>
     /// <param name="sender"> <see cref="object"/> instance of this
     /// <see cref="Control"/> </param>
     /// <param name="e">      Event information. </param>
@@ -1518,7 +1520,7 @@ public partial class StatusView : cc.isr.WinControls.ModelViewBase
         if ( Properties.Settings.Instance is not null )
         {
             Form form = new JsonSettingsEditorForm( "UI Base Settings",
-                new AppSettingsEditorViewModel( Properties.Settings.Scribe, SimpleServiceProvider.GetInstance() ) );
+                new AppSettingsEditorViewModel( Properties.Settings.Instance.Scribe!, SimpleServiceProvider.GetInstance() ) );
             _ = form.ShowDialog();
         }
     }

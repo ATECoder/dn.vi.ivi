@@ -18,22 +18,20 @@ public partial class ThermalTransientHeader : cc.isr.WinControls.ModelViewBase
 
     #region " dut "
 
-    private DeviceUnderTest? _deviceUnderTestInternal;
-
     private DeviceUnderTest? DeviceUnderTestInternal
     {
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
-        get => this._deviceUnderTestInternal;
+        get;
 
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( this._deviceUnderTestInternal is not null )
-                this._deviceUnderTestInternal.PropertyChanged -= this.DeviceUnderTest_PropertyChanged;
+            if ( field is not null )
+                field.PropertyChanged -= this.DeviceUnderTest_PropertyChanged;
 
-            this._deviceUnderTestInternal = value;
-            if ( this._deviceUnderTestInternal is not null )
-                this._deviceUnderTestInternal.PropertyChanged += this.DeviceUnderTest_PropertyChanged;
+            field = value;
+            if ( field is not null )
+                field.PropertyChanged += this.DeviceUnderTest_PropertyChanged;
         }
     }
 
@@ -125,24 +123,23 @@ public partial class ThermalTransientHeader : cc.isr.WinControls.ModelViewBase
 
     #region " part: thermal transient "
 
-    private ThermalTransient? _thermalTransientInternal;
 
     /// <summary> The Part Thermal Transient. </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage( "CodeQuality", "IDE0052:Remove unread private members", Justification = "<Pending>" )]
     private ThermalTransient? ThermalTransientInternal
     {
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
-        get => this._thermalTransientInternal;
+        get;
 
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( this._thermalTransientInternal is not null )
-                this._thermalTransientInternal.PropertyChanged -= this.ThermalTransient_PropertyChanged;
+            if ( field is not null )
+                field.PropertyChanged -= this.ThermalTransient_PropertyChanged;
 
-            this._thermalTransientInternal = value;
-            if ( this._thermalTransientInternal is not null )
-                this._thermalTransientInternal.PropertyChanged += this.ThermalTransient_PropertyChanged;
+            field = value;
+            if ( field is not null )
+                field.PropertyChanged += this.ThermalTransient_PropertyChanged;
         }
     }
 

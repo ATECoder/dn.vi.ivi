@@ -55,9 +55,8 @@ namespace cc.isr.VI.WinControls.Properties {
             get {
                 return resourceCulture;
             }
-            set
-            {
-                 resourceCulture = value;
+            set {
+                resourceCulture = value;
             }
         }
         

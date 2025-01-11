@@ -525,6 +525,4 @@ public partial class ArmLayerView : cc.isr.WinControls.ModelViewBase
     }
 
     #endregion
-
-
 }

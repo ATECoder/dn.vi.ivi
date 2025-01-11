@@ -44,22 +44,20 @@ public partial class PartsView : cc.isr.WinControls.ModelViewBase
 
     #region " device under test "
 
-    private DeviceUnderTest? _partInternal;
-
     private DeviceUnderTest? PartInternal
     {
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
-        get => this._partInternal;
+        get;
 
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( this._partInternal is not null )
-                this._partInternal.PropertyChanged -= this.Part_PropertyChanged;
+            if ( field is not null )
+                field.PropertyChanged -= this.Part_PropertyChanged;
 
-            this._partInternal = value;
-            if ( this._partInternal is not null )
-                this._partInternal.PropertyChanged += this.Part_PropertyChanged;
+            field = value;
+            if ( field is not null )
+                field.PropertyChanged += this.Part_PropertyChanged;
         }
     }
 
@@ -169,16 +167,13 @@ public partial class PartsView : cc.isr.WinControls.ModelViewBase
         }
     }
 
-    /// <summary> Message describing the measurement. </summary>
-    private string? _measurementMessage;
-
     /// <summary> Gets or sets a message describing the measurement. </summary>
     /// <value> A message describing the measurement. </value>
     [Browsable( false )]
     [DesignerSerializationVisibility( DesignerSerializationVisibility.Hidden )]
     public string? MeasurementMessage
     {
-        get => this._measurementMessage;
+        get;
         set
         {
             if ( string.IsNullOrWhiteSpace( value ) )
@@ -186,16 +181,13 @@ public partial class PartsView : cc.isr.WinControls.ModelViewBase
             else if ( (value ?? "") != (this.MeasurementMessage ?? "") )
                 this._outcomeToolStripLabel.Text = value;
 
-            this._measurementMessage = value;
+            field = value;
         }
     }
 
     /// <summary> Gets or sets the test <see cref="MeasurementOutcomes">outcome</see>. </summary>
     /// <remarks> David, 2020-10-12. </remarks>
     /// <param name="value"> The value. </param>
-#if NET5_0_OR_GREATER
-    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Globalization", "CA1304:Specify CultureInfo", Justification = "<Pending>" )]
-#endif
     public void OutcomeSetter( MeasurementOutcomes value )
     {
         if ( value == MeasurementOutcomes.None )
@@ -247,14 +239,14 @@ public partial class PartsView : cc.isr.WinControls.ModelViewBase
         if ( (value & MeasurementOutcomes.PartPassed) != 0 )
         {
             this._passFailToolStripButton.Visible = true;
-            this._passFailToolStripButton.Image = ( System.Drawing.Bitmap ) (Ttm.Controls.Properties.Resources.ResourceManager.GetObject( nameof( Ttm.Controls.Properties.Resources.Good ) )
-                ?? new Bitmap( 1, 1 ));
+            this._passFailToolStripButton.Image = ( System.Drawing.Bitmap ) (Ttm.Controls.Properties.Resources.ResourceManager.GetObject( nameof( Ttm.Controls.Properties.Resources.Good ),
+                System.Globalization.CultureInfo.CurrentUICulture ) ?? new Bitmap( 1, 1 ));
         }
         else if ( (value & MeasurementOutcomes.PartFailed) != 0 )
         {
             this._passFailToolStripButton.Visible = true;
-            this._passFailToolStripButton.Image = ( System.Drawing.Bitmap ) (Ttm.Controls.Properties.Resources.ResourceManager.GetObject( nameof( Ttm.Controls.Properties.Resources.Bad ) )
-                ?? new Bitmap( 1, 1 ));
+            this._passFailToolStripButton.Image = ( System.Drawing.Bitmap ) (Ttm.Controls.Properties.Resources.ResourceManager.GetObject( nameof( Ttm.Controls.Properties.Resources.Bad ),
+                System.Globalization.CultureInfo.CurrentUICulture ) ?? new Bitmap( 1, 1 ));
         }
     }
 
@@ -305,22 +297,21 @@ public partial class PartsView : cc.isr.WinControls.ModelViewBase
 
     #region " parts list management "
 
-    private DeviceUnderTestCollection? _partsInternal;
 
     private DeviceUnderTestCollection? PartsInternal
     {
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
-        get => this._partsInternal;
+        get;
 
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( this._partsInternal is not null )
-                this._partsInternal.CollectionChanged -= this.OnPartsChanged;
+            if ( field is not null )
+                field.CollectionChanged -= this.OnPartsChanged;
 
-            this._partsInternal = value;
-            if ( this._partsInternal is not null )
-                this._partsInternal.CollectionChanged += this.OnPartsChanged;
+            field = value;
+            if ( field is not null )
+                field.CollectionChanged += this.OnPartsChanged;
         }
     }
 

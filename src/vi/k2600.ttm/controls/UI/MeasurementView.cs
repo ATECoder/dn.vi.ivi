@@ -33,18 +33,16 @@ public partial class MeasurementView : MeasurementViewBase
     [Browsable( false )]
     public override bool IsDeviceOpen => this.Meter is not null && this.Meter.IsDeviceOpen;
 
-    private Meter? _meter;
-
     /// <summary> Gets or sets the meter. </summary>
     /// <value> The meter. </value>
     [Browsable( false )]
     [DesignerSerializationVisibility( DesignerSerializationVisibility.Hidden )]
     public Meter? Meter
     {
-        get => this._meter;
+        get;
         set
         {
-            this._meter = value;
+            field = value;
             if ( value is not null )
             {
                 this.TspDevice = value.TspDevice;
