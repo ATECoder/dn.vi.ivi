@@ -12,7 +12,7 @@
     <Nullable>enable</Nullable>
 
     <!-- Assembly Info -->
-    <RootNamespace>cc.isr</RootNamespace>
+    <RootNamespace>cc.isr.VI.DeviceWinControls</RootNamespace>
     <Description>Unit tests of Device Windows controls</Description>
 
     <!-- Coding -->
@@ -72,6 +72,12 @@
 
   <ItemGroup>
     <Compile Include="..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="cc.isr.VI.DeviceWinControls.MSTest.Settings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

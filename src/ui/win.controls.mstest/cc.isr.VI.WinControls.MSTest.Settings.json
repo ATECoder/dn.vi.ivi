@@ -1,7 +1,8 @@
 {
   "Settings": {
-    "CheckUnpublishedMessageLogFileSize": false,
-    "Dummy": "Dummy"
+    "Exists": true,
+    "TraceLevel": "Verbose",
+    "MessageDisplayLevel": "Verbose"
   },
 
   "TestSiteSettings": {
@@ -13,5 +14,5 @@
     "TimeZones": "Pacific Standard Time|Central Standard Time",
     "TimeZoneOffsets": "-8|-6"
   }
-  
+
 }

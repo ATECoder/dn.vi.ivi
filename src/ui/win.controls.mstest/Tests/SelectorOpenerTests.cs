@@ -1,6 +1,7 @@
 using System;
+using cc.isr.VI.WinControls.BindingExtensions;
 
-namespace cc.isr.VI.WinControls.MSTest;
+namespace cc.isr.VI.WinControls.Tests;
 
 /// <summary> A resource tests. </summary>
 /// <remarks>
@@ -61,7 +62,7 @@ public class SelectorOpenerTests
     public void InitializeBeforeEachTest()
     {
         Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
-        Console.WriteLine( $"Testing {typeof( VI.WinControls.BindingEventHandlers ).Assembly.FullName}" );
+        Console.WriteLine( $"Testing {typeof( BindingEventHandlers ).Assembly.FullName}" );
         TraceListener?.ClearQueue();
     }
 
@@ -102,7 +103,7 @@ public class SelectorOpenerTests
             Searchable = true,
             ResourcesFilter = SessionFactory.Instance.Factory.ResourcesProvider().ResourceFinder!.BuildMinimalResourcesFilter()
         };
-        DeviceManager.AssertSelectorShouldEnumerateResources( control, selector );
+        Asserts.AssertSelectorShouldEnumerateResources( control, selector );
     }
 
     #endregion

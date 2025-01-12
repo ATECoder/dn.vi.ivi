@@ -287,6 +287,7 @@ public class DigitalLine : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
 
     #endregion
 }
+
 /// <summary> Collection of digital lines. </summary>
 /// <remarks>
 /// (c) 2018 Integrated Scientific Resources, Inc. All rights reserved.<para>

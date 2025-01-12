@@ -2,9 +2,9 @@ using System;
 using cc.isr.VI.Device.MSTest.Base;
 using cc.isr.VI.DeviceWinControls.Views;
 
-namespace cc.isr.VI.DeviceWinControls.MSTest;
+namespace cc.isr.VI.DeviceWinControls.Tests;
 
-public sealed partial class DeviceManager
+public sealed partial class Asserts
 {
     /// <summary>   Assert model should match. </summary>
     /// <remarks>   David, 2021-07-06. </remarks>

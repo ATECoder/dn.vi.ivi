@@ -75,9 +75,27 @@ public class Settings : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
     /// <summary>   Check if the settings file exits. </summary>
     /// <remarks>   2024-07-06. </remarks>
     /// <returns>   True if it the settings file exists; otherwise false. </returns>
-    public bool Exists()
+    public bool SettingsFileExists()
     {
         return this.Scribe is not null && System.IO.File.Exists( this.Scribe.UserSettingsPath );
+    }
+
+    #endregion
+
+    #region " exists "
+
+    private bool _exists;
+
+    /// <summary>
+    /// Gets or sets a value indicating whether this settings section exists and the values were thus
+    /// fetched from the settings file.
+    /// </summary>
+    /// <value> True if this settings section exists in the settings file, false if not. </value>
+	[Description( "True if this settings section exists and was read from the JSon settings file." )]
+    public bool Exists
+    {
+        get => this._exists;
+        set => _ = this.SetProperty( ref this._exists, value );
     }
 
     #endregion
@@ -101,31 +119,9 @@ public class Settings : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
         set => _ = this.SetProperty( ref this._messageLevel, value );
     }
 
-    private bool _enabled = true;
-
-    /// <summary>   Gets or sets a value indicating whether this object is enabled. </summary>
-    /// <value> True if enabled, false if not. </value>
-    [System.ComponentModel.Description( "True if testing is enabled for this test class" )]
-    public bool Enabled
-    {
-        get => this._enabled;
-        set => this.SetProperty( ref this._enabled, value );
-    }
-
-    private bool _all = true;
-
-    /// <summary> Gets or sets all. </summary>
-    /// <value> all. </value>
-    [System.ComponentModel.Description( "True if all testing is enabled for this test class" )]
-    public bool All
-    {
-        get => this._all;
-        set => this.SetProperty( ref this._all, value );
-    }
-
     #endregion
 
-    #region " test information "
+    #region " values "
 
     private TraceEventType _messageDisplayLevel = TraceEventType.Verbose;
 

@@ -1,5 +1,18 @@
 {
+  "TestSiteSettings": {
+    "Exists": true,
+    "Enabled": true,
+    "TraceLevel": "Verbose",
+    "All": true,
+    "IPv4Prefixes": "192.168|10.1",
+    "TimeZones": "Pacific Standard Time|Central Standard Time",
+    "TimeZoneOffsets": "-8|-6"
+  },
+
   "Settings": {
+    "Exists": true,
+    "Enabled": true,
+    "TraceLevel": "Verbose",
     "MessageDisplayLevel": "Verbose",
     "StatusReadDelay": 10,
     "ReadDelay": 10,

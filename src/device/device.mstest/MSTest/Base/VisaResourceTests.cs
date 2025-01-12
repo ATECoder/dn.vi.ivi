@@ -4,17 +4,6 @@ using cc.isr.Std.Tests;
 using cc.isr.VI.Pith;
 using cc.isr.Std.Tests.Extensions;
 
-/* Unmerged change from project 'cc.isr.VI.Device.MSTest (net472)'
-Added:
-using cc;
-using cc.isr;
-using cc.isr.VI;
-using cc.isr.VI.Device;
-using cc.isr.VI.Device.MSTest;
-using cc.isr.VI.Device.MSTest.Pith;
-using cc.isr.VI.Device.MSTest.Base;
-*/
-
 namespace cc.isr.VI.Device.MSTest.Base;
 
 /// <summary> The abstract VISA Resource Settings tests. </summary>

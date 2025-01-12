@@ -108,12 +108,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="cc.isr.VI.WinControls.Settings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\..\..\..\core\win.controls\src\model.view.logger\model.view.logger\cc.isr.WinControls.ModelViewLogger.csproj" />
   </ItemGroup>
  

@@ -1,7 +1,7 @@
 using System.Windows.Forms;
 using cc.isr.WinControls.BindingExtensions;
 
-namespace cc.isr.VI.WinControls;
+namespace cc.isr.VI.WinControls.BindingExtensions;
 
 /// <summary> A binding event handlers. </summary>
 /// <remarks> (c) 2019 Integrated Scientific Resources, Inc. All rights reserved.<para>

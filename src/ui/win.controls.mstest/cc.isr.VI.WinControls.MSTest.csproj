@@ -10,7 +10,7 @@
     <Nullable>enable</Nullable>
 
     <!-- Assembly Info -->
-    <RootNamespace>cc.isr</RootNamespace>
+    <RootNamespace>cc.isr.VI.WinControls</RootNamespace>
     <Description>Unit tests of Visa Session Base Windows controls</Description>
 
     <!-- Coding -->
@@ -68,9 +68,6 @@
 
   <ItemGroup>
     <Compile Include="..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
   </ItemGroup>
 
   <ItemGroup>

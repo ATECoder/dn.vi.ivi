@@ -75,12 +75,53 @@ public class Settings : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
     /// <summary>   Check if the settings file exits. </summary>
     /// <remarks>   2024-07-06. </remarks>
     /// <returns>   True if it the settings file exists; otherwise false. </returns>
-    public bool Exists()
+    public bool SettingsFIleExists()
     {
         return this.Scribe is not null && System.IO.File.Exists( this.Scribe.UserSettingsPath );
     }
 
     #endregion
+
+    #region " exists "
+
+    private bool _exists;
+
+    /// <summary>
+    /// Gets or sets a value indicating whether this settings section exists and the values were thus
+    /// fetched from the settings file.
+    /// </summary>
+    /// <value> True if this settings section exists in the settings file, false if not. </value>
+	[Description( "True if this settings section exists and was read from the JSon settings file." )]
+    public bool Exists
+    {
+        get => this._exists;
+        set => _ = this.SetProperty( ref this._exists, value );
+    }
+
+    #endregion
+
+    #region " configuration information "
+
+    private TraceLevel _messageLevel = TraceLevel.Off;
+
+    /// <summary>   Gets or sets the trace level. </summary>
+    /// <remarks>
+    /// This property name is different from the <see cref="System.Text.Json"/> property name in
+    /// order to ensure that the class is correctly serialized. It's value is initialized as <see cref="TraceLevel.Off"/>
+    /// in order to test the reading from the settings file.
+    /// </remarks>
+    /// <value> The message <see cref="TraceLevel"/>. </value>
+    [System.ComponentModel.Description( "Sets the message level" )]
+    [JsonPropertyName( "TraceLevel" )]
+    public TraceLevel MessageLevel
+    {
+        get => this._messageLevel;
+        set => _ = this.SetProperty( ref this._messageLevel, value );
+    }
+
+    #endregion
+
+    #region " values "
 
     private TraceEventType _messageDisplayLevel = TraceEventType.Verbose;
 
@@ -97,6 +138,5 @@ public class Settings : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
         get => this._messageDisplayLevel;
         set => this.SetProperty( ref this._messageDisplayLevel, value );
     }
-
+    #endregion
 }
-

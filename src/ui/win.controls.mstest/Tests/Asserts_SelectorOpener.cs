@@ -1,8 +1,8 @@
 using System;
 
-namespace cc.isr.VI.WinControls.MSTest;
+namespace cc.isr.VI.WinControls.Tests;
 
-public sealed partial class DeviceManager
+public sealed partial class Asserts
 {
     /// <summary> An opener. </summary>
     private sealed class Opener : cc.isr.Std.Notifiers.OpenResourceBase
