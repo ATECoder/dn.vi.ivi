@@ -32,7 +32,7 @@ public partial class VisaView : cc.isr.WinControls.ModelViewBase, IVisaView
             CaptionFormat = "{0} " + Convert.ToChar( 0x1C2 ),
             ResetCount = 1000,
             PresetCount = 500,
-            TraceLevel = Properties.Settings.Instance.MessageDisplayLevel
+            TraceLevel = TraceEventType.Verbose
         };
         cc.isr.Tracing.TracingPlatform.Instance.AddTraceEventWriter( this.TextBoxTextWriter );
         this._tabs.DrawMode = TabDrawMode.OwnerDrawFixed;
@@ -418,4 +418,25 @@ public partial class VisaView : cc.isr.WinControls.ModelViewBase, IVisaView
 
     #endregion
 
+    #region " Text Box Text Writer "
+
+    /// <summary>   Gets or sets the display level for log and trace messages. </summary>
+    /// <remarks>
+    /// The maximum trace event type for displaying logged and trace events. Only messages with a
+    /// message <see cref="System.Diagnostics.TraceEventType"/> level that is same or higher than
+    /// this level are displayed.
+    /// </remarks>
+    /// <value> The message display level. </value>
+    [DesignerSerializationVisibility( DesignerSerializationVisibility.Hidden )]
+    [Browsable( false )]
+    public TraceEventType MessageDisplayLevel
+    {
+        get => this.TextBoxTextWriter is null ? TraceEventType.Verbose : this.TextBoxTextWriter.TraceLevel;
+        set
+        {
+            if ( this.TextBoxTextWriter is not null ) this.TextBoxTextWriter.TraceLevel = value;
+        }
+    }
+
+    #endregion
 }

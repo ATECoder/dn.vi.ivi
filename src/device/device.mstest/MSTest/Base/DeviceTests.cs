@@ -126,11 +126,11 @@ public abstract class DeviceTests
 
     /// <summary>   Gets or sets the resource settings. </summary>
     /// <value> The resource settings. </value>
-    protected Settings.ResourceSettingsBase? ResourceSettings { get; set; }
+    protected Pith.Settings.ResourceSettings? ResourceSettings { get; set; }
 
     /// <summary>   Gets or sets the test site settings. </summary>
     /// <value> The test site settings. </value>
-    protected Settings.DeviceErrorsSettingsBase? DeviceErrorsSettings { get; set; }
+    protected Settings.DeviceErrorsSettings? DeviceErrorsSettings { get; set; }
 
     /// <summary>   Gets or sets the visa session base. </summary>
     /// <value> The visa session base. </value>

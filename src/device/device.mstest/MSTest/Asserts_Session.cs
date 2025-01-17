@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using cc.isr.Std.SplitExtensions;
-using cc.isr.VI.Device.MSTest.Settings;
 
 namespace cc.isr.VI.Device.MSTest;
 
@@ -13,7 +12,7 @@ public sealed partial class Asserts
     /// <remarks>   2024-10-23. </remarks>
     /// <param name="session">          The session. </param>
     /// <param name="resourceSettings"> Information describing the resource. </param>
-    public static void AssertSessionInitialValuesShouldMatch( cc.isr.VI.Pith.SessionBase? session, Settings.ResourceSettingsBase? resourceSettings )
+    public static void AssertSessionInitialValuesShouldMatch( cc.isr.VI.Pith.SessionBase? session, Pith.Settings.ResourceSettings? resourceSettings )
     {
         System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
         string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
@@ -21,8 +20,8 @@ public sealed partial class Asserts
 
         Assert.IsNotNull( session, $"{nameof( session )} should not be null." );
         Assert.IsTrue( session.TimingSettings.Exists );
-        Assert.IsNotNull( resourceSettings, $"{nameof( Settings.ResourceSettingsBase )} should not be null." );
-        Assert.IsTrue( resourceSettings.Exists, $"{nameof( Settings.ResourceSettingsBase )} should exist in the settings file." );
+        Assert.IsNotNull( resourceSettings, $"{nameof( Pith.Settings.ResourceSettings )} should not be null." );
+        Assert.IsTrue( resourceSettings.Exists, $"{nameof( Pith.Settings.ResourceSettings )} should exist in the settings file." );
         string propertyName = nameof( cc.isr.VI.Pith.ServiceRequests.ErrorAvailable ).SplitWords();
         int expectedErrorAvailableBitmask = session.RegistersBitmasksSettings.ErrorAvailableBitmask;
         int actualErrorAvailableBitmask = ( int ) session.ErrorAvailableBitmask;
@@ -33,7 +32,7 @@ public sealed partial class Asserts
     /// <summary> Assert session open values should match. </summary>
     /// <param name="session">      The session. </param>
     /// <param name="resourceInfo"> Information describing the resource. </param>
-    public static void AssertSessionOpenValuesShouldMatch( cc.isr.VI.Pith.SessionBase? session, Settings.ResourceSettingsBase? resourceSettings )
+    public static void AssertSessionOpenValuesShouldMatch( cc.isr.VI.Pith.SessionBase? session, Pith.Settings.ResourceSettings? resourceSettings )
     {
         System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
         string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
@@ -41,8 +40,8 @@ public sealed partial class Asserts
 
         Assert.IsNotNull( session, $"{nameof( session )} should not be null." );
         Assert.IsTrue( session.TimingSettings.Exists );
-        Assert.IsNotNull( resourceSettings, $"{nameof( Settings.ResourceSettingsBase )} should not be null." );
-        Assert.IsTrue( resourceSettings.Exists, $"{nameof( Settings.ResourceSettingsBase )} should exist in the settings file." );
+        Assert.IsNotNull( resourceSettings, $"{nameof( Pith.Settings.ResourceSettings )} should not be null." );
+        Assert.IsTrue( resourceSettings.Exists, $"{nameof( Pith.Settings.ResourceSettings )} should exist in the settings file." );
 
         string propertyName = nameof( cc.isr.VI.Pith.SessionBase.ValidatedResourceName ).SplitWords();
         string actualResource = session.ValidatedResourceName;
@@ -65,45 +64,46 @@ public sealed partial class Asserts
         Assert.AreEqual( expectedResourceModel, actualResourceModel, $"{session.ResourceNameCaption} {propertyName} should match" );
     }
 
-    /// <summary> Assert termination values should match. </summary>
-    /// <param name="session">        The session. </param>
-    /// <param name="subsystemsInfo"> Information describing the subsystems. </param>
-    public static void AssertTerminationValuesShouldMatch( cc.isr.VI.Pith.SessionBase? session, SubsystemsSettingsBase? subsystemsInfo )
+    /// <summary>   Assert termination values should match. </summary>
+    /// <remarks>   2025-01-16. </remarks>
+    /// <param name="session">      The session. </param>
+    /// <param name="ioSettings">   Information describing the Session IO. </param>
+    public static void AssertTerminationValuesShouldMatch( cc.isr.VI.Pith.SessionBase? session, Pith.Settings.IOSettings? ioSettings )
     {
         Assert.IsNotNull( session, $"{nameof( session )} should not be null." );
-        Assert.IsNotNull( subsystemsInfo, $"{nameof( subsystemsInfo )} should not be null." );
+        Assert.IsNotNull( ioSettings, $"{nameof( ioSettings )} should not be null." );
 
         System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
         string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
         Console.WriteLine( $"@{methodFullName}" );
 
         Assert.IsNotNull( session, $"{nameof( session )} should not be null." );
-        Assert.IsNotNull( subsystemsInfo, $"{nameof( subsystemsInfo )} should not be null." );
+        Assert.IsNotNull( ioSettings, $"{nameof( ioSettings )} should not be null." );
         // read termination is enabled from the status subsystem. It is disabled at the IVI Visa level. 
         bool actualReadTerminationEnabled = session.ReadTerminationCharacterEnabled;
-        bool expectedReadTerminationEnabled = subsystemsInfo.ReadTerminationEnabled;
+        bool expectedReadTerminationEnabled = ioSettings.ReadTerminationEnabled;
         string propertyName = nameof( cc.isr.VI.Pith.SessionBase.ReadTerminationCharacterEnabled ).SplitWords();
         Assert.AreEqual( expectedReadTerminationEnabled, actualReadTerminationEnabled, $"{session.ResourceNameCaption} initial {propertyName} should match" );
 
         propertyName = nameof( cc.isr.VI.Pith.SessionBase.ReadTerminationCharacter ).SplitWords();
         int actualTermination = session.ReadTerminationCharacter;
-        int expectedTermination = subsystemsInfo.ReadTerminationCharacter;
+        int expectedTermination = ioSettings.ReadTerminationCharacter;
         Assert.AreEqual( expectedTermination, actualTermination, $"{session.ResourceNameCaption} initial {propertyName} value should match" );
 
         propertyName = nameof( cc.isr.VI.Pith.SessionBase.ReadTerminationCharacterEnabled ).SplitWords();
-        expectedReadTerminationEnabled = !subsystemsInfo.ReadTerminationEnabled;
+        expectedReadTerminationEnabled = !ioSettings.ReadTerminationEnabled;
         session.ReadTerminationCharacterEnabled = expectedReadTerminationEnabled;
         actualReadTerminationEnabled = session.ReadTerminationCharacterEnabled;
         Assert.AreEqual( expectedReadTerminationEnabled, actualReadTerminationEnabled, $"{session.ResourceNameCaption} toggled {propertyName} should match" );
 
-        expectedReadTerminationEnabled = subsystemsInfo.ReadTerminationEnabled;
+        expectedReadTerminationEnabled = ioSettings.ReadTerminationEnabled;
         session.ReadTerminationCharacterEnabled = expectedReadTerminationEnabled;
         actualReadTerminationEnabled = session.ReadTerminationCharacterEnabled;
         Assert.AreEqual( expectedReadTerminationEnabled, actualReadTerminationEnabled, $"{session.ResourceNameCaption} restored {propertyName} should match" );
 
         propertyName = nameof( cc.isr.VI.Pith.SessionBase.ReadTerminationCharacter ).SplitWords();
         actualTermination = session.ReadTerminationCharacter;
-        expectedTermination = subsystemsInfo.ReadTerminationCharacter;
+        expectedTermination = ioSettings.ReadTerminationCharacter;
         Assert.AreEqual( expectedTermination, actualTermination, $"{session.ResourceNameCaption} {propertyName} value should match" );
         Assert.AreEqual( ( byte ) session.TerminationCharacters().ElementAtOrDefault( 0 ), session.ReadTerminationCharacter, $"{session.ResourceNameCaption} first termination character value should match" );
     }

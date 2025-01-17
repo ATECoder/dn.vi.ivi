@@ -1,15 +1,14 @@
-using System;
-using cc.isr.VI.Pith;
 using DescriptionAttribute = System.ComponentModel.DescriptionAttribute;
 
-namespace cc.isr.VI.Device.MSTest.Settings;
+namespace cc.isr.VI.Pith.Settings;
 
 /// <summary>   Resource test settings class for a single resource. </summary>
 /// <remarks>
 /// <para>
 /// David, 2018-02-12 </para>
 /// </remarks>
-public class ResourceSettingsBase() : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
+[CLSCompliant( false )]
+public class ResourceSettings() : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
 {
     #region " exists "
 
@@ -69,6 +68,17 @@ public class ResourceSettingsBase() : CommunityToolkit.Mvvm.ComponentModel.Obser
     {
         get => this._closedCaption;
         set => this.SetProperty( ref this._closedCaption, value );
+    }
+
+    private TimeSpan _resourceNameSelectionTimeout = TimeSpan.FromSeconds( 10 );
+
+    /// <summary>   Gets or sets the resource name selection timeout. </summary>
+    /// <value> The resource name selection timeout. </value>
+	[Description( "Specifies the time to wait when selecting a resource name [10s]" )]
+    public TimeSpan ResourceNameSelectionTimeout
+    {
+        get => this._resourceNameSelectionTimeout;
+        set => _ = this.SetProperty( ref this._resourceNameSelectionTimeout, value );
     }
 
     #endregion

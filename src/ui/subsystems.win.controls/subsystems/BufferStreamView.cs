@@ -79,6 +79,16 @@ public partial class BufferStreamView : cc.isr.WinControls.ModelViewBase
 
     #endregion
 
+    #region " settings "
+
+    /// <summary>   Gets or sets the timing settings. </summary>
+    /// <value> The timing settings. </value>
+    [DesignerSerializationVisibility( DesignerSerializationVisibility.Hidden )]
+    [Browsable( false )]
+    public BufferStreamViewSettings Settings { get; private set; } = BufferStreamViewSettings.Instance;
+
+    #endregion
+
     #region " public members: buffer "
 
     /// <summary> Applies the buffer capacity. </summary>
@@ -1273,12 +1283,12 @@ public partial class BufferStreamView : cc.isr.WinControls.ModelViewBase
         if ( this.Device is null || this.Device.Session is null
             || this.SystemSubsystem is null || this.SenseSubsystem is null || this.SenseFunctionSubsystem is null ) return;
         _ = this.SystemSubsystem.ApplyAutoZeroEnabled( true );
-        _ = this.SenseSubsystem.ApplyFunctionMode( Properties.Settings.Instance.StreamBufferSenseFunctionMode );
+        _ = this.SenseSubsystem.ApplyFunctionMode( this.Settings.StreamBufferSenseFunctionMode );
         _ = this.Device.Session.QueryOperationCompleted();
         // verify that function mode change occurred
         if ( this.FunctionModeChanged )
         {
-            throw new InvalidOperationException( $"Failed settings new {nameof( SenseFunctionSubsystemBase ).SplitWords()} to {Properties.Settings.Instance.StreamBufferSenseFunctionMode} from {this.SenseFunctionSubsystem.FunctionMode}" );
+            throw new InvalidOperationException( $"Failed settings new {nameof( SenseFunctionSubsystemBase ).SplitWords()} to {this.Settings.StreamBufferSenseFunctionMode} from {this.SenseFunctionSubsystem.FunctionMode}" );
         }
 
         _ = this.SenseFunctionSubsystem.ApplyPowerLineCycles( 1d );
@@ -1309,16 +1319,16 @@ public partial class BufferStreamView : cc.isr.WinControls.ModelViewBase
     protected virtual void ConfigureLimitBinning()
     {
         if ( this.BinningSubsystem is null ) return;
-        double expectedResistance = Properties.Settings.Instance.NominalResistance;
-        double resistanceTolerance = Properties.Settings.Instance.ResistanceTolerance;
-        double openLimit = Properties.Settings.Instance.OpenLimit;
-        int passOutputValue = Properties.Settings.Instance.PassBitmask;
-        int failOutputValue = Properties.Settings.Instance.FailBitmask;
-        int overflowOutputValue = Properties.Settings.Instance.OverflowBitmask;
+        double expectedResistance = this.Settings.NominalResistance;
+        double resistanceTolerance = this.Settings.ResistanceTolerance;
+        double openLimit = this.Settings.OpenLimit;
+        int passOutputValue = this.Settings.PassBitmask;
+        int failOutputValue = this.Settings.FailBitmask;
+        int overflowOutputValue = this.Settings.OverflowBitmask;
 
         // sets the expected duration of the binning probe, which is used to wait before 
         // enabling the next measurement cycle. 
-        this.BinningSubsystem.BinningStrobeDuration = TimeSpan.FromMilliseconds( Properties.Settings.Instance.BinningStrobeDuration );
+        this.BinningSubsystem.BinningStrobeDuration = TimeSpan.FromMilliseconds( this.Settings.BinningStrobeDuration );
         _ = this.BinningSubsystem.ApplyPassSource( passOutputValue );
 
         // limit 2 is set for the nominal values
@@ -1360,21 +1370,21 @@ public partial class BufferStreamView : cc.isr.WinControls.ModelViewBase
         if ( this.InitializingComponents ) return string.Empty;
         System.Text.StringBuilder builder = new();
         _ = builder.AppendLine( $"Buffer streaming plan:" );
-        _ = builder.AppendLine( $"Measurement: {Properties.Settings.Instance.StreamBufferSenseFunctionMode}; auto zero; {1} NPLC; auto range; 8.5 digits." );
-        _ = builder.AppendLine( $"Limits, Ω: Pass: {Properties.Settings.Instance.NominalResistance}±{Properties.Settings.Instance.NominalResistance * Properties.Settings.Instance.ResistanceTolerance}; Open: {Properties.Settings.Instance.OpenLimit}." );
-        _ = builder.AppendLine( $"Binning Bitmasks: Pass={Properties.Settings.Instance.PassBitmask}; Fail={Properties.Settings.Instance.FailBitmask}; Open={Properties.Settings.Instance.OverflowBitmask}." );
+        _ = builder.AppendLine( $"Measurement: {this.Settings.StreamBufferSenseFunctionMode}; auto zero; {1} NPLC; auto range; 8.5 digits." );
+        _ = builder.AppendLine( $"Limits, Ω: Pass: {this.Settings.NominalResistance}±{this.Settings.NominalResistance * this.Settings.ResistanceTolerance}; Open: {this.Settings.OpenLimit}." );
+        _ = builder.AppendLine( $"Binning Bitmasks: Pass={this.Settings.PassBitmask}; Fail={this.Settings.FailBitmask}; Open={this.Settings.OverflowBitmask}." );
         _ = builder.AppendLine( $"Using Scan Card: {this._usingScanCardMenuItem.Checked}" );
         if ( this._usingScanCardMenuItem.Checked )
         {
             _ = builder.AppendLine( $"Arm layer 1: {1} count; {ArmSources.Immediate}; {0} delay." );
-            _ = builder.AppendLine( $"Arm layer 2: {Properties.Settings.Instance.StreamTriggerCount} count; {Properties.Settings.Instance.StreamBufferArmSource}; {0} delay." );
-            _ = builder.AppendLine( $"Trigger: {ArmSources.Immediate}; {Properties.Settings.Instance.ScanCardSampleCount} count; {0} delay; {TriggerLayerBypassModes.Acceptor} bypass." );
+            _ = builder.AppendLine( $"Arm layer 2: {this.Settings.StreamTriggerCount} count; {this.Settings.StreamBufferArmSource}; {0} delay." );
+            _ = builder.AppendLine( $"Trigger: {ArmSources.Immediate}; {this.Settings.ScanCardSampleCount} count; {0} delay; {TriggerLayerBypassModes.Acceptor} bypass." );
         }
         else
         {
             _ = builder.AppendLine( $"Arm layer 1: {1} count; {ArmSources.Immediate}; {0} delay." );
             _ = builder.AppendLine( $"Arm layer 2: {1} count; {ArmSources.Immediate}; {0} delay." );
-            _ = builder.AppendLine( $"Trigger: {Properties.Settings.Instance.StreamBufferTriggerSource}; {Properties.Settings.Instance.StreamTriggerCount} count; {0} delay; {TriggerLayerBypassModes.Acceptor} bypass." );
+            _ = builder.AppendLine( $"Trigger: {this.Settings.StreamBufferTriggerSource}; {this.Settings.StreamTriggerCount} count; {0} delay; {TriggerLayerBypassModes.Acceptor} bypass." );
         }
 
         return builder.ToString().TrimEnd( Environment.NewLine.ToCharArray() );
@@ -1391,9 +1401,9 @@ public partial class BufferStreamView : cc.isr.WinControls.ModelViewBase
             this.InfoProvider?.Clear();
             activity = $"{this.Device?.ResourceNameCaption} Configure trigger plan";
             _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"{activity};. " );
-            this.ConfigureTriggerPlan( Properties.Settings.Instance.StreamTriggerCount, 1, Properties.Settings.Instance.StreamBufferTriggerSource );
+            this.ConfigureTriggerPlan( this.Settings.StreamTriggerCount, 1, this.Settings.StreamBufferTriggerSource );
             if ( this.SenseSubsystem is not null && (!this.SenseSubsystem.FunctionMode.HasValue
-                || ( int? ) this.SenseSubsystem.FunctionMode != ( int? ) Properties.Settings.Instance.StreamBufferSenseFunctionMode) )
+                || ( int? ) this.SenseSubsystem.FunctionMode != ( int? ) this.Settings.StreamBufferSenseFunctionMode) )
                 this.ConfigureMeasurement();
             if ( this.BinningSubsystem is not null && (!this.BinningSubsystem.Limit1AutoClear.GetValueOrDefault( false ) || !this.BinningSubsystem.Limit1Enabled.GetValueOrDefault( false )) )
             {
@@ -1404,15 +1414,15 @@ public partial class BufferStreamView : cc.isr.WinControls.ModelViewBase
             if ( this.TraceSubsystem is not null && this.TraceSubsystem.FeedSource.GetValueOrDefault( FeedSources.None ) != FeedSources.Sense )
             {
                 this.ConfigureTrace( this.BinningSubsystem is not null ? this.BinningSubsystem.BinningStrobeDuration
-                    : TimeSpan.FromMilliseconds( Properties.Settings.Instance.BinningStrobeDuration ) );
+                    : TimeSpan.FromMilliseconds( this.Settings.BinningStrobeDuration ) );
             }
 
             if ( this._usingScanCardMenuItem.Checked )
             {
                 // the fetched buffer includes only reading values.
                 this.TraceSubsystem!.OrderedReadingElementTypes = [ReadingElementTypes.Reading];
-                _ = this.ConfigureFourWireResistanceScan( Properties.Settings.Instance.ScanCardScanList,
-                    Properties.Settings.Instance.ScanCardSampleCount, Properties.Settings.Instance.StreamBufferArmSource, Properties.Settings.Instance.StreamTriggerCount );
+                _ = this.ConfigureFourWireResistanceScan( this.Settings.ScanCardScanList,
+                    this.Settings.ScanCardSampleCount, this.Settings.StreamBufferArmSource, this.Settings.StreamTriggerCount );
             }
 
             _ = this.BufferSubsystem is not null
@@ -1462,7 +1472,7 @@ public partial class BufferStreamView : cc.isr.WinControls.ModelViewBase
     {
         if ( this.InitializingComponents || this.TraceSubsystem is null || this.TriggerSubsystem is null ) return;
         TimeSpan timeout = TraceSubsystemBase.EstimateStreamStopTimeoutInterval( this.TraceSubsystem.StreamCycleDuration,
-            TimeSpan.FromMilliseconds( Properties.Settings.Instance.BufferStreamPollInterval ), 1.5d );
+            TimeSpan.FromMilliseconds( this.Settings.BufferStreamPollInterval ), 1.5d );
         if ( this.BufferSubsystem is not null )
             this.BufferSubsystem.BufferStreamTasker.AsyncCompleted -= this.BufferStreamTasker_asyncCompleted;
         if ( this.TraceSubsystem is not null )
@@ -1517,7 +1527,7 @@ public partial class BufferStreamView : cc.isr.WinControls.ModelViewBase
         this.TriggerSubsystem.Initiate();
         subsystem.BufferStreamTasker.AsyncCompleted += this.BufferStreamTasker_asyncCompleted;
         subsystem.StartBufferStream( this.TriggerSubsystem,
-                                     TimeSpan.FromMilliseconds( Properties.Settings.Instance.BufferStreamPollInterval ), this.SenseSubsystem.FunctionUnit );
+                                     TimeSpan.FromMilliseconds( this.Settings.BufferStreamPollInterval ), this.SenseSubsystem.FunctionUnit );
     }
 
     /// <summary> Starts buffer streaming. </summary>
@@ -1529,7 +1539,7 @@ public partial class BufferStreamView : cc.isr.WinControls.ModelViewBase
         subsystem.BufferReadingUnit = this.SenseSubsystem.FunctionUnit;
         this.TriggerSubsystem.Initiate();
         subsystem.BufferStreamTasker.AsyncCompleted += this.BufferStreamTasker_asyncCompleted;
-        subsystem.StartBufferStream( this.TriggerSubsystem, TimeSpan.FromMilliseconds( Properties.Settings.Instance.BufferStreamPollInterval ) );
+        subsystem.StartBufferStream( this.TriggerSubsystem, TimeSpan.FromMilliseconds( this.Settings.BufferStreamPollInterval ) );
     }
 
     /// <summary> Commence buffer stream. </summary>
@@ -1562,7 +1572,7 @@ public partial class BufferStreamView : cc.isr.WinControls.ModelViewBase
             }
             else
             {
-                this.Device.Session.StatusPrompt = this._usingScanCardMenuItem.Checked ? $"Streaming started--awaiting {Properties.Settings.Instance.StreamBufferArmSource} triggers" : $"Streaming started--awaiting {Properties.Settings.Instance.StreamBufferTriggerSource} triggers";
+                this.Device.Session.StatusPrompt = this._usingScanCardMenuItem.Checked ? $"Streaming started--awaiting {this.Settings.StreamBufferArmSource} triggers" : $"Streaming started--awaiting {this.Settings.StreamBufferTriggerSource} triggers";
             }
         }
         catch ( Exception ex )
@@ -1628,7 +1638,7 @@ public partial class BufferStreamView : cc.isr.WinControls.ModelViewBase
     {
         if ( this.InitializingComponents || sender is null || e is null ) return;
         this.StartBufferStream();
-        this._assertBusTriggerButton.Enabled = this._startBufferStreamMenuItem.Checked && (this._usingScanCardMenuItem.Checked ? ArmSources.Bus == Properties.Settings.Instance.StreamBufferArmSource : TriggerSources.Bus == Properties.Settings.Instance.StreamBufferTriggerSource);
+        this._assertBusTriggerButton.Enabled = this._startBufferStreamMenuItem.Checked && (this._usingScanCardMenuItem.Checked ? ArmSources.Bus == this.Settings.StreamBufferArmSource : TriggerSources.Bus == this.Settings.StreamBufferTriggerSource);
     }
 
     /// <summary> Configure streaming menu item click. </summary>

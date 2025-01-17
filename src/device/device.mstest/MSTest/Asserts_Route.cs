@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using cc.isr.Std.SplitExtensions;
-using cc.isr.VI.Device.MSTest.Settings;
 
 namespace cc.isr.VI.Device.MSTest;
 
@@ -12,7 +11,7 @@ public sealed partial class Asserts
     /// <summary> Assert initial subsystem values should match. </summary>
     /// <param name="subsystem">      The subsystem. </param>
     /// <param name="subsystemsInfo"> Information describing the subsystems. </param>
-    public static void AssertSubsystemInitialValuesShouldMatch( RouteSubsystemBase? subsystem, SubsystemsSettingsBase? subsystemsInfo )
+    public static void AssertSubsystemInitialValuesShouldMatch( RouteSubsystemBase? subsystem, VI.Settings.SubsystemsSettings? subsystemsInfo )
     {
         Assert.IsNotNull( subsystem, $"{nameof( subsystem )} should not be null." );
         Assert.IsNotNull( subsystemsInfo, $"{nameof( subsystemsInfo )} should not be null." );
@@ -56,7 +55,7 @@ public sealed partial class Asserts
     /// <remarks> David, 2020-04-04. </remarks>
     /// <param name="subsystem">      The subsystem. </param>
     /// <param name="subsystemsInfo"> Information describing the subsystems. </param>
-    public static void AssertScanCardInstalledShouldMatch( SystemSubsystemBase? subsystem, SubsystemsSettingsBase? subsystemsInfo )
+    public static void AssertScanCardInstalledShouldMatch( SystemSubsystemBase? subsystem, VI.Settings.SubsystemsSettings? subsystemsInfo )
     {
         Assert.IsNotNull( subsystem, $"{nameof( subsystem )} should not be null." );
         Assert.IsNotNull( subsystemsInfo, $"{nameof( subsystemsInfo )} should not be null." );
@@ -68,7 +67,7 @@ public sealed partial class Asserts
     /// <param name="routeSubsystem">  The route subsystem. </param>
     /// <param name="systemSubsystem"> The system subsystem. </param>
     /// <param name="subsystemsInfo">  Information describing the subsystems. </param>
-    public static void AssertScanCardInternalScanShouldSet( RouteSubsystemBase? routeSubsystem, SystemSubsystemBase? systemSubsystem, SubsystemsSettingsBase? subsystemsInfo )
+    public static void AssertScanCardInternalScanShouldSet( RouteSubsystemBase? routeSubsystem, SystemSubsystemBase? systemSubsystem, VI.Settings.SubsystemsSettings? subsystemsInfo )
     {
         if ( systemSubsystem is null || !systemSubsystem.InstalledScanCards.Any() )
             return;

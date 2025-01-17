@@ -23,13 +23,13 @@ public partial class DigitalOutputView : cc.isr.WinControls.ModelViewBase
         this.InitializingComponents = false;
         this._digitalOutputLine1View.LineIdentity = Strobe_Line_Identity;
         this._digitalOutputLine1View.LineName = Strobe_Line_Identity;
-        this._digitalOutputLine1View.LineNumber = Properties.Settings.Instance.StrobeLineNumber;
-        this._digitalOutputLine1View.PulseWidth = TimeSpan.FromMilliseconds( Properties.Settings.Instance.StrobeDuration );
+        this._digitalOutputLine1View.LineNumber = this.Settings.StrobeLineNumber;
+        this._digitalOutputLine1View.PulseWidth = TimeSpan.FromMilliseconds( this.Settings.StrobeDuration );
         this._digitalOutputLine1View.ActiveLevel = DigitalActiveLevels.Low;
         this._digitalOutputLine2View.LineIdentity = Bin_Line_Identity;
         this._digitalOutputLine2View.LineName = Bin_Line_Identity;
-        this._digitalOutputLine2View.LineNumber = Properties.Settings.Instance.BinLineNumber;
-        this._digitalOutputLine2View.PulseWidth = TimeSpan.FromMilliseconds( Properties.Settings.Instance.BinDuration );
+        this._digitalOutputLine2View.LineNumber = this.Settings.BinLineNumber;
+        this._digitalOutputLine2View.PulseWidth = TimeSpan.FromMilliseconds( this.Settings.BinDuration );
         this._digitalOutputLine2View.ActiveLevel = DigitalActiveLevels.Low;
         this._digitalOutputLine3View.LineIdentity = Third_Line_Identity;
         this._digitalOutputLine3View.LineName = "Line";
@@ -84,6 +84,16 @@ public partial class DigitalOutputView : cc.isr.WinControls.ModelViewBase
 
     #endregion
 
+    #region " Settings "
+
+    /// <summary>   Gets or sets the timing settings. </summary>
+    /// <value> The timing settings. </value>
+    [DesignerSerializationVisibility( DesignerSerializationVisibility.Hidden )]
+    [Browsable( false )]
+    public DigitalOutputViewSettings Settings { get; private set; } = DigitalOutputViewSettings.Instance;
+
+    #endregion
+
     #region " public members "
 
     /// <summary> Adds a menu item. </summary>
@@ -101,6 +111,12 @@ public partial class DigitalOutputView : cc.isr.WinControls.ModelViewBase
         {
             this.Cursor = Cursors.WaitCursor;
             this.InfoProvider?.Clear();
+
+            this._digitalOutputLine1View.LineNumber = this.Settings.StrobeLineNumber;
+            this._digitalOutputLine2View.LineNumber = this.Settings.BinLineNumber;
+            this._digitalOutputLine1View.PulseWidth = TimeSpan.FromMilliseconds( this.Settings.StrobeDuration );
+            this._digitalOutputLine2View.PulseWidth = TimeSpan.FromMilliseconds( this.Settings.BinDuration );
+
             activity = $"{this.Device?.ResourceNameCaption} applying digital output 1 subsystem instrument settings";
             this._digitalOutputLine1View.ApplySettings();
             activity = $"{this.Device?.ResourceNameCaption} applying digital output 2 subsystem instrument settings";
@@ -258,16 +274,16 @@ public partial class DigitalOutputView : cc.isr.WinControls.ModelViewBase
             {
                 case Strobe_Line_Identity:
                     {
-                        lineNumber = Properties.Settings.Instance.StrobeLineNumber;
-                        pulseWidth = TimeSpan.FromMilliseconds( Properties.Settings.Instance.StrobeDuration );
+                        lineNumber = this.Settings.StrobeLineNumber;
+                        pulseWidth = TimeSpan.FromMilliseconds( this.Settings.StrobeDuration );
                         activeLevel = DigitalActiveLevels.Low;
                         break;
                     }
 
                 case Bin_Line_Identity:
                     {
-                        lineNumber = Properties.Settings.Instance.BinLineNumber;
-                        pulseWidth = TimeSpan.FromMilliseconds( Properties.Settings.Instance.BinDuration );
+                        lineNumber = this.Settings.BinLineNumber;
+                        pulseWidth = TimeSpan.FromMilliseconds( this.Settings.BinDuration );
                         activeLevel = DigitalActiveLevels.Low;
                         break;
                     }
@@ -349,13 +365,13 @@ public partial class DigitalOutputView : cc.isr.WinControls.ModelViewBase
                     {
                         case Strobe_Line_Identity:
                             {
-                                Properties.Settings.Instance.StrobeLineNumber = view.LineNumber;
+                                this.Settings.StrobeLineNumber = view.LineNumber;
                                 break;
                             }
 
                         case Bin_Line_Identity:
                             {
-                                Properties.Settings.Instance.BinLineNumber = view.LineNumber;
+                                this.Settings.BinLineNumber = view.LineNumber;
                                 break;
                             }
 
@@ -377,13 +393,13 @@ public partial class DigitalOutputView : cc.isr.WinControls.ModelViewBase
                     {
                         case Strobe_Line_Identity:
                             {
-                                Properties.Settings.Instance.StrobeDuration = ( int ) view.PulseWidth.TotalMilliseconds;
+                                this.Settings.StrobeDuration = ( int ) view.PulseWidth.TotalMilliseconds;
                                 break;
                             }
 
                         case Bin_Line_Identity:
                             {
-                                Properties.Settings.Instance.BinDuration = ( int ) view.PulseWidth.TotalMilliseconds;
+                                this.Settings.BinDuration = ( int ) view.PulseWidth.TotalMilliseconds;
                                 break;
                             }
 

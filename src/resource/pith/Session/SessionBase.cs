@@ -25,6 +25,8 @@ public abstract partial class SessionBase : CommunityToolkit.Mvvm.ComponentModel
         this.UseDefaultTerminationThis();
         this.CommunicationTimeouts = new Stack<TimeSpan>();
         this.TimingSettings.PropertyChanged += this.HandleSettingsPropertyChanged;
+        this.IOSettings.PropertyChanged += this.HandleSettingsPropertyChanged;
+        this.ResourceSettings.PropertyChanged += this.HandleSettingsPropertyChanged;
 
         this.DeviceErrorBuilder = new System.Text.StringBuilder();
         this.NoErrorCompoundMessage = VI.Syntax.ScpiSyntax.NoErrorCompoundMessage;
@@ -85,6 +87,8 @@ public abstract partial class SessionBase : CommunityToolkit.Mvvm.ComponentModel
             }
             // dispose of unmanaged code here; unmanaged code gets disposed if disposing or not.
             this.TimingSettings.PropertyChanged -= this.HandleSettingsPropertyChanged;
+            this.IOSettings.PropertyChanged -= this.HandleSettingsPropertyChanged;
+            this.ResourceSettings.PropertyChanged -= this.HandleSettingsPropertyChanged;
         }
         finally
         {

@@ -181,8 +181,7 @@ public static class Methods
         }
         catch
         {
-            if ( column is not null )
-                column.Dispose();
+            column?.Dispose();
             throw;
         }
 
@@ -202,8 +201,7 @@ public static class Methods
         }
         catch
         {
-            if ( column is not null )
-                column.Dispose();
+            column?.Dispose();
             throw;
         }
 
@@ -346,8 +344,7 @@ public static class Methods
         }
         catch
         {
-            if ( column is not null )
-                column.Dispose();
+            column?.Dispose();
             throw;
         }
 
@@ -369,8 +366,7 @@ public static class Methods
         }
         catch
         {
-            if ( column is not null )
-                column.Dispose();
+            column?.Dispose();
             throw;
         }
 
@@ -392,8 +388,7 @@ public static class Methods
         }
         catch
         {
-            if ( column is not null )
-                column.Dispose();
+            column?.Dispose();
             throw;
         }
 
@@ -414,8 +409,7 @@ public static class Methods
         }
         catch
         {
-            if ( column is not null )
-                column.Dispose();
+            column?.Dispose();
             throw;
         }
 

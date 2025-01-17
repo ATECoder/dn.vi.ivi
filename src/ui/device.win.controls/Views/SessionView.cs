@@ -24,13 +24,10 @@ public partial class SessionView : cc.isr.WinControls.ModelViewBase
     {
         this.InitializingComponents = true;
         this.InitializeComponent();
-        this.BindSettings();
         this.RefreshCommandListThis();
         this.OnConnectionChanged();
         this.InitializingComponents = false;
         this.AppendTermination = true;
-        this._readTextBox.Text = $@"'Append Termination' is {(this.AppendTermination ? "" : "un")}checked--Termination characters are {(this.AppendTermination ? "not" : "")}required;
-Write *ESE 255{Properties.Settings.Instance.Termination} if opening a stand alone VISA Session";
     }
 
     /// <summary>
@@ -55,30 +52,6 @@ Write *ESE 255{Properties.Settings.Instance.Termination} if opening a stand alon
         {
             base.Dispose( disposing );
         }
-    }
-
-    #endregion
-
-    #region " bind settings "
-
-    /// <summary> Bind settings. </summary>
-    private void BindSettings()
-    {
-        this._statusReadDelayNumeric.NumericUpDown.Minimum = 0m;
-        this._statusReadDelayNumeric.NumericUpDown.Maximum = Properties.Settings.Instance.MaximumDelay;
-        _ = this._statusReadDelayNumeric.NumericUpDown.DataBindings.Add( nameof( NumericUpDown.Maximum ), Properties.Settings.Instance, nameof( Properties.Settings.Instance.MaximumDelay ) );
-        this._statusReadDelayNumeric.NumericUpDown.DecimalPlaces = 0;
-        this._statusReadDelayNumeric.NumericUpDown.Value = Properties.Settings.Instance.StatusReadDelay;
-        _ = this._statusReadDelayNumeric.NumericUpDown.DataBindings.Add( nameof( NumericUpDown.Value ), Properties.Settings.Instance, nameof( Properties.Settings.Instance.StatusReadDelay ) );
-        this._readDelayNumeric.NumericUpDown.Minimum = 0m;
-        this._readDelayNumeric.NumericUpDown.Maximum = Properties.Settings.Instance.MaximumDelay;
-        _ = this._readDelayNumeric.NumericUpDown.DataBindings.Add( nameof( NumericUpDown.Maximum ), Properties.Settings.Instance, nameof( Properties.Settings.Instance.MaximumDelay ) );
-        this._readDelayNumeric.NumericUpDown.DecimalPlaces = 0;
-        this._readDelayNumeric.NumericUpDown.Value = Properties.Settings.Instance.ReadAfterWriteDelay;
-        _ = this._readDelayNumeric.NumericUpDown.DataBindings.Add( nameof( NumericUpDown.Value ), Properties.Settings.Instance, nameof( Properties.Settings.Instance.ReadAfterWriteDelay ) );
-
-        // Me._termination = Std.EscapeSequencesExtensions.NEW_LINE_ESCAPE
-        this._termination = Properties.Settings.Instance.Termination;
     }
 
     #endregion
@@ -193,6 +166,7 @@ Write *ESE 255{Properties.Settings.Instance.Termination} if opening a stand alon
         {
             this.SessionBase.StatusPrompt = $"Releasing session {this.SessionBase.ResourceNameCaption}";
             this.BindSessionViewModel( false, this.SessionBase );
+            this.SessionBase.PropertyChanged -= this.SessionBasePropertyChanged;
             this.SessionBase = null;
         }
 
@@ -200,10 +174,61 @@ Write *ESE 255{Properties.Settings.Instance.Termination} if opening a stand alon
         {
             this.SessionBase = sessionBase;
             this.BindSessionViewModel( true, this.SessionBase );
+            this.SessionBase.PropertyChanged += this.SessionBasePropertyChanged;
         }
 
         this.OnConnectionChanged();
     }
+
+    /// <summary> Handles the session property changed action. </summary>
+    /// <param name="sender">       Source of the event. </param>
+    /// <param name="propertyName"> Name of the property. </param>
+    protected virtual void HandlePropertyChanged( Pith.SessionBase? sender, string? propertyName )
+    {
+        if ( sender is null || string.IsNullOrWhiteSpace( propertyName ) ) return;
+        switch ( propertyName ?? string.Empty )
+        {
+            case nameof( Pith.SessionBase.TerminationSequence ):
+                this._termination = sender.TerminationSequence;
+                this._readTextBox.Text = $@"'Append Termination' is {(this.AppendTermination ? "" : "un")}checked--Termination characters are {(this.AppendTermination ? "not" : "")}required;
+Write *ESE 255{this.Termination} if opening a stand alone VISA Session";
+                break;
+
+            case nameof( Pith.SessionBase.StatusReadDelay ):
+                {
+                    this._statusReadDelayNumeric.Value = ( decimal ) sender.StatusReadDelay.TotalMilliseconds;
+                    break;
+                }
+
+            case nameof( Pith.SessionBase.ReadAfterWriteDelay ):
+                {
+                    this._readDelayNumeric.Value = ( decimal ) sender.ReadAfterWriteDelay.TotalMilliseconds;
+                    break;
+                }
+
+            default:
+                break;
+        }
+    }
+
+    /// <summary> Handles the Session property changed event. </summary>
+    /// <param name="sender"> Source of the event. </param>
+    /// <param name="e">      Property Changed event information. </param>
+    private void SessionBasePropertyChanged( object? sender, PropertyChangedEventArgs e )
+    {
+        if ( sender is null || e is null )
+            return;
+        string activity = $"handling {nameof( Pith.SessionBase )}.{e.PropertyName} change";
+        try
+        {
+            this.HandlePropertyChanged( sender as Pith.SessionBase, e.PropertyName );
+        }
+        catch ( Exception ex )
+        {
+            _ = cc.isr.VI.SessionLogger.Instance.LogException( ex, activity );
+        }
+    }
+
 
     /// <summary> Gets the sentinel indication having an open session. </summary>
     /// <value> The is open. </value>
@@ -271,7 +296,7 @@ Write *ESE 255{Properties.Settings.Instance.Termination} if opening a stand alon
     #region " commands "
 
     /// <summary> The termination. </summary>
-    private string? _termination;
+    private string? _termination = "\\n";
 
     /// <summary> Gets or sets the termination. </summary>
     /// <value> The termination. </value>
@@ -282,6 +307,7 @@ Write *ESE 255{Properties.Settings.Instance.Termination} if opening a stand alon
         get => this._termination;
         set
         {
+            value ??= "\\n";
             if ( !string.Equals( this.Termination, value, StringComparison.Ordinal ) )
             {
                 this._termination = value;
@@ -297,6 +323,7 @@ Write *ESE 255{Properties.Settings.Instance.Termination} if opening a stand alon
     /// <returns> A Dictionary(Of String, String) </returns>
 #if NET5_0_OR_GREATER
     [System.Diagnostics.CodeAnalysis.SuppressMessage( "Performance", "CA1863:Use 'CompositeFormat'", Justification = "<Pending>" )]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "<Pending>" )]
 #endif
     private Dictionary<string, string>? CommandDictionary()
     {
@@ -343,7 +370,7 @@ Write *ESE 255{Properties.Settings.Instance.Termination} if opening a stand alon
     /// <param name="value"> The value. </param>
     private void InsertCommandThis( string value )
     {
-        this.InsertCommandThis( value, Properties.Settings.Instance.Termination );
+        this.InsertCommandThis( value, this.Termination! );
     }
 
     /// <summary> Inserts a command described by value. </summary>
@@ -368,7 +395,7 @@ Write *ESE 255{Properties.Settings.Instance.Termination} if opening a stand alon
     /// <param name="value"> The value. </param>
     private void AddCommandThis( string value )
     {
-        this.AddCommandThis( value, Properties.Settings.Instance.Termination );
+        this.AddCommandThis( value, this.Termination! );
     }
 
     /// <summary> Adds a command. </summary>

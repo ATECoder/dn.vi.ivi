@@ -10,17 +10,18 @@ public sealed partial class Asserts
 {
     #region " device errors "
 
-    /// <summary> Assert device errors should match. </summary>
-    /// <param name="subsystem">      The subsystem. </param>
-    /// <param name="subsystemsInfo"> Information describing the subsystems. </param>
-    public static void AssertDeviceErrorsShouldMatch( StatusSubsystemBase subsystem, SubsystemsSettingsBase? subsystemsInfo )
+    /// <summary>   Assert device errors should match. </summary>
+    /// <remarks>   2025-01-16. </remarks>
+    /// <param name="subsystem">            The subsystem. </param>
+    /// <param name="deviceErrorSettings">  Information describing the device errors for testing. </param>
+    public static void AssertDeviceErrorsShouldMatch( StatusSubsystemBase subsystem, DeviceErrorsSettings? deviceErrorSettings )
     {
         System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
         string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
         Console.WriteLine( $"@{methodFullName}" );
 
         Assert.IsNotNull( subsystem, $"{nameof( subsystem )} should not be null." );
-        Assert.IsNotNull( subsystemsInfo, $"{nameof( subsystemsInfo )} should not be null." );
+        Assert.IsNotNull( deviceErrorSettings, $"{nameof( deviceErrorSettings )} should not be null." );
         string propertyName = nameof( cc.isr.VI.Pith.ServiceRequests.ErrorAvailable ).SplitWords();
         Assert.IsFalse( subsystem.Session.IsErrorBitSet( subsystem.Session.ServiceRequestStatus ), $"{subsystem.ResourceNameCaption} {propertyName} bit {subsystem.Session.ServiceRequestStatus:X} should be off" );
         Assert.IsFalse( subsystem.Session.ErrorAvailable, $"{subsystem.ResourceNameCaption} error available bit {subsystem.Session.ServiceRequestStatus:X} is on; last device error: {subsystem.Session.LastErrorCompoundErrorMessage}" );
@@ -32,53 +33,53 @@ public sealed partial class Asserts
         Assert.AreEqual( 0, subsystem.Session.DeviceErrorReportCount, "Error count should be zero" );
 
         DeviceError deviceError = new();
-        deviceError.Parse( subsystemsInfo.ParseCompoundErrorMessage );
+        deviceError.Parse( deviceErrorSettings.ParseCompoundErrorMessage );
         propertyName = nameof( DeviceError.ErrorMessage ).SplitWords();
-        Assert.AreEqual( subsystemsInfo.ParseErrorMessage, deviceError.ErrorMessage, $"{subsystem.ResourceNameCaption} parsed {propertyName} should match" );
+        Assert.AreEqual( deviceErrorSettings.ParseErrorMessage, deviceError.ErrorMessage, $"{subsystem.ResourceNameCaption} parsed {propertyName} should match" );
 
         propertyName = nameof( DeviceError.ErrorNumber ).SplitWords();
-        Assert.AreEqual( subsystemsInfo.ParseErrorNumber, deviceError.ErrorNumber, $"{subsystem.ResourceNameCaption} parsed {propertyName} should match" );
+        Assert.AreEqual( deviceErrorSettings.ParseErrorNumber, deviceError.ErrorNumber, $"{subsystem.ResourceNameCaption} parsed {propertyName} should match" );
 
         propertyName = nameof( DeviceError.ErrorLevel ).SplitWords();
-        Assert.AreEqual( subsystemsInfo.ParseErrorLevel, deviceError.ErrorLevel, $"{subsystem.ResourceNameCaption} parsed {propertyName} should match" );
+        Assert.AreEqual( deviceErrorSettings.ParseErrorLevel, deviceError.ErrorLevel, $"{subsystem.ResourceNameCaption} parsed {propertyName} should match" );
     }
 
     /// <summary> Assert session device errors should clear. </summary>
     /// <param name="device">         The device. </param>
-    /// <param name="subsystemsInfo"> Information describing the subsystems. </param>
-    public static void AssertSessionDeviceErrorsShouldClear( VisaSessionBase? device, SubsystemsSettingsBase? subsystemsInfo )
+    /// <param name="deviceErrorSettings"> Information describing the device errors for testing. </param>
+    public static void AssertSessionDeviceErrorsShouldClear( VisaSessionBase? device, DeviceErrorsSettings? deviceErrorSettings )
     {
         System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
         string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
         Console.WriteLine( $"@{methodFullName}" );
 
         Assert.IsNotNull( device );
-        Assert.IsNotNull( subsystemsInfo, $"{nameof( subsystemsInfo )} should not be null." );
+        Assert.IsNotNull( deviceErrorSettings, $"{nameof( deviceErrorSettings )} should not be null." );
         if ( device.Session is null ) throw new ArgumentException( $"{nameof( device )}.{nameof( device.Session )} is null." );
         if ( device.StatusSubsystemBase is null ) throw new ArgumentException( $"{nameof( device )}.{nameof( device.StatusSubsystemBase )} is null." );
 
         device.Session.ClearActiveState();
-        AssertDeviceErrorsShouldMatch( device.StatusSubsystemBase, subsystemsInfo );
+        AssertDeviceErrorsShouldMatch( device.StatusSubsystemBase, deviceErrorSettings );
     }
 
     /// <summary> Assert that the device should read exiting errors that are generated by an erroneous message. </summary>
     /// <param name="device">         The device. </param>
-    /// <param name="subsystemsInfo"> Information describing the subsystems. </param>
-    public static void AssertDeviceErrorsShouldRead( VisaSessionBase? device, SubsystemsSettingsBase? subsystemsInfo )
+    /// <param name="deviceErrorSettings"> Information describing the devie errors for testing. </param>
+    public static void AssertDeviceErrorsShouldRead( VisaSessionBase? device, DeviceErrorsSettings? deviceErrorSettings )
     {
         System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
         string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
         Console.WriteLine( $"@{methodFullName}" );
 
         Assert.IsNotNull( device );
-        Assert.IsNotNull( subsystemsInfo, $"{nameof( subsystemsInfo )} should not be null." );
+        Assert.IsNotNull( deviceErrorSettings, $"{nameof( deviceErrorSettings )} should not be null." );
         if ( device.Session is null ) throw new ArgumentException( $"{nameof( device )}.{nameof( device.Session )} is null." );
         if ( device.StatusSubsystemBase is null ) throw new ArgumentException( $"{nameof( device )}.{nameof( device.StatusSubsystemBase )} is null." );
 
         // send an erroneous command
-        string erroneousCommand = subsystemsInfo.ErroneousCommand;
+        string erroneousCommand = deviceErrorSettings.ErroneousCommand;
         _ = device.Session.WriteLine( erroneousCommand );
-        TimeSpan appliedDelay = TimeSpan.FromMilliseconds( subsystemsInfo.ErrorAvailableMillisecondsDelay ).AsyncWaitElapsed();
+        TimeSpan appliedDelay = TimeSpan.FromMilliseconds( deviceErrorSettings.ErrorAvailableMillisecondsDelay ).AsyncWaitElapsed();
 
         // read the service request status; this should generate an error available 
         _ = cc.isr.VI.Pith.SessionBase.AsyncDelay( device.Session.StatusReadDelay );
@@ -104,20 +105,20 @@ public sealed partial class Asserts
         Assert.IsTrue( actualErrorAvailable, $"{device.ResourceNameCaption} an error is expected" );
 
         string propertyName = nameof( DeviceError.ErrorMessage ).SplitWords();
-        Assert.AreEqual( subsystemsInfo.ExpectedErrorMessage, device.Session.DeviceErrorQueue.LastError.ErrorMessage, $"{device.ResourceNameCaption} {propertyName} should match" );
+        Assert.AreEqual( deviceErrorSettings.ExpectedErrorMessage, device.Session.DeviceErrorQueue.LastError.ErrorMessage, $"{device.ResourceNameCaption} {propertyName} should match" );
 
         propertyName = nameof( DeviceError.ErrorNumber ).SplitWords();
-        Assert.AreEqual( subsystemsInfo.ExpectedErrorNumber, device.Session.DeviceErrorQueue.LastError.ErrorNumber, $"{device.ResourceNameCaption} {propertyName} should match" );
+        Assert.AreEqual( deviceErrorSettings.ExpectedErrorNumber, device.Session.DeviceErrorQueue.LastError.ErrorNumber, $"{device.ResourceNameCaption} {propertyName} should match" );
 
         propertyName = nameof( DeviceError.ErrorLevel ).SplitWords();
-        Assert.AreEqual( subsystemsInfo.ExpectedErrorLevel, device.Session.DeviceErrorQueue.LastError.ErrorLevel, $"{device.ResourceNameCaption} {propertyName} should match" );
+        Assert.AreEqual( deviceErrorSettings.ExpectedErrorLevel, device.Session.DeviceErrorQueue.LastError.ErrorLevel, $"{device.ResourceNameCaption} {propertyName} should match" );
     }
 
     /// <summary>   Assert session should read device errors. </summary>
     /// <remarks>   2024-10-07. </remarks>
     /// <param name="session">          The session. </param>
     /// <param name="deviceErrorsSettings">   Information describing the device errors. </param>
-    public static void AssertSessionShouldReadDeviceErrors( SessionBase? session, DeviceErrorsSettingsBase? deviceErrorsSettings )
+    public static void AssertSessionShouldReadDeviceErrors( SessionBase? session, DeviceErrorsSettings? deviceErrorsSettings )
     {
         System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
         string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
@@ -164,7 +165,7 @@ public sealed partial class Asserts
     /// <remarks>   2024-10-07. </remarks>
     /// <param name="session">          The session. </param>
     /// <param name="deviceErrorsSettings">   Information describing the device errors. </param>
-    public static void AssertSessionShouldClearDeviceErrors( SessionBase? session, DeviceErrorsSettingsBase? deviceErrorsSettings )
+    public static void AssertSessionShouldClearDeviceErrors( SessionBase? session, DeviceErrorsSettings? deviceErrorsSettings )
     {
         System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
         string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";

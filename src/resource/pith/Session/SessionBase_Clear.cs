@@ -268,4 +268,18 @@ public partial class SessionBase
     }
 
     #endregion
+
+    #region " resource selection "
+
+    private TimeSpan _resourceNameSelectionTimeout;
+
+    /// <summary>   Gets or sets the resource name selection timeout. </summary>
+    /// <value> The resource name selection timeout. </value>
+    public TimeSpan ResourceNameSelectionTimeout
+    {
+        get => this._resourceNameSelectionTimeout;
+        set => _ = base.SetProperty( ref this._resourceNameSelectionTimeout, value );
+    }
+
+    #endregion
 }

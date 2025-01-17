@@ -29,5 +29,23 @@
     "StrobeDuration": 10,
     "BinLineNumber": 1,
     "BinDuration": 20
+  },
+
+  "BufferStreamViewSettings": {
+    "Exists": true,
+    "StreamBufferSenseFunctionMode": "ResistanceFourWire",
+    "NominalResistance": 100,
+    "ResistanceTolerance": 0.01,
+    "OpenLimit": 1000,
+    "PassBitmask": 1,
+    "FailBitmask": 2,
+    "OverflowBitmask": 4,
+    "BinningStrobeDuration": 10,
+    "StreamTriggerCount": 999,
+    "StreamBufferArmSource": "Bus",
+    "StreamBufferTriggerSource": "Bus",
+    "BufferStreamPollInterval": 50,
+    "ScanCardScanList": "(@1:3)",
+    "ScanCardSampleCount": 3
   }
 }

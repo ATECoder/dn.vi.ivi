@@ -27,6 +27,7 @@
     "ClosedCaption": "closed",
     "Language": "TSP",
     "PingTimeout": "00:00:01.0000000",
-    "PingHops": 2
+    "PingHops": 2,
+    "ResourceNameSelectionTimeout": "00:00:10"
   }
 }

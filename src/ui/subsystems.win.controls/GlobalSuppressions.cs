@@ -9,3 +9,4 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage( "Style", "IDE1006:Naming Styles", Justification = "<Pending>", Scope = "namespace", Target = "~N:cc.isr.VI.SubsystemsWinControls" )]
 [assembly: SuppressMessage( "Style", "IDE1006:Naming Styles", Justification = "<Pending>", Scope = "namespace", Target = "~N:cc.isr.VI.SubsystemsWinControls.Properties" )]
 [assembly: SuppressMessage( "Globalization", "CA1305:Specify IFormatProvider", Justification = "<Pending>", Scope = "module" )]
+[assembly: SuppressMessage( "Style", "IDE0130:Namespace does not match folder structure", Justification = "<Pending>", Scope = "namespace", Target = "~N:cc.isr.VI.SubsystemsWinControls" )]

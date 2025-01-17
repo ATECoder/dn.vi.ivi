@@ -2,7 +2,7 @@ namespace cc.isr.VI.Tsp.K2600.MSTest.Visa;
 
 /// <summary>   The Subsystems Test Settings class. </summary>
 /// <remarks>   David, 2021-06/30. </remarks>
-public class DeviceErrorsSettings : VI.Device.MSTest.Settings.DeviceErrorsSettingsBase
+public class DeviceErrorsSettings : VI.Device.MSTest.Settings.DeviceErrorsSettings
 {
     #region " construction "
 

@@ -39,7 +39,4 @@ public class VisaResourceInfo( string resourceName )
     }
 
     #endregion
-
-
-
 }

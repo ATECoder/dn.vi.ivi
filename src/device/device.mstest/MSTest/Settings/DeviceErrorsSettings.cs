@@ -10,7 +10,7 @@ namespace cc.isr.VI.Device.MSTest.Settings;
 /// </remarks>
 /// <param name="filePath"> Full pathname of the file. </param>
 [CLSCompliant( false )]
-public class DeviceErrorsSettingsBase() : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
+public class DeviceErrorsSettings() : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
 {
     #region " exists "
 

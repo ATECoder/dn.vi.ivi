@@ -17,12 +17,12 @@ public sealed partial class Asserts
     /// </remarks>
     /// <param name="session">          The visa session. </param>
     /// <param name="resourceSettings"> The resource settings. </param>
-    public static void AssertVisaSessionShouldOpen( VisaSessionBase? session, Settings.ResourceSettingsBase? resourceSettings )
+    public static void AssertVisaSessionShouldOpen( VisaSessionBase? session, Pith.Settings.ResourceSettings? resourceSettings )
     {
         Assert.IsNotNull( session, $"{nameof( session )} should not be null." );
         Assert.IsNotNull( session.Session );
-        Assert.IsNotNull( resourceSettings, $"{nameof( Settings.ResourceSettingsBase )} should not be null." );
-        Assert.IsTrue( resourceSettings.Exists, $"{nameof( Settings.ResourceSettingsBase )} should exist in the settings file." );
+        Assert.IsNotNull( resourceSettings, $"{nameof( Pith.Settings.ResourceSettings )} should not be null." );
+        Assert.IsTrue( resourceSettings.Exists, $"{nameof( Pith.Settings.ResourceSettings )} should exist in the settings file." );
         Assert.IsTrue( session.Session.TimingSettings.Exists );
         Assert.IsTrue( session.Session.RegistersBitmasksSettings.Exists );
 

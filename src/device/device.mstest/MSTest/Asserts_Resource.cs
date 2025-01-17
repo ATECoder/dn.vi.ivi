@@ -49,7 +49,7 @@ public sealed partial class Asserts
     /// <exception cref="ArgumentException">        Thrown when one or more arguments have
     ///                                             unsupported or illegal values. </exception>
     /// <param name="device">           The device. </param>
-    public static void AssertDeviceShouldOpenWithoutDeviceErrors( VisaSessionBase? device, Settings.ResourceSettingsBase? resourceSettings )
+    public static void AssertDeviceShouldOpenWithoutDeviceErrors( VisaSessionBase? device, Pith.Settings.ResourceSettings? resourceSettings )
     {
         System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
         string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
@@ -58,8 +58,8 @@ public sealed partial class Asserts
         Assert.IsNotNull( device );
         Assert.IsNotNull( device.Session );
         Assert.IsNotNull( device.StatusSubsystemBase, $"{nameof( device )}.{nameof( device.StatusSubsystemBase )} should be defined. Device not initialized." );
-        Assert.IsNotNull( resourceSettings, $"{nameof( Settings.ResourceSettingsBase )} should not be null." );
-        Assert.IsTrue( resourceSettings.Exists, $"{nameof( Settings.ResourceSettingsBase )} should exist in the settings file." );
+        Assert.IsNotNull( resourceSettings, $"{nameof( Pith.Settings.ResourceSettings )} should not be null." );
+        Assert.IsTrue( resourceSettings.Exists, $"{nameof( Pith.Settings.ResourceSettings )} should exist in the settings file." );
 
         TestBase.AssertResourceNameShouldPing( device.Session, resourceSettings );
 
@@ -90,7 +90,7 @@ public sealed partial class Asserts
     /// <exception cref="ArgumentException">        Thrown when one or more arguments have
     ///                                             unsupported or illegal values. </exception>
     /// <param name="device">           The device. </param>
-    public static void AssertDeviceShouldOpen( VisaSessionBase? device, Settings.ResourceSettingsBase? resourceSettings )
+    public static void AssertDeviceShouldOpen( VisaSessionBase? device, Pith.Settings.ResourceSettings? resourceSettings )
     {
         System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
         string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
@@ -99,8 +99,8 @@ public sealed partial class Asserts
         Assert.IsNotNull( device );
         Assert.IsNotNull( device.Session );
         Assert.IsNotNull( device.StatusSubsystemBase, $"{nameof( device )}.{nameof( device.StatusSubsystemBase )} should be defined. Device not initialized." );
-        Assert.IsNotNull( resourceSettings, $"{nameof( Settings.ResourceSettingsBase )} should not be null." );
-        Assert.IsTrue( resourceSettings.Exists, $"{nameof( Settings.ResourceSettingsBase )} should exist in the settings file." );
+        Assert.IsNotNull( resourceSettings, $"{nameof( Pith.Settings.ResourceSettings )} should not be null." );
+        Assert.IsTrue( resourceSettings.Exists, $"{nameof( Pith.Settings.ResourceSettings )} should exist in the settings file." );
 
         TestBase.AssertResourceNameShouldPing( device.Session, resourceSettings );
 

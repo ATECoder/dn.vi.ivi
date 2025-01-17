@@ -7,6 +7,8 @@ namespace cc.isr.VI.Pith.Settings;
 [CLSCompliant( false )]
 public class CommandsSettings() : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
 {
+    #region " exists "
+
     private bool _exists;
 
     /// <summary>
@@ -14,12 +16,40 @@ public class CommandsSettings() : CommunityToolkit.Mvvm.ComponentModel.Observabl
     /// fetched from the settings file.
     /// </summary>
     /// <value> True if this settings section exists in the settings file, false if not. </value>
-	[Description( "True if this settings were found and read from the settings file." )]
+	[Description( "True if this settings section exists and was read from the JSon settings file." )]
     public bool Exists
     {
         get => this._exists;
         set => _ = this.SetProperty( ref this._exists, value );
     }
+
+    #endregion
+
+    #region " keep alive commands "
+
+    private string _keepAliveQueryCommand = "*OPC?";
+
+    /// <summary> Gets or sets the keep alive query command. </summary>
+    /// <value> The keep alive query command. </value>
+	public virtual string KeepAliveQueryCommand
+    {
+        get => this._keepAliveQueryCommand;
+        set => _ = this.SetProperty( ref this._keepAliveQueryCommand, value );
+    }
+
+    private string _keepAliveCommand = "*OPC";
+
+    /// <summary> Gets or sets the keep-alive command. </summary>
+    /// <value> The keep-alive command. </value>
+	public virtual string KeepAliveCommand
+    {
+        get => this._keepAliveCommand;
+        set => _ = this.SetProperty( ref this._keepAliveCommand, value );
+    }
+
+    #endregion
+
+    #region " session commands "
 
     private string _clearExecutionStateCommand = "*CLS";
 
@@ -167,4 +197,6 @@ public class CommandsSettings() : CommunityToolkit.Mvvm.ComponentModel.Observabl
         get => this._waitToContinueCommand;
         set => _ = this.SetProperty( ref this._waitToContinueCommand, value );
     }
+
+    #endregion
 }

@@ -1,6 +1,5 @@
 using System;
 using cc.isr.Std.SplitExtensions;
-using cc.isr.VI.Device.MSTest.Settings;
 
 namespace cc.isr.VI.Device.MSTest;
 
@@ -11,7 +10,7 @@ public sealed partial class Asserts
     /// <summary> Assert line frequency should match. </summary>
     /// <param name="subsystem">      The subsystem. </param>
     /// <param name="subsystemsInfo"> Information describing the subsystems. </param>
-    public static void AssertLineFrequencyShouldMatch( StatusSubsystemBase subsystem, SubsystemsSettingsBase? subsystemsInfo )
+    public static void AssertLineFrequencyShouldMatch( StatusSubsystemBase subsystem, VI.Settings.SubsystemsSettings? subsystemsInfo )
     {
         System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
         string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
@@ -27,7 +26,7 @@ public sealed partial class Asserts
     /// <summary> Assert integration period should match. </summary>
     /// <param name="subsystem">      The subsystem. </param>
     /// <param name="subsystemsInfo"> Information describing the subsystems. </param>
-    public static void AssertIntegrationPeriodShouldMatch( StatusSubsystemBase subsystem, SubsystemsSettingsBase? subsystemsInfo )
+    public static void AssertIntegrationPeriodShouldMatch( StatusSubsystemBase subsystem, VI.Settings.SubsystemsSettings? subsystemsInfo )
     {
         System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
         string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
@@ -48,15 +47,15 @@ public sealed partial class Asserts
     /// <summary> Assert device model should match. </summary>
     /// <param name="subsystem">    The subsystem. </param>
     /// <param name="resourceInfo"> Information describing the resource. </param>
-    public static void AssertDeviceModelShouldMatch( StatusSubsystemBase subsystem, Settings.ResourceSettingsBase? resourceSettings )
+    public static void AssertDeviceModelShouldMatch( StatusSubsystemBase subsystem, Pith.Settings.ResourceSettings? resourceSettings )
     {
         System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
         string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
         Console.WriteLine( $"@{methodFullName}" );
 
         Assert.IsNotNull( subsystem, $"{nameof( subsystem )} should not be null." );
-        Assert.IsNotNull( resourceSettings, $"{nameof( Settings.ResourceSettingsBase )} should not be null." );
-        Assert.IsTrue( resourceSettings.Exists, $"{nameof( Settings.ResourceSettingsBase )} should exist in the settings file." );
+        Assert.IsNotNull( resourceSettings, $"{nameof( Pith.Settings.ResourceSettings )} should not be null." );
+        Assert.IsTrue( resourceSettings.Exists, $"{nameof( Pith.Settings.ResourceSettings )} should exist in the settings file." );
 
         string propertyName = nameof( VersionInfoBase.Model ).SplitWords();
         Assert.AreEqual( resourceSettings.ResourceModel, subsystem.VersionInfoBase.Model,

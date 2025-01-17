@@ -10,11 +10,11 @@ public sealed partial class Asserts
     /// <summary>   Assert visa resource manager should include a resource. </summary>
     /// <remarks>   2024-08-08. </remarks>
     /// <param name="session">  The device. </param>
-    public static void AssertVisaResourceManagerShouldIncludeResource( cc.isr.VI.Pith.SessionBase session, Settings.ResourceSettingsBase? resourceSettings )
+    public static void AssertVisaResourceManagerShouldIncludeResource( cc.isr.VI.Pith.SessionBase session, Pith.Settings.ResourceSettings? resourceSettings )
     {
         Assert.IsNotNull( session, $"{nameof( session )} should not be null." );
-        Assert.IsNotNull( resourceSettings, $"{nameof( Settings.ResourceSettingsBase )} should not be null." );
-        Assert.IsTrue( resourceSettings.Exists, $"{nameof( Settings.ResourceSettingsBase )} should exist in the settings file." );
+        Assert.IsNotNull( resourceSettings, $"{nameof( Pith.Settings.ResourceSettings )} should not be null." );
+        Assert.IsTrue( resourceSettings.Exists, $"{nameof( Pith.Settings.ResourceSettings )} should exist in the settings file." );
 
         string? resourcesFilter = SessionFactory.Instance.Factory.ResourcesProvider().ResourceFinder!.BuildMinimalResourcesFilter();
         Assert.IsNotNull( resourcesFilter );
@@ -31,12 +31,12 @@ public sealed partial class Asserts
     /// <summary> Assert visa session base should find the resource. </summary>
     /// <param name="device">           The device. </param>
     /// <param name="resourceSettings"> The resource settings. </param>
-    public static void AssertVisaSessionBaseShouldFindResource( VisaSessionBase? device, Settings.ResourceSettingsBase? resourceSettings )
+    public static void AssertVisaSessionBaseShouldFindResource( VisaSessionBase? device, Pith.Settings.ResourceSettings? resourceSettings )
     {
         Assert.IsNotNull( device, nameof( device ) );
         Assert.IsNotNull( device.Session, nameof( device.Session ) );
-        Assert.IsNotNull( resourceSettings, $"{nameof( Settings.ResourceSettingsBase )} should not be null." );
-        Assert.IsTrue( resourceSettings.Exists, $"{nameof( Settings.ResourceSettingsBase )} should exist in the settings file." );
+        Assert.IsNotNull( resourceSettings, $"{nameof( Pith.Settings.ResourceSettings )} should not be null." );
+        Assert.IsTrue( resourceSettings.Exists, $"{nameof( Pith.Settings.ResourceSettings )} should exist in the settings file." );
 
         Assert.IsTrue( VisaSessionBase.Find( resourceSettings.ResourceName, device.ResourcesFilter ),
             $"VISA Resource {resourceSettings.ResourceName} not found among {device.ResourcesFilter}" );
@@ -45,12 +45,12 @@ public sealed partial class Asserts
     /// <summary> Assert visa session should find the resource. </summary>
     /// <param name="session">          The device. </param>
     /// <param name="resourceSettings"> The resource settings. </param>
-    public static void AssertVisaSessionShouldFindResource( VisaSession? session, Settings.ResourceSettingsBase? resourceSettings )
+    public static void AssertVisaSessionShouldFindResource( VisaSession? session, Pith.Settings.ResourceSettings? resourceSettings )
     {
         Assert.IsNotNull( session, nameof( session ) );
         Assert.IsNotNull( session.Session, nameof( session.Session ) );
-        Assert.IsNotNull( resourceSettings, $"{nameof( Settings.ResourceSettingsBase )} should not be null." );
-        Assert.IsTrue( resourceSettings.Exists, $"{nameof( Settings.ResourceSettingsBase )} should exist in the settings file." );
+        Assert.IsNotNull( resourceSettings, $"{nameof( Pith.Settings.ResourceSettings )} should not be null." );
+        Assert.IsTrue( resourceSettings.Exists, $"{nameof( Pith.Settings.ResourceSettings )} should exist in the settings file." );
         Assert.IsTrue( VisaSessionBase.Find( resourceSettings.ResourceName, session.ResourcesFilter ),
             $"VISA Resource {resourceSettings.ResourceName} not found among {session.ResourcesFilter}" );
     }

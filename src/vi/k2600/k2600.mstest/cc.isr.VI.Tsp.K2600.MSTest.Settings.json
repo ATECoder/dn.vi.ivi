@@ -27,7 +27,8 @@
     "ClosedCaption": "closed",
     "Language": "TSP",
     "PingTimeout": "00:00:01.0000000",
-    "PingHops": 2
+    "PingHops": 2,
+    "ResourceNameSelectionTimeout": "00:00:10"
   },
 
   "DeviceErrorsSettings": {
@@ -62,14 +63,6 @@
     "InitialAutoDelayEnabled": true,
     "InitialSourceLevel": 0,
     "InitialSourceLimit": 0.000105,
-    "_DEVICE_ERRORS_": "",
-    "ErroneousCommand": "*CLL",
-    "_140_ms_does_not_work_": "",
-    "ErrorAvailableMillisecondsDelay": 100,
-    "ExpectedCompoundErrorMessage": "-285,TSP Syntax Error at line 1: unexpected symbol near `*',level=20",
-    "ExpectedErrorNumber": -285,
-    "ExpectedErrorMessage": "TSP Syntax error at line 1: unexpected symbol near `*'",
-    "ExpectedErrorLevel": 20,
     "_DIGITAL_IO_VALUES_": "",
     "DigitalOutputLineNumber": 1,
     "DigitalInputLineNumber": 2,

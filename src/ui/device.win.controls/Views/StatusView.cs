@@ -675,9 +675,7 @@ public partial class StatusView : cc.isr.WinControls.ModelViewBase
 
     #region " device (visa session base): assignment "
 
-#pragma warning disable IDE0032
     private VisaSessionBase? _visaSessionBaseInternal;
-#pragma warning restore IDE0032
 
     /// <summary>   Gets or sets the visa session base internal. </summary>
     /// <value> The visa session base internal. </value>
@@ -1511,16 +1509,16 @@ public partial class StatusView : cc.isr.WinControls.ModelViewBase
 
     /// <summary> Base settings menu item click. </summary>
     /// <remarks>   David, 2021-12-08. <para>
-    /// The settings <see cref="Properties.Settings.Initialize(Type, string)"/></para> must be called before attempting to edit the settings. </remarks>
+    /// The settings <see cref="Views.DisplayViewSettings.Initialize(Type, string)"/></para> must be called before attempting to edit the settings. </remarks>
     /// <param name="sender"> <see cref="object"/> instance of this
     /// <see cref="Control"/> </param>
     /// <param name="e">      Event information. </param>
     private void UIBaseSettingsMenuItem_Click( object? sender, EventArgs e )
     {
-        if ( Properties.Settings.Instance is not null )
+        if ( Views.DisplayViewSettings.Instance is not null )
         {
-            Form form = new JsonSettingsEditorForm( "UI Base Settings",
-                new AppSettingsEditorViewModel( Properties.Settings.Instance.Scribe!, SimpleServiceProvider.GetInstance() ) );
+            Form form = new JsonSettingsEditorForm( "Display View Settings Editor",
+                new AppSettingsEditorViewModel( Views.DisplayViewSettings.Instance.Scribe!, SimpleServiceProvider.GetInstance() ) );
             _ = form.ShowDialog();
         }
     }

@@ -15,13 +15,13 @@ public sealed partial class Asserts
     /// <param name="device">           The device. </param>
     /// <param name="resourceSettings"> The resource settings. </param>
     /// <param name="statusSettings">   The status settings. </param>
-    public static void AssertDeviceShouldBePolled( VisaSessionBase? device, Settings.ResourceSettingsBase? resourceSettings )
+    public static void AssertDeviceShouldBePolled( VisaSessionBase? device, Pith.Settings.ResourceSettings? resourceSettings )
     {
         Assert.IsNotNull( device );
         Assert.IsNotNull( device.Session );
         Assert.IsTrue( device.Session.TimingSettings.Exists );
-        Assert.IsNotNull( resourceSettings, $"{nameof( Settings.ResourceSettingsBase )} should not be null." );
-        Assert.IsTrue( resourceSettings.Exists, $"{nameof( Settings.ResourceSettingsBase )} should exist in the settings file." );
+        Assert.IsNotNull( resourceSettings, $"{nameof( Pith.Settings.ResourceSettings )} should not be null." );
+        Assert.IsTrue( resourceSettings.Exists, $"{nameof( Pith.Settings.ResourceSettings )} should exist in the settings file." );
         Assert.IsTrue( device.IsDeviceOpen, "session should be open" );
 
         if ( device.Session is null ) throw new ArgumentException( $"{nameof( device )}.{nameof( device.Session )} is null." );
@@ -186,11 +186,11 @@ public sealed partial class Asserts
 
     /// <summary> Assert service request should be handled. </summary>
     /// <param name="session"> The session. </param>
-    private static void AssertServiceRequestShouldBeHandled( cc.isr.VI.Pith.SessionBase? session, Settings.ResourceSettingsBase? resourceSettings )
+    private static void AssertServiceRequestShouldBeHandled( cc.isr.VI.Pith.SessionBase? session, Pith.Settings.ResourceSettings? resourceSettings )
     {
         Assert.IsNotNull( session, $"{nameof( session )} should not be null." );
-        Assert.IsNotNull( resourceSettings, $"{nameof( Settings.ResourceSettingsBase )} should not be null." );
-        Assert.IsTrue( resourceSettings.Exists, $"{nameof( Settings.ResourceSettingsBase )} should exist in the settings file." );
+        Assert.IsNotNull( resourceSettings, $"{nameof( Pith.Settings.ResourceSettings )} should not be null." );
+        Assert.IsTrue( resourceSettings.Exists, $"{nameof( Pith.Settings.ResourceSettings )} should exist in the settings file." );
         Assert.IsTrue( session.TimingSettings.Exists );
         Assert.IsFalse( session.ServiceRequestEventEnabled, "service request event should not be enabled" );
         Assert.IsNotNull( session.ServiceRequestEnableBitmask );
@@ -235,12 +235,12 @@ public sealed partial class Asserts
     /// <param name="device">           The device. </param>
     /// <param name="resourceSettings"> The resource settings. </param>
     /// <param name="statusSettings">   The status settings. </param>
-    public static void AssertRequestingServiceBeEnabledBySession( VisaSessionBase? device, Settings.ResourceSettingsBase? resourceSettings )
+    public static void AssertRequestingServiceBeEnabledBySession( VisaSessionBase? device, Pith.Settings.ResourceSettings? resourceSettings )
     {
         Assert.IsNotNull( device );
         Assert.IsNotNull( device.Session );
-        Assert.IsNotNull( resourceSettings, $"{nameof( Settings.ResourceSettingsBase )} should not be null." );
-        Assert.IsTrue( resourceSettings.Exists, $"{nameof( Settings.ResourceSettingsBase )} should exist in the settings file." );
+        Assert.IsNotNull( resourceSettings, $"{nameof( Pith.Settings.ResourceSettings )} should not be null." );
+        Assert.IsTrue( resourceSettings.Exists, $"{nameof( Pith.Settings.ResourceSettings )} should exist in the settings file." );
         Assert.IsTrue( device.Session.TimingSettings.Exists );
         Assert.IsTrue( device.IsDeviceOpen, "session should be open" );
 
@@ -267,12 +267,12 @@ public sealed partial class Asserts
     /// <param name="resourceSettings"> The resource settings. </param>
     /// <param name="statusSettings">   The status settings. </param>
     ///
-    public static void AssertServiceRequestShouldBeHandledBySession( VisaSessionBase? device, Settings.ResourceSettingsBase? resourceSettings )
+    public static void AssertServiceRequestShouldBeHandledBySession( VisaSessionBase? device, Pith.Settings.ResourceSettings? resourceSettings )
     {
         Assert.IsNotNull( device );
         Assert.IsNotNull( device.Session );
-        Assert.IsNotNull( resourceSettings, $"{nameof( Settings.ResourceSettingsBase )} should not be null." );
-        Assert.IsTrue( resourceSettings.Exists, $"{nameof( Settings.ResourceSettingsBase )} should exist in the settings file." );
+        Assert.IsNotNull( resourceSettings, $"{nameof( Pith.Settings.ResourceSettings )} should not be null." );
+        Assert.IsTrue( resourceSettings.Exists, $"{nameof( Pith.Settings.ResourceSettings )} should exist in the settings file." );
         Assert.IsTrue( device.Session.TimingSettings.Exists );
         Assert.IsTrue( device.IsDeviceOpen, "session should be open" );
 
@@ -293,12 +293,12 @@ public sealed partial class Asserts
     /// <param name="device">           The device. </param>
     /// <param name="resourceSettings"> The resource settings. </param>
     /// <param name="statusSettings">   The status settings. </param>
-    public static void AssertServiceRequestShouldBeHandledByDevice( VisaSessionBase? device, Settings.ResourceSettingsBase? resourceSettings )
+    public static void AssertServiceRequestShouldBeHandledByDevice( VisaSessionBase? device, Pith.Settings.ResourceSettings? resourceSettings )
     {
         Assert.IsNotNull( device );
         Assert.IsNotNull( device.Session );
-        Assert.IsNotNull( resourceSettings, $"{nameof( Settings.ResourceSettingsBase )} should not be null." );
-        Assert.IsTrue( resourceSettings.Exists, $"{nameof( Settings.ResourceSettingsBase )} should exist in the settings file." );
+        Assert.IsNotNull( resourceSettings, $"{nameof( Pith.Settings.ResourceSettings )} should not be null." );
+        Assert.IsTrue( resourceSettings.Exists, $"{nameof( Pith.Settings.ResourceSettings )} should exist in the settings file." );
         Assert.IsTrue( device.Session.TimingSettings.Exists );
         Assert.IsTrue( device.IsDeviceOpen, "session should be open" );
 

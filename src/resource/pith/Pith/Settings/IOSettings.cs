@@ -44,4 +44,15 @@ public class IOSettings() : CommunityToolkit.Mvvm.ComponentModel.ObservableObjec
         get => this._readTerminationEnabled;
         set => _ = this.SetProperty( ref this._readTerminationEnabled, value );
     }
+
+    private MessageNotificationModes _sessionMessageNotificationModes = MessageNotificationModes.None;
+
+    /// <summary>   Gets or sets the session message notification modes. </summary>
+    /// <value> The session message notification modes. </value>
+	[Description( "Specifies the modes of session notification, e.g., none or message received, sent or both [None; 0]" )]
+    public MessageNotificationModes SessionMessageNotificationModes
+    {
+        get => this._sessionMessageNotificationModes;
+        set => this.SetProperty( ref this._sessionMessageNotificationModes, value );
+    }
 }

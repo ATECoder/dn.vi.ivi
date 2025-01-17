@@ -32,14 +32,14 @@ public class Settings
 
     /// <summary>   Reads the settings. </summary>
     /// <remarks>   2024-08-05. </remarks>
-    /// <param name="callingEntity">        The calling entity. </param>
-    /// <param name="settingsFileSuffix">   The suffix of the assembly settings file, e.g.,
-    ///                                     '.session' in
+    /// <param name="settingsAssembly">     The settings assembly. </param>
+    /// <param name="settingsFileSuffix">   (Optional) The suffix of the assembly settings file, e.g.,
+    ///                                     '.driver' in
     ///                                     'cc.isr.VI.Tsp.K2600.Device.MSTest.Session.JSon' where
     ///                                     cc.isr.VI.Tsp.K2600.Device.MSTest is the assembly name. </param>
-    public void ReadSettings( System.Type callingEntity, string settingsFileSuffix )
+    public void CreateScribe( System.Reflection.Assembly settingsAssembly, string settingsFileSuffix = ".driver" )
     {
-        AssemblyFileInfo ai = new( callingEntity.Assembly, null, settingsFileSuffix, ".json" );
+        AssemblyFileInfo ai = new( settingsAssembly, null, settingsFileSuffix, ".json" );
 
         // must copy application context settings here to clear any bad settings files.
 
@@ -53,7 +53,49 @@ public class Settings
             AllUsersSettingsPath = ai.AllUsersAssemblyFilePath,
             ThisUserSettingsPath = ai.ThisUserAssemblyFilePath
         };
-        this.Scribe.ReadSettings();
+    }
+
+    /// <summary>   Reads the settings. </summary>
+    /// <remarks>   2024-08-05. </remarks>
+    /// <param name="callingEntity">        The calling entity. </param>
+    /// <param name="settingsFileSuffix">   (Optional) The suffix of the assembly settings file, e.g.,
+    ///                                     '.driver' in
+    ///                                     'cc.isr.VI.Tsp.K2600.Device.MSTest.Session.JSon' where
+    ///                                     cc.isr.VI.Tsp.K2600.Device.MSTest is the assembly name. </param>
+    public void CreateScribe( System.Type callingEntity, string settingsFileSuffix = ".driver" )
+    {
+        this.CreateScribe( callingEntity.Assembly, settingsFileSuffix );
+    }
+
+    /// <summary>   Reads the settings. </summary>
+    /// <remarks>   2024-08-17. <para>
+    /// Creates the scribe if null.</para>
+    /// </remarks>
+    /// <param name="settingsAssembly">     The assembly where the settings fille is located.. </param>
+    /// <param name="settingsFileSuffix">   (Optional) The suffix of the assembly settings file, e.g.,
+    ///                                     '.driver' in
+    ///                                     'cc.isr.VI.Tsp.K2600.Device.MSTest.Session.JSon' where
+    ///                                     cc.isr.VI.Tsp.K2600.Device.MSTest is the assembly name. </param>
+    public void ReadSettings( System.Reflection.Assembly settingsAssembly, string settingsFileSuffix = ".driver" )
+    {
+        if ( this.Scribe is null )
+            this.CreateScribe( settingsAssembly, settingsFileSuffix );
+
+        this.Scribe!.ReadSettings();
+    }
+
+    /// <summary>   Reads the settings. </summary>
+    /// <remarks> 2024-08-05. <para>
+    /// Creates the scribe if null.</para>
+    /// </remarks>
+    /// <param name="callingEntity">        The calling entity. </param>
+    /// <param name="settingsFileSuffix">   The suffix of the assembly settings file, e.g.,
+    ///                                     '.driver' in
+    ///                                     'cc.isr.VI.Tsp.K2600.Device.MSTest.Session.JSon' where
+    ///                                     cc.isr.VI.Tsp.K2600.Device.MSTest is the assembly name. </param>
+    public void ReadSettings( System.Type callingEntity, string settingsFileSuffix = ".driver" )
+    {
+        this.ReadSettings( callingEntity.Assembly, settingsFileSuffix );
     }
 
     #endregion

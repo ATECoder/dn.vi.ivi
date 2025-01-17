@@ -1,7 +1,6 @@
 using System;
 using cc.isr.Std.Tests;
 using cc.isr.Std.Tests.Extensions;
-using cc.isr.VI.Device.MSTest.Settings;
 using cc.isr.VI.Pith.Settings;
 
 namespace cc.isr.VI.Device.MSTest.Base;
@@ -72,14 +71,14 @@ public abstract class SubsystemsTests
         Assert.IsTrue( Math.Abs( this.TestSiteSettings.TimeZoneOffset() ) < expectedUpperLimit,
                        $"{nameof( this.TestSiteSettings.TimeZoneOffset )} should be lower than {expectedUpperLimit}" );
         Assert.IsNotNull( this.ResourceSettings, $"{nameof( this.ResourceSettings )} should not be null." );
-        Assert.IsTrue( this.ResourceSettings.Exists, $"{nameof( Settings.ResourceSettingsBase )} should exist." );
+        Assert.IsTrue( this.ResourceSettings.Exists, $"{nameof( Pith.Settings.ResourceSettings )} should exist." );
 
         Assert.IsNotNull( this.VisaSessionBase );
         Assert.IsNotNull( this.VisaSessionBase.Session );
         Assert.IsTrue( this.VisaSessionBase.Session.TimingSettings.Exists, $"{nameof( TimingSettings )} should exist." );
         Assert.IsTrue( this.VisaSessionBase.Session.RegistersBitmasksSettings.Exists, $"{nameof( RegistersBitmasksSettings )} should exist." );
 
-        Assert.IsNotNull( this.SubsystemsSettings, $"{nameof( this.SubsystemsSettings )} {nameof( SubsystemsSettingsBase )} should exist" );
+        Assert.IsNotNull( this.SubsystemsSettings, $"{nameof( this.SubsystemsSettings )} {nameof( VI.Settings.SubsystemsSettings )} should exist" );
         Assert.IsTrue( this.SubsystemsSettings.Exists, $"{nameof( this.SubsystemsSettings )} should ne enabled" );
 
         if ( Logger is not null )
@@ -126,7 +125,7 @@ public abstract class SubsystemsTests
 
     /// <summary>   Gets or sets the subsystems settings. </summary>
     /// <value> The subsystems settings. </value>
-    protected SubsystemsSettingsBase? SubsystemsSettings { get; set; }
+    protected VI.Settings.SubsystemsSettings? SubsystemsSettings { get; set; }
 
     /// <summary>   Gets or sets the test site settings. </summary>
     /// <value> The test site settings. </value>
@@ -134,7 +133,7 @@ public abstract class SubsystemsTests
 
     /// <summary>   Gets or sets the resource settings. </summary>
     /// <value> The resource settings. </value>
-    protected ResourceSettingsBase? ResourceSettings { get; set; }
+    protected ResourceSettings? ResourceSettings { get; set; }
 
     /// <summary>   Gets or sets the visa session base. </summary>
     /// <value> The visa session base. </value>

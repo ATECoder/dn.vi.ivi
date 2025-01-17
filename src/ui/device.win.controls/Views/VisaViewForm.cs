@@ -139,7 +139,7 @@ public class VisaViewForm : WinForms.ModelViewForm.ModelViewForm
                 if ( this.AwaitResourceNameValidationTaskEnabled )
                 {
                     activity = $"{this.Name}; awaiting {this.VisaView.VisaSessionBase.CandidateResourceName} validation";
-                    this.VisaView.VisaSessionBase.AwaitResourceNameValidation( TimeSpan.FromMilliseconds( Properties.Settings.Instance.ResourceNameSelectionTimeout ) );
+                    this.VisaView.VisaSessionBase.AwaitResourceNameValidation( this.VisaSessionBase!.Session!.ResourceSettings.ResourceNameSelectionTimeout );
                 }
                 else
                     activity = $"{this.Name}; validating {this.VisaView.VisaSessionBase.CandidateResourceName}";

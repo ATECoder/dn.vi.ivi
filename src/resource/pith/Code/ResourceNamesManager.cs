@@ -531,6 +531,7 @@ public sealed class ResourceNamesManager
 
     #endregion
 }
+
 /// <summary> Values that represent resource types. </summary>
 public enum ResourceType
 {
@@ -550,6 +551,7 @@ public enum ResourceType
     [Description( "Backplane" )]
     Backplane
 }
+
 /// <summary> Values that represent hardware interface types. </summary>
 public enum HardwareInterfaceType
 {

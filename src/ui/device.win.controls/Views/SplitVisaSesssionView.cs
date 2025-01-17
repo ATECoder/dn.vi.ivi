@@ -53,7 +53,7 @@ public class SplitVisaSessionView : WinControls.VisaTreePanel
         this.TopHeader?.BindVisaSessionBase( visaSessionBase );
         this.SessionStatusView?.BindVisaSessionBase( visaSessionBase );
         if ( this.SessionStatusView != null && this.SessionStatusView.StatusView is not null )
-            this.SessionStatusView.StatusView.UserInterfaceSettings = Properties.Settings.Instance.Scribe;
+            this.SessionStatusView.StatusView.UserInterfaceSettings = DisplayViewSettings.Instance.Scribe;
     }
 
     #endregion
@@ -197,16 +197,14 @@ public class SplitVisaSessionView : WinControls.VisaTreePanel
 
     /// <summary>   Opens the settings editor. </summary>
     /// <remarks>   David, 2021-12-08. <para>
-    /// The settings <see cref="Properties.Settings.Initialize(Type, string)"/></para> must be called before attempting to edit the settings. </remarks>
+    /// The settings <see cref="DisplayViewSettings.Initialize(Type, string)"/></para> must be called before attempting to edit the settings. </remarks>
     /// <returns>   A System.Windows.Forms.DialogResult. </returns>
     public static DialogResult OpenSettingsEditor()
     {
         Form form = new JsonSettingsEditorForm( "Device UI Settings Editor",
-            new AppSettingsEditorViewModel( Properties.Settings.Instance.Scribe!, SimpleServiceProvider.GetInstance() ) );
+            new AppSettingsEditorViewModel( DisplayViewSettings.Instance.Scribe!, SimpleServiceProvider.GetInstance() ) );
         return form.ShowDialog();
     }
 
     #endregion
-
-
 }

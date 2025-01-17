@@ -1,5 +1,3 @@
-using cc.isr.VI.Device.MSTest.Settings;
-
 namespace cc.isr.VI.Device.MSTest;
 
 public sealed partial class Asserts
@@ -10,7 +8,7 @@ public sealed partial class Asserts
     ///           . </summary>
     /// <param name="subsystem">      The subsystem. </param>
     /// <param name="subsystemsInfo"> Information describing the subsystems. </param>
-    public static void AssertSubsystemInitialValuesShouldMatch( MeasureSubsystemBase subsystem, SubsystemsSettingsBase? subsystemsInfo )
+    public static void AssertSubsystemInitialValuesShouldMatch( MeasureSubsystemBase subsystem, VI.Settings.SubsystemsSettings? subsystemsInfo )
     {
         Assert.IsNotNull( subsystem, $"{nameof( subsystem )} should not be null." );
         Assert.IsNotNull( subsystemsInfo, $"{nameof( subsystemsInfo )} should not be null." );

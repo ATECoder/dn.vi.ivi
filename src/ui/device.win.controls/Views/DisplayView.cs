@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using System.Windows.Forms;
+using cc.isr.Json.AppSettings.Models;
 using cc.isr.VI.DeviceWinControls.BindingExtensions;
 using cc.isr.WinControls.BindingExtensions;
 
@@ -74,6 +75,90 @@ public partial class DisplayView : cc.isr.WinControls.ModelViewBase
         {
             base.Dispose( disposing );
         }
+    }
+
+    #endregion
+
+    #region " scribe "
+
+    /// <summary>   Gets or sets the scribe. </summary>
+    /// <value> The scribe. </value>
+    [DesignerSerializationVisibility( DesignerSerializationVisibility.Hidden )]
+    [Browsable( false )]
+    public static AppSettingsScribe? Scribe { get; set; }
+
+    /// <summary>   Gets or sets the timing settings. </summary>
+    /// <value> The timing settings. </value>
+    [DesignerSerializationVisibility( DesignerSerializationVisibility.Hidden )]
+    [Browsable( false )]
+    public static Views.DisplayViewSettings DisplayViewSettings { get; private set; } = new Views.DisplayViewSettings();
+
+    /// <summary>   Creates a scribe. </summary>
+    /// <remarks>   2025-01-13. </remarks>
+    /// <param name="settingsAssembly">     The settings assembly. </param>
+    /// <param name="settingsFileSuffix">   (Optional) The suffix of the assembly settings file, e.g.,
+    ///                                     '.session' in
+    ///                                     'cc.isr.VI.Tsp.K2600.Device.MSTest.Session.JSon' where
+    ///                                     cc.isr.VI.Tsp.K2600.Device.MSTest is the assembly name. </param>
+    public static void CreateScribe( System.Reflection.Assembly settingsAssembly, string settingsFileSuffix = ".session" )
+    {
+        AssemblyFileInfo ai = new( settingsAssembly, null, settingsFileSuffix, ".json" );
+
+        // must copy application context settings here to clear any bad settings files.
+
+        AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.AllUsersAssemblyFilePath! );
+        AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.ThisUserAssemblyFilePath! );
+
+        DisplayView.Scribe = new( [DisplayView.DisplayViewSettings],
+            ai.AppContextAssemblyFilePath!, ai.AllUsersAssemblyFilePath! )
+        {
+            AllUsersSettingsPath = ai.AllUsersAssemblyFilePath,
+            ThisUserSettingsPath = ai.ThisUserAssemblyFilePath
+        };
+    }
+
+    /// <summary>   Creates a scribe. </summary>
+    /// <remarks>   2025-01-13. </remarks>
+    /// <param name="callingEntity">        The calling entity. </param>
+    /// <param name="settingsFileSuffix">   The suffix of the assembly settings file, e.g.,
+    ///                                     '.session' in
+    ///                                     'cc.isr.VI.Tsp.K2600.Device.MSTest.Session.JSon' where
+    ///                                     cc.isr.VI.Tsp.K2600.Device.MSTest is the assembly name. </param>
+    public static void CreateScribe( System.Type callingEntity, string settingsFileSuffix = ".DisplayView" )
+    {
+        DisplayView.CreateScribe( callingEntity.Assembly, settingsFileSuffix );
+    }
+
+    /// <summary>   Reads the settings. </summary>
+    /// <remarks>   2024-08-17. <para>
+    /// Creates the scribe if null.</para>
+    /// </remarks>
+    /// <param name="settingsAssembly">     The assembly where the settings fille is located.. </param>
+    /// <param name="settingsFileSuffix">   (Optional) The suffix of the assembly settings file, e.g.,
+    ///                                     '.session' in
+    ///                                     'cc.isr.VI.Tsp.K2600.Device.MSTest.Session.JSon' where
+    ///                                     cc.isr.VI.Tsp.K2600.Device.MSTest is the assembly name. </param>
+    public static void ReadSettings( System.Reflection.Assembly settingsAssembly, string settingsFileSuffix = ".DisplayView" )
+    {
+        if ( DisplayView.Scribe is null )
+            DisplayView.CreateScribe( settingsAssembly, settingsFileSuffix );
+
+        DisplayView.Scribe!.ReadSettings();
+    }
+
+    /// <summary>   Reads the settings. </summary>
+    /// <remarks>
+    /// 2024-08-05. <para>
+    /// Creates the scribe if null.</para>
+    /// </remarks>
+    /// <param name="callingEntity">        The calling entity. </param>
+    /// <param name="settingsFileSuffix">   (Optional) The suffix of the assembly settings file, e.g.,
+    ///                                     '.session' in
+    ///                                     'cc.isr.VI.Tsp.K2600.Device.MSTest.Session.JSon' where
+    ///                                     cc.isr.VI.Tsp.K2600.Device.MSTest is the assembly name. </param>
+    public static void ReadSettings( System.Type callingEntity, string settingsFileSuffix = ".session" )
+    {
+        DisplayView.ReadSettings( callingEntity.Assembly, settingsFileSuffix );
     }
 
     #endregion
@@ -272,7 +357,7 @@ public partial class DisplayView : cc.isr.WinControls.ModelViewBase
     {
         _ = this.AddRemoveBinding( this._titleLabel, add, nameof( Control.Text ), viewModel, nameof( Pith.SessionBase.ResourceModelCaption ), DataSourceUpdateMode.Never );
         _ = this.AddRemoveBinding( this._statusRegisterLabel, add, nameof( Control.Text ), viewModel, nameof( Pith.SessionBase.StatusRegisterCaption ), DataSourceUpdateMode.Never );
-        if ( Properties.Settings.Instance.DisplayStandardServiceRequests )
+        if ( DisplayView.DisplayViewSettings.DisplayStandardServiceRequests )
         {
             this.BindVisibility( this._measurementEventBitLabel, add, viewModel, Pith.ServiceRequests.MeasurementEvent );
             this.BindVisibility( this._systemEventBitLabel, add, viewModel, Pith.ServiceRequests.SystemEvent );
@@ -1110,24 +1195,54 @@ public partial class DisplayView : cc.isr.WinControls.ModelViewBase
 
     #region " bind settings "
 
-    /// <summary> Bind settings. </summary>
-    private void BindSettings()
+    /// <summary>   Sets charcoal back color. </summary>
+    /// <remarks>   2025-01-13. </remarks>
+    public void SetCharcoalBackColor()
     {
-        this._layout.BackColor = Properties.Settings.Instance.CharcoalColor;
-        this._layout.DataBindings.Add( new Binding( nameof( this.BackColor ), Properties.Settings.Instance, nameof( Properties.Settings.Instance.CharcoalColor ), true, DataSourceUpdateMode.OnPropertyChanged ) );
-        this._sessionReadingStatusStrip.BackColor = Properties.Settings.Instance.CharcoalColor;
-        this._sessionReadingStatusStrip.DataBindings.Add( new Binding( nameof( this.BackColor ), Properties.Settings.Instance, nameof( Properties.Settings.Instance.CharcoalColor ), true, DataSourceUpdateMode.OnPropertyChanged ) );
-        this._subsystemStatusStrip.BackColor = Properties.Settings.Instance.CharcoalColor;
-        this._subsystemStatusStrip.DataBindings.Add( new Binding( nameof( this.BackColor ), Properties.Settings.Instance, nameof( Properties.Settings.Instance.CharcoalColor ), true, DataSourceUpdateMode.OnPropertyChanged ) );
-        this._titleStatusStrip.BackColor = Properties.Settings.Instance.CharcoalColor;
-        this._titleStatusStrip.DataBindings.Add( new Binding( nameof( this.BackColor ), Properties.Settings.Instance, nameof( Properties.Settings.Instance.CharcoalColor ), true, DataSourceUpdateMode.OnPropertyChanged ) );
-        this._errorStatusStrip.BackColor = Properties.Settings.Instance.CharcoalColor;
-        this._errorStatusStrip.DataBindings.Add( new Binding( nameof( this.BackColor ), Properties.Settings.Instance, nameof( Properties.Settings.Instance.CharcoalColor ), true, DataSourceUpdateMode.OnPropertyChanged ) );
-        this._statusStrip.BackColor = Properties.Settings.Instance.CharcoalColor;
-        this._statusStrip.DataBindings.Add( new Binding( nameof( this.BackColor ), Properties.Settings.Instance, nameof( Properties.Settings.Instance.CharcoalColor ), true, DataSourceUpdateMode.OnPropertyChanged ) );
+        this.SetBackColors( DisplayView.DisplayViewSettings.CharcoalColor );
+    }
+
+    /// <summary>   Sets back colors. </summary>
+    /// <remarks>   2025-01-13. </remarks>
+    /// <param name="backColor">    The back color. </param>
+    public void SetBackColors( System.Drawing.Color backColor )
+    {
+        this._layout.BackColor = backColor;
+        this._sessionReadingStatusStrip.BackColor = backColor;
+        this._subsystemStatusStrip.BackColor = backColor;
+        this._titleStatusStrip.BackColor = backColor;
+        this._errorStatusStrip.BackColor = backColor;
+        this._statusStrip.BackColor = backColor;
+    }
+
+    /// <summary> Bind settings. </summary>
+    public void BindSettings()
+    {
+        this._layout.BackColor = DisplayView.DisplayViewSettings.CharcoalColor;
+        Binding binding = new( nameof( this.BackColor ), DisplayView.DisplayViewSettings, nameof( DisplayView.DisplayViewSettings.CharcoalColor ), true, DataSourceUpdateMode.OnPropertyChanged );
+        if ( this._layout.DataBindings.Exists( binding ) ) { this._layout.DataBindings.Remove( binding ); }
+        this._layout.DataBindings.Add( binding );
+
+        this._sessionReadingStatusStrip.BackColor = DisplayView.DisplayViewSettings.CharcoalColor;
+        if ( this._sessionReadingStatusStrip.DataBindings.Exists( binding ) ) { this._layout.DataBindings.Remove( binding ); }
+        this._sessionReadingStatusStrip.DataBindings.Add( binding );
+
+        this._subsystemStatusStrip.BackColor = DisplayView.DisplayViewSettings.CharcoalColor;
+        if ( this._subsystemStatusStrip.DataBindings.Exists( binding ) ) { this._layout.DataBindings.Remove( binding ); }
+        this._subsystemStatusStrip.DataBindings.Add( binding );
+
+        this._titleStatusStrip.BackColor = DisplayView.DisplayViewSettings.CharcoalColor;
+        if ( this._titleStatusStrip.DataBindings.Exists( binding ) ) { this._layout.DataBindings.Remove( binding ); }
+        this._titleStatusStrip.DataBindings.Add( binding );
+
+        this._errorStatusStrip.BackColor = DisplayView.DisplayViewSettings.CharcoalColor;
+        if ( this._errorStatusStrip.DataBindings.Exists( binding ) ) { this._layout.DataBindings.Remove( binding ); }
+        this._errorStatusStrip.DataBindings.Add( binding );
+
+        this._statusStrip.BackColor = DisplayView.DisplayViewSettings.CharcoalColor;
+        if ( this._statusStrip.DataBindings.Exists( binding ) ) { this._layout.DataBindings.Remove( binding ); }
+        this._statusStrip.DataBindings.Add( binding );
     }
 
     #endregion
-
-
 }

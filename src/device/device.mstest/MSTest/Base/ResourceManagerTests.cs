@@ -71,7 +71,7 @@ public abstract class ResourceManagerTests
         Assert.IsTrue( Math.Abs( this.TestSiteSettings.TimeZoneOffset() ) < expectedUpperLimit,
                        $"{nameof( this.TestSiteSettings.TimeZoneOffset )} should be lower than {expectedUpperLimit}" );
         Assert.IsNotNull( this.ResourceSettings, $"{nameof( this.ResourceSettings )} should not be null." );
-        Assert.IsTrue( this.ResourceSettings.Exists, $"{nameof( Settings.ResourceSettingsBase )} should exist." );
+        Assert.IsTrue( this.ResourceSettings.Exists, $"{nameof( Pith.Settings.ResourceSettings )} should exist." );
 
         Assert.IsNotNull( this.VisaSessionBase );
         Assert.IsNotNull( this.VisaSessionBase.Session );
@@ -126,7 +126,7 @@ public abstract class ResourceManagerTests
 
     /// <summary>   Gets or sets the resource settings. </summary>
     /// <value> The resource settings. </value>
-    protected Settings.ResourceSettingsBase? ResourceSettings { get; set; }
+    protected Pith.Settings.ResourceSettings? ResourceSettings { get; set; }
 
     /// <summary>   Gets or sets the visa session base. </summary>
     /// <value> The visa session base. </value>

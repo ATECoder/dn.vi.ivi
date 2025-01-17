@@ -1,44 +1,42 @@
 using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Text.Json.Serialization;
+using System.Windows.Forms;
 using cc.isr.Json.AppSettings.Models;
+using cc.isr.Json.AppSettings.ViewModels;
 
-namespace cc.isr.VI.WinControls.Properties;
-
-/// <summary>   A settings. </summary>
-/// <remarks>   David, 2021-02-01. </remarks>
-public class Settings : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
+namespace cc.isr.VI.DeviceWinControls.Views;
+/// <summary>   A display view settings. </summary>
+/// <remarks>   2025-01-14. </remarks>
+public class DisplayViewSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
 {
     #region " construction "
 
-    /// <summary>
-    /// Constructor that prevents a default instance of this class from being created.
-    /// </summary>
-    /// <remarks>   2023-04-24. </remarks>
-    public Settings() { }
+    /// <summary>   Default constructor. </summary>
+    /// <remarks>   2025-01-16. </remarks>
+    public DisplayViewSettings() { }
 
     #endregion
 
     #region " singleton "
 
     /// <summary>
-    /// Creates an instance of the <see cref="Settings"/> after restoring the application context
+    /// Creates an instance of the <see cref="DisplayViewSettings"/> after restoring the application context
     /// settings to both the user and all user files.
     /// </summary>
     /// <remarks>   2023-05-15. </remarks>
     /// <returns>   The new instance. </returns>
-    private static Settings CreateInstance()
+    private static DisplayViewSettings CreateInstance()
     {
-        Settings ti = new();
+        DisplayViewSettings ti = new();
         return ti;
     }
 
     /// <summary>   Gets the instance. </summary>
     /// <value> The instance. </value>
-    public static Settings Instance => _instance.Value;
+    public static DisplayViewSettings Instance => _instance.Value;
 
-    private static readonly Lazy<Settings> _instance = new( CreateInstance, true );
+    private static readonly Lazy<DisplayViewSettings> _instance = new( CreateInstance, true );
 
     #endregion
 
@@ -56,7 +54,7 @@ public class Settings : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
     ///                                     '.session' in
     ///                                     'cc.isr.VI.Tsp.K2600.Device.MSTest.Session.JSon' where
     ///                                     cc.isr.VI.Tsp.K2600.Device.MSTest is the assembly name. </param>
-    public void Initialize( System.Type callingEntity, string settingsFileSuffix )
+    public void Initialize( Type callingEntity, string settingsFileSuffix )
     {
         AssemblyFileInfo ai = new( callingEntity.Assembly, null, settingsFileSuffix, ".json" );
 
@@ -75,7 +73,7 @@ public class Settings : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
     /// <summary>   Check if the settings file exits. </summary>
     /// <remarks>   2024-07-06. </remarks>
     /// <returns>   True if it the settings file exists; otherwise false. </returns>
-    public bool SettingsFIleExists()
+    public bool SettingsFileExists()
     {
         return this.Scribe is not null && System.IO.File.Exists( this.Scribe.UserSettingsPath );
     }
@@ -100,43 +98,54 @@ public class Settings : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
 
     #endregion
 
-    #region " configuration information "
+    #region " values "
 
-    private TraceLevel _messageLevel = TraceLevel.Off;
+    private System.Drawing.Color _charcoalColor = System.Drawing.Color.FromArgb( 30, 38, 44 );
 
-    /// <summary>   Gets or sets the trace level. </summary>
-    /// <remarks>
-    /// This property name is different from the <see cref="System.Text.Json"/> property name in
-    /// order to ensure that the class is correctly serialized. It's value is initialized as <see cref="TraceLevel.Off"/>
-    /// in order to test the reading from the settings file.
-    /// </remarks>
-    /// <value> The message <see cref="TraceLevel"/>. </value>
-    [System.ComponentModel.Description( "Sets the message level" )]
-    [JsonPropertyName( "TraceLevel" )]
-    public TraceLevel MessageLevel
+    /// <summary>   Gets or sets the color of the charcoal. </summary>
+    /// <value> The color of the charcoal. </value>
+	public System.Drawing.Color CharcoalColor
     {
-        get => this._messageLevel;
-        set => _ = this.SetProperty( ref this._messageLevel, value );
+        get => this._charcoalColor;
+        set => _ = this.SetProperty( ref this._charcoalColor, value );
+    }
+
+    private System.Drawing.Color _backgroundColor = System.Drawing.Color.FromArgb( 30, 38, 44 );
+
+    /// <summary>   Gets or sets the color of the Background. </summary>
+    /// <value> The color of the Background. </value>
+	public System.Drawing.Color BackgroundColor
+    {
+        get => this._backgroundColor;
+        set => _ = this.SetProperty( ref this._backgroundColor, value );
+    }
+
+    private bool _displayStandardServiceRequests = true;
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the display standard service requests.
+    /// </summary>
+    /// <value> True if display standard service requests, false if not. </value>
+	public bool DisplayStandardServiceRequests
+    {
+        get => this._displayStandardServiceRequests;
+        set => _ = this.SetProperty( ref this._displayStandardServiceRequests, value );
     }
 
     #endregion
 
-    #region " values "
+    #region " Settings editor "
 
-    private TraceEventType _messageDisplayLevel = TraceEventType.Verbose;
-
-    /// <summary>   Gets or sets the display level for log and trace messages. </summary>
-    /// <remarks>
-    /// The maximum trace event type for displaying logged and trace events. Only messages with a
-    /// message <see cref="System.Diagnostics.TraceEventType"/> level that is same or higher than
-    /// this level are displayed.
-    /// </remarks>
-    /// <value> The message display level. </value>
-	[Description( "The maximum trace event type for displaying logged and trace events. Only messages with a message a level that is same or higher than this level are displayed." )]
-    public TraceEventType MessageDisplayLevel
+    /// <summary>   Opens the settings editor. </summary>
+    /// <remarks>   David, 2021-12-08. <para>
+    /// The settings <see cref="DisplayViewSettings.Initialize(Type, string)"/></para> must be called before attempting to edit the settings. </remarks>
+    /// <returns>   A System.Windows.Forms.DialogResult. </returns>
+    public DialogResult OpenSettingsEditor()
     {
-        get => this._messageDisplayLevel;
-        set => this.SetProperty( ref this._messageDisplayLevel, value );
+        Form form = new Json.AppSettings.WinForms.JsonSettingsEditorForm( "Display View Settings Editor",
+            new AppSettingsEditorViewModel( this.Scribe!, Json.AppSettings.Services.SimpleServiceProvider.GetInstance() ) );
+        return form.ShowDialog();
     }
+
     #endregion
 }

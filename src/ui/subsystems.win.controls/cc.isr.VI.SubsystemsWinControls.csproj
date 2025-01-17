@@ -1,5 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <EnablePreviewFeatures>true</EnablePreviewFeatures>
     <TargetFrameworks>net48;net9.0-windows</TargetFrameworks>
     <OutputType>Library</OutputType>
     <UseWindowsForms>true</UseWindowsForms>
@@ -56,8 +57,13 @@
   <Choose>
     <When Condition="$(DefineConstants.Contains(';PROJREF;')) OR $(DefineConstants.Contains(';MYPROJREF;'))">
       <ItemGroup>
+        <ProjectReference Include="..\..\..\..\..\core\enums\src\win.controls\win.controls\cc.isr.Enums.WinControls.csproj" />
+        <ProjectReference Include="..\..\..\..\..\core\json\src\app.settings\app.settings.win.forms\cc.isr.Json.AppSettings.WinForms.csproj" />
+        <ProjectReference Include="..\..\..\..\..\core\logging\src\tracelog\tracelog.win.forms\cc.isr.Logging.TraceLog.WinForms.csproj" />
+        <ProjectReference Include="..\..\..\..\..\core\tracing\src\win.forms\tracing.win.forms\cc.isr.Tracing.WinForms.csproj" />
+        <ProjectReference Include="..\..\..\..\..\core\win.forms\src\model.view.form\model.view.form\cc.isr.WinForms.ModelViewForm.csproj" />
+        <ProjectReference Include="..\win.controls\cc.isr.VI.WinControls.csproj" />
         <ProjectReference Include="..\..\..\..\..\core\win.controls\src\extensions\extensions\cc.isr.WinControls.Extensions.csproj" />
-        <ProjectReference Include="..\device.win.controls\cc.isr.VI.DeviceWinControls.csproj" />
       </ItemGroup>
     </When>
     <Otherwise>

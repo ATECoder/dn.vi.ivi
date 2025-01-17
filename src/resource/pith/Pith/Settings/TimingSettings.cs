@@ -155,42 +155,4 @@ public class TimingSettings() : CommunityToolkit.Mvvm.ComponentModel.ObservableO
         get => this._operationCompletionRefractoryPeriod;
         set => this.SetProperty( ref this._operationCompletionRefractoryPeriod, value );
     }
-
-    private MessageNotificationModes _sessionMessageNotificationModes = MessageNotificationModes.None;
-
-    /// <summary>   Gets or sets the session message notification modes. </summary>
-    /// <value> The session message notification modes. </value>
-	[Description( "Specifies the modes of session notification, e.g., none or message received, sent or both [None; 0]" )]
-    public MessageNotificationModes SessionMessageNotificationModes
-    {
-        get => this._sessionMessageNotificationModes;
-        set => this.SetProperty( ref this._sessionMessageNotificationModes, value );
-    }
-
-    #region " ping "
-
-    private TimeSpan _pingTimeout = TimeSpan.FromMilliseconds( 5 );
-
-    /// <summary>   Gets or sets the ping timeout. </summary>
-    /// <value> The ping timeout. </value>
-	[Description( "The time to allow for ping results to come back [sms]" )]
-    public TimeSpan PingTimeout
-    {
-        get => this._pingTimeout;
-        set => this.SetProperty( ref this._pingTimeout, value );
-    }
-
-    private int _pingHops = 1;
-
-    /// <summary>   Gets or sets the PingHops. </summary>
-    /// <value> The PingHops. </value>
-	[Description( "The number of hops to set when pinging an instrument [1]" )]
-    public int PingHops
-    {
-        get => this._pingHops;
-        set => this.SetProperty( ref this._pingHops, value );
-    }
-
-    #endregion
-
 }
