@@ -1,4 +1,5 @@
 using System;
+using cc.isr.VI.Pith.Settings;
 using cc.isr.VI.Tsp.K2600.MSTest.Measure;
 using cc.isr.VI.Tsp.K2600.MSTest.Source;
 using cc.isr.VI.Tsp.K2600.MSTest.Subsystems;
@@ -87,8 +88,11 @@ public class AllSettings
         // get an instance of the settings file info first.
         AssemblyFileInfo settingsFileInfo = SettingsFileInfo;
 
-        AppSettingsScribe scribe = new( [AllSettings.DummySettings, AllSettings.TestSiteSettings, AllSettings.ResourceSettings,
-            AllSettings.DeviceErrorsSettings, AllSettings.SubsystemsSettings, AllSettings.ResistanceSettings, AllSettings.CurrentSourceSettings],
+        AppSettingsScribe scribe = new( [AllSettings.DummySettings, AllSettings.TestSiteSettings, AllSettings.IOSettings,
+            AllSettings.CommandsSettings, AllSettings.ResourceSettings,
+            AllSettings.DeviceErrorsSettings, AllSettings.DigitalIOSettings, AllSettings.SystemSubsystemSettings,
+            AllSettings.SenseResistanceSettings, AllSettings.SourceResistanceSettings, AllSettings.ResistanceSettings,
+            AllSettings.SenseCurrentSettings, AllSettings.SourceCurrentSettings, AllSettings.CurrentSourceMeasureSettings],
             settingsFileInfo.AppContextAssemblyFilePath!, settingsFileInfo.AllUsersAssemblyFilePath! )
         {
             AllUsersSettingsPath = settingsFileInfo.AllUsersAssemblyFilePath,
@@ -131,25 +135,57 @@ public class AllSettings
     /// <value> The test site settings. </value>
     internal static TestSiteSettings TestSiteSettings { get; private set; } = new();
 
+    /// <summary>   Gets or sets the i/o settings. </summary>
+    /// <value> The i/o settings. </value>
+    internal static IOSettings IOSettings { get; private set; } = new();
+
+    /// <summary>   Gets or sets the commands settings. </summary>
+    /// <value> The commands settings. </value>
+    internal static CommandsSettings CommandsSettings { get; private set; } = new();
+
     /// <summary>   Gets or sets the resource settings. </summary>
     /// <value> The resource settings. </value>
-    internal static ResourceSettings ResourceSettings { get; private set; } = new();
+    internal static cc.isr.VI.Tsp.K2600.MSTest.Visa.ResourceSettings ResourceSettings { get; private set; } = new();
+
+    /// <summary>   Gets or sets the digital i/o settings. </summary>
+    /// <value> The digital i/o settings. </value>
+    internal static DigitalIOSettings DigitalIOSettings { get; private set; } = new();
+
+    /// <summary>   Gets or sets the device errors settings. </summary>
+    /// <value> The device errors settings. </value>
+    internal static DeviceErrorsSettings DeviceErrorsSettings { get; private set; } = new();
+
+    /// <summary>   Gets or sets the system subsystem settings. </summary>
+    /// <value> The system subsystem settings. </value>
+    internal static VI.Settings.SystemSubsystemSettings SystemSubsystemSettings { get; private set; } = new();
+
+    /// <summary>   Gets or sets the sense subsystem settings. </summary>
+    /// <value> The sense subsystem settings. </value>
+    internal static VI.Settings.SenseSubsystemSettings SenseSubsystemSettings { get; private set; } = new();
+
+    /// <summary>   Gets or sets the sense resistance settings. </summary>
+    /// <value> The sense resistance settings. </value>
+    internal static SenseResistanceSettings SenseResistanceSettings { get; private set; } = new();
+
+    /// <summary>   Gets or sets source resistance settings. </summary>
+    /// <value> The source resistance settings. </value>
+    internal static SourceResistanceSettings SourceResistanceSettings { get; private set; } = new();
 
     /// <summary>   Gets or sets the resistance settings. </summary>
     /// <value> The resistance settings. </value>
     internal static ResistanceSettings ResistanceSettings { get; private set; } = new();
 
+    /// <summary>   Gets or sets the sense current settings. </summary>
+    /// <value> The sense current settings. </value>
+    internal static SenseCurrentSettings SenseCurrentSettings { get; private set; } = new();
+
+    /// <summary>   Gets or sets source current settings. </summary>
+    /// <value> The source current settings. </value>
+    internal static SourceCurrentSettings SourceCurrentSettings { get; private set; } = new();
+
     /// <summary>   Gets or sets the current source settings. </summary>
     /// <value> The current source settings. </value>
-    internal static CurrentSourceSettings CurrentSourceSettings { get; private set; } = new();
-
-    /// <summary>   Gets or sets the subsystems settings. </summary>
-    /// <value> The subsystems settings. </value>
-    internal static SubsystemsSettings SubsystemsSettings { get; private set; } = new();
-
-    /// <summary>   Gets or sets the device errors settings. </summary>
-    /// <value> The device errors settings. </value>
-    internal static DeviceErrorsSettings DeviceErrorsSettings { get; private set; } = new();
+    internal static CurrentSourceMeasureSettings CurrentSourceMeasureSettings { get; private set; } = new();
 
     #endregion
 }

@@ -16,18 +16,18 @@
 
   "ResourceSettings": {
     "Exists": true,
-    "ResourceModel": "2601B",
+    "ClosedCaption": "closed",
     "FirmwareRevision": "3.0.1",
+    "Language": "TSP",
+    "PingTimeout": "00:00:01.0000000",
+    "PingHops": 2,
+    "ResourceModel": "2601B",
     "ResourceName": "TCPIP0::192.168.0.150::inst0::INSTR",
     "2602": "1.4.2.4 TCPIP0::192.168.0.254::gpib0,26::INSTR",
     "2601A": "2.2.6   TCPIP0::192.168.0.50::inst0::INSTR",
     "2601B": "3.0.1   TCPIP0::192.168.0.150::inst0::INSTR",
     "2612A": "2.2.6   TCPIP0::192.168.0.150::inst0::INSTR",
     "7510": "4.0.0   TCPIP0::192.168.0.144::inst0::INSTR",
-    "ClosedCaption": "closed",
-    "Language": "TSP",
-    "PingTimeout": "00:00:01.0000000",
-    "PingHops": 2,
     "ResourceNameSelectionTimeout": "00:00:10"
   },
 
@@ -41,13 +41,20 @@
     "ExpectedErrorLevel": 20
   },
 
+  "IOSettings": {
+    "Exists": true,
+    "ReadTerminationEnabled": true,
+    "ReadTerminationCharacter": 10
+  },
+
+  "CommandsSettings": {
+    "Exists": true,
+    "KeepAliveQueryCommand": "*OPC?",
+    "KeepAliveCommand": "*OPC"
+  },
+
   "SubsystemsSettings": {
     "Exists": true,
-    "_VISA_SESSION_": "",
-    "KeepAliveQueryCommand": "*OPC?",
-    "KeepAliveCommand": "*OPC",
-    "ReadTerminationEnabled": true,
-    "ReadTerminationCharacter": 10,
     "_INITIAL_MEASURE_VALUES_": "",
     "InitialPowerLineCycles": 1,
     "InitialAutoZeroEnabled": true,
@@ -69,37 +76,75 @@
     "DigitalLineCount": 6
   },
 
-  "ResistanceSettings": {
+  "DigitalIOSettings": {
     "Exists": true,
-    "_MEASUREMENT_SETTINGS_": "",
+    "DigitalOutputLineNumber": 1,
+    "DigitalInputLineNumber": 2,
+    "DigitalLineCount": 6
+  },
+
+  "SenseSubsystemSettings": {
+    "Exists": true,
     "AutoZeroEnabled": true,
     "AutoRangeEnabled": true,
     "SenseFunction": "Resistance",
-    "PowerLineCycles": 1,
-    "_SOURCE_SETTINGS_": "",
+    "PowerLineCycles": 1
+  },
+
+  "SourceSubsystemSettings": {
+    "Exists": true,
     "FrontTerminalsSelected": true,
     "RemoteSenseSelected": true,
     "SourceFunction": "CurrentDC",
-    "SourceLevel": 0.02,
-    "_EXPECTED_VALUES_": "",
+    "SourceLevel": 0.02
+  },
+
+  "SystemSubsystemSettings": {
+    "Exists": true,
+    "LineFrequency": 60
+  },
+
+  "SenseResistanceSettings": {
+    "Exists": true,
+    "AutoZeroEnabled": true,
+    "AutoRangeEnabled": true,
+    "SenseFunction": "Resistance",
+    "PowerLineCycles": 1
+  },
+
+  "SourceResistanceSettings": {
+    "Exists": true,
+    "FrontTerminalsSelected": true,
+    "RemoteSenseSelected": true,
+    "SourceFunction": "CurrentDC",
+    "SourceLevel": 0.02
+  },
+
+  "ResistanceSettings": {
+    "Exists": true,
     "ExpectedResistance": 100,
     "ResistanceTolerance": 0.01
   },
 
-  "CurrentSourceSettings": {
+  "SenseVoltageSettings": {
     "Exists": true,
-    "_MEASUREMENT_SETTINGS_": "",
     "AutoZeroEnabled": true,
     "AutoRangeEnabled": true,
     "SenseFunction": "VoltageDC",
-    "PowerLineCycles": 1,
-    "_CURRENT_SOURCE_SETTINGS_": "",
+    "PowerLineCycles": 1
+  },
+
+  "SourceCurrentSettings": {
+    "Exists": true,
     "FrontTerminalsSelected": true,
     "RemoteSenseSelected": true,
     "SourceReadBackEnabled": true,
     "SourceFunction": "CurrentDC",
-    "SourceLevel": 0.01,
-    "_LOAD_VALUE_": "",
+    "SourceLevel": 0.01
+  },
+
+  "CurrentSourceMeasureSettings": {
+    "Exists": true,
     "LoadResistance": 100,
     "MeasurementTolerance": 0.01
   }

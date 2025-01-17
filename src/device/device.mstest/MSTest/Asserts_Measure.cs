@@ -7,11 +7,11 @@ public sealed partial class Asserts
     /// <summary> Assert initial subsystem values should match
     ///           . </summary>
     /// <param name="subsystem">      The subsystem. </param>
-    /// <param name="subsystemsInfo"> Information describing the subsystems. </param>
-    public static void AssertSubsystemInitialValuesShouldMatch( MeasureSubsystemBase subsystem, VI.Settings.SubsystemsSettings? subsystemsInfo )
+    /// <param name="subsystemInfo"> Information describing the subsystems. </param>
+    public static void AssertSubsystemInitialValuesShouldMatch( MeasureSubsystemBase subsystem, VI.Settings.SenseSubsystemSettings? subsystemInfo )
     {
         Assert.IsNotNull( subsystem, $"{nameof( subsystem )} should not be null." );
-        Assert.IsNotNull( subsystemsInfo, $"{nameof( subsystemsInfo )} should not be null." );
+        Assert.IsNotNull( subsystemInfo, $"{nameof( subsystemInfo )} should not be null." );
     }
 
     #endregion

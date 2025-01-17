@@ -73,7 +73,6 @@ public class CommandsSettings() : CommunityToolkit.Mvvm.ComponentModel.Observabl
         set => _ = this.SetProperty( ref this._identificationQueryCommand, value );
     }
 
-
     private string _operationCompleteCommand = "*OPC";
 
     /// <summary>   Gets or sets the operation completion command. Note that 

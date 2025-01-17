@@ -1,8 +1,8 @@
 {
   "ResourceSettings": {
     "Exists": true,
-    "FirmwareRevision": "2.2.6",
     "ClosedCaption": "closed",
+    "FirmwareRevision": "2.2.6",
     "Language": "TSP",
     "PingTimeout": "00:00:01.0000000",
     "PingHops": 2,

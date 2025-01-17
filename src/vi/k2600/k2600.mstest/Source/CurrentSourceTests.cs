@@ -84,7 +84,7 @@ public class CurrentSourceTests : cc.isr.VI.Device.MSTest.Base.TestBase
     {
         Assert.IsNotNull( device );
         Assert.IsNotNull( device.SourceSubsystem );
-        SourceFunctionMode expectedFunctionMode = Settings.AllSettings.CurrentSourceSettings.SourceFunction;
+        SourceFunctionMode expectedFunctionMode = Settings.AllSettings.SourceCurrentSettings.SourceFunction;
         SourceFunctionMode? sourceFunction = device.SourceSubsystem.ApplySourceFunction( expectedFunctionMode ).GetValueOrDefault( SourceFunctionMode.None );
         Assert.IsNotNull( sourceFunction );
         Assert.AreEqual( expectedFunctionMode, sourceFunction,

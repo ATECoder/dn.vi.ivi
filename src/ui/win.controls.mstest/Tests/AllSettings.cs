@@ -1,6 +1,6 @@
 using System;
 
-namespace cc.isr.VI.DeviceWinControls.Tests;
+namespace cc.isr.VI.WinControls.Tests;
 
 /// <summary>   A settings. </summary>
 /// <remarks>   David, 2021-02-01. </remarks>
@@ -83,7 +83,7 @@ public class AllSettings
         // get an instance of the settings file info first.
         AssemblyFileInfo settingsFileInfo = SettingsFileInfo;
 
-        AppSettingsScribe scribe = new( [TestSiteSettings, DisplayViewSettings],
+        AppSettingsScribe scribe = new( [TestSiteSettings, Settings],
             settingsFileInfo.AppContextAssemblyFilePath!, settingsFileInfo.AllUsersAssemblyFilePath! )
         {
             AllUsersSettingsPath = settingsFileInfo.AllUsersAssemblyFilePath,
@@ -122,9 +122,9 @@ public class AllSettings
     /// <value> The test site settings. </value>
     internal static TestSiteSettings TestSiteSettings { get; private set; } = new();
 
-    /// <summary>   Gets or sets the display view settings. </summary>
-    /// <value> The display view settings. </value>
-    internal static Views.DisplayViewSettings DisplayViewSettings { get; private set; } = new();
+    /// <summary>   Gets or sets the <see cref="Properties.Settings"/>. </summary>
+    /// <value> The Win Controls settings. </value>
+    internal static cc.isr.Logging.TraceLog.TraceLogSettings TraceLogSettings { get; private set; } = new();
 
     #endregion
 }

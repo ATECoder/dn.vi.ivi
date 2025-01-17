@@ -1,8 +1,7 @@
 using System;
 using cc.isr.VI.Device.MSTest.Base;
-using cc.isr.VI.DeviceWinControls.Views;
 
-namespace cc.isr.VI.DeviceWinControls.Tests;
+namespace cc.isr.VI.SubsystemsWinControls.Tests;
 
 public sealed partial class Asserts
 {
@@ -17,90 +16,6 @@ public sealed partial class Asserts
         Assert.IsTrue( resourceSettings.Exists, $"{nameof( resourceSettings )} should exist int he settings file." );
         Assert.IsTrue( string.Equals( resourceSettings.ResourceModel, subsystem.VersionInfoBase.Model, StringComparison.OrdinalIgnoreCase ),
             $"Resource settings model {resourceSettings.ResourceModel} should equal the model from {subsystem.ResourceNameCaption} Identity '{subsystem.VersionInfoBase.Identity}'" );
-    }
-
-    /// <summary>   Assert resource name should be selected. </summary>
-    /// <remarks>
-    /// Visa Tree View Timing:<para>
-    /// Ping elapsed 0.119   </para><para>
-    /// Create device 0.125   </para><para>
-    /// Session Factory enumerating resource names 0.388   </para><para>
-    /// Connector listing resource names 0.002   </para><para>
-    /// Session factory listing resource names 0.000   </para><para>
-    /// Session factory selecting TCPIP0:192.168.0.254:gpib0,22:INSTR selected  0.337   </para><para>
-    /// Factory selected resource 0.000   </para><para>
-    /// Check selected resource name 2.293   </para><para>
-    /// </para>
-    /// Visa View Timing:<para>
-    /// Ping elapsed 0.123   </para><para>
-    /// Create device 0.097   </para><para>
-    /// Session Factory enumerating resource names 0.369   </para><para>
-    /// Connector listing resource names 0.005   </para><para>
-    /// Session factory listing resource names 0.000   </para><para>
-    /// Session factory selecting TCPIP0:192.168.0.254:gpib0,22:INSTR selected  0.354   </para><para>
-    /// Factory selected resource 0.000   </para><para>
-    /// Check selected resource name 2.298   </para><para>
-    /// </para>
-    /// </remarks>
-    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
-    ///                                             null. </exception>
-    /// <param name="testInfo">         Information describing the test. </param>
-    /// <param name="visaView">         The visa view control. </param>
-    /// <param name="resourceSettings"> The resource settings. </param>
-    public static void AssertResourceNameShouldBeSelected( IVisaView visaView, Pith.Settings.ResourceSettings? resourceSettings )
-    {
-        Assert.IsNotNull( visaView, $"{nameof( visaView )} should not be null." );
-        Assert.IsNotNull( visaView.VisaSessionBase );
-        Assert.IsNotNull( visaView.VisaSessionBase.Session );
-
-        Assert.IsNotNull( resourceSettings, $"{nameof( resourceSettings )} should not be null." );
-        Assert.IsTrue( resourceSettings.Exists, $"{nameof( resourceSettings )} should exist int he settings file." );
-
-        Stopwatch sw = Stopwatch.StartNew();
-        VisaSessionBase sessionBase = visaView.VisaSessionBase;
-        Assert.IsNotNull( sessionBase.Session );
-        Assert.IsFalse( string.IsNullOrEmpty( sessionBase.Session.ResourcesFilter ), "Resources filter should be defined" );
-        string activity = "Session Factory enumerating resource names";
-        Assert.IsNotNull( sessionBase.SessionFactory );
-        SessionFactory factory = sessionBase.SessionFactory;
-        // enumerate resources without filtering
-        _ = factory.EnumerateResources( false );
-        Console.Out.WriteLine( $"{activity} {sw.Elapsed:s\\.fff}" );
-        sw.Restart();
-        bool actualBoolean = factory.HasResources;
-        bool expectedBoolean = true;
-        Assert.AreEqual( expectedBoolean, actualBoolean, $"{activity} should succeed" );
-
-        activity = "Connector listing resource names";
-        actualBoolean = visaView.ResourceNamesCount > 0;
-        expectedBoolean = true;
-        Console.Out.WriteLine( $"{activity} {sw.Elapsed:s\\.fff}" );
-        sw.Restart();
-        Assert.AreEqual( expectedBoolean, actualBoolean, $"{activity} should succeed" );
-
-        activity = "Session factory listing resource names";
-        actualBoolean = sessionBase.SessionFactory.ResourceNames.Count > 0;
-        expectedBoolean = true;
-        Console.Out.WriteLine( $"{activity} {sw.Elapsed:s\\.fff}" );
-        sw.Restart();
-        Assert.AreEqual( expectedBoolean, actualBoolean, $"{activity} should succeed" );
-
-        activity = $"Session factory selecting {resourceSettings.ResourceName} selected {factory.ValidatedResourceName}";
-        (bool success, string details) = factory.TryValidateResource( resourceSettings.ResourceName );
-        Console.Out.WriteLine( $"{activity} {sw.Elapsed:s\\.fff}" );
-        sw.Restart();
-        Assert.IsTrue( success, $"{activity} should succeed: {details}" );
-
-        actualBoolean = !string.IsNullOrWhiteSpace( factory.ValidatedResourceName );
-        expectedBoolean = true;
-        Assert.AreEqual( expectedBoolean, actualBoolean, $"Resource {resourceSettings.ResourceName} not found" );
-
-        activity = "Factory selected resource";
-        string actualResource = factory.ValidatedResourceName;
-        string expectedResource = resourceSettings.ResourceName;
-        Console.Out.WriteLine( $"{activity} {sw.Elapsed:s\\.fff}" );
-        sw.Restart();
-        Assert.AreEqual( expectedResource, actualResource, $"{activity} should match" );
     }
 
     /// <summary>   Assert session resource names should match. </summary>
@@ -193,23 +108,6 @@ public sealed partial class Asserts
             _ = visaSessionBase.Session.TryQueryAndReportDeviceErrors( visaSessionBase.Session.ReadStatusByte() );
     }
 
-    /// <summary>   Assert Visa View session should open. </summary>
-    /// <remarks>   David, 2021-07-06. </remarks>
-    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
-    ///                                             null. </exception>
-    /// <param name="testInfo">         Information describing the test. </param>
-    /// <param name="trialNumber">      The trial number. </param>
-    /// <param name="visaView">         The View control. </param>
-    /// <param name="resourceSettings"> The resource settings. </param>
-    public static void AssertVisaViewSessionShouldOpen( int trialNumber, IVisaView visaView, Pith.Settings.ResourceSettings? resourceSettings )
-    {
-        Assert.IsNotNull( visaView, $"{nameof( visaView )} should not be null." );
-        Assert.IsNotNull( visaView.VisaSessionBase );
-        Assert.IsNotNull( visaView.VisaSessionBase.Session );
-
-        AssertVisaSessionBaseShouldOpen( trialNumber, visaView.VisaSessionBase, resourceSettings );
-    }
-
     /// <summary>   Assert session should close. </summary>
     /// <remarks>   David, 2021-07-06. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
@@ -245,40 +143,5 @@ public sealed partial class Asserts
         actualBoolean = visaSessionBase.IsDeviceOpen;
         expectedBoolean = false;
         Assert.AreEqual( expectedBoolean, actualBoolean, $"{trialNumber} closing session {visaSessionBase.OpenResourceName} device still open" );
-    }
-
-    /// <summary>   Assert visa view session should close. </summary>
-    /// <remarks>   David, 2021-07-06. </remarks>
-    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
-    ///                                             null. </exception>
-    /// <param name="testInfo">     Information describing the test. </param>
-    /// <param name="trialNumber">  The trial number. </param>
-    /// <param name="visaView">     The control. </param>
-    public static void AssertVisaViewSessionShouldClose( int trialNumber, IVisaView visaView )
-    {
-        Assert.IsNotNull( visaView, $"{nameof( visaView )} should not be null." );
-        Assert.IsNotNull( visaView.VisaSessionBase );
-        AssertVisaSessionBaseShouldClose( trialNumber, visaView.VisaSessionBase );
-    }
-
-    /// <summary>   Assert visa view session should open and close. </summary>
-    /// <remarks>   David, 2021-07-06. </remarks>
-    /// <param name="trialNumber">      The trial number. </param>
-    /// <param name="visaView">         The control. </param>
-    /// <param name="resourceSettings"> The resource settings. </param>
-    public static void AssertVisaViewSessionShouldOpenAndClose( int trialNumber, IVisaView visaView, Pith.Settings.ResourceSettings? resourceSettings )
-    {
-        try
-        {
-            AssertVisaViewSessionShouldOpen( trialNumber, visaView, resourceSettings );
-        }
-        catch
-        {
-            throw;
-        }
-        finally
-        {
-            AssertVisaViewSessionShouldClose( trialNumber, visaView );
-        }
     }
 }

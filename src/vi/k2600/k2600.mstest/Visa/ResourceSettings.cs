@@ -2,7 +2,7 @@ namespace cc.isr.VI.Tsp.K2600.MSTest.Visa;
 
 /// <summary>   The Resource Settings class. </summary>
 /// <remarks>   David, 2021-06/30. </remarks>
-public class ResourceSettings : VI.Device.MSTest.Settings.ResourceSettingsBase
+public class ResourceSettings : Pith.Settings.ResourceSettings
 {
     #region " construction "
 
@@ -19,7 +19,7 @@ public class ResourceSettings : VI.Device.MSTest.Settings.ResourceSettingsBase
     /// <remarks>   2024-08-03. </remarks>
     public void ReadSettings()
     {
-        AppSettingsScribe.ReadSettings( Settings.AllSettings.SettingsFileInfo.AllUsersAssemblyFilePath!, nameof( ResourceSettings ), Settings.AllSettings.SubsystemsSettings );
+        AppSettingsScribe.ReadSettings( Settings.AllSettings.SettingsFileInfo.AllUsersAssemblyFilePath!, nameof( ResourceSettings ), Settings.AllSettings.DigitalIOSettings );
     }
 
     #endregion

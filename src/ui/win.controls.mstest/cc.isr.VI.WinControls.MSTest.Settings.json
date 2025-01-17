@@ -1,10 +1,4 @@
 {
-  "Settings": {
-    "Exists": true,
-    "TraceLevel": "Verbose",
-    "MessageDisplayLevel": "Verbose"
-  },
-
   "TestSiteSettings": {
     "Exists": true,
     "Enabled": true,
@@ -13,6 +7,11 @@
     "IPv4Prefixes": "192.168|10.1",
     "TimeZones": "Pacific Standard Time|Central Standard Time",
     "TimeZoneOffsets": "-8|-6"
-  }
+  },
 
+  "TraceLogSettings": {
+    "Exists": true,
+    "TraceLevel": "Verbose",
+    "MessageDisplayLevel": "Verbose"
+  }
 }

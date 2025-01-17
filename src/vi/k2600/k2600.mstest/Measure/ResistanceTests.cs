@@ -84,7 +84,7 @@ public class ResistanceTests : cc.isr.VI.Device.MSTest.Base.TestBase
     {
         Assert.IsNotNull( device );
         Assert.IsNotNull( device.SourceSubsystem );
-        SourceFunctionMode expectedFunctionMode = Settings.AllSettings.ResistanceSettings.SourceFunction;
+        SourceFunctionMode expectedFunctionMode = Settings.AllSettings.SourceResistanceSettings.SourceFunction;
         SourceFunctionMode? sourceFunction = device.SourceSubsystem.ApplySourceFunction( expectedFunctionMode ).GetValueOrDefault( SourceFunctionMode.None );
         Assert.AreEqual( expectedFunctionMode, sourceFunction,
             $"{typeof( SourceSubsystemBase )}.{nameof( SourceSubsystemBase.SourceFunction )} is {sourceFunction} ; expected {expectedFunctionMode}" );

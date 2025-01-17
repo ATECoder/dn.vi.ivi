@@ -8,15 +8,16 @@ public sealed partial class Asserts
 {
     #region " route subsystem "
 
-    /// <summary> Assert initial subsystem values should match. </summary>
-    /// <param name="subsystem">      The subsystem. </param>
-    /// <param name="subsystemsInfo"> Information describing the subsystems. </param>
-    public static void AssertSubsystemInitialValuesShouldMatch( RouteSubsystemBase? subsystem, VI.Settings.SubsystemsSettings? subsystemsInfo )
+    /// <summary>   Assert initial subsystem values should match. </summary>
+    /// <remarks>   2025-01-17. </remarks>
+    /// <param name="subsystem">            The subsystem. </param>
+    /// <param name="routeSubsystemsInfo">  Information describing the route subsystems. </param>
+    public static void AssertSubsystemInitialValuesShouldMatch( RouteSubsystemBase? subsystem, VI.Settings.RouteSubsystemSettings? routeSubsystemsInfo )
     {
         Assert.IsNotNull( subsystem, $"{nameof( subsystem )} should not be null." );
-        Assert.IsNotNull( subsystemsInfo, $"{nameof( subsystemsInfo )} should not be null." );
+        Assert.IsNotNull( routeSubsystemsInfo, $"{nameof( routeSubsystemsInfo )} should not be null." );
         string propertyName = nameof( RouteSubsystemBase.ClosedChannels ).SplitWords();
-        string expectedClosedChannels = subsystemsInfo.InitialClosedChannels;
+        string expectedClosedChannels = routeSubsystemsInfo.InitialClosedChannels;
         if ( subsystem.SupportsClosedChannelsQuery )
         {
             string? actualClosedChannels = subsystem.QueryClosedChannels();
@@ -26,7 +27,7 @@ public sealed partial class Asserts
         if ( !subsystem.ScanListPersists )
         {
             propertyName = nameof( RouteSubsystemBase.ScanList ).SplitWords();
-            string expectedScanList = subsystemsInfo.InitialScanList;
+            string expectedScanList = routeSubsystemsInfo.InitialScanList;
             string? actualScanList = subsystem.QueryScanList();
             Assert.AreEqual( expectedScanList, actualScanList, $"{subsystem.ResourceNameCaption} initial {propertyName} should be expected" );
         }
@@ -51,31 +52,32 @@ public sealed partial class Asserts
         Assert.AreEqual( existingSettlingTime, actualSettlingTime, $"{subsystem.ResourceNameCaption} slot card #{cardNumber} restored {propertyName} should be expected" );
     }
 
-    /// <summary> Assert scan card installed should match. </summary>
-    /// <remarks> David, 2020-04-04. </remarks>
-    /// <param name="subsystem">      The subsystem. </param>
-    /// <param name="subsystemsInfo"> Information describing the subsystems. </param>
-    public static void AssertScanCardInstalledShouldMatch( SystemSubsystemBase? subsystem, VI.Settings.SubsystemsSettings? subsystemsInfo )
+    /// <summary>   Assert scan card installed should match. </summary>
+    /// <remarks>   David, 2020-04-04. </remarks>
+    /// <param name="subsystem">                The subsystem. </param>
+    /// <param name="scannerSubsystemsInfo">    Information describing the scanner subsystems. </param>
+    public static void AssertScanCardInstalledShouldMatch( SystemSubsystemBase? subsystem, VI.Settings.ScannerSubsystemSettings? scannerSubsystemsInfo )
     {
         Assert.IsNotNull( subsystem, $"{nameof( subsystem )} should not be null." );
-        Assert.IsNotNull( subsystemsInfo, $"{nameof( subsystemsInfo )} should not be null." );
-        Assert.AreEqual( subsystemsInfo.ScanCardInstalled, subsystem.InstalledScanCards.Any(), $"Scan card should {(subsystemsInfo.ScanCardInstalled ? string.Empty : "not")} be installed" );
+        Assert.IsNotNull( scannerSubsystemsInfo, $"{nameof( scannerSubsystemsInfo )} should not be null." );
+        Assert.AreEqual( scannerSubsystemsInfo.ScanCardInstalled, subsystem.InstalledScanCards.Any(), $"Scan card should {(scannerSubsystemsInfo.ScanCardInstalled ? string.Empty : "not")} be installed" );
     }
 
-    /// <summary> Assert scan card internal scan should set. </summary>
-    /// <remarks> David, 2020-04-04. </remarks>
-    /// <param name="routeSubsystem">  The route subsystem. </param>
-    /// <param name="systemSubsystem"> The system subsystem. </param>
-    /// <param name="subsystemsInfo">  Information describing the subsystems. </param>
-    public static void AssertScanCardInternalScanShouldSet( RouteSubsystemBase? routeSubsystem, SystemSubsystemBase? systemSubsystem, VI.Settings.SubsystemsSettings? subsystemsInfo )
+    /// <summary>   Assert scan card internal scan should set. </summary>
+    /// <remarks>   David, 2020-04-04. </remarks>
+    /// <param name="routeSubsystem">       The route subsystem. </param>
+    /// <param name="systemSubsystem">      The system subsystem. </param>
+    /// <param name="routeSubsystemsInfo">  Information describing the route subsystems. </param>
+    public static void AssertScanCardInternalScanShouldSet( RouteSubsystemBase? routeSubsystem, SystemSubsystemBase? systemSubsystem,
+        VI.Settings.RouteSubsystemSettings? routeSubsystemsInfo )
     {
         if ( systemSubsystem is null || !systemSubsystem.InstalledScanCards.Any() )
             return;
         Assert.IsNotNull( routeSubsystem, $"{nameof( routeSubsystem )} should not be null." );
         Assert.IsNotNull( systemSubsystem, $"{nameof( systemSubsystem )} should not be null." );
-        Assert.IsNotNull( subsystemsInfo, $"{nameof( subsystemsInfo )} should not be null." );
+        Assert.IsNotNull( routeSubsystemsInfo, $"{nameof( routeSubsystemsInfo )} should not be null." );
 
-        string expectedScanList = subsystemsInfo.InitialScanList;
+        string expectedScanList = routeSubsystemsInfo.InitialScanList;
         string? actualScanList = routeSubsystem.QueryScanList();
         Assert.AreEqual( expectedScanList, actualScanList, $"Scan list should be '{expectedScanList}'" );
         expectedScanList = "(@1,2)";

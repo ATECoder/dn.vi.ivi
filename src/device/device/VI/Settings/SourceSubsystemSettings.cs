@@ -1,13 +1,15 @@
-using System.Collections.Generic;
 using System.ComponentModel;
-using System;
+using DescriptionAttribute = System.ComponentModel.DescriptionAttribute;
 
-namespace cc.isr.VI.Tsp.K2600.MSTest.Measure;
+namespace cc.isr.VI.Settings;
 
-/// <summary> A Resistance measurement Test settings. </summary>
-/// <remarks> <para>
-/// David, 2018-02-12 </para></remarks>
-public class ResistanceSettings() : INotifyPropertyChanged
+/// <summary>   The Route Subsystem Test Settings base class. </summary>
+/// <remarks>
+/// <para>
+/// David, 2018-02-12 </para>
+/// </remarks>
+[CLSCompliant( false )]
+public class SourceSubsystemSettings() : INotifyPropertyChanged
 {
     #region " notify property change implementation "
 
@@ -98,39 +100,104 @@ public class ResistanceSettings() : INotifyPropertyChanged
 
     #endregion
 
-    #region " scribe "
+    #region " exists "
 
-    /// <summary>   Reads the settings. </summary>
-    /// <remarks>   2024-08-03. </remarks>
-    public void ReadSettings()
+    private bool _exists;
+
+    /// <summary>
+    /// Gets or sets a value indicating whether this settings section exists and the values were thus
+    /// fetched from the settings file.
+    /// </summary>
+    /// <value> True if this settings section exists in the settings file, false if not. </value>
+	[Description( "True if this settings section exists and was read from the JSon settings file." )]
+    public bool Exists
     {
-        AppSettingsScribe.ReadSettings( Settings.AllSettings.SettingsFileInfo.AllUsersAssemblyFilePath!, nameof( ResistanceSettings ), Settings.AllSettings.ResistanceSettings );
+        get => this._exists;
+        set => _ = this.SetProperty( ref this._exists, value );
     }
 
     #endregion
 
-    #region " resistance information "
+    #region " initial values "
 
-    private double _expectedResistance = 100;
+    private SourceFunctionModes _initialSourceFunction = SourceFunctionModes.VoltageDC;
 
-    /// <summary>   Gets or sets the expected resistance. </summary>
-    /// <value> The expected resistance. </value>
-	public double ExpectedResistance
+    /// <summary> Gets or sets the initial source function mode. </summary>
+    /// <value> The initial source function mode. </value>
+	public virtual SourceFunctionModes InitialSourceFunction
     {
-        get => this._expectedResistance;
-        set => this.SetProperty( ref this._expectedResistance, value );
+        get => this._initialSourceFunction;
+        set => _ = this.SetProperty( ref this._initialSourceFunction, value );
     }
 
-    private double _resistanceTolerance = 0.01;
+    private double _initialSourceLevel;
 
-    /// <summary>   Gets or sets the resistance tolerance. </summary>
-    /// <value> The resistance tolerance. </value>
-	public double ResistanceTolerance
+    /// <summary> Gets or sets the initial source level. </summary>
+    /// <value> The initial source level. </value>
+	public virtual double InitialSourceLevel
     {
-        get => this._resistanceTolerance;
-        set => this.SetProperty( ref this._resistanceTolerance, value );
+        get => this._initialSourceLevel;
+        set => _ = this.SetProperty( ref this._initialSourceLevel, value );
+    }
+
+    private double _initialSourceLimit = 0.000105;
+
+    /// <summary> Gets or sets the initial source limit. </summary>
+    /// <value> The initial source limit. </value>
+	public virtual double InitialSourceLimit
+    {
+        get => this._initialSourceLimit;
+        set => _ = this.SetProperty( ref this._initialSourceLimit, value );
+    }
+
+    private double _maximumOutputPower;
+
+    /// <summary> Gets or sets the maximum output power of the instrument. </summary>
+    /// <value> The maximum output power . </value>
+	public virtual double MaximumOutputPower
+    {
+        get => this._maximumOutputPower;
+        set => _ = this.SetProperty( ref this._maximumOutputPower, value );
     }
 
     #endregion
+
+    #region " source subsystem information "
+
+    private bool _sourceReadBackEnabled = true;
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the source read back is enabled.
+    /// </summary>
+    /// <value> True if source read back enabled, false if not. </value>
+	public bool SourceReadBackEnabled
+    {
+        get => this._sourceReadBackEnabled;
+        set => this.SetProperty( ref this._sourceReadBackEnabled, value );
+    }
+
+    private bool _frontTerminalsSelected = true;
+
+    /// <summary>   Gets or sets a value indicating whether the front terminals selected. </summary>
+    /// <value> True if front terminals selected, false if not. </value>
+	public bool FrontTerminalsSelected
+    {
+        get => this._frontTerminalsSelected;
+        set => this.SetProperty( ref this._frontTerminalsSelected, value );
+    }
+
+    private double _sourceLevel = 0.02;
+
+    /// <summary>   Gets or sets source level. </summary>
+    /// <value> The source level. </value>
+	public double SourceLevel
+    {
+        get => this._sourceLevel;
+        set => this.SetProperty( ref this._sourceLevel, value );
+    }
+
+    #endregion
+
+
 }
 

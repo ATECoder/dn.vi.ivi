@@ -1,6 +1,6 @@
 using System;
 
-namespace cc.isr.VI.DeviceWinControls.Tests;
+namespace cc.isr.VI.SubsystemsWinControls.Tests;
 
 /// <summary>   A settings. </summary>
 /// <remarks>   David, 2021-02-01. </remarks>
@@ -83,7 +83,7 @@ public class AllSettings
         // get an instance of the settings file info first.
         AssemblyFileInfo settingsFileInfo = SettingsFileInfo;
 
-        AppSettingsScribe scribe = new( [TestSiteSettings, DisplayViewSettings],
+        AppSettingsScribe scribe = new( [TestSiteSettings, BufferStreamViewSettings, DigitalOutputViewSettings],
             settingsFileInfo.AppContextAssemblyFilePath!, settingsFileInfo.AllUsersAssemblyFilePath! )
         {
             AllUsersSettingsPath = settingsFileInfo.AllUsersAssemblyFilePath,
@@ -122,9 +122,13 @@ public class AllSettings
     /// <value> The test site settings. </value>
     internal static TestSiteSettings TestSiteSettings { get; private set; } = new();
 
-    /// <summary>   Gets or sets the display view settings. </summary>
-    /// <value> The display view settings. </value>
-    internal static Views.DisplayViewSettings DisplayViewSettings { get; private set; } = new();
+    /// <summary>   Gets or sets the buffer stream view settings. </summary>
+    /// <value> The buffer stream view settings. </value>
+    internal static BufferStreamViewSettings BufferStreamViewSettings { get; private set; } = new();
+
+    /// <summary>   Gets or sets the digital output view settings. </summary>
+    /// <value> The digital output view settings. </value>
+    internal static DigitalOutputViewSettings DigitalOutputViewSettings { get; private set; } = new();
 
     #endregion
 }

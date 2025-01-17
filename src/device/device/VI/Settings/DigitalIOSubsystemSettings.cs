@@ -1,13 +1,15 @@
-using System.Collections.Generic;
 using System.ComponentModel;
-using System;
+using DescriptionAttribute = System.ComponentModel.DescriptionAttribute;
 
-namespace cc.isr.VI.Tsp.K2600.MSTest.Measure;
+namespace cc.isr.VI.Settings;
 
-/// <summary> A Resistance measurement Test settings. </summary>
-/// <remarks> <para>
-/// David, 2018-02-12 </para></remarks>
-public class ResistanceSettings() : INotifyPropertyChanged
+/// <summary>   The Route Subsystem Test Settings base class. </summary>
+/// <remarks>
+/// <para>
+/// David, 2018-02-12 </para>
+/// </remarks>
+[CLSCompliant( false )]
+public class DigitalIOSubsystemSettings() : INotifyPropertyChanged
 {
     #region " notify property change implementation "
 
@@ -98,37 +100,54 @@ public class ResistanceSettings() : INotifyPropertyChanged
 
     #endregion
 
-    #region " scribe "
+    #region " exists "
 
-    /// <summary>   Reads the settings. </summary>
-    /// <remarks>   2024-08-03. </remarks>
-    public void ReadSettings()
+    private bool _exists;
+
+    /// <summary>
+    /// Gets or sets a value indicating whether this settings section exists and the values were thus
+    /// fetched from the settings file.
+    /// </summary>
+    /// <value> True if this settings section exists in the settings file, false if not. </value>
+	[Description( "True if this settings section exists and was read from the JSon settings file." )]
+    public bool Exists
     {
-        AppSettingsScribe.ReadSettings( Settings.AllSettings.SettingsFileInfo.AllUsersAssemblyFilePath!, nameof( ResistanceSettings ), Settings.AllSettings.ResistanceSettings );
+        get => this._exists;
+        set => _ = this.SetProperty( ref this._exists, value );
     }
 
     #endregion
 
-    #region " resistance information "
+    #region " digital i/o subsystem settings "
 
-    private double _expectedResistance = 100;
+    private int _digitalOutputLineNumber = 1;
 
-    /// <summary>   Gets or sets the expected resistance. </summary>
-    /// <value> The expected resistance. </value>
-	public double ExpectedResistance
+    /// <summary>   Gets or sets the digital output line number. </summary>
+    /// <value> The digital output line number. </value>
+	public virtual int DigitalOutputLineNumber
     {
-        get => this._expectedResistance;
-        set => this.SetProperty( ref this._expectedResistance, value );
+        get => this._digitalOutputLineNumber;
+        set => this.SetProperty( ref this._digitalOutputLineNumber, value );
     }
 
-    private double _resistanceTolerance = 0.01;
+    private int _digitalInputLineNumber = 2;
 
-    /// <summary>   Gets or sets the resistance tolerance. </summary>
-    /// <value> The resistance tolerance. </value>
-	public double ResistanceTolerance
+    /// <summary>   Gets or sets the digital input line number. </summary>
+    /// <value> The digital input line number. </value>
+	public virtual int DigitalInputLineNumber
     {
-        get => this._resistanceTolerance;
-        set => this.SetProperty( ref this._resistanceTolerance, value );
+        get => this._digitalInputLineNumber;
+        set => this.SetProperty( ref this._digitalInputLineNumber, value );
+    }
+
+    private int _digitalLineCount = 6;
+
+    /// <summary>   Gets or sets the number of digital lines. </summary>
+    /// <value> The number of digital lines. </value>
+	public virtual int DigitalLineCount
+    {
+        get => this._digitalLineCount;
+        set => this.SetProperty( ref this._digitalLineCount, value );
     }
 
     #endregion

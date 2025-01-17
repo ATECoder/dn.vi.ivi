@@ -7,41 +7,46 @@ public sealed partial class Asserts
 {
     #region " status subsystem "
 
-    /// <summary> Assert line frequency should match. </summary>
-    /// <param name="subsystem">      The subsystem. </param>
-    /// <param name="subsystemsInfo"> Information describing the subsystems. </param>
-    public static void AssertLineFrequencyShouldMatch( StatusSubsystemBase subsystem, VI.Settings.SubsystemsSettings? subsystemsInfo )
+    /// <summary>   Assert line frequency should match. </summary>
+    /// <remarks>   2025-01-17. </remarks>
+    /// <param name="subsystem">            The subsystem. </param>
+    /// <param name="systemSubsystemsInfo"> Information describing the system subsystems. </param>
+    public static void AssertLineFrequencyShouldMatch( StatusSubsystemBase subsystem, VI.Settings.SystemSubsystemSettings? systemSubsystemsInfo )
     {
         System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
         string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
         Console.WriteLine( $"@{methodFullName}" );
 
         Assert.IsNotNull( subsystem, $"{nameof( subsystem )} should not be null." );
-        Assert.IsNotNull( subsystemsInfo, $"{nameof( subsystemsInfo )} should not be null." );
+        Assert.IsNotNull( systemSubsystemsInfo, $"{nameof( systemSubsystemsInfo )} should not be null." );
         string propertyName = nameof( StatusSubsystemBase.LineFrequency ).SplitWords();
         double actualFrequency = subsystem.LineFrequency.GetValueOrDefault( 0d );
-        Assert.AreEqual( subsystemsInfo.LineFrequency, actualFrequency, $"{subsystem.ResourceNameCaption} {propertyName} should match" );
+        Assert.AreEqual( systemSubsystemsInfo.LineFrequency, actualFrequency, $"{subsystem.ResourceNameCaption} {propertyName} should match" );
     }
 
-    /// <summary> Assert integration period should match. </summary>
-    /// <param name="subsystem">      The subsystem. </param>
-    /// <param name="subsystemsInfo"> Information describing the subsystems. </param>
-    public static void AssertIntegrationPeriodShouldMatch( StatusSubsystemBase subsystem, VI.Settings.SubsystemsSettings? subsystemsInfo )
+    /// <summary>   Assert integration period should match. </summary>
+    /// <remarks>   2025-01-17. </remarks>
+    /// <param name="subsystem">            The subsystem. </param>
+    /// <param name="senseSubsystemInfo">   Information describing the sense subsystem. </param>
+    /// <param name="systemSubsystemInfo">  Information describing the system subsystem. </param>
+    public static void AssertIntegrationPeriodShouldMatch( StatusSubsystemBase subsystem, VI.Settings.SenseSubsystemSettings? senseSubsystemInfo,
+        VI.Settings.SystemSubsystemSettings? systemSubsystemInfo )
     {
         System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
         string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
         Console.WriteLine( $"@{methodFullName}" );
 
         Assert.IsNotNull( subsystem, $"{nameof( subsystem )} should not be null." );
-        Assert.IsNotNull( subsystemsInfo, $"{nameof( subsystemsInfo )} should not be null." );
+        Assert.IsNotNull( senseSubsystemInfo, $"{nameof( senseSubsystemInfo )} should not be null." );
+        Assert.IsNotNull( systemSubsystemInfo, $"{nameof( systemSubsystemInfo )} should not be null." );
         string propertyName = "Integration Period";
-        double expectedPowerLineCycles = subsystemsInfo.InitialPowerLineCycles;
-        TimeSpan expectedIntegrationPeriod = StatusSubsystemBase.FromSecondsPrecise( expectedPowerLineCycles / subsystemsInfo.LineFrequency );
+        double expectedPowerLineCycles = senseSubsystemInfo.InitialPowerLineCycles;
+        TimeSpan expectedIntegrationPeriod = StatusSubsystemBase.FromSecondsPrecise( expectedPowerLineCycles / systemSubsystemInfo.LineFrequency );
         TimeSpan actualIntegrationPeriod = StatusSubsystemBase.FromPowerLineCycles( expectedPowerLineCycles );
         Assert.AreEqual( expectedIntegrationPeriod, actualIntegrationPeriod, $"{propertyName} for {expectedPowerLineCycles} power line cycles is {actualIntegrationPeriod}; expected {expectedIntegrationPeriod}" );
         propertyName = "Power line cycles";
         double actualPowerLineCycles = StatusSubsystemBase.ToPowerLineCycles( actualIntegrationPeriod );
-        Assert.AreEqual( expectedPowerLineCycles, actualPowerLineCycles, subsystemsInfo.LineFrequency / TimeSpan.TicksPerSecond, $"{propertyName} is {actualPowerLineCycles:G5}; expected {expectedPowerLineCycles:G5}" );
+        Assert.AreEqual( expectedPowerLineCycles, actualPowerLineCycles, systemSubsystemInfo.LineFrequency / TimeSpan.TicksPerSecond, $"{propertyName} is {actualPowerLineCycles:G5}; expected {expectedPowerLineCycles:G5}" );
     }
 
     /// <summary> Assert device model should match. </summary>

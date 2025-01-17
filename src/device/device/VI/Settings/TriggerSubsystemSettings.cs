@@ -1,13 +1,15 @@
-using System.Collections.Generic;
 using System.ComponentModel;
-using System;
+using DescriptionAttribute = System.ComponentModel.DescriptionAttribute;
 
-namespace cc.isr.VI.Tsp.K2600.MSTest.Measure;
+namespace cc.isr.VI.Settings;
 
-/// <summary> A Resistance measurement Test settings. </summary>
-/// <remarks> <para>
-/// David, 2018-02-12 </para></remarks>
-public class ResistanceSettings() : INotifyPropertyChanged
+/// <summary>   The Route Subsystem Test Settings base class. </summary>
+/// <remarks>
+/// <para>
+/// David, 2018-02-12 </para>
+/// </remarks>
+[CLSCompliant( false )]
+public class TriggerSubsystemSettings() : INotifyPropertyChanged
 {
     #region " notify property change implementation "
 
@@ -98,37 +100,34 @@ public class ResistanceSettings() : INotifyPropertyChanged
 
     #endregion
 
-    #region " scribe "
+    #region " exists "
 
-    /// <summary>   Reads the settings. </summary>
-    /// <remarks>   2024-08-03. </remarks>
-    public void ReadSettings()
+    private bool _exists;
+
+    /// <summary>
+    /// Gets or sets a value indicating whether this settings section exists and the values were thus
+    /// fetched from the settings file.
+    /// </summary>
+    /// <value> True if this settings section exists in the settings file, false if not. </value>
+	[Description( "True if this settings section exists and was read from the JSon settings file." )]
+    public bool Exists
     {
-        AppSettingsScribe.ReadSettings( Settings.AllSettings.SettingsFileInfo.AllUsersAssemblyFilePath!, nameof( ResistanceSettings ), Settings.AllSettings.ResistanceSettings );
+        get => this._exists;
+        set => _ = this.SetProperty( ref this._exists, value );
     }
 
     #endregion
 
-    #region " resistance information "
+    #region " initial values "
 
-    private double _expectedResistance = 100;
+    private TriggerSources _initialTriggerSource = TriggerSources.Immediate;
 
-    /// <summary>   Gets or sets the expected resistance. </summary>
-    /// <value> The expected resistance. </value>
-	public double ExpectedResistance
+    /// <summary> Gets or sets the initial trigger source. </summary>
+    /// <value> The initial trigger source. </value>
+	public virtual TriggerSources InitialTriggerSource
     {
-        get => this._expectedResistance;
-        set => this.SetProperty( ref this._expectedResistance, value );
-    }
-
-    private double _resistanceTolerance = 0.01;
-
-    /// <summary>   Gets or sets the resistance tolerance. </summary>
-    /// <value> The resistance tolerance. </value>
-	public double ResistanceTolerance
-    {
-        get => this._resistanceTolerance;
-        set => this.SetProperty( ref this._resistanceTolerance, value );
+        get => this._initialTriggerSource;
+        set => _ = this.SetProperty( ref this._initialTriggerSource, value );
     }
 
     #endregion

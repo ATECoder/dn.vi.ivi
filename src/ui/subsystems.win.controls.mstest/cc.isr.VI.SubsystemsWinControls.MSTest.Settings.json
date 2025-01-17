@@ -1,0 +1,64 @@
+{
+  "TestSiteSettings": {
+    "Exists": true,
+    "Enabled": true,
+    "TraceLevel": "Verbose",
+    "All": true,
+    "IPv4Prefixes": "192.168|10.1",
+    "TimeZones": "Pacific Standard Time|Central Standard Time",
+    "TimeZoneOffsets": "-8|-6"
+  },
+
+  "TraceLogSettings": {
+    "Exists": true,
+    "TraceLevel": "Verbose",
+    "MessageDisplayLevel": "Verbose"
+  },
+
+  "ResourceSettings": {
+    "Exists": true,
+    "ResourceTitle": "Facade",
+    "ResourceNameSelectionTimeout": 10000
+  },
+
+  "IOSettings": {
+    "Exists": true,
+    "StatusReadDelay": 10,
+    "ReadDelay": 10,
+    "MaximumDelay": 1000,
+    "Termination": "\\n"
+  },
+
+  "BufferStreamViewSettings": {
+    "Exists": true,
+    "StreamBufferSenseFunctionMode": "ResistanceFourWire",
+    "NominalResistance": 100,
+    "ResistanceTolerance": 0.01,
+    "OpenLimit": 1000,
+    "PassBitmask": 1,
+    "FailBitmask": 2,
+    "OverflowBitmask": 4,
+    "BinningStrobeDuration": 10,
+    "StreamTriggerCount": 999,
+    "StreamBufferArmSource": "Bus",
+    "StreamBufferTriggerSource": "Bus",
+    "BufferStreamPollInterval": 50,
+    "ScanCardScanList": "(@1:3)",
+    "ScanCardSampleCount": 3
+  },
+
+  "BinningSettings": {
+    "Exists": true,
+    "BinLineNumber": 1,
+    "BinDuration": 20,
+    "StrobeLineNumber": 4,
+    "StrobeDuration": 10
+  },
+
+  "DisplayViewSettings": {
+    "Exists": true,
+    "CharcoalColor": "30, 38, 44",
+    "BackgroundColor": "30, 38, 44",
+    "DisplayStandardServiceRequests": true
+  }
+}

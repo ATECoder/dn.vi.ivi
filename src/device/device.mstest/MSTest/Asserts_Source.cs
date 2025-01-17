@@ -4,13 +4,14 @@ public sealed partial class Asserts
 {
     #region " source subsystem "
 
-    /// <summary> Assert initial subsystem values should match. </summary>
-    /// <param name="subsystem">      The subsystem. </param>
-    /// <param name="subsystemsInfo"> Information describing the subsystems. </param>
-    public static void AssertSubsystemInitialValuesShouldMatch( SourceSubsystemBase subsystem, VI.Settings.SubsystemsSettings? subsystemsInfo )
+    /// <summary>   Assert initial subsystem values should match. </summary>
+    /// <remarks>   2025-01-17. </remarks>
+    /// <param name="subsystem">            The subsystem. </param>
+    /// <param name="sourceSubsystemInfo">  Information describing the source subsystem. </param>
+    public static void AssertSubsystemInitialValuesShouldMatch( SourceSubsystemBase subsystem, VI.Settings.SourceSubsystemSettings? sourceSubsystemInfo )
     {
         Assert.IsNotNull( subsystem, $"{nameof( subsystem )} should not be null." );
-        Assert.IsNotNull( subsystemsInfo, $"{nameof( subsystemsInfo )} should not be null." );
+        Assert.IsNotNull( sourceSubsystemInfo, $"{nameof( sourceSubsystemInfo )} should not be null." );
     }
 
     /// <summary> Assert output enabled should toggle. </summary>

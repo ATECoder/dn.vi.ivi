@@ -1,6 +1,8 @@
 <Project Sdk="MSTest.Sdk">
+
   <PropertyGroup>
-    <TargetFrameworks>net472;net48;net9.0-windows</TargetFrameworks>
+    <EnablePreviewFeatures>true</EnablePreviewFeatures>
+    <TargetFrameworks>net48;net9.0-windows</TargetFrameworks>
     <UseWindowsForms>true</UseWindowsForms>
 
     <LangVersion>latest</LangVersion>
@@ -10,8 +12,8 @@
     <Nullable>enable</Nullable>
 
     <!-- Assembly Info -->
-    <RootNamespace>cc.isr.VI.WinControls</RootNamespace>
-    <Description>Unit tests of Visa Session Base Windows controls</Description>
+    <RootNamespace>cc.isr.VI.SubsystemsWinControls</RootNamespace>
+    <Description>Unit tests of Device Windows controls</Description>
 
     <!-- Coding -->
     <OptionExplicit>On</OptionExplicit>
@@ -40,12 +42,15 @@
   <Choose>
     <When Condition="$(DefineConstants.Contains(';PROJREF;')) OR $(DefineConstants.Contains(';MYPROJREF;'))">
       <ItemGroup>
-        <ProjectReference Include="..\win.controls\cc.isr.VI.WinControls.csproj" />
+        <ProjectReference Include="..\..\device\device.mstest\cc.isr.VI.Device.MSTest.csproj">
+          <TreatAsUsed>true</TreatAsUsed>
+        </ProjectReference>
+        <ProjectReference Include="..\subsystems.win.controls\cc.isr.VI.SubsystemsWinControls.csproj" />
       </ItemGroup>
     </When>
     <Otherwise>
       <ItemGroup>
-        <PackageReference Include="cc.isr.VI.WinControls" Version="8.0.8123" />
+        <PackageReference Include="cc.isr.VI.SubsystemsWinControls" Version="8.0.8128" />
       </ItemGroup>
       <ItemGroup>
         <ProjectReference Include="..\..\device\device.mstest\cc.isr.VI.Device.MSTest.csproj">
@@ -54,7 +59,6 @@
       </ItemGroup>
     </Otherwise>
   </Choose>
-
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DefineDebug>true</DefineDebug>
@@ -71,7 +75,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="cc.isr.VI.WinControls.MSTest.Settings.json">
+    <Content Include="cc.isr.VI.SubsystemsWinControls.MSTest.Settings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -79,7 +83,6 @@
   <ItemGroup>
     <!-- Suppress warning about newton soft 9.0.1 which is part of the .net fx testing extensions code coverage. -->
     <NuGetAuditSuppress Include="https://github.com/advisories/GHSA-5crp-9r3c-p9vr" />
-    <ProjectReference Include="..\..\..\..\..\core\std\src\mstest\mstest\cc.isr.Std.MSTest.csproj" />
     <PackageReference Update="Microsoft.Testing.Extensions.CodeCoverage" Version="17.12.6" />
   </ItemGroup>
 

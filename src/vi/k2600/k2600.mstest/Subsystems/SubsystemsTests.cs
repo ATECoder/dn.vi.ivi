@@ -1,4 +1,5 @@
 using System;
+using cc.isr.VI.Tsp.K2600.MSTest.Settings;
 using cc.isr.VI.Tsp.K2600.MSTest.Visa;
 
 namespace cc.isr.VI.Tsp.K2600.MSTest.Subsystems;
@@ -51,7 +52,7 @@ public class SubsystemsTests : cc.isr.VI.Device.MSTest.Base.SubsystemsTests
 
         this.TestSiteSettings = Settings.AllSettings.TestSiteSettings;
         this.ResourceSettings = Settings.AllSettings.ResourceSettings;
-        this.SubsystemsSettings = Settings.AllSettings.SubsystemsSettings;
+        this.DeviceErrorsSettings = Settings.AllSettings.DeviceErrorsSettings;
         this.Device = K2600Device.Create();
         Assert.IsNotNull( this.Device );
         Assert.IsNotNull( this.Device.Session );
@@ -100,16 +101,16 @@ public class SubsystemsTests : cc.isr.VI.Device.MSTest.Base.SubsystemsTests
             cc.isr.VI.Device.MSTest.Asserts.AssertDeviceShouldInitializeKnownState( this.Device );
             cc.isr.VI.Device.MSTest.Asserts.AssertSessionOpenValuesShouldMatch( this.Device.Session, this.ResourceSettings );
             cc.isr.VI.Device.MSTest.Asserts.AssertDeviceModelShouldMatch( this.Device.StatusSubsystemBase, this.ResourceSettings );
-            cc.isr.VI.Device.MSTest.Asserts.AssertDeviceErrorsShouldMatch( this.Device.StatusSubsystemBase, this.SubsystemsSettings );
-            cc.isr.VI.Device.MSTest.Asserts.AssertTerminationValuesShouldMatch( this.Device.Session, this.SubsystemsSettings );
-            cc.isr.VI.Device.MSTest.Asserts.AssertLineFrequencyShouldMatch( this.Device.StatusSubsystem, this.SubsystemsSettings );
-            cc.isr.VI.Device.MSTest.Asserts.AssertIntegrationPeriodShouldMatch( this.Device.StatusSubsystem, this.SubsystemsSettings );
-            cc.isr.VI.Device.MSTest.Asserts.AssertSessionDeviceErrorsShouldClear( this.Device, this.SubsystemsSettings );
+            cc.isr.VI.Device.MSTest.Asserts.AssertDeviceErrorsShouldMatch( this.Device.StatusSubsystemBase, this.DeviceErrorsSettings );
+            cc.isr.VI.Device.MSTest.Asserts.AssertTerminationValuesShouldMatch( this.Device.Session, AllSettings.IOSettings );
+            cc.isr.VI.Device.MSTest.Asserts.AssertLineFrequencyShouldMatch( this.Device.StatusSubsystem, AllSettings.SystemSubsystemSettings );
+            cc.isr.VI.Device.MSTest.Asserts.AssertIntegrationPeriodShouldMatch( this.Device.StatusSubsystem, AllSettings.SenseSubsystemSettings, AllSettings.SystemSubsystemSettings );
+            cc.isr.VI.Device.MSTest.Asserts.AssertSessionDeviceErrorsShouldClear( this.Device, AllSettings.DeviceErrorsSettings );
             cc.isr.VI.Device.MSTest.Asserts.AssertOrphanMessagesShouldBeEmpty( this.Device.StatusSubsystemBase );
             if ( readErrorEnabled )
                 try
                 {
-                    cc.isr.VI.Device.MSTest.Asserts.AssertDeviceErrorsShouldRead( this.Device, this.SubsystemsSettings );
+                    cc.isr.VI.Device.MSTest.Asserts.AssertDeviceErrorsShouldRead( this.Device, AllSettings.DeviceErrorsSettings );
                 }
                 catch
                 {

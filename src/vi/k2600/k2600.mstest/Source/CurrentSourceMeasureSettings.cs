@@ -2,12 +2,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System;
 
-namespace cc.isr.VI.Tsp.K2600.MSTest.Measure;
+namespace cc.isr.VI.Tsp.K2600.MSTest.Source;
 
-/// <summary> A Resistance measurement Test settings. </summary>
-/// <remarks> <para>
-/// David, 2018-02-12 </para></remarks>
-public class ResistanceSettings() : INotifyPropertyChanged
+/// <summary>   A current source measure settings. </summary>
+/// <remarks>   2025-01-17. </remarks>
+public class CurrentSourceMeasureSettings() : INotifyPropertyChanged
 {
     #region " notify property change implementation "
 
@@ -104,33 +103,32 @@ public class ResistanceSettings() : INotifyPropertyChanged
     /// <remarks>   2024-08-03. </remarks>
     public void ReadSettings()
     {
-        AppSettingsScribe.ReadSettings( Settings.AllSettings.SettingsFileInfo.AllUsersAssemblyFilePath!, nameof( ResistanceSettings ), Settings.AllSettings.ResistanceSettings );
+        AppSettingsScribe.ReadSettings( Settings.AllSettings.SettingsFileInfo.AllUsersAssemblyFilePath!, nameof( CurrentSourceMeasureSettings ), Settings.AllSettings.CurrentSourceMeasureSettings );
     }
 
     #endregion
 
     #region " resistance information "
 
-    private double _expectedResistance = 100;
+    private double _loadResistance = 100;
 
-    /// <summary>   Gets or sets the expected resistance. </summary>
-    /// <value> The expected resistance. </value>
-	public double ExpectedResistance
+    /// <summary>   Gets or sets the load resistance. </summary>
+    /// <value> The load resistance. </value>
+	public double LoadResistance
     {
-        get => this._expectedResistance;
-        set => this.SetProperty( ref this._expectedResistance, value );
+        get => this._loadResistance;
+        set => this.SetProperty( ref this._loadResistance, value );
     }
 
-    private double _resistanceTolerance = 0.01;
+    private double _measurementTolerance = 0.01;
 
-    /// <summary>   Gets or sets the resistance tolerance. </summary>
-    /// <value> The resistance tolerance. </value>
-	public double ResistanceTolerance
+    /// <summary>   Gets or sets the measurement tolerance. </summary>
+    /// <value> The measurement tolerance. </value>
+	public double MeasurementTolerance
     {
-        get => this._resistanceTolerance;
-        set => this.SetProperty( ref this._resistanceTolerance, value );
+        get => this._measurementTolerance;
+        set => this.SetProperty( ref this._measurementTolerance, value );
     }
 
     #endregion
 }
-

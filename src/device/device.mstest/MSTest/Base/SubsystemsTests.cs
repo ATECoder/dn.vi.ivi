@@ -1,6 +1,7 @@
 using System;
 using cc.isr.Std.Tests;
 using cc.isr.Std.Tests.Extensions;
+using cc.isr.VI.Device.MSTest.Settings;
 using cc.isr.VI.Pith.Settings;
 
 namespace cc.isr.VI.Device.MSTest.Base;
@@ -78,9 +79,6 @@ public abstract class SubsystemsTests
         Assert.IsTrue( this.VisaSessionBase.Session.TimingSettings.Exists, $"{nameof( TimingSettings )} should exist." );
         Assert.IsTrue( this.VisaSessionBase.Session.RegistersBitmasksSettings.Exists, $"{nameof( RegistersBitmasksSettings )} should exist." );
 
-        Assert.IsNotNull( this.SubsystemsSettings, $"{nameof( this.SubsystemsSettings )} {nameof( VI.Settings.SubsystemsSettings )} should exist" );
-        Assert.IsTrue( this.SubsystemsSettings.Exists, $"{nameof( this.SubsystemsSettings )} should ne enabled" );
-
         if ( Logger is not null )
         {
             this._loggerScope = Logger.BeginScope( this.TestContext?.TestName ?? string.Empty );
@@ -123,9 +121,13 @@ public abstract class SubsystemsTests
 
     #region " settings "
 
-    /// <summary>   Gets or sets the subsystems settings. </summary>
-    /// <value> The subsystems settings. </value>
-    protected VI.Settings.SubsystemsSettings? SubsystemsSettings { get; set; }
+    /// <summary>   Gets or sets the i/o settings. </summary>
+    /// <value> The i/o settings. </value>
+    protected Pith.Settings.IOSettings? IOSettings { get; set; }
+
+    /// <summary>   Gets or sets the device errors settings. </summary>
+    /// <value> The device errors settings. </value>
+    protected DeviceErrorsSettings? DeviceErrorsSettings { get; set; }
 
     /// <summary>   Gets or sets the test site settings. </summary>
     /// <value> The test site settings. </value>
@@ -154,7 +156,6 @@ public abstract class SubsystemsTests
     [TestMethod( "01. Open Session Check Status Should Pass All Tests" )]
     public void OpenSessionCheckStatusShouldPass()
     {
-        Assert.IsNotNull( this.SubsystemsSettings );
         this.AssertOpenSessionCheckStatus( false );
     }
 
@@ -162,7 +163,6 @@ public abstract class SubsystemsTests
     [TestMethod( "02. Open Session Should Pass All Tests and Read Device Errors" )]
     public void OpenSessionReadDeviceErrorsShouldPass()
     {
-        Assert.IsNotNull( this.SubsystemsSettings );
         this.AssertOpenSessionCheckStatus( true );
     }
 
