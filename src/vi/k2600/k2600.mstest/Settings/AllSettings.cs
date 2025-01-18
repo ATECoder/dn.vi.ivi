@@ -145,7 +145,7 @@ public class AllSettings
 
     /// <summary>   Gets or sets the resource settings. </summary>
     /// <value> The resource settings. </value>
-    internal static cc.isr.VI.Tsp.K2600.MSTest.Visa.ResourceSettings ResourceSettings { get; private set; } = new();
+    internal static Pith.Settings.ResourceSettings ResourceSettings { get; private set; } = new();
 
     /// <summary>   Gets or sets the digital i/o settings. </summary>
     /// <value> The digital i/o settings. </value>

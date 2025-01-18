@@ -1,24 +1,41 @@
 {
-  "TtmTimingSettings": {
+  "TraceLogSettings": {
+    "Exists": true,
+    "TraceLogLevel": "Information",
+    "TraceShowLevel": "Information"
+  },
+
+  "TimingSettings": {
     "Exists": true,
     "ClearRefractoryPeriod": "00:00:00.1000000",
+    "CollectGarbageTimeout": "00:00:00.5000000",
+    "CommunicationTimeout": "00:00:03.0500000",
     "DeviceClearRefractoryPeriod": "00:00:01.0500000",
-    "InitializeTimeout": "00:00:05",
-    "InitRefractoryPeriod": "00:00:00.1000000",
-    "InterfaceClearRefractoryPeriod": "00:00:00.5000000",
+    "InitKnownStateTimeout": "00:00:05",
+    "InterfaceClearRefractoryPeriod": "00:00:00.500000",
+    "OpenSessionTimeout": "00:00:00.5000000",
+    "OperationCompletionRefractoryPeriod": "00:00:00.1000000",
     "ReadAfterWriteDelay": "00:00:00.0100000",
     "ResetRefractoryPeriod": "00:00:00.2000000",
     "StatusReadDelay": "00:00:00.0100000",
     "StatusReadTurnaroundTime": "00:00:00.0100000"
   },
 
-  "TtmSessionSettings": {
+  "ResourceSettings": {
     "Exists": true,
-    "SessionMessageNotificationModes": "None",
-    "TraceLogLevel": "Information",
-    "TraceShowLevel": "Information",
-    "DeviceEnabled": true,
-    "ResourceName": "TCPIP0::192.168.0.50::inst0::INSTR"
+    "FirmwareRevision": "2.2.6",
+    "ClosedCaption": "closed",
+    "Language": "TSP",
+    "PingTimeout": "00:00:01.0000000",
+    "PingHops": 2,
+    "ResourceModel": "2612A",
+    "ResourceName": "TCPIP0::192.168.0.150::inst0::INSTR",
+    "2602": "1.4.2.4 TCPIP0::192.168.0.254::gpib0,26::INSTR",
+    "2601A": "2.2.6   TCPIP0::192.168.0.50::inst0::INSTR",
+    "2601B": "3.0.1   TCPIP0::192.168.0.150::inst0::INSTR",
+    "2612A": "2.2.6   TCPIP0::192.168.0.150::inst0::INSTR",
+    "7510": "4.0.0   TCPIP0::192.168.0.144::inst0::INSTR",
+    "ResourceNameSelectionTimeout": "00:00:10"
   },
 
   "TtmMeterSettings": {

@@ -126,7 +126,7 @@ public class DeviceTests
 
     /// <summary>   Gets or sets the resource settings. </summary>
     /// <value> The resource settings. </value>
-    internal ResourceSettings ResourceSettings { get; set; } = new();
+    internal Pith.Settings.ResourceSettings ResourceSettings { get; set; } = new();
 
     /// <summary>   Gets or sets the visa session base. </summary>
     /// <value> The visa session base. </value>

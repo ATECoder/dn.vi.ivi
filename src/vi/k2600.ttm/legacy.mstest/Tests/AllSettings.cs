@@ -126,7 +126,7 @@ public class AllSettings
 
     /// <summary>   Gets or sets the resource settings. </summary>
     /// <value> The resource settings. </value>
-    internal static ResourceSettings ResourceSettings { get; private set; } = new();
+    internal static Pith.Settings.ResourceSettings ResourceSettings { get; private set; } = new();
 
     #endregion
 }

@@ -16,10 +16,15 @@
     "ResourceNameSelectionTimeout": "00:00:10"
   },
 
+  "IOSettings": {
+    "Exists": true,
+    "ReadTerminationEnabled": true,
+    "ReadTerminationCharacter": 10,
+    "SessionMessageNotificationModes": "None"
+  },
+
   "TimingSettings": {
     "Exists": true,
-    "PingTimeout": "00:00:01.0000000",
-    "PingHops": 2,
     "ClearRefractoryPeriod": "00:00:00.2000000",
     "CollectGarbageTimeout": "00:00:00.5000000",
     "CommunicationTimeout": "00:00:03.0500000",
@@ -32,7 +37,6 @@
     "ResetRefractoryPeriod": "00:00:00.2000000",
     "StatusReadDelay": "00:00:00.0100000",
     "StatusReadTurnaroundTime": "00:00:00.0100000",
-    "SessionMessageNotificationModes": "None"
   },
 
   "CommandsSettings": {
@@ -69,12 +73,5 @@
     "StatusClearDistractive": true,
     "ClearsDeviceStructures": true,
     "SplitCommonCommands": true
-  },
-
-  "IOSettings": {
-    "Exists": true,
-    "ReadTerminationEnabled": true,
-    "ReadTerminationCharacter": 10,
-    "SessionMessageNotificationModes": "None"
   }
 }

@@ -93,7 +93,7 @@ public class MeterTests
         Assert.AreEqual( VI.Syntax.Tsp.Lua.ClearExecutionStateCommand, visaSession.Session.ClearExecutionStateCommand );
         visaSession.Session.ReadSettings( typeof( MeterTests ), ".Session" );
         Assert.IsTrue( visaSession.Session.TimingSettings.Exists,
-            $"{nameof( VisaSession )}.{nameof( TspDevice.Session )}.{nameof( VisaSession.Session.TimingSettings )} does not exist." );
+            $"{nameof( VisaSession )}.{nameof( MeterTests.TspDevice.Session )}.{nameof( VisaSession.Session.TimingSettings )} does not exist." );
 
         this.VisaSessionBase = visaSession;
     }
@@ -120,7 +120,7 @@ public class MeterTests
 
     /// <summary>   Gets or sets the resource settings. </summary>
     /// <value> The resource settings. </value>
-    internal Settings.ResourceSettings ResourceSettings { get; set; } = new();
+    internal Pith.Settings.ResourceSettings ResourceSettings { get; set; } = new();
 
     /// <summary>   Gets or sets the visa session base. </summary>
     /// <value> The visa session base. </value>

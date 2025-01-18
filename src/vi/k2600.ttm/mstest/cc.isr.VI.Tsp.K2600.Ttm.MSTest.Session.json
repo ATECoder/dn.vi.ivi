@@ -1,11 +1,11 @@
 {
   "ResourceSettings": {
     "Exists": true,
-    "FirmwareRevision": "2.2.6",
     "ClosedCaption": "closed",
+    "FirmwareRevision": "2.2.6",
     "Language": "TSP",
-    "PingTimeout": "00:00:01.0000000",
     "PingHops": 2,
+    "PingTimeout": "00:00:01.0000000",
     "ResourceModel": "2612A",
     "ResourceName": "TCPIP0::192.168.0.150::inst0::INSTR",
     "2602": "1.4.2.4 TCPIP0::192.168.0.254::gpib0,26::INSTR",
@@ -16,10 +16,15 @@
     "ResourceNameSelectionTimeout": "00:00:10"
   },
 
+  "IOSettings": {
+    "Exists": true,
+    "ReadTerminationEnabled": true,
+    "ReadTerminationCharacter": 10,
+    "SessionMessageNotificationModes": "None"
+  },
+
   "TimingSettings": {
     "Exists": true,
-    "PingTimeout": "00:00:01.0000000",
-    "PingHops": 2,
     "ClearRefractoryPeriod": "00:00:00.2000000",
     "CollectGarbageTimeout": "00:00:00.5000000",
     "CommunicationTimeout": "00:00:03.0500000",
@@ -31,8 +36,7 @@
     "ReadAfterWriteDelay": "00:00:00.0100000",
     "ResetRefractoryPeriod": "00:00:00.2000000",
     "StatusReadDelay": "00:00:00.0100000",
-    "StatusReadTurnaroundTime": "00:00:00.0100000",
-    "SessionMessageNotificationModes": "None"
+    "StatusReadTurnaroundTime": "00:00:00.0100000"
   },
 
   "CommandsSettings": {
@@ -69,12 +73,5 @@
     "StatusClearDistractive": true,
     "ClearsDeviceStructures": true,
     "SplitCommonCommands": true
-  },
-
-  "IOSettings": {
-    "Exists": true,
-    "ReadTerminationEnabled": true,
-    "ReadTerminationCharacter": 10,
-    "SessionMessageNotificationModes": "None"
   }
 }

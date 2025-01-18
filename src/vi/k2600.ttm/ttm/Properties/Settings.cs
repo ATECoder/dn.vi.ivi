@@ -1,4 +1,5 @@
 using cc.isr.Json.AppSettings.Models;
+using cc.isr.Logging.TraceLog;
 
 namespace cc.isr.VI.Tsp.K2600.Ttm.Properties;
 
@@ -46,8 +47,9 @@ public class Settings
         AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.AllUsersAssemblyFilePath! );
         AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.ThisUserAssemblyFilePath! );
 
-        this.Scribe = new( [this.TtmEstimatorSettings, this.TtmMeterSettings, this.TtmResistanceSettings,
-            this.TtmSessionSettings, this.TtmShuntSettings, this.TtmTimingSettings, this.TtmTraceSettings],
+        this.Scribe = new( [this.TraceLogSettings, this.TimingSettings, this.ResourceSettings,
+            this.TtmEstimatorSettings, this.TtmMeterSettings, this.TtmResistanceSettings,
+            this.TtmShuntSettings, this.TtmTraceSettings],
             ai.AppContextAssemblyFilePath!, ai.AllUsersAssemblyFilePath! )
         {
             AllUsersSettingsPath = ai.AllUsersAssemblyFilePath,
@@ -102,6 +104,18 @@ public class Settings
 
     #region " setting instances 
 
+    /// <summary>   Gets or sets the trace log settings. </summary>
+    /// <value> The trace log settings. </value>
+    public TraceLogSettings TraceLogSettings { get; private set; } = new();
+
+    /// <summary>   Gets or sets the Timing settings. </summary>
+    /// <value> The Timing settings. </value>
+    public Pith.Settings.TimingSettings TimingSettings { get; private set; } = new();
+
+    /// <summary>   Gets or sets the resource settings. </summary>
+    /// <value> The resource settings. </value>
+    public Pith.Settings.ResourceSettings ResourceSettings { get; private set; } = new();
+
     /// <summary>   Gets or sets the TTM Estimator settings. </summary>
     /// <value> The TTM Estimator settings. </value>
     public TtmEstimatorSettings TtmEstimatorSettings { get; private set; } = new();
@@ -117,14 +131,6 @@ public class Settings
     /// <summary>   Gets or sets the TTM Shunt settings. </summary>
     /// <value> The TTM Shunt settings. </value>
     public TtmShuntSettings TtmShuntSettings { get; private set; } = new();
-
-    /// <summary>   Gets or sets the TTM Session settings. </summary>
-    /// <value> The TTM Session settings. </value>
-    public TtmSessionSettings TtmSessionSettings { get; private set; } = new();
-
-    /// <summary>   Gets or sets the TTM Timing settings. </summary>
-    /// <value> The TTM Timing settings. </value>
-    public TtmTimingSettings TtmTimingSettings { get; private set; } = new();
 
     /// <summary>   Gets or sets the TTM Trace settings. </summary>
     /// <value> The TTM Trace settings. </value>

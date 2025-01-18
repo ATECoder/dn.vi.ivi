@@ -9,16 +9,8 @@ using cc.isr.Json.AppSettings.ViewModels;
 namespace cc.isr.VI.DeviceWinControls.Views;
 /// <summary>   A display view settings. </summary>
 /// <remarks>   2025-01-14. </remarks>
-public class DisplayViewSettings : INotifyPropertyChanged
+public class DisplayViewSettings() : INotifyPropertyChanged
 {
-    #region " construction "
-
-    /// <summary>   Default constructor. </summary>
-    /// <remarks>   2025-01-16. </remarks>
-    public DisplayViewSettings() { }
-
-    #endregion
-
     #region " notify property change implementation "
 
     /// <summary>   Occurs when a property value changes. </summary>

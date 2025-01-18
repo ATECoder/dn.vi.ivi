@@ -47,7 +47,7 @@ public class TimingSettings() : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the timeout for initializing all subsystem following a reset and clear. </summary>
     /// <value> The timeout for initialize the post reset clear state. </value>
-	[Description( "The VISA session timeout for initializing all subsystem following a reset and clear [10s]" )]
+	[Description( "The VISA session timeout for initializing all subsystems following a reset and clear [10s]" )]
     public TimeSpan InitKnownStateTimeout
     {
         get => this._initKnownStateTimeout;

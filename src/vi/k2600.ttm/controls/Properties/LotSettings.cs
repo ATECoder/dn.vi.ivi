@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System;
 using System.ComponentModel;
 using System.Text.Json.Serialization;
 
@@ -5,199 +7,233 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls;
 
 /// <summary>   A settings. </summary>
 /// <remarks>   David, 2021-02-01. </remarks>
-public class LotSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
+public class LotSettings() : INotifyPropertyChanged
 {
-    #region " construction "
+    #region " notify property change implementation "
 
-    /// <summary>   Default constructor. </summary>
-    /// <remarks>   2024-10-24. </remarks>
-    public LotSettings() { }
+    /// <summary>   Occurs when a property value changes. </summary>
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    /// <summary>   Executes the 'property changed' action. </summary>
+    /// <param name="propertyName"> Name of the property. </param>
+    protected virtual void OnPropertyChanged( string? propertyName )
+    {
+        if ( !string.IsNullOrEmpty( propertyName ) )
+            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
+    }
+
+    /// <summary>   Executes the 'property changed' action. </summary>
+    /// <typeparam name="T">    Generic type parameter. </typeparam>
+    /// <param name="backingField"> [in,out] The backing field. </param>
+    /// <param name="value">        The value. </param>
+    /// <param name="propertyName"> (Optional) Name of the property. </param>
+    /// <returns>   <see langword="true"/> if it succeeds; otherwise, <see langword="false"/>. </returns>
+    protected virtual bool OnPropertyChanged<T>( ref T backingField, T value, [System.Runtime.CompilerServices.CallerMemberName] string? propertyName = "" )
+    {
+        if ( EqualityComparer<T>.Default.Equals( backingField, value ) )
+            return false;
+
+        backingField = value;
+        this.OnPropertyChanged( propertyName );
+        return true;
+    }
+
+    /// <summary>   Sets a property. </summary>
+    /// <typeparam name="T">    Generic type parameter. </typeparam>
+    /// <param name="prop">         [in,out] The property. </param>
+    /// <param name="value">        The value. </param>
+    /// <param name="propertyName"> (Optional) Name of the property. </param>
+    /// <returns>   <see langword="true"/> if it succeeds; otherwise, <see langword="false"/>. </returns>
+    protected bool SetProperty<T>( ref T prop, T value, [System.Runtime.CompilerServices.CallerMemberName] string? propertyName = null )
+    {
+        if ( EqualityComparer<T>.Default.Equals( prop, value ) ) return false;
+        prop = value;
+        this.OnPropertyChanged( propertyName );
+        return true;
+    }
+
+    /// <summary>   Sets a property. </summary>
+    /// <remarks>   2023-03-24. </remarks>
+    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
+    ///                                             null. </exception>
+    /// <typeparam name="T">    Generic type parameter. </typeparam>
+    /// <param name="oldValue">     The old value. </param>
+    /// <param name="newValue">     The new value. </param>
+    /// <param name="callback">     The callback. </param>
+    /// <param name="propertyName"> (Optional) Name of the property. </param>
+    /// <returns>   <see langword="true"/> if it succeeds; otherwise, <see langword="false"/>. </returns>
+    protected bool SetProperty<T>( T oldValue, T newValue, Action callback, [System.Runtime.CompilerServices.CallerMemberName] string? propertyName = null )
+    {
+#if NET8_0_OR_GREATER
+        ArgumentNullException.ThrowIfNull( callback, nameof( callback ) );
+#else
+        if ( callback is null ) throw new ArgumentNullException( nameof( callback ) );
+#endif
+
+        if ( EqualityComparer<T>.Default.Equals( oldValue, newValue ) )
+        {
+            return false;
+        }
+
+        callback();
+
+        this.OnPropertyChanged( propertyName );
+
+        return true;
+    }
+
+    /// <summary>   Removes the property changed event handlers. </summary>
+    /// <remarks>   David, 2021-06-28. </remarks>
+    protected void RemovePropertyChangedEventHandlers()
+    {
+        PropertyChangedEventHandler? handler = this.PropertyChanged;
+        if ( handler is not null )
+        {
+            foreach ( Delegate? item in handler.GetInvocationList() )
+            {
+                handler -= ( PropertyChangedEventHandler ) item;
+            }
+        }
+    }
 
     #endregion
 
     #region " exists "
 
-    private bool _exists;
 
     /// <summary>
     /// Gets or sets a value indicating whether this settings section exists and the values were thus
     /// fetched from the settings file.
     /// </summary>
     /// <value> True if this settings section exists in the settings file, false if not. </value>
-	[Description( "True if this settings section exists and was read from the JSon settings file." )]
+    [Description( "True if this settings section exists and was read from the JSon settings file." )]
     public bool Exists
     {
-        get => this._exists;
-        set => _ = this.SetProperty( ref this._exists, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
 
     #endregion
 
     #region " ttm properties "
 
-    private System.Diagnostics.TraceEventType _traceLogLevel = System.Diagnostics.TraceEventType.Information;
-
-    /// <summary>   Gets or sets the trace log level. </summary>
-    /// <value> The trace log level. </value>
-	public System.Diagnostics.TraceEventType TraceLogLevel
-    {
-        get => this._traceLogLevel;
-        set => this.SetProperty( ref this._traceLogLevel, value );
-    }
-
-    private System.Diagnostics.TraceEventType _traceShowLevel = System.Diagnostics.TraceEventType.Information;
-
-    /// <summary>   Gets or sets the trace Show level. </summary>
-    /// <value> The trace Show level. </value>
-	public System.Diagnostics.TraceEventType TraceShowLevel
-    {
-        get => this._traceShowLevel;
-        set => this.SetProperty( ref this._traceShowLevel, value );
-    }
-
-    private bool _automaticallyAddPart;
-
     /// <summary>   Gets or sets a value indicating whether the automatically add part. </summary>
     /// <value> True if automatically add part, false if not. </value>
-	public bool AutomaticallyAddPart
+    public bool AutomaticallyAddPart
     {
-        get => this._automaticallyAddPart;
-        set => this.SetProperty( ref this._automaticallyAddPart, value );
+        get;
+        set => this.SetProperty( ref field, value );
     }
-
-    private bool _deviceEnabled = true;
 
     /// <summary>   Gets or sets a value indicating whether the device is enabled. </summary>
     /// <value> True if device enabled, false if not. </value>
-	public bool DeviceEnabled
+    public bool DeviceEnabled
     {
-        get => this._deviceEnabled;
-        set => this.SetProperty( ref this._deviceEnabled, value );
-    }
-
-    private string _ftpAddress = "ftp://ttm%40isr.cc:ttm2.2@ftp.isr.cc";
+        get;
+        set => this.SetProperty( ref field, value );
+    } = true;
 
     /// <summary>   Gets or sets the FTP address. </summary>
     /// <value> The FTP address. </value>
-	public string FtpAddress
+    public string FtpAddress
     {
-        get => this._ftpAddress;
-        set => this.SetProperty( ref this._ftpAddress, value );
-    }
-
-    private string _lotNumber = "Lot 1";
+        get;
+        set => this.SetProperty( ref field, value );
+    } = "ftp://ttm%40isr.cc:ttm2.2@ftp.isr.cc";
 
     /// <summary>   Gets or sets the lot number. </summary>
     /// <value> The lot number. </value>
 	public string LotNumber
     {
-        get => this._lotNumber;
-        set => this.SetProperty( ref this._lotNumber, value );
-    }
-
-    private string _partNumber = "Part 1";
+        get;
+        set => this.SetProperty( ref field, value );
+    } = "Lot 1";
 
     /// <summary>   Gets or sets the part number. </summary>
     /// <value> The part number. </value>
-	public string PartNumber
+    public string PartNumber
     {
-        get => this._partNumber;
-        set => this.SetProperty( ref this._partNumber, value );
-    }
-
-    private string _dataFolder = "c:\\users\\public\\documents\\ttm";
+        get;
+        set => this.SetProperty( ref field, value );
+    } = "Part 1";
 
     /// <summary>   Gets or sets the pathname of the data folder. </summary>
     /// <value> The pathname of the data folder. </value>
-	public string DataFolder
+    public string DataFolder
     {
-        get => this._dataFolder;
-        set => this.SetProperty( ref this._dataFolder, value );
-    }
-
-    private string _measurementsFolderName = "measurements";
+        get;
+        set => this.SetProperty( ref field, value );
+    } = "c:\\users\\public\\documents\\ttm";
 
     /// <summary>   Gets or sets the pathname of the measurements folder. </summary>
     /// <value> The pathname of the measurements folder. </value>
-	public string MeasurementsFolderName
+    public string MeasurementsFolderName
     {
-        get => this._measurementsFolderName;
-        set => this.SetProperty( ref this._measurementsFolderName, value );
-    }
+        get;
+        set => this.SetProperty( ref field, value );
+    } = "measurements";
 
     /// <summary>   Gets the pathname of the measurements folder. </summary>
     /// <value> The pathname of the measurements folder. </value>
 	public string MeasurementsFolder => System.IO.Path.Combine( this.DataFolder, this.MeasurementsFolderName );
 
-    private string _partsFileName = "Part1.csv";
-
     /// <summary>   Gets or sets the full pathname of the parts file. </summary>
     /// <value> The full pathname of the parts file. </value>
-	public string PartsFileName
+    public string PartsFileName
     {
-        get => this._partsFileName;
-        set => this.SetProperty( ref this._partsFileName, value );
-    }
+        get;
+        set => this.SetProperty( ref field, value );
+    } = "Part1.csv";
 
     /// <summary>   Gets the full pathname of the parts file. </summary>
     /// <value> The full pathname of the parts file. </value>
     [JsonIgnore]
     public string PartsFilePath => System.IO.Path.Combine( this.MeasurementsFolder, this.PartsFileName );
 
-    private string _operatorId = "Operator 1";
-
     /// <summary>   Gets or sets the identifier of the operator. </summary>
     /// <value> The identifier of the operator. </value>
-	public string OperatorId
+    public string OperatorId
     {
-        get => this._operatorId;
-        set => this.SetProperty( ref this._operatorId, value );
-    }
-
-    private string _resourceName = "TCPIP0::192.168.0.150::inst0::INSTR";
+        get;
+        set => this.SetProperty( ref field, value );
+    } = "Operator 1";
 
     /// <summary>   Gets or sets the name of the resource. </summary>
     /// <value> The name of the resource. </value>
     public string ResourceName
     {
-        get => this._resourceName;
-        set => this.SetProperty( ref this._resourceName, value );
-    }
-
-    private string _setting = string.Empty;
+        get;
+        set => this.SetProperty( ref field, value );
+    } = "TCPIP0::192.168.0.150::inst0::INSTR";
 
     /// <summary>   Gets or sets the setting. </summary>
     /// <value> The setting. </value>
-	public string Setting
+    public string Setting
     {
-        get => this._setting;
-        set => this.SetProperty( ref this._setting, value );
-    }
-
-    private string _traceFileName = "Trace1.csv";
+        get;
+        set => this.SetProperty( ref field, value );
+    } = string.Empty;
 
     /// <summary>   Gets or sets the full pathname of the trace file. </summary>
     /// <value> The full pathname of the trace file. </value>
-	public string TraceFileName
+    public string TraceFileName
     {
-        get => this._traceFileName;
-        set => this.SetProperty( ref this._traceFileName, value );
-    }
+        get;
+        set => this.SetProperty( ref field, value );
+    } = "Trace1.csv";
 
     /// <summary>   Gets the full pathname of the trace file. </summary>
     /// <value> The full pathname of the trace file. </value>
     [JsonIgnore]
     public string TraceFilePath => System.IO.Path.Combine( this.MeasurementsFolder, this.TraceFileName );
 
-    private double _lineFrequency = 60;
-
     /// <summary>   Gets or sets the line frequency. </summary>
     /// <value> The line frequency. </value>
-	public double LineFrequency
+    public double LineFrequency
     {
-        get => this._lineFrequency;
-        set => this.SetProperty( ref this._lineFrequency, value );
-    }
+        get;
+        set => this.SetProperty( ref field, value );
+    } = 60;
 
     #endregion
 }

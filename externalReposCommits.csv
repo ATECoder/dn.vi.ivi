@@ -3,9 +3,9 @@ CommitID,LocalRepoName,TargetDirectory
 8c723a652af1eff24344e8c6efd2c0e6e956fb68,enums,lib\vs\core
 7d9baf752972ae73d1bd3f18becebaa9203c061e,json,lib\vs\core
 c3bc7e53e9eaf2aed63d19b57aee4634efe92696,tracing,lib\vs\core
-4890ba01747cdd8a3d7b026fb5007f572284606d,std,lib\vs\core
+bf789a5a9c1775230e7ecc8e78661d8ac4051b19,std,lib\vs\core
 c3bc7e53e9eaf2aed63d19b57aee4634efe92696,tracing,lib\vs\core
-e820fa5168d89f523c7b259a416a3e64c62ec2b2,vi,lib\vs\vi
+45255e1570c1d8aade6eb15b2c80e5282e5ea8fa,vi,lib\vs\vi
 1c63cb9060090b456bfd581199fb09eb803c972e,visa,lib\vs\io
 844081f3847d3bfbce57e69d4b7675b0367cde1b,ide,libraries\vs\core
 5ea133a6a6153353ef8e1a3cbbecc5a1288c7744,wix,libraries\vs\core
