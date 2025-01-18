@@ -1,4 +1,6 @@
 using System;
+using System.Text.Json.Serialization;
+using cc.isr.Json.AppSettings.Models;
 
 namespace cc.isr.VI.WinControls.Tests;
 
@@ -83,7 +85,7 @@ public class AllSettings
         // get an instance of the settings file info first.
         AssemblyFileInfo settingsFileInfo = SettingsFileInfo;
 
-        AppSettingsScribe scribe = new( [TestSiteSettings, Settings],
+        AppSettingsScribe scribe = new( [AllSettings.TestSiteSettings, AllSettings.TraceLogSettings],
             settingsFileInfo.AppContextAssemblyFilePath!, settingsFileInfo.AllUsersAssemblyFilePath! )
         {
             AllUsersSettingsPath = settingsFileInfo.AllUsersAssemblyFilePath,

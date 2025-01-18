@@ -1,3 +1,5 @@
+using cc.isr.Json.AppSettings.Models;
+
 namespace cc.isr.VI.WinControls.Tests;
 
 /// <summary>   Provides settings for all tests. </summary>
@@ -19,7 +21,7 @@ internal sealed class TestSiteSettings : Std.Tests.TestSiteSettingsBase
     /// <remarks>   2024-08-03. </remarks>
     public void ReadSettings()
     {
-        AppSettingsScribe.ReadSettings( AllSettings.SettingsFileInfo.AllUsersAssemblyFilePath!, nameof( TestSiteSettings ), AllSettings.TestSiteSettings );
+        AppSettingsScribe.ReadSettings( AllSettings.SettingsFileInfo.AllUsersAssemblyFilePath!, nameof( AllSettings.TestSiteSettings ), this );
     }
 
     #endregion

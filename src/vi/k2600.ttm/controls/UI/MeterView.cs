@@ -45,7 +45,7 @@ public partial class MeterView : cc.isr.WinControls.ModelViewBase
             CaptionFormat = "{0} " + Convert.ToChar( 0x1C2 ),
             ResetCount = 1000,
             PresetCount = 500,
-            TraceLevel = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmSessionSettings.TraceShowLevel
+            TraceLevel = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TraceLogSettings.TraceShowLevel
         };
         cc.isr.Tracing.TracingPlatform.Instance.AddTraceEventWriter( this.TextBoxTextWriter );
 
@@ -594,7 +594,7 @@ public partial class MeterView : cc.isr.WinControls.ModelViewBase
                 this._ttmConfigurationPanel.CopySettings();
                 this.CopyShuntSettings();
                 if ( this.ResourceName is not null && !string.IsNullOrWhiteSpace( this.ResourceName ) )
-                    cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmSessionSettings.ResourceName = this.ResourceName;
+                    cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.ResourceSettings.ResourceName = this.ResourceName;
                 cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.Scribe?.WriteSettings();
 
                 // flush the log.
@@ -924,7 +924,7 @@ public partial class MeterView : cc.isr.WinControls.ModelViewBase
             this.Device.Initialized += this.DeviceInitialized;
             this.Device.Initializing += this.DeviceInitializing;
             this.Device.SessionFactory.PropertyChanged += this.SessionFactoryPropertyChanged;
-            this.Device.SessionFactory.CandidateResourceName = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmSessionSettings.ResourceName;
+            this.Device.SessionFactory.CandidateResourceName = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.ResourceSettings.ResourceName;
             if ( this.Device.IsDeviceOpen )
             {
                 this.DeviceOpened( this.Device, EventArgs.Empty );

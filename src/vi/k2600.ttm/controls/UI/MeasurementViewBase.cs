@@ -1057,8 +1057,8 @@ public partial class MeasurementViewBase : cc.isr.WinControls.ModelViewBase
         this._logTraceLevelComboBox.ComboBox.SelectedValueChanged += this.LogTraceLevelComboBox_SelectedIndexChanged;
         cc.isr.WinControls.ComboBoxExtensions.ComboBoxExtensionsMethods.ListTraceEventLevels( this._displayTraceLevelComboBox.ComboBox, cc.isr.Logging.TraceLog.TraceEventSelector.TraceEventValueNamePairs );
         this._displayTraceLevelComboBox.ComboBox.SelectedValueChanged += this.DisplayTraceLevelComboBox_SelectedIndexChanged;
-        cc.isr.WinControls.ComboBoxExtensions.ComboBoxExtensionsMethods.SelectItem( this._logTraceLevelComboBox, cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmSessionSettings.TraceLogLevel );
-        cc.isr.WinControls.ComboBoxExtensions.ComboBoxExtensionsMethods.SelectItem( this._displayTraceLevelComboBox, cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmSessionSettings.TraceShowLevel );
+        cc.isr.WinControls.ComboBoxExtensions.ComboBoxExtensionsMethods.SelectItem( this._logTraceLevelComboBox, cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TraceLogSettings.TraceLogLevel );
+        cc.isr.WinControls.ComboBoxExtensions.ComboBoxExtensionsMethods.SelectItem( this._displayTraceLevelComboBox, cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TraceLogSettings.TraceShowLevel );
     }
 
     /// <summary>
