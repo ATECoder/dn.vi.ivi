@@ -68,7 +68,7 @@ public class DeviceTests
 
         // create an instance of the Serilog logger. 
         SessionLogger.Instance.CreateSerilogLogger( typeof( DeviceTests ) );
-        Assert.IsTrue( AllSettings.Exists(), $"{nameof( AllSettings )} settings file {AllSettings.FilePath} should exist" );
+        Assert.IsTrue( AllSettings.SettingsFileExists(), $"{nameof( AllSettings )} settings file {AllSettings.FilePath} should exist" );
 
         Assert.IsTrue( AllSettings.TestSiteSettings.Exists, $"{nameof( AllSettings.TestSiteSettings )} should exist" );
         Assert.IsTrue( AllSettings.ResourceSettings.Exists, $"{nameof( AllSettings.ResourceSettings )} should exist" );

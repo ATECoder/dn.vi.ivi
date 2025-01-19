@@ -1,9 +1,4 @@
 {
-  "DummySettings": {
-    "CheckUnpublishedMessageLogFileSize": false,
-    "Dummy": "Dummy"
-  },
-
   "TestSiteSettings": {
     "Exists": true,
     "Enabled": true,

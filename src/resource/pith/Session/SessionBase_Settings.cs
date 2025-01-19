@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using cc.isr.VI.Pith.ExceptionExtensions;
 
 namespace cc.isr.VI.Pith;
@@ -87,6 +88,9 @@ public partial class SessionBase
 
         this.Scribe!.ReadSettings();
 
+        if ( !this.SettingsExist( out string details ) )
+            throw new InvalidOperationException( details );
+
         this.ApplySettings( this.TimingSettings );
         this.ApplySettings( this.IOSettings );
         this.ApplySettings( this.ResourceSettings );
@@ -105,6 +109,43 @@ public partial class SessionBase
     public void ReadSettings( System.Type callingEntity, string settingsFileSuffix = ".session" )
     {
         this.ReadSettings( callingEntity.Assembly, settingsFileSuffix );
+    }
+
+    /// <summary>   Gets the full pathname of the settings file. </summary>
+    /// <value> The full pathname of the settings file. </value>
+    [JsonIgnore]
+    public string FilePath => this.Scribe!.UserSettingsPath;
+
+    /// <summary>   Check if the settings file exists. </summary>
+    /// <remarks>   2024-07-06. </remarks>
+    /// <returns>   True if it the settings file exists; otherwise false. </returns>
+    public bool SettingsFileExists()
+    {
+        return System.IO.File.Exists( this.FilePath );
+    }
+
+    /// <summary>   Checks if all settings exist. </summary>
+    /// <remarks>   2025-01-18. </remarks>
+    /// <returns>   A Tuple. </returns>
+    public bool SettingsExist( out string details )
+    {
+        details = string.Empty;
+        if ( !this.SettingsFileExists() )
+            details = $"{this.FilePath} not found.";
+        else if ( this.TimingSettings is null || !this.TimingSettings.Exists )
+            details = $"{nameof( SessionBase.TimingSettings )} not found.";
+        else if ( this.IOSettings is null || !this.IOSettings.Exists )
+            details = $"{nameof(SessionBase.IOSettings)} not found.";
+        else if ( this.ResourceSettings is null || !this.ResourceSettings.Exists )
+            details = $"{nameof(SessionBase.ResourceSettings)} not found.";
+        else if ( this.CommandsSettings is null || !this.CommandsSettings.Exists )
+            details = $"{nameof(SessionBase.CommandsSettings)} not found.";
+        else if ( this.RegistersBitmasksSettings is null || !this.RegistersBitmasksSettings.Exists )
+            details = $"{nameof(SessionBase.RegistersBitmasksSettings)} not found.";
+        else if ( this.ScpiExceptionsSettings is null || !this.ScpiExceptionsSettings.Exists )
+            details = $"{nameof(SessionBase.ScpiExceptionsSettings)} not found.";
+
+        return details.Length == 0;
     }
 
     #endregion
@@ -184,7 +225,7 @@ public partial class SessionBase
 
     #endregion
 
-    #region " IO settings "
+    #region " Resource settings "
 
     /// <summary>   Applies the <see cref="ResourceSettings"/>. </summary>
     /// <remarks>   2024-08-17. </remarks>
@@ -227,7 +268,6 @@ public partial class SessionBase
     }
 
     #endregion
-
 
     #region " Timing settings "
 

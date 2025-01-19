@@ -46,7 +46,7 @@ public class ResourceManagerTests : cc.isr.VI.Device.MSTest.Base.ResourceManager
         Console.WriteLine( $"Testing {typeof( cc.isr.VI.Pith.ResourceNamesManager ).Assembly.FullName}" );
 
         SessionLogger.Instance.CreateSerilogLogger( typeof( ResourceManagerTests ) );
-        Assert.IsTrue( Settings.AllSettings.Exists(), $"{nameof( Settings )} settings file {Settings.AllSettings.FilePath} should exist" );
+        Assert.IsTrue( Settings.AllSettings.SettingsFileExists(), $"{nameof( Settings )} settings file {Settings.AllSettings.FilePath} should exist" );
 
         this.TestSiteSettings = Settings.AllSettings.TestSiteSettings;
         this.ResourceSettings = Settings.AllSettings.ResourceSettings;

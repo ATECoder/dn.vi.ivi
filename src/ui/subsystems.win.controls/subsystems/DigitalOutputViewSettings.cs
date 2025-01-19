@@ -68,7 +68,11 @@ public class DigitalOutputViewSettings : CommunityToolkit.Mvvm.ComponentModel.Ob
             AllUsersSettingsPath = ai.AllUsersAssemblyFilePath,
             ThisUserSettingsPath = ai.ThisUserAssemblyFilePath
         };
+
         this.Scribe.ReadSettings();
+
+        if ( _instance.Value is null || !_instance.Value.Exists )
+            throw new InvalidOperationException( $"{nameof( DigitalOutputViewSettings )} was not found." );
     }
 
     /// <summary>   Check if the settings file exits. </summary>

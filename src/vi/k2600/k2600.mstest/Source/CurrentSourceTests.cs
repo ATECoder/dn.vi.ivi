@@ -48,7 +48,7 @@ public class CurrentSourceTests : cc.isr.VI.Device.MSTest.Base.TestBase
 
         // create an instance of the Serilog logger. 
         SessionLogger.Instance.CreateSerilogLogger( typeof( CurrentSourceTests ) );
-        Assert.IsTrue( Settings.AllSettings.Exists(), $"{nameof( Settings.AllSettings )}  settings file  {Settings.AllSettings.FilePath} should exist" );
+        Assert.IsTrue( Settings.AllSettings.SettingsFileExists(), $"{nameof( Settings.AllSettings )}  settings file  {Settings.AllSettings.FilePath} should exist" );
 
         this.TestSiteSettings = Settings.AllSettings.TestSiteSettings;
         this.ResourceSettings = Settings.AllSettings.ResourceSettings;

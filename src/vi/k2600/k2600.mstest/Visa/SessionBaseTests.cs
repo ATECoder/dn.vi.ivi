@@ -46,7 +46,7 @@ public class SessionBaseTests : Device.MSTest.Base.SessionBaseTests
 
         // create an instance of the Serilog logger. 
         SessionLogger.Instance.CreateSerilogLogger( typeof( DeviceTests ) );
-        Assert.IsTrue( Settings.AllSettings.Exists(), $"{nameof( Settings.AllSettings )} settings file {Settings.AllSettings.FilePath} should exist" );
+        Assert.IsTrue( Settings.AllSettings.SettingsFileExists(), $"{nameof( Settings.AllSettings )} settings file {Settings.AllSettings.FilePath} should exist" );
 
         this.TestSiteSettings = Settings.AllSettings.TestSiteSettings;
         this.Device = K2600Device.Create();

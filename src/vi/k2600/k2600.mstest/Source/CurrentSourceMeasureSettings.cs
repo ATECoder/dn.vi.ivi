@@ -108,6 +108,24 @@ public class CurrentSourceMeasureSettings() : INotifyPropertyChanged
 
     #endregion
 
+    #region " exists "
+
+    private bool _exists;
+
+    /// <summary>
+    /// Gets or sets a value indicating whether this settings section exists and the values were thus
+    /// fetched from the settings file.
+    /// </summary>
+    /// <value> True if this settings section exists in the settings file, false if not. </value>
+	[System.ComponentModel.Description( "True if this settings were found and read from the settings file." )]
+    public bool Exists
+    {
+        get => this._exists;
+        set => _ = this.SetProperty( ref this._exists, value );
+    }
+
+    #endregion
+
     #region " resistance information "
 
     private double _loadResistance = 100;

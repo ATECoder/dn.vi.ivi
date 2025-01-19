@@ -48,7 +48,7 @@ public class SubsystemsTests : cc.isr.VI.Device.MSTest.Base.SubsystemsTests
 
         // create an instance of the Serilog logger. 
         SessionLogger.Instance.CreateSerilogLogger( typeof( SubsystemsTests ) );
-        Assert.IsTrue( Settings.AllSettings.Exists(), $"{nameof( Settings.AllSettings )} settings file {Settings.AllSettings.FilePath} should exist" );
+        Assert.IsTrue( Settings.AllSettings.SettingsFileExists(), $"{nameof( Settings.AllSettings )} settings file {Settings.AllSettings.FilePath} should exist" );
 
         this.TestSiteSettings = Settings.AllSettings.TestSiteSettings;
         this.ResourceSettings = Settings.AllSettings.ResourceSettings;

@@ -78,7 +78,11 @@ public class BufferStreamViewSettings : CommunityToolkit.Mvvm.ComponentModel.Obs
             AllUsersSettingsPath = ai.AllUsersAssemblyFilePath,
             ThisUserSettingsPath = ai.ThisUserAssemblyFilePath
         };
+
         this.Scribe.ReadSettings();
+
+        if ( _instance.Value is null || !_instance.Value.Exists )
+            throw new InvalidOperationException( $"{nameof( BufferStreamViewSettings )} was not found." );
     }
 
     /// <summary>   Check if the settings file exits. </summary>

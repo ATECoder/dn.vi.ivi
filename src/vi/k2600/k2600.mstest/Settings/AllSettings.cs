@@ -88,7 +88,7 @@ public class AllSettings
         // get an instance of the settings file info first.
         AssemblyFileInfo settingsFileInfo = SettingsFileInfo;
 
-        AppSettingsScribe scribe = new( [AllSettings.DummySettings, AllSettings.TestSiteSettings, AllSettings.IOSettings,
+        AppSettingsScribe scribe = new( [AllSettings.TestSiteSettings, AllSettings.IOSettings,
             AllSettings.CommandsSettings, AllSettings.ResourceSettings,
             AllSettings.DeviceErrorsSettings, AllSettings.DigitalIOSettings, AllSettings.SystemSubsystemSettings,
             AllSettings.SenseResistanceSettings, AllSettings.SourceResistanceSettings, AllSettings.ResistanceSettings,
@@ -98,7 +98,11 @@ public class AllSettings
             AllUsersSettingsPath = settingsFileInfo.AllUsersAssemblyFilePath,
             ThisUserSettingsPath = settingsFileInfo.ThisUserAssemblyFilePath
         };
+
         scribe.ReadSettings();
+
+        if ( !AllSettings.SettingsExist( out string details ) )
+            throw new InvalidOperationException( details );
 
         return scribe;
     }
@@ -118,18 +122,50 @@ public class AllSettings
     /// <summary>   Check if the settings file exists. </summary>
     /// <remarks>   2024-07-06. </remarks>
     /// <returns>   True if it the settings file exists; otherwise false. </returns>
-    public static bool Exists()
+    public static bool SettingsFileExists()
     {
         return System.IO.File.Exists( FilePath );
+    }
+
+    /// <summary>   Checks if all settings exist. </summary>
+    /// <remarks>   2025-01-18. </remarks>
+    /// <returns>   A Tuple. </returns>
+    public static bool SettingsExist( out string details )
+    {
+        details = string.Empty;
+        if ( !AllSettings.SettingsFileExists() )
+            details = $"{AllSettings.Scribe.UserSettingsPath} not found.";
+        else if ( AllSettings.TestSiteSettings is null || !AllSettings.TestSiteSettings.Exists )
+            details = $"{nameof( AllSettings.TestSiteSettings )} not found.";
+        else if ( AllSettings.IOSettings is null || !AllSettings.IOSettings.Exists )
+            details = $"{nameof( AllSettings.IOSettings )} not found.";
+        else if ( AllSettings.ResourceSettings is null || !AllSettings.ResourceSettings.Exists )
+            details = $"{nameof( AllSettings.ResourceSettings )} not found.";
+        else if ( AllSettings.CommandsSettings is null || !AllSettings.CommandsSettings.Exists )
+            details = $"{nameof( AllSettings.CommandsSettings )} not found.";
+        else if ( AllSettings.DigitalIOSettings is null || !AllSettings.DigitalIOSettings.Exists )
+            details = $"{nameof( AllSettings.DigitalIOSettings )} not found.";
+        else if ( AllSettings.SystemSubsystemSettings is null || !AllSettings.SystemSubsystemSettings.Exists )
+            details = $"{nameof( AllSettings.SystemSubsystemSettings )} not found.";
+        else if ( AllSettings.SenseResistanceSettings is null || !AllSettings.SenseResistanceSettings.Exists )
+            details = $"{nameof( AllSettings.SenseResistanceSettings )} not found.";
+        else if ( AllSettings.SourceResistanceSettings is null || !AllSettings.SourceResistanceSettings.Exists )
+            details = $"{nameof( AllSettings.SourceResistanceSettings )} not found.";
+        else if ( AllSettings.ResistanceSettings is null || !AllSettings.ResistanceSettings.Exists )
+            details = $"{nameof( AllSettings.ResistanceSettings )} not found.";
+        else if ( AllSettings.SenseCurrentSettings is null || !AllSettings.SenseCurrentSettings.Exists )
+            details = $"{nameof( AllSettings.SenseCurrentSettings )} not found.";
+        else if ( AllSettings.SourceCurrentSettings is null || !AllSettings.SourceCurrentSettings.Exists )
+            details = $"{nameof( AllSettings.SourceCurrentSettings )} not found.";
+        else if ( AllSettings.CurrentSourceMeasureSettings is null || !AllSettings.CurrentSourceMeasureSettings.Exists )
+            details = $"{nameof( AllSettings.CurrentSourceMeasureSettings )} not found.";
+
+        return details.Length == 0;
     }
 
     #endregion
 
     #region " settings "
-
-    /// <summary>   Gets or sets the dummy settings. </summary>
-    /// <value> The dummy settings. </value>
-    internal static DummySettings DummySettings { get; private set; } = new();
 
     /// <summary>   Gets or sets the test site settings. </summary>
     /// <value> The test site settings. </value>

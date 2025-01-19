@@ -91,6 +91,7 @@ public class AllSettings
             AllUsersSettingsPath = settingsFileInfo.AllUsersAssemblyFilePath,
             ThisUserSettingsPath = settingsFileInfo.ThisUserAssemblyFilePath
         };
+
         scribe.ReadSettings();
 
         return scribe;
@@ -111,10 +112,27 @@ public class AllSettings
     /// <summary>   Check if the settings file exists. </summary>
     /// <remarks>   2024-07-06. </remarks>
     /// <returns>   True if it the settings file exists; otherwise false. </returns>
-    public static bool TestFileExists()
+    public static bool SettingsFileExists()
     {
         return System.IO.File.Exists( FilePath );
     }
+
+    /// <summary>   Checks if all settings exist. </summary>
+    /// <remarks>   2025-01-18. </remarks>
+    /// <returns>   A Tuple. </returns>
+    public static bool SettingsExist( out string details )
+    {
+        details = string.Empty;
+        if ( !AllSettings.SettingsFileExists() )
+            details = $"{Scribe.UserSettingsPath} not found.";
+        else if ( AllSettings.TestSiteSettings is null || !AllSettings.TestSiteSettings.Exists )
+            details = $"{nameof( AllSettings.TestSiteSettings )} not found.";
+        else if ( AllSettings.TraceLogSettings is null || !AllSettings.TraceLogSettings.Exists )
+            details = $"{nameof( AllSettings.TraceLogSettings )} not found.";
+
+        return details.Length == 0;
+    }
+
 
     #endregion
 

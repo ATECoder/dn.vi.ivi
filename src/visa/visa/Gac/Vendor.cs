@@ -5,7 +5,7 @@ namespace cc.isr.Visa.Gac;
 
 /// <summary>   Implementation Vendor. </summary>
 /// <remarks>   David, 2022-02-25. </remarks>
-public static class Vendor
+public static partial class Vendor
 {
     /// <summary>   Creates vendor resource manager. </summary>
     /// <remarks>   David, 2021-11-06. </remarks>
@@ -137,25 +137,6 @@ public static class Vendor
         }
     }
 
-    /// <summary>
-    /// (Immutable) The IVI visa implementation version supported by the <see href="https://www.nuget.org/packages/Kelary.Ivi.Visa"/>.
-    /// This is the version of the ivi.visa.dll as reported by Ivi.Visa.GlobalResourceManager.ImplementationVersion"
-    /// package.
-    /// </summary>
-    public const string IVI_VISA_IMPLEMENTATION_VERSION = "5.11.0.0";
-
-    /// <summary>
-    /// (Immutable) the ivi visa specification version, which is hard coded into the
-    /// Ivi.Visa.GlobalResourceManager.SpecificationVersion".
-    /// </summary>
-    public const string IVI_VISA_SPECIFICATION_VERSION = "5.7.0.0";
-
-    /// <summary>   (Immutable) filename of the ivi visa file. </summary>
-    public const string IVI_VISA_FILENAME = "Ivi.Visa.dll";
-
-    /// <summary>   (Immutable) name of the ivi visa full. </summary>
-    public const string IVI_VISA_FULL_NAME = "Ivi.Visa, Version=5.11.0.0, Culture=neutral, PublicKeyToken=a128c98f1d7717c1";
-
     /// <summary>   Checks if an IVI Visa assembly with the specified full name exists in the current execution path. </summary>
     /// <remarks>   2024-07-13. </remarks>
     /// <returns>   A Tuple. </returns>
@@ -163,21 +144,6 @@ public static class Vendor
     {
         return Vendor.IsAssemblyExists( IVI_VISA_FILENAME, IVI_VISA_FULL_NAME );
     }
-
-    /// <summary>   (Immutable) path of the Keysight visa file. </summary>
-    public const string KEYSIGHT_VISA_PATH = @"C:\Windows\assembly\GAC_MSIL\Keysight.Visa\18.2.0.0__7a01cdb2a9131f73";
-
-    /// <summary>   (Immutable) filename of the Keysight visa file. </summary>
-    public const string KEYSIGHT_VISA_FILENAME = "Keysight.Visa.dll";
-
-    /// <summary>   (Immutable) name of the keysight visa full. </summary>
-    public const string KEYSIGHT_VISA_FRIENDLY_NAME = "Keysight.Visa";
-
-    /// <summary>   (Immutable) full name of the Keysight visa. </summary>
-    public const string KEYSIGHT_VISA_FULL_NAME = "Keysight.Visa, Version=18.2.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73";
-
-    /// <summary>   (Immutable) full name of the Keysight visa resource manager. </summary>
-    public const string KEYSIGHT_RESOURCE_MANAGER_TYPE_NAME = "Keysight.Visa.ResourceManager, Keysight.Visa, Version=18.2.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73";
 
     /// <summary>   Has keysight visa implementation. </summary>
     /// <remarks>   2024-07-13. </remarks>
@@ -217,21 +183,6 @@ public static class Vendor
         return GacLoader.HasDotNetImplementations && GacLoader.LoadedImplementation is not null
             && string.Equals( Vendor.KEYSIGHT_VISA_FRIENDLY_NAME, GacLoader.LoadedImplementation.FriendlyName, StringComparison.OrdinalIgnoreCase );
     }
-
-    /// <summary>   (Immutable) path of the NI visa file. </summary>
-    public const string NI_VISA_PATH = @"C:\Windows\assembly\GAC_MSIL\NationalInstruments.Visa\21.0.0.0__2eaa5af0834e221d";
-
-    /// <summary>   (Immutable) filename of the NI visa file. </summary>
-    public const string NI_VISA_FILENAME = "NationalInstruments.Visa.dll";
-
-    /// <summary>   (Immutable) name of the keysight visa full. </summary>
-    public const string NI_VISA_FRIENDLY_NAME = "NationalInstruments.Visa";
-
-    /// <summary>   (Immutable) full name of the NI visa. </summary>
-    public const string NI_VISA_FULL_NAME = "NationalInstruments.Visa, Version=21.0.0.0, Culture=neutral, PublicKeyToken=2eaa5af0834e221d";
-
-    /// <summary>   (Immutable) full name of the Keysight visa resource manager. </summary>
-    public const string NI_RESOURCE_MANAGER_TYPE_NAME = "NationalInstruments.Visa.ResourceManager, NationalInstruments.Visa, Version=21.0.0.49304, Culture=neutral, PublicKeyToken=2eaa5af0834e221d";
 
     /// <summary>   Has NI visa implementation. </summary>
     /// <remarks>   2024-07-13. </remarks>
