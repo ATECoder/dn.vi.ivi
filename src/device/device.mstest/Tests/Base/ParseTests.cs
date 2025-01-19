@@ -4,7 +4,7 @@ using cc.isr.Enums;
 using cc.isr.Std.Tests;
 using cc.isr.Std.Tests.Extensions;
 
-namespace cc.isr.VI.Device.MSTest.Base;
+namespace cc.isr.VI.Device.Tests.Base;
 
 /// <summary> The abstract parse tests. </summary>
 /// <remarks>
@@ -123,26 +123,26 @@ public abstract class ParseTests
     [TestMethod()]
     public void HexValueFormatProviderTest()
     {
-        VI.Pith.HexFormatProvider provider = VI.Pith.HexFormatProvider.FormatProvider( 2 );
-        VI.Pith.ServiceRequests expectedValue = VI.Pith.ServiceRequests.All & ~VI.Pith.ServiceRequests.RequestingService;
+        Pith.HexFormatProvider provider = Pith.HexFormatProvider.FormatProvider( 2 );
+        Pith.ServiceRequests expectedValue = Pith.ServiceRequests.All & ~Pith.ServiceRequests.RequestingService;
         string expectedCaption = $"0x{( int ) expectedValue:X2}";
         string actualCaption = provider.Format( expectedValue );
         Assert.AreEqual( expectedCaption, actualCaption, $"Should be the hexadecimal caption of {expectedValue}" );
 
-        VI.Pith.ServiceRequests actualValue = provider.ParseEnumHexValue<VI.Pith.ServiceRequests>( actualCaption ).GetValueOrDefault( VI.Pith.ServiceRequests.None );
+        Pith.ServiceRequests actualValue = provider.ParseEnumHexValue<Pith.ServiceRequests>( actualCaption ).GetValueOrDefault( Pith.ServiceRequests.None );
         Assert.AreEqual( expectedValue, actualValue, $"Should be the hexadecimal value parsed value {expectedValue}" );
 
         expectedCaption = "0x..";
         actualCaption = provider.NullValueCaption;
         Assert.AreEqual( expectedCaption, actualCaption, $"Should be the null caption" );
 
-        provider = VI.Pith.HexFormatProvider.FormatProvider( 4 );
-        expectedValue = VI.Pith.ServiceRequests.All & ~VI.Pith.ServiceRequests.RequestingService;
+        provider = Pith.HexFormatProvider.FormatProvider( 4 );
+        expectedValue = Pith.ServiceRequests.All & ~Pith.ServiceRequests.RequestingService;
         expectedCaption = $"0x{( int ) expectedValue:X4}";
         actualCaption = provider.Format( expectedValue );
         Assert.AreEqual( expectedCaption, actualCaption, $"Should be the hexadecimal caption of {expectedValue}" );
 
-        actualValue = provider.ParseEnumHexValue<VI.Pith.ServiceRequests>( actualCaption ).GetValueOrDefault( VI.Pith.ServiceRequests.None );
+        actualValue = provider.ParseEnumHexValue<Pith.ServiceRequests>( actualCaption ).GetValueOrDefault( Pith.ServiceRequests.None );
         Assert.AreEqual( expectedValue, actualValue, $"Should be the hexadecimal value parsed value {expectedValue}" );
 
         expectedCaption = "0x....";
@@ -171,7 +171,7 @@ public abstract class ParseTests
     public static void ParseEnumValueTestHelper<T>( string value, T? expected ) where T : struct
     {
         T? actual;
-        actual = VI.Pith.SessionBase.ParseEnumValue<T>( value );
+        actual = Pith.SessionBase.ParseEnumValue<T>( value );
         Assert.AreEqual( expected, actual );
     }
 
@@ -188,12 +188,12 @@ public abstract class ParseTests
     {
         string reading = "0";
         bool expectedResult = false;
-        bool successParsing = VI.Pith.SessionBase.TryParse( reading, out bool actualResult );
+        bool successParsing = Pith.SessionBase.TryParse( reading, out bool actualResult );
         Assert.AreEqual( expectedResult, actualResult, "Value set to {0}", actualResult );
         Assert.AreEqual( true, successParsing, "Success set to {0}", actualResult );
         reading = "1";
         expectedResult = true;
-        successParsing = VI.Pith.SessionBase.TryParse( reading, out actualResult );
+        successParsing = Pith.SessionBase.TryParse( reading, out actualResult );
         Assert.AreEqual( expectedResult, actualResult, "Value set to {0}", actualResult );
         Assert.AreEqual( true, successParsing, "Success set to {0}", actualResult );
     }
@@ -239,7 +239,7 @@ public abstract class ParseTests
     /// <summary> Tests unknown enum read write value. </summary>
     /// <param name="enumReadWrites">    The enum read writes. </param>
     /// <param name="expectedEnumValue"> The expected enum value. </param>
-    private static void TestUnknownEnumReadWriteValue( VI.Pith.EnumReadWriteCollection enumReadWrites, long expectedEnumValue )
+    private static void TestUnknownEnumReadWriteValue( Pith.EnumReadWriteCollection enumReadWrites, long expectedEnumValue )
     {
         Assert.IsFalse( enumReadWrites.Exists( expectedEnumValue ), $"{expectedEnumValue} should Not exist" );
         _ = Assert.ThrowsException<KeyNotFoundException>( () => enumReadWrites.SelectItem( expectedEnumValue ), $"{expectedEnumValue} enum value Is out of range" );
@@ -248,7 +248,7 @@ public abstract class ParseTests
     /// <summary> Tests unknown enum read write value. </summary>
     /// <param name="enumReadWrites">    The enum read writes. </param>
     /// <param name="expectedReadValue"> The expected read value. </param>
-    private static void TestUnknownEnumReadWriteValue( VI.Pith.EnumReadWriteCollection enumReadWrites, string expectedReadValue )
+    private static void TestUnknownEnumReadWriteValue( Pith.EnumReadWriteCollection enumReadWrites, string expectedReadValue )
     {
         Assert.IsFalse( enumReadWrites.Exists( expectedReadValue ), $"{expectedReadValue} should Not exist" );
         _ = Assert.ThrowsException<KeyNotFoundException>( () => enumReadWrites.SelectItem( expectedReadValue ), $"{expectedReadValue} read value should Not exist" );
@@ -258,11 +258,11 @@ public abstract class ParseTests
     /// <param name="enumReadWrites">    The enum read writes. </param>
     /// <param name="expectedEnumValue"> The expected enum value. </param>
     /// <param name="expectedReadValue"> The expected read value. </param>
-    private static void TestEnumReadWriteValue( VI.Pith.EnumReadWriteCollection enumReadWrites, long expectedEnumValue, string expectedReadValue )
+    private static void TestEnumReadWriteValue( Pith.EnumReadWriteCollection enumReadWrites, long expectedEnumValue, string expectedReadValue )
     {
         Assert.IsTrue( enumReadWrites.Exists( expectedEnumValue ), $"{expectedEnumValue} exists" );
         Assert.IsTrue( enumReadWrites.Exists( expectedReadValue ), $"{expectedReadValue} exists" );
-        VI.Pith.EnumReadWrite enumReadWrite = enumReadWrites.SelectItem( expectedEnumValue );
+        Pith.EnumReadWrite enumReadWrite = enumReadWrites.SelectItem( expectedEnumValue );
         Assert.AreEqual( expectedEnumValue, enumReadWrite.EnumValue, "expected item equals item selected from the collection" );
         Assert.AreEqual( expectedReadValue, enumReadWrite.ReadValue, "expected read value equals read value selected from the collection" );
     }
@@ -271,7 +271,7 @@ public abstract class ParseTests
     [TestMethod( "05. Enum Read Write Values Should Be Selected" )]
     public void EnumReadWriteValuesShouldBeSelected()
     {
-        VI.Pith.EnumReadWriteCollection enumReadWrites = [];
+        Pith.EnumReadWriteCollection enumReadWrites = [];
         MultimeterSubsystemBase.DefineFunctionModeReadWrites( enumReadWrites );
         long expectedEnumValue = 1000L;
         string expectedReadValue = "xx";

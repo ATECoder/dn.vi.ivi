@@ -8,7 +8,16 @@ namespace cc.isr.VI.Tsp.K2600.MSTest.Measure;
 [TestClass]
 [Ignore( "Pending implementation" )]
 [TestCategory( "k2600" )]
+
+/* Unmerged change from project 'cc.isr.VI.Tsp.K2600.MSTest (net48)'
+Before:
 public class ResistanceTests : cc.isr.VI.Device.MSTest.Base.TestBase
+{
+After:
+public class ResistanceTests : TestBase
+{
+*/
+public class ResistanceTests : Device.Tests.Base.TestBase
 {
     #region " construction and cleanup "
 
@@ -22,7 +31,16 @@ public class ResistanceTests : cc.isr.VI.Device.MSTest.Base.TestBase
     [ClassInitialize()]
     public static void InitializeTestClass( TestContext testContext )
     {
+
+/* Unmerged change from project 'cc.isr.VI.Tsp.K2600.MSTest (net48)'
+Before:
         cc.isr.VI.Device.MSTest.Base.TestBase.InitializeBaseTestClass( testContext );
+    }
+After:
+        TestBase.InitializeBaseTestClass( testContext );
+    }
+*/
+        VI.Device.Tests.Base.TestBase.InitializeBaseTestClass( testContext );
     }
 
     /// <summary> Cleans up the test class after all tests in the class have run. </summary>
@@ -30,7 +48,16 @@ public class ResistanceTests : cc.isr.VI.Device.MSTest.Base.TestBase
     [ClassCleanup( ClassCleanupBehavior.EndOfClass )]
     public static void CleanupTestClass()
     {
+
+/* Unmerged change from project 'cc.isr.VI.Tsp.K2600.MSTest (net48)'
+Before:
         cc.isr.VI.Device.MSTest.Base.TestBase.CleanupBaseTestClass();
+    }
+After:
+        TestBase.CleanupBaseTestClass();
+    }
+*/
+        VI.Device.Tests.Base.TestBase.CleanupBaseTestClass();
     }
 
     /// <summary>   Gets or sets the reference to the K2600 Device. </summary>
@@ -97,7 +124,7 @@ public class ResistanceTests : cc.isr.VI.Device.MSTest.Base.TestBase
     {
         try
         {
-            cc.isr.VI.Device.MSTest.Asserts.AssertDeviceShouldOpenWithoutDeviceErrors( this.Device, this.ResourceSettings );
+            cc.isr.VI.Device.Tests.Asserts.AssertDeviceShouldOpenWithoutDeviceErrors( this.Device, this.ResourceSettings );
             try
             {
                 AssertSourceFunctionShouldApply( this.Device );
@@ -118,7 +145,7 @@ public class ResistanceTests : cc.isr.VI.Device.MSTest.Base.TestBase
         }
         finally
         {
-            cc.isr.VI.Device.MSTest.Asserts.AssertDeviceShouldCloseWithoutErrors( this.Device );
+            cc.isr.VI.Device.Tests.Asserts.AssertDeviceShouldCloseWithoutErrors( this.Device );
         }
     }
 

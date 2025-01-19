@@ -2,7 +2,7 @@ using System;
 using cc.isr.Std.TimeSpanExtensions;
 using cc.isr.Std.SplitExtensions;
 
-namespace cc.isr.VI.Device.MSTest;
+namespace cc.isr.VI.Device.Tests;
 
 public sealed partial class Asserts
 {

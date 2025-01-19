@@ -6,7 +6,7 @@ namespace cc.isr.VI.Tsp.K2600.MSTest.Visa;
 /// <remarks>   David, 2017-10-10. </remarks>
 [TestClass]
 [TestCategory( "k2600" )]
-public partial class VisaSessionTests : cc.isr.VI.Device.MSTest.Base.VisaSessionTests
+public partial class VisaSessionTests : Device.Tests.Base.VisaSessionTests
 {
     #region " construction and cleanup "
 
@@ -20,7 +20,7 @@ public partial class VisaSessionTests : cc.isr.VI.Device.MSTest.Base.VisaSession
     [ClassInitialize()]
     public static void InitializeTestClass( TestContext testContext )
     {
-        cc.isr.VI.Device.MSTest.Base.VisaSessionTests.InitializeBaseTestClass( testContext );
+        Device.Tests.Base.VisaSessionTests.InitializeBaseTestClass( testContext );
     }
 
     /// <summary> Cleans up the test class after all tests in the class have run. </summary>
@@ -28,7 +28,7 @@ public partial class VisaSessionTests : cc.isr.VI.Device.MSTest.Base.VisaSession
     [ClassCleanup( ClassCleanupBehavior.EndOfClass )]
     public static void CleanupTestClass()
     {
-        cc.isr.VI.Device.MSTest.Base.VisaSessionTests.CleanupTestBaseClass();
+        Device.Tests.Base.VisaSessionTests.CleanupTestBaseClass();
     }
 
     /// <summary> Initializes the test class instance before each test runs. </summary>

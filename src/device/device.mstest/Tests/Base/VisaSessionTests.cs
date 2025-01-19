@@ -1,9 +1,10 @@
 using System;
 using cc.isr.Std.Tests;
 using cc.isr.Std.Tests.Extensions;
+using cc.isr.VI.Device.Tests;
 using cc.isr.VI.Pith.Settings;
 
-namespace cc.isr.VI.Device.MSTest.Base;
+namespace cc.isr.VI.Device.Tests.Base;
 
 /// <summary>  A Visa Session tests base class. </summary>
 /// <remarks>   David, 2021-03-25. </remarks>
@@ -64,8 +65,8 @@ public abstract class VisaSessionTests
     [TestInitialize()]
     public virtual void InitializeBeforeEachTest()
     {
-        Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
-        Console.WriteLine( $"Testing {typeof( cc.isr.VI.VisaSession ).Assembly.FullName}" );
+        Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {TimeZoneInfo.Local}" );
+        Console.WriteLine( $"Testing {typeof( VisaSession ).Assembly.FullName}" );
 
         // assert reading of test settings from the configuration file.
         Assert.IsNotNull( this.TestSiteSettings, $"{nameof( this.TestSiteSettings )} should not be null." );
@@ -130,7 +131,7 @@ public abstract class VisaSessionTests
 
     /// <summary>   Gets or sets the resource settings. </summary>
     /// <value> The resource settings. </value>
-    protected Pith.Settings.ResourceSettings? ResourceSettings { get; set; }
+    protected ResourceSettings? ResourceSettings { get; set; }
 
     /// <summary>   Gets or sets the visa session base. </summary>
     /// <value> The visa session base. </value>

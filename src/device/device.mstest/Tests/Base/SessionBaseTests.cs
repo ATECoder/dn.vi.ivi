@@ -3,7 +3,7 @@ using System.Linq;
 using cc.isr.Std.Tests;
 using cc.isr.Std.Tests.Extensions;
 
-namespace cc.isr.VI.Device.MSTest.Base;
+namespace cc.isr.VI.Device.Tests.Base;
 
 /// <summary> the abstract session base tests. </summary>
 /// <remarks>
@@ -66,7 +66,7 @@ public abstract class SessionBaseTests
     public virtual void InitializeBeforeEachTest()
     {
         Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {TimeZoneInfo.Local}" );
-        Console.WriteLine( $"Testing {typeof( VI.Pith.SessionBase ).Assembly.FullName}" );
+        Console.WriteLine( $"Testing {typeof( Pith.SessionBase ).Assembly.FullName}" );
 
         // assert reading of test settings from the configuration file.
         Assert.IsNotNull( this.TestSiteSettings );
@@ -122,7 +122,7 @@ public abstract class SessionBaseTests
     [TestMethod( "01. Termination Character Should Be Line Feed" )]
     public void TerminationCharacterShouldBeLineFeed()
     {
-        using VI.Pith.SessionBase session = SessionFactory.Instance.Factory.Session();
+        using Pith.SessionBase session = SessionFactory.Instance.Factory.Session();
         Assert.AreEqual( Environment.NewLine.ToCharArray()[1], session.TerminationCharacters().ElementAtOrDefault( 0 ),
             "Initial termination character set to line feed" );
     }
@@ -132,7 +132,7 @@ public abstract class SessionBaseTests
     [TestMethod( "02. New Termination Character Could Be Set" )]
     public void NewTerminationCharacterCouldBeSet()
     {
-        using VI.Pith.SessionBase session = SessionFactory.Instance.Factory.Session();
+        using Pith.SessionBase session = SessionFactory.Instance.Factory.Session();
         char[] values = Environment.NewLine.ToCharArray();
         session.NewTermination( values );
         Assert.AreEqual( values.Length, session.TerminationCharacters().Length );

@@ -1,13 +1,14 @@
 using System;
 using cc.isr.Std.Tests;
 using cc.isr.Std.Tests.Extensions;
+using cc.isr.VI.Device.Tests;
 using cc.isr.VI.Pith.Settings;
 
-namespace cc.isr.VI.Device.MSTest.Base;
+namespace cc.isr.VI.Device.Tests.Base;
 
-/// <summary>   A device status only tests base class. </summary>
+/// <summary>   A device tests base class. </summary>
 /// <remarks>   David, 2021-03-25. </remarks>
-public abstract class DeviceStatusOnlyTests
+public abstract class DeviceTests
 {
     #region " construction and cleanup "
 
@@ -56,13 +57,13 @@ public abstract class DeviceStatusOnlyTests
 
     /// <summary>   Gets or sets the trace listener. </summary>
     /// <value> The trace listener. </value>
-    public LoggerTraceListener<DeviceStatusOnlyTests>? TraceListener { get; set; }
+    public LoggerTraceListener<DeviceTests>? TraceListener { get; set; }
 
     /// <summary> Initializes the test class instance before each test runs. </summary>											   
     public virtual void InitializeBeforeEachTest()
     {
-        Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
-        Console.WriteLine( $"Testing {typeof( cc.isr.VI.VisaSessionBase ).Assembly.FullName}" );
+        Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {TimeZoneInfo.Local}" );
+        Console.WriteLine( $"Testing {typeof( VisaSessionBase ).Assembly.FullName}" );
 
         // assert reading of test settings from the configuration file.
         Assert.IsNotNull( this.TestSiteSettings, $"{nameof( this.TestSiteSettings )} should not be null." );
@@ -71,7 +72,7 @@ public abstract class DeviceStatusOnlyTests
         Assert.IsTrue( Math.Abs( this.TestSiteSettings.TimeZoneOffset() ) < expectedUpperLimit,
                        $"{nameof( this.TestSiteSettings.TimeZoneOffset )} should be lower than {expectedUpperLimit}" );
         Assert.IsNotNull( this.ResourceSettings, $"{nameof( this.ResourceSettings )} should not be null." );
-        Assert.IsTrue( this.ResourceSettings.Exists, $"{nameof( Pith.Settings.ResourceSettings )} should exist." );
+        Assert.IsTrue( this.ResourceSettings.Exists, $"{nameof( this.ResourceSettings )} should exist." );
 
         Assert.IsNotNull( this.VisaSessionBase );
         Assert.IsNotNull( this.VisaSessionBase.Session );
@@ -81,7 +82,7 @@ public abstract class DeviceStatusOnlyTests
         if ( Logger is not null )
         {
             this._loggerScope = Logger.BeginScope( this.TestContext?.TestName ?? string.Empty );
-            this.TraceListener = new LoggerTraceListener<DeviceStatusOnlyTests>( Logger );
+            this.TraceListener = new LoggerTraceListener<DeviceTests>( Logger );
             _ = Trace.Listeners.Add( this.TraceListener );
         }
 
@@ -114,7 +115,7 @@ public abstract class DeviceStatusOnlyTests
 
     /// <summary>   Gets a logger instance for this category. </summary>
     /// <value> The logger. </value>
-    public static ILogger<DeviceStatusOnlyTests>? Logger { get; } = LoggerProvider.CreateLogger<DeviceStatusOnlyTests>();
+    public static ILogger<DeviceTests>? Logger { get; } = LoggerProvider.CreateLogger<DeviceTests>();
 
     #endregion
 
@@ -126,7 +127,11 @@ public abstract class DeviceStatusOnlyTests
 
     /// <summary>   Gets or sets the resource settings. </summary>
     /// <value> The resource settings. </value>
-    protected Pith.Settings.ResourceSettings? ResourceSettings { get; set; }
+    protected ResourceSettings? ResourceSettings { get; set; }
+
+    /// <summary>   Gets or sets the test site settings. </summary>
+    /// <value> The test site settings. </value>
+    protected Settings.DeviceErrorsSettings? DeviceErrorsSettings { get; set; }
 
     /// <summary>   Gets or sets the visa session base. </summary>
     /// <value> The visa session base. </value>
@@ -134,18 +139,77 @@ public abstract class DeviceStatusOnlyTests
 
     #endregion
 
-    #region " open, close "
+    #region " trace messages "
+
+    /// <summary>   (Unit Test Method) trace message should be queued. </summary>
+    /// <remarks>   Checks if the device adds a trace message to a trace listener. </remarks>
+    [TestMethod( "01. Trace Message Should Be Queued" )]
+    public void TraceMessageShouldBeQueued()
+    {
+        Assert.IsNotNull( this.VisaSessionBase );
+        Asserts.AssertDeviceTraceMessageShouldBeQueued( this.VisaSessionBase );
+    }
+
+    #endregion
+
+    #region " visa session base tests "
+
+    /// <summary> (Unit Test Method) queries if a given visa session base should open. </summary>
+    /// <remarks> David, 2020-10-12. </remarks>
+    [TestMethod( "02. Visa Session Base Should Open" )]
+    public void VisaSessionBaseShouldOpen()
+    {
+        Assert.IsNotNull( this.VisaSessionBase );
+        try
+        {
+            Asserts.AssertVisaSessionShouldOpen( this.VisaSessionBase, this.ResourceSettings );
+        }
+        catch
+        {
+            throw;
+        }
+        finally
+        {
+            Asserts.AssertVisaSessionShouldClose( this.VisaSessionBase );
+        }
+    }
+
+    #endregion
+
+    #region " visa session base + status subsystem tests "
 
     /// <summary>   (Unit Test Method) device should open without device errors. </summary>
-    /// <remarks>   David, 2021-07-04. </remarks>
-    [TestMethod( "01. Device Should Open Without Device Errors" )]
+    /// <remarks>   Tests opening and closing a VISA session. </remarks>
+    [TestMethod( "03. Device Should Open Without Device Errors" )]
     public void DeviceShouldOpenWithoutDeviceErrors()
     {
         Assert.IsNotNull( this.VisaSessionBase );
+        Assert.IsNotNull( this.VisaSessionBase.Session );
         try
         {
-            this.VisaSessionBase.SubsystemSupportMode = SubsystemSupportMode.StatusOnly;
+            Asserts.AssertSessionInitialValuesShouldMatch( this.VisaSessionBase.Session, this.ResourceSettings );
             Asserts.AssertDeviceShouldOpenWithoutDeviceErrors( this.VisaSessionBase, this.ResourceSettings );
+            Asserts.AssertSessionOpenValuesShouldMatch( this.VisaSessionBase.Session, this.ResourceSettings );
+        }
+        catch
+        {
+            throw;
+        }
+        finally
+        {
+            Asserts.AssertDeviceShouldCloseWithoutErrors( this.VisaSessionBase );
+        }
+    }
+
+    [TestMethod( "04. Session Should Collect Garbage" )]
+    public void SessionShouldCollectGarbage()
+    {
+        Assert.IsNotNull( this.VisaSessionBase );
+        Assert.IsNotNull( this.VisaSessionBase.Session );
+        try
+        {
+            Asserts.AssertDeviceShouldOpenWithoutDeviceErrors( this.VisaSessionBase, this.ResourceSettings );
+            Asserts.AssertSessionShouldCollectGarbage( this.VisaSessionBase.Session, false );
         }
         catch
         {
@@ -159,50 +223,62 @@ public abstract class DeviceStatusOnlyTests
 
     #endregion
 
-    #region " message available "
+    #region " Session Base "
 
-    /// <summary>   (Unit Test Method) message available should wait for. </summary>
-    /// <remarks>   David, 2021-07-04. </remarks>
-    [TestMethod( "02. Message Available Should Wait For" )]
-    public void MessageAvailableShouldWaitFor()
+    /// <summary> (Unit Test Method) tests session should read device errors. </summary>
+    [TestMethod( "05. Session Should Read Device Error" )]
+    public void SessionShouldReadDeviceErrors()
     {
         Assert.IsNotNull( this.VisaSessionBase );
         Assert.IsNotNull( this.VisaSessionBase.Session );
         try
         {
-            this.VisaSessionBase.SubsystemSupportMode = SubsystemSupportMode.StatusOnly;
             Asserts.AssertDeviceShouldOpenWithoutDeviceErrors( this.VisaSessionBase, this.ResourceSettings );
-            Asserts.AssertSessionShouldWaitForMessageAvailable( this.VisaSessionBase.Session );
-        }
-        catch
-        {
-            throw;
-        }
-        finally
-        {
-            Asserts.AssertDeviceShouldCloseWithoutErrors( this.VisaSessionBase );
-        }
-    }
-
-    #endregion
-
-    #region " operation complete "
-
-    /// <summary>   (Unit Test Method) operation completion should wait for. </summary>
-    /// <remarks>   David, 2021-07-04. </remarks>
-    [TestMethod( "03. Operation Completion Should Wait For" )]
-    public void OperationCompletionShouldWaitFor()
-    {
-        Assert.IsNotNull( this.VisaSessionBase );
-        Assert.IsNotNull( this.VisaSessionBase.Session );
-        try
-        {
-            if ( this.VisaSessionBase.Session.SupportsOperationComplete )
+            try
             {
-                this.VisaSessionBase.SubsystemSupportMode = SubsystemSupportMode.StatusOnly;
-                Asserts.AssertDeviceShouldOpenWithoutDeviceErrors( this.VisaSessionBase, this.ResourceSettings );
-                Asserts.AssertSessionShouldWaitForOperationCompletion( this.VisaSessionBase.Session, this.VisaSessionBase.Session.OperationCompleteCommand );
-                Asserts.AssertSessionShouldWaitForServiceRequestOperationCompletion( this.VisaSessionBase.Session, this.VisaSessionBase.Session.OperationCompleteCommand );
+                Asserts.AssertSessionShouldReadDeviceErrors( this.VisaSessionBase.Session, this.DeviceErrorsSettings );
+            }
+            catch ( Exception )
+            {
+                throw;
+            }
+            finally
+            {
+                // clear the trace as we know it has errors that were purposely created.
+                this.TraceListener?.Clear();
+            }
+        }
+        catch
+        {
+            throw;
+        }
+        finally
+        {
+            Asserts.AssertDeviceShouldCloseWithoutErrors( this.VisaSessionBase );
+        }
+    }
+
+    /// <summary> (Unit Test Method) tests session should clear device errors. </summary>
+    [TestMethod( "06. Session Should Clear Device Error" )]
+    public void SessionShouldClearDeviceErrors()
+    {
+        Assert.IsNotNull( this.VisaSessionBase );
+        Assert.IsNotNull( this.VisaSessionBase.Session );
+        try
+        {
+            Asserts.AssertDeviceShouldOpenWithoutDeviceErrors( this.VisaSessionBase, this.ResourceSettings );
+            try
+            {
+                Asserts.AssertSessionShouldClearDeviceErrors( this.VisaSessionBase.Session, this.DeviceErrorsSettings );
+            }
+            catch ( Exception )
+            {
+                throw;
+            }
+            finally
+            {
+                // clear the trace as we know it has errors that were purposely created.
+                this.TraceListener?.Clear();
             }
         }
         catch
@@ -216,58 +292,4 @@ public abstract class DeviceStatusOnlyTests
     }
 
     #endregion
-
-    #region " poll tests "
-
-    /// <summary> (Unit Test Method) tests device polling. </summary>
-    [TestMethod( "04. Device Should Be Polled" )]
-    public void DeviceShouldBePolled()
-    {
-        Assert.IsNotNull( this.VisaSessionBase );
-        Assert.IsNotNull( this.VisaSessionBase.Session );
-        try
-        {
-            this.VisaSessionBase.SubsystemSupportMode = SubsystemSupportMode.StatusOnly;
-            Asserts.AssertDeviceShouldOpenWithoutDeviceErrors( this.VisaSessionBase, this.ResourceSettings );
-            Asserts.AssertDeviceShouldBePolled( this.VisaSessionBase, this.ResourceSettings );
-        }
-        catch
-        {
-            throw;
-        }
-        finally
-        {
-            Asserts.AssertDeviceShouldCloseWithoutErrors( this.VisaSessionBase );
-        }
-    }
-
-    #endregion
-
-    #region " service request enabling "
-
-    /// <summary>   (Unit Test Method) requesting service should be enabled by session. </summary>
-    /// <remarks>   David, 2021-11-29. </remarks>
-    [TestMethod( "05. Requesting Service Should Be Exists By Session" )]
-    public void RequestingServiceShouldBeEnabledBySession()
-    {
-        Assert.IsNotNull( this.VisaSessionBase );
-        Assert.IsNotNull( this.VisaSessionBase.Session );
-        try
-        {
-            this.VisaSessionBase.SubsystemSupportMode = SubsystemSupportMode.StatusOnly;
-            Asserts.AssertDeviceShouldOpenWithoutDeviceErrors( this.VisaSessionBase, this.ResourceSettings );
-            Asserts.AssertRequestingServiceBeEnabledBySession( this.VisaSessionBase, this.ResourceSettings );
-        }
-        catch
-        {
-            throw;
-        }
-        finally
-        {
-            Asserts.AssertDeviceShouldCloseWithoutErrors( this.VisaSessionBase );
-        }
-    }
-
-    #endregion
-
 }

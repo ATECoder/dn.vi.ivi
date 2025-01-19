@@ -6,7 +6,7 @@ namespace cc.isr.VI.Tsp.K2600.MSTest.Visa;
 /// <remarks>  David, 2017-10-10 </remarks>
 [TestClass]
 [TestCategory( "k2600" )]
-public class VisaResourceTests : Device.MSTest.Base.VisaResourceTests
+public class VisaResourceTests : Device.Tests.Base.VisaResourceTests
 {
     #region " construction and cleanup "
 
@@ -20,7 +20,7 @@ public class VisaResourceTests : Device.MSTest.Base.VisaResourceTests
     [ClassInitialize()]
     public static void InitializeTestClass( TestContext testContext )
     {
-        VI.Device.MSTest.Base.VisaResourceTests.InitializeBaseTestClass( testContext );
+        VI.Device.Tests.Base.VisaResourceTests.InitializeBaseTestClass( testContext );
     }
 
     /// <summary> Cleans up the test class after all tests in the class have run. </summary>
@@ -28,7 +28,7 @@ public class VisaResourceTests : Device.MSTest.Base.VisaResourceTests
     [ClassCleanup( ClassCleanupBehavior.EndOfClass )]
     public static void CleanupTestClass()
     {
-        VI.Device.MSTest.Base.VisaResourceTests.CleanupBaseTestClass();
+        VI.Device.Tests.Base.VisaResourceTests.CleanupBaseTestClass();
     }
 
     /// <summary>   Gets or sets the reference to the K2600 Device. </summary>

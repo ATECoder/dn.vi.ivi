@@ -1,7 +1,7 @@
 using System;
 using DescriptionAttribute = System.ComponentModel.DescriptionAttribute;
 
-namespace cc.isr.VI.Device.MSTest.Settings;
+namespace cc.isr.VI.Device.Tests.Settings;
 
 /// <summary>   The Subsystems Test Settings base class. </summary>
 /// <remarks>

@@ -1,14 +1,15 @@
 using System;
 using cc.isr.Std.Tests;
 using cc.isr.Std.Tests.Extensions;
-using cc.isr.VI.Device.MSTest.Settings;
+using cc.isr.VI.Device.Tests;
 using cc.isr.VI.Pith.Settings;
 
-namespace cc.isr.VI.Device.MSTest.Base;
+namespace cc.isr.VI.Device.Tests.Base;
 
-/// <summary>  Subsystem tests base class. </summary>
+/// <summary>  A Visa Session service request tests base class. </summary>
 /// <remarks>   David, 2021-03-25. </remarks>
-public abstract class SubsystemsTests
+[TestClass]
+public abstract class VisaSessionServiceRequestTests
 {
     #region " construction and cleanup "
 
@@ -46,10 +47,11 @@ public abstract class SubsystemsTests
             {
             }
         }
+
     }
 
     /// <summary> Cleans up the test class after all tests in the class have run. </summary>
-    /// <remarks> Use <see cref="CleanupBaseTestClass"/> to run code after all tests in the class have run. </remarks>
+    /// <remarks> Use <see cref="CleanupTestClass"/> to run code after all tests in the class have run. </remarks>
     public static void CleanupBaseTestClass()
     { }
 
@@ -57,13 +59,14 @@ public abstract class SubsystemsTests
 
     /// <summary>   Gets or sets the trace listener. </summary>
     /// <value> The trace listener. </value>
-    public LoggerTraceListener<SubsystemsTests>? TraceListener { get; set; }
+    public LoggerTraceListener<VisaSessionServiceRequestTests>? TraceListener { get; set; }
 
     /// <summary> Initializes the test class instance before each test runs. </summary>											   
+    [TestInitialize()]
     public virtual void InitializeBeforeEachTest()
     {
-        Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
-        Console.WriteLine( $"Testing {typeof( cc.isr.VI.SubsystemBase ).Assembly.FullName}" );
+        Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {TimeZoneInfo.Local}" );
+        Console.WriteLine( $"Testing {typeof( VisaSessionBase ).Assembly.FullName}" );
 
         // assert reading of test settings from the configuration file.
         Assert.IsNotNull( this.TestSiteSettings, $"{nameof( this.TestSiteSettings )} should not be null." );
@@ -82,7 +85,7 @@ public abstract class SubsystemsTests
         if ( Logger is not null )
         {
             this._loggerScope = Logger.BeginScope( this.TestContext?.TestName ?? string.Empty );
-            this.TraceListener = new LoggerTraceListener<SubsystemsTests>( Logger );
+            this.TraceListener = new LoggerTraceListener<VisaSessionServiceRequestTests>( Logger );
             _ = Trace.Listeners.Add( this.TraceListener );
         }
 
@@ -94,6 +97,7 @@ public abstract class SubsystemsTests
     }
 
     /// <summary> Cleans up the test class instance after each test has run. </summary>	   
+    [TestCleanup()]
     public virtual void CleanupAfterEachTest()
     {
         this.VisaSessionBase?.Dispose();
@@ -115,19 +119,11 @@ public abstract class SubsystemsTests
 
     /// <summary>   Gets a logger instance for this category. </summary>
     /// <value> The logger. </value>
-    public static ILogger<SubsystemsTests>? Logger { get; } = LoggerProvider.CreateLogger<SubsystemsTests>();
+    public static ILogger<VisaSessionServiceRequestTests>? Logger { get; } = LoggerProvider.CreateLogger<VisaSessionServiceRequestTests>();
 
     #endregion
 
     #region " settings "
-
-    /// <summary>   Gets or sets the i/o settings. </summary>
-    /// <value> The i/o settings. </value>
-    protected Pith.Settings.IOSettings? IOSettings { get; set; }
-
-    /// <summary>   Gets or sets the device errors settings. </summary>
-    /// <value> The device errors settings. </value>
-    protected DeviceErrorsSettings? DeviceErrorsSettings { get; set; }
 
     /// <summary>   Gets or sets the test site settings. </summary>
     /// <value> The test site settings. </value>
@@ -143,29 +139,57 @@ public abstract class SubsystemsTests
 
     #endregion
 
-    #region " status susbsystem "
+    #region " session service request handling "
 
-    /// <summary>   Opens session and check subsystems status. </summary>
-    /// <remarks>   2024-08-01. </remarks>
-    /// <param name="readErrorEnabled"> True to read errors; otherwise false. </param>
-    /// <param name="subsystemsInfo">   Information describing the subsystems. </param>
-    protected abstract void AssertOpenSessionCheckStatus( bool readErrorEnabled );
-
-    /// <summary>   (Unit Test Method) opens session check status should pass. </summary>
+    /// <summary>   (Unit Test Method) service request handling should toggle. </summary>
     /// <remarks>   David, 2021-07-04. </remarks>
-    [TestMethod( "01. Open Session Check Status Should Pass All Tests" )]
-    public void OpenSessionCheckStatusShouldPass()
+    [TestMethod( "01. Service Request Handling Should Toggle" )]
+    public void ServiceRequestHandlingShouldToggle()
     {
-        this.AssertOpenSessionCheckStatus( false );
+        using VisaSession session = VisaSession.Create();
+        Assert.IsNotNull( session.Session );
+        session.Session.ReadSettings( this.GetType(), ".Session" );
+        Assert.IsTrue( session.Session.TimingSettings.Exists );
+
+        try
+        {
+            Asserts.AssertVisaSessionShouldOpen( session, this.ResourceSettings );
+            Asserts.AssertServiceRequestHandlingShouldToggle( session.Session );
+        }
+        catch
+        {
+            throw;
+        }
+        finally
+        {
+            Asserts.AssertVisaSessionShouldClose( session );
+        }
     }
 
-    /// <summary> (Unit Test Method) tests open session read device errors. </summary>
-    [TestMethod( "02. Open Session Should Pass All Tests and Read Device Errors" )]
-    public void OpenSessionReadDeviceErrorsShouldPass()
+    /// <summary>   (Unit Test Method) should wait for operation completion. </summary>
+    /// <remarks>   David, 2021-07-04. </remarks>
+    [TestMethod( "02. Operation Completion Should Wait For" )]
+    public void OperationCompletionShouldWaitFor()
     {
-        this.AssertOpenSessionCheckStatus( true );
+        using VisaSession session = VisaSession.Create();
+        Assert.IsNotNull( session.Session );
+        session.Session.ReadSettings( this.GetType(), ".Session" );
+        Assert.IsTrue( session.Session.TimingSettings.Exists );
+
+        try
+        {
+            Asserts.AssertVisaSessionShouldOpen( session, this.ResourceSettings );
+            Asserts.AssertSessionShouldWaitForServiceRequestOperationCompletion( session.Session, session.Session.OperationCompleteCommand );
+        }
+        catch
+        {
+            throw;
+        }
+        finally
+        {
+            Asserts.AssertVisaSessionShouldClose( session );
+        }
     }
 
     #endregion
-
 }

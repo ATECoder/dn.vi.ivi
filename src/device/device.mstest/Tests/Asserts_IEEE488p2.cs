@@ -3,7 +3,7 @@ using cc.isr.Std.TimeSpanExtensions;
 using cc.isr.Std.SplitExtensions;
 using cc.isr.VI.Pith;
 
-namespace cc.isr.VI.Device.MSTest;
+namespace cc.isr.VI.Device.Tests;
 
 public sealed partial class Asserts
 {
@@ -26,7 +26,14 @@ public sealed partial class Asserts
         Assert.IsTrue( session.Session.TimingSettings.Exists );
         Assert.IsTrue( session.Session.RegistersBitmasksSettings.Exists );
 
+
+/* Unmerged change from project 'cc.isr.VI.Device.MSTest (net48)'
+Before:
         Base.TestBase.AssertResourceNameShouldPing( session.Session, resourceSettings );
+After:
+        TestBase.AssertResourceNameShouldPing( session.Session, resourceSettings );
+*/
+        Tests.Base.TestBase.AssertResourceNameShouldPing( session.Session, resourceSettings );
 
         Assert.AreEqual( cc.isr.VI.Syntax.Ieee488Syntax.LanguageTsp.Equals( resourceSettings.Language, StringComparison.OrdinalIgnoreCase ),
             session.Session.SplitCommonCommands, $"{resourceSettings.Language} instruments must split common commands." );

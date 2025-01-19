@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using cc.isr.Std.SplitExtensions;
 
-namespace cc.isr.VI.Device.MSTest;
+namespace cc.isr.VI.Device.Tests;
 
 public sealed partial class Asserts
 {
@@ -129,9 +129,9 @@ public sealed partial class Asserts
         Assert.IsTrue( session.CollectGarbageQueryComplete(), "collecting garbage incomplete (reply not '1')." );
 
         if ( deviceErrorTraceEnabled )
-            cc.isr.VI.Device.MSTest.Asserts.AssertMessageQueue();
+            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
         if ( deviceErrorTraceEnabled )
-            cc.isr.VI.Device.MSTest.Asserts.AssertSessionLastError( session, session.ReadStatusByte() );
+            cc.isr.VI.Device.Tests.Asserts.AssertSessionLastError( session, session.ReadStatusByte() );
         else if ( session.IsErrorBitSet( session.ReadStatusByte() ) )
             Assert.Fail( "failed after collecting garbage" );
     }

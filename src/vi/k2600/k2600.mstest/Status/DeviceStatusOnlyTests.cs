@@ -7,7 +7,7 @@ namespace cc.isr.VI.Tsp.K2600.MSTest.Status;
 /// <remarks>   David, 2017-10-10. </remarks>
 [TestClass]
 [TestCategory( "k2600" )]
-public class DeviceStatusOnlyTests : cc.isr.VI.Device.MSTest.Base.DeviceStatusOnlyTests
+public class DeviceStatusOnlyTests : Device.Tests.Base.DeviceStatusOnlyTests
 {
     #region " construction and cleanup "
 
@@ -21,7 +21,7 @@ public class DeviceStatusOnlyTests : cc.isr.VI.Device.MSTest.Base.DeviceStatusOn
     [ClassInitialize()]
     public static void InitializeTestClass( TestContext testContext )
     {
-        cc.isr.VI.Device.MSTest.Base.DeviceStatusOnlyTests.InitializeBaseTestClass( testContext );
+        VI.Device.Tests.Base.DeviceStatusOnlyTests.InitializeBaseTestClass( testContext );
     }
 
     /// <summary> Cleans up the test class after all tests in the class have run. </summary>
@@ -29,7 +29,7 @@ public class DeviceStatusOnlyTests : cc.isr.VI.Device.MSTest.Base.DeviceStatusOn
     [ClassCleanup( ClassCleanupBehavior.EndOfClass )]
     public static void CleanupTestClass()
     {
-        cc.isr.VI.Device.MSTest.Base.DeviceStatusOnlyTests.CleanupBaseTestClass();
+        VI.Device.Tests.Base.DeviceStatusOnlyTests.CleanupBaseTestClass();
     }
 
     /// <summary>   Gets or sets the reference to the K2600 Device. </summary>

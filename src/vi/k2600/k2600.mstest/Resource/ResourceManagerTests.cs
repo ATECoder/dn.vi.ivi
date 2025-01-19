@@ -7,7 +7,7 @@ namespace cc.isr.VI.Tsp.K2600.MSTest.Resource;
 /// <remarks>  David, 2017-10-10  </remarks>
 [TestClass]
 [TestCategory( "k2600" )]
-public class ResourceManagerTests : cc.isr.VI.Device.MSTest.Base.ResourceManagerTests
+public class ResourceManagerTests : Device.Tests.Base.ResourceManagerTests
 {
     #region " construction and cleanup "
 
@@ -21,7 +21,7 @@ public class ResourceManagerTests : cc.isr.VI.Device.MSTest.Base.ResourceManager
     [ClassInitialize()]
     public static void InitializeTestClass( TestContext testContext )
     {
-        cc.isr.VI.Device.MSTest.Base.ResourceManagerTests.InitializeBaseTestClass( testContext );
+        VI.Device.Tests.Base.ResourceManagerTests.InitializeBaseTestClass( testContext );
     }
 
     /// <summary> Cleans up the test class after all tests in the class have run. </summary>
@@ -29,7 +29,7 @@ public class ResourceManagerTests : cc.isr.VI.Device.MSTest.Base.ResourceManager
     [ClassCleanup( ClassCleanupBehavior.EndOfClass )]
     public static void CleanupTestClass()
     {
-        cc.isr.VI.Device.MSTest.Base.ResourceManagerTests.CleanupBaseTestClass();
+        VI.Device.Tests.Base.ResourceManagerTests.CleanupBaseTestClass();
     }
 
     /// <summary>   Gets or sets the reference to the K2600 Device. </summary>

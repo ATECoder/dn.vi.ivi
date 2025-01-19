@@ -1,14 +1,15 @@
 using System;
 using cc.isr.Std.Tests;
 using cc.isr.Std.Tests.Extensions;
-using cc.isr.VI.Pith;
+using cc.isr.VI.Device.Tests;
+using cc.isr.VI.Device.Tests.Settings;
 using cc.isr.VI.Pith.Settings;
 
-namespace cc.isr.VI.Device.MSTest.Base;
+namespace cc.isr.VI.Device.Tests.Base;
 
-/// <summary>   A device status only tests base class. </summary>
+/// <summary>  Subsystem tests base class. </summary>
 /// <remarks>   David, 2021-03-25. </remarks>
-public abstract class TestBase
+public abstract class SubsystemsTests
 {
     #region " construction and cleanup "
 
@@ -25,14 +26,14 @@ public abstract class TestBase
         try
         {
             if ( Logger is null )
-                Console.Out.WriteLine( $"Initializing {methodFullName}" );
+                Trace.WriteLine( "Initializing", methodFullName );
             else
                 Logger?.LogVerboseMultiLineMessage( "Initializing" );
         }
         catch ( Exception ex )
         {
             if ( Logger is null )
-                Console.WriteLine( $"Failed initializing the test class: {ex}", methodFullName );
+                Trace.WriteLine( $"Failed initializing the test class: {ex}", methodFullName );
             else
                 Logger.LogExceptionMultiLineMessage( "Failed initializing the test class:", ex );
 
@@ -49,7 +50,7 @@ public abstract class TestBase
     }
 
     /// <summary> Cleans up the test class after all tests in the class have run. </summary>
-    /// <remarks> Use <see cref="CleanupTestClass"/> to run code after all tests in the class have run. </remarks>
+    /// <remarks> Use <see cref="CleanupBaseTestClass"/> to run code after all tests in the class have run. </remarks>
     public static void CleanupBaseTestClass()
     { }
 
@@ -57,13 +58,13 @@ public abstract class TestBase
 
     /// <summary>   Gets or sets the trace listener. </summary>
     /// <value> The trace listener. </value>
-    protected LoggerTraceListener<TestBase>? TraceListener { get; set; }
+    public LoggerTraceListener<SubsystemsTests>? TraceListener { get; set; }
 
     /// <summary> Initializes the test class instance before each test runs. </summary>											   
     public virtual void InitializeBeforeEachTest()
     {
-        Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
-        Console.WriteLine( $"Testing {typeof( cc.isr.VI.VisaSessionBase ).Assembly.FullName}" );
+        Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {TimeZoneInfo.Local}" );
+        Console.WriteLine( $"Testing {typeof( SubsystemBase ).Assembly.FullName}" );
 
         // assert reading of test settings from the configuration file.
         Assert.IsNotNull( this.TestSiteSettings, $"{nameof( this.TestSiteSettings )} should not be null." );
@@ -82,7 +83,7 @@ public abstract class TestBase
         if ( Logger is not null )
         {
             this._loggerScope = Logger.BeginScope( this.TestContext?.TestName ?? string.Empty );
-            this.TraceListener = new LoggerTraceListener<TestBase>( Logger! );
+            this.TraceListener = new LoggerTraceListener<SubsystemsTests>( Logger );
             _ = Trace.Listeners.Add( this.TraceListener );
         }
 
@@ -115,11 +116,19 @@ public abstract class TestBase
 
     /// <summary>   Gets a logger instance for this category. </summary>
     /// <value> The logger. </value>
-    public static ILogger<TestBase>? Logger { get; } = LoggerProvider.CreateLogger<TestBase>();
+    public static ILogger<SubsystemsTests>? Logger { get; } = LoggerProvider.CreateLogger<SubsystemsTests>();
 
     #endregion
 
     #region " settings "
+
+    /// <summary>   Gets or sets the i/o settings. </summary>
+    /// <value> The i/o settings. </value>
+    protected IOSettings? IOSettings { get; set; }
+
+    /// <summary>   Gets or sets the device errors settings. </summary>
+    /// <value> The device errors settings. </value>
+    protected DeviceErrorsSettings? DeviceErrorsSettings { get; set; }
 
     /// <summary>   Gets or sets the test site settings. </summary>
     /// <value> The test site settings. </value>
@@ -127,7 +136,7 @@ public abstract class TestBase
 
     /// <summary>   Gets or sets the resource settings. </summary>
     /// <value> The resource settings. </value>
-    protected Pith.Settings.ResourceSettings? ResourceSettings { get; set; }
+    protected ResourceSettings? ResourceSettings { get; set; }
 
     /// <summary>   Gets or sets the visa session base. </summary>
     /// <value> The visa session base. </value>
@@ -135,45 +144,29 @@ public abstract class TestBase
 
     #endregion
 
-    #region " Test Site Settings tests  "
+    #region " status susbsystem "
 
-    /// <summary>   Assert resource name should ping. </summary>
-    /// <remarks>   2024-08-26. </remarks>
-    public static void AssertResourceNameShouldPing( SessionBase session, Pith.Settings.ResourceSettings? resourceSettings )
+    /// <summary>   Opens session and check subsystems status. </summary>
+    /// <remarks>   2024-08-01. </remarks>
+    /// <param name="readErrorEnabled"> True to read errors; otherwise false. </param>
+    /// <param name="subsystemsInfo">   Information describing the subsystems. </param>
+    protected abstract void AssertOpenSessionCheckStatus( bool readErrorEnabled );
+
+    /// <summary>   (Unit Test Method) opens session check status should pass. </summary>
+    /// <remarks>   David, 2021-07-04. </remarks>
+    [TestMethod( "01. Open Session Check Status Should Pass All Tests" )]
+    public void OpenSessionCheckStatusShouldPass()
     {
-        Assert.IsNotNull( session, $"{nameof( SessionBase )} should not be null." );
-        Assert.IsNotNull( resourceSettings, $"{nameof( resourceSettings )} should not be null." );
-        Assert.IsTrue( resourceSettings.Exists, $"{nameof( SessionBase )}.{nameof( Pith.Settings.ResourceSettings )} should exist." );
-        int trials = 0;
-        bool pinged = false;
-        TimeSpan postPingDelay = TimeSpan.FromMilliseconds( 500 );
-        Stopwatch sw = Stopwatch.StartNew();
-        while ( trials < 3 && !pinged )
-        {
-            sw = Stopwatch.StartNew();
-            pinged = resourceSettings.ResourcePinged;
-            trials += 1;
-            if ( !pinged )
-                _ = SessionBase.AsyncDelay( postPingDelay );
-        }
-        TimeSpan elapsed = sw.Elapsed;
-        Assert.IsTrue( pinged, $"{resourceSettings.ResourceName} ping failed after {elapsed:s\\.fff}s after {trials} trials." );
-        Console.Out.WriteLine( $"\n{resourceSettings.ResourceName} pinged in {elapsed:s\\.fff}s after {trials} trials.\n" );
+        this.AssertOpenSessionCheckStatus( false );
     }
 
-    /// <summary>   (Unit Test Method) settings is local pacific standard time. </summary>
-    /// <remarks>   David, 2020-09-23. </remarks>
-    [TestMethod( "00. Local time zone should equals the expected time zone" )]
-    public void SettingsIsLocalPacificStandardTime()
+    /// <summary> (Unit Test Method) tests open session read device errors. </summary>
+    [TestMethod( "02. Open Session Should Pass All Tests and Read Device Errors" )]
+    public void OpenSessionReadDeviceErrorsShouldPass()
     {
-        // Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
-        // Console.WriteLine( $"Text context {this.TestContext?.GetHashCode():exists;exists;null}" );
-        Assert.IsNotNull( this.TestSiteSettings, $"{nameof( this.TestSiteSettings )} should not be null." );
-        TimeZoneInfo tz = TimeZoneInfo.Local;
-        string expected = this.TestSiteSettings.TimeZone();
-        string actual = tz.Id;
-        Assert.AreEqual( expected, actual );
+        this.AssertOpenSessionCheckStatus( true );
     }
 
     #endregion
+
 }

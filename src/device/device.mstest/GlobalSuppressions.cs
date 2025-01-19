@@ -6,7 +6,7 @@
 using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage( "Style", "IDE1006:Naming Styles", Justification = "<Pending>", Scope = "namespace", Target = "~N:cc.isr" )]
-[assembly: SuppressMessage( "Style", "IDE1006:Naming Styles", Justification = "<Pending>", Scope = "namespace", Target = "~N:cc.isr.VI.Device.MSTest" )]
-[assembly: SuppressMessage( "Style", "IDE1006:Naming Styles", Justification = "<Pending>", Scope = "namespace", Target = "~N:cc.isr.VI.Device.MSTest.Base" )]
-[assembly: SuppressMessage( "Style", "IDE1006:Naming Styles", Justification = "<Pending>", Scope = "namespace", Target = "~N:cc.isr.VI.Device.MSTest.Pith" )]
-[assembly: SuppressMessage( "Style", "IDE1006:Naming Styles", Justification = "<Pending>", Scope = "namespace", Target = "~N:cc.isr.VI.Device.MSTest.Settings" )]
+[assembly: SuppressMessage( "Style", "IDE1006:Naming Styles", Justification = "<Pending>", Scope = "namespace", Target = "~N:cc.isr.VI.Device.Tests" )]
+[assembly: SuppressMessage( "Style", "IDE1006:Naming Styles", Justification = "<Pending>", Scope = "namespace", Target = "~N:cc.isr.VI.Device.Tests.Base" )]
+[assembly: SuppressMessage( "Style", "IDE1006:Naming Styles", Justification = "<Pending>", Scope = "namespace", Target = "~N:cc.isr.VI.Device.Tests.Pith" )]
+[assembly: SuppressMessage( "Style", "IDE1006:Naming Styles", Justification = "<Pending>", Scope = "namespace", Target = "~N:cc.isr.VI.Device.Tests.Settings" )]

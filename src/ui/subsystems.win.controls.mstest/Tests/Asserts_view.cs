@@ -1,5 +1,5 @@
 using System;
-using cc.isr.VI.Device.MSTest.Base;
+using cc.isr.VI.Device.Tests.Base;
 
 namespace cc.isr.VI.SubsystemsWinControls.Tests;
 

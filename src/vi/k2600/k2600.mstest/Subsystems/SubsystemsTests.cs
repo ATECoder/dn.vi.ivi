@@ -8,7 +8,7 @@ namespace cc.isr.VI.Tsp.K2600.MSTest.Subsystems;
 /// <remarks>  David, 2017-10-10 </remarks>
 [TestClass]
 [TestCategory( "k2600" )]
-public class SubsystemsTests : cc.isr.VI.Device.MSTest.Base.SubsystemsTests
+public class SubsystemsTests : Device.Tests.Base.SubsystemsTests
 {
     #region " construction and cleanup "
 
@@ -22,7 +22,7 @@ public class SubsystemsTests : cc.isr.VI.Device.MSTest.Base.SubsystemsTests
     [ClassInitialize()]
     public static void InitializeTestClass( TestContext testContext )
     {
-        cc.isr.VI.Device.MSTest.Base.SubsystemsTests.InitializeBaseTestClass( testContext );
+        VI.Device.Tests.Base.SubsystemsTests.InitializeBaseTestClass( testContext );
     }
 
     /// <summary> Cleans up the test class after all tests in the class have run. </summary>
@@ -30,7 +30,7 @@ public class SubsystemsTests : cc.isr.VI.Device.MSTest.Base.SubsystemsTests
     [ClassCleanup( ClassCleanupBehavior.EndOfClass )]
     public static void CleanupTestClass()
     {
-        cc.isr.VI.Device.MSTest.Base.SubsystemsTests.CleanupBaseTestClass();
+        VI.Device.Tests.Base.SubsystemsTests.CleanupBaseTestClass();
     }
 
     /// <summary>   Gets or sets the reference to the K2600 Device. </summary>
@@ -95,22 +95,22 @@ public class SubsystemsTests : cc.isr.VI.Device.MSTest.Base.SubsystemsTests
             string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
             Console.WriteLine( $"@{methodFullName}" );
 
-            cc.isr.VI.Device.MSTest.Asserts.AssertSessionInitialValuesShouldMatch( this.Device.Session, this.ResourceSettings );
-            cc.isr.VI.Device.MSTest.Asserts.AssertDeviceShouldOpenWithoutDeviceErrors( this.Device, this.ResourceSettings );
-            cc.isr.VI.Device.MSTest.Asserts.AssertDeviceShouldPresetKnownState( this.Device );
-            cc.isr.VI.Device.MSTest.Asserts.AssertDeviceShouldInitializeKnownState( this.Device );
-            cc.isr.VI.Device.MSTest.Asserts.AssertSessionOpenValuesShouldMatch( this.Device.Session, this.ResourceSettings );
-            cc.isr.VI.Device.MSTest.Asserts.AssertDeviceModelShouldMatch( this.Device.StatusSubsystemBase, this.ResourceSettings );
-            cc.isr.VI.Device.MSTest.Asserts.AssertDeviceErrorsShouldMatch( this.Device.StatusSubsystemBase, this.DeviceErrorsSettings );
-            cc.isr.VI.Device.MSTest.Asserts.AssertTerminationValuesShouldMatch( this.Device.Session, AllSettings.IOSettings );
-            cc.isr.VI.Device.MSTest.Asserts.AssertLineFrequencyShouldMatch( this.Device.StatusSubsystem, AllSettings.SystemSubsystemSettings );
-            cc.isr.VI.Device.MSTest.Asserts.AssertIntegrationPeriodShouldMatch( this.Device.StatusSubsystem, AllSettings.SenseSubsystemSettings, AllSettings.SystemSubsystemSettings );
-            cc.isr.VI.Device.MSTest.Asserts.AssertSessionDeviceErrorsShouldClear( this.Device, AllSettings.DeviceErrorsSettings );
-            cc.isr.VI.Device.MSTest.Asserts.AssertOrphanMessagesShouldBeEmpty( this.Device.StatusSubsystemBase );
+            cc.isr.VI.Device.Tests.Asserts.AssertSessionInitialValuesShouldMatch( this.Device.Session, this.ResourceSettings );
+            cc.isr.VI.Device.Tests.Asserts.AssertDeviceShouldOpenWithoutDeviceErrors( this.Device, this.ResourceSettings );
+            cc.isr.VI.Device.Tests.Asserts.AssertDeviceShouldPresetKnownState( this.Device );
+            cc.isr.VI.Device.Tests.Asserts.AssertDeviceShouldInitializeKnownState( this.Device );
+            cc.isr.VI.Device.Tests.Asserts.AssertSessionOpenValuesShouldMatch( this.Device.Session, this.ResourceSettings );
+            cc.isr.VI.Device.Tests.Asserts.AssertDeviceModelShouldMatch( this.Device.StatusSubsystemBase, this.ResourceSettings );
+            cc.isr.VI.Device.Tests.Asserts.AssertDeviceErrorsShouldMatch( this.Device.StatusSubsystemBase, this.DeviceErrorsSettings );
+            cc.isr.VI.Device.Tests.Asserts.AssertTerminationValuesShouldMatch( this.Device.Session, AllSettings.IOSettings );
+            cc.isr.VI.Device.Tests.Asserts.AssertLineFrequencyShouldMatch( this.Device.StatusSubsystem, AllSettings.SystemSubsystemSettings );
+            cc.isr.VI.Device.Tests.Asserts.AssertIntegrationPeriodShouldMatch( this.Device.StatusSubsystem, AllSettings.SenseSubsystemSettings, AllSettings.SystemSubsystemSettings );
+            cc.isr.VI.Device.Tests.Asserts.AssertSessionDeviceErrorsShouldClear( this.Device, AllSettings.DeviceErrorsSettings );
+            cc.isr.VI.Device.Tests.Asserts.AssertOrphanMessagesShouldBeEmpty( this.Device.StatusSubsystemBase );
             if ( readErrorEnabled )
                 try
                 {
-                    cc.isr.VI.Device.MSTest.Asserts.AssertDeviceErrorsShouldRead( this.Device, AllSettings.DeviceErrorsSettings );
+                    cc.isr.VI.Device.Tests.Asserts.AssertDeviceErrorsShouldRead( this.Device, AllSettings.DeviceErrorsSettings );
                 }
                 catch
                 {
@@ -128,7 +128,7 @@ public class SubsystemsTests : cc.isr.VI.Device.MSTest.Base.SubsystemsTests
         }
         finally
         {
-            cc.isr.VI.Device.MSTest.Asserts.AssertDeviceShouldCloseWithoutErrors( this.Device );
+            cc.isr.VI.Device.Tests.Asserts.AssertDeviceShouldCloseWithoutErrors( this.Device );
         }
     }
 

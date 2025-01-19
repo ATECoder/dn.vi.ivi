@@ -1,10 +1,10 @@
 using System;
 using cc.isr.Std.TimeSpanExtensions;
 using cc.isr.Std.SplitExtensions;
-using cc.isr.VI.Device.MSTest.Settings;
 using cc.isr.VI.Pith;
+using cc.isr.VI.Device.Tests.Settings;
 
-namespace cc.isr.VI.Device.MSTest;
+namespace cc.isr.VI.Device.Tests;
 
 public sealed partial class Asserts
 {
