@@ -8,15 +8,6 @@ namespace cc.isr.VI.Tsp.K2600.MSTest.Measure;
 [TestClass]
 [Ignore( "Pending implementation" )]
 [TestCategory( "k2600" )]
-
-/* Unmerged change from project 'cc.isr.VI.Tsp.K2600.MSTest (net48)'
-Before:
-public class ResistanceTests : cc.isr.VI.Device.MSTest.Base.TestBase
-{
-After:
-public class ResistanceTests : TestBase
-{
-*/
 public class ResistanceTests : Device.Tests.Base.TestBase
 {
     #region " construction and cleanup "
@@ -31,15 +22,6 @@ public class ResistanceTests : Device.Tests.Base.TestBase
     [ClassInitialize()]
     public static void InitializeTestClass( TestContext testContext )
     {
-
-/* Unmerged change from project 'cc.isr.VI.Tsp.K2600.MSTest (net48)'
-Before:
-        cc.isr.VI.Device.MSTest.Base.TestBase.InitializeBaseTestClass( testContext );
-    }
-After:
-        TestBase.InitializeBaseTestClass( testContext );
-    }
-*/
         VI.Device.Tests.Base.TestBase.InitializeBaseTestClass( testContext );
     }
 
@@ -48,15 +30,6 @@ After:
     [ClassCleanup( ClassCleanupBehavior.EndOfClass )]
     public static void CleanupTestClass()
     {
-
-/* Unmerged change from project 'cc.isr.VI.Tsp.K2600.MSTest (net48)'
-Before:
-        cc.isr.VI.Device.MSTest.Base.TestBase.CleanupBaseTestClass();
-    }
-After:
-        TestBase.CleanupBaseTestClass();
-    }
-*/
         VI.Device.Tests.Base.TestBase.CleanupBaseTestClass();
     }
 

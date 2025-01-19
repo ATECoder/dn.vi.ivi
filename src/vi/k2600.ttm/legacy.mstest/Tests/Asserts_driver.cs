@@ -380,7 +380,8 @@ internal static partial class Asserts
             if ( outcomeValue.Value == 0 )
             {
                 bitValue = 2;
-                Assert.IsTrue( 0 == (bitValue & statusValue), $"status {statusValue} must not have the over temp bit {bitValue} set if measurement was made." );
+                Assert.AreEqual( bitValue & statusValue, 0,
+                    $"status {statusValue} must not have the over temp bit {bitValue} set if measurement was made." );
                 // compliance is acceptable
                 // bitValue = 64;
                 // Assert.IsTrue( 0 == (bitValue & statusValue), $"status {statusValue} must not have the compliance bit {bitValue} set if measurement was made." );

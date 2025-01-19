@@ -25,14 +25,6 @@ public sealed partial class Asserts
         Assert.IsTrue( resourceSettings.Exists, $"{nameof( Pith.Settings.ResourceSettings )} should exist in the settings file." );
         Assert.IsTrue( session.Session.TimingSettings.Exists );
         Assert.IsTrue( session.Session.RegistersBitmasksSettings.Exists );
-
-
-/* Unmerged change from project 'cc.isr.VI.Device.MSTest (net48)'
-Before:
-        Base.TestBase.AssertResourceNameShouldPing( session.Session, resourceSettings );
-After:
-        TestBase.AssertResourceNameShouldPing( session.Session, resourceSettings );
-*/
         Tests.Base.TestBase.AssertResourceNameShouldPing( session.Session, resourceSettings );
 
         Assert.AreEqual( cc.isr.VI.Syntax.Ieee488Syntax.LanguageTsp.Equals( resourceSettings.Language, StringComparison.OrdinalIgnoreCase ),
@@ -88,7 +80,8 @@ After:
         (_, byte status) = (false, expectedBitmask);
         (bool timedOut, int statusByte, TimeSpan _) = session.AwaitStatusBitmask( expectedBitmask, timeout );
         Assert.IsFalse( timedOut, $"Awaiting 0x{( int ) expectedBitmask:X2} should not time out" );
-        Assert.IsTrue( (statusByte & status) != 0, $"Status byte 0x{statusByte:X2} 0x{status:X2} bitmask should be set" );
+        Assert.AreNotEqual( 0, statusByte & status,
+            $"Status byte 0x{statusByte:X2} 0x{status:X2} bitmask should be set" );
         Console.Out.WriteLine( $"{session.OpenResourceModel} status byte 0x{statusByte:X2} 0x{status:X2} bitmask was set" );
     }
 
@@ -103,7 +96,7 @@ After:
         (_, cc.isr.VI.Pith.ServiceRequests status) = (false, expectedBitmask);
         (bool timedOut, cc.isr.VI.Pith.ServiceRequests statusByte, TimeSpan _) = session.AwaitStatusBitmask( expectedBitmask, timeout );
         Assert.IsFalse( timedOut, $"Getting 0x{( int ) statusByte:X2} awaiting 0x{( int ) expectedBitmask:X2} should not time out" );
-        Assert.IsTrue( (statusByte & status) != 0, $"Status byte 0x{( int ) statusByte:X2} 0x{( int ) status:X2} bitmask should be set" );
+        Assert.AreNotEqual( 0, ( int ) statusByte & ( int ) status, $"Status byte 0x{( int ) statusByte:X2} 0x{( int ) status:X2} bitmask should be set" );
         Console.Out.WriteLine( $"{session.OpenResourceModel} status byte 0x{( int ) statusByte:X2} 0x{( int ) status:X2} bitmask was set" );
     }
 
@@ -121,8 +114,10 @@ After:
         (_, cc.isr.VI.Pith.ServiceRequests status) = (false, expectedBitmask);
         (bool timedOut, cc.isr.VI.Pith.ServiceRequests statusByte, TimeSpan _) = session.AwaitStatusBitmask( expectedBitmask, timeout );
         Assert.IsFalse( timedOut, $"Awaiting 0x{( int ) expectedBitmask:X2} should not time out" );
-        Assert.IsTrue( (statusByte & status) != 0, $"Status byte 0x{( int ) statusByte:X2} 0x{( int ) status:X2} bitmask should be set" );
-        Assert.IsTrue( (statusByte & secondaryBitmask) != 0, $"Status byte 0x{( int ) statusByte:X2} 0x{( int ) secondaryBitmask:X2} bitmask should also be set" );
+        Assert.AreNotEqual( 0, ( int ) statusByte & ( int ) status,
+            $"Status byte 0x{( int ) statusByte:X2} 0x{( int ) status:X2} bitmask should be set" );
+        Assert.AreNotEqual( 0, ( int ) statusByte & ( int ) secondaryBitmask,
+            $"Status byte 0x{( int ) statusByte:X2} 0x{( int ) secondaryBitmask:X2} bitmask should also be set" );
         Console.Out.WriteLine( $"{session.OpenResourceModel} status byte 0x{( int ) statusByte:X2} 0x{( int ) status:X2} bitmask was set" );
     }
 
@@ -139,8 +134,10 @@ After:
         (_, int status) = (false, expectedBitmask);
         (bool timedOut, int statusByte, TimeSpan _) = session.AwaitStatusBitmask( expectedBitmask, timeout );
         Assert.IsFalse( timedOut, $"Awaiting 0x{expectedBitmask:X2} should not time out" );
-        Assert.IsTrue( (statusByte & status) != 0, $"Status byte 0x{statusByte:X2} 0x{status:X2} bitmask should be set" );
-        Assert.IsTrue( (statusByte & secondaryBitmask) != 0, $"Status byte 0x{statusByte:X2} 0x{secondaryBitmask:X2} bitmask should also be set" );
+        Assert.AreNotEqual( 0, statusByte & status,
+            $"Status byte 0x{statusByte:X2} 0x{status:X2} bitmask should be set" );
+        Assert.AreNotEqual( 0, statusByte & secondaryBitmask,
+            $"Status byte 0x{statusByte:X2} 0x{secondaryBitmask:X2} bitmask should also be set" );
         Console.Out.WriteLine( $"{session.OpenResourceModel} status byte 0x{statusByte:X2} 0x{status:X2} bitmask was set" );
     }
 
@@ -157,9 +154,10 @@ After:
         (bool _, cc.isr.VI.Pith.ServiceRequests expectedStatus) = (false, setBitmask);
         (bool timedOut, cc.isr.VI.Pith.ServiceRequests status, TimeSpan _) = session.AwaitStatusBitmask( setBitmask, timeout );
         Assert.IsFalse( timedOut, $"Awaiting 0x{( int ) setBitmask:X2} should not time out" );
-        Assert.IsTrue( (status & expectedStatus) != 0,
+        Assert.AreNotEqual( 0, ( int ) status & ( int ) expectedStatus,
             $"Status byte 0x{( int ) status:X2} 0x{( int ) expectedStatus:X2} bitmask should be set" );
-        Assert.IsTrue( (status & clearBitmask) == 0, $"Status byte 0x{( int ) status:X2} 0x{( int ) clearBitmask:X2} bitmask should also be clear" );
+        Assert.AreEqual( 0, ( int ) status & ( int ) clearBitmask,
+            $"Status byte 0x{( int ) status:X2} 0x{( int ) clearBitmask:X2} bitmask should also be clear" );
         Console.Out.WriteLine( $"{session.OpenResourceModel} status byte 0x{( int ) status:X2} 0x{( int ) expectedStatus:X2} bitmask was set" );
     }
 

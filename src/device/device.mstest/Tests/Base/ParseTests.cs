@@ -162,7 +162,7 @@ public abstract class ParseTests
         Assert.AreEqual( new bool?(), new bool?(), "? New Boolean? = New Boolean?" );
         Assert.AreNotEqual( new bool?( true ), new bool?(), "? New Boolean?(True) = New Boolean?" );
         // VB.Net: Assert.IsNull(new bool?() == new bool?(), "? Null = New Boolean? = New Boolean?");
-        Assert.IsTrue( new bool?() == new bool?(), "? New Boolean? = New Boolean?" );
+        Assert.AreEqual( new bool?(), new bool?(), "? New Boolean? = New Boolean?" );
     }
 
     /// <summary> A test for ParseEnumValue. </summary>
@@ -190,12 +190,12 @@ public abstract class ParseTests
         bool expectedResult = false;
         bool successParsing = Pith.SessionBase.TryParse( reading, out bool actualResult );
         Assert.AreEqual( expectedResult, actualResult, "Value set to {0}", actualResult );
-        Assert.AreEqual( true, successParsing, "Success set to {0}", actualResult );
+        Assert.IsTrue( successParsing, "Success set to {0}", actualResult );
         reading = "1";
         expectedResult = true;
         successParsing = Pith.SessionBase.TryParse( reading, out actualResult );
         Assert.AreEqual( expectedResult, actualResult, "Value set to {0}", actualResult );
-        Assert.AreEqual( true, successParsing, "Success set to {0}", actualResult );
+        Assert.IsTrue( successParsing, "Success set to {0}", actualResult );
     }
 
     /// <summary> (Unit Test Method) assert that enum names function should return the expected values. </summary>

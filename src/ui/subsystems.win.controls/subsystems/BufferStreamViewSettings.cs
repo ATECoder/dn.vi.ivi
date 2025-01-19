@@ -5,16 +5,6 @@ using System.Text.Json.Serialization;
 using cc.isr.Json.AppSettings.ViewModels;
 using System.Windows.Forms;
 
-/* Unmerged change from project 'cc.isr.VI.DeviceWinControls (net48)'
-Added:
-using cc;
-using cc.isr;
-using cc.isr.VI;
-using cc.isr.VI.DeviceWinControls;
-using cc.isr.VI.DeviceWinControls.Properties;
-using cc.isr.VI.DeviceWinControls.Views;
-*/
-
 namespace cc.isr.VI.SubsystemsWinControls;
 
 /// <summary>   A settings. </summary>
