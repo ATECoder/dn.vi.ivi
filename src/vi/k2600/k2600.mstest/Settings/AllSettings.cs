@@ -71,7 +71,7 @@ public class AllSettings
     [JsonIgnore]
     internal static AssemblyFileInfo SettingsFileInfo => _settingsFileInfo.Value;
 
-    private static readonly Lazy<AssemblyFileInfo> _settingsFileInfo = new( CreateSettingsFileInfo, true );
+    private static readonly Lazy<AssemblyFileInfo> _settingsFileInfo = new( AllSettings.CreateSettingsFileInfo, true );
 
     #endregion
 
@@ -88,11 +88,11 @@ public class AllSettings
         // get an instance of the settings file info first.
         AssemblyFileInfo settingsFileInfo = SettingsFileInfo;
 
-        AppSettingsScribe scribe = new( [AllSettings.TestSiteSettings, AllSettings.IOSettings,
-            AllSettings.CommandsSettings, AllSettings.ResourceSettings,
-            AllSettings.DeviceErrorsSettings, AllSettings.DigitalIOSettings, AllSettings.SystemSubsystemSettings,
+        AppSettingsScribe scribe = new( [AllSettings.TestSiteSettings,
+            AllSettings.CommandsSettings, AllSettings.DeviceErrorsSettings, AllSettings.DigitalIOSettings,
+            AllSettings.IOSettings, AllSettings.ResourceSettings, AllSettings.SystemSubsystemSettings,
             AllSettings.SenseResistanceSettings, AllSettings.SourceResistanceSettings, AllSettings.ResistanceSettings,
-            AllSettings.SenseCurrentSettings, AllSettings.SourceCurrentSettings, AllSettings.CurrentSourceMeasureSettings],
+            AllSettings.SenseVoltageSettings, AllSettings.SourceCurrentSettings, AllSettings.CurrentSourceMeasureSettings],
             settingsFileInfo.AppContextAssemblyFilePath!, settingsFileInfo.AllUsersAssemblyFilePath! )
         {
             AllUsersSettingsPath = settingsFileInfo.AllUsersAssemblyFilePath,
@@ -101,7 +101,9 @@ public class AllSettings
 
         scribe.ReadSettings();
 
-        if ( !AllSettings.SettingsExist( out string details ) )
+        if ( !System.IO.File.Exists( scribe.UserSettingsPath ) )
+            throw new InvalidOperationException( $"{nameof( AllSettings )} settings file {AllSettings.Scribe.UserSettingsPath} not found." );
+        else if ( !AllSettings.SettingsExist( out string details ) )
             throw new InvalidOperationException( details );
 
         return scribe;
@@ -112,19 +114,19 @@ public class AllSettings
     [JsonIgnore]
     public static AppSettingsScribe Scribe => _scribe.Value;
 
-    private static readonly Lazy<AppSettingsScribe> _scribe = new( CreateScribe, true );
+    private static readonly Lazy<AppSettingsScribe> _scribe = new( AllSettings.CreateScribe, true );
 
     /// <summary>   Gets the full pathname of the settings file. </summary>
     /// <value> The full pathname of the settings file. </value>
     [JsonIgnore]
-    public static string FilePath => Scribe.UserSettingsPath;
+    public static string FilePath => AllSettings.Scribe.UserSettingsPath;
 
     /// <summary>   Check if the settings file exists. </summary>
     /// <remarks>   2024-07-06. </remarks>
     /// <returns>   True if it the settings file exists; otherwise false. </returns>
     public static bool SettingsFileExists()
     {
-        return System.IO.File.Exists( FilePath );
+        return System.IO.File.Exists( AllSettings.FilePath );
     }
 
     /// <summary>   Checks if all settings exist. </summary>
@@ -132,10 +134,7 @@ public class AllSettings
     /// <returns>   A Tuple. </returns>
     public static bool SettingsExist( out string details )
     {
-        details = string.Empty;
-        if ( !AllSettings.SettingsFileExists() )
-            details = $"{AllSettings.Scribe.UserSettingsPath} not found.";
-        else if ( AllSettings.TestSiteSettings is null || !AllSettings.TestSiteSettings.Exists )
+        if ( AllSettings.TestSiteSettings is null || !AllSettings.TestSiteSettings.Exists )
             details = $"{nameof( AllSettings.TestSiteSettings )} not found.";
         else if ( AllSettings.IOSettings is null || !AllSettings.IOSettings.Exists )
             details = $"{nameof( AllSettings.IOSettings )} not found.";
@@ -153,12 +152,14 @@ public class AllSettings
             details = $"{nameof( AllSettings.SourceResistanceSettings )} not found.";
         else if ( AllSettings.ResistanceSettings is null || !AllSettings.ResistanceSettings.Exists )
             details = $"{nameof( AllSettings.ResistanceSettings )} not found.";
-        else if ( AllSettings.SenseCurrentSettings is null || !AllSettings.SenseCurrentSettings.Exists )
-            details = $"{nameof( AllSettings.SenseCurrentSettings )} not found.";
+        else if ( AllSettings.SenseVoltageSettings is null || !AllSettings.SenseVoltageSettings.Exists )
+            details = $"{nameof( AllSettings.SenseVoltageSettings )} not found.";
         else if ( AllSettings.SourceCurrentSettings is null || !AllSettings.SourceCurrentSettings.Exists )
             details = $"{nameof( AllSettings.SourceCurrentSettings )} not found.";
         else if ( AllSettings.CurrentSourceMeasureSettings is null || !AllSettings.CurrentSourceMeasureSettings.Exists )
             details = $"{nameof( AllSettings.CurrentSourceMeasureSettings )} not found.";
+        else
+            details = string.Empty;
 
         return details.Length == 0;
     }
@@ -211,9 +212,9 @@ public class AllSettings
     /// <value> The resistance settings. </value>
     internal static ResistanceSettings ResistanceSettings { get; private set; } = new();
 
-    /// <summary>   Gets or sets the sense current settings. </summary>
-    /// <value> The sense current settings. </value>
-    internal static SenseCurrentSettings SenseCurrentSettings { get; private set; } = new();
+    /// <summary>   Gets or sets the sense voltage settings. </summary>
+    /// <value> The sense voltage settings. </value>
+    internal static SenseVoltageSettings SenseVoltageSettings { get; private set; } = new();
 
     /// <summary>   Gets or sets source current settings. </summary>
     /// <value> The source current settings. </value>

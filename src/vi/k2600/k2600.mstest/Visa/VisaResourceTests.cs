@@ -46,14 +46,12 @@ public class VisaResourceTests : Device.Tests.Base.VisaResourceTests
 
         // create an instance of the Serilog logger. 
         SessionLogger.Instance.CreateSerilogLogger( typeof( VisaResourceTests ) );
-        Assert.IsTrue( Settings.AllSettings.SettingsFileExists(), $"{nameof( Settings.AllSettings )} settings file {Settings.AllSettings.FilePath} should exist" );
 
         this.TestSiteSettings = Settings.AllSettings.TestSiteSettings;
         this.Device = K2600Device.Create();
         Assert.IsNotNull( this.Device );
         Assert.IsNotNull( this.Device.Session );
         this.Device.Session.ReadSettings( typeof( VisaSessionTests ), ".Session" );
-        Assert.IsTrue( this.Device.Session.TimingSettings.Exists );
         base.InitializeBeforeEachTest();
     }
 

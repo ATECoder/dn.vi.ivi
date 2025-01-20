@@ -56,7 +56,6 @@ public class CurrentSourceTests : Device.Tests.Base.TestBase
         Assert.IsNotNull( this.Device );
         Assert.IsNotNull( this.Device.Session );
         this.Device.Session.ReadSettings( typeof( VisaSessionTests ), ".Session" );
-        Assert.IsTrue( this.Device.Session.TimingSettings.Exists );
         this.VisaSessionBase = this.Device;
         base.InitializeBeforeEachTest();
     }

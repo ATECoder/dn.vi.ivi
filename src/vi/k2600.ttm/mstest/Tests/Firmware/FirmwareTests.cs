@@ -69,7 +69,6 @@ public class FirmwareTests
 
         // create an instance of the Serilog logger. 
         SessionLogger.Instance.CreateSerilogLogger( typeof( FirmwareTests ) );
-        Assert.IsTrue( Settings.AllSettings.SettingsFileExists(), $"{nameof( Settings.AllSettings )} settings file {Settings.AllSettings.FilePath} should exist" );
 
         Assert.IsTrue( Settings.AllSettings.TestSiteSettings.Exists, $"{nameof( Settings.AllSettings.TestSiteSettings )} should exist" );
         Assert.IsTrue( Settings.AllSettings.ResourceSettings.Exists, $"{nameof( Settings.AllSettings.ResourceSettings )} should exist" );

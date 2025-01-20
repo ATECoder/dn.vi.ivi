@@ -9,6 +9,35 @@
     "TimeZoneOffsets": "-8|-6"
   },
 
+  "CommandsSettings": {
+    "Exists": true,
+    "KeepAliveQueryCommand": "*OPC?",
+    "KeepAliveCommand": "*OPC"
+  },
+
+  "DeviceErrorsSettings": {
+    "Exists": true,
+    "ErroneousCommand": "*CLL",
+    "ErrorAvailableMillisecondsDelay": 100,
+    "ExpectedCompoundErrorMessage": "-285,TSP Syntax Error at line 1: unexpected symbol near `*',level=20",
+    "ExpectedErrorNumber": -285,
+    "ExpectedErrorMessage": "TSP Syntax error at line 1: unexpected symbol near `*'",
+    "ExpectedErrorLevel": 20
+  },
+
+  "DigitalIOSettings": {
+    "Exists": true,
+    "DigitalOutputLineNumber": 1,
+    "DigitalInputLineNumber": 2,
+    "DigitalLineCount": 6
+  },
+
+  "IOSettings": {
+    "Exists": true,
+    "ReadTerminationEnabled": true,
+    "ReadTerminationCharacter": 10
+  },
+
   "ResourceSettings": {
     "Exists": true,
     "ClosedCaption": "closed",
@@ -26,74 +55,6 @@
     "ResourceNameSelectionTimeout": "00:00:10"
   },
 
-  "DeviceErrorsSettings": {
-    "Exists": true,
-    "ErroneousCommand": "*CLL",
-    "ErrorAvailableMillisecondsDelay": 100,
-    "ExpectedCompoundErrorMessage": "-285,TSP Syntax Error at line 1: unexpected symbol near `*',level=20",
-    "ExpectedErrorNumber": -285,
-    "ExpectedErrorMessage": "TSP Syntax error at line 1: unexpected symbol near `*'",
-    "ExpectedErrorLevel": 20
-  },
-
-  "IOSettings": {
-    "Exists": true,
-    "ReadTerminationEnabled": true,
-    "ReadTerminationCharacter": 10
-  },
-
-  "CommandsSettings": {
-    "Exists": true,
-    "KeepAliveQueryCommand": "*OPC?",
-    "KeepAliveCommand": "*OPC"
-  },
-
-  "SubsystemsSettings": {
-    "Exists": true,
-    "_INITIAL_MEASURE_VALUES_": "",
-    "InitialPowerLineCycles": 1,
-    "InitialAutoZeroEnabled": true,
-    "InitialAutoRangeEnabled": true,
-    "InitialSenseFunction": "CurrentDC",
-    "InitialRemoteSenseSelected": false,
-    "_SMU_SETTINGS_": "",
-    "LineFrequency": 60,
-    "MaximumOutputPower": 22,
-    "_INITIAL_SOURCE_VALUES_": "",
-    "InitialFrontTerminalsSelected": true,
-    "InitialSourceFunction": "VoltageDC",
-    "InitialAutoDelayEnabled": true,
-    "InitialSourceLevel": 0,
-    "InitialSourceLimit": 0.000105,
-    "_DIGITAL_IO_VALUES_": "",
-    "DigitalOutputLineNumber": 1,
-    "DigitalInputLineNumber": 2,
-    "DigitalLineCount": 6
-  },
-
-  "DigitalIOSettings": {
-    "Exists": true,
-    "DigitalOutputLineNumber": 1,
-    "DigitalInputLineNumber": 2,
-    "DigitalLineCount": 6
-  },
-
-  "SenseSubsystemSettings": {
-    "Exists": true,
-    "AutoZeroEnabled": true,
-    "AutoRangeEnabled": true,
-    "SenseFunction": "Resistance",
-    "PowerLineCycles": 1
-  },
-
-  "SourceSubsystemSettings": {
-    "Exists": true,
-    "FrontTerminalsSelected": true,
-    "RemoteSenseSelected": true,
-    "SourceFunction": "CurrentDC",
-    "SourceLevel": 0.02
-  },
-
   "SystemSubsystemSettings": {
     "Exists": true,
     "LineFrequency": 60
@@ -101,15 +62,26 @@
 
   "SenseResistanceSettings": {
     "Exists": true,
-    "AutoZeroEnabled": true,
+    "InitialPowerLineCycles": 1,
+    "InitialAutoZeroEnabled": true,
+    "InitialAutoRangeEnabled": true,
+    "InitialSenseFunction": "CurrentDC",
+    "InitialRemoteSenseSelected": false,
     "AutoRangeEnabled": true,
-    "SenseFunction": "Resistance",
-    "PowerLineCycles": 1
+    "AutoZeroEnabled": true,
+    "PowerLineCycles": 1,
+    "SenseFunction": "Resistance"
   },
 
   "SourceResistanceSettings": {
     "Exists": true,
+    "InitialFrontTerminalsSelected": true,
+    "InitialSourceFunction": "VoltageDC",
+    "InitialAutoDelayEnabled": true,
+    "InitialSourceLevel": 0,
+    "InitialSourceLimit": 0.000105,
     "FrontTerminalsSelected": true,
+    "MaximumOutputPower": 22,
     "RemoteSenseSelected": true,
     "SourceFunction": "CurrentDC",
     "SourceLevel": 0.02
@@ -123,6 +95,11 @@
 
   "SenseVoltageSettings": {
     "Exists": true,
+    "InitialPowerLineCycles": 1,
+    "InitialAutoZeroEnabled": true,
+    "InitialAutoRangeEnabled": true,
+    "InitialSenseFunction": "CurrentDC",
+    "InitialRemoteSenseSelected": false,
     "AutoZeroEnabled": true,
     "AutoRangeEnabled": true,
     "SenseFunction": "VoltageDC",
@@ -131,7 +108,13 @@
 
   "SourceCurrentSettings": {
     "Exists": true,
+    "InitialFrontTerminalsSelected": true,
+    "InitialSourceFunction": "VoltageDC",
+    "InitialAutoDelayEnabled": true,
+    "InitialSourceLevel": 0,
+    "InitialSourceLimit": 0.000105,
     "FrontTerminalsSelected": true,
+    "MaximumOutputPower": 22,
     "RemoteSenseSelected": true,
     "SourceReadBackEnabled": true,
     "SourceFunction": "CurrentDC",

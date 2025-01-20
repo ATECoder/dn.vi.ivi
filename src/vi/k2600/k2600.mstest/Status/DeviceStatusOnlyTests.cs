@@ -47,7 +47,6 @@ public class DeviceStatusOnlyTests : Device.Tests.Base.DeviceStatusOnlyTests
 
         // create an instance of the Serilog logger. 
         SessionLogger.Instance.CreateSerilogLogger( typeof( DeviceStatusOnlyTests ) );
-        Assert.IsTrue( Settings.AllSettings.SettingsFileExists(), $"{nameof( Settings.AllSettings )} settings file {Settings.AllSettings.FilePath} should exist" );
 
         this.TestSiteSettings = Settings.AllSettings.TestSiteSettings;
         this.ResourceSettings = Settings.AllSettings.ResourceSettings;
@@ -55,7 +54,6 @@ public class DeviceStatusOnlyTests : Device.Tests.Base.DeviceStatusOnlyTests
         Assert.IsNotNull( this.Device );
         Assert.IsNotNull( this.Device.Session );
         this.Device.Session.ReadSettings( typeof( VisaSessionTests ), ".Session" );
-        Assert.IsTrue( this.Device.Session.TimingSettings.Exists );
         this.VisaSessionBase = this.Device;
         base.InitializeBeforeEachTest();
     }

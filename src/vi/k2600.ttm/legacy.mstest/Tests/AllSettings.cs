@@ -94,7 +94,9 @@ public class AllSettings
 
         scribe.ReadSettings();
 
-        if ( !AllSettings.SettingsExist( out string details ) )
+        if ( !System.IO.File.Exists( scribe.UserSettingsPath ) )
+            throw new InvalidOperationException( $"{nameof( AllSettings )} settings file {AllSettings.Scribe.UserSettingsPath} not found." );
+        else if ( !AllSettings.SettingsExist( out string details ) )
             throw new InvalidOperationException( details );
 
         return scribe;
@@ -126,9 +128,7 @@ public class AllSettings
     public static bool SettingsExist( out string details )
     {
         details = string.Empty;
-        if ( !AllSettings.SettingsFileExists() )
-            details = $"{AllSettings.Scribe.UserSettingsPath} not found.";
-        else if ( AllSettings.TestSiteSettings is null || !AllSettings.TestSiteSettings.Exists )
+        if ( AllSettings.TestSiteSettings is null || !AllSettings.TestSiteSettings.Exists )
             details = $"{nameof( AllSettings.TestSiteSettings )} not found.";
         else if ( AllSettings.ResourceSettings is null || !AllSettings.ResourceSettings.Exists )
             details = $"{nameof( AllSettings.ResourceSettings )} not found.";
