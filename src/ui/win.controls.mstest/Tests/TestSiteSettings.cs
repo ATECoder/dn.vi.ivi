@@ -4,7 +4,7 @@ namespace cc.isr.VI.WinControls.Tests;
 
 /// <summary>   Provides settings for all tests. </summary>
 /// <remarks>   2023-04-24. </remarks>
-internal sealed class TestSiteSettings : Std.Tests.TestSiteSettingsBase
+internal sealed class TestSiteSettings : Std.Tests.TestSiteSettings
 {
     #region " construction "
 

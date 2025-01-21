@@ -124,7 +124,7 @@ public abstract class TestBase
 
     /// <summary>   Gets or sets the test site settings. </summary>
     /// <value> The test site settings. </value>
-    protected TestSiteSettingsBase? TestSiteSettings { get; set; }
+    protected TestSiteSettings? TestSiteSettings { get; set; }
 
     /// <summary>   Gets or sets the resource settings. </summary>
     /// <value> The resource settings. </value>

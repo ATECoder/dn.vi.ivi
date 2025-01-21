@@ -47,9 +47,9 @@ public class DeviceTests : Device.Tests.Base.DeviceTests
         // create an instance of the Serilog logger. 
         SessionLogger.Instance.CreateSerilogLogger( typeof( DeviceTests ) );
 
-        this.TestSiteSettings = Settings.AllSettings.TestSiteSettings;
-        this.ResourceSettings = Settings.AllSettings.ResourceSettings;
-        this.DeviceErrorsSettings = Settings.AllSettings.DeviceErrorsSettings;
+        this.TestSiteSettings = Settings.AllSettings.Instance.TestSiteSettings;
+        this.ResourceSettings = Settings.AllSettings.Instance.ResourceSettings;
+        this.DeviceErrorsSettings = Settings.AllSettings.Instance.DeviceErrorsSettings;
         this.Device = K2600Device.Create();
         Assert.IsNotNull( this.Device );
         Assert.IsNotNull( this.Device.Session );

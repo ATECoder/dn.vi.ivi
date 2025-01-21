@@ -68,7 +68,7 @@ public abstract class SessionBaseTests
         Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {TimeZoneInfo.Local}" );
         Console.WriteLine( $"Testing {typeof( Pith.SessionBase ).Assembly.FullName}" );
 
-        // assert reading of test settings from the configuration file.
+        // assert reading of test settings from the configuration file
         Assert.IsNotNull( this.TestSiteSettings );
         Assert.IsTrue( this.TestSiteSettings.Exists );
         double expectedUpperLimit = 12d;
@@ -112,7 +112,7 @@ public abstract class SessionBaseTests
 
     /// <summary>   Gets or sets the test site settings. </summary>
     /// <value> The test site settings. </value>
-    protected TestSiteSettingsBase? TestSiteSettings { get; set; }
+    protected TestSiteSettings? TestSiteSettings { get; set; }
 
     #endregion
 

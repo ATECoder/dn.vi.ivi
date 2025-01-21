@@ -43,8 +43,8 @@ public partial class VisaSessionTests : Device.Tests.Base.VisaSessionTests
         // create an instance of the Serilog logger. 
         SessionLogger.Instance.CreateSerilogLogger( typeof( VisaSessionTests ) );
 
-        this.TestSiteSettings = Settings.AllSettings.TestSiteSettings;
-        this.ResourceSettings = Settings.AllSettings.ResourceSettings;
+        this.TestSiteSettings = Settings.AllSettings.Instance.TestSiteSettings;
+        this.ResourceSettings = Settings.AllSettings.Instance.ResourceSettings;
         cc.isr.VI.Tsp.VisaSession visaSession = new();
         Assert.IsNotNull( visaSession.Session );
         Assert.AreEqual( Syntax.Tsp.Lua.ClearExecutionStateCommand, visaSession.Session.ClearExecutionStateCommand );

@@ -49,8 +49,8 @@ public class ResistanceTests : Device.Tests.Base.TestBase
         // create an instance of the Serilog logger. 
         SessionLogger.Instance.CreateSerilogLogger( typeof( ResistanceTests ) );
 
-        this.TestSiteSettings = Settings.AllSettings.TestSiteSettings;
-        this.ResourceSettings = Settings.AllSettings.ResourceSettings;
+        this.TestSiteSettings = Settings.AllSettings.Instance.TestSiteSettings;
+        this.ResourceSettings = Settings.AllSettings.Instance.ResourceSettings;
         this.Device = K2600Device.Create();
         Assert.IsNotNull( this.Device );
         Assert.IsNotNull( this.Device.Session );
@@ -83,7 +83,7 @@ public class ResistanceTests : Device.Tests.Base.TestBase
     {
         Assert.IsNotNull( device );
         Assert.IsNotNull( device.SourceSubsystem );
-        SourceFunctionMode expectedFunctionMode = Settings.AllSettings.SourceResistanceSettings.SourceFunction;
+        SourceFunctionMode expectedFunctionMode = Settings.AllSettings.Instance.SourceResistanceSettings.SourceFunction;
         SourceFunctionMode? sourceFunction = device.SourceSubsystem.ApplySourceFunction( expectedFunctionMode ).GetValueOrDefault( SourceFunctionMode.None );
         Assert.AreEqual( expectedFunctionMode, sourceFunction,
             $"{typeof( SourceSubsystemBase )}.{nameof( SourceSubsystemBase.SourceFunction )} is {sourceFunction} ; expected {expectedFunctionMode}" );

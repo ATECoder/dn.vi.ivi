@@ -81,7 +81,7 @@
 
   <ItemGroup>
     <Content Include="cc.isr.VI.Tsp.K2600.MSTest.Resources.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
     <Content Include="cc.isr.VI.Tsp.K2600.MSTest.Serilog.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

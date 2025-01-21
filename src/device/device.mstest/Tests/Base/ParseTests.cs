@@ -113,7 +113,7 @@ public abstract class ParseTests
 
     /// <summary>   Gets or sets the test site settings. </summary>
     /// <value> The test site settings. </value>
-    protected TestSiteSettingsBase? TestSiteSettings { get; set; }
+    protected TestSiteSettings? TestSiteSettings { get; set; }
 
     #endregion
 

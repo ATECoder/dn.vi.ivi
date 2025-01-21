@@ -1,9 +1,9 @@
 {
   "TestSiteSettings": {
     "Exists": true,
+    "All": true,
     "Enabled": true,
     "TraceLevel": "Verbose",
-    "All": true,
     "IPv4Prefixes": "192.168|10.1",
     "TimeZones": "Pacific Standard Time|Central Standard Time",
     "TimeZoneOffsets": "-8|-6"
@@ -41,17 +41,12 @@
   "ResourceSettings": {
     "Exists": true,
     "ClosedCaption": "closed",
-    "FirmwareRevision": "3.0.1",
+    "FirmwareRevision": "2.2.6",
     "Language": "TSP",
     "PingTimeout": "00:00:01.0000000",
     "PingHops": 2,
-    "ResourceModel": "2601B",
+    "ResourceModel": "2612A",
     "ResourceName": "TCPIP0::192.168.0.150::inst0::INSTR",
-    "2602": "1.4.2.4 TCPIP0::192.168.0.254::gpib0,26::INSTR",
-    "2601A": "2.2.6   TCPIP0::192.168.0.50::inst0::INSTR",
-    "2601B": "3.0.1   TCPIP0::192.168.0.150::inst0::INSTR",
-    "2612A": "2.2.6   TCPIP0::192.168.0.150::inst0::INSTR",
-    "7510": "4.0.0   TCPIP0::192.168.0.144::inst0::INSTR",
     "ResourceNameSelectionTimeout": "00:00:10"
   },
 

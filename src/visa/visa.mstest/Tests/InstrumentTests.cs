@@ -113,7 +113,8 @@ public abstract partial class InstrumentTests
     [TestMethod( "01. Resource Should Exist" )]
     public void ResourceShouldExist()
     {
-        if ( this.ResourceName == null ) return;         string pattern = "(TCPIP|GPIB|USB)?*INSTR";
+        if ( this.ResourceName == null ) return;
+        string pattern = "(TCPIP|GPIB|USB)?*INSTR";
         IEnumerable<string> resources = Ivi.Visa.GlobalResourceManager.Find( pattern );
         Assert.IsTrue( resources.Any(), $"Resource manager  Failed to find resources matching {pattern}." );
 
@@ -127,7 +128,8 @@ public abstract partial class InstrumentTests
     [TestMethod( "02. Session Should Open" )]
     public void SessionShouldOpen()
     {
-        if ( this.ResourceName == null ) return;         Ivi.Visa.IMessageBasedSession? session = null;
+        if ( this.ResourceName == null ) return;
+        Ivi.Visa.IMessageBasedSession? session = null;
         try
         {
             session = Asserts.AssertMessageBasedSessionShouldOpen( this.ResourceName, this.SessionOpenTimeout, this.CommunicationTimeout );
@@ -148,9 +150,11 @@ public abstract partial class InstrumentTests
     [TestMethod( "03. Session Should Handle Service Requests" )]
     [Ignore( "Awaits fixing of service request on the Virtual Machine" )]
     [System.Diagnostics.CodeAnalysis.SuppressMessage( "Design", "MSTEST0015:Test method should not be ignored", Justification = "<Pending>" )]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "<Pending>" )]
     public void SessionShouldHandleServiceRequests()
     {
-        if ( this.ResourceName == null ) return;         Ivi.Visa.IMessageBasedSession? session = null;
+        if ( this.ResourceName == null ) return;
+        Ivi.Visa.IMessageBasedSession? session = null;
         try
         {
             session = Asserts.AssertMessageBasedSessionShouldOpen( this.ResourceName, this.SessionOpenTimeout, this.CommunicationTimeout );
@@ -176,7 +180,8 @@ public abstract partial class InstrumentTests
     [TestMethod( "04. Session Should Write Read Asynchronously" )]
     public void SessionShouldWriteReadAsync()
     {
-        if ( this.ResourceName == null ) return;         Ivi.Visa.IMessageBasedSession? session = null;
+        if ( this.ResourceName == null ) return;
+        Ivi.Visa.IMessageBasedSession? session = null;
         try
         {
             session = Asserts.AssertMessageBasedSessionShouldOpen( this.ResourceName, this.SessionOpenTimeout, this.CommunicationTimeout );
@@ -205,7 +210,8 @@ public abstract partial class InstrumentTests
     [TestMethod( "05. Syntax Tests should pass" )]
     public void SyntaxTestsShouldPass()
     {
-        if ( this.ResourceName == null ) return;         Ivi.Visa.IMessageBasedSession? session = null;
+        if ( this.ResourceName == null ) return;
+        Ivi.Visa.IMessageBasedSession? session = null;
         try
         {
             session = Asserts.AssertMessageBasedSessionShouldOpen( this.ResourceName, this.SessionOpenTimeout, this.CommunicationTimeout );

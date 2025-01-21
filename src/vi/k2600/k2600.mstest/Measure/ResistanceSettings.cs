@@ -104,7 +104,7 @@ public class ResistanceSettings() : INotifyPropertyChanged
     /// <remarks>   2024-08-03. </remarks>
     public void ReadSettings()
     {
-        AppSettingsScribe.ReadSettings( Settings.AllSettings.SettingsFileInfo.AllUsersAssemblyFilePath!, nameof( ResistanceSettings ), Settings.AllSettings.ResistanceSettings );
+        AppSettingsScribe.ReadSettings( Settings.AllSettings.Instance.Scribe!.AllUsersSettingsPath!, nameof( ResistanceSettings ), Settings.AllSettings.Instance.ResistanceSettings );
     }
 
     #endregion

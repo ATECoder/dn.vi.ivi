@@ -11,7 +11,7 @@ public class SenseVoltageSettings() : VI.Settings.SenseSubsystemSettings
     /// <remarks>   2024-08-03. </remarks>
     public void ReadSettings()
     {
-        AppSettingsScribe.ReadSettings( Settings.AllSettings.SettingsFileInfo.AllUsersAssemblyFilePath!, nameof( CurrentSourceMeasureSettings ), Settings.AllSettings.CurrentSourceMeasureSettings );
+        AppSettingsScribe.ReadSettings( Settings.AllSettings.Instance.Scribe!.AllUsersSettingsPath!, nameof( SenseVoltageSettings ), Settings.AllSettings.Instance.SenseVoltageSettings );
     }
 
     #endregion

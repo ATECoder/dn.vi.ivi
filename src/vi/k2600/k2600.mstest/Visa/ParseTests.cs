@@ -47,7 +47,7 @@ public class ParseTests : Device.Tests.Base.ParseTests
         // create an instance of the Serilog logger. 
         SessionLogger.Instance.CreateSerilogLogger( typeof( ParseTests ) );
 
-        this.TestSiteSettings = Settings.AllSettings.TestSiteSettings;
+        this.TestSiteSettings = Settings.AllSettings.Instance.TestSiteSettings;
         this.Device = K2600Device.Create();
         Assert.IsNotNull( this.Device );
         Assert.IsNotNull( this.Device.Session );

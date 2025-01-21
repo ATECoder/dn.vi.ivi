@@ -46,10 +46,9 @@ public class ResourceManagerTests : Device.Tests.Base.ResourceManagerTests
         Console.WriteLine( $"Testing {typeof( cc.isr.VI.Pith.ResourceNamesManager ).Assembly.FullName}" );
 
         SessionLogger.Instance.CreateSerilogLogger( typeof( ResourceManagerTests ) );
-        Assert.IsTrue( Settings.AllSettings.SettingsFileExists(), $"{nameof( Settings )} settings file {Settings.AllSettings.FilePath} should exist" );
 
-        this.TestSiteSettings = Settings.AllSettings.TestSiteSettings;
-        this.ResourceSettings = Settings.AllSettings.ResourceSettings;
+        this.TestSiteSettings = Settings.AllSettings.Instance.TestSiteSettings;
+        this.ResourceSettings = Settings.AllSettings.Instance.ResourceSettings;
         this.Device = K2600Device.Create();
         Assert.IsNotNull( this.Device );
         Assert.IsNotNull( this.Device.Session );

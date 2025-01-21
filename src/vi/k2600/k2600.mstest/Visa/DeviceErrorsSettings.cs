@@ -19,8 +19,7 @@ public class DeviceErrorsSettings : Device.Tests.Settings.DeviceErrorsSettings
     /// <remarks>   2024-08-03. </remarks>
     public void ReadSettings()
     {
-        AppSettingsScribe.ReadSettings( Settings.AllSettings.SettingsFileInfo.AllUsersAssemblyFilePath!,
-            nameof( DeviceErrorsSettings ), Settings.AllSettings.DeviceErrorsSettings );
+        AppSettingsScribe.ReadSettings( Settings.AllSettings.Instance.Scribe!.AllUsersSettingsPath!, nameof( DeviceErrorsSettings ), Settings.AllSettings.Instance.DeviceErrorsSettings );
     }
 
     #endregion

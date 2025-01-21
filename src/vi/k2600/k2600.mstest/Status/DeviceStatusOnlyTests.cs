@@ -48,8 +48,8 @@ public class DeviceStatusOnlyTests : Device.Tests.Base.DeviceStatusOnlyTests
         // create an instance of the Serilog logger. 
         SessionLogger.Instance.CreateSerilogLogger( typeof( DeviceStatusOnlyTests ) );
 
-        this.TestSiteSettings = Settings.AllSettings.TestSiteSettings;
-        this.ResourceSettings = Settings.AllSettings.ResourceSettings;
+        this.TestSiteSettings = Settings.AllSettings.Instance.TestSiteSettings;
+        this.ResourceSettings = Settings.AllSettings.Instance.ResourceSettings;
         this.Device = K2600Device.Create();
         Assert.IsNotNull( this.Device );
         Assert.IsNotNull( this.Device.Session );

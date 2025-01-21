@@ -47,7 +47,7 @@ public class VisaResourceTests : Device.Tests.Base.VisaResourceTests
         // create an instance of the Serilog logger. 
         SessionLogger.Instance.CreateSerilogLogger( typeof( VisaResourceTests ) );
 
-        this.TestSiteSettings = Settings.AllSettings.TestSiteSettings;
+        this.TestSiteSettings = Settings.AllSettings.Instance.TestSiteSettings;
         this.Device = K2600Device.Create();
         Assert.IsNotNull( this.Device );
         Assert.IsNotNull( this.Device.Session );

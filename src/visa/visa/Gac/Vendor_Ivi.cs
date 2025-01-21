@@ -14,13 +14,13 @@ public static partial class Vendor
     /// This is the version of the ivi.visa.dll as reported by Ivi.Visa.GlobalResourceManager.ImplementationVersion"
     /// package.
     /// </summary>
-    public const string IVI_VISA_IMPLEMENTATION_VERSION = "5.11.0.0";
+    public const string IVI_VISA_IMPLEMENTATION_VERSION = "7.2.0.0";
 
     /// <summary>
     /// (Immutable) the ivi visa specification version, which is hard coded into the
     /// Ivi.Visa.GlobalResourceManager.SpecificationVersion".
     /// </summary>
-    public const string IVI_VISA_SPECIFICATION_VERSION = "5.7.0.0";
+    public const string IVI_VISA_SPECIFICATION_VERSION = "7.2.0.0";
 
     /// <summary>   (Immutable) name of the ivi visa full. </summary>
     public const string IVI_VISA_FULL_NAME = "Ivi.Visa, Version=7.2.0.0, Culture=neutral, PublicKeyToken=a128c98f1d7717c1";

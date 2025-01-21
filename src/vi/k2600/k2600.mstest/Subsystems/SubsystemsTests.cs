@@ -49,9 +49,9 @@ public class SubsystemsTests : Device.Tests.Base.SubsystemsTests
         // create an instance of the Serilog logger. 
         SessionLogger.Instance.CreateSerilogLogger( typeof( SubsystemsTests ) );
 
-        this.TestSiteSettings = Settings.AllSettings.TestSiteSettings;
-        this.ResourceSettings = Settings.AllSettings.ResourceSettings;
-        this.DeviceErrorsSettings = Settings.AllSettings.DeviceErrorsSettings;
+        this.TestSiteSettings = Settings.AllSettings.Instance.TestSiteSettings;
+        this.ResourceSettings = Settings.AllSettings.Instance.ResourceSettings;
+        this.DeviceErrorsSettings = Settings.AllSettings.Instance.DeviceErrorsSettings;
         this.Device = K2600Device.Create();
         Assert.IsNotNull( this.Device );
         Assert.IsNotNull( this.Device.Session );
@@ -101,15 +101,15 @@ public class SubsystemsTests : Device.Tests.Base.SubsystemsTests
             cc.isr.VI.Device.Tests.Asserts.AssertSessionOpenValuesShouldMatch( this.Device.Session, this.ResourceSettings );
             cc.isr.VI.Device.Tests.Asserts.AssertDeviceModelShouldMatch( this.Device.StatusSubsystemBase, this.ResourceSettings );
             cc.isr.VI.Device.Tests.Asserts.AssertDeviceErrorsShouldMatch( this.Device.StatusSubsystemBase, this.DeviceErrorsSettings );
-            cc.isr.VI.Device.Tests.Asserts.AssertTerminationValuesShouldMatch( this.Device.Session, AllSettings.IOSettings );
-            cc.isr.VI.Device.Tests.Asserts.AssertLineFrequencyShouldMatch( this.Device.StatusSubsystem, AllSettings.SystemSubsystemSettings );
-            cc.isr.VI.Device.Tests.Asserts.AssertIntegrationPeriodShouldMatch( this.Device.StatusSubsystem, AllSettings.SenseSubsystemSettings, AllSettings.SystemSubsystemSettings );
-            cc.isr.VI.Device.Tests.Asserts.AssertSessionDeviceErrorsShouldClear( this.Device, AllSettings.DeviceErrorsSettings );
+            cc.isr.VI.Device.Tests.Asserts.AssertTerminationValuesShouldMatch( this.Device.Session, AllSettings.Instance.IOSettings );
+            cc.isr.VI.Device.Tests.Asserts.AssertLineFrequencyShouldMatch( this.Device.StatusSubsystem, AllSettings.Instance.SystemSubsystemSettings );
+            cc.isr.VI.Device.Tests.Asserts.AssertIntegrationPeriodShouldMatch( this.Device.StatusSubsystem, AllSettings.Instance.SenseSubsystemSettings, AllSettings.Instance.SystemSubsystemSettings );
+            cc.isr.VI.Device.Tests.Asserts.AssertSessionDeviceErrorsShouldClear( this.Device, AllSettings.Instance.DeviceErrorsSettings );
             cc.isr.VI.Device.Tests.Asserts.AssertOrphanMessagesShouldBeEmpty( this.Device.StatusSubsystemBase );
             if ( readErrorEnabled )
                 try
                 {
-                    cc.isr.VI.Device.Tests.Asserts.AssertDeviceErrorsShouldRead( this.Device, AllSettings.DeviceErrorsSettings );
+                    cc.isr.VI.Device.Tests.Asserts.AssertDeviceErrorsShouldRead( this.Device, AllSettings.Instance.DeviceErrorsSettings );
                 }
                 catch
                 {
