@@ -77,6 +77,9 @@ public class AllSettings
     /// settings to both the user and all user files.
     /// </summary>
     /// <remarks>   2023-05-15. </remarks>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <param name="settingsFileInfo"> Information describing the settings file. </param>
     /// <returns>   The new instance. </returns>
     private AppSettingsScribe CreateScribe( AssemblyFileInfo settingsFileInfo )
     {

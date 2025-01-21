@@ -96,6 +96,13 @@ public partial class SessionBase
         this.ApplySettings( this.ResourceSettings );
     }
 
+    /// <summary>   Saves the settings. </summary>
+    /// <remarks>   2025-01-20. </remarks>
+    public void SaveSettings()
+    {
+        this.Scribe?.WriteSettings();
+    }
+
     /// <summary>   Reads the settings. </summary>
     /// <remarks>
     /// 2024-08-05. <para>
@@ -135,15 +142,15 @@ public partial class SessionBase
         else if ( this.TimingSettings is null || !this.TimingSettings.Exists )
             details = $"{nameof( SessionBase.TimingSettings )} not found.";
         else if ( this.IOSettings is null || !this.IOSettings.Exists )
-            details = $"{nameof(SessionBase.IOSettings)} not found.";
+            details = $"{nameof( SessionBase.IOSettings )} not found.";
         else if ( this.ResourceSettings is null || !this.ResourceSettings.Exists )
-            details = $"{nameof(SessionBase.ResourceSettings)} not found.";
+            details = $"{nameof( SessionBase.ResourceSettings )} not found.";
         else if ( this.CommandsSettings is null || !this.CommandsSettings.Exists )
-            details = $"{nameof(SessionBase.CommandsSettings)} not found.";
+            details = $"{nameof( SessionBase.CommandsSettings )} not found.";
         else if ( this.RegistersBitmasksSettings is null || !this.RegistersBitmasksSettings.Exists )
-            details = $"{nameof(SessionBase.RegistersBitmasksSettings)} not found.";
+            details = $"{nameof( SessionBase.RegistersBitmasksSettings )} not found.";
         else if ( this.ScpiExceptionsSettings is null || !this.ScpiExceptionsSettings.Exists )
-            details = $"{nameof(SessionBase.ScpiExceptionsSettings)} not found.";
+            details = $"{nameof( SessionBase.ScpiExceptionsSettings )} not found.";
 
         return details.Length == 0;
     }

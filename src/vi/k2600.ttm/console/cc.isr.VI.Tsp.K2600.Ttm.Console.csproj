@@ -84,15 +84,28 @@
     <None Include="..\..\..\..\docs\ttm\TTM Instrument Guide.html" Link="docs\TTM Instrument Guide.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Content Include="cc.isr.VI.Tsp.K2600.Ttm.Console.Lot.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Include="CandidateResources.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
-    <Content Include="cc.isr.VI.Tsp.K2600.Ttm.Console.Serilog.json">
+    <Content Include="cc.isr.VI.Tsp.K2600.Ttm.Console.Lot.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="cc.isr.VI.Tsp.K2600.Ttm.Console.Settings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="cc.isr.VI.Tsp.K2600.Ttm.Console.Serilog.json">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>cc.isr.VI.Tsp.K2600.Ttm.Console.SerilogSettings.tt</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Update="cc.isr.VI.Tsp.K2600.Ttm.Console.SerilogSettings.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>cc.isr.VI.Tsp.K2600.Ttm.Console.Serilog.json</LastGenOutput>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

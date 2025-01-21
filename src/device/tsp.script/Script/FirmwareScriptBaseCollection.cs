@@ -157,7 +157,7 @@ public class FirmwareScriptBaseCollection<TItem> : System.Collections.ObjectMode
                         }
                         _ = builder.Append( $"{indent}{scriptEntity.Name}.run()" );
                         if ( postRunDelay > 0 )
-                          _ = builder.AppendLine( $"{indent}_G.delay({postRunDelay:0.###})" );
+                            _ = builder.AppendLine( $"{indent}_G.delay({postRunDelay:0.###})" );
                     }
                 }
             }

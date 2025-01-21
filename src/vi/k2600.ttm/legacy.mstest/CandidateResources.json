@@ -1,0 +1,53 @@
+{
+  "2602": {
+    "FirmwareRevision": "1.4.2.4",
+    "Language": "TSP",
+    "PingTimeout": "00:00:01.0000000",
+    "PingHops": 2,
+    "ResourceModel": "2602",
+    "ResourceName": "TCPIP0::192.168.0.254::gpib0,26::INSTR",
+    "ResourceNameSelectionTimeout": "00:00:10"
+  },
+
+  "2601A": {
+    "FirmwareRevision": "2.2.6",
+    "Language": "TSP",
+    "PingTimeout": "00:00:01.0000000",
+    "PingHops": 2,
+    "ResourceModel": "2601A",
+    "ResourceName": "TCPIP0::192.168.0.150::inst0::INSTR",
+    "ResourceNameSelectionTimeout": "00:00:10"
+  },
+
+  "2601B": {
+    "FirmwareRevision": "3.0.1",
+    "Language": "TSP",
+    "PingTimeout": "00:00:01.0000000",
+    "PingHops": 2,
+    "ResourceModel": "2601B",
+    "ResourceName": "TCPIP0::192.168.0.150::inst0::INSTR",
+    "ResourceNameSelectionTimeout": "00:00:10"
+  },
+
+  "2612A": {
+    "FirmwareRevision": "2.2.6",
+    "Language": "TSP",
+    "PingTimeout": "00:00:01.0000000",
+    "PingHops": 2,
+    "ResourceModel": "2612A",
+    "ResourceName": "TCPIP0::192.168.0.150::inst0::INSTR",
+    "ResourceNameSelectionTimeout": "00:00:10"
+  },
+
+  "7510": {
+    "Exists": true,
+    "ClosedCaption": "closed",
+    "FirmwareRevision": "4.0.0",
+    "Language": "TSP",
+    "PingTimeout": "00:00:01.0000000",
+    "PingHops": 2,
+    "ResourceModel": "7510",
+    "ResourceName": "TCPIP0::192.168.0.144::inst0::INSTR",
+    "ResourceNameSelectionTimeout": "00:00:10"
+  }
+}

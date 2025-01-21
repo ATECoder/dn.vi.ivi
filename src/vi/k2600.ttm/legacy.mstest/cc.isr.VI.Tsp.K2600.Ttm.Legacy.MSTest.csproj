@@ -68,6 +68,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="CandidateResources.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="cc.isr.VI.Tsp.K2600.Ttm.Legacy.MSTest.Driver.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

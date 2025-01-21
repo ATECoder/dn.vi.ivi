@@ -203,8 +203,8 @@ internal static partial class Asserts
     {
         Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
         Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
-        double lowLimit = session.QueryDoubleThrowIfError(  "print(ttm.ir.lowLimit) ", "Initial MeasuredValue Low Limit" );
-        double highLimit = session.QueryDoubleThrowIfError(  "print(ttm.ir.highLimit) ", "Initial MeasuredValue High Limit" );
+        double lowLimit = session.QueryDoubleThrowIfError( "print(ttm.ir.lowLimit) ", "Initial MeasuredValue Low Limit" );
+        double highLimit = session.QueryDoubleThrowIfError( "print(ttm.ir.highLimit) ", "Initial MeasuredValue High Limit" );
         return (lowLimit, highLimit);
     }
 
@@ -216,8 +216,8 @@ internal static partial class Asserts
     {
         Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
         Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
-        double lowLimit = session.QueryDoubleThrowIfError(  "print(ttm.fr.lowLimit) ", "Final MeasuredValue Low Limit" );
-        double highLimit = session.QueryDoubleThrowIfError(  "print(ttm.fr.highLimit) ", "Final MeasuredValue High Limit" );
+        double lowLimit = session.QueryDoubleThrowIfError( "print(ttm.fr.lowLimit) ", "Final MeasuredValue Low Limit" );
+        double highLimit = session.QueryDoubleThrowIfError( "print(ttm.fr.highLimit) ", "Final MeasuredValue High Limit" );
         return (lowLimit, highLimit);
     }
 
@@ -229,8 +229,8 @@ internal static partial class Asserts
     {
         Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
         Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
-        double lowLimit = session.QueryDoubleThrowIfError(  "print(ttm.tr.lowLimit) ", "Thermal Transient Low Limit" );
-        double highLimit = session.QueryDoubleThrowIfError(  "print(ttm.tr.highLimit) ", "Thermal Transient High Limit" );
+        double lowLimit = session.QueryDoubleThrowIfError( "print(ttm.tr.lowLimit) ", "Thermal Transient Low Limit" );
+        double highLimit = session.QueryDoubleThrowIfError( "print(ttm.tr.highLimit) ", "Thermal Transient High Limit" );
         return (lowLimit, highLimit);
     }
 
@@ -242,7 +242,7 @@ internal static partial class Asserts
     {
         Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
         Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
-        bool okayAndPass = session.QueryBoolThrowIfError(  "print(ttm.ir:isOkayAndPass()) ", "Initial MeasuredValue Initial and Pass" );
+        bool okayAndPass = session.QueryBoolThrowIfError( "print(ttm.ir:isOkayAndPass()) ", "Initial MeasuredValue Initial and Pass" );
         int? outcome = session.QueryNullableIntegerThrowIfError( "print(ttm.ir.outcome) ", "Initial MeasuredValue MeasurementOutcome" );
         int? status = session.QueryNullableIntegerThrowIfError( "print(ttm.ir.status) ", "Initial MeasuredValue Buffer StatusReading" );
         double? resistance = session.QueryNullableDoubleThrowIfError( "print(ttm.ir.resistance) ", "Initial MeasuredValue" );
@@ -257,7 +257,7 @@ internal static partial class Asserts
     {
         Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
         Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
-        bool okayAndPass = session.QueryBoolThrowIfError(  "print(ttm.tr:isOkayAndPass()) ", "Initial MeasuredValue Initial and Pass" );
+        bool okayAndPass = session.QueryBoolThrowIfError( "print(ttm.tr:isOkayAndPass()) ", "Initial MeasuredValue Initial and Pass" );
         int? outcome = session.QueryNullableIntegerThrowIfError( "print(ttm.tr.outcome) ", "Thermal Transient MeasurementOutcome" );
         int? status = session.QueryNullableIntegerThrowIfError( "print(ttm.tr.status) ", "Thermal Transient Buffer StatusReading" );
         double? value = session.QueryNullableDoubleThrowIfError( "print(ttm.tr.voltageChange) ", "Thermal Transient" );
@@ -272,7 +272,7 @@ internal static partial class Asserts
     {
         Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
         Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
-        bool okayAndPass = session.QueryBoolThrowIfError(  "print(ttm.fr:isOkayAndPass()) ", "Initial MeasuredValue Initial and Pass" );
+        bool okayAndPass = session.QueryBoolThrowIfError( "print(ttm.fr:isOkayAndPass()) ", "Initial MeasuredValue Initial and Pass" );
         int? outcome = session.QueryNullableIntegerThrowIfError( "print(ttm.fr.outcome) ", "Final MeasuredValue MeasurementOutcome" );
         int? status = session.QueryNullableIntegerThrowIfError( "print(ttm.fr.status) ", "Final MeasuredValue Buffer StatusReading" );
         double? resistance = session.QueryNullableDoubleThrowIfError( "print(ttm.fr.resistance) ", "Final MeasuredValue" );
@@ -350,7 +350,7 @@ internal static partial class Asserts
 
         return Asserts.LegacyFirmware
             ? new double?()
-            : session.QueryDoubleThrowIfError(  "print(ttm.contactLimitGetter()) ", "Meter Values Contact Check Options" );
+            : session.QueryDoubleThrowIfError( "print(ttm.contactLimitGetter()) ", "Meter Values Contact Check Options" );
     }
 
     /// <summary>   Assert contact check should conform. </summary>

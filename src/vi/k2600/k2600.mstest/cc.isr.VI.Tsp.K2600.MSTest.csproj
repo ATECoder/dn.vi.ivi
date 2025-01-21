@@ -27,9 +27,6 @@
     <IsPackable>false</IsPackable>
 
   </PropertyGroup>
-  <ItemGroup>
-    <None Remove="cc.isr.VI.Tsp.K2600.MSTest.Resources.json" />
-  </ItemGroup>
   
   <ItemGroup>
     <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
@@ -80,7 +77,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="cc.isr.VI.Tsp.K2600.MSTest.Resources.json">
+    <Content Include="CandidateResources.json">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
     <Content Include="cc.isr.VI.Tsp.K2600.MSTest.Serilog.json">

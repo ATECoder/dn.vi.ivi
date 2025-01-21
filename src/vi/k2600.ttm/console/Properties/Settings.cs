@@ -128,7 +128,6 @@ public class Settings : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
     /// <value> The lot settings. </value>
     public static LotSettings LotSettings { get; private set; } = new();
 
-
     /// <summary>   Gets or sets the ttm settings. </summary>
     /// <value> The ttm settings. </value>
     public static cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings TtmSettings { get; set; } = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance;

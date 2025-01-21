@@ -70,17 +70,14 @@ public class MeterTests
         // create an instance of the Serilog logger. 
         SessionLogger.Instance.CreateSerilogLogger( typeof( MeterTests ) );
 
-        Assert.IsTrue( Settings.AllSettings.TestSiteSettings.Exists, $"{nameof( Settings.AllSettings.TestSiteSettings )} should exist" );
-        Assert.IsTrue( Settings.AllSettings.ResourceSettings.Exists, $"{nameof( Settings.AllSettings.ResourceSettings )} should exist" );
+        // read settings and throw if not found.
+        this.TestSiteSettings = Settings.AllSettings.Instance.TestSiteSettings;
 
         // read the TTM Driver settings
         this.TtmSettings.ReadSettings( this.GetType(), ".Driver" );
         Assert.IsTrue( this.TtmSettings.TtmMeterSettings.Exists, $"{nameof( this.TtmSettings.TtmMeterSettings )} should exist" );
 
         Asserts.LegacyDriver = this.TtmSettings.TtmMeterSettings.LegacyDriver;
-
-        this.TestSiteSettings = Settings.AllSettings.TestSiteSettings;
-        this.ResourceSettings = Settings.AllSettings.ResourceSettings;
 
         // instantiate a meter with associated visa sessions
         this.Meter = new();
@@ -91,6 +88,7 @@ public class MeterTests
         Assert.IsNotNull( visaSession.Session );
         Assert.AreEqual( VI.Syntax.Tsp.Lua.ClearExecutionStateCommand, visaSession.Session.ClearExecutionStateCommand );
         visaSession.Session.ReadSettings( typeof( MeterTests ), ".Session" );
+        this.ResourceSettings = visaSession.Session.ResourceSettings;
         Assert.IsTrue( visaSession.Session.TimingSettings.Exists,
             $"{nameof( VisaSession )}.{nameof( MeterTests.TspDevice.Session )}.{nameof( VisaSession.Session.TimingSettings )} does not exist." );
 

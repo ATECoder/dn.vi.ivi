@@ -12,7 +12,7 @@ public class AllSettings
     /// Constructor that prevents a default instance of this class from being created.
     /// </summary>
     /// <remarks>   2023-04-24. </remarks>
-    public AllSettings() { }
+    private AllSettings() { }
 
     #endregion
 
@@ -27,7 +27,9 @@ public class AllSettings
     private static AllSettings CreateInstance()
     {
         AllSettings ti = new();
-        AppSettingsScribe.ReadSettings( SettingsFileInfo.AllUsersAssemblyFilePath!, nameof( AllSettings ), ti );
+        AssemblyFileInfo settingsFileInfo = AllSettings.CreateSettingsFileInfo();
+        ti.Scribe = ti.CreateScribe( settingsFileInfo );
+        // AppSettingsScribe.ReadSettings( SettingsFileInfo.AllUsersAssemblyFilePath!, nameof( AllSettings ), ti );
         return ti;
     }
 
@@ -61,13 +63,6 @@ public class AllSettings
         return ai;
     }
 
-    /// <summary>   Gets information describing the settings file. </summary>
-    /// <value> Information describing the settings file. </value>
-    [JsonIgnore]
-    internal static AssemblyFileInfo SettingsFileInfo => _settingsFileInfo.Value;
-
-    private static readonly Lazy<AssemblyFileInfo> _settingsFileInfo = new( CreateSettingsFileInfo, true );
-
     #endregion
 
     #region " settings scribe "
@@ -77,13 +72,13 @@ public class AllSettings
     /// settings to both the user and all user files.
     /// </summary>
     /// <remarks>   2023-05-15. </remarks>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <param name="settingsFileInfo"> Information describing the settings file. </param>
     /// <returns>   The new instance. </returns>
-    private static AppSettingsScribe CreateScribe()
+    private AppSettingsScribe CreateScribe( AssemblyFileInfo settingsFileInfo )
     {
-        // get an instance of the settings file info first.
-        AssemblyFileInfo settingsFileInfo = SettingsFileInfo;
-
-        AppSettingsScribe scribe = new( [AllSettings.TestSiteSettings, AllSettings.ResourceSettings],
+        AppSettingsScribe scribe = new( [this.TestSiteSettings],
             settingsFileInfo.AppContextAssemblyFilePath!, settingsFileInfo.AllUsersAssemblyFilePath! )
         {
             AllUsersSettingsPath = settingsFileInfo.AllUsersAssemblyFilePath,
@@ -92,43 +87,40 @@ public class AllSettings
         scribe.ReadSettings();
 
         if ( !System.IO.File.Exists( scribe.UserSettingsPath ) )
-            throw new InvalidOperationException( $"{nameof( AllSettings )} settings file {AllSettings.Scribe.UserSettingsPath} not found." );
-        else if ( !AllSettings.SettingsExist( out string details ) )
+            throw new InvalidOperationException( $"{nameof( AllSettings )} settings file {scribe.UserSettingsPath} not found." );
+        else if ( !this.SettingsExist( out string details ) )
             throw new InvalidOperationException( details );
 
         return scribe;
     }
 
-    /// <summary>   Gets the <see cref="AppSettingsScribe">settings reader and writer</see>. </summary>
+    /// <summary>   Gets or sets the <see cref="AppSettingsScribe">settings reader and writer</see>. </summary>
     /// <value> The scribe. </value>
     [JsonIgnore]
-    public static AppSettingsScribe Scribe => _scribe.Value;
+    public AppSettingsScribe? Scribe { get; private set; }
 
-    private static readonly Lazy<AppSettingsScribe> _scribe = new( CreateScribe, true );
-
-    /// <summary>   Gets the full path name of the settings file. </summary>
-    /// <value> The full path name of the settings file. </value>
+    /// <summary>   Gets the full pathname of the settings file. </summary>
+    /// <value> The full pathname of the settings file. </value>
     [JsonIgnore]
-    public static string FilePath => Scribe.UserSettingsPath;
+    public string? FilePath => this.Scribe?.UserSettingsPath;
 
     /// <summary>   Check if the settings file exists. </summary>
     /// <remarks>   2024-07-06. </remarks>
     /// <returns>   True if it the settings file exists; otherwise false. </returns>
-    public static bool SettingsFileExists()
+    public bool SettingsFileExists()
     {
-        return System.IO.File.Exists( FilePath );
+        return this.FilePath is not null && System.IO.File.Exists( this.FilePath );
     }
 
     /// <summary>   Checks if all settings exist. </summary>
     /// <remarks>   2025-01-18. </remarks>
     /// <returns>   A Tuple. </returns>
-    public static bool SettingsExist( out string details )
+    public bool SettingsExist( out string details )
     {
-        details = string.Empty;
-        if ( AllSettings.TestSiteSettings is null || !AllSettings.TestSiteSettings.Exists )
-            details = $"{nameof( AllSettings.TestSiteSettings )} not found.";
-        else if ( AllSettings.ResourceSettings is null || !AllSettings.ResourceSettings.Exists )
-            details = $"{nameof( AllSettings.ResourceSettings )} not found.";
+        if ( this.TestSiteSettings is null || !this.TestSiteSettings.Exists )
+            details = $"{nameof( this.TestSiteSettings )} not found.";
+        else
+            details = string.Empty;
 
         return details.Length == 0;
     }
@@ -139,11 +131,7 @@ public class AllSettings
 
     /// <summary>   Gets or sets the test site settings. </summary>
     /// <value> The test site settings. </value>
-    internal static TestSiteSettings TestSiteSettings { get; private set; } = new();
-
-    /// <summary>   Gets or sets the resource settings. </summary>
-    /// <value> The resource settings. </value>
-    internal static Pith.Settings.ResourceSettings ResourceSettings { get; private set; } = new();
+    internal TestSiteSettings TestSiteSettings { get; private set; } = new();
 
     #endregion
 }

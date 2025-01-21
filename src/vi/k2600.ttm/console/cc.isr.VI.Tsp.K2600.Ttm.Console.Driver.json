@@ -1,24 +1,8 @@
 {
-  "TtmTimingSettings": {
+  "TraceLogSettings": {
     "Exists": true,
-    "ClearRefractoryPeriod": "00:00:00.1000000",
-    "DeviceClearRefractoryPeriod": "00:00:01.0500000",
-    "InitializeTimeout": "00:00:05",
-    "InitRefractoryPeriod": "00:00:00.1000000",
-    "InterfaceClearRefractoryPeriod": "00:00:00.5000000",
-    "ReadAfterWriteDelay": "00:00:00.0100000",
-    "ResetRefractoryPeriod": "00:00:00.2000000",
-    "StatusReadDelay": "00:00:00.0100000",
-    "StatusReadTurnaroundTime": "00:00:00.0100000"
-  },
-
-  "TtmSessionSettings": {
-    "Exists": true,
-    "SessionMessageNotificationModes": "None",
     "TraceLogLevel": "Information",
-    "TraceShowLevel": "Information",
-    "DeviceEnabled": true,
-    "ResourceName": "TCPIP0::192.168.0.50::inst0::INSTR",
+    "TraceShowLevel": "Information"
   },
 
   "TtmMeterSettings": {

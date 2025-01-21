@@ -68,18 +68,14 @@ public class DeviceTests
 
         // create an instance of the Serilog logger. 
         SessionLogger.Instance.CreateSerilogLogger( typeof( DeviceTests ) );
-        Assert.IsTrue( AllSettings.SettingsFileExists(), $"{nameof( AllSettings )} settings file {AllSettings.FilePath} should exist" );
-
-        Assert.IsTrue( AllSettings.TestSiteSettings.Exists, $"{nameof( AllSettings.TestSiteSettings )} should exist" );
-        Assert.IsTrue( AllSettings.ResourceSettings.Exists, $"{nameof( AllSettings.ResourceSettings )} should exist" );
 
         // read the TTM Driver settings
         // this.TtmSettings.ReadSettings( this.GetType(), ".Driver" );
         // Assert.IsTrue( this.TtmSettings.TtmMeterSettings.Exists, $"{nameof( this.TtmSettings.TtmMeterSettings )} should exist" );
         // Asserts.LegacyDriver = this.TtmSettings.TtmMeterSettings.LegacyDriver;
 
-        this.TestSiteSettings = AllSettings.TestSiteSettings;
-        this.ResourceSettings = AllSettings.ResourceSettings;
+        // read the settings and throw if not found
+        this.TestSiteSettings = AllSettings.Instance.TestSiteSettings;
 
         // instantiate the legacy device, meter, TSP device and associated visa sessions
         this.LegacyDevice = new( this.GetType(), ".Driver" );
@@ -100,6 +96,8 @@ public class DeviceTests
         Assert.IsNotNull( this.VisaSessionBase.Session );
         Assert.AreEqual( VI.Syntax.Tsp.Lua.ClearExecutionStateCommand, this.VisaSessionBase.Session.ClearExecutionStateCommand );
         this.VisaSessionBase.Session.ReadSettings( typeof( DeviceTests ), ".Session" );
+        this.ResourceSettings = this.VisaSessionBase.Session.ResourceSettings;
+
         Assert.IsTrue( this.VisaSessionBase.Session.TimingSettings.Exists,
             $"{nameof( K2600Device )}.{nameof( K2600Device.Session )}.{nameof( K2600Device.Session.TimingSettings )} does not exist." );
     }

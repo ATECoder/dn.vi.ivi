@@ -21,7 +21,7 @@ internal static partial class Asserts
         command = "_G.status.request_enable=0";
         Asserts.AssertCommandShouldExecute( session, command, logEnabled );
 
-        expectedValue = Settings.AllSettings.ResourceSettings.ResourceModel;
+        expectedValue = session.ResourceSettings.ResourceModel;
         command = "_G.print(localnode.model)";
         Asserts.AssertQueryReplyShouldBeValid( session, command, expectedValue, logEnabled );
 
@@ -177,7 +177,7 @@ internal static partial class Asserts
             command = $"_G.ttm.legacyDriverSetter(_G.ttm.meterDefaults.legacyDriver)";
             Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedInt, logEnabled );
 
-            string model = Settings.AllSettings.ResourceSettings.ResourceModel;
+            string model = session.ResourceSettings.ResourceModel;
             query = "_G.print(localnode.model)";
             Asserts.AssertQueryReplyShouldBeValid( session, query, model, logEnabled );
 
@@ -264,7 +264,7 @@ internal static partial class Asserts
         cc.isr.VI.Tsp.K2600.Ttm.TtmResistanceSettings resistanceSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmResistanceSettings;
         cc.isr.VI.Tsp.K2600.Ttm.TtmMeterSettings meterSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmMeterSettings;
 
-        string model = Settings.AllSettings.ResourceSettings.ResourceModel;
+        string model = session.ResourceSettings.ResourceModel;
         command = "_G.print(localnode.model)";
         Asserts.AssertQueryReplyShouldBeValid( session, command, model, logEnabled );
 
@@ -299,7 +299,7 @@ internal static partial class Asserts
 
         double aperture; // 1.0000;
         query = "_G.print(string.format('%7.4f',_G.ttm.coldResistance.Defaults.aperture))";
-        aperture = session.QueryDoubleThrowIfError(query, "default aperture" );
+        aperture = session.QueryDoubleThrowIfError( query, "default aperture" );
         Assert.AreEqual( resistanceSettings.ApertureDefault, aperture, $"{nameof( aperture )} should match settings value." );
 
         expectedDouble = aperture + 1;
@@ -318,7 +318,7 @@ internal static partial class Asserts
         {
             double level; // 0.01;
             query = "_G.print(string.format('%9.6f',_G.ttm.coldResistance.Defaults.level))";
-            level = session.QueryDoubleThrowIfError(query, "default current source level" );
+            level = session.QueryDoubleThrowIfError( query, "default current source level" );
             Assert.AreEqual( resistanceSettings.CurrentLevel, level, $"{nameof( level )} should match settings value." );
 
             expectedDouble = level + 0.001;
@@ -333,7 +333,7 @@ internal static partial class Asserts
 
             double limit; // 0.1
             query = "_G.print(string.format('%9.6f',_G.ttm.coldResistance.Defaults.limit))";
-            limit = session.QueryDoubleThrowIfError(query, "default current source voltage limit" );
+            limit = session.QueryDoubleThrowIfError( query, "default current source voltage limit" );
             Assert.AreEqual( resistanceSettings.VoltageLimit, limit, $"{nameof( limit )} should match settings value." );
 
             expectedDouble = limit + 0.01;
@@ -348,7 +348,7 @@ internal static partial class Asserts
 
         double lowLimit; // 1.85;
         query = "_G.print(string.format('%9.6f',_G.ttm.coldResistance.Defaults.lowLimit))";
-        lowLimit = session.QueryDoubleThrowIfError(query, "default low limit" );
+        lowLimit = session.QueryDoubleThrowIfError( query, "default low limit" );
         Assert.AreEqual( resistanceSettings.LowLimitDefault, lowLimit, $"{nameof( lowLimit )} should match settings value." );
 
         expectedDouble = lowLimit + 0.01;
@@ -363,7 +363,7 @@ internal static partial class Asserts
 
         double highLimit; // 2.156;
         query = "_G.print(string.format('%9.6f',_G.ttm.coldResistance.Defaults.highLimit))";
-        highLimit = session.QueryDoubleThrowIfError(query, "default high limit" );
+        highLimit = session.QueryDoubleThrowIfError( query, "default high limit" );
         Assert.AreEqual( resistanceSettings.HighLimitDefault, highLimit, $"{nameof( highLimit )} should match settings value." );
 
         expectedDouble = highLimit + 0.01;
@@ -402,25 +402,25 @@ internal static partial class Asserts
 
             double levelI; // 0.01;
             query = "_G.print(string.format('%9.6f',_G.ttm.coldResistance.Defaults.levelI))";
-            levelI = session.QueryDoubleThrowIfError(query, "default current source current level" );
+            levelI = session.QueryDoubleThrowIfError( query, "default current source current level" );
             Assert.AreEqual( resistanceSettings.CurrentLevel, levelI, $"{nameof( levelI )} should match settings value." );
 
             double levelV; // 0.02 ;
             query = "_G.print(string.format('%9.6f',_G.ttm.coldResistance.Defaults.levelV))";
-            levelV = session.QueryDoubleThrowIfError(query, "default voltage source voltage level" );
+            levelV = session.QueryDoubleThrowIfError( query, "default voltage source voltage level" );
             Assert.AreEqual( resistanceSettings.VoltageLevel, levelV, $"{nameof( levelV )} should match settings value." );
 
             double limitI; // 0.04;
             query = "_G.print(string.format('%9.6f',_G.ttm.coldResistance.Defaults.limitI))";
-            limitI = session.QueryDoubleThrowIfError(query, "default voltage source current limit" );
+            limitI = session.QueryDoubleThrowIfError( query, "default voltage source current limit" );
             Assert.AreEqual( resistanceSettings.CurrentLimit, limitI, $"{nameof( limitI )} should match settings value." );
 
             double limitV; // 0.1;
             query = "_G.print(string.format('%9.6f',_G.ttm.coldResistance.Defaults.limitV))";
-            limitV = session.QueryDoubleThrowIfError(query, "default current source voltage limit" );
+            limitV = session.QueryDoubleThrowIfError( query, "default current source voltage limit" );
             Assert.AreEqual( resistanceSettings.VoltageLimit, limitV, $"{nameof( limitV )} should match settings value." );
 
-            bool sourceVoltage = session.QueryBoolThrowIfError("_G.ttm.ir:sourceVoltage()", "source voltage method" );
+            bool sourceVoltage = session.QueryBoolThrowIfError( "_G.ttm.ir:sourceVoltage()", "source voltage method" );
             Assert.AreEqual( resistanceSettings.SourceOutput, sourceVoltage ? SourceOutputOption.Voltage : SourceOutputOption.Current, $"{nameof( sourceVoltage )} should match settings value." );
 
             expectedDouble = levelV + 0.01;
@@ -520,7 +520,7 @@ internal static partial class Asserts
         cc.isr.VI.Tsp.K2600.Ttm.TtmTraceSettings traceSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmTraceSettings;
         cc.isr.VI.Tsp.K2600.Ttm.TtmMeterSettings meterSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmMeterSettings;
 
-        string model = Settings.AllSettings.ResourceSettings.ResourceModel;
+        string model = session.ResourceSettings.ResourceModel;
         command = "_G.print(localnode.model)";
         Asserts.AssertQueryReplyShouldBeValid( session, command, model, logEnabled );
 
