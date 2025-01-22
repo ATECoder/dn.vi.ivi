@@ -76,25 +76,25 @@
     <Compile Include="..\..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Content Include="CandidateResources.json">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Content>
-    <Content Include="cc.isr.VI.Tsp.K2600.MSTest.Serilog.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="cc.isr.VI.Tsp.K2600.MSTest.Settings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="cc.isr.VI.Tsp.K2600.MSTest.Session.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
   <PropertyGroup Condition="'$(TargetFramework)'=='net472' or '$(TargetFramework)'=='net48'">
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Update="CandidateResources.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="cc.isr.VI.Tsp.K2600.MSTest.Serilog.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="cc.isr.VI.Tsp.K2600.MSTest.Session.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="cc.isr.VI.Tsp.K2600.MSTest.Settings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.12.0" />

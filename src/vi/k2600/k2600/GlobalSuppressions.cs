@@ -7,4 +7,3 @@ using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage( "Style", "IDE1006:Naming Styles", Justification = "<Pending>", Scope = "namespace", Target = "~N:cc.isr" )]
 [assembly: SuppressMessage( "Style", "IDE1006:Naming Styles", Justification = "<Pending>", Scope = "namespace", Target = "~N:cc.isr.VI.Tsp.K2600" )]
-[assembly: SuppressMessage( "Style", "IDE1006:Naming Styles", Justification = "<Pending>", Scope = "namespace", Target = "~N:cc.isr.VI.Tsp.K2600.Properties" )]
