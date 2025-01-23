@@ -46,17 +46,17 @@ public enum FirmwareOutcomes
 [Flags()]
 public enum ContactCheckOptions
 {
-    /// <summary>   A binary constant representing the initial flag. </summary>
+    /// <summary>   A binary constant representing the pre initial resistance contact check option. </summary>
     [Description( "Initial" )]
-    Initial = 0,
+    Initial = 1,
 
-    /// <summary>   A binary constant representing the pre trace flag. </summary>
+    /// <summary>   A binary constant representing the pre trace  contact check option. </summary>
     [Description( "Pre-Trace" )]
-    PreTrace = 1,
+    PreTrace = 2,
 
-    /// <summary>   A binary constant representing the final flag. </summary>
+    /// <summary>   A binary constant representing the pre final resistance contact check option. </summary>
     [Description( "Final" )]
-    Final = 2,
+    Final = 4,
 }
 
 /// <summary>   Values that represent source output options. </summary>
