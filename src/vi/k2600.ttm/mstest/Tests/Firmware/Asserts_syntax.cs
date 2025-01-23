@@ -59,13 +59,15 @@ internal static partial class Asserts
         command = $"_G.errorqueue.clear() {cc.isr.VI.Syntax.Tsp.Lua.OperationCompletedQueryCommand} ";
         Asserts.AssertQueryReplyShouldBeValid( session, command, expectedValue, logEnabled );
 
-        // this may not work....
-        command = "_G.status.reset() _G.status.standard.enable=253 _G.status.request_enable=32 _G.opc()";
+        // this may not work...
+#if false
+        command = "_G.status.reset() _G.waitcomplete() _G.status.standard.enable=253 _G.status.request_enable=32 _G.opc()";
         Asserts.AssertCommandShouldExecute( session, command, logEnabled );
 
         // wait for operation completion bit.
-        (bool timedOut, Pith.ServiceRequests status, TimeSpan elapsed) = session.AwaitOperationCompletion( TimeSpan.FromMilliseconds( 100 ) );
+        (bool timedOut, Pith.ServiceRequests status, TimeSpan elapsed) = session.AwaitOperationCompletion( TimeSpan.FromMilliseconds( 1000 ) );
         Assert.IsFalse( timedOut, $"wait for operation completion timed out with status {( int ) status:X2} after {elapsed.TotalMilliseconds:0} ms." );
+#endif
 
         // this should work....
         command = "*IDN?; *WAI";

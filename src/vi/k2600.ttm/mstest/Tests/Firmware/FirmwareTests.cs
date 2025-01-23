@@ -73,19 +73,18 @@ public class FirmwareTests
         // read settings and throw if not found.
         this.TestSiteSettings = Settings.AllSettings.Instance.TestSiteSettings;
 
-        Assert.IsTrue( this.TtmSettings.TtmMeterSettings.Exists, $"{nameof( this.TtmSettings.TtmMeterSettings )} should exist" );
-
-        // read the TTM Driver settings
+        // read the TTM Driver settings and throw if not found.
         this.TtmSettings.ReadSettings( this.GetType(), ".Driver" );
+
         Asserts.LegacyDriver = this.TtmSettings.TtmMeterSettings.LegacyDriver;
 
         cc.isr.VI.Tsp.VisaSession visaSession = new();
         Assert.IsNotNull( visaSession.Session );
         Assert.AreEqual( cc.isr.VI.Syntax.Tsp.Lua.ClearExecutionStateCommand, visaSession.Session.ClearExecutionStateCommand );
+
+        // read settings and throw if not found.
         visaSession.Session.ReadSettings( typeof( FirmwareTests ), ".Session" );
         this.ResourceSettings = visaSession.Session.ResourceSettings;
-        Assert.IsTrue( visaSession.Session.TimingSettings.Exists,
-            $"{nameof( VisaSession )}.{nameof( K2600Device.Session )}.{nameof( VisaSession.Session.TimingSettings )} does not exist." );
 
         this.VisaSessionBase = visaSession;
     }

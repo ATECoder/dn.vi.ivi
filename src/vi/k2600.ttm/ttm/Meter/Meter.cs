@@ -720,7 +720,7 @@ public partial class Meter : CommunityToolkit.Mvvm.ComponentModel.ObservableObje
 
     #endregion
 
-    #region " configure"
+    #region " configure "
 
     /// <summary> Gets or sets the <see cref="ConfigInfo">Device under test</see>. </summary>
     /// <exception cref="ArgumentNullException">       Thrown when one or more required arguments

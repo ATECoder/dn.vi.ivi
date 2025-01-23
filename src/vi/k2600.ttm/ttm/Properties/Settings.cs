@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using cc.isr.Json.AppSettings.Models;
 using cc.isr.Logging.TraceLog;
 
@@ -11,7 +12,7 @@ public class Settings
 
     /// <summary>   Default constructor. </summary>
     /// <remarks>   2024-10-24. </remarks>
-    public Settings() { }
+    private Settings() { }
 
     #endregion
 
@@ -83,6 +84,11 @@ public class Settings
             this.CreateScribe( settingsAssembly, settingsFileSuffix );
 
         this.Scribe!.ReadSettings();
+
+        if ( !System.IO.File.Exists( this.Scribe.UserSettingsPath ) )
+            throw new InvalidOperationException( $"{nameof( Settings )} settings file {this.Scribe.UserSettingsPath} not found." );
+        else if ( !this.SettingsExist( out string details ) )
+            throw new InvalidOperationException( details );
     }
 
     /// <summary>   Reads the settings. </summary>
@@ -99,9 +105,45 @@ public class Settings
         this.ReadSettings( callingEntity.Assembly, settingsFileSuffix );
     }
 
+    /// <summary>   Gets the full pathname of the settings file. </summary>
+    /// <value> The full pathname of the settings file. </value>
+    [JsonIgnore]
+    public string? FilePath => this.Scribe?.UserSettingsPath;
+
+    /// <summary>   Check if the settings file exists. </summary>
+    /// <remarks>   2024-07-06. </remarks>
+    /// <returns>   True if it the settings file exists; otherwise false. </returns>
+    public bool SettingsFileExists()
+    {
+        return this.FilePath is not null && System.IO.File.Exists( this.FilePath );
+    }
+
+    /// <summary>   Checks if all settings exist. </summary>
+    /// <remarks>   2025-01-18. </remarks>
+    /// <returns>   A Tuple. </returns>
+    public bool SettingsExist( out string details )
+    {
+        if ( this.TraceLogSettings is null || !this.TraceLogSettings.Exists )
+            details = $"{nameof( this.TraceLogSettings )} not found.";
+        else if ( this.TtmEstimatorSettings is null || !this.TtmEstimatorSettings.Exists )
+            details = $"{nameof( this.TtmEstimatorSettings )} not found.";
+        else if ( this.TtmMeterSettings is null || !this.TtmMeterSettings.Exists )
+            details = $"{nameof( this.TtmMeterSettings )} not found.";
+        else if ( this.TtmResistanceSettings is null || !this.TtmResistanceSettings.Exists )
+            details = $"{nameof( this.TtmResistanceSettings )} not found.";
+        else if ( this.TtmShuntSettings is null || !this.TtmShuntSettings.Exists )
+            details = $"{nameof( this.TtmShuntSettings )} not found.";
+        else if ( this.TtmTraceSettings is null || !this.TtmTraceSettings.Exists )
+            details = $"{nameof( this.TtmTraceSettings )} not found.";
+        else
+            details = string.Empty;
+
+        return details.Length == 0;
+    }
+
     #endregion
 
-    #region " setting instances 
+    #region " setting instances "
 
     /// <summary>   Gets or sets the trace log settings. </summary>
     /// <value> The trace log settings. </value>

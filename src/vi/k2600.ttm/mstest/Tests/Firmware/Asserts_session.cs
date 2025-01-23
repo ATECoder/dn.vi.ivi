@@ -15,6 +15,9 @@ internal static partial class Asserts
 
         Assert.IsNotNull( session, $"{nameof( SessionFactory )} should provide a valid session." );
 
+        // read settings and throw if not found.
+        session.ReadSettings( typeof( Asserts ), ".Session" );
+
         session.OpenSession( resourceName );
 
         Assert.AreEqual( resourceName, session.OpenResourceName, "The open session resource name should equal to the opening resource name." );

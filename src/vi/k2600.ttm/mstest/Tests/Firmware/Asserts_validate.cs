@@ -102,7 +102,7 @@ internal static partial class Asserts
     public static void AssertQueryReplyShouldBeValid( Pith.SessionBase? session, string query, bool expectedValue, bool logEnabled = false )
     {
         string reply = Asserts.AssertQueryShouldExecute( session, query, logEnabled );
-        Assert.IsTrue( bool.TryParse( reply, out bool actualValue ) );
+        Assert.IsTrue( bool.TryParse( reply, out bool actualValue ), $"Failed parsing value '{reply}' to Boolean from command '{query}'" );
         Assert.AreEqual( expectedValue, actualValue, $"'{query}' should return the expected reply." );
     }
 
@@ -117,7 +117,7 @@ internal static partial class Asserts
     {
         Asserts.AssertCommandShouldExecute( session, command, logEnabled );
         string reply = Asserts.AssertQueryShouldExecute( session, query, logEnabled );
-        Assert.IsTrue( bool.TryParse( reply, out bool actualValue ) );
+        Assert.IsTrue( bool.TryParse( reply, out bool actualValue ), $"Failed parsing value '{reply}' to Boolean from command '{query}'" );
         Assert.AreEqual( expectedValue, actualValue, $"'{query}' should return the expected reply after {command}." );
     }
 
@@ -131,7 +131,7 @@ internal static partial class Asserts
     public static void AssertQueryReplyShouldBeValid( Pith.SessionBase? session, string query, double expectedValue, double delta, bool logEnabled = false )
     {
         string reply = Asserts.AssertQueryShouldExecute( session, query, logEnabled );
-        Assert.IsTrue( double.TryParse( reply, out double actualValue ) );
+        Assert.IsTrue( double.TryParse( reply, out double actualValue ), $"Failed parsing value '{reply}' to double from command '{query}'" );
         Assert.AreEqual( expectedValue, actualValue, delta, $"'{query}' should return the expected reply." );
     }
 
@@ -147,7 +147,7 @@ internal static partial class Asserts
     {
         Asserts.AssertCommandShouldExecute( session, command, logEnabled );
         string reply = Asserts.AssertQueryShouldExecute( session, query, logEnabled );
-        Assert.IsTrue( double.TryParse( reply, out double actualValue ) );
+        Assert.IsTrue( double.TryParse( reply, out double actualValue ), $"Failed parsing value '{reply}' to double from command '{query}'" );
         Assert.AreEqual( expectedValue, actualValue, delta, $"'{query}' should return the expected reply after {command}." );
     }
 
@@ -160,8 +160,8 @@ internal static partial class Asserts
     public static void AssertQueryReplyShouldBeValid( Pith.SessionBase? session, string query, int expectedValue, bool logEnabled = false )
     {
         string reply = Asserts.AssertQueryShouldExecute( session, query, logEnabled );
-        Assert.IsTrue( int.TryParse( reply, out int actualValue ) );
-        Assert.AreEqual( expectedValue, actualValue, $"'{query}' should return the expected reply." );
+        Assert.IsTrue( double.TryParse( reply, out double actualValue ), $"Failed parsing value '{reply}' to double from command '{query}'" );
+        Assert.AreEqual( expectedValue, ( int ) actualValue, $"'{query}' should return the expected reply." );
     }
 
     /// <summary>   Assert setter query reply should be valid. </summary>
@@ -175,7 +175,7 @@ internal static partial class Asserts
     {
         Asserts.AssertCommandShouldExecute( session, command, logEnabled );
         string reply = Asserts.AssertQueryShouldExecute( session, query, logEnabled );
-        Assert.IsTrue( int.TryParse( reply, out int actualValue ) );
-        Assert.AreEqual( expectedValue, actualValue, $"'{query}' should return the expected reply after {command}." );
+        Assert.IsTrue( double.TryParse( reply, out double actualValue ), $"Failed parsing value '{reply}' to double from command '{query}'" );
+        Assert.AreEqual( expectedValue, ( int ) actualValue, $"'{query}' should return the expected reply after {command}." );
     }
 }
