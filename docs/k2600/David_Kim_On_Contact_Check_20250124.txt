@@ -1,0 +1,15 @@
+I am sorry to hear your test of the contact check failure. What you have observed is what it is unfortunately. It is a known issue and I have tested what you have done and could have the same result that you have got. I want to walk through the detail. 
+
+Contact check is the Keithley SMU specific feature. There is no contact check in other SMUs. But it is not perfectly working. What you have seen is the only unsolved problem. Precisely, in the low resistance of DUT, contact check fails resistance reading at High or Low lead disconnected. If you have higher resistive DUT, you should be fine. 
+
+Our contact check circuit is shown in a reference manual but it is not accurate. We have two separate current sources 300uA both in high sense and the low sense. The following circuit shows those current sources on the high and the low. But we have them on the high sense and the low sense. I want that this current level is not too high for your DUT. When your high lead is disconnected, that 300uA is supposed to flow from the sense high to the high and it results in very high resistance reading(open circuit). But that current could flow through the DUT and result in reading DUT resistance. That is what you experienced. That happens in the same way for the low side as well. In the case of the sense leads disconnection, you shouldn't have failure in contact check. 
+
+If your DUT resistance is higher than 20ohm, then you can use contact check with threshold, then you can make it even though the resistance reading is not accurate. In detail case, if you have 20 ohm DUT and the high lead is open, you can set threshold like 15 ohm, then the contact check should return to you FAIL though it gets 20 ohm reading. 20 reading means the high lead is open and the high sense is connected. If the high lead is closed, you should get 1 ~ 2 ohm and it returns TRUE from the contact check. But if you have single digit resistance of DUT, We have no workaround about this so far. We could not change the contact check hardware because it is too much. 
+
+If I didn't cover your question, let me know. 
+
+Thank you
+David Kim
+Factory Application Engineer
+T/ 440.498.2486M/ 440.554.3092
+tek.com

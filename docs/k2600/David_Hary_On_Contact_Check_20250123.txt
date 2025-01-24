@@ -1,0 +1,126 @@
+Hello David Kim,
+
+It has been some time since we connected and talked last year.  I hope you are doing well and still supporting the 2600 instrument.
+
+I have a question regarding the contact check behavior of the 2600 instruments.
+
+The test configuration schematic is attached as DUT-Probes.png. I use a Keithley provided probe to connect to the DUT using dual banana terminal connectors. To simulate an open contact, I disconnect one of the probes form the DUT as shown for the Lo probe in the diagram.
+
+I attached three images from my 2612A fw 2.2.6.
+
+pro-yq...
+This image shows a measurement with all contacts attached. The top left resistance of 2.13 is a simple resistance measurement taken after a contact check. Then a transient (delta) is measured and finaly another measurement of the DUT resistance is taken.
+
+pro-dc...
+For this image, the S-Lo probe was disconnected (see the probes tot eh right of the instrument screen). The meter now shows that a contact check failed. The resistance measurement was not taken. Rather the low and high probe resistances are displayed at the bottem left corner, which is hiden in this image. 
+
+pro-ny...
+This image shows the measurement after disconnecting the Lo (Source Low) probe. This time, a resistance value of 2.7e7 was measured indicating that the contact check test did not fail. Because this value is higher than the maximum allowed for the initial resistance measurement, no other measurements were taken. 
+
+I then ran another test disconnecting both the Lo and Hi probes. This time the instrument reported open contacts at  9.9e+37 (infinity).
+
+Conclusion:
+The instrument did not detect an open contact if the low source terminal is open. 
+
+Because the contact checks reported above run within the firmware I uploaded to the instrument, I decided to double-check these observations from C# using the commands to set the SMU contact check speed (contact.speed), threshold (contact.threshold), check (contact.check()), and then read the values (contact.r()):
+
+Here are the results:
+
+(1) Intact contacts 2.14 ohms DUT:
+
+Contact check speed: Fast
+Contact check threshold: 100
+Contact check passed: True
+Contact resistances: -1.29747e+00 -5.57899e-01
+Low contacts resistance: -1.30 passed
+High contacts resistance: -.56 passed
+
+(2) Open S-Lo (sense low) 2.14 ohms DUT:
+
+Contact check speed: Fast
+Contact check threshold: 100
+Contact check passed: False
+Contact high low resistances: 1.46687e+00 9.91000e+37
+Low contacts resistance: 99100000000000000000000000000000000000.00 high
+High contacts resistance: 1.47 passed
+
+(3) Open Lo (source low) 2.14 ohms DUT:
+Contact check speed: Fast
+Contact check threshold: 100
+Contact check passed: True
+Contact high low resistances: 3.14224e+00 2.66242e+00
+Low contacts resistance: 2.66 passed
+High contacts resistance: 3.14 passed
+
+(4) Open Lo (source low) slow speed 2.14 ohms DUT:
+
+Contact check speed: Slow
+Contact check threshold: 100
+Contact check passed: True
+Contact high low resistances: 3.37601e-01 2.36559e+00
+Low contacts resistance: 2.37 passed
+High contacts resistance: .34 passed
+
+(5) Open Lo (source low) slow speed 10.1 ohms DUT:
+
+Contact check speed: Slow
+Contact check threshold: 100
+Contact check passed: True
+Contact high low resistances: 1.01221e+00 1.10224e+01
+Low contacts resistance: 11.02 passed
+High contacts resistance: 1.01 passed
+
+After the 4th test, I noticed that the open low contact resistance was similar to the resistance of the DUT. So I changed the DUT to 10 ohms. Sure enough, the open contact on the low circuit showed 11 ohms instead of 2.6 ohms. 
+
+I then ran the same tests on the 2601B FW 3.0.1:
+Contact check results 2601B:
+(1) Intact contacts 2.14 ohms DUT:
+
+Contact check speed: Fast
+Contact check threshold: 100
+Contact check passed: True
+Contact high low resistances: 1.36828e+00 3.08752e-01
+Low contacts resistance: .31 passed
+High contacts resistance: 1.37 passed
+
+(2) Open S-Lo (sense low) 2.14 ohms DUT:
+Contact check speed: Fast
+Contact check threshold: 100
+Contact check passed: False
+Contact high low resistances: 0.00000e+00 9.91000e+37
+Low contacts resistance: 99100000000000000000000000000000000000.00 high
+High contacts resistance: .00 passed
+
+(3) Open Lo (source low) 2.14 ohms DUT:
+Contact check speed: Fast
+Contact check threshold: 100
+Contact check passed: True
+Contact high low resistances: 6.98328e-01 2.58780e+00
+Low contacts resistance: 2.59 passed
+High contacts resistance: .70 passed
+
+(4) Open Lo (source low) 10.1 ohms DUT:
+Contact check speed: Fast
+Contact check threshold: 100
+Contact check passed: True
+Contact high low resistances: 1.95444e+00 9.60505e+00
+Low contacts resistance: 9.61 passed
+High contacts resistance: 1.95 passed
+
+Conclusion: 
+The instrument contact check function detects an open contact if either S-Lo or S-Hi are probes are open.
+The instrument contact check function detects both open contacts when both Lo and Hi probes are open.
+When either the Lo or Hi probes are open, the instrument contact check function measures the DUT resistance rather than the Source-Sense resistance and therefore reports the contact as not open.
+So, after this long preamble.
+
+My question is:  Is this how the instrument contact check works or am I making some errors in my test fixture or in the way I am testing for the open contacts?
+
+Your answer is critical for our next step.
+If this is how contact check works, then we must figure out a workaround, which includes determining if an excessive current might go through the DUT absent one of the source probes.
+Possibly, our contact check validation is incommensurate with how the contact check is designed to work. In this case, please let me know how to check the instrument. 
+If indeed the instrument should be cable of detecting the open Source-Sense contact in all cases, please let us know what options we have.
+Thank you for your help in looking into this matter.
+
+Best regards
+
+David

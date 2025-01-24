@@ -193,11 +193,13 @@ public abstract class SubsystemsTests
     }
 
     /// <summary>   (Unit Test Method) contact check should detect open source low. </summary>
-    /// <remarks>   2025-01-23. </remarks>
+    /// <remarks>   2025-01-23. <para>
+    /// The 2600 measure the DUT resistance when either the low or high source lead is open.  
+    /// Consequently, the contact check will pass if the DUT resistance is lower than the contact check threshold. </para></remarks>
     [TestMethod( "05. Contact check detect open low source terminal" )]
     public void ContactCheckShouldDetectOpenSourceLow()
     {
-        this.AssertCheckContacts( true, false );
+        this.AssertCheckContacts( true, true );
     }
 
     #endregion

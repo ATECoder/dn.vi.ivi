@@ -332,6 +332,32 @@ internal static partial class Asserts
         Asserts.AssertOrphanMessagesOrDeviceErrors( session );
     }
 
+    /// <summary>   Output cold resistance. </summary>
+    /// <remarks>   2025-01-24. </remarks>
+    /// <param name="resistance">   The resistance. </param>
+    private static void OutputColdResistance( IColdResistance resistance )
+    {
+        Console.WriteLine( $"{resistance.EntityName} values:" );
+        Console.WriteLine( $"  Okay Outcome: {resistance.OkayReading}" );
+        Console.WriteLine( $"        Status: {resistance.StatusReading}" );
+        Console.WriteLine( $"       Outcome: {resistance.OutcomeReading}" );
+        Console.WriteLine( $"       Reading: {resistance.Reading}" );
+        Console.WriteLine( $"    Resistance: {resistance.Resistance}" );
+    }
+
+    /// <summary>   Output trace. </summary>
+    /// <remarks>   2025-01-24. </remarks>
+    /// <param name="trace">    The trace. </param>
+    private static void OutputTrace( IThermalTransient trace )
+    {
+        Console.WriteLine( $"{trace.EntityName} values:" );
+        Console.WriteLine( $"    Okay Outcome: {trace.OkayReading}" );
+        Console.WriteLine( $"          Status: {trace.StatusReading}" );
+        Console.WriteLine( $"         Outcome: {trace.OutcomeReading}" );
+        Console.WriteLine( $"         Reading: {trace.Reading}" );
+        Console.WriteLine( $"  Voltage Change: {trace.Voltage}" );
+    }
+
     /// <summary>   Assert measurements should read. </summary>
     /// <remarks>   2024-11-08. </remarks>
     /// <param name="legacyDevice">                     The legacy device. </param>
@@ -343,6 +369,12 @@ internal static partial class Asserts
 
         // the trigger cycle complete message was already read
         _ = legacyDevice.ReadMeasurements( readTriggerCycleCompleteMessage );
+
+        if ( !string.IsNullOrWhiteSpace( legacyDevice.LastOrphanMessages ) )
+            Console.WriteLine( "Orphan orphan messages:/n{this.LastOrphanMessages}" );
+        Asserts.OutputColdResistance( legacyDevice.InitialResistance );
+        Asserts.OutputColdResistance( legacyDevice.FinalResistance );
+        Asserts.OutputTrace( legacyDevice.ThermalTransient );
     }
 
     /// <summary>   Assert cold resistance reading should validate. </summary>

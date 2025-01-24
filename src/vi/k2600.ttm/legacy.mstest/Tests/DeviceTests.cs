@@ -231,4 +231,22 @@ public class DeviceTests
         _ = this.LegacyDevice.Disconnect();
     }
 
+    /// <summary>   (Unit Test Method) measurement should trigger but fail open contact. </summary>
+    /// <remarks>   2024-11-15. </remarks>
+    [TestMethod( "07. Measurement Should Fail Open Contact" )]
+    public void MeasurementShouldFailOpenContact()
+    {
+        Assert.IsNotNull( this.LegacyDevice, $"{nameof( this.LegacyDevice )} should not be null." );
+
+        using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( this.LegacyDevice, this.ResourceSettings.ResourceName );
+
+        bool validateTriggerCycleReplyMessage = true;
+        Asserts.AssertTriggerCycleShouldStart( this.LegacyDevice, validateTriggerCycleReplyMessage );
+        Asserts.AssertMeasurementsShouldRead( this.LegacyDevice, !validateTriggerCycleReplyMessage );
+        Asserts.AssertInitialResistanceReadingShouldValidate( this.LegacyDevice );
+        Asserts.AssertTriggerCycleShouldAbort( this.LegacyDevice );
+
+        _ = this.LegacyDevice.Disconnect();
+    }
+
 }
