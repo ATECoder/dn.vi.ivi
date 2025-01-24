@@ -3,9 +3,9 @@ c722e8661e461425d8ed570e7c525b2d7713a361,units.amounts,lib\vs\core
 ddfa2157872044b1fb4a73260730fb892b5f65cf,enums,lib\vs\core
 57729c6fc2428783d89ac2dcc447068e314d6429,json,lib\vs\core
 817323e88db1ae20219d6dcceb33d2ef43a92322,tracing,lib\vs\core
-b16876475fee3b95606b611329335abe38d3cf42,std,lib\vs\core
+623348557e6812566e9deaa0ed71e14d49cf0d5c,std,lib\vs\core
 817323e88db1ae20219d6dcceb33d2ef43a92322,tracing,lib\vs\core
-103626f502fde36d9cd377380faa119abb992412,vi,lib\vs\vi
+c880cf1437071821dcd2c090fbe3a2808f3a4f4f,vi,lib\vs\vi
 455192fa8856d86a52f6e77902ea7afe601f94ea,visa,lib\vs\io
 844081f3847d3bfbce57e69d4b7675b0367cde1b,ide,libraries\vs\core
 5ea133a6a6153353ef8e1a3cbbecc5a1288c7744,wix,libraries\vs\core

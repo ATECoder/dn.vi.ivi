@@ -86,16 +86,22 @@ public abstract class SourceMeasureUnitBase : SubsystemBase
             {
                 this.SourceMeasureBasedSubsystems.NodeNumber = value;
                 if ( !string.IsNullOrWhiteSpace( this.UnitNumber ) )
-                {
-                    // update the smu reference
-                    this.UnitNumber = this.UnitNumber;
-                }
+                    this.UpdateSourceMeasureUnitReference();
             }
         }
     }
 
     /// <summary> Source measure unit reference. </summary>
     private string _sourceMeasureUnitReference = string.Empty;
+
+    /// <summary>   Updates the source measure unit reference. </summary>
+    /// <remarks>   2025-01-23. </remarks>
+    private void UpdateSourceMeasureUnitReference()
+    {
+        this.SourceMeasureUnitReference = this.NodeNumber <= 0 || this.LocalNodeNumber <= 0
+            ? Syntax.Tsp.SourceMeasureUnit.BuildSmuReference( this.UnitNumber )
+            : Syntax.Tsp.SourceMeasureUnit.BuildSmuReference( this.NodeNumber, this.LocalNodeNumber, this.UnitNumber );
+    }
 
     /// <summary> Gets or sets the full SMU reference string, e.g., '_G.node[ 1 ].smua'. </summary>
     /// <value> The SMU reference. </value>
@@ -117,7 +123,7 @@ public abstract class SourceMeasureUnitBase : SubsystemBase
     }
 
     /// <summary> Gets or sets the SMU Unit number. </summary>
-    private string _unitNumber = "a";
+    private string _unitNumber = string.Empty;
 
     /// <summary> Gets or sets the SMU unit number (a or b). </summary>
     /// <value> The unit number. </value>
@@ -130,9 +136,7 @@ public abstract class SourceMeasureUnitBase : SubsystemBase
             {
                 this.SourceMeasureBasedSubsystems.UnitNumber = value ?? "a";
                 this.SourceMeasureUnitName = Syntax.Tsp.SourceMeasureUnit.BuildSmuName( this.UnitNumber );
-                this.SourceMeasureUnitReference = this.NodeNumber <= 0 || this.LocalNodeNumber <= 0
-                    ? Syntax.Tsp.SourceMeasureUnit.BuildSmuReference( this.UnitNumber )
-                    : Syntax.Tsp.SourceMeasureUnit.BuildSmuReference( this.NodeNumber, this.LocalNodeNumber, this.UnitNumber );
+                this.UpdateSourceMeasureUnitReference();
             }
         }
     }

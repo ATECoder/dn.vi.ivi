@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using cc.isr.Enums;
+using cc.isr.Std.ParseExtensions;
 using cc.isr.VI.Pith;
 
 namespace cc.isr.VI.Tsp;
@@ -33,8 +34,6 @@ public class ContactSubsystemBase( Tsp.StatusSubsystemBase statusSubsystem ) : S
     }
 
     #endregion
-
-    #region " contact check "
 
     #region " contact check speed mode "
 
@@ -71,20 +70,27 @@ public class ContactSubsystemBase( Tsp.StatusSubsystemBase statusSubsystem ) : S
     {
         string currentValue = this.ContactCheckSpeedMode.ToString();
         this.Session.MakeEmulatedReplyIfEmpty( currentValue );
-        currentValue = this.Session.QueryTrimEnd( $"_G.print({this.SourceMeasureUnitReference}.contact.speed())" );
+        currentValue = this.Session.QueryTrimEnd( $"_G.print({this.SourceMeasureUnitReference}.contact.speed)" );
         if ( string.IsNullOrWhiteSpace( currentValue ) )
         {
             string message = "Failed fetching Contact Check Speed Mode";
             Debug.Assert( !Debugger.IsAttached, message );
             this.ContactCheckSpeedMode = new ContactCheckSpeedMode?();
         }
+        else if ( currentValue.TryParseNumber( out double enumValue ) )
+        {
+            this.ContactCheckSpeedMode = ( cc.isr.VI.Tsp.ContactCheckSpeedMode ) (( int ) enumValue + 1);
+        }
         else
         {
             // var se = new StringEnumerator<ContactCheckSpeedMode>();
             // strip the SMU reference.
             // currentValue = currentValue.Substring( currentValue.LastIndexOf( ".", StringComparison.OrdinalIgnoreCase ) + 1 ).Trim( '.' );
-            // this.ContactCheckSpeedMode = se.ParseContained( currentValue.Substring( 4 ) );
             this.ContactCheckSpeedMode = SessionBase.ParseContained<ContactCheckSpeedMode>( currentValue[4..].BuildDelimitedValue() );
+            currentValue = currentValue[(currentValue.LastIndexOf( ".", StringComparison.OrdinalIgnoreCase ) + 1)..].Trim( '.' );
+            string enumText = currentValue.BuildDelimitedValue();
+            // this.ContactCheckSpeedMode = se.ParseContained( currentValue.Substring( 4 ) );
+            this.ContactCheckSpeedMode = SessionBase.ParseContained<ContactCheckSpeedMode>( enumText );
         }
 
         return this.ContactCheckSpeedMode;
@@ -137,7 +143,7 @@ public class ContactSubsystemBase( Tsp.StatusSubsystemBase statusSubsystem ) : S
     public virtual int? QueryContactCheckThreshold()
     {
         this.ContactCheckThreshold = this.Session.QueryPrint( this.ContactCheckThreshold.GetValueOrDefault( 15 ),
-                                                                "{0}.contact.threshold()", this.SourceMeasureUnitReference );
+                                                                "{0}.contact.threshold", this.SourceMeasureUnitReference );
         return this.ContactCheckThreshold;
     }
 
@@ -172,13 +178,26 @@ public class ContactSubsystemBase( Tsp.StatusSubsystemBase statusSubsystem ) : S
 
     /// <summary> Reads the Contact Resistances. </summary>
     /// <returns>
-    /// The <see cref="ContactResistances">Contact Resistances</see> or nothing if not known.
+    /// The <see cref="ContactResistances">Contact Resistances</see> as (high tab low) or nothing if not known.
     /// </returns>
     public virtual string QueryContactResistances()
     {
         this.Session.MakeEmulatedReplyIfEmpty( this.ContactResistances ?? string.Empty );
         this.ContactResistances = this.Session.QueryTrimEnd( $"_G.print({this.SourceMeasureUnitReference}.contact.r())" );
         return this.ContactResistances;
+    }
+
+    /// <summary>   Parse contact resistances. </summary>
+    /// <remarks>   2025-01-23. </remarks>
+    /// <returns>   A Tuple. </returns>
+    public (double? highContactResistance, double? lowContactResistance) ParseContactResistances()
+    {
+        string? contactResistances = this.ContactResistances ?? this.QueryContactResistances();
+        if ( string.IsNullOrWhiteSpace( contactResistances ) )
+            return (null, null);
+
+        string[] values = contactResistances!.Split( '\t' );
+        return (values[0].ExtractNumber(), values[1].ExtractNumber());
     }
 
     #endregion
@@ -254,8 +273,6 @@ public class ContactSubsystemBase( Tsp.StatusSubsystemBase statusSubsystem ) : S
 
         return this.ContactCheckOkay ?? new bool?();
     }
-
-    #endregion
 
     #endregion
 

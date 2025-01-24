@@ -1,7 +1,6 @@
 using System;
 using cc.isr.Std.Tests;
 using cc.isr.Std.Tests.Extensions;
-using cc.isr.VI.Device.Tests;
 using cc.isr.VI.Device.Tests.Settings;
 using cc.isr.VI.Pith.Settings;
 
@@ -165,6 +164,40 @@ public abstract class SubsystemsTests
     public void OpenSessionReadDeviceErrorsShouldPass()
     {
         this.AssertOpenSessionCheckStatus( true );
+    }
+
+    #endregion
+
+    #region " contact check susbsystem "
+
+    /// <summary>   Assert check contacts. </summary>
+    /// <remarks>   2025-01-23. </remarks>
+    /// <param name="highOkay"> True to high okay. </param>
+    /// <param name="lowOkay">  True to low okay. </param>
+    protected abstract void AssertCheckContacts( bool highOkay, bool lowOkay );
+
+    /// <summary>   (Unit Test Method) contact check should pass. </summary>
+    /// <remarks>   2025-01-23. </remarks>
+    [TestMethod( "03. Contact check should pass" )]
+    public void ContactCheckShouldPass()
+    {
+        this.AssertCheckContacts( true, true );
+    }
+
+    /// <summary>   (Unit Test Method) contact check should detect open sense low. </summary>
+    /// <remarks>   2025-01-23. </remarks>
+    [TestMethod( "04. Contact check detect open low sense terminal" )]
+    public void ContactCheckShouldDetectOpenSenseLow()
+    {
+        this.AssertCheckContacts( true, false );
+    }
+
+    /// <summary>   (Unit Test Method) contact check should detect open source low. </summary>
+    /// <remarks>   2025-01-23. </remarks>
+    [TestMethod( "05. Contact check detect open low source terminal" )]
+    public void ContactCheckShouldDetectOpenSourceLow()
+    {
+        this.AssertCheckContacts( true, false );
     }
 
     #endregion

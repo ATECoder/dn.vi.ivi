@@ -132,4 +132,78 @@ public class SubsystemsTests : Device.Tests.Base.SubsystemsTests
     }
 
     #endregion
+
+    #region " contact check susbsystem "
+
+    /// <summary>   Assert contact subsystem should check contacts. </summary>
+    /// <remarks>   2025-01-23. </remarks>
+    /// <param name="device">   The reference to the K2600 Device. </param>
+    /// <param name="highOkay"> True to high okay. </param>
+    /// <param name="lowOkay">  True to low okay. </param>
+    private static void AssertContactSubsystemShouldCheckContacts( K2600Device? device, bool highOkay, bool lowOkay )
+    {
+        System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
+        string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
+        Console.WriteLine( $"@{methodFullName}" );
+        Assert.IsNotNull( device, $"{nameof( device )} should not be null." );
+        Assert.IsNotNull( device.Session, $"{nameof( device )}.{nameof( device.Session )} should not be null." );
+        Assert.IsTrue( device.IsDeviceOpen, $"{device.ResourceNameCaption} session should be open." );
+        Assert.IsNotNull( device.ContactSubsystem, $"{nameof( device )}.{nameof( device.ContactSubsystem )} should not be null." );
+
+        int contactThreshold = 100;
+        ContactSubsystem contactSubsystem = device.ContactSubsystem;
+        ContactCheckSpeedMode? speedMode = contactSubsystem.ApplyContactCheckSpeedMode( ContactCheckSpeedMode.Fast );
+        Console.WriteLine( $"Contact check speed: {speedMode}" );
+        double? contactCheckThreshold = contactSubsystem.ApplyContactCheckThreshold( contactThreshold );
+        Console.WriteLine( $"Contact check threshold: {contactCheckThreshold}" );
+        bool? contactCheckPassed = contactSubsystem.QueryContactCheckOkay();
+        Console.WriteLine( $"Contact check passed: {contactCheckPassed}" );
+        Assert.IsNotNull( contactCheckPassed, $"{nameof( contactCheckPassed )} should not be null." );
+        string contactResistances = contactSubsystem.QueryContactResistances();
+        Console.WriteLine( $"Contact high low resistances: {contactResistances}" );
+        (double? highResistance, double? lowResistance) = contactSubsystem.ParseContactResistances();
+        bool lowContactPassed = lowResistance.GetValueOrDefault( 0 ) < contactThreshold;
+        string lowContactOutcome = lowContactPassed ? "passed" : "high";
+        Console.WriteLine( $"Low contacts resistance: {lowResistance:#.00} {lowContactOutcome}" );
+        bool highContactPassed = highResistance.GetValueOrDefault( 0 ) < contactThreshold;
+        string highContactOutcome = highContactPassed ? "passed" : "high";
+        Console.WriteLine( $"High contacts resistance: {highResistance:#.00} {highContactOutcome}" );
+        Assert.AreEqual( highOkay && lowOkay, contactCheckPassed.Value, $"{nameof( contactCheckPassed )} should be {highOkay} and {lowOkay}." );
+        Assert.AreEqual( highOkay, highContactPassed, $"{nameof( highContactPassed )} should be {(highOkay ? """passed""" : """high""")}." );
+        Assert.AreEqual( lowOkay, lowContactPassed, $"{nameof( lowContactPassed )} should be {(lowOkay ? """passed""" : """high""")}." );
+    }
+
+    /// <summary>   Assert check contacts. </summary>
+    /// <remarks>   2025-01-23. </remarks>
+    /// <param name="highOkay"> True if high contacts are okay. </param>
+    /// <param name="lowOkay">  True if low contacts are okay. </param>
+    protected override void AssertCheckContacts( bool highOkay, bool lowOkay )
+    {
+        Assert.IsNotNull( this.Device );
+        Assert.IsNotNull( this.Device.Session );
+        Assert.IsNotNull( this.Device.StatusSubsystemBase );
+        Assert.IsNotNull( this.Device.StatusSubsystem );
+        try
+        {
+            System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
+            string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
+            Console.WriteLine( $"@{methodFullName}" );
+
+            cc.isr.VI.Device.Tests.Asserts.AssertSessionInitialValuesShouldMatch( this.Device.Session, this.ResourceSettings );
+            cc.isr.VI.Device.Tests.Asserts.AssertDeviceShouldOpenWithoutDeviceErrors( this.Device, this.ResourceSettings );
+            SubsystemsTests.AssertContactSubsystemShouldCheckContacts( this.Device, highOkay, lowOkay );
+        }
+        catch
+        {
+            throw;
+        }
+        finally
+        {
+            cc.isr.VI.Device.Tests.Asserts.AssertDeviceShouldCloseWithoutErrors( this.Device );
+        }
+    }
+
+    #endregion
+
+
 }
