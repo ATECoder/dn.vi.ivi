@@ -13,7 +13,8 @@
 	  - [Channel Menu](#Channel-Menu)
 	  - [Driver Menu](#Driver-Menu)
 	  - [Leads Menu](#Leads-Menu)
-	  - [Contact Checks Menu](#Contacts-Check-Menu)
+	  - [Contacts Checks Menu](#Contacts-Check-Menu)
+	  - [Open Source Lead Limit Menu](#Open_Source_Lead_Limit_Menu)
 	- [Resistance Menu](#Resistance-Menu)
 	  - [Source Menu](#Source-Menu)
 	  - [Level Menu](#Level-Menu)
@@ -206,6 +207,8 @@ The contact check function also detects an open circuit that may occur when a fo
 
 The leads contacts are checked if the maximum leads resistance (see below) is set to a non-zero positive value. Contacts are measured before taking the initial resistance measurement. The measurement is aborted and the lead resistances are displayed if the measured lead resistances exceeds the maximum limit. 
 
+Check [Open Source Lead Limit Menu](#Open_Source_Lead_Limit_Menu) for a workaround that is aimed to overcome an issue with the standard contact check.
+
 ![](ContactCheckDiagram.png)
 
 To enable and set the maximum allowed leads resistance:
@@ -213,7 +216,7 @@ To enable and set the maximum allowed leads resistance:
 Selecting _Leads_ from the [Meter Menu](#Meter-Menu) displays the [Leads Menu](#Leads-Menu) displaying the maximum resistance beyond which the leads are taken as open. The resistance is in Ohms between 10 and 999:
 
 - Title: __100 Ω__.
-- Description: _Max Resistance_.
+- Description: _Max Leads R_.
 
 The range is: 10 - 999.
 
@@ -236,6 +239,29 @@ Selecting _Checks_ from the [Meter Menu](#Meter-Menu) displays the [Checks Menu]
 The expected range are: 1, 3, 5, 7.
 
 Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or `ENTER` and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or `ENTER` selects the new value.
+
+<a name="Open_Source_Lead_Limit_Menu"></a>
+#### Open Source Lead Limit Menu
+
+The [Open Source Lead Limit Menu](#Open_Source_Lead_Limit_Menu) sets the maximum DUT resistance. This value is used as a workaround for the instrument failure to detect an open lead if either the low or high source lead is open. The TTM firmware add a resistance measurement after conducting the standard contact check. This measurement yields a high resistance if a source lead is open. Thus, this measurement can be used to detect an open source lead.
+
+The contact check function prevents measurements that may be in error due to excessive resistance in the force or sense leads when making remotely sensed (Kelvin) measurements. Potential sources for this resistance include poor contact at the device under test (DUT), failing relay contacts on a switching card or wires that are too long or thin.
+
+The contact check function also detects an open circuit that may occur when a four-point probe is misplaced or misaligned. This relationship is shown schematically in the figure below, where R~C~ is the resistance of the mechanical contact at the DUT, and R~S~ is the series resistance of cables and any series relays.
+
+The leads contacts are checked if the maximum leads resistance (see below) is set to a non-zero positive value. Contacts are measured before taking the initial resistance measurement. The measurement is aborted and the lead resistances are displayed if the measured lead resistances exceeds the maximum limit. 
+
+To set the maximum allowed DUT resistance:
+
+Selecting _Limit_ from the [Meter Menu](#Meter-Menu) displays the [Open Source Lead Limit Menu](#Open_Source_Lead_Limit_Menu) displaying the maximum resistance beyond which a source lead is taken as open. The resistance is in Ohms between 10 and 999999:
+
+- Title: __1000 Ω__.
+- Description: _Max DUT R_.
+
+The range is: 10 - 999999.
+
+Moving the cursor over the digits, the digit blinks. Pressing the _Wheel_ or `ENTER` and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or `ENTER` selects the new value.
+
 
 <a name="Resistance-Menu"></a>
 ### Resistance Menu
