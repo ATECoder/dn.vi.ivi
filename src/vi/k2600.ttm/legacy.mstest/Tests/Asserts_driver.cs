@@ -46,10 +46,10 @@ internal static partial class Asserts
         string ttmObjectName = "ttm";
         Assert.IsFalse( session.IsNil( ttmObjectName ), $"{ttmObjectName} should not be nil." );
 
-        ttmObjectName = "ttm.Outcomes";
+        ttmObjectName = "ttm.OutcomeBits";
         Assert.IsFalse( session.IsNil( ttmObjectName ), $"{ttmObjectName} should not be nil." );
 
-        ttmObjectName = "ttm.Outcomes.okay";
+        ttmObjectName = "ttm.OutcomeBits.okay";
         Assert.IsFalse( session.IsNil( ttmObjectName ), $"{ttmObjectName} should not be nil." );
 
         // the legacy software has no definition for open leads.

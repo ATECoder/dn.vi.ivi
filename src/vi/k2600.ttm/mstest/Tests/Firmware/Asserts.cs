@@ -124,6 +124,27 @@ internal static partial class Asserts
 
         }
     }
+	
+    public static (bool? Low, bool? High, bool? Pass) ParsePassFailOutcome( int passFailOutcome )
+    {
+        int bitmask = 2;
+        bool? low = 0 == passFailOutcome
+            ? new bool?()
+            : bitmask = (passFailOutcome & bitmask)
+
+        bitmask = 4;
+        bool? high = 0 == passFailOutcome
+            ? new bool?()
+            : bitmask = (passFailOutcome & bitmask)
+
+        int bitmask = 1;
+        bool? pass = 0 == passFailOutcome
+            ? new bool?()
+            : bitmask = (passFailOutcome & bitmask)
+
+        return (low, high, pass);
+    }
+	
 
     /// <summary>   Assert Initial Resistance should read low, high and pass. </summary>
     /// <remarks>   2024-10-26. </remarks>
@@ -136,16 +157,11 @@ internal static partial class Asserts
 
         // the legacy driver is agnostic to the low and high properties and, therefore, could be tested even if testing the legacy driver.
 
-        bool? low = Asserts.LegacyFirmware
-            ? new bool?()
-            : session.QueryNullableBoolThrowIfError( "print(ttm.ir.low) ", "Initial MeasuredValue Low" );
+        int passFailOutcome = Asserts.LegacyFirmware
+            ? 0
+            : session.QueryNullableBoolThrowIfError( "print(ttm.ir.passFailOutcome) ", "Initial resistance pass fail outcome" );
 
-        bool? high = Asserts.LegacyFirmware
-            ? new bool?()
-            : session.QueryNullableBoolThrowIfError( "print(ttm.ir.high) ", "Initial MeasuredValue High" );
-
-        bool? pass = session.QueryNullableBoolThrowIfError( "print(ttm.ir.pass) ", "Initial MeasuredValue Pass" );
-        return (low, high, pass);
+        return Asserts.ParsePassFailOutcome( passFailOutcome );
     }
 
     /// <summary>   Assert final resistance should read low, high and pass. </summary>
@@ -159,16 +175,11 @@ internal static partial class Asserts
 
         // the legacy driver is agnostic to the low and high properties and, therefore, could be tested even if testing the legacy driver.
 
-        bool? low = Asserts.LegacyFirmware
-            ? new bool?()
-            : session.QueryNullableBoolThrowIfError( "print(ttm.fr.low) ", "Final MeasuredValue Low" );
+        int passFailOutcome = Asserts.LegacyFirmware
+            ? 0
+            : session.QueryNullableBoolThrowIfError( "print(ttm.fr.passFailOutcome) ", "Final resistance pass fail outcome" );
 
-        bool? high = Asserts.LegacyFirmware
-            ? new bool?()
-            : session.QueryNullableBoolThrowIfError( "print(ttm.fr.high) ", "Final MeasuredValue High" );
-
-        bool? pass = session.QueryNullableBoolThrowIfError( "print(ttm.fr.pass) ", "Final MeasuredValue Pass" );
-        return (low, high, pass);
+        return Asserts.ParsePassFailOutcome( passFailOutcome );
     }
 
     /// <summary>   Assert thermal transient should read low, high and pass. </summary>
@@ -182,16 +193,11 @@ internal static partial class Asserts
 
         // the low and high properties are not used by the legacy driver and, therefore, could be tested even if testing the legacy driver.
 
-        bool? low = Asserts.LegacyFirmware
-            ? new bool?()
-            : session.QueryNullableBoolThrowIfError( "print(ttm.tr.low) ", "Thermal Transient Low" );
+        int passFailOutcome = Asserts.LegacyFirmware
+            ? 0
+            : session.QueryNullableBoolThrowIfError( "print(ttm.tr.passFailOutcome) ", "Thermal transient pass fail outcome" );
 
-        bool? high = Asserts.LegacyFirmware
-            ? new bool?()
-            : session.QueryNullableBoolThrowIfError( "print(ttm.tr.high) ", "Thermal Transient High" );
-
-        bool? pass = session.QueryNullableBoolThrowIfError( "print(ttm.tr.pass) ", "Thermal Transient Pass" );
-        return (low, high, pass);
+        return Asserts.ParsePassFailOutcome( passFailOutcome );
     }
 
 
@@ -283,42 +289,42 @@ internal static partial class Asserts
     /// <remarks>   2024-10-31. </remarks>
     /// <param name="session">  The session. </param>
     /// <returns>   A Tuple. </returns>
-    public static (bool? Okay, double? LowLeadsResistance, double? HighLeadsResistance) AssertInitialResistanceShouldReadContactCheck( Pith.SessionBase? session )
+    public static (int? openLeadsStatus, double? LowLeadsResistance, double? HighLeadsResistance) AssertInitialResistanceShouldReadContactCheck( Pith.SessionBase? session )
     {
         Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
         Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
-        bool? okay = session.QueryNullableBoolThrowIfError( "print(ttm.ir.contactsOkay) ", "Initial MeasuredValue Contacts Initial" );
-        double? low = session.QueryNullableDoubleThrowIfError( "print(ttm.ir.lowContact) ", "Initial MeasuredValue Low Leads MeasuredValue" );
-        double? high = session.QueryNullableDoubleThrowIfError( "print(ttm.ir.highContact) ", "Initial MeasuredValue High Leads MeasuredValue" );
-        return (okay, low, high);
+        int? openLeadsStatus = session.QueryNullableIntegerThrowIfError( "print(ttm.ir.openLeadsStatus) ", "Initial resistance open leads status" );
+        double? low = session.QueryNullableDoubleThrowIfError( "print(ttm.ir.lowLeadsR) ", "Initial resistance low leads contact resistance" );
+        double? high = session.QueryNullableDoubleThrowIfError( "print(ttm.ir.highLeadsR) ", "Initial resistance high leads contact resistance" );
+        return (openLeadsStatus, low, high);
     }
 
     /// <summary>   Assert final resistance should read contact check. </summary>
     /// <remarks>   2024-10-31. </remarks>
     /// <param name="session">  The session. </param>
     /// <returns>   A Tuple. </returns>
-    public static (bool? Okay, double? LowLeadsResistance, double? HighLeadsResistance) AssertFinalResistanceShouldReadContactCheck( Pith.SessionBase? session )
+    public static (int? openLeadsStatus, double? LowLeadsResistance, double? HighLeadsResistance) AssertFinalResistanceShouldReadContactCheck( Pith.SessionBase? session )
     {
         Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
         Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
-        bool? okay = session.QueryNullableBoolThrowIfError( "print(ttm.fr.contactsOkay) ", "Final MeasuredValue Contacts Initial" );
-        double? low = session.QueryNullableDoubleThrowIfError( "print(ttm.fr.lowContact) ", "Final MeasuredValue Low Leads MeasuredValue" );
-        double? high = session.QueryNullableDoubleThrowIfError( "print(ttm.fr.highContact) ", "Final MeasuredValue High Leads MeasuredValue" );
-        return (okay, low, high);
+        int? openLeadsStatus = session.QueryNullableIntegerThrowIfError( "print(ttm.fr.openLeadsStatus) ", "Final resistance open leads status" );
+        double? low = session.QueryNullableDoubleThrowIfError( "print(ttm.fr.lowLeadsR) ", "Final resistance low leads contact resistance" );
+        double? high = session.QueryNullableDoubleThrowIfError( "print(ttm.fr.highLeadsR) ", "Final resistance high leads contact resistance" );
+        return (openLeadsStatus, low, high);
     }
 
     /// <summary>   Assert trace should read contact check. </summary>
     /// <remarks>   2024-10-31. </remarks>
     /// <param name="session">  The session. </param>
     /// <returns>   A Tuple. </returns>
-    public static (bool? Okay, double? LowLeadsResistance, double? HighLeadsResistance) AssertTraceShouldReadContactCheck( Pith.SessionBase? session )
+    public static (int? openLeadsStatus, double? LowLeadsResistance, double? HighLeadsResistance) AssertFinalResistanceShouldReadContactCheck( Pith.SessionBase? session )
     {
         Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
         Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
-        bool? okay = session.QueryNullableBoolThrowIfError( "print(ttm.tr.contactsOkay) ", "Trace Contacts Initial" );
-        double? low = session.QueryNullableDoubleThrowIfError( "print(ttm.tr.lowContact) ", "Trace Low Leads MeasuredValue" );
-        double? high = session.QueryNullableDoubleThrowIfError( "print(ttm.tr.highContact) ", "Trace High Leads MeasuredValue" );
-        return (okay, low, high);
+        int? openLeadsStatus = session.QueryNullableIntegerThrowIfError( "print(ttm.tr.openLeadsStatus) ", "Trace open leads status" );
+        double? low = session.QueryNullableDoubleThrowIfError( "print(ttm.tr.lowLeadsR) ", "Trace low leads contact resistance" );
+        double? high = session.QueryNullableDoubleThrowIfError( "print(ttm.tr.highLeadsR) ", "Trace high leads contact resistance" );
+        return (openLeadsStatus, low, high);
     }
 
     /// <summary>   Assert meter should read contact check options. </summary>
