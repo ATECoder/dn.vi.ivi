@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 Current overall binaries revision: 8.1.9111
 
 ## [8.1.9154] - 2025-01-23
+- K2600 TTM
+  - Add Contact check subsystem tests.
+
+## [8.1.9154] - 2025-01-23
 - TSP
   - Fix setting of the source meter reference name.
 - K2600

@@ -124,27 +124,34 @@ internal static partial class Asserts
 
         }
     }
-	
-    public static (bool? Low, bool? High, bool? Pass) ParsePassFailOutcome( int passFailOutcome )
+
+    /// <summary>   Parse pass fail outcome. </summary>
+    /// <remarks>   2025-01-27. </remarks>
+    /// <param name="passFailOutcome">  The pass fail outcome. </param>
+    /// <returns>   A Tuple. </returns>
+    public static (bool? Low, bool? High, bool? Pass) ParsePassFailOutcome( int? passFailOutcome )
     {
-        int bitmask = 2;
+        if ( !passFailOutcome.HasValue )
+            return (new bool?(), new bool?(), new bool?());
+
+        int bitmask = ( int ) PassFailBits.Low;
         bool? low = 0 == passFailOutcome
             ? new bool?()
-            : bitmask = (passFailOutcome & bitmask)
+            : bitmask == (passFailOutcome & bitmask);
 
-        bitmask = 4;
+        bitmask = ( int ) PassFailBits.High;
         bool? high = 0 == passFailOutcome
             ? new bool?()
-            : bitmask = (passFailOutcome & bitmask)
+            : bitmask == (passFailOutcome & bitmask);
 
-        int bitmask = 1;
+        bitmask = ( int ) PassFailBits.Pass;
         bool? pass = 0 == passFailOutcome
             ? new bool?()
-            : bitmask = (passFailOutcome & bitmask)
+            : bitmask == (passFailOutcome & bitmask);
 
         return (low, high, pass);
     }
-	
+
 
     /// <summary>   Assert Initial Resistance should read low, high and pass. </summary>
     /// <remarks>   2024-10-26. </remarks>
@@ -157,10 +164,11 @@ internal static partial class Asserts
 
         // the legacy driver is agnostic to the low and high properties and, therefore, could be tested even if testing the legacy driver.
 
-        int passFailOutcome = Asserts.LegacyFirmware
+        int? passFailOutcome = Asserts.LegacyFirmware
             ? 0
-            : session.QueryNullableBoolThrowIfError( "print(ttm.ir.passFailOutcome) ", "Initial resistance pass fail outcome" );
+            : session.QueryNullableIntegerThrowIfError( "print(ttm.ir.passFailOutcome) ", "Initial resistance pass fail outcome" );
 
+        Assert.IsNotNull( passFailOutcome, $"{nameof( passFailOutcome )} should not be null." );
         return Asserts.ParsePassFailOutcome( passFailOutcome );
     }
 
@@ -175,10 +183,11 @@ internal static partial class Asserts
 
         // the legacy driver is agnostic to the low and high properties and, therefore, could be tested even if testing the legacy driver.
 
-        int passFailOutcome = Asserts.LegacyFirmware
+        int? passFailOutcome = Asserts.LegacyFirmware
             ? 0
-            : session.QueryNullableBoolThrowIfError( "print(ttm.fr.passFailOutcome) ", "Final resistance pass fail outcome" );
+            : session.QueryNullableIntegerThrowIfError( "print(ttm.fr.passFailOutcome) ", "Final resistance pass fail outcome" );
 
+        Assert.IsNotNull( passFailOutcome, $"{nameof( passFailOutcome )} should not be null." );
         return Asserts.ParsePassFailOutcome( passFailOutcome );
     }
 
@@ -193,10 +202,11 @@ internal static partial class Asserts
 
         // the low and high properties are not used by the legacy driver and, therefore, could be tested even if testing the legacy driver.
 
-        int passFailOutcome = Asserts.LegacyFirmware
+        int? passFailOutcome = Asserts.LegacyFirmware
             ? 0
-            : session.QueryNullableBoolThrowIfError( "print(ttm.tr.passFailOutcome) ", "Thermal transient pass fail outcome" );
+            : session.QueryNullableIntegerThrowIfError( "print(ttm.tr.passFailOutcome) ", "Thermal transient pass fail outcome" );
 
+        Assert.IsNotNull( passFailOutcome, $"{nameof( passFailOutcome )} should not be null." );
         return Asserts.ParsePassFailOutcome( passFailOutcome );
     }
 
@@ -289,42 +299,45 @@ internal static partial class Asserts
     /// <remarks>   2024-10-31. </remarks>
     /// <param name="session">  The session. </param>
     /// <returns>   A Tuple. </returns>
-    public static (int? openLeadsStatus, double? LowLeadsResistance, double? HighLeadsResistance) AssertInitialResistanceShouldReadContactCheck( Pith.SessionBase? session )
+    public static (int? openLeadsStatus, double? LowLeadsResistance, double? HighLeadsResistance, double? dutResistance) AssertInitialResistanceShouldReadContactCheck( Pith.SessionBase? session )
     {
         Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
         Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
         int? openLeadsStatus = session.QueryNullableIntegerThrowIfError( "print(ttm.ir.openLeadsStatus) ", "Initial resistance open leads status" );
         double? low = session.QueryNullableDoubleThrowIfError( "print(ttm.ir.lowLeadsR) ", "Initial resistance low leads contact resistance" );
         double? high = session.QueryNullableDoubleThrowIfError( "print(ttm.ir.highLeadsR) ", "Initial resistance high leads contact resistance" );
-        return (openLeadsStatus, low, high);
+        double? dut = session.QueryNullableDoubleThrowIfError( "print(ttm.ir.dutR) ", "Initial resistance DUT leads contact resistance" );
+        return (openLeadsStatus, low, high, dut);
     }
 
     /// <summary>   Assert final resistance should read contact check. </summary>
     /// <remarks>   2024-10-31. </remarks>
     /// <param name="session">  The session. </param>
     /// <returns>   A Tuple. </returns>
-    public static (int? openLeadsStatus, double? LowLeadsResistance, double? HighLeadsResistance) AssertFinalResistanceShouldReadContactCheck( Pith.SessionBase? session )
+    public static (int? openLeadsStatus, double? LowLeadsResistance, double? HighLeadsResistance, double? dutResistance) AssertFinalResistanceShouldReadContactCheck( Pith.SessionBase? session )
     {
         Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
         Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
         int? openLeadsStatus = session.QueryNullableIntegerThrowIfError( "print(ttm.fr.openLeadsStatus) ", "Final resistance open leads status" );
         double? low = session.QueryNullableDoubleThrowIfError( "print(ttm.fr.lowLeadsR) ", "Final resistance low leads contact resistance" );
         double? high = session.QueryNullableDoubleThrowIfError( "print(ttm.fr.highLeadsR) ", "Final resistance high leads contact resistance" );
-        return (openLeadsStatus, low, high);
+        double? dut = session.QueryNullableDoubleThrowIfError( "print(ttm.fr.dutR) ", "Final resistance DUT leads contact resistance" );
+        return (openLeadsStatus, low, high, dut);
     }
 
     /// <summary>   Assert trace should read contact check. </summary>
     /// <remarks>   2024-10-31. </remarks>
     /// <param name="session">  The session. </param>
     /// <returns>   A Tuple. </returns>
-    public static (int? openLeadsStatus, double? LowLeadsResistance, double? HighLeadsResistance) AssertFinalResistanceShouldReadContactCheck( Pith.SessionBase? session )
+    public static (int? openLeadsStatus, double? LowLeadsResistance, double? HighLeadsResistance, double? dutResistance) AssertTraceShouldReadContactCheck( Pith.SessionBase? session )
     {
         Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
         Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
         int? openLeadsStatus = session.QueryNullableIntegerThrowIfError( "print(ttm.tr.openLeadsStatus) ", "Trace open leads status" );
         double? low = session.QueryNullableDoubleThrowIfError( "print(ttm.tr.lowLeadsR) ", "Trace low leads contact resistance" );
         double? high = session.QueryNullableDoubleThrowIfError( "print(ttm.tr.highLeadsR) ", "Trace high leads contact resistance" );
-        return (openLeadsStatus, low, high);
+        double? dut = session.QueryNullableDoubleThrowIfError( "print(ttm.tr.dutR) ", "Trace DUT leads contact resistance" );
+        return (openLeadsStatus, low, high, dut);
     }
 
     /// <summary>   Assert meter should read contact check options. </summary>
@@ -361,14 +374,16 @@ internal static partial class Asserts
 
     /// <summary>   Assert contact check should conform. </summary>
     /// <remarks>   2024-10-31. </remarks>
-    /// <param name="outcomes"> The outcomes. </param>
-    /// <param name="options">  Options for controlling the operation. </param>
-    /// <param name="option">   The option. </param>
-    /// <param name="limit">    The limit. </param>
-    /// <param name="okay">     True to okay. </param>
-    /// <param name="low">      True to low. </param>
-    /// <param name="high">     True to high. </param>
-    public static void AssertContactCheckShouldConform( int? outcomes, int? options, ContactCheckOptions option, double? limit, bool? okay, double? low, double? high )
+    /// <param name="outcomes">     The outcomes. </param>
+    /// <param name="options">      Options for controlling the operation. </param>
+    /// <param name="option">       The option. </param>
+    /// <param name="limit">        The limit. </param>
+    /// <param name="leadsStatus">  True to okay. </param>
+    /// <param name="lowR">         True to low. </param>
+    /// <param name="highR">        True to high. </param>
+    /// <param name="dutR">         The dut r. </param>
+    public static void AssertContactCheckShouldConform( int? outcomes, int? options, ContactCheckOptions option, double? limit,
+        int? leadsStatus, double? lowR, double? highR, double? dutR )
     {
         Assert.IsNotNull( options, $"Meter Contact Check {nameof( options )} should not be null." );
         Assert.IsNotNull( limit, $"Leads resistance {nameof( limit )} should not be null." );
@@ -376,9 +391,10 @@ internal static partial class Asserts
         if ( 0 == (options.Value & ( int ) option) )
         {
             // if the specified option is net enabled, the contact check values should be null.
-            Assert.IsFalse( okay.HasValue, $"{nameof( okay )} should not have a value {okay} if the options {options} do not include {option}." );
-            Assert.IsFalse( low.HasValue, $"{nameof( low )} contact resistance should not have a value {low}if the options {options} do not include {option}." );
-            Assert.IsFalse( high.HasValue, $"{nameof( high )} contact resistance should not have a value {high}if the options {options} do not include {option}." );
+            Assert.IsFalse( leadsStatus.HasValue, $"{nameof( leadsStatus )} should not have a value {leadsStatus} if the options {options} do not include {option}." );
+            Assert.IsFalse( lowR.HasValue, $"{nameof( lowR )} contact resistance should not have a value {lowR}if the options {options} do not include {option}." );
+            Assert.IsFalse( highR.HasValue, $"{nameof( highR )} contact resistance should not have a value {highR}if the options {options} do not include {option}." );
+            Assert.IsFalse( dutR.HasValue, $"{nameof( dutR )} contact resistance should not have a value {dutR}if the options {options} do not include {option}." );
         }
         else
         {
@@ -387,30 +403,30 @@ internal static partial class Asserts
                 if ( 0 == (( FirmwareOutcomes ) outcomes & FirmwareOutcomes.openLeads) )
                 {
                     // if leads are not open okay should be true and low and high should be zero
-                    Assert.IsTrue( okay, $"{nameof( okay )} value should not be {okay} if contact check did not fail if outcome has no value." );
+                    Assert.AreEqual( ( int ) LeadsStatusBits.Okay, leadsStatus, $"{nameof( leadsStatus )} value should not be {leadsStatus} if contact check did not fail if outcome has no value." );
                     double expectedValue = 0;
-                    Assert.IsNotNull( low, $"{nameof( low )} contact resistance should not be null if leads are not open." );
-                    Assert.AreEqual( expectedValue, low.Value, $"{nameof( low )} contact resistance should equal the expected value if leads are not open." );
-                    Assert.IsNotNull( high, $"{nameof( high )} contact resistance should not be null if leads are not open." );
-                    Assert.AreEqual( expectedValue, high.Value, $"{nameof( high )} contact resistance should equal the expected value if leads are not open." );
+                    Assert.IsNotNull( lowR, $"{nameof( lowR )} contact resistance should not be null if leads are not open." );
+                    Assert.AreEqual( expectedValue, lowR.Value, $"{nameof( lowR )} contact resistance should equal the expected value if leads are not open." );
+                    Assert.IsNotNull( highR, $"{nameof( highR )} contact resistance should not be null if leads are not open." );
+                    Assert.AreEqual( expectedValue, highR.Value, $"{nameof( highR )} contact resistance should equal the expected value if leads are not open." );
                 }
                 else
                 {
                     // if leads are open okay should be false and low and high should be higher than the limit
-                    Assert.IsFalse( okay, $"{nameof( okay )} value should not be {okay} if contact check did not fail if outcome has no value." );
+                    Assert.AreEqual( ( int ) LeadsStatusBits.Okay, leadsStatus, $"{nameof( leadsStatus )} value should not be {leadsStatus} if contact check did not fail if outcome has no value." );
 
-                    Assert.IsNotNull( low, $"{nameof( low )} contact resistance should not be null if leads are open." );
-                    Assert.IsNotNull( high, $"{nameof( high )} contact resistance should not be null if leads are open." );
-                    Assert.IsTrue( (low.Value > limit.Value) || (high.Value > limit.Value),
-                        $"{nameof( low )} ({low}) and/or {nameof( high )} ({high}) contact values should exceed the contact check threshold {limit}." );
+                    Assert.IsNotNull( lowR, $"{nameof( lowR )} contact resistance should not be null if leads are open." );
+                    Assert.IsNotNull( highR, $"{nameof( highR )} contact resistance should not be null if leads are open." );
+                    Assert.IsTrue( (lowR.Value > limit.Value) || (highR.Value > limit.Value),
+                        $"{nameof( lowR )} ({lowR}) and/or {nameof( highR )} ({highR}) contact values should exceed the contact check threshold {limit}." );
                 }
             }
             else
             {
                 // if outcome has no value., than the rest of the items should not have values
-                Assert.IsFalse( okay.HasValue, $"{nameof( okay )} should not have a value {okay} if outcome has no value." );
-                Assert.IsFalse( low.HasValue, $"{nameof( low )} contact resistance should not have a value {low} if outcome has no value." );
-                Assert.IsFalse( high.HasValue, $"{nameof( high )} contact resistance should not have a value {high} if outcome has no value." );
+                Assert.IsFalse( leadsStatus.HasValue, $"{nameof( leadsStatus )} should not have a value {leadsStatus} if outcome has no value." );
+                Assert.IsFalse( lowR.HasValue, $"{nameof( lowR )} contact resistance should not have a value {lowR} if outcome has no value." );
+                Assert.IsFalse( highR.HasValue, $"{nameof( highR )} contact resistance should not have a value {highR} if outcome has no value." );
             }
         }
     }
@@ -544,12 +560,12 @@ internal static partial class Asserts
         {
             int? contactOptions = Asserts.AssertMeterShouldReadContactCheckOptions( session );
             double? limit = Asserts.AssertMeterShouldReadContactCheckLimit( session );
-            (bool? okay, double? lowLeads, double? highLeads) = Asserts.AssertInitialResistanceShouldReadContactCheck( session );
-            Asserts.AssertContactCheckShouldConform( outcome, contactOptions, ContactCheckOptions.Initial, limit, okay, lowLeads, highLeads );
+            (int? leadsStatus, double? lowR, double? highR, double? dutR) = Asserts.AssertInitialResistanceShouldReadContactCheck( session );
+            Asserts.AssertContactCheckShouldConform( outcome, contactOptions, ContactCheckOptions.Initial, limit, leadsStatus, lowR, highR, dutR );
 
             if ( ( int ) ContactCheckOptions.Initial == (contactOptions & ( int ) ContactCheckOptions.Initial) )
             {
-                if ( okay.HasValue && !okay.Value )
+                if ( leadsStatus.HasValue && (( int ) LeadsStatusBits.Okay != leadsStatus.Value) )
                 {
                     // if contact check failed, the voltage change reading should be NaN in millivolts
                     Assert.IsNotNull( resistance, $"{nameof( resistance )} should have a value after contact check." );
@@ -580,12 +596,12 @@ internal static partial class Asserts
         {
             int? contactOptions = Asserts.AssertMeterShouldReadContactCheckOptions( session );
             double? limit = Asserts.AssertMeterShouldReadContactCheckLimit( session );
-            (bool? okay, double? lowLeads, double? highLeads) = Asserts.AssertFinalResistanceShouldReadContactCheck( session );
-            Asserts.AssertContactCheckShouldConform( outcome, contactOptions, ContactCheckOptions.Final, limit, okay, lowLeads, highLeads );
+            (int? leadsStatus, double? lowR, double? highR, double? dutR) = Asserts.AssertFinalResistanceShouldReadContactCheck( session );
+            Asserts.AssertContactCheckShouldConform( outcome, contactOptions, ContactCheckOptions.Final, limit, leadsStatus, lowR, highR, dutR );
 
             if ( ( int ) ContactCheckOptions.Final == (contactOptions & ( int ) ContactCheckOptions.Final) )
             {
-                if ( okay.HasValue && !okay.Value )
+                if ( leadsStatus.HasValue && (( int ) LeadsStatusBits.Okay != leadsStatus.Value) )
                 {
                     // if contact check failed, the voltage change reading should be NaN in millivolts
                     Assert.IsNotNull( resistance, $"{nameof( resistance )} should have a value after contact check." );
@@ -617,12 +633,12 @@ internal static partial class Asserts
             int? contactOptions = Asserts.AssertMeterShouldReadContactCheckOptions( session );
             Assert.IsNotNull( contactOptions, nameof( contactOptions ) );
             double? limit = Asserts.AssertMeterShouldReadContactCheckLimit( session );
-            (bool? okay, double? lowLeads, double? highLeads) = Asserts.AssertTraceShouldReadContactCheck( session );
-            Asserts.AssertContactCheckShouldConform( outcome, contactOptions, ContactCheckOptions.PreTrace, limit, okay, lowLeads, highLeads );
+            (int? leadsStatus, double? lowR, double? highR, double? dutR) = Asserts.AssertTraceShouldReadContactCheck( session );
+            Asserts.AssertContactCheckShouldConform( outcome, contactOptions, ContactCheckOptions.Final, limit, leadsStatus, lowR, highR, dutR );
 
             if ( ( int ) ContactCheckOptions.PreTrace == (contactOptions & ( int ) ContactCheckOptions.PreTrace) )
             {
-                if ( okay.HasValue && !okay.Value )
+                if ( leadsStatus.HasValue && (( int ) LeadsStatusBits.Okay != leadsStatus.Value) )
                 {
                     // if contact check failed, the voltage change reading should be NaN in millivolts
                     Assert.IsNotNull( voltageChange, $"{nameof( voltageChange )} should have a value after contact check." );
