@@ -4,6 +4,7 @@ using cc.isr.VI.Tsp.SessionBaseExtensions;
 using cc.isr.VI.Tsp.ParseStringExtensions;
 using cc.isr.VI.Pith;
 using cc.isr.VI.Tsp.K2600.Ttm.Syntax;
+using Serilog.Sinks.File;
 
 namespace cc.isr.VI.Tsp.K2600.Ttm.Legacy.Tests;
 
@@ -398,14 +399,38 @@ internal static partial class Asserts
             Assert.IsNotNull( outcomeValue, $"{nameof( ColdResistance.OutcomeReading )} should be not not be null if measurement was made." );
 
             Assert.IsNotNull( resistance.Resistance, $"{nameof( ColdResistance.Resistance )} should be not be null if measurement was made." );
-            bool? pass = session.QueryNullableBoolThrowIfError( $"print({resistance.EntityName}.pass) ", "Cold Resistance pass" );
-            Assert.IsNotNull( pass, $"{resistance.EntityName}.Pass should be not be null if measurement was made." );
+            int? status = ( int? ) session.QueryNullableDoubleThrowIfError( $"print({resistance.EntityName}.status) ", "Cold Resistance status" );
+            Assert.IsNotNull( status, $"{resistance.EntityName}.status should be not be null if measurement was made." );
+
+            int? passFailOutcome = ( int? ) session.QueryNullableDoubleThrowIfError( $"print({resistance.EntityName}.passFailOutcome) ", "Cold Resistance pass fail outcome" );
+            Assert.IsNotNull( passFailOutcome, $"{resistance.EntityName}.passFailOutcome should be not be null if measurement was made." );
 
             float resistanceValue = resistance.Resistance.Value;
             // if measurement was made
             float low = legacyDevice.ColdResistanceConfig.LowLimit;
             float high = legacyDevice.ColdResistanceConfig.HighLimit;
-            Assert.AreEqual( pass.Value, (resistanceValue >= low) & (resistanceValue <= high), $"resistance {resistanceValue} must be withing [{low},{high}]." );
+            if ( ( int ) PassFailBits.Unknown == passFailOutcome.Value )
+            {
+                // failed contact check.
+                Assert.AreEqual( ( int ) FirmwareOutcomes.badStatus, ( int ) FirmwareOutcomes.badStatus & outcomeValue.Value, 
+                    $"Outcome value {outcomeValue.Value} bad status bit {FirmwareOutcomes.badStatus} should be set if contact check failed." );
+            }
+            else if ( resistanceValue < low )
+            {
+                Assert.AreEqual( ( int ) PassFailBits.Low, passFailOutcome.Value,
+                    $"Pass fail value {passFailOutcome.Value} must be 'low' if resistance {resistanceValue} is lower than {low}." );
+            }
+            else if ( resistanceValue > high )
+            {
+                Assert.AreEqual( ( int ) PassFailBits.High, passFailOutcome.Value,
+                    $"Pass fail value {passFailOutcome.Value} must be 'high' if resistance {resistanceValue} is high than {high}." );
+            }
+            else
+            {
+                Assert.AreEqual( ( int ) PassFailBits.Pass, passFailOutcome.Value,
+                    $"Pass fail value {passFailOutcome.Value} must be 'pass' if resistance {resistanceValue} is within [{low},{high}]." );
+            }
+
             Assert.IsTrue( resistance.StatusReading.TryParseNullableInteger( out int? statusValue ) );
             Assert.IsNotNull( statusValue, $"status {statusValue} should not be null if measurement was made." );
             int bitValue;

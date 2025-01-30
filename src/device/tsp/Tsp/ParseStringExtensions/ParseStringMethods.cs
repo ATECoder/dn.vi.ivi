@@ -27,7 +27,7 @@ public static class ParseStringMethods
             else
             {
                 result = temp;
-                return true;
+                return false;
             }
         }
     }
@@ -49,15 +49,18 @@ public static class ParseStringMethods
         }
         else
         {
-            if ( int.TryParse( value, out int temp ) )
+            if ( int.TryParse( value,
+                System.Globalization.NumberStyles.AllowExponent | System.Globalization.NumberStyles.AllowDecimalPoint,
+                System.Globalization.CultureInfo.CurrentCulture, out int temp ) )
             {
                 result = temp;
                 return true;
             }
             else
             {
+
                 result = temp;
-                return true;
+                return false;
             }
         }
     }
@@ -84,7 +87,7 @@ public static class ParseStringMethods
             else
             {
                 result = temp;
-                return true;
+                return false;
             }
         }
     }
