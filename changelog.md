@@ -4,6 +4,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 Current overall binaries revision: 8.1.9111
 
+## [8.1.9161] - 2025-01-30
+Device Tsp: Fix parsing nullable integer by adding exponent and period.
+Legacy driver tester: Fix reading the outcome.
+
 ## [8.1.9154] - 2025-01-23
 - K2600 TTM
   - Add Contact check subsystem tests.
@@ -40,11 +44,9 @@ Resource:
 GAC Loader:
 * Update IVI to 7.2.0
 * Update GAC loaders and demo revision to 7.2
-TTMware:
-* Add derigistration method.
-VMWare Loader: 
+TTMWare Loader: 
 * Add the mesa conditional compilation constant.
-* Dix bug in reporting the deployed files folder.
+* Fix bug in reporting the deployed files folder.
 * Analyze done. add load, save, register etc. 
 * Conditionally add access function to the deploy folder.
 TTM Ware:
@@ -183,6 +185,6 @@ which has issued a defect report.
 
 &copy; 2012 Integrated Scientific Resources, Inc. All rights reserved.
 
-[8.1.9119]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9161]: https://www.github.com/atecoder/dn.vi.ivi
 [vs.VI]: https://www.github.com/atecoder/dn.vi.ivi
 [vs.Visa]: https://bitbucket.org/davidhary/vs.io.visa

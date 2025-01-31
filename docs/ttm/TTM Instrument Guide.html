@@ -22,49 +22,55 @@ td, h1, h2, h3, h4, h5, p, ul, ol, li {
 <li><a href="#Preparations">Preparations</a>
 <ul>
 <li><a href="#Wiring">Wiring the Device Under Test</a></li>
-<li><a href="#Remote-Local">Taking the instrument from Remote to Local Mode</a></li>
+<li><a href="#Remote_Local">Taking the instrument from Remote to Local Mode</a></li>
 <li><a href="#Starting">Starting TTM from the Front Panel</a></li>
 <li><a href="#Exiting">Exiting from TTM Front Panel Mode</a></li>
-<li><a href="#Main-Menu">Setup of Measurement Parameters</a>
+<li><a href="#Main_menu">Setup of Measurement Parameters</a>
 <ul>
-<li><a href="#Meter-Menu">Meter Menu</a>
+<li><a href="#meter_menu">Meter Menu</a>
 <ul>
-<li><a href="#Channel-Menu">Channel Menu</a></li>
-<li><a href="#Driver-Menu">Driver Menu</a></li>
-<li><a href="#Leads-Menu">Leads Menu</a></li>
-<li><a href="#Contacts-Check-Menu">Contacts Checks Menu</a></li>
-<li><a href="#Open_Source_Lead_Limit_Menu">Open Source Lead Limit Menu</a></li>
+<li><a href="#channel_menu">Channel Menu</a></li>
+<li><a href="#driver_menu">Driver Menu</a></li>
+<li><a href="#leads_menu">Leads Menu</a></li>
+<li><a href="#contacts_check_menu">Contacts Checks Menu</a></li>
+<li><a href="#open_source_lead_limit_menu">Open Source Lead Limit Menu</a>
+<ul>
+<li><a href="#Contact_Check_Algorithm">Contact Check Algorithm</a></li>
+<li><a href="#Contact_Check_DUT_Voltage">Contact Check DUT Voltage</a></li>
 </ul>
 </li>
-<li><a href="#Resistance-Menu">Resistance Menu</a>
-<ul>
-<li><a href="#Source-Menu">Source Menu</a></li>
-<li><a href="#Level-Menu">Level Menu</a></li>
-<li><a href="#Limit-Menu">Limit Menu</a>
--<a href="#Voltage-Source-Current-Limit">Voltage Source Current Limit</a>
--<a href="#Current-Source-Voltage-Limit">Current Source Voltage Limit</a></li>
-<li><a href="#Aperture-Menu">Aperture Menu</a></li>
-<li><a href="#Limits-Menu">Limits Menu</a>
-<ul>
-<li><a href="#Low_Limit-Menu">Low Limit Menu</a></li>
-<li><a href="#High_Limit-Menu">High Limit Menu</a></li>
+<li><a href="#Meter_Shunts_Menu">Shunts Menu</a></li>
 </ul>
 </li>
-<li><a href="#Status-Menu">Status Menu</a></li>
+<li><a href="#Resistance_menu">Resistance Menu</a>
+<ul>
+<li><a href="#Source_menu">Source Menu</a></li>
+<li><a href="#Level_menu">Level Menu</a></li>
+<li><a href="#Limit_menu">Limit Menu</a>
+-<a href="#voltage_source_current_limit">Voltage Source Current Limit</a>
+-<a href="#current_source_voltage_limit">Current Source Voltage Limit</a></li>
+<li><a href="#Aperture_menu">Aperture Menu</a></li>
+<li><a href="#Limits_menu">Limits Menu</a>
+<ul>
+<li><a href="#Low_Limit_menu">Low Limit Menu</a></li>
+<li><a href="#High_Limit_menu">High Limit Menu</a></li>
 </ul>
 </li>
-<li><a href="#Thermal-Transient-Menu">Thermal Transient Menu</a>
+<li><a href="#Status_menu">Status Menu</a></li>
+</ul>
+</li>
+<li><a href="#Thermal-Transient_menu">Thermal Transient Menu</a>
 <ul>
-<li><a href="#Source_Current-Menu">Source Current Menu</a></li>
-<li><a href="#Maximum_Voltage-Menu">Maximum Voltage Menu</a></li>
-<li><a href="#Transient_Aperture-Menu">Thermal Transient Aperture Menu</a></li>
-<li><a href="#Transient_Points-Menu">Thermal Transient Points Menu</a></li>
-<li><a href="#Transient_Period-Menu">Thermal Transient Period Menu</a></li>
-<li><a href="#Post_Transient_Delay-Menu">Post Thermal Transient Delay Menu</a></li>
-<li><a href="#Transient_Limits-Menu">Thermal Transient Limits Menu</a>
+<li><a href="#Source_Current_menu">Source Current Menu</a></li>
+<li><a href="#Maximum_Voltage_menu">Maximum Voltage Menu</a></li>
+<li><a href="#Transient_Aperture_menu">Thermal Transient Aperture Menu</a></li>
+<li><a href="#Transient_Points_menu">Thermal Transient Points Menu</a></li>
+<li><a href="#Transient_Period_menu">Thermal Transient Period Menu</a></li>
+<li><a href="#Post_Transient_Delay_menu">Post Thermal Transient Delay Menu</a></li>
+<li><a href="#Transient_Limits_menu">Thermal Transient Limits Menu</a>
 <ul>
-<li><a href="#Transient_Low_Limit-Menu">Thermal Transient Low Limit Menu</a></li>
-<li><a href="#Transient_High_LImit-Menu">Thermal Transient High Limit Menu</a></li>
+<li><a href="#Transient_Low_Limit_menu">Thermal Transient Low Limit Menu</a></li>
+<li><a href="#Transient_High_LImit_menu">Thermal Transient High Limit Menu</a></li>
 </ul>
 </li>
 </ul>
@@ -111,7 +117,7 @@ td, h1, h2, h3, h4, h5, p, ul, ol, li {
 <h3 id="wiring-the-device-under-test">Wiring the Device Under Test</h3>
 <p>The device under test must be connected to the TTM Instrument using a <a href="https://en.wikipedia.org/wiki/Four-terminal_sensing">Four-Terminal Sensing</a> circuit:</p>
 <p><img src="KelvinDiagram.jpg" alt="" /></p>
-<p><a name="Remote-Local"></a></p>
+<p><a name="Remote_Local"></a></p>
 <h3 id="taking-the-instrument-from-remote-to-local-mode">Taking the instrument from Remote to Local Mode</h3>
 <p>When controlling the instrument from an application program the instrument goes into Remote mode.</p>
 <p>Pressing the <code>EXIT</code> button on the instrument panel changes the instrument access mode to local where the instrument is controlled from the front panel rather than from an external program.</p>
@@ -175,10 +181,10 @@ SrcA:+000.0000mV LimA:1.00000 A
 <p><a name="Exiting"></a></p>
 <h3 id="exiting-from-ttm-front-panel-mode">Exiting from TTM Front Panel Mode</h3>
 <p>Click the <code>RUN</code> button to exit from the run loop.</p>
-<p><a name="Main-Menu"></a></p>
+<p><a name="Main_menu"></a></p>
 <h2 id="setup-of-measurement-parameters">Setup of Measurement Parameters</h2>
-<p>Press <code>MENU</code> from the instrument panel to configure the instrument. This opens the TTM <a href="#Main-menu">Main Menu</a>. The font panel displays
-<code>TTM Main Menu</code> with the <a href="#Meter-Menu">Meter</a> option blinking:</p>
+<p>Press <code>MENU</code> from the instrument panel to configure the instrument. This opens the TTM <a href="#Main_menu">Main Menu</a>. The font panel displays
+<code>TTM Main Menu</code> with the <a href="#meter_menu">Meter</a> option blinking:</p>
 <table>
 <thead>
 <tr>
@@ -188,16 +194,16 @@ SrcA:+000.0000mV LimA:1.00000 A
 </thead>
 <tbody>
 <tr>
-<td><a href="#Meter-Menu">Meter</a></td>
-<td>Selects the <a href="#Meter-Menu">Meter</a> Menu</td>
+<td><a href="#meter_menu">Meter</a></td>
+<td>Selects the <a href="#meter_menu">Meter</a> Menu</td>
 </tr>
 <tr>
-<td><a href="#Resistance-Menu">Resistance</a></td>
-<td>Selects the <a href="#Resistance-Menu">Resistance</a> Menu</td>
+<td><a href="#Resistance_menu">Resistance</a></td>
+<td>Selects the <a href="#Resistance_menu">Resistance</a> Menu</td>
 </tr>
 <tr>
-<td><a href="#Thermal-Transient-Menu">Transient</a></td>
-<td>Selects the Thermal <a href="#Thermal-Transient-Menu">Transient</a> Menu</td>
+<td><a href="#Thermal-Transient_menu">Transient</a></td>
+<td>Selects the Thermal <a href="#Thermal-Transient_menu">Transient</a> Menu</td>
 </tr>
 </tbody>
 </table>
@@ -209,9 +215,9 @@ SrcA:+000.0000mV LimA:1.00000 A
 </ul>
 <h3 id="parameter-ranges">Parameter Ranges</h3>
 <p>See <a href="#Specifications">Specifications</a> for parameter ranges.</p>
-<p><a name="Meter-Menu"></a></p>
+<p><a name="meter_menu"></a></p>
 <h3 id="meter-menu">Meter Menu</h3>
-<p>Selecting <em>Meter</em> from the <a href="#Main-Menu">Main Menu</a> displays the <a href="#Meter-Menu">Meter Menu</a>. The front panel displays <strong>Meter</strong> with the following options:</p>
+<p>Selecting <em>Meter</em> from the <a href="#Main_menu">Main Menu</a> displays the <a href="#meter_menu">Meter Menu</a>. The front panel displays <strong>Meter</strong> with the following options:</p>
 <table>
 <thead>
 <tr>
@@ -221,60 +227,60 @@ SrcA:+000.0000mV LimA:1.00000 A
 </thead>
 <tbody>
 <tr>
-<td><a href="#Channel-Menu">Channel</a></td>
+<td><a href="#channel_menu">Channel</a></td>
 <td>Selects the source channel (only for meters with dual source channels )</td>
 </tr>
 <tr>
-<td><a href="#Driver-Menu">Driver</a></td>
+<td><a href="#driver_menu">Driver</a></td>
 <td>Selects compatibility with the legacy TTM drivers.</td>
 </tr>
 <tr>
-<td><a href="#Leads-Menu">Leads</a></td>
+<td><a href="#leads_menu">Leads</a></td>
 <td>Sets the leads resistance for contact check.</td>
 </tr>
 <tr>
-<td><a href="#Checks-Menu">Checks</a></td>
+<td><a href="#Checks_menu">Checks</a></td>
 <td>Sets the contact checks options.</td>
 </tr>
 </tbody>
 </table>
-<p><a name="Channel-Menu"></a></p>
+<p><a name="channel_menu"></a></p>
 <h4 id="channel-menu">Channel Menu</h4>
 <p>The channel menu selects either <code>smua</code> or <code>smub</code> as the active source meter for instruments with dual source meter units. This setting is enabled (turned on) only for instruments with a two source measure units.</p>
-<p>Selecting <em>Channel</em> from the <a href="#Meter-Menu">Meter Menu</a> displays the <a href="#Channel-Menu">Channel Menu</a> showing the current value, <code>smua</code> or <code>smub</code> (<code>smua</code> in this case):</p>
+<p>Selecting <em>Channel</em> from the <a href="#meter_menu">Meter Menu</a> displays the <a href="#channel_menu">Channel Menu</a> showing the current value, <code>smua</code> or <code>smub</code> (<code>smua</code> in this case):</p>
 <ul>
 <li>Title: <strong>SMU: smua</strong>.</li>
 <li>Options: <strong>smua</strong> <strong>smub</strong>.</li>
 </ul>
 <p>Navigating to <code>smub</code> and pressing the <em>Navigation Wheel</em> or <code>ENTER</code> selects the <code>smub</code> channel.</p>
-<p><a name="Driver-Menu"></a></p>
+<p><a name="driver_menu"></a></p>
 <h4 id="driver-menu">Driver Menu</h4>
-<p>Selecting <em>Driver</em> from the <a href="#Meter-Menu">Meter Menu</a> displays the <a href="#Driver-Menu">Driver Menu</a>:</p>
+<p>Selecting <em>Driver</em> from the <a href="#meter_menu">Meter Menu</a> displays the <a href="#driver_menu">Driver Menu</a>:</p>
 <ul>
-<li>Title: <strong>01</strong>.</li>
-<li>Description: <em>Legacy (1) or new (0)</em>.</li>
+<li>Title: <strong>01</strong></li>
+<li>Description: <em>Set to 1 for legacy driver</em></li>
 </ul>
 <p>Moving the cursor over the 1, the number blinks. Pressing the <em>Wheel</em> or <code>ENTER</code> and turning the <em>Wheel</em> changes the value between 0 and 1. Pressing the <em>Wheel</em> or <code>ENTER</code> selects the new value. Pressing <code>EXIT</code> cancels the selection.</p>
 <p>Set the driver option to <code>1</code> if using the meter with the legacy Visual Basic Driver that supported versions 2.3.4009 or earlier of the TTM Meter as used by the ISR TTM Driver version 2.3.4063. Set the value to <code>0</code> to use the Meter with software that supports the new features of the firmware.</p>
-<p><a name="Leads-Menu"></a></p>
+<p><a name="leads_menu"></a></p>
 <h4 id="leads-menu">Leads Menu</h4>
-<p>The <a href="#Leads-Menu">Leads Menu</a> sets the maximum allowed open leads resistance. The measurement will be aborted after a contact check if leads resistance exceeds above this value.</p>
+<p>The <a href="#leads_menu">Leads Menu</a> sets the maximum allowed open leads resistance. The measurement will be aborted after a contact check if leads resistance exceeds above this value.</p>
 <p>The contact check function prevents measurements that may be in error due to excessive resistance in the force or sense leads when making remotely sensed (Kelvin) measurements. Potential sources for this resistance include poor contact at the device under test (DUT), failing relay contacts on a switching card or wires that are too long or thin.</p>
 <p>The contact check function also detects an open circuit that may occur when a four-point probe is misplaced or misaligned. This relationship is shown schematically in the figure below, where R<sub>C</sub> is the resistance of the mechanical contact at the DUT, and R<sub>S</sub> is the series resistance of cables and any series relays.</p>
 <p>The leads contacts are checked if the maximum leads resistance (see below) is set to a non-zero positive value. Contacts are measured before taking the initial resistance measurement. The measurement is aborted and the lead resistances are displayed if the measured lead resistances exceeds the maximum limit.</p>
-<p>Check <a href="#Open_Source_Lead_Limit_Menu">Open Source Lead Limit Menu</a> for a workaround that is aimed to overcome an issue with the standard contact check.</p>
+<p>Check <a href="#open_source_lead_limit_menu">Open Source Lead Limit Menu</a> for a workaround that is aimed to overcome an issue with the standard contact check.</p>
 <p><img src="ContactCheckDiagram.png" alt="" /></p>
 <p>To enable and set the maximum allowed leads resistance:</p>
-<p>Selecting <em>Leads</em> from the <a href="#Meter-Menu">Meter Menu</a> displays the <a href="#Leads-Menu">Leads Menu</a> displaying the maximum resistance beyond which the leads are taken as open. The resistance is in Ohms between 10 and 999:</p>
+<p>Selecting <em>Leads</em> from the <a href="#meter_menu">Meter Menu</a> displays the <a href="#leads_menu">Leads Menu</a> displaying the maximum resistance beyond which the leads are taken as open. The resistance is in Ohms between 10 and 999:</p>
 <ul>
-<li>Title: <strong>100 Ω</strong>.</li>
-<li>Description: <em>Max Leads R</em>.</li>
+<li>Title: <strong>100 Ω</strong></li>
+<li>Description: <em>Max Leads Resistance</em></li>
 </ul>
 <p>The range is: 10 - 999.</p>
 <p>Moving the cursor over the digits, the digit blinks. Pressing the <em>Wheel</em> or <code>ENTER</code> and turning the <em>Wheel</em> changes the digit between 0 and 9. Pressing the <em>Wheel</em> or <code>ENTER</code> selects the new value.</p>
-<p><a name="Contacts-Check-Menu"></a></p>
+<p><a name="contacts_check_menu"></a></p>
 <h4 id="contacts-check-menu">Contacts Check Menu</h4>
-<p>Selecting <em>Checks</em> from the <a href="#Meter-Menu">Meter Menu</a> displays the <a href="#Checks-Menu">Checks Menu</a>. This menu selects when contact checks are to be performed. This is done by setting a bit value that toggles the contact check for Initial Resistance (IR) (binary 001), Thermal Transient (TR) (binary 010) or Final Resistance (FR) (binary 100). For example, setting the value to 5 (binary 101), enables contact checks before the Initial and Final Resistance measurements whereas setting the value to 7 (binary 111 or 1+2+4), enables contact checks before the initial, final, and thermal transient measurements.</p>
+<p>Selecting <em>Checks</em> from the <a href="#meter_menu">Meter Menu</a> displays the <a href="#Checks_menu">Checks Menu</a>. This menu selects when contact checks are to be performed. This is done by setting a bit value that toggles the contact check for Initial Resistance (IR) (binary 001), Thermal Transient (TR) (binary 010) or Final Resistance (FR) (binary 100). For example, setting the value to 5 (binary 101), enables contact checks before the Initial and Final Resistance measurements whereas setting the value to 7 (binary 111 or 1+2+4), enables contact checks before the initial, final, and thermal transient measurements.</p>
 <table>
 <thead>
 <tr>
@@ -310,28 +316,139 @@ SrcA:+000.0000mV LimA:1.00000 A
 </tbody>
 </table>
 <ul>
-<li>Title: <strong>01</strong>.</li>
-<li>Description: <em>Pre IR[1]+TR[2]+FR[3]</em>.</li>
+<li>Title: <strong>01</strong></li>
+<li>Description: <em>Pre-IR[1]+TR[2]+FR[3]</em></li>
 </ul>
 <p>The expected range are: 1, 3, 5, 7.</p>
 <p>Moving the cursor over the digits, the digit blinks and changes with the rotation of the <em>Navigation Wheel</em> the number blinks. Pressing the <em>Wheel</em> or <code>ENTER</code> and turning the <em>Wheel</em> changes the digit between 0 and 9. Pressing the <em>Wheel</em> or <code>ENTER</code> selects the new value.</p>
-<p><a name="Open_Source_Lead_Limit_Menu"></a></p>
+<p><a name="open_source_lead_limit_menu"></a></p>
 <h4 id="open-source-lead-limit-menu">Open Source Lead Limit Menu</h4>
-<p>The <a href="#Open_Source_Lead_Limit_Menu">Open Source Lead Limit Menu</a> sets the maximum DUT resistance. This value is used as a workaround for the instrument failure to detect an open lead if either the low or high source lead is open. The TTM firmware add a resistance measurement after conducting the standard contact check. This measurement yields a high resistance if a source lead is open. Thus, this measurement can be used to detect an open source lead.</p>
-<p>The contact check function prevents measurements that may be in error due to excessive resistance in the force or sense leads when making remotely sensed (Kelvin) measurements. Potential sources for this resistance include poor contact at the device under test (DUT), failing relay contacts on a switching card or wires that are too long or thin.</p>
-<p>The contact check function also detects an open circuit that may occur when a four-point probe is misplaced or misaligned. This relationship is shown schematically in the figure below, where R<sub>C</sub> is the resistance of the mechanical contact at the DUT, and R<sub>S</sub> is the series resistance of cables and any series relays.</p>
-<p>The leads contacts are checked if the maximum leads resistance (see below) is set to a non-zero positive value. Contacts are measured before taking the initial resistance measurement. The measurement is aborted and the lead resistances are displayed if the measured lead resistances exceeds the maximum limit.</p>
+<p>The <a href="#open_source_lead_limit_menu">Open Source Lead Limit Menu</a> sets the maximum DUT resistance. This value is used by the modified <a href="#Contact_Check_Algorithm">Contact Check Algorithm</a> to determine if either one of the source terminals is open of if the DUT resistance is so high that the DUT leads are taken to be open.</p>
+<p>Selecting <em>Limit</em> from the <a href="#meter_menu">Meter Menu</a> displays the <a href="#open_source_lead_limit_menu">Open Source Lead Limit Menu</a> displaying the maximum resistance beyond which a source lead is taken as open. The resistance is in Ohms between 10 and 999999:</p>
 <p>To set the maximum allowed DUT resistance:</p>
-<p>Selecting <em>Limit</em> from the <a href="#Meter-Menu">Meter Menu</a> displays the <a href="#Open_Source_Lead_Limit_Menu">Open Source Lead Limit Menu</a> displaying the maximum resistance beyond which a source lead is taken as open. The resistance is in Ohms between 10 and 999999:</p>
 <ul>
-<li>Title: <strong>1000 Ω</strong>.</li>
+<li>Title: <strong>100.000E+1 Ω</strong>.</li>
 <li>Description: <em>Max DUT R</em>.</li>
 </ul>
 <p>The range is: 10 - 999999.</p>
 <p>Moving the cursor over the digits, the digit blinks. Pressing the <em>Wheel</em> or <code>ENTER</code> and turning the <em>Wheel</em> changes the digit between 0 and 9. Pressing the <em>Wheel</em> or <code>ENTER</code> selects the new value.</p>
-<p><a name="Resistance-Menu"></a></p>
-<h3 id="resistance-menu">Resistance Menu</h3>
-<p>Selecting <em>Resistance</em> from the <a href="#Main-Menu">Main Menu</a> displays the <a href="#Resistance-Menu">Resistance Menu</a>, which is used to set the parameters for the initial and final cold resistance measurements. The front panel displays <strong>Cold Resistance</strong> with the following options:</p>
+<p><a name="Contact_Check_Algorithm"></a></p>
+<h5 id="contact-check-algorithm">Contact Check Algorithm</h5>
+<p>The contact check function prevents measurements that may be in error due to excessive resistance in the force or sense leads when making remotely sensed (Kelvin) measurements. Potential sources for this resistance include a poor contact at the device under test (DUT), a failing relay contacts on a switching card or wires that are too long or thin. The contact check function also detects an open circuit that may occur when a four-point probe is misplaced or misaligned. This relationship is shown schematically in the figure below, where R<sub>C</sub> is the resistance of the mechanical contact at the DUT, and R<sub>S</sub> is the series resistance of cables and any series relays.</p>
+<p><img src="ContactCheckDiagram.png" alt="" /></p>
+<p>The leads contacts are checked if the maximum leads resistance (see below) is set to a non-zero positive value. Contacts are measured before taking the initial resistance measurement. The measurement is aborted and the lead resistances are displayed if the measured lead resistances exceeds the maximum limit.</p>
+<p>A custom contact check algorithm is implemented in the TTM firmware as a workaround for the instrument failure to detect an open lead if either the low or high source lead is open.</p>
+<p>The custom algorithm measured the DUT resistance measurement after conducting the standard contact check if this check did find open contacts. This measurement yields a high resistance if a source lead is open or if the DUT leads are open. Thus, this measurement can be used to detect an open source lead.</p>
+<p>To this end, the custom algorithm work as follows:</p>
+<ol>
+<li>An <em>openLeadsStatus</em> value is set to <em>unknown</em> when the measurements are initiated.</li>
+<li>The custom contact check method is then called before each of the initial resistance, thermal transient and final resistance measurements.</li>
+<li>The nominal contact check method is called to detect an open contact.</li>
+<li>The algorithm then reads the lead resistances, <em>lowLeadsR</em> and <em>highLeadsR</em> as reported by the nominal contact check algorithm.</li>
+<li>If the contact check fails, the firmware sets the <em>openLeadsStatus</em> to either <em>low</em> if the low leads resistance exceeds the high leads resistance or to <em>high</em> if the low leads resistance is
+lower than the high leads resistance.</li>
+<li>If the nominal contact check did not fail then the custom algorithm kicks in.</li>
+<li>If the <em>Limit</em> set in the <a href="#open_source_lead_limit_menu">Open Source Lead Limit Menu</a> is zero, the algorithm sets a <em>dutR</em> value to zero.</li>
+<li>If the <em>Limit</em> set in the <a href="#open_source_lead_limit_menu">Open Source Lead Limit Menu</a> is positive, <em>dutR</em> is set to the measured resistances using a current source of 100µA of 0.1 power line cycles with a voltage limit of one volt (most likely leading to taking the measurement under a compliance state, which is fine). The measured <em>dut_R</em> is not corrected for the presence of shunt resistors, which means that the actual open DUT value is likely higher.</li>
+<li>If <em>dutR</em> exceeds the <em>Limit</em>, the <em>openLeadsStatus</em> is set to <em>openDutLeads</em>.</li>
+<li>If the algorithm found open leads, the measured resistance of the TTM entity, either <em>Initial Reisstance</em>, <em>Final Resistance</em> or _Trace_initial, is the to the <em>NaN</em> (9.91e+37).</li>
+<li>If the algorithm found an open DUT, the measured resistance of the TTM entity, either <em>Initial Reisstance</em>, <em>Final Resistance</em> or _Trace_initial, is the to the measured <em>dutR</em>.</li>
+</ol>
+<p><a name="Contact_Check_DUT_Voltage"></a></p>
+<h5 id="contact-check-dut-voltage">Contact Check DUT Voltage</h5>
+<p>Testing for open contacts is done by forcing a small 300µA current into the sense lead, amplifying the voltage drop via a high impedance amplifier and reading this voltage by the instrument voltmeter. A significant voltage might develop across the DUT leads if the DUT leads are open during the contact check.</p>
+<p>For instance the following values where measured:</p>
+<table>
+<thead>
+<tr>
+<th>}DUT</th>
+<th>Source Low</th>
+<th>Sense Low</th>
+<th>Sense High</th>
+<th>Source High</th>
+<th>Max Volts</th>
+<th>Min Volts</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Open</td>
+<td>Wired</td>
+<td>Wired</td>
+<td>Wired</td>
+<td>Wired</td>
+<td>0.3</td>
+<td>-0.64</td>
+</tr>
+<tr>
+<td>Open</td>
+<td>Wired</td>
+<td>Open</td>
+<td>Wired</td>
+<td>Wired</td>
+<td>0.32</td>
+<td>-0.22</td>
+</tr>
+<tr>
+<td>Open</td>
+<td>Open</td>
+<td>Wired</td>
+<td>Wired</td>
+<td>Wired</td>
+<td>2.81</td>
+<td>-5.39</td>
+</tr>
+<tr>
+<td>3.3KΩ</td>
+<td>Open</td>
+<td>Wired</td>
+<td>Wired</td>
+<td>Wired</td>
+<td>1.07</td>
+<td>-1.15</td>
+</tr>
+<tr>
+<td>Open</td>
+<td>Wired</td>
+<td>Open</td>
+<td>Open</td>
+<td>Wired</td>
+<td>0.12</td>
+<td>-0.16</td>
+</tr>
+<tr>
+<td>Open</td>
+<td>Open</td>
+<td>Wired</td>
+<td>Wired</td>
+<td>Open</td>
+<td>1.29</td>
+<td>-2.73</td>
+</tr>
+<tr>
+<td>3.3KΩ</td>
+<td>Open</td>
+<td>Wired</td>
+<td>Wired</td>
+<td>Open</td>
+<td>1.09</td>
+<td>-1.33</td>
+</tr>
+<tr>
+<td>~2Ω</td>
+<td>any</td>
+<td>any</td>
+<td>any</td>
+<td>any</td>
+<td>&lt; 50mv</td>
+<td>&lt; 50mv</td>
+</tr>
+</tbody>
+</table>
+<p>Apparently, the contact check circuit current runs through the device under test causing a significant voltage drop if the DUT resistance is high or open. Shunt resistors of 3.3KΩ were wired across both the source and sense terminal to limit the voltage across an open device under test.</p>
+<p><a name="Meter_Shunts_Menu"></a></p>
+<h3 id="shunts-menu">Shunts Menu</h3>
+<p>Selecting <em>Shunts</em> from the <a href="#meter_menu">Meter Menu</a> displays the <a href="#Meter_Shunts_Menu">Shunts Menu</a>. This menu sets the values of the shunt resistances that are placed across the source and sense leads. The value is set to 0 if no shunt resistances are used. The front panel displays <strong>Shunts</strong> with the following options:</p>
 <table>
 <thead>
 <tr>
@@ -341,34 +458,76 @@ SrcA:+000.0000mV LimA:1.00000 A
 </thead>
 <tbody>
 <tr>
-<td><a href="#Source-Menu">Source</a></td>
-<td>Selects the source modality as current or voltage</td>
+<td>Source</td>
+<td>Selects the <a href="#Source_Shunt_menu">Source Shunt Menu</a></td>
 </tr>
 <tr>
-<td><a href="#Level-Menu">Level</a></td>
-<td>Selects source level</td>
-</tr>
-<tr>
-<td><a href="#Limit-Menu">Limit</a></td>
-<td>Sets the sense limit</td>
-</tr>
-<tr>
-<td><a href="#Aperture-Menu">Aperture</a></td>
-<td>Sets the duration that the source is applied to the device under test</td>
-</tr>
-<tr>
-<td><a href="#Limits-Menu">Limits</a></td>
-<td>Selects the <a href="#Limits-Menu">Limits</a>.</td>
-</tr>
-<tr>
-<td><a href="#Status-Menu">Status</a></td>
-<td>Selects the <a href="#Status-Menu">Status</a> condition menu.</td>
+<td>Sense</td>
+<td>Selects the <a href="#Sense_Shunt_menu">Sense Shunt Menu</a></td>
 </tr>
 </tbody>
 </table>
-<p><a name="Source-Menu"></a></p>
+<p>Moving the cursor over an option and pressing the <em>Wheel</em> or <code>ENTER</code> selects this option. Pressing <code>EXIT</code> returns to the <a href="#meter_menu">Meter Menu</a>.</p>
+<p>The shunt resistances are used to limit the voltage drop across the DUT in case the contact check fails and the contact check current flows through the DUT.</p>
+<p>The shunt resistances thus entered are used to correct the measured resistance such that the measured resistance equals the corrected resistance in parallel with the effective shunt, which is the parallel of the two shunt resistances. The shunt resistances are ignored if set to zero. The resistance range is 0 to 9999 ohms.</p>
+<p><a name="Source_Sunt_Menu"></a></p>
+<h5 id="source-shunt-menu">Source Shunt Menu</h5>
+<p>Selecting <em>Source</em> from the <a href="#Meter_Shunts_Menu">Shunts Menu</a> displays the <a href="#Source_Shunt_Menu">Source Shunt Menu</a>. This menu sets the resistance of the shunt resistor that is connected across the source terminals of the instrument:</p>
+<ul>
+<li>Title: <strong>03300 Ω</strong>.</li>
+<li>Description: <em>Source shunt or 0 if none</em></li>
+</ul>
+<p>The range is: 0 - 9999 Ω.</p>
+<p>Moving the cursor over the digits, the digit blinks and changes with the rotation of the <em>Navigation Wheel</em> the number blinks. Pressing the <em>Wheel</em> or <code>ENTER</code> and turning the <em>Wheel</em> changes the digit between 0 and 9. Pressing the <em>Wheel</em> or <code>ENTER</code> selects the new value.</p>
+<p><a name="Sense_Sunt_Menu"></a></p>
+<h5 id="sense-shunt-menu">Sense Shunt Menu</h5>
+<p>Selecting <em>Sense</em> from the <a href="#Meter_Shunts_Menu">Shunts Menu</a> displays the <a href="#Sense_Shunt_Menu">Sense Shunt Menu</a>. This menu sets the resistance of the shunt resistor that is connected across the Sense terminals of the instrument:</p>
+<ul>
+<li>Title: <strong>03300 Ω</strong>.</li>
+<li>Description: <em>Sense shunt or 0 if none</em></li>
+</ul>
+<p>The range is: 0 - 9999 Ω.</p>
+<p>Moving the cursor over the digits, the digit blinks and changes with the rotation of the <em>Navigation Wheel</em> the number blinks. Pressing the <em>Wheel</em> or <code>ENTER</code> and turning the <em>Wheel</em> changes the digit between 0 and 9. Pressing the <em>Wheel</em> or <code>ENTER</code> selects the new value.</p>
+<p><a name="Resistance_menu"></a></p>
+<h3 id="resistance-menu">Resistance Menu</h3>
+<p>Selecting <em>Resistance</em> from the <a href="#Main_menu">Main Menu</a> displays the <a href="#Resistance_menu">Resistance Menu</a>, which is used to set the parameters for the initial and final cold resistance measurements. The front panel displays <strong>Cold Resistance</strong> with the following options:</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#Source_menu">Source</a></td>
+<td>Selects the source modality as current or voltage</td>
+</tr>
+<tr>
+<td><a href="#Level_menu">Level</a></td>
+<td>Selects source level</td>
+</tr>
+<tr>
+<td><a href="#Limit_menu">Limit</a></td>
+<td>Sets the sense limit</td>
+</tr>
+<tr>
+<td><a href="#Aperture_menu">Aperture</a></td>
+<td>Sets the duration that the source is applied to the device under test</td>
+</tr>
+<tr>
+<td><a href="#Limits_menu">Limits</a></td>
+<td>Selects the <a href="#Limits_menu">Limits</a>.</td>
+</tr>
+<tr>
+<td><a href="#Status_menu">Status</a></td>
+<td>Selects the <a href="#Status_menu">Status</a> condition menu.</td>
+</tr>
+</tbody>
+</table>
+<p><a name="Source_menu"></a></p>
 <h4 id="source-menu">Source Menu</h4>
-<p>Selecting <em>Source</em> from the <a href="#Resistance-Menu">Resistance Menu</a> displays the <a href="#Source-Menu">Source Menu</a>. The front panel displays <strong>Source: Voltage</strong> or <strong>Source: Current</strong> with the following options:</p>
+<p>Selecting <em>Source</em> from the <a href="#Resistance_menu">Resistance Menu</a> displays the <a href="#Source_menu">Source Menu</a>. The front panel displays <strong>Source: Voltage</strong> or <strong>Source: Current</strong> with the following options:</p>
 <table>
 <thead>
 <tr>
@@ -388,11 +547,11 @@ SrcA:+000.0000mV LimA:1.00000 A
 </tbody>
 </table>
 <p>Either a Voltage or a Current source can be selected to force voltage or current, respectively for measuring the cold resistance.</p>
-<p>Moving the cursor over an option and pressing the <em>Wheel</em> or <code>ENTER</code> selects this option. Pressing <code>EXIT</code> returns to the <a href="#Resistance-Menu">Resistance Menu</a>.</p>
-<p><a name="Level-Menu"></a></p>
+<p>Moving the cursor over an option and pressing the <em>Wheel</em> or <code>ENTER</code> selects this option. Pressing <code>EXIT</code> returns to the <a href="#Resistance_menu">Resistance Menu</a>.</p>
+<p><a name="Level_menu"></a></p>
 <h4 id="level-menu">Level Menu</h4>
-<p>Selecting <em>Level</em> from the <a href="#Resistance-Menu">Resistance Menu</a> displays the <a href="#Level-Menu">Level Menu</a>. This menu sets the level of the source modality. The selected level is forced by the TTM instrument onto (Voltage) or through (Current) the bridge-wire when measuring the bridge-wire resistance. This forcing level must be small so as not to trip or excessively heat the bridge-wire.</p>
-<p>The display depends on the <a href="#Source-Menu">Source Menu</a> option. For <em>Voltage</em> the display is:</p>
+<p>Selecting <em>Level</em> from the <a href="#Resistance_menu">Resistance Menu</a> displays the <a href="#Level_menu">Level Menu</a>. This menu sets the level of the source modality. The selected level is forced by the TTM instrument onto (Voltage) or through (Current) the bridge-wire when measuring the bridge-wire resistance. This forcing level must be small so as not to trip or excessively heat the bridge-wire.</p>
+<p>The display depends on the <a href="#Source_menu">Source Menu</a> option. For <em>Voltage</em> the display is:</p>
 <ul>
 <li>Title: <strong>0010 mV</strong>.</li>
 <li>Description: <em>Source Voltage</em>.</li>
@@ -405,10 +564,10 @@ SrcA:+000.0000mV LimA:1.00000 A
 </ul>
 <p>The range is: 1 - 50 mA</p>
 <p>Moving the cursor over the digits, the digit blinks and changes with the rotation of the <em>Navigation Wheel</em> the number blinks. Pressing the <em>Wheel</em> or <code>ENTER</code> and turning the <em>Wheel</em> changes the digit between 0 and 9. Pressing the <em>Wheel</em> or <code>ENTER</code> selects the new value.</p>
-<p><a name="Limit-Menu"></a></p>
+<p><a name="Limit_menu"></a></p>
 <h4 id="limit-menu">Limit Menu</h4>
-<p>Selecting <em>Limit</em> from the <a href="#Resistance-Menu">Resistance Menu</a> displays the <a href="#Limit-Menu">Limit Menu</a>. This menu sets the Limit of the sense modality. The display depends on the <a href="#Source-Menu">Source Menu</a> option.</p>
-<p><a name="Voltage-Source-Current-Limit"></a></p>
+<p>Selecting <em>Limit</em> from the <a href="#Resistance_menu">Resistance Menu</a> displays the <a href="#Limit_menu">Limit Menu</a>. This menu sets the Limit of the sense modality. The display depends on the <a href="#Source_menu">Source Menu</a> option.</p>
+<p><a name="voltage_source_current_limit"></a></p>
 <h5 id="voltage-source-current-limit">Voltage Source Current Limit</h5>
 <p>For <em>Voltage</em> the display is:</p>
 <ul>
@@ -416,8 +575,8 @@ SrcA:+000.0000mV LimA:1.00000 A
 <li>Description: <em>Current Limit</em>.</li>
 </ul>
 <p>The range is: 1 - 50 mA</p>
-<p>The <a href="#Voltage-Source-Current-Limit">Voltage Source Current Limit</a> is the highest current that the instrument would allow to flow through the bridge-wire when forcing voltage across the bridge-wire. This limit will be reached if the bridge-wire exhibits a low resistance at which point the measurement is said to hit <a href="#Compliance">Compliance</a>.</p>
-<p><a name="Current-Source-Voltage-Limit"></a></p>
+<p>The <a href="#voltage_source_current_limit">Voltage Source Current Limit</a> is the highest current that the instrument would allow to flow through the bridge-wire when forcing voltage across the bridge-wire. This limit will be reached if the bridge-wire exhibits a low resistance at which point the measurement is said to hit <a href="#Compliance">Compliance</a>.</p>
+<p><a name="current_source_voltage_limit"></a></p>
 <h5 id="current-source-voltage-limit">Current Source Voltage Limit</h5>
 <p>For <em>Current</em> the display is:</p>
 <ul>
@@ -425,13 +584,13 @@ SrcA:+000.0000mV LimA:1.00000 A
 <li>Description: <em>Voltage Limit</em>.</li>
 </ul>
 <p>The range is: 1 - 999 mV.</p>
-<p>The <a href="#Current-Source-Voltage-Limit">Current Source Voltage Limit</a> is the highest voltage that the instrument would allow over the bridge-wire when forcing current through the bridge-wire. This limit will be reached if the bridge-wire is open or exhibits a very high resistance at which point the measurement is said to hit <a href="#Compliance">Compliance</a>.</p>
+<p>The <a href="#current_source_voltage_limit">Current Source Voltage Limit</a> is the highest voltage that the instrument would allow over the bridge-wire when forcing current through the bridge-wire. This limit will be reached if the bridge-wire is open or exhibits a very high resistance at which point the measurement is said to hit <a href="#Compliance">Compliance</a>.</p>
 <p><a name="Compliance"></a></p>
 <h5 id="compliance">Compliance</h5>
-<p>The measurement is said to hit <a href="#Compliance">Compliance</a> if the measurement forcing modality, e.g., voltage or current, caused the measured modality, e.g, current or voltage respectively, to reach the limit set by the <a href="#Limit-Menu">Limit Menu</a>. At compliance, the forced modality reaches a level that is lower than the level set in the <a href="#Level-Menu">Level Menu</a> thus protecting the bridge-wire from over voltage or current.</p>
-<p><a name="Aperture-Menu"></a></p>
+<p>The measurement is said to hit <a href="#Compliance">Compliance</a> if the measurement forcing modality, e.g., voltage or current, caused the measured modality, e.g, current or voltage respectively, to reach the limit set by the <a href="#Limit_menu">Limit Menu</a>. At compliance, the forced modality reaches a level that is lower than the level set in the <a href="#Level_menu">Level Menu</a> thus protecting the bridge-wire from over voltage or current.</p>
+<p><a name="Aperture_menu"></a></p>
 <h4 id="aperture-menu">Aperture Menu</h4>
-<p>Selecting <em>Aperture</em> from the <a href="#Resistance-Menu">Resistance Menu</a> displays the <a href="#Aperture-Menu">Aperture Menu</a>. This menu sets the Aperture, or duration, of the applied source level. The front panel displays:</p>
+<p>Selecting <em>Aperture</em> from the <a href="#Resistance_menu">Resistance Menu</a> displays the <a href="#Aperture_menu">Aperture Menu</a>. This menu sets the Aperture, or duration, of the applied source level. The front panel displays:</p>
 <ul>
 <li>Title: <strong>01.000 PLC</strong>.</li>
 <li>Description: <em>Integration Period</em>.</li>
@@ -440,9 +599,9 @@ SrcA:+000.0000mV LimA:1.00000 A
 <p>This menu sets the duration of the measurement in power line cycles (PLC).</p>
 <p>Moving the cursor over the digits, the digit blinks and changes with the rotation of the <em>Navigation Wheel</em> the number blinks. Pressing the <em>Wheel</em> or <code>ENTER</code> and turning the <em>Wheel</em> changes the digit between 0 and 9. Pressing the <em>Wheel</em> or <code>ENTER</code> selects the new value.</p>
 <p>The aperture (integration period) defines the duration and, thereby the accuracy, of the cold resistance measurement. This value is defined in multiples or fractions of power line cycles (PLC). one (1) PLC equals to 1/60th of a second in the US. At 1 PLC the measurement accuracy exceeds 0.01%.</p>
-<p><a name="Limits-Menu"></a></p>
+<p><a name="Limits_menu"></a></p>
 <h4 id="limits-menu">Limits Menu</h4>
-<p>Selecting <em>Limits</em> from the <a href="#Resistance-Menu">Resistance Menu</a> displays the <a href="#Limits-Menu">Limits Menu</a>. The front panel displays <strong>Limits</strong> with the following options:</p>
+<p>Selecting <em>Limits</em> from the <a href="#Resistance_menu">Resistance Menu</a> displays the <a href="#Limits_menu">Limits Menu</a>. The front panel displays <strong>Limits</strong> with the following options:</p>
 <table>
 <thead>
 <tr>
@@ -453,45 +612,45 @@ SrcA:+000.0000mV LimA:1.00000 A
 <tbody>
 <tr>
 <td>Low</td>
-<td>Selects the <a href="#Low-Limit-Menu">Low Limit Menu</a></td>
+<td>Selects the <a href="#Low-Limit_menu">Low Limit Menu</a></td>
 </tr>
 <tr>
 <td>High</td>
-<td>Selects the <a href="#High-Limit-Menu">High Limit Menu</a></td>
+<td>Selects the <a href="#High-Limit_menu">High Limit Menu</a></td>
 </tr>
 </tbody>
 </table>
-<p>Moving the cursor over an option and pressing the <em>Wheel</em> or <code>ENTER</code> selects this option. Pressing <code>EXIT</code> returns to the <a href="#Resistance-Menu">Resistance Menu</a>.</p>
+<p>Moving the cursor over an option and pressing the <em>Wheel</em> or <code>ENTER</code> selects this option. Pressing <code>EXIT</code> returns to the <a href="#Resistance_menu">Resistance Menu</a>.</p>
 <p>Limits are used to determine if the measured value is within range (pass) or out of range (fail).</p>
 <p>The initial and final cold resistances are checked against the limits and the measurement outcome is set to <strong>High</strong> or <strong>Low</strong> if the values are out of range.</p>
 <p>If the initial resistance measurement fails, the measured value is displayed along with the outcome status (see <a href="#Status">Status</a> below).</p>
-<p><a name="Low-Limit-Menu"></a></p>
-<h5 id="low-limit-menu">Low Limit  Menu</h5>
-<p>Selecting <em>Low</em> from the <a href="#Limits-Menu">Limits Menu</a> displays the <a href="#Low-Limit-Menu">Low Limit Menu</a>. This menu sets the low limit of the measurement in Ohms. The front panel displays:</p>
+<p><a name="Low-Limit_menu"></a></p>
+<h5 id="low-limit-menu">Low Limit Menu</h5>
+<p>Selecting <em>Low</em> from the <a href="#Limits_menu">Limits Menu</a> displays the <a href="#Low-Limit_menu">Low Limit Menu</a>. This menu sets the low limit of the measurement in Ohms. The front panel displays:</p>
 <ul>
 <li>Title: <strong>01.920 Ω</strong>.</li>
 <li>Description: <em>Low Limit</em>.</li>
 </ul>
 <p>The range is: 0.1 - 10 Ω.</p>
 <p>Moving the cursor over the digits, the digit blinks and changes with the rotation of the <em>Navigation Wheel</em> the number blinks. Pressing the <em>Wheel</em> or <code>ENTER</code> and turning the <em>Wheel</em> changes the digit between 0 and 9. Pressing the <em>Wheel</em> or <code>ENTER</code> selects the new value.</p>
-<p><a name="High-Limit-Menu"></a></p>
-<h5 id="high-limit-menu">High Limit  Menu</h5>
-<p>Selecting <em>High</em> from the <a href="#Limits-Menu">Limits Menu</a> displays the <a href="#High-Limit-Menu">High Limit Menu</a>. This menu sets the High limit of the measurement in Ohms. The front panel displays:</p>
+<p><a name="High-Limit_menu"></a></p>
+<h5 id="high-limit-menu">High Limit Menu</h5>
+<p>Selecting <em>High</em> from the <a href="#Limits_menu">Limits Menu</a> displays the <a href="#High-Limit_menu">High Limit Menu</a>. This menu sets the High limit of the measurement in Ohms. The front panel displays:</p>
 <ul>
 <li>Title: <strong>02.160 Ω</strong>.</li>
 <li>Description: <em>High Limit</em>.</li>
 </ul>
 <p>The range is: 0.1 - 10 Ω.</p>
 <p>Moving the cursor over the digits, the digit blinks and changes with the rotation of the <em>Navigation Wheel</em> the number blinks. Pressing the <em>Wheel</em> or <code>ENTER</code> and turning the <em>Wheel</em> changes the digit between 0 and 9. Pressing the <em>Wheel</em> or <code>ENTER</code> selects the new value.</p>
-<p><a name="Status-Menu"></a></p>
+<p><a name="Status_menu"></a></p>
 <h4 id="status-menu">Status Menu</h4>
-<p>Selecting <em>Status</em> from the <a href="#Resistance-Menu">Resistance Menu</a> displays the <a href="#Status-Menu">Status Menu</a>:</p>
+<p>Selecting <em>Status</em> from the <a href="#Resistance_menu">Resistance Menu</a> displays the <a href="#Status_menu">Status Menu</a>:</p>
 <ul>
 <li>Title: <strong>002</strong>.</li>
 <li>Description: <em>66=compliance 64 or over-temp 2</em>.</li>
 </ul>
 <p>The expected range are: 2, 64, 66.</p>
-<p>This sets bit values that toggle the over-temperature failure condition (2) or compliance failure condition (64). For example, setting the value to 2 the instrument will fail under an over-temperature condition but will not fail if the sense current or voltage reaches the limit set with the <a href="#Limit-Menu">Limit Menu</a>.</p>
+<p>This sets bit values that toggle the over-temperature failure condition (2) or compliance failure condition (64). For example, setting the value to 2 the instrument will fail under an over-temperature condition but will not fail if the sense current or voltage reaches the limit set with the <a href="#Limit_menu">Limit Menu</a>.</p>
 <p>Moving the cursor over the digits, the digit blinks and changes with the rotation of the <em>Navigation Wheel</em> the number blinks. Pressing the <em>Wheel</em> or <code>ENTER</code> and turning the <em>Wheel</em> changes the digit between 0 and 9. Pressing the <em>Wheel</em> or <code>ENTER</code> selects the new value.</p>
 <p><a name="Buffer-Status"></a></p>
 <h5 id="buffer-status">Buffer Status</h5>
@@ -571,14 +730,14 @@ SrcA:+000.0000mV LimA:1.00000 A
 <li>Press the thumb wheel to select and then increase or decrease the value;</li>
 <li>Press <code>ENTER</code> to accept or <code>EXIT</code> to cancel the changes.</li>
 </ul>
-<p>The <a href="#Status-Menu">Status Menu</a> settings of the Thermal Transient Meter allows the operator to select what status values are interpreted as a failed measurement.</p>
+<p>The <a href="#Status_menu">Status Menu</a> settings of the Thermal Transient Meter allows the operator to select what status values are interpreted as a failed measurement.</p>
 <p>The legacy revisions of the TTM firmware prior to and including 2.3.4009 has taken either or both the over-temp and compliance status bits to indicate a failure. With the new firmware, the operator can choose to accept a measurement that hits a <a href="#Compliance">Compliance</a> condition. For example, the operator may choose to apply a voltage of 100 mV but limit the current at 20 mA. When making this measurement on a 2 Ohm bridge-wire, the instrument will <em>hit compliance</em>. The measurement accuracy will still be acceptable. In the case, the operator will set the Status settings to 2 instead of the default of 66.</p>
 <p>The measurement outcome and status are displayed along with the bridge-wire resistance and low or high indication if the initial cold resistance measurement failed. Typically a status value of 28 will display indicating that a 4-wire measurement was taken under auto range conditions.</p>
 <h5 id="legacy-support">Legacy support</h5>
-<p>In order to support the legacy Visual Basic software the status settings defaults to over-temp only. This way, the instrument can be set to source voltage using the <a href="#Source-Menu">Source-Menu</a> while still using the legacy current source settings which would cause the instrument to hit <a href="#Compliance">Compliance</a>.</p>
-<p><a name="Thermal-Transient-Menu"></a></p>
+<p>In order to support the legacy Visual Basic software the status settings defaults to over-temp only. This way, the instrument can be set to source voltage using the <a href="#Source_menu">Source_menu</a> while still using the legacy current source settings which would cause the instrument to hit <a href="#Compliance">Compliance</a>.</p>
+<p><a name="Thermal-Transient_menu"></a></p>
 <h3 id="thermal-transient-menu">Thermal Transient Menu</h3>
-<p>Selecting <em>Transient</em> from the <a href="#Main-Menu">Main Menu</a> displays the <a href="#Thermal-Transient-Menu">Thermal Transient Menu</a>:</p>
+<p>Selecting <em>Transient</em> from the <a href="#Main_menu">Main Menu</a> displays the <a href="#Thermal-Transient_menu">Thermal Transient Menu</a>:</p>
 <table>
 <thead>
 <tr>
@@ -588,49 +747,49 @@ SrcA:+000.0000mV LimA:1.00000 A
 </thead>
 <tbody>
 <tr>
-<td><a href="#Source_Current-Menu">Current</a></td>
-<td>Selects the <a href="#Source_Current-Menu">Source Current Menu</a>.</td>
+<td><a href="#Source_Current_menu">Current</a></td>
+<td>Selects the <a href="#Source_Current_menu">Source Current Menu</a>.</td>
 </tr>
 <tr>
-<td><a href="#Maximum_Voltage-Menu">Voltage</a></td>
-<td>Selects the <a href="#Maximum_Voltage-Menu">Maximum Voltage Menu</a>.</td>
+<td><a href="#Maximum_Voltage_menu">Voltage</a></td>
+<td>Selects the <a href="#Maximum_Voltage_menu">Maximum Voltage Menu</a>.</td>
 </tr>
 <tr>
-<td><a href="#Transient_Aperture-Menu">Aperture</a></td>
+<td><a href="#Transient_Aperture_menu">Aperture</a></td>
 <td>Sets the duration of each measurement point of the thermal transient pulse.</td>
 </tr>
 <tr>
-<td><a href="#Transient_Points-Menu">Points</a></td>
+<td><a href="#Transient_Points_menu">Points</a></td>
 <td>Sets the number of points to acquire during the thermal transient pulse.</td>
 </tr>
 <tr>
-<td><a href="#Transient_Period-Menu">Period</a></td>
+<td><a href="#Transient_Period_menu">Period</a></td>
 <td>Sets the repetition period of the thermal transient pulse points.</td>
 </tr>
 <tr>
-<td><a href="#Port_Transient_Delay-Menu">Delay</a></td>
+<td><a href="#Port_Transient_Delay_menu">Delay</a></td>
 <td>Sets the time between the thermal transient and the final cold resistance measurement.</td>
 </tr>
 <tr>
-<td><a href="#Transient_Limits-Menu">Limits</a></td>
+<td><a href="#Transient_Limits_menu">Limits</a></td>
 <td>Sets the limits of the maximum thermal transient response voltage.</td>
 </tr>
 </tbody>
 </table>
-<p>Use <a href="#Thermal-Transient-Menu">Thermal Transient Menu</a> items to set the test parameters of the thermal transient forcing and measurement parameters.</p>
-<p><a name="Source_Current-Menu"></a></p>
+<p>Use <a href="#Thermal-Transient_menu">Thermal Transient Menu</a> items to set the test parameters of the thermal transient forcing and measurement parameters.</p>
+<p><a name="Source_Current_menu"></a></p>
 <h4 id="source-current-menu">Source Current Menu</h4>
-<p>Selecting <em>Current</em> from the <a href="#Thermal-Transient-Menu">Thermal Transient Menu</a> displays the <a href="#Source_Current-Menu">Source Current Menu</a>. This menu sets the current level of the thermal transient pulse:</p>
+<p>Selecting <em>Current</em> from the <a href="#Thermal-Transient_menu">Thermal Transient Menu</a> displays the <a href="#Source_Current_menu">Source Current Menu</a>. This menu sets the current level of the thermal transient pulse:</p>
 <ul>
 <li>Title: <strong>297 mA</strong>.</li>
 <li>Description: <em>Source Current</em>.</li>
 </ul>
 <p>The range is: 10 - 999 mA.</p>
 <p>Moving the cursor over the digits, the digit blinks and changes with the rotation of the <em>Navigation Wheel</em> the number blinks. Pressing the <em>Wheel</em> or <code>ENTER</code> and turning the <em>Wheel</em> changes the digit between 0 and 9. Pressing the <em>Wheel</em> or <code>ENTER</code> selects the new value.</p>
-<p>The source current is the current that is forced by the TTM instrument through the bridge-wire to measure the bridge-wire thermal transient response. This current is pulsed through the bridge-wire for a very short duration determined by the <a href="#Transient_Period-Menu">Period Menu</a> value times the <a href="#Transient_Points-Menu">Thermal Transient Points Menu</a> value.</p>
-<p><a name="Maximum_Voltage-Menu"></a></p>
+<p>The source current is the current that is forced by the TTM instrument through the bridge-wire to measure the bridge-wire thermal transient response. This current is pulsed through the bridge-wire for a very short duration determined by the <a href="#Transient_Period_menu">Period Menu</a> value times the <a href="#Transient_Points_menu">Thermal Transient Points Menu</a> value.</p>
+<p><a name="Maximum_Voltage_menu"></a></p>
 <h4 id="maximum-voltage-menu">Maximum Voltage Menu</h4>
-<p>Selecting <em>Voltage</em> from the <a href="#Thermal-Transient-Menu">Thermal Transient Menu</a> displays the <a href="#Maximum_Voltage-Menu">Maximum Voltage Menu</a>. This menu sets the Voltage limit of the sense modality:</p>
+<p>Selecting <em>Voltage</em> from the <a href="#Thermal-Transient_menu">Thermal Transient Menu</a> displays the <a href="#Maximum_Voltage_menu">Maximum Voltage Menu</a>. This menu sets the Voltage limit of the sense modality:</p>
 <ul>
 <li>Title: <strong>0.990 V</strong>.</li>
 <li>Description: <em>Voltage Limit</em>.</li>
@@ -638,9 +797,9 @@ SrcA:+000.0000mV LimA:1.00000 A
 <p>The range is: 10 - 999 mV.</p>
 <p>Moving the cursor over the digits, the digit blinks and changes with the rotation of the <em>Navigation Wheel</em> the number blinks. Pressing the <em>Wheel</em> or <code>ENTER</code> and turning the <em>Wheel</em> changes the digit between 0 and 9. Pressing the <em>Wheel</em> or <code>ENTER</code> selects the new value.</p>
 <p>The maximum voltage is the limit set by the instrument for the maximum voltage that could develop on the bridge-wire during the thermal transient test. This limit will be reached if the bridge-wire is open or exhibits a very high resistance.</p>
-<p><a name="Transient_Aperture-Menu"></a></p>
+<p><a name="Transient_Aperture_menu"></a></p>
 <h4 id="thermal-transient-aperture-menu">Thermal Transient Aperture Menu</h4>
-<p>Selecting <em>Aperture</em> from the <a href="#Thermal-Transient-Menu">Thermal Transient Menu</a> displays the <a href="#Transient_Aperture-Menu">Thermal Transient Aperture Menu</a>. This menu sets the Aperture, or duration, of each measurement of the current pulse point:</p>
+<p>Selecting <em>Aperture</em> from the <a href="#Thermal-Transient_menu">Thermal Transient Menu</a> displays the <a href="#Transient_Aperture_menu">Thermal Transient Aperture Menu</a>. This menu sets the Aperture, or duration, of each measurement of the current pulse point:</p>
 <ul>
 <li>Title: <strong>0.004 PLC</strong>.</li>
 <li>Description: <em>Integration Period</em>.</li>
@@ -649,29 +808,29 @@ SrcA:+000.0000mV LimA:1.00000 A
 <p>This menu sets the duration of the measurement in power line cycles (PLC).</p>
 <p>Moving the cursor over the digits, the digit blinks and changes with the rotation of the <em>Navigation Wheel</em> the number blinks. Pressing the <em>Wheel</em> or <code>ENTER</code> and turning the <em>Wheel</em> changes the digit between 0 and 9. Pressing the <em>Wheel</em> or <code>ENTER</code> selects the new value.</p>
 <p>The aperture (integration period) defines the duration and accuracy of the thermal transient measurement. This value is defined in multiples or fractions of power line cycles (PLC). One (1) PLC equals to 1/60th of a second in the US. Thermal transients are measured during a very short pulse period. Therefore, a very small integration period is allowed for the thermal transient.</p>
-<p><a name="Transient_Points-Menu"></a></p>
+<p><a name="Transient_Points_menu"></a></p>
 <h4 id="thermal-transient-points-menu">Thermal Transient Points Menu</h4>
-<p>Selecting <em>Points</em> from the <a href="#Thermal-Transient-Menu">Thermal Transient Menu</a> displays the <a href="#Transient_Points-Menu">Thermal Transient Points Menu</a>. This menu sets the number of points of the current pulse applied during the thermal transient measurement:</p>
+<p>Selecting <em>Points</em> from the <a href="#Thermal-Transient_menu">Thermal Transient Menu</a> displays the <a href="#Transient_Points_menu">Thermal Transient Points Menu</a>. This menu sets the number of points of the current pulse applied during the thermal transient measurement:</p>
 <ul>
 <li>Title: <strong>00100</strong>.</li>
 <li>Description: <em>Data Points</em>.</li>
 </ul>
 <p>The range is: 10 - 10000.</p>
 <p>Moving the cursor over the digits, the digit blinks and changes with the rotation of the <em>Navigation Wheel</em> the number blinks. Pressing the <em>Wheel</em> or <code>ENTER</code> and turning the <em>Wheel</em> changes the digit between 0 and 9. Pressing the <em>Wheel</em> or <code>ENTER</code> selects the new value.</p>
-<p>During the thermal transient test a current pulse is applied to the bridge-wire. The pulse duration is determined by the <a href="#Transient_Period-Menu">Period</a> times the <a href="#Transient_Points-Menu">Points</a> values.</p>
-<p><a name="Transient_Period-Menu"></a></p>
+<p>During the thermal transient test a current pulse is applied to the bridge-wire. The pulse duration is determined by the <a href="#Transient_Period_menu">Period</a> times the <a href="#Transient_Points_menu">Points</a> values.</p>
+<p><a name="Transient_Period_menu"></a></p>
 <h4 id="thermal-transient-period-menu">Thermal Transient Period Menu</h4>
-<p>Selecting <em>Period</em> from the <a href="#Thermal-Transient-Menu">Thermal Transient Menu</a> displays the <a href="#Transient_Period-Menu">Period Menu</a>. This menu sets the duration of each point of the current pulse applied during the thermal transient measurement:</p>
+<p>Selecting <em>Period</em> from the <a href="#Thermal-Transient_menu">Thermal Transient Menu</a> displays the <a href="#Transient_Period_menu">Period Menu</a>. This menu sets the duration of each point of the current pulse applied during the thermal transient measurement:</p>
 <ul>
 <li>Title: <strong>00100 µS</strong>.</li>
 <li>Description: <em>Sampling Interval</em>.</li>
 </ul>
 <p>The range is: 80 - 1000 µS.</p>
 <p>Moving the cursor over the digits, the digit blinks and changes with the rotation of the <em>Navigation Wheel</em> the number blinks. Pressing the <em>Wheel</em> or <code>ENTER</code> and turning the <em>Wheel</em> changes the digit between 0 and 9. Pressing the <em>Wheel</em> or <code>ENTER</code> selects the new value.</p>
-<p>The total duration of the thermal transient pulse equals the <a href="#Transient_Period-Menu">Period</a> times the <a href="#Transient_Points-Menu">Points</a> values.</p>
-<p><a name="Post_Transient_Delay-Menu"></a></p>
+<p>The total duration of the thermal transient pulse equals the <a href="#Transient_Period_menu">Period</a> times the <a href="#Transient_Points_menu">Points</a> values.</p>
+<p><a name="Post_Transient_Delay_menu"></a></p>
 <h4 id="post-thermal-transient-delay-menu">Post Thermal Transient Delay Menu</h4>
-<p>Selecting <em>Delay</em> from the <a href="#Thermal-Transient-Menu">Thermal Transient Menu</a> displays the <a href="#Post_Transient_Delay-Menu">Delay Menu</a>. This menu sets the delay time between the end of the thermal transient measurement and the beginning of the final resistance measurement:</p>
+<p>Selecting <em>Delay</em> from the <a href="#Thermal-Transient_menu">Thermal Transient Menu</a> displays the <a href="#Post_Transient_Delay_menu">Delay Menu</a>. This menu sets the delay time between the end of the thermal transient measurement and the beginning of the final resistance measurement:</p>
 <ul>
 <li>Title: <strong>00011 mS</strong>.</li>
 <li>Description: <em>Final Cold Resistance Delay</em>.</li>
@@ -679,9 +838,9 @@ SrcA:+000.0000mV LimA:1.00000 A
 <p>The range is: 1 - 10000 mS.</p>
 <p>Moving the cursor over the digits, the digit blinks and changes with the rotation of the <em>Navigation Wheel</em> the number blinks. Pressing the <em>Wheel</em> or <code>ENTER</code> and turning the <em>Wheel</em> changes the digit between 0 and 9. Pressing the <em>Wheel</em> or <code>ENTER</code> selects the new value.</p>
 <p>The delay sets the time the instrument will pause between the thermal transient measurement and the final resistance measurement. This time is designed to allow the bridge-wire to cool down before making the final resistance measurement.</p>
-<p><a name="Transient_Limits-Menu"></a></p>
+<p><a name="Transient_Limits_menu"></a></p>
 <h4 id="thermal-transient-limits-menu">Thermal Transient Limits Menu</h4>
-<p>Selecting <em>Limits</em> from the <a href="#Thermal-Transient-Menu">Thermal Transient Menu</a> displays the <a href="#Transient_Limits-Menu">Thermal Transient Limits Menu</a>. The front panel displays <strong>Limits</strong> with the following options:</p>
+<p>Selecting <em>Limits</em> from the <a href="#Thermal-Transient_menu">Thermal Transient Menu</a> displays the <a href="#Transient_Limits_menu">Thermal Transient Limits Menu</a>. The front panel displays <strong>Limits</strong> with the following options:</p>
 <table>
 <thead>
 <tr>
@@ -692,28 +851,28 @@ SrcA:+000.0000mV LimA:1.00000 A
 <tbody>
 <tr>
 <td>Low</td>
-<td>Selects the <a href="#Transient_Low_Limit-Menu">Thermal Transient Low Limit Menu</a></td>
+<td>Selects the <a href="#Transient_Low_Limit_menu">Thermal Transient Low Limit Menu</a></td>
 </tr>
 <tr>
 <td>High</td>
-<td>Selects the <a href="#Transient_High_Limit-Menu">Thermal Transient High Limit Menu</a></td>
+<td>Selects the <a href="#Transient_High_Limit_menu">Thermal Transient High Limit Menu</a></td>
 </tr>
 </tbody>
 </table>
-<p>Moving the cursor over an option and pressing the <em>Wheel</em> or <code>ENTER</code> selects this option. Pressing <code>EXIT</code> returns to the <a href="#Thermal-Transient-Menu">Thermal Transient Menu</a>.</p>
+<p>Moving the cursor over an option and pressing the <em>Wheel</em> or <code>ENTER</code> selects this option. Pressing <code>EXIT</code> returns to the <a href="#Thermal-Transient_menu">Thermal Transient Menu</a>.</p>
 <p>The limits are used to determine if the thermal transient measurement is within range (pass) or out of range (fail).</p>
-<p><a name="Transient_Low_Limit-Menu"></a></p>
+<p><a name="Transient_Low_Limit_menu"></a></p>
 <h5 id="thermal-transient-low-limit-menu">Thermal Transient Low Limit Menu</h5>
-<p>Selecting <em>Low</em> from the <a href="#Transient_Limits-Menu">Limits Menu</a> displays the <a href="#Transient_Low_Limit-Menu">Thermal Transient Low Limit Menu</a>. This menu sets the low limit for the measured thermal transient voltage. The front panel displays:</p>
+<p>Selecting <em>Low</em> from the <a href="#Transient_Limits_menu">Limits Menu</a> displays the <a href="#Transient_Low_Limit_menu">Thermal Transient Low Limit Menu</a>. This menu sets the low limit for the measured thermal transient voltage. The front panel displays:</p>
 <ul>
 <li>Title: <strong>005.4 mV</strong>.</li>
 <li>Description: <em>Low Limit</em>.</li>
 </ul>
 <p>The range is: 1 - 999 mV.</p>
 <p>Moving the cursor over the digits, the digit blinks and changes with the rotation of the <em>Navigation Wheel</em> the number blinks. Pressing the <em>Wheel</em> or <code>ENTER</code> and turning the <em>Wheel</em> changes the digit between 0 and 9. Pressing the <em>Wheel</em> or <code>ENTER</code> selects the new value.</p>
-<p><a name="Transient_High_Limit-Menu"></a></p>
+<p><a name="Transient_High_Limit_menu"></a></p>
 <h5 id="thermal-transient-high-limit-menu">Thermal Transient High Limit Menu</h5>
-<p>Selecting <em>High</em> from the <a href="#Transient_Limits-Menu">Thermal Transient Limits Menu</a> displays the <a href="#Transient_High_Limit-Menu">Thermal Transient High Limit Menu</a>. This menu sets the high limit for the measured thermal transient voltage. The front panel displays:</p>
+<p>Selecting <em>High</em> from the <a href="#Transient_Limits_menu">Thermal Transient Limits Menu</a> displays the <a href="#Transient_High_Limit_menu">Thermal Transient High Limit Menu</a>. This menu sets the high limit for the measured thermal transient voltage. The front panel displays:</p>
 <ul>
 <li>Title: <strong>076.0 mV</strong></li>
 <li>Description: <em>High Limit</em></li>
