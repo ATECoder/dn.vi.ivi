@@ -33,6 +33,21 @@ public class TtmResistanceSettings : CommunityToolkit.Mvvm.ComponentModel.Observ
 
     #endregion
 
+    #region " legacy settings "
+
+    private string _currentSourceSmu = "smua";
+
+    /// <summary>   Gets or sets the current source smu. </summary>
+    /// <value> The current source smu. </value>
+	[Description( "Specifies the Bridge-Wire Measurement Current Source Source Measure Unit (smua)." )]
+    public string CurrentSourceSmu
+    {
+        get => this._currentSourceSmu;
+        set => _ = this.SetProperty( ref this._currentSourceSmu, value );
+    }
+
+    #endregion
+
     #region " resistance "
 
     private double _aperture = 1;
@@ -300,11 +315,11 @@ public class TtmResistanceSettings : CommunityToolkit.Mvvm.ComponentModel.Observ
         set => this.SetProperty( ref this._voltageLimitDefault, value );
     }
 
-    private double _voltageMaximum = 0.1;
+    private double _voltageMaximum = 10;
 
     /// <summary>   Gets or sets the bridge-wire resistance measurement voltage maximum. </summary>
     /// <value> The bridge-wire resistance measurement voltage maximum. </value>
-	[Description( "Specifies the Bridge-Wire MeasuredValue Maximum Voltage Limit (0.1)." )]
+	[Description( "Specifies the Bridge-Wire MeasuredValue Maximum Voltage Limit (9.999)." )]
     public double VoltageMaximum
     {
         get => this._voltageMaximum;

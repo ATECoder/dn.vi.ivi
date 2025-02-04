@@ -1,13 +1,14 @@
 using cc.isr.VI.Tsp.SessionBaseExtensions;
 using cc.isr.VI.Tsp.K2600.Ttm.Syntax;
+using cc.isr.Std.Primitives;
 
 namespace cc.isr.VI.Tsp.K2600.Ttm.Tests.Firmware;
 internal static partial class Asserts
 {
     /// <summary>   Assert tsp syntax should not fail. </summary>
     /// <remarks>   2024-11-02. </remarks>
-    /// <param name="session">      The session. </param>
-    /// <param name="logEnabled">   (Optional) True to enable, false to disable the log. </param>
+    /// <param name="session">          The session. </param>
+    /// <param name="logEnabled">       (Optional) True to enable, false to disable the log. </param>
     public static void AssertTspSyntaxShouldNotFail( Pith.SessionBase? session, bool logEnabled = false )
     {
         Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
@@ -82,9 +83,10 @@ internal static partial class Asserts
 
     /// <summary>   Assert meter value should reset. </summary>
     /// <remarks>   2024-11-02. </remarks>
-    /// <param name="session">      The session. </param>
-    /// <param name="logEnabled">   (Optional) True to enable, false to disable the log. </param>
-    public static void AssertMeterValueShouldReset( Pith.SessionBase? session, bool logEnabled = false )
+    /// <param name="session">          The session. </param>
+    /// <param name="checkSmuSetter">   (Optional) True to check smu setter. </param>
+    /// <param name="logEnabled">       (Optional) True to enable, false to disable the log. </param>
+    public static void AssertMeterValueShouldReset( Pith.SessionBase? session, bool checkSmuSetter = false, bool logEnabled = false )
     {
         Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
         Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
@@ -95,6 +97,8 @@ internal static partial class Asserts
         string expectedValue;
 
         cc.isr.VI.Tsp.K2600.Ttm.TtmMeterSettings meterSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmMeterSettings;
+
+        Assert.IsTrue( meterSettings.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmMeterSettings )} should exist." );
 
         expectedBoolean = true;
         query = "_G.print(_G.isr.access.loaded())";
@@ -161,17 +165,13 @@ internal static partial class Asserts
             query = "_G.print(_G.ttm.checkContactsBeforeInitialResistance())";
             Asserts.AssertQueryReplyShouldBeValid( session, query, expectedBoolean, logEnabled );
 
-            // !@#: tsp1 meter.tsp code error was fixed and awaits deployment.
             // change after updating the deployed version;
-            // expectedBoolean = ( int ) ContactCheckOptions.PreTrace == (contactOptions & ( int ) ContactCheckOptions.PreTrace);
-            expectedBoolean = ( int ) ContactCheckOptions.PreTrace == (contactOptions & ( int ) ContactCheckOptions.Initial);
+            expectedBoolean = ( int ) ContactCheckOptions.PreTrace == (contactOptions & ( int ) ContactCheckOptions.PreTrace);
             query = "_G.print(_G.ttm.checkContactsBeforeThermalTransient())";
             Asserts.AssertQueryReplyShouldBeValid( session, query, expectedBoolean, logEnabled );
 
-            // !@#: tsp1 meter.tsp code error was fixed and awaits deployment.
             // change after updating the deployed version;
-            // expectedBoolean = ( int ) ContactCheckOptions.Final == (contactOptions & ( int ) ContactCheckOptions.Final);
-            expectedBoolean = ( int ) ContactCheckOptions.Final == (contactOptions & ( int ) ContactCheckOptions.Initial);
+            expectedBoolean = ( int ) ContactCheckOptions.Final == (contactOptions & ( int ) ContactCheckOptions.Final);
             query = "_G.print(_G.ttm.checkContactsBeforeFinalResistance())";
             Asserts.AssertQueryReplyShouldBeValid( session, query, expectedBoolean, logEnabled );
 
@@ -208,27 +208,30 @@ internal static partial class Asserts
             query = "_G.print(_G.ttm.smuNameGetter())";
             Asserts.AssertQueryReplyShouldBeValid( session, query, expectedValue, logEnabled );
 
-            if ( ("26" == model[..2]) && ("2" == model.Substring( 3, 1 )) )
+            if ( checkSmuSetter  )
             {
-                expectedValue = smuName == "smua" ? "smub" : "smua";
+                if ( ("26" == model[..2]) && ("2" == model.Substring( 3, 1 )) )
+                {
+                    expectedValue = smuName == "smua" ? "smub" : "smua";
+                    query = "_G.print(_G.ttm.smuNameGetter())";
+                    command = $"_G.ttm.smuNameSetter('{expectedValue}')";
+                    Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedValue, logEnabled );
+
+                    expectedBoolean = true;
+                    query = $"_G.print(_G.localnode.{expectedValue} == _G.ttm.smuGetter())";
+                    Asserts.AssertQueryReplyShouldBeValid( session, query, expectedBoolean, logEnabled );
+                }
+
+                // restore the smu name to the default value
+                expectedValue = smuName;
                 query = "_G.print(_G.ttm.smuNameGetter())";
-                command = $"_G.ttm.smuNameSetter('{expectedValue}')";
+                command = $"_G.ttm.smuNameSetter(_G.ttm.meterDefaults.smuName)";
                 Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedValue, logEnabled );
 
                 expectedBoolean = true;
                 query = $"_G.print(_G.localnode.{expectedValue} == _G.ttm.smuGetter())";
                 Asserts.AssertQueryReplyShouldBeValid( session, query, expectedBoolean, logEnabled );
             }
-
-            // restore the smu name to the default value
-            expectedValue = smuName;
-            query = "_G.print(_G.ttm.smuNameGetter())";
-            command = $"_G.ttm.smuNameSetter(_G.ttm.meterDefaults.smuName)";
-            Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedValue, logEnabled );
-
-            expectedBoolean = true;
-            query = $"_G.print(_G.localnode.{expectedValue} == _G.ttm.smuGetter())";
-            Asserts.AssertQueryReplyShouldBeValid( session, query, expectedBoolean, logEnabled );
         }
     }
 
@@ -244,6 +247,7 @@ internal static partial class Asserts
         double expectedDouble;
 
         cc.isr.VI.Tsp.K2600.Ttm.TtmResistanceSettings resistanceSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmResistanceSettings;
+        Assert.IsTrue( resistanceSettings.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmResistanceSettings )} should exist." );
 
         expectedDouble = resistanceSettings.CurrentMinimum;
         query = "_G.print(string.format('%9.6f',_G.ttm.coldResistance.Defaults.minCurrent))";
@@ -272,9 +276,10 @@ internal static partial class Asserts
 
     /// <summary>   Assert initial resistance commands should execute. </summary>
     /// <remarks>   2024-11-03. </remarks>
-    /// <param name="session">      The session. </param>
-    /// <param name="logEnabled">   (Optional) True to enable, false to disable the log. </param>
-    public static void AssertInitialResistanceShouldReset( Pith.SessionBase? session, bool logEnabled = false )
+    /// <param name="session">          The session. </param>
+    /// <param name="checkSmuSetter">   (Optional) True to check smu setter. </param>
+    /// <param name="logEnabled">       (Optional) True to enable, false to disable the log. </param>
+    public static void AssertInitialResistanceShouldReset( Pith.SessionBase? session, bool checkSmuSetter = false, bool logEnabled = false )
     {
         Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
         Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
@@ -286,6 +291,9 @@ internal static partial class Asserts
 
         cc.isr.VI.Tsp.K2600.Ttm.TtmResistanceSettings resistanceSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmResistanceSettings;
         cc.isr.VI.Tsp.K2600.Ttm.TtmMeterSettings meterSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmMeterSettings;
+
+        Assert.IsTrue( resistanceSettings.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmResistanceSettings )} should exist." );
+        Assert.IsTrue( meterSettings.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmMeterSettings )} should exist." );
 
         string model = session.ResourceSettings.ResourceModel;
         command = "_G.print(localnode.model)";
@@ -300,9 +308,20 @@ internal static partial class Asserts
             smuName = session.QueryStringThrowIfError( query, "smu name" );
             Assert.AreEqual( meterSettings.SourceMeasureUnitDefault, smuName, $"{nameof( smuName )} should match settings value." );
 
-            if ( ("26" == model[..2]) && ("2" == model.Substring( 3, 1 )) )
+            if ( checkSmuSetter )
             {
-                expectedValue = smuName == "smua" ? "smub" : "smua";
+                if ( ("26" == model[..2]) && ("2" == model.Substring( 3, 1 )) )
+                {
+                    expectedValue = smuName == "smua" ? "smub" : "smua";
+                    command = $"_G.ttm.ir:currentSourceChannelSetter({expectedValue})";
+                    Asserts.AssertCommandShouldExecute( session, command, logEnabled );
+
+                    expectedBoolean = true;
+                    query = $"_G.print(_G.localnode.{expectedValue} == _G.ttm.ir.smuI)";
+                    Asserts.AssertQueryReplyShouldBeValid( session, query, expectedBoolean, logEnabled );
+                }
+
+                expectedValue = smuName;
                 command = $"_G.ttm.ir:currentSourceChannelSetter({expectedValue})";
                 Asserts.AssertCommandShouldExecute( session, command, logEnabled );
 
@@ -310,14 +329,6 @@ internal static partial class Asserts
                 query = $"_G.print(_G.localnode.{expectedValue} == _G.ttm.ir.smuI)";
                 Asserts.AssertQueryReplyShouldBeValid( session, query, expectedBoolean, logEnabled );
             }
-
-            expectedValue = smuName;
-            command = $"_G.ttm.ir:currentSourceChannelSetter({expectedValue})";
-            Asserts.AssertCommandShouldExecute( session, command, logEnabled );
-
-            expectedBoolean = true;
-            query = $"_G.print(_G.localnode.{expectedValue} == _G.ttm.ir.smuI)";
-            Asserts.AssertQueryReplyShouldBeValid( session, query, expectedBoolean, logEnabled );
         }
 
         double aperture; // 1.0000;
@@ -325,15 +336,22 @@ internal static partial class Asserts
         aperture = session.QueryDoubleThrowIfError( query, "default aperture" );
         Assert.AreEqual( resistanceSettings.ApertureDefault, aperture, $"{nameof( aperture )} should match settings value." );
 
-        expectedDouble = aperture + 1;
+        // get actual value
         query = "_G.print(string.format('%7.4f',_G.ttm.ir.aperture))";
+        aperture = session.QueryDoubleThrowIfError( query, "actual aperture" );
+
+        // get actual value
+        // restore actual value
+        expectedDouble = aperture + 1;
         command = $"_G.ttm.ir:apertureSetter({expectedDouble})";
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.0001, logEnabled );
 
+        // restore actual value
         expectedDouble = aperture;
-        query = "_G.print(string.format('%7.4f',_G.ttm.ir.aperture))";
-        command = "_G.ttm.ir:apertureSetter(_G.ttm.coldResistance.Defaults.aperture)";
+        command = $"_G.ttm.ir:apertureSetter({expectedDouble})";
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.0001, logEnabled );
+
+        bool isVoltageSource = session.QueryBoolThrowIfError( "_G.print(_G.ttm.ir:sourceVoltage())", "source voltage method" );
 
         // legacy driver: these need only be tested for the legacy driver.
 
@@ -341,31 +359,40 @@ internal static partial class Asserts
         {
             double level; // 0.01;
             query = "_G.print(string.format('%9.6f',_G.ttm.coldResistance.Defaults.level))";
-            level = session.QueryDoubleThrowIfError( query, "default current source level" );
-            Assert.AreEqual( resistanceSettings.CurrentLevel, level, $"{nameof( level )} should match settings value." );
-
-            expectedDouble = level + 0.001;
-            query = "_G.print(string.format('%9.6f',_G.ttm.ir.level))";
-            command = $"_G.ttm.ir:levelSetter({expectedDouble})";
-            Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.0001, logEnabled );
-
-            expectedDouble = level;
-            query = "_G.print(string.format('%9.6f',_G.ttm.ir.level))";
-            command = "_G.ttm.ir:levelSetter(_G.ttm.coldResistance.Defaults.level)";
-            Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.0001, logEnabled );
+            level = session.QueryDoubleThrowIfError( query, isVoltageSource ? "voltage source current limit" : "default current source current level" );
+            Assert.AreEqual( resistanceSettings.CurrentLevel, level, $"{nameof( level )} should match {nameof( resistanceSettings.CurrentLevel )} default settings value." );
 
             double limit; // 0.1
             query = "_G.print(string.format('%9.6f',_G.ttm.coldResistance.Defaults.limit))";
-            limit = session.QueryDoubleThrowIfError( query, "default current source voltage limit" );
-            Assert.AreEqual( resistanceSettings.VoltageLimit, limit, $"{nameof( limit )} should match settings value." );
+            limit = session.QueryDoubleThrowIfError( query, isVoltageSource ? "voltage source voltage level" : "default current source voltage limit" );
+            Assert.AreEqual( resistanceSettings.VoltageLimit, limit, $"{nameof( limit )} should match the {nameof( resistanceSettings.VoltageLimit )} default settings value." );
 
-            expectedDouble = limit + 0.01;
+            // get actual value
+            query = "_G.print(string.format('%9.6f',_G.ttm.ir.level))";
+            level = session.QueryDoubleThrowIfError( query, isVoltageSource ? "actual voltage source current limit" : "actual current source current level" );
+
+            // set a new value
+            expectedDouble = level + 0.001;
+            command = $"_G.ttm.ir:levelSetter({expectedDouble})";
+            Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.0001, logEnabled );
+
+            // restore actual value
+            expectedDouble = level;
+            command = $"_G.ttm.ir:levelSetter({expectedDouble})";
+            Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.0001, logEnabled );
+
+            // get actual value
             query = "_G.print(string.format('%9.6f',_G.ttm.ir.limit))";
+            limit = session.QueryDoubleThrowIfError( query, isVoltageSource ? "actual voltage source voltage level" : "actual current source voltage limit" );
+
+            // set a new value
+            expectedDouble = limit + 0.01;
             command = $"_G.ttm.ir:limitSetter({expectedDouble})";
             Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.001, logEnabled );
 
+            // restore actual value
             expectedDouble = limit;
-            command = "_G.ttm.ir:limitSetter(_G.ttm.coldResistance.Defaults.limit)";
+            command = $"_G.ttm.ir:limitSetter({expectedDouble})";
             Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.001, logEnabled );
         }
 
@@ -374,14 +401,18 @@ internal static partial class Asserts
         lowLimit = session.QueryDoubleThrowIfError( query, "default low limit" );
         Assert.AreEqual( resistanceSettings.LowLimitDefault, lowLimit, $"{nameof( lowLimit )} should match settings value." );
 
-        expectedDouble = lowLimit + 0.01;
+        // get actual value
         query = "_G.print(string.format('%9.6f',_G.ttm.ir.lowLimit))";
+        lowLimit = session.QueryDoubleThrowIfError( query, "actual low limit" );
+
+        // set a new value
+        expectedDouble = lowLimit + 0.01;
         command = $"_G.ttm.ir:lowLimitSetter({expectedDouble})";
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.001, logEnabled );
 
+        // restore actual value
         expectedDouble = lowLimit;
-        query = "_G.print(string.format('%9.6f',_G.ttm.ir.lowLimit))";
-        command = "_G.ttm.ir:lowLimitSetter(_G.ttm.coldResistance.Defaults.lowLimit)";
+        command = $"_G.ttm.ir:lowLimitSetter({expectedDouble})";
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.001, logEnabled );
 
         double highLimit; // 2.156;
@@ -389,14 +420,18 @@ internal static partial class Asserts
         highLimit = session.QueryDoubleThrowIfError( query, "default high limit" );
         Assert.AreEqual( resistanceSettings.HighLimitDefault, highLimit, $"{nameof( highLimit )} should match settings value." );
 
-        expectedDouble = highLimit + 0.01;
+        // get actual value
         query = "_G.print(string.format('%9.6f',_G.ttm.ir.highLimit))";
+        highLimit = session.QueryDoubleThrowIfError( query, "actual high limit" );
+
+        // set a new value
+        expectedDouble = highLimit + 0.01;
         command = $"_G.ttm.ir:highLimitSetter({expectedDouble})";
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.001, logEnabled );
 
+        // restore actual value
         expectedDouble = highLimit;
-        query = "_G.print(string.format('%9.6f',_G.ttm.ir.highLimit))";
-        command = "_G.ttm.ir:highLimitSetter(_G.ttm.coldResistance.Defaults.highLimit)";
+        command = $"_G.ttm.ir:highLimitSetter({expectedDouble})";
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.001, logEnabled );
 
         // legacy driver: agnostic; can test.
@@ -408,11 +443,16 @@ internal static partial class Asserts
             failStatus = session.QueryIntegerThrowIfError( query, "default fail StatusReading" );
             Assert.AreEqual( resistanceSettings.FailStatus, failStatus, $"{nameof( highLimit )} should match settings value." );
 
-            expectedInt = failStatus == 2 ? 66 : 2;
+            // get actual value
             query = "_G.print(string.format('%d',_G.ttm.ir.failStatus))";
+            failStatus = session.QueryIntegerThrowIfError( query, "actual fail StatusReading" );
+
+            // set a new value
+            expectedInt = failStatus == 2 ? 66 : 2;
             command = $"_G.ttm.ir:failStatusSetter({expectedInt})";
             Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedInt, logEnabled );
 
+            // restore actual value
             expectedInt = failStatus;
             command = "_G.ttm.ir:failStatusSetter(_G.ttm.coldResistance.Defaults.failStatus)";
             Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedInt, logEnabled );
@@ -443,60 +483,115 @@ internal static partial class Asserts
             limitV = session.QueryDoubleThrowIfError( query, "default current source voltage limit" );
             Assert.AreEqual( resistanceSettings.VoltageLimit, limitV, $"{nameof( limitV )} should match settings value." );
 
+            // get actual value
             bool sourceVoltage = session.QueryBoolThrowIfError( "_G.ttm.ir:sourceVoltage()", "source voltage method" );
-            Assert.AreEqual( resistanceSettings.SourceOutput, sourceVoltage ? SourceOutputOption.Voltage : SourceOutputOption.Current, $"{nameof( sourceVoltage )} should match settings value." );
 
-            expectedDouble = levelV + 0.01;
-            query = "_G.print(string.format('%9.6f',_G.ttm.ir.levelV))";
-            command = $"_G.ttm.ir:levelSetter({expectedDouble},_G.ttm.ir:sourceVoltage())";
-            Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.001, logEnabled );
+            if ( sourceVoltage )
+                Asserts.AssertInitialResistanceVoltageSourceShouldSet( session, logEnabled );
+            else
+                Asserts.AssertInitialResistanceCurrentSourceShouldSet( session, logEnabled );
 
-            expectedDouble = levelV;
-            query = "_G.print(string.format('%9.6f',_G.ttm.ir.levelV))";
-            command = "_G.ttm.ir:levelSetter(_G.ttm.coldResistance.Defaults.levelV,_G.ttm.ir:sourceVoltage())";
-            Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.001, logEnabled );
-
-            expectedDouble = limitI + 0.01;
-            query = "_G.print(string.format('%9.6f',_G.ttm.ir.limitI))";
-            command = $"_G.ttm.ir:limitSetter({expectedDouble},_G.ttm.ir:sourceVoltage())";
-            Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.001, logEnabled );
-
-            expectedDouble = limitI;
-            query = "_G.print(string.format('%9.6f',_G.ttm.ir.limitI))";
-            command = "_G.ttm.ir:limitSetter(_G.ttm.coldResistance.Defaults.limitI,_G.ttm.ir:sourceVoltage())";
-            Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.001, logEnabled );
-
+            // set a new value
             expectedBoolean = !sourceVoltage;
             query = "_G.print(_G.ttm.ir:sourceVoltage())";
-            command = "_G.ttm.ir:sourceOutputSetter(_G.ttm.SourceOutputs.current)";
+            command = expectedBoolean ? "_G.ttm.ir:sourceOutputSetter(_G.ttm.SourceOutputs.voltage)" : "_G.ttm.ir:sourceOutputSetter(_G.ttm.SourceOutputs.current)";
             Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedBoolean, logEnabled );
 
-            expectedDouble = levelI + 0.01;
-            query = "_G.print(string.format('%9.6f',_G.ttm.ir.levelI))";
-            command = $"_G.ttm.ir:levelSetter({expectedDouble},_G.ttm.ir:sourceVoltage())";
-            Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.001, logEnabled );
+            if ( sourceVoltage )
+                Asserts.AssertInitialResistanceVoltageSourceShouldSet( session, logEnabled );
+            else
+                Asserts.AssertInitialResistanceCurrentSourceShouldSet( session, logEnabled );
 
-            expectedDouble = levelI;
-            query = "_G.print(string.format('%9.6f',_G.ttm.ir.levelI))";
-            command = "_G.ttm.ir:levelSetter(_G.ttm.coldResistance.Defaults.levelI,_G.ttm.ir:sourceVoltage())";
-            Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.001, logEnabled );
-
-            expectedDouble = limitV + 0.01;
-            query = "_G.print(string.format('%9.6f',_G.ttm.ir.limitV))";
-            command = $"_G.ttm.ir:limitSetter({expectedDouble},_G.ttm.ir:sourceVoltage())";
-            Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.001, logEnabled );
-
-            expectedDouble = limitV;
-            query = "_G.print(string.format('%9.6f',_G.ttm.ir.limitV))";
-            command = "_G.ttm.ir:limitSetter(_G.ttm.coldResistance.Defaults.limitV,_G.ttm.ir:sourceVoltage())";
-            Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.001, logEnabled );
-
+            // restore actual value
             expectedBoolean = sourceVoltage;
             query = "_G.print(_G.ttm.ir:sourceVoltage())";
-            command = "_G.ttm.ir:sourceOutputSetter(_G.ttm.SourceOutputs.voltage)";
+            command = expectedBoolean ? "_G.ttm.ir:sourceOutputSetter(_G.ttm.SourceOutputs.voltage)" : "_G.ttm.ir:sourceOutputSetter(_G.ttm.SourceOutputs.current)";
             Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedBoolean, logEnabled );
         }
     }
+
+    /// <summary>   Assert initial resistance voltage source should set. </summary>
+    /// <remarks>   2025-02-03. </remarks>
+    /// <param name="session">      The session. </param>
+    /// <param name="logEnabled">   (Optional) True to enable, false to disable the log. </param>
+    public static void AssertInitialResistanceVoltageSourceShouldSet( Pith.SessionBase? session, bool logEnabled = false )
+    {
+        Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
+        Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
+        string command, query;
+        double expectedDouble;
+
+        // get actual value
+        query = "_G.print(string.format('%9.6f',_G.ttm.ir.levelV))";
+        double levelV = session.QueryDoubleThrowIfError( query, "actual voltage source voltage level" );
+
+        // set a new value
+        expectedDouble = levelV + 0.01;
+        command = $"_G.ttm.ir:levelSetter({expectedDouble},_G.ttm.ir:sourceVoltage())";
+        Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.001, logEnabled );
+
+        // restore actual value
+        expectedDouble = levelV;
+        query = "_G.print(string.format('%9.6f',_G.ttm.ir.levelV))";
+        command = $"_G.ttm.ir:levelSetter({expectedDouble},_G.ttm.ir:sourceVoltage())";
+        Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.001, logEnabled );
+
+        // get actual value
+        query = "_G.print(string.format('%9.6f',_G.ttm.ir.limitI))";
+        double limitI = session.QueryDoubleThrowIfError( query, "actual voltage source current limit" );
+
+        // set a new value
+        expectedDouble = limitI + 0.01;
+        command = $"_G.ttm.ir:limitSetter({expectedDouble},_G.ttm.ir:sourceVoltage())";
+        Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.001, logEnabled );
+
+        // restore actual value
+        expectedDouble = limitI;
+        command = $"_G.ttm.ir:limitSetter({expectedDouble},_G.ttm.ir:sourceVoltage())";
+        Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.001, logEnabled );
+
+    }
+
+    /// <summary>   Assert initial resistance current source should set. </summary>
+    /// <remarks>   2025-02-03. </remarks>
+    /// <param name="session">      The session. </param>
+    /// <param name="logEnabled">   (Optional) True to enable, false to disable the log. </param>
+    public static void AssertInitialResistanceCurrentSourceShouldSet( Pith.SessionBase? session, bool logEnabled = false )
+    {
+        Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
+        Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
+        string command, query;
+        double expectedDouble;
+
+        // get actual value
+        query = "_G.print(string.format('%9.6f',_G.ttm.ir.levelI))";
+        double levelI = session.QueryDoubleThrowIfError( query, "actual current source current level" );
+
+        // set a new value
+        expectedDouble = levelI + 0.01;
+        command = $"_G.ttm.ir:levelSetter({expectedDouble},_G.ttm.ir:sourceVoltage())";
+        Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.001, logEnabled );
+
+        // restore actual value
+        expectedDouble = levelI;
+        command = $"_G.ttm.ir:levelSetter({expectedDouble},_G.ttm.ir:sourceVoltage())";
+        Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.001, logEnabled );
+
+        // get actual value
+        query = "_G.print(string.format('%9.6f',_G.ttm.ir.limitV))";
+        double limitV = session.QueryDoubleThrowIfError( query, "actual current source voltage limit" );
+
+        // set a new value
+        expectedDouble = limitV + 0.01;
+        command = $"_G.ttm.ir:limitSetter({expectedDouble},_G.ttm.ir:sourceVoltage())";
+        Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.001, logEnabled );
+
+        // restore actual value
+        expectedDouble = limitV;
+        command = $"_G.ttm.ir:limitSetter({expectedDouble},_G.ttm.ir:sourceVoltage())";
+        Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.001, logEnabled );
+    }
+
 
     /// <summary>   Assert estimator should reset. </summary>
     /// <remarks>   2024-11-03. </remarks>
@@ -510,27 +605,33 @@ internal static partial class Asserts
         double expectedDouble;
 
         cc.isr.VI.Tsp.K2600.Ttm.TtmEstimatorSettings estimatorSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmEstimatorSettings;
+        Assert.IsTrue( estimatorSettings.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmEstimatorSettings )} should exist." );
 
         expectedDouble = estimatorSettings.ThermalCoefficientDefault;
         query = "_G.print(string.format('%9.6f',_G.ttm.estimator.Defaults.thermalCoefficient))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedDouble, 0.00001, logEnabled );
 
-        expectedDouble = 0.00051;
+        // get actual value
         query = "_G.print(string.format('%9.6f',_G.ttm.est.thermalCoefficient))";
+        double thermalCoefficient = session.QueryDoubleThrowIfError( query, "actual thermal coefficient" );
+
+        // set a new value
+        expectedDouble = thermalCoefficient + 0.00001;
         command = $"_G.ttm.est:thermalCoefficientSetter({expectedDouble})";
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.00001, logEnabled );
 
-        expectedDouble = estimatorSettings.ThermalCoefficientDefault;
-        query = "_G.print(string.format('%9.6f',_G.ttm.est.thermalCoefficient))";
-        command = "_G.ttm.est:thermalCoefficientSetter(_G.ttm.estimator.Defaults.thermalCoefficient)";
+        // restore actual value
+        expectedDouble = thermalCoefficient;
+        command = $"_G.ttm.est:thermalCoefficientSetter({expectedDouble})";
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.00001, logEnabled );
     }
 
     /// <summary>   Assert thermal transient should reset. </summary>
     /// <remarks>   2024-11-03. </remarks>
-    /// <param name="session">      The session. </param>
-    /// <param name="logEnabled">   (Optional) True to enable, false to disable the log. </param>
-    public static void AssertThermalTransientShouldReset( Pith.SessionBase? session, bool logEnabled = false )
+    /// <param name="session">          The session. </param>
+    /// <param name="checkSmuSetter">   (Optional) True to check smu setter. </param>
+    /// <param name="logEnabled">       (Optional) True to enable, false to disable the log. </param>
+    public static void AssertThermalTransientShouldReset( Pith.SessionBase? session, bool checkSmuSetter = false, bool logEnabled = false )
     {
         Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
         Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
@@ -542,6 +643,8 @@ internal static partial class Asserts
 
         cc.isr.VI.Tsp.K2600.Ttm.TtmTraceSettings traceSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmTraceSettings;
         cc.isr.VI.Tsp.K2600.Ttm.TtmMeterSettings meterSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmMeterSettings;
+        Assert.IsTrue( traceSettings.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmTraceSettings )} should exist." );
+        Assert.IsTrue( meterSettings.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmMeterSettings )} should exist." );
 
         string model = session.ResourceSettings.ResourceModel;
         command = "_G.print(localnode.model)";
@@ -556,9 +659,20 @@ internal static partial class Asserts
             smuName = session.QueryStringThrowIfError( query, "smu name" );
             Assert.AreEqual( meterSettings.SourceMeasureUnitDefault, smuName, $"{nameof( smuName )} should match settings value." );
 
-            if ( ("26" == model[..2]) && ("2" == model.Substring( 3, 1 )) )
+            if ( checkSmuSetter )
             {
-                expectedValue = smuName == "smua" ? "smub" : "smua";
+                if ( ("26" == model[..2]) && ("2" == model.Substring( 3, 1 )) )
+                {
+                    expectedValue = smuName == "smua" ? "smub" : "smua";
+                    command = $"_G.ttm.tr:currentSourceChannelSetter({expectedValue})";
+                    Asserts.AssertCommandShouldExecute( session, command, logEnabled );
+
+                    expectedBoolean = true;
+                    query = $"_G.print(_G.localnode.{expectedValue} == _G.ttm.tr.smuI)";
+                    Asserts.AssertQueryReplyShouldBeValid( session, query, expectedBoolean, logEnabled );
+                }
+
+                expectedValue = smuName;
                 command = $"_G.ttm.tr:currentSourceChannelSetter({expectedValue})";
                 Asserts.AssertCommandShouldExecute( session, command, logEnabled );
 
@@ -566,96 +680,108 @@ internal static partial class Asserts
                 query = $"_G.print(_G.localnode.{expectedValue} == _G.ttm.tr.smuI)";
                 Asserts.AssertQueryReplyShouldBeValid( session, query, expectedBoolean, logEnabled );
             }
-
-            expectedValue = smuName;
-            command = $"_G.ttm.tr:currentSourceChannelSetter({expectedValue})";
-            Asserts.AssertCommandShouldExecute( session, command, logEnabled );
-
-            expectedBoolean = true;
-            query = $"_G.print(_G.localnode.{expectedValue} == _G.ttm.tr.smuI)";
-            Asserts.AssertQueryReplyShouldBeValid( session, query, expectedBoolean, logEnabled );
         }
 
         expectedDouble = traceSettings.ApertureDefault;
         query = "_G.print(string.format('%7.4f',_G.ttm.trace.Defaults.aperture))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedDouble, 0.00001, logEnabled );
 
-        expectedDouble += 0.0001;
+        // get actual value
         query = "_G.print(string.format('%7.4f',_G.ttm.tr.aperture))";
+        double aperture = session.QueryDoubleThrowIfError( query, "actual aperture" );
+
+        // set a new value
+        expectedDouble = aperture + 0.0001;
         command = $"_G.ttm.tr:apertureSetter({expectedDouble})";
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.00001, logEnabled );
 
-        expectedDouble = traceSettings.ApertureDefault;
-        query = "_G.print(string.format('%7.4f',_G.ttm.tr.aperture))";
-        command = "_G.ttm.tr:apertureSetter(_G.ttm.trace.Defaults.aperture)";
+        // restore actual value
+        expectedDouble = aperture;
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.00001, logEnabled );
 
         expectedDouble = traceSettings.ApertureMinimum;
         query = "_G.print(string.format('%9.6f',_G.ttm.trace.Defaults.minAperture))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedDouble, 0.00001, logEnabled );
 
-        expectedDouble += 0.0001;
+        // get actual value
         query = "_G.print(string.format('%9.6f',_G.ttm.tr.minAperture))";
+        double minAaperture = session.QueryDoubleThrowIfError( query, "actual minimum aperture" );
+
+        // set a new value
+        expectedDouble = minAaperture + 0.0001;
         command = $"_G.ttm.tr:minApertureSetter({expectedDouble})";
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.00001, logEnabled );
 
-        expectedDouble = traceSettings.ApertureMinimum;
-        query = "_G.print(string.format('%9.6f',_G.ttm.tr.minAperture))";
-        command = "_G.ttm.tr:minApertureSetter(_G.ttm.trace.Defaults.minAperture)";
+        // restore actual value
+        expectedDouble = minAaperture;
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.00001, logEnabled );
 
         expectedDouble = traceSettings.ApertureMaximum;
         query = "_G.print(string.format('%9.6f',_G.ttm.trace.Defaults.maxAperture))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedDouble, 0.00001, logEnabled );
 
-        expectedDouble += 0.0001;
+        // get actual value
         query = "_G.print(string.format('%9.6f',_G.ttm.tr.maxAperture))";
+        double maxAaperture = session.QueryDoubleThrowIfError( query, "actual maximum aperture" );
+
+        // set a new value
+        expectedDouble = maxAaperture + 0.0001;
         command = $"_G.ttm.tr:maxApertureSetter({expectedDouble})";
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.00001, logEnabled );
 
-        expectedDouble = traceSettings.ApertureMaximum;
-        query = "_G.print(string.format('%9.6f',_G.ttm.tr.maxAperture))";
-        command = "_G.ttm.tr:maxApertureSetter(_G.ttm.trace.Defaults.maxAperture)";
+        // restore actual value
+        expectedDouble = maxAaperture;
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.00001, logEnabled );
 
         expectedDouble = traceSettings.CurrentLevelDefault;
         query = "_G.print(string.format('%9.6f',_G.ttm.trace.Defaults.level))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedDouble, 0.00001, logEnabled );
 
-        expectedDouble += 0.001;
+        // get actual value
         query = "_G.print(string.format('%9.6f',_G.ttm.tr.level))";
+        double level = session.QueryDoubleThrowIfError( query, "actual trace level" );
+
+        // set a new value
+        expectedDouble = level + 0.001;
         command = $"_G.ttm.tr:levelSetter({expectedDouble})";
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.00001, logEnabled );
 
-        expectedDouble = traceSettings.CurrentLevelDefault;
-        query = "_G.print(string.format('%9.6f',_G.ttm.tr.level))";
-        command = "_G.ttm.tr:levelSetter(_G.ttm.trace.Defaults.level)";
+        // restore actual value
+        expectedDouble = level;
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.00001, logEnabled );
 
         expectedDouble = traceSettings.VoltageLimitDefault;
         query = "_G.print(string.format('%9.6f',_G.ttm.trace.Defaults.limit))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedDouble, 0.00001, logEnabled );
 
-        expectedDouble += 0.001;
+        // get actual value
         query = "_G.print(string.format('%9.6f',_G.ttm.tr.limit))";
+        double limit = session.QueryDoubleThrowIfError( query, "actual trace limit" );
+
+        // set a new value
+        expectedDouble = limit + 0.001;
         command = $"_G.ttm.tr:limitSetter({expectedDouble})";
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.00001, logEnabled );
 
-        expectedDouble = traceSettings.VoltageLimitDefault;
-        query = "_G.print(string.format('%9.6f',_G.ttm.tr.limit))";
-        command = "_G.ttm.tr:limitSetter(_G.ttm.trace.Defaults.limit)";
+        // restore actual value
+        expectedDouble = limit;
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.00001, logEnabled );
 
         expectedDouble = traceSettings.CurrentMinimum;
         query = "_G.print(string.format('%9.6f',_G.ttm.trace.Defaults.minCurrent))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedDouble, 0.00001, logEnabled );
 
-        expectedDouble += 0.001;
+        // get actual value
         query = "_G.print(string.format('%9.6f',_G.ttm.tr.minCurrent))";
+        double minCurrent = session.QueryDoubleThrowIfError( query, "actual trace minimum current" );
+
+        // set a new value
+        expectedDouble = minCurrent + 0.001;
         command = $"_G.ttm.tr:minCurrentSetter({expectedDouble})";
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.00001, logEnabled );
 
-        expectedDouble = traceSettings.CurrentMinimum;
+        // restore actual value
+        expectedDouble = minCurrent;
         query = "_G.print(string.format('%9.6f',_G.ttm.tr.minCurrent))";
         command = "_G.ttm.tr:minCurrentSetter(_G.ttm.trace.Defaults.minCurrent)";
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.00001, logEnabled );
@@ -664,82 +790,102 @@ internal static partial class Asserts
         query = "_G.print(string.format('%9.6f',_G.ttm.trace.Defaults.maxCurrent))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedDouble, 0.00001, logEnabled );
 
-        expectedDouble += 0.0001;
+        // get actual value
         query = "_G.print(string.format('%9.6f',_G.ttm.tr.maxCurrent))";
+        double maxCurrent = session.QueryDoubleThrowIfError( query, "actual trace maximum current" );
+
+        // set a new value
+        expectedDouble = maxCurrent - 0.0001;
         command = $"_G.ttm.tr:maxCurrentSetter({expectedDouble})";
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.00001, logEnabled );
 
-        expectedDouble = traceSettings.CurrentMaximum;
-        query = "_G.print(string.format('%9.6f',_G.ttm.tr.maxCurrent))";
-        command = "_G.ttm.tr:maxCurrentSetter(_G.ttm.trace.Defaults.maxCurrent)";
+        // restore actual value
+        expectedDouble = maxCurrent;
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.00001, logEnabled );
 
         expectedDouble = traceSettings.VoltageMinimum;
         query = "_G.print(string.format('%9.6f',_G.ttm.trace.Defaults.minVoltage))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedDouble, 0.00001, logEnabled );
 
-        expectedDouble += 0.001;
+        // get actual value
         query = "_G.print(string.format('%9.6f',_G.ttm.tr.minVoltage))";
+        double minVoltage = session.QueryDoubleThrowIfError( query, "actual trace minimum voltage" );
+
+        // set a new value
+        expectedDouble = minVoltage + 0.001;
         command = $"_G.ttm.tr:minVoltageSetter({expectedDouble})";
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.00001, logEnabled );
 
-        expectedDouble = traceSettings.VoltageMinimum;
-        query = "_G.print(string.format('%9.6f',_G.ttm.tr.minVoltage))";
-        command = "_G.ttm.tr:minVoltageSetter(_G.ttm.trace.Defaults.minVoltage)";
+        // restore actual value
+        expectedDouble = minVoltage;
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.00001, logEnabled );
 
         expectedDouble = traceSettings.VoltageMaximum;
         query = "_G.print(string.format('%9.6f',_G.ttm.trace.Defaults.maxVoltage))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedDouble, 0.00001, logEnabled );
 
-        expectedDouble += 0.001;
+        // get actual value
         query = "_G.print(string.format('%9.6f',_G.ttm.tr.maxVoltage))";
+        double maxVoltage = session.QueryDoubleThrowIfError( query, "actual trace minimum voltage" );
+
+        // set a new value
+        expectedDouble = maxVoltage + 0.001;
         command = $"_G.ttm.tr:maxVoltageSetter({expectedDouble})";
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.00001, logEnabled );
 
-        expectedDouble = traceSettings.VoltageMaximum;
-        query = "_G.print(string.format('%9.6f',_G.ttm.tr.maxVoltage))";
-        command = "_G.ttm.tr:maxVoltageSetter(_G.ttm.trace.Defaults.maxVoltage)";
+        // restore actual value
+        expectedDouble = maxVoltage;
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.00001, logEnabled );
 
         expectedDouble = traceSettings.LowLimitDefault;
         query = "_G.print(string.format('%9.6f',_G.ttm.trace.Defaults.lowLimit))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedDouble, 0.00001, logEnabled );
 
-        expectedDouble += 0.0001;
+        // get actual value
         query = "_G.print(string.format('%9.6f',_G.ttm.tr.lowLimit))";
+        double lowLimit = session.QueryDoubleThrowIfError( query, "actual trace low limit" );
+
+        // set a new value
+        expectedDouble = lowLimit + 0.0001;
         command = $"_G.ttm.tr:lowLimitSetter({expectedDouble})";
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.00001, logEnabled );
 
-        expectedDouble = traceSettings.LowLimitDefault;
-        query = "_G.print(string.format('%9.6f',_G.ttm.tr.lowLimit))";
-        command = "_G.ttm.tr:lowLimitSetter(_G.ttm.trace.Defaults.lowLimit)";
+        // restore actual value
+        expectedDouble = lowLimit;
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.00001, logEnabled );
 
         expectedDouble = traceSettings.HighLimitDefault;
         query = "_G.print(string.format('%9.6f',_G.ttm.trace.Defaults.highLimit))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedDouble, 0.00001, logEnabled );
 
-        expectedDouble += 0.001;
+        // get actual value
         query = "_G.print(string.format('%9.6f',_G.ttm.tr.highLimit))";
+        double highLimit = session.QueryDoubleThrowIfError( query, "actual trace high limit" );
+
+        // set a new value
+        expectedDouble = highLimit + 0.001;
         command = $"_G.ttm.tr:highLimitSetter({expectedDouble})";
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.00001, logEnabled );
 
-        expectedDouble = traceSettings.HighLimitDefault;
-        query = "_G.print(string.format('%9.6f',_G.ttm.tr.highLimit))";
-        command = "_G.ttm.tr:highLimitSetter(_G.ttm.trace.Defaults.highLimit)";
+        // restore actual value
+        expectedDouble = highLimit;
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.00001, logEnabled );
 
         expectedDouble = traceSettings.VoltageChangeMaximum;
         query = "_G.print(string.format('%9.6f',_G.ttm.trace.Defaults.maxVoltageChange))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedDouble, 0.00001, logEnabled );
 
-        expectedDouble += 0.0001;
+        // get actual value
         query = "_G.print(string.format('%9.6f',_G.ttm.tr.maxVoltageChange))";
+        double maxVoltageChange= session.QueryDoubleThrowIfError( query, "actual trace maximum voltage change" );
+
+        // set a new value
+        expectedDouble = maxVoltageChange - 0.0001;
         command = $"_G.ttm.tr:maxVoltageChangeSetter({expectedDouble})";
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.00001, logEnabled );
 
-        expectedDouble = traceSettings.VoltageChangeMaximum;
+        // restore actual value
+        expectedDouble = maxVoltageChange;
         query = "_G.print(string.format('%9.6f',_G.ttm.tr.maxVoltageChange))";
         command = "_G.ttm.tr:maxVoltageChangeSetter(_G.ttm.trace.Defaults.maxVoltageChange)";
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.00001, logEnabled );
@@ -748,40 +894,51 @@ internal static partial class Asserts
         query = "_G.print(string.format('%d',_G.ttm.trace.Defaults.medianFilterSize))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedInt, logEnabled );
 
-        expectedInt += 2;
+        // get actual value
         query = "_G.print(string.format('%d',_G.ttm.tr.medianFilterSize))";
+        int medianFilterSize = session.QueryIntegerThrowIfError( query, "actual trace median filter size" );
+
+        // set a new value
+        expectedInt = medianFilterSize + 2;
         command = $"_G.ttm.tr:medianFilterSizeSetter({expectedDouble})";
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedInt, logEnabled );
 
-        expectedInt = traceSettings.MedianFilterLengthDefault;
-        query = "_G.print(string.format('%d',_G.ttm.tr.medianFilterSize))";
-        command = "_G.ttm.tr:medianFilterSizeSetter(_G.ttm.trace.Defaults.medianFilterSize)";
+        // restore actual value
+        expectedInt = medianFilterSize;
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedInt, logEnabled );
 
         expectedDouble = traceSettings.SamplingIntervalDefault;
         query = "_G.print(string.format('%9.6f',_G.ttm.trace.Defaults.period))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedDouble, 0.00001, logEnabled );
 
-        expectedDouble += 0.00001;
+        // get actual value
         query = "_G.print(string.format('%9.6f',_G.ttm.tr.period))";
+        double period = session.QueryDoubleThrowIfError( query, "actual trace period" );
+
+        // set a new value
+        expectedDouble = period + 0.00001;
         command = $"_G.ttm.tr:periodSetter({expectedDouble})";
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.00001, logEnabled );
 
-        expectedDouble = traceSettings.SamplingIntervalDefault;
-        query = "_G.print(string.format('%9.6f',_G.ttm.tr.period))";
-        command = "_G.ttm.tr:periodSetter(_G.ttm.trace.Defaults.period)";
+        // restore actual value
+        expectedDouble = period;
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.00001, logEnabled );
 
         expectedDouble = traceSettings.SamplingIntervalMinimum;
         query = "_G.print(string.format('%9.6f',_G.ttm.trace.Defaults.minPeriod))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedDouble, 0.00001, logEnabled );
 
-        expectedDouble += 0.000001;
+        // get actual value
         query = "_G.print(string.format('%9.6f',_G.ttm.tr.minPeriod))";
+        double minPeriod = session.QueryDoubleThrowIfError( query, "actual trace minimum period" );
+
+        // set a new value
+        expectedDouble = minPeriod + 0.000001;
         command = $"_G.ttm.tr:minPeriodSetter({expectedDouble})";
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.00001, logEnabled );
 
-        expectedDouble = traceSettings.SamplingIntervalMinimum;
+        // restore actual value
+        expectedDouble = minPeriod;
         query = "_G.print(string.format('%9.6f',_G.ttm.tr.minPeriod))";
         command = "_G.ttm.tr:minPeriodSetter(_G.ttm.trace.Defaults.minPeriod)";
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.00001, logEnabled );
@@ -790,56 +947,68 @@ internal static partial class Asserts
         query = "_G.print(string.format('%9.6f',_G.ttm.trace.Defaults.maxPeriod))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedDouble, 0.00001, logEnabled );
 
-        expectedDouble += 0.0001;
+        // get actual value
         query = "_G.print(string.format('%9.6f',_G.ttm.tr.maxPeriod))";
+        double maxPeriod = session.QueryDoubleThrowIfError( query, "actual trace maximum period" );
+
+        // set a new value
+        // restore actual value
+        expectedDouble = maxPeriod + 0.0001;
         command = $"_G.ttm.tr:maxPeriodSetter({expectedDouble})";
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.00001, logEnabled );
 
-        expectedDouble = traceSettings.SamplingIntervalMaximum;
-        query = "_G.print(string.format('%9.6f',_G.ttm.tr.maxPeriod))";
-        command = "_G.ttm.tr:maxPeriodSetter(_G.ttm.trace.Defaults.maxPeriod)";
+        expectedDouble = maxPeriod;
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.00001, logEnabled );
 
         expectedInt = traceSettings.TracePointsDefault;
         query = "_G.print(string.format('%d',_G.ttm.trace.Defaults.points))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedInt, logEnabled );
 
-        expectedInt += 1;
+        // get actual value
         query = "_G.print(string.format('%d',_G.ttm.tr.points))";
+        int points = session.QueryIntegerThrowIfError( query, "actual trace points" );
+
+        // set a new value
+        expectedInt = points + 1;
         command = $"_G.ttm.tr:pointsSetter({expectedDouble})";
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedInt, logEnabled );
 
-        expectedInt = traceSettings.TracePointsDefault;
-        query = "_G.print(string.format('%d',_G.ttm.tr.points))";
-        command = "_G.ttm.tr:pointsSetter(_G.ttm.trace.Defaults.points)";
+        // restore actual value
+        expectedInt = points;
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedInt, logEnabled );
 
         expectedInt = traceSettings.TracePointsMinimum;
         query = "_G.print(string.format('%9.6f',_G.ttm.trace.Defaults.minPoints))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedInt, logEnabled );
 
-        expectedInt += 1;
+        // get actual value
         query = "_G.print(string.format('%9.6f',_G.ttm.tr.minPoints))";
+        int minPoints = session.QueryIntegerThrowIfError( query, "actual trace minimum points" );
+
+        // set a new value
+        expectedInt = minPoints + 1;
         command = $"_G.ttm.tr:minPointsSetter({expectedInt})";
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedInt, logEnabled );
 
-        expectedInt = traceSettings.TracePointsMinimum;
-        query = "_G.print(string.format('%9.6f',_G.ttm.tr.minPoints))";
-        command = "_G.ttm.tr:minPointsSetter(_G.ttm.trace.Defaults.minPoints)";
+        // restore actual value
+        expectedInt = minPoints;
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedInt, logEnabled );
 
         expectedInt = traceSettings.TracePointsMaximum;
         query = "_G.print(string.format('%9.6f',_G.ttm.trace.Defaults.maxPoints))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedInt, logEnabled );
 
-        expectedInt += 1;
+        // get actual value
         query = "_G.print(string.format('%9.6f',_G.ttm.tr.maxPoints))";
+        int maxPoints = session.QueryIntegerThrowIfError( query, "actual trace maximum points" );
+
+        // set a new value
+        expectedInt = maxPoints + 1;
         command = $"_G.ttm.tr:maxPointsSetter({expectedInt})";
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedInt, logEnabled );
 
-        expectedInt = traceSettings.TracePointsMaximum;
-        query = "_G.print(string.format('%9.6f',_G.ttm.tr.maxPoints))";
-        command = "_G.ttm.tr:maxPointsSetter(_G.ttm.trace.Defaults.maxPoints)";
+        // restore actual value
+        expectedInt = maxPoints;
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedInt, logEnabled );
 
         // get the max read estimate 
@@ -854,14 +1023,17 @@ internal static partial class Asserts
         query = "_G.print(string.format('%9.6f',_G.ttm.trace.Defaults.latency))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedDouble, 0.000001, logEnabled );
 
-        expectedDouble += 0.000001;
+        // get actual value
         query = "_G.print(string.format('%9.6f',_G.ttm.tr.latency))";
+        double latency = session.QueryDoubleThrowIfError( query, "actual trace latency" );
+
+        // set a new value
+        expectedDouble = latency + 0.000001;
         command = $"_G.ttm.tr:latencySetter({expectedDouble})";
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.000001, logEnabled );
 
-        expectedDouble = traceSettings.LowLimitDefault;
-        query = "_G.print(string.format('%9.6f',_G.ttm.tr.latency))";
-        command = "_G.ttm.tr:latencySetter(_G.ttm.trace.Defaults.latency)";
+        // restore actual value
+        expectedDouble = latency;
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.000001, logEnabled );
     }
 }

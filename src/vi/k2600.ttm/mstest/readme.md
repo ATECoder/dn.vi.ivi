@@ -32,7 +32,7 @@ Presently (Visual Studio 17.10.4), this project targets .NET 8.0 Core only. Unfo
 System.IO.FileLoadException: Could not load file or assembly 'Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10' or one of its dependencies. The located assembly's manifest definition does not match the assembly reference. (Exception from HRESULT: 0x80131040)
 ```
 
-This failure occurred upon attempting to configure the Serilog logging platform form our .NETSTANDARD 2.0 logging library. We are not sure at this time how this could be remedied. Apparently, a similar issue was reported in 2017 ([2017 issue]) that was reported as fixed in Visual Studio 15.5.
+This failure occurred upon attempting to configure the Serilog logging platform from our .NETSTANDARD 2.0 logging library. We are not sure at this time how this could be remedied. Apparently, a similar issue was reported in 2017 ([2017 issue]) that was reported as fixed in Visual Studio 15.5.
 
 # Main Types
 

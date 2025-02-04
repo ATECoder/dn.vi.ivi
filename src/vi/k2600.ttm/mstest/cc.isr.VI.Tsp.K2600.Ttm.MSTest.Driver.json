@@ -25,6 +25,7 @@
 
   "TtmResistanceSettings": {
     "Exists": true,
+    "CurrentSourceSmu": "smua",
     "Aperture": 1,
     "ApertureDefault": 1,
     "ApertureMaximum": 10,

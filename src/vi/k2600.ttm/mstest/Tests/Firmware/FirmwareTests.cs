@@ -75,7 +75,11 @@ public class FirmwareTests
 
         // read the TTM Driver settings and throw if not found.
         this.TtmSettings.ReadSettings( this.GetType(), ".Driver" );
-
+        cc.isr.VI.Tsp.K2600.Ttm.TtmMeterSettings meterSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmMeterSettings;
+        Assert.IsTrue( meterSettings.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmMeterSettings )} should exist." );
+        cc.isr.VI.Tsp.K2600.Ttm.TtmResistanceSettings resistanceSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmResistanceSettings;
+        Assert.IsTrue( resistanceSettings.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmResistanceSettings )} should exist." );
+        Assert.AreEqual( 9.999, resistanceSettings.VoltageMaximum );
         Asserts.LegacyDriver = this.TtmSettings.TtmMeterSettings.LegacyDriver;
 
         cc.isr.VI.Tsp.VisaSession visaSession = new();
@@ -170,19 +174,19 @@ public class FirmwareTests
         Asserts.AssertTspSyntaxShouldNotFail( session, true );
         Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertTspSyntaxShouldNotFail )}" );
 
-        Asserts.AssertMeterValueShouldReset( session, true );
+        Asserts.AssertMeterValueShouldReset( session );
         Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertMeterValueShouldReset )}" );
 
-        Asserts.AssertColdResistanceDefaultsShouldBeFetched( session, true );
+        Asserts.AssertColdResistanceDefaultsShouldBeFetched( session );
         Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertColdResistanceDefaultsShouldBeFetched )}" );
 
-        Asserts.AssertInitialResistanceShouldReset( session, true );
+        Asserts.AssertInitialResistanceShouldReset( session );
         Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertInitialResistanceShouldReset )}" );
 
         Asserts.AssertEstimatorShouldReset( session, true );
         Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertEstimatorShouldReset )}" );
 
-        Asserts.AssertThermalTransientShouldReset( session, true );
+        Asserts.AssertThermalTransientShouldReset( session );
         Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertThermalTransientShouldReset )}" );
     }
 
