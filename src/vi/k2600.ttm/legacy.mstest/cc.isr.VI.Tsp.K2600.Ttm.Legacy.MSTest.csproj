@@ -40,7 +40,7 @@
   <Choose>
     <When Condition="$(DefineConstants.Contains(';PROJREF;')) OR $(DefineConstants.Contains(';MYPROJREF;'))">
       <ItemGroup>
-        <ProjectReference Include="..\Legacy\cc.isr.VI.Tsp.K2600.Ttm.Legacy.csproj" />
+        <ProjectReference Include="..\legacy\cc.isr.VI.Tsp.K2600.Ttm.Legacy.csproj" />
       </ItemGroup>
     </When>
     <Otherwise>
@@ -85,13 +85,13 @@
     </None>
   </ItemGroup>
 
+  <Import Project="..\legacy\version.build.props" />
+  
   <ItemGroup>
     <!-- Suppress warning about newton soft 9.0.1 which is part of the .net fx testing extensions code coverage. -->
     <NuGetAuditSuppress Include="https://github.com/advisories/GHSA-5crp-9r3c-p9vr" />
     <ProjectReference Include="..\..\..\device\device.mstest\cc.isr.VI.Device.MSTest.csproj" />
     <PackageReference Update="Microsoft.Testing.Extensions.CodeCoverage" Version="17.12.6" />
-    <PackageReference Update="Microsoft.Testing.Extensions.TrxReport" Version="1.4.3" />
-    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.12.0" />
   </ItemGroup>
 
 </Project>

@@ -309,6 +309,7 @@ internal static partial class Asserts
 
         //allow some time for the trigger loop to start..
         _ = Pith.SessionBase.AsyncDelay( TimeSpan.FromMilliseconds( 100 ) );
+
         session.AssertTrigger();
 
         bool messageAvailable = false;
@@ -329,6 +330,10 @@ internal static partial class Asserts
             Assert.IsFalse( string.IsNullOrEmpty( reading ), $"Triggered output should not be null or empty." );
             Assert.AreEqual( legacyDevice.MeasurementCompletedReply, reading, "The triggered output should match the expected reading" );
         }
+
+        sw.Stop();
+        TimeSpan timeSpan = sw.Elapsed;
+        Console.WriteLine( $"Trigger Cycle Time: {timeSpan:s\\.fff}s" );
 
         Asserts.AssertOrphanMessagesOrDeviceErrors( session );
     }

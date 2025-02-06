@@ -85,7 +85,11 @@ public partial class LegacyDevice : CommunityToolkit.Mvvm.ComponentModel.Observa
                 this.OnMessageAvailable( TraceEventType.Verbose, "Querying Final resistance", "Instrument '{0}' querying Final Resistance reading", this.ResourceName );
                 this.LastReading = session.QueryPrintStringFormatTrimEnd( "%8.5f", "_G.ttm.fr.resistance" ) ?? string.Empty;
                 this.OnMessageAvailable( TraceEventType.Verbose, "Received Final Resistance reading", "Instrument '{0}' received Final Resistance reading ='{1}'", this.ResourceName, this.LastReading );
-                this.LastOutcomeReading = "0";
+
+                this.OnMessageAvailable( TraceEventType.Verbose, "Final Resistance okay--getting outcome", "Instrument '{0}' Final Resistance measurement okay--reading outcome", this.ResourceName );
+                this.LastOutcomeReading = session.QueryPrintStringFormatTrimEnd( "%d", "_G.ttm.fr.outcome" ) ?? string.Empty;
+                this.OnMessageAvailable( TraceEventType.Verbose, "Final Resistance outcome received", "Instrument '{0}' Final Resistance outcome = {1}", this.ResourceName, this.LastOutcomeReading );
+
                 this.OnMessageAvailable( TraceEventType.Verbose, "Final Resistance okay--getting Status", "Instrument '{0}' Final Resistance measurement okay--reading status", this.ResourceName );
                 this.LastStatusReading = session.QueryPrintStringFormatTrimEnd( "%d", "_G.ttm.fr.status" ) ?? string.Empty;
                 this.OnMessageAvailable( TraceEventType.Verbose, "Final Resistance Status received", "Instrument '{0}' Final Resistance status= {1}", this.ResourceName, this.LastStatusReading );
@@ -174,12 +178,13 @@ public partial class LegacyDevice : CommunityToolkit.Mvvm.ComponentModel.Observa
                 this.LastReading = session.QueryPrintStringFormatTrimEnd( "%8.5f", "_G.ttm.ir.resistance" ) ?? string.Empty;
                 this.OnMessageAvailable( TraceEventType.Verbose, "Received Initial resistance reading", "Instrument '{0}' received Initial Resistance reading ='{1}'", this.ResourceName, this.LastReading );
 
-                this.LastOutcomeReading = "0";
+                this.OnMessageAvailable( TraceEventType.Verbose, "Initial Resistance okay--getting outcome", "Instrument '{0}' Initial Resistance measurement okay--reading outcome", this.ResourceName );
+                this.LastOutcomeReading = session.QueryPrintStringFormatTrimEnd( "%d", "_G.ttm.ir.outcome" ) ?? string.Empty;
+                this.OnMessageAvailable( TraceEventType.Verbose, "Initial Resistance outcome received", "Instrument '{0}' Initial Resistance outcome = {1}", this.ResourceName, this.LastOutcomeReading );
 
                 this.OnMessageAvailable( TraceEventType.Verbose, "Initial resistance okay--getting Status", "Instrument '{0}' Initial Resistance measurement--reading status", this.ResourceName );
                 this.LastStatusReading = session.QueryPrintStringFormatTrimEnd( "%d", "_G.ttm.ir.status" ) ?? string.Empty;
                 this.OnMessageAvailable( TraceEventType.Verbose, "Initial resistance Status received", "Instrument '{0}' Initial Resistance status= {1}", this.ResourceName, this.LastStatusReading );
-                this.LastOutcomeReading = session.QueryTrimEnd( "print(_G.ttm.ir.outcome)" );
                 return true;
             }
             else

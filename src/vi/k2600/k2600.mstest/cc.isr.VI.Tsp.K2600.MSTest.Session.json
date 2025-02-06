@@ -31,7 +31,7 @@
     "ReadAfterWriteDelay": "00:00:00.0100000",
     "ResetRefractoryPeriod": "00:00:00.2000000",
     "StatusReadDelay": "00:00:00.0100000",
-    "StatusReadTurnaroundTime": "00:00:00.0100000"
+    "StatusReadTurnaroundTime": "00:00:00.0100000",
     "SessionMessageNotificationModes": "None"
   },
 

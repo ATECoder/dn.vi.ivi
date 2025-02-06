@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using cc.isr.VI.Tsp.K2600.MSTest.Settings;
 using cc.isr.VI.Tsp.K2600.MSTest.Visa;
 
@@ -156,7 +157,10 @@ public class SubsystemsTests : Device.Tests.Base.SubsystemsTests
         Console.WriteLine( $"Contact check speed: {speedMode}" );
         double? contactCheckThreshold = contactSubsystem.ApplyContactCheckThreshold( contactThreshold );
         Console.WriteLine( $"Contact check threshold: {contactCheckThreshold}" );
+        Stopwatch sw = Stopwatch.StartNew();
         bool? contactCheckPassed = contactSubsystem.QueryContactCheckOkay();
+        sw.Stop();
+        Console.WriteLine( $"Contact check time: {sw.ElapsedMilliseconds:#.0} ms" );
         Console.WriteLine( $"Contact check passed: {contactCheckPassed}" );
         Assert.IsNotNull( contactCheckPassed, $"{nameof( contactCheckPassed )} should not be null." );
         string contactResistances = contactSubsystem.QueryContactResistances();
@@ -204,6 +208,4 @@ public class SubsystemsTests : Device.Tests.Base.SubsystemsTests
     }
 
     #endregion
-
-
 }

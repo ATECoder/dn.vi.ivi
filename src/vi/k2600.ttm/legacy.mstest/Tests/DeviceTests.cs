@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 
 namespace cc.isr.VI.Tsp.K2600.Ttm.Legacy.Tests;
 
@@ -64,7 +65,7 @@ public class DeviceTests
     {
         // reported in the base class
         // Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
-        Console.WriteLine( $"Testing {typeof( K2600Device ).Assembly.FullName}" );
+        Console.WriteLine( $"Testing {typeof( LegacyDevice ).Assembly.FullName}" );
 
         // create an instance of the Serilog logger. 
         SessionLogger.Instance.CreateSerilogLogger( typeof( DeviceTests ) );
@@ -208,9 +209,13 @@ public class DeviceTests
 
         using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( this.LegacyDevice, this.ResourceSettings.ResourceName );
 
+        Stopwatch sw = Stopwatch.StartNew();
         bool validateTriggerCycleReplyMessage = true;
         Asserts.AssertTriggerCycleShouldStart( this.LegacyDevice, validateTriggerCycleReplyMessage );
         Asserts.AssertMeasurementsShouldRead( this.LegacyDevice, !validateTriggerCycleReplyMessage );
+        sw.Stop();
+        TimeSpan timeSpan = sw.Elapsed;
+        Console.WriteLine( $"         Elapsed: {timeSpan:s\\.fff}s" );
         Asserts.AssertInitialResistanceReadingShouldValidate( this.LegacyDevice );
         Asserts.AssertTriggerCycleShouldAbort( this.LegacyDevice );
 
@@ -240,9 +245,13 @@ public class DeviceTests
 
         using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( this.LegacyDevice, this.ResourceSettings.ResourceName );
 
+        Stopwatch sw = Stopwatch.StartNew();
         bool validateTriggerCycleReplyMessage = true;
         Asserts.AssertTriggerCycleShouldStart( this.LegacyDevice, validateTriggerCycleReplyMessage );
         Asserts.AssertMeasurementsShouldRead( this.LegacyDevice, !validateTriggerCycleReplyMessage );
+        sw.Stop();
+        TimeSpan timeSpan = sw.Elapsed;
+        Console.WriteLine( $"         Elapsed: {timeSpan:s\\.fff}s" );
         Asserts.AssertInitialResistanceReadingShouldValidate( this.LegacyDevice );
         Asserts.AssertTriggerCycleShouldAbort( this.LegacyDevice );
 

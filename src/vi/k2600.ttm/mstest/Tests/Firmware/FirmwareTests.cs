@@ -65,7 +65,7 @@ public class FirmwareTests
     {
         // reported in the base class
         // Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
-        Console.WriteLine( $"Testing {typeof( cc.isr.VI.Tsp.K2600.K2600Device ).Assembly.FullName}" );
+        Console.WriteLine( $"Testing {typeof( cc.isr.VI.Tsp.K2600.Ttm.Meter ).Assembly.FullName}" );
 
         // create an instance of the Serilog logger. 
         SessionLogger.Instance.CreateSerilogLogger( typeof( FirmwareTests ) );
