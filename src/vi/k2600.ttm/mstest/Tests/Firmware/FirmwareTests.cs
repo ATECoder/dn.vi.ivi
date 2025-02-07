@@ -64,7 +64,7 @@ public class FirmwareTests
     public void InitializeBeforeEachTest()
     {
         // reported in the base class
-        // Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
+        Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
         Console.WriteLine( $"Testing {typeof( cc.isr.VI.Tsp.K2600.Ttm.Meter ).Assembly.FullName}" );
 
         // create an instance of the Serilog logger. 
@@ -263,16 +263,17 @@ public class FirmwareTests
     }
 
 
-    /// <summary>   (Unit Test Method) *TRG command should trigger measurements. </summary>
-    /// <remarks>   2024-10-26. </remarks>
-    [TestMethod( "12. TRG command should trigger measurements" )]
-    public void TRGCommandShouldTriggerMeasurements()
+    /// <summary>   (Unit Test Method) measurement should be triggered. </summary>
+    /// <remarks>   2025-02-07. </remarks>
+    [TestMethod( "12. Measurement should be triggered" )]
+    public void MeasurementShouldBeTriggered()
     {
         string resourceName = this.ResourceSettings.ResourceName;
         using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( resourceName );
 
-        Asserts.AssertTheTRGCommandShouldTriggerMeasurements( session, TimeSpan.FromMilliseconds( 1000 ) );
-        Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertTheTRGCommandShouldTriggerMeasurements )}" );
+        TimeSpan timeout = TimeSpan.FromSeconds( 1 );
+        Asserts.AssertTriggerCycleShouldStart( session, timeout, true );
+        Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertTriggerCycleShouldStart )}" );
 
         Asserts.AssertTtmElementReadings( session, Asserts.IR );
         Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertTtmElementReadings )} TTM Elements {Asserts.IR}" );
@@ -285,5 +286,10 @@ public class FirmwareTests
 
         Asserts.AssertEstimatesShouldRead( session );
         Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertEstimatesShouldRead )}" );
+
+        // !@# estimate needs to be fixed.
+        // Asserts.AssertEstimatesShouldEstimate( session );
+        // Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertEstimatesShouldRead )}" );
+
     }
 }

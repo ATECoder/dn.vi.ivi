@@ -804,7 +804,7 @@ public abstract class MeasureSubsystemBase( VI.StatusSubsystemBase statusSubsyst
             else if ( numericValue != 0 )
             {
                 outcome = MeasurementOutcomes.MeasurementFailed;
-                if ( 0 != (numericValue & ( int ) FirmwareOutcomes.badStatus) )
+                if ( 0 != (numericValue & ( int ) FirmwareOutcomes.BadStatus) )
                 {
                     // this is a bad status - could be compliance or other things.
                     if ( !string.IsNullOrWhiteSpace( this.FirmwareStatusReading ) )
@@ -830,7 +830,7 @@ public abstract class MeasureSubsystemBase( VI.StatusSubsystemBase statusSubsyst
                     outcome |= MeasurementOutcomes.HitCompliance;
                 }
 
-                if ( (numericValue & ( int ) FirmwareOutcomes.badTimeStamps) != 0 )
+                if ( (numericValue & ( int ) FirmwareOutcomes.BadTimeStamps) != 0 )
                 {
                     if ( detailsBuilder.Length > 0 )
                         _ = detailsBuilder.AppendLine();
@@ -838,7 +838,7 @@ public abstract class MeasureSubsystemBase( VI.StatusSubsystemBase statusSubsyst
                     outcome |= MeasurementOutcomes.UnspecifiedFirmwareOutcome;
                 }
 
-                if ( (numericValue & ( int ) FirmwareOutcomes.configFailed) != 0 )
+                if ( (numericValue & ( int ) FirmwareOutcomes.ConfigFailed) != 0 )
                 {
                     if ( detailsBuilder.Length > 0 )
                         _ = detailsBuilder.AppendLine();
@@ -846,7 +846,7 @@ public abstract class MeasureSubsystemBase( VI.StatusSubsystemBase statusSubsyst
                     outcome |= MeasurementOutcomes.UnspecifiedFirmwareOutcome;
                 }
 
-                if ( (numericValue & ( int ) FirmwareOutcomes.initiationFailed) != 0 )
+                if ( (numericValue & ( int ) FirmwareOutcomes.InitiationFailed) != 0 )
                 {
                     if ( detailsBuilder.Length > 0 )
                         _ = detailsBuilder.AppendLine();
@@ -854,7 +854,7 @@ public abstract class MeasureSubsystemBase( VI.StatusSubsystemBase statusSubsyst
                     outcome |= MeasurementOutcomes.UnspecifiedFirmwareOutcome;
                 }
 
-                if ( (numericValue & ( int ) FirmwareOutcomes.loadFailed) != 0 )
+                if ( (numericValue & ( int ) FirmwareOutcomes.LoadFailed) != 0 )
                 {
                     if ( detailsBuilder.Length > 0 )
                         _ = detailsBuilder.AppendLine();
@@ -862,7 +862,7 @@ public abstract class MeasureSubsystemBase( VI.StatusSubsystemBase statusSubsyst
                     outcome |= MeasurementOutcomes.UnspecifiedFirmwareOutcome;
                 }
 
-                if ( (numericValue & ( int ) FirmwareOutcomes.measurementFailed) != 0 )
+                if ( (numericValue & ( int ) FirmwareOutcomes.MeasurementFailed) != 0 )
                 {
                     if ( detailsBuilder.Length > 0 )
                         _ = detailsBuilder.AppendLine();
@@ -870,7 +870,7 @@ public abstract class MeasureSubsystemBase( VI.StatusSubsystemBase statusSubsyst
                     outcome |= MeasurementOutcomes.MeasurementFailed;
                 }
 
-                if ( (numericValue & ( int ) FirmwareOutcomes.openLeads) != 0 )
+                if ( (numericValue & ( int ) FirmwareOutcomes.OpenLeads) != 0 )
                 {
                     if ( detailsBuilder.Length > 0 )
                         _ = detailsBuilder.AppendLine();
@@ -878,7 +878,7 @@ public abstract class MeasureSubsystemBase( VI.StatusSubsystemBase statusSubsyst
                     outcome |= MeasurementOutcomes.OpenLeads;
                 }
 
-                if ( (numericValue & ((2 * ( int ) FirmwareOutcomes.openLeads) - 1)) != 0 )
+                if ( (numericValue & ((2 * ( int ) FirmwareOutcomes.OpenLeads) - 1)) != 0 )
                 {
                     if ( detailsBuilder.Length > 0 )
                         _ = detailsBuilder.AppendLine();

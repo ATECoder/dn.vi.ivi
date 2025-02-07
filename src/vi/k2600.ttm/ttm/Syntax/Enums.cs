@@ -14,35 +14,39 @@ public enum FirmwareOutcomes
     /// <summary>   A binary constant indicating that sampling return bad status from the buffer. 
     ///             Also indicates open leads when the firmware is compatibility is set for the legacy driver.. </summary>
     [Description( "Bad status" )]
-    badStatus = 1,
+    BadStatus = 1,
 
     /// <summary>   A binary constant indicating that sampling returned bad time stamps. </summary>
     [Description( "Base Time Stamps" )]
-    badTimeStamps = 2,
+    BadTimeStamps = 2,
 
     /// <summary>   A binary constant indicating that configuration failed. </summary>
     [Description( "Configuration Failed" )]
-    configFailed = 4,
+    ConfigFailed = 4,
 
     /// <summary>   A binary constant indicating that pulse initiation failed. </summary>
     [Description( "Initiation Failed" )]
-    initiationFailed = 8,
+    InitiationFailed = 8,
 
     /// <summary>   A binary constant indicating that scripts not loaded completely. </summary>
     [Description( "Scripts Not Loaded Completely." )]
-    loadFailed = 16,
+    LoadFailed = 16,
 
     /// <summary>   A binary constant indicating that a measurement failed (e.g., a null value returned from the voltage buffer). </summary>
     [Description( "Measurement Failed" )]
-    measurementFailed = 32,
+    MeasurementFailed = 32,
 
     /// <summary>   A binary constant indicating that the leads resistance is higher than the minimum acceptable value. </summary>
     [Description( "Open Leads" )]
-    openLeads = 64,
+    OpenLeads = 64,
+
+    /// <summary>   A binary constant representing the unknown flag. </summary>
+    [Description( "Open DUT Leads" )]
+    OpenDutLeads = 128,
 
     /// <summary>   A binary constant representing the unknown flag. </summary>
     [Description( "Unknown" )]
-    Unknown = 128
+    Unknown = 1024
 }
 
 /// <summary>   A bit-field of flags for specifying contact check options. </summary>
@@ -142,21 +146,29 @@ public enum LeadsStatusBits
     [Description( "None" )]
     Okay = 0,
 
+    /// <summary>   A binary constant representing the open leads status bit. </summary>
+    [Description( "Open Leads" )]
+    OpenLeads = 1,
+
     /// <summary>   A binary constant representing the open high leads status bit. </summary>
     [Description( "Open High Leads" )]
-    OpenHighLeads = 1,
+    OpenHighLeads = 2,
 
     /// <summary>   A binary constant representing the open low leads status bit. </summary>
     [Description( "Open Low Leads" )]
-    OpenLowLeads = 2,
+    OpenLowLeads = 4,
+
+    /// <summary>   A binary constant representing the open DUT leads status bit. </summary>
+    [Description( "Open DUT Leads" )]
+    OpenDutLeads = 8,
 
     /// <summary>   A binary constant representing the open high source leads status bit. </summary>
     [Description( "Open High Source Lead" )]
-    OpenHighSourceLead = 4,
+    OpenHighSourceLead = 16,
 
     /// <summary>   A binary constant representing the open low source leads status bit. </summary>
     [Description( "Open Low Source Lead" )]
-    OpenLowSourceLead = 8,
+    OpenLowSourceLead = 32,
 
     /// <summary>   A binary constant representing the unknown flag. </summary>
     [Description( "Unknown" )]

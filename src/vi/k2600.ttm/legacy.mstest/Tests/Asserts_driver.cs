@@ -294,9 +294,10 @@ internal static partial class Asserts
     /// <summary>   Assert trigger cycle should start. </summary>
     /// <remarks>   2024-11-11. </remarks>
     /// <param name="legacyDevice">                         The legacy device. </param>
+    /// <param name="timeout">                              The timeout. </param>
     /// <param name="validateTriggerCycleCompleteMessage">  True to validate trigger cycle complete
     ///                                                     message. </param>
-    public static void AssertTriggerCycleShouldStart( LegacyDevice? legacyDevice, bool validateTriggerCycleCompleteMessage )
+    public static void AssertTriggerCycleShouldStart( LegacyDevice? legacyDevice, TimeSpan timeout, bool validateTriggerCycleCompleteMessage )
     {
         Assert.IsNotNull( legacyDevice, $"{nameof( legacyDevice )} should not be null." );
         Assert.IsNotNull( legacyDevice.Meter.TspDevice!.Session, $"{nameof( legacyDevice )} should not be null." );
@@ -313,7 +314,6 @@ internal static partial class Asserts
         session.AssertTrigger();
 
         bool messageAvailable = false;
-        TimeSpan timeout = TimeSpan.FromSeconds( 1 );
         Stopwatch sw = Stopwatch.StartNew();
         while ( !messageAvailable && sw.Elapsed < timeout )
         {
@@ -328,7 +328,7 @@ internal static partial class Asserts
         {
             string reading = session.ReadLineTrimEnd();
             Assert.IsFalse( string.IsNullOrEmpty( reading ), $"Triggered output should not be null or empty." );
-            Assert.AreEqual( legacyDevice.MeasurementCompletedReply, reading, "The triggered output should match the expected reading" );
+            Assert.AreEqual( legacyDevice.MeasurementCompletedReply, reading, "The trigger cycle completion reply should match the expected value" );
         }
 
         sw.Stop();
@@ -417,8 +417,8 @@ internal static partial class Asserts
             if ( ( int ) PassFailBits.Unknown == passFailOutcome.Value )
             {
                 // failed contact check.
-                Assert.AreEqual( ( int ) FirmwareOutcomes.badStatus, ( int ) FirmwareOutcomes.badStatus & outcomeValue.Value, 
-                    $"Outcome value {outcomeValue.Value} bad status bit {FirmwareOutcomes.badStatus} should be set if contact check failed." );
+                Assert.AreEqual( ( int ) FirmwareOutcomes.BadStatus, ( int ) FirmwareOutcomes.BadStatus & outcomeValue.Value, 
+                    $"Outcome value {outcomeValue.Value} bad status bit {FirmwareOutcomes.BadStatus} should be set if contact check failed." );
             }
             else if ( resistanceValue < low )
             {

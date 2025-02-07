@@ -2,6 +2,8 @@ using System;
 using System.Diagnostics;
 using cc.isr.VI.Tsp.SessionBaseExtensions;
 using cc.isr.VI.Tsp.K2600.Ttm.Syntax;
+using System.Diagnostics.Metrics;
+using cc.isr.VI.Pith;
 
 namespace cc.isr.VI.Tsp.K2600.Ttm.Tests.Firmware;
 /// <summary>   An asserts. </summary>
@@ -80,6 +82,83 @@ internal static partial class Asserts
         session.ThrowDeviceExceptionIfError( failureMessage: $"{nameof( Pith.SessionBase.ReadLines )} after {memberName} failed" );
     }
 
+    /// <summary>
+    /// Primes the instrument to wait for a trigger. This clears the digital outputs and loops until
+    /// trigger or <see cref="SessionBase.AssertTrigger"/> command or external *TRG command.
+    /// </summary>
+    /// <remarks>   David, 2020-10-12. </remarks>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <param name="lockLocal">        (Optional) When true, displays the title and locks the local
+    ///                                 key. </param>
+    /// <param name="onCompleteReply">  (Optional) The operation completion reply. </param>
+    public static void PrepareForTrigger( Pith.SessionBase? session, bool lockLocal = false, string onCompleteReply = "OPC" )
+    {
+        Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
+        Assert.IsTrue( session.IsDeviceOpen, $"VISA session to '{nameof( session.ResourceNameCaption )}' must be open." );
+
+        session.MessageAvailableBitmask = Pith.ServiceRequests.MessageAvailable;
+
+        session.SetLastAction( "clearing execution state." );
+        session.ClearExecutionState();
+
+        session.SetLastAction( "enabling service request on completion." );
+        session.EnableServiceRequestOnOperationCompletion();
+
+        session.SetLastAction( "waiting for trigger" );
+        _ = session.WriteLine( "prepareForTrigger({0},'{1}') waitcomplete() ",
+                lockLocal ? cc.isr.VI.Syntax.Tsp.Lua.TrueValue : cc.isr.VI.Syntax.Tsp.Lua.FalseValue, onCompleteReply );
+        _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay + session.StatusReadDelay );
+    }
+
+    /// <summary>   Assert trigger cycle should start. </summary>
+    /// <remarks>   2024-11-11. </remarks>
+    /// <param name="session">                              The session. </param>
+    /// <param name="timeout">                              The timeout. </param>
+    /// <param name="validateTriggerCycleCompleteMessage">  True to validate trigger cycle complete
+    ///                                                     message. </param>
+    /// <param name="lockLocal">                            (Optional) When true, displays the title
+    ///                                                     and locks the local key. </param>
+    /// <param name="onCompleteReply">                      (Optional) The operation completion
+    ///                                                     reply. </param>
+    public static void AssertTriggerCycleShouldStart( Pith.SessionBase? session, TimeSpan timeout, bool validateTriggerCycleCompleteMessage,
+        bool lockLocal = false, string onCompleteReply = "OPC" )
+    {
+        Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
+        Assert.IsTrue( session.IsDeviceOpen, $"VISA session to '{nameof( session.ResourceNameCaption )}' must be open." );
+
+        // start the trigger cycle
+        Asserts.PrepareForTrigger( session, lockLocal, onCompleteReply );
+
+        //allow some time for the trigger loop to start..
+        _ = Pith.SessionBase.AsyncDelay( TimeSpan.FromMilliseconds( 100 ) );
+
+        // send a trigger command.
+        session.AssertTrigger();
+
+        bool messageAvailable = false;
+        Stopwatch sw = Stopwatch.StartNew();
+        while ( !messageAvailable && sw.Elapsed < timeout )
+        {
+            _ = Pith.SessionBase.AsyncDelay( TimeSpan.FromMilliseconds( 10 ) );
+            messageAvailable = session.IsMessageAvailableBitSet( session.ReadStatusByte() );
+        }
+
+        Assert.IsTrue( messageAvailable, "The trigger wait should not timeout." );
+
+        if ( validateTriggerCycleCompleteMessage )
+        {
+            string reading = session.ReadLineTrimEnd();
+            Assert.IsFalse( string.IsNullOrEmpty( reading ), $"The trigger cycle completion reply should not be null or empty." );
+            Assert.AreEqual( onCompleteReply, reading, "The trigger cycle completion reply should match the expected value" );
+        }
+
+        sw.Stop();
+        TimeSpan timeSpan = sw.Elapsed;
+        Console.WriteLine( $"Trigger Cycle Time: {timeSpan:s\\.fff}s" );
+    }
+
+
     /// <summary>   Assert the the *TRG command should trigger measurements. </summary>
     /// <remarks>   2024-10-26. </remarks>
     /// <param name="session">  The session. </param>
@@ -95,7 +174,7 @@ internal static partial class Asserts
         string expectedReading = "OPC";
         _ = session.WriteLine( $"prepareForTrigger(true,'{expectedReading}') " );
 
-        //allow some tim for the trigger loop to start..
+        //allow some time for the trigger loop to start..
         _ = Pith.SessionBase.AsyncDelay( TimeSpan.FromMilliseconds( 100 ) );
         session.AssertTrigger();
         // _ = session.WriteLine( "*TRG " );
@@ -114,65 +193,125 @@ internal static partial class Asserts
         Assert.AreEqual( expectedReading, reading, "The triggered output should match the expected reading" );
     }
 
-    /// <summary>   Assert estimate should read. </summary>
-    /// <remarks>   2024-10-31. </remarks>
-    /// <param name="session">              The session. </param>
-    /// <param name="initialResistance">    The initial resistance. </param>
+    /// <summary>   Assert estimates should read. </summary>
+    /// <remarks>   2025-02-07. </remarks>
+    /// <param name="session">  The session. </param>
     public static void AssertEstimatesShouldRead( Pith.SessionBase? session )
     {
         Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
         Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
 
         string ttmElement = Asserts.EST;
-        string ttmElementName = "Estimator";
+        string ttmElementName = Asserts.TtmElementName( ttmElement );
 
         int? outcome = session.QueryNullableIntegerThrowIfError( $"print(ttm.{ttmElement}.outcome) ", $"{ttmElementName} outcome" );
-        double? initialVoltage = session.QueryNullableIntegerThrowIfError( $"print(ttm.{ttmElement}.initialVoltage) ", $"{ttmElementName} Initial Voltage" );
+        Assert.IsNotNull( outcome, $"{nameof( outcome )} should not be null." );
+        double? initialVoltage = session.QueryNullableDoubleThrowIfError( $"print(ttm.{ttmElement}.initialVoltage) ", $"{ttmElementName} Initial Voltage" );
+        Assert.IsNotNull( initialVoltage, $"{nameof( initialVoltage )} should not be null." );
         double? finalVoltage = session.QueryNullableDoubleThrowIfError( $"print(ttm.{ttmElement}.finalVoltage) ", $"{ttmElementName} Final Voltage" );
+        Assert.IsNotNull( finalVoltage, $"{nameof( finalVoltage )} should not be null." );
         double? voltageChange = session.QueryNullableDoubleThrowIfError( $"print(ttm.{ttmElement}.voltageChange) ", $"{ttmElementName} Voltage Change" );
+        Assert.IsNotNull( voltageChange, $"{nameof( voltageChange )} should not be null." );
 
-        string ttmTrace = Asserts.TR;
-
-        // the legacy driver does not call the estimator estimate and, therefore, could be tested even if testing compliance with the legacy driver.
-
-        if ( !Asserts.LegacyFirmware && outcome.HasValue )
-            _ = session.WriteLine( $"ttm.{ttmElement}:estimate( ttm.{ttmTrace}.resistance, ttm.{ttmTrace} ) " );
-
-        double? temperatureChange = session.QueryNullableDoubleThrowIfError( $"print(ttm.{ttmElement}.temperatureChange) ", $"{ttmElementName} Temperature Change" );
-        double? thermalConductance = session.QueryNullableDoubleThrowIfError( $"print(ttm.{ttmElement}.thermalConductance) ", $"{ttmElementName} Thermal Conductance" );
-        double? thermalTimeConstant = session.QueryNullableDoubleThrowIfError( $"print(ttm.{ttmElement}.thermalTimeConstant) ", $"{ttmElementName} Thermal Time Constant" );
-        double? thermalCapacitance = session.QueryNullableDoubleThrowIfError( $"print(ttm.{ttmElement}.thermalCapacitance) ", $"{ttmElementName} Thermal Capacitance" );
-        if ( outcome.HasValue )
+        if ( ( int ) FirmwareOutcomes.Unknown == (outcome.Value & ( int ) FirmwareOutcomes.Unknown) )
         {
-            Assert.IsNotNull( initialVoltage, $"{nameof( initialVoltage )} should not be null if {nameof( outcome )} is not null." );
-            Assert.IsNotNull( finalVoltage, $"{nameof( finalVoltage )} should not be null if {nameof( outcome )} is not null." );
-            double expectedVoltageChange = finalVoltage.Value - initialVoltage.Value;
-            Assert.IsNotNull( voltageChange, $"{nameof( voltageChange )} should not be null if {nameof( outcome )} is not null." );
-            Assert.AreEqual( expectedVoltageChange, voltageChange.Value, 0.0001, $"{nameof( voltageChange )} should equal expected value." );
-
-            // the legacy driver is agnostic of the estimated values and, therefore, could be tested even if testing compliance with the legacy driver.
-
-            if ( !Asserts.LegacyFirmware )
-            {
-                Assert.IsNotNull( temperatureChange, $"{nameof( temperatureChange )} should not be null if {nameof( outcome )} is not null." );
-                Assert.IsNotNull( thermalConductance, $"{nameof( thermalConductance )} should not be null if {nameof( outcome )} is not null." );
-                Assert.IsNotNull( thermalTimeConstant, $"{nameof( thermalTimeConstant )} should not be null if {nameof( outcome )} is noy null." );
-                Assert.IsNotNull( thermalCapacitance, $"{nameof( thermalCapacitance )} should not be null if {nameof( outcome )} is not null." );
-            }
+            Assert.AreEqual( 0, initialVoltage, $"{nameof( initialVoltage )} {initialVoltage} should be zero if {nameof( outcome )} is not known." );
+            Assert.AreEqual( 0, finalVoltage, $"{nameof( finalVoltage )} {finalVoltage} should be zero if {nameof( outcome )} is not known." );
+            Assert.AreEqual( 0, voltageChange, $"{nameof( voltageChange )} {finalVoltage} should be zero if {nameof( outcome )} is not known." );
+        }
+        else if ( 0 == initialVoltage )
+        {
+            // !@# Kludge until we initialize outcome to unknown
+            Assert.AreEqual( 0, initialVoltage, $"{nameof( initialVoltage )} {initialVoltage} should be zero if {nameof( outcome )} is not known." );
+            Assert.AreEqual( 0, finalVoltage, $"{nameof( finalVoltage )} {finalVoltage} should be zero if {nameof( outcome )} is not known." );
+            Assert.AreEqual( 0, voltageChange, $"{nameof( voltageChange )} {finalVoltage} should be zero if {nameof( outcome )} is not known." );
         }
         else
         {
-            Assert.IsNull( initialVoltage, $"{nameof( initialVoltage )} {initialVoltage} should be null if {nameof( outcome )} is null." );
-            Assert.IsNull( finalVoltage, $"{nameof( finalVoltage )} {finalVoltage} should be null if {nameof( outcome )} is null." );
-            Assert.IsNull( voltageChange, $"{nameof( voltageChange )} {finalVoltage} should be null if {nameof( outcome )} is null." );
-
-            Assert.IsNull( temperatureChange, $"{nameof( temperatureChange )} {temperatureChange} should be null if {nameof( outcome )} is null." );
-            Assert.IsNull( thermalConductance, $"{nameof( thermalConductance )} {thermalConductance} should be null if {nameof( outcome )} is null." );
-            Assert.IsNull( thermalTimeConstant, $"{nameof( thermalTimeConstant )} {thermalTimeConstant} should be null if {nameof( outcome )} is null." );
-            Assert.IsNull( thermalCapacitance, $"{nameof( thermalCapacitance )} {thermalCapacitance} should be null if {nameof( outcome )} is null." );
-
+            Assert.AreNotEqual( 0, initialVoltage, $"{nameof( initialVoltage )} {initialVoltage} should not be zero if {nameof( outcome )} is known." );
+            Assert.AreNotEqual( 0, finalVoltage, $"{nameof( finalVoltage )} {finalVoltage} should be zero if {nameof( outcome )} is known." );
+            Assert.AreNotEqual( 0, voltageChange, $"{nameof( voltageChange )} {finalVoltage} should be zero if {nameof( outcome )} is known." );
         }
     }
+
+    /// <summary>   Assert estimates should estimate. </summary>
+    /// <remarks>   2025-02-07. </remarks>
+    /// <param name="session">  The session. </param>
+    public static void AssertEstimatesShouldEstimate( Pith.SessionBase? session )
+    {
+        Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
+        Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
+
+        string ttmElement = Asserts.EST;
+        string ttmElementName = Asserts.TtmElementName( ttmElement );
+
+        int? outcome = session.QueryNullableIntegerThrowIfError( $"print(ttm.{ttmElement}.outcome) ", $"{ttmElementName} outcome" );
+        Assert.IsNotNull( outcome, $"{nameof( outcome )} should not be null." );
+        double? initialVoltage = session.QueryNullableDoubleThrowIfError( $"print(ttm.{ttmElement}.initialVoltage) ", $"{ttmElementName} Initial Voltage" );
+        Assert.IsNotNull( initialVoltage, $"{nameof( initialVoltage )} should not be null." );
+        double? finalVoltage = session.QueryNullableDoubleThrowIfError( $"print(ttm.{ttmElement}.finalVoltage) ", $"{ttmElementName} Final Voltage" );
+        Assert.IsNotNull( finalVoltage, $"{nameof( finalVoltage )} should not be null." );
+        double? voltageChange = session.QueryNullableDoubleThrowIfError( $"print(ttm.{ttmElement}.voltageChange) ", $"{ttmElementName} Voltage Change" );
+        Assert.IsNotNull( voltageChange, $"{nameof( voltageChange )} should not be null." );
+
+        double? temperatureChange = session.QueryNullableDoubleThrowIfError( $"print(ttm.{ttmElement}.temperatureChange) ", $"{ttmElementName} Temperature Change" );
+        Assert.IsNotNull( temperatureChange, $"{nameof( temperatureChange )} should not be null." );
+
+        // !@# Kludge until we initialize outcome to unknown
+        if ( 0 != initialVoltage && 0 == temperatureChange.Value )
+        {
+            string ttmTrace = Asserts.TR;
+            string traceElementName = Asserts.TtmElementName( Asserts.TR );
+            int? traceOutcome = session.QueryNullableIntegerThrowIfError( $"print(ttm.{Asserts.TR}.outcome) ", $"{traceElementName} outcome" );
+            // the legacy driver does not call the estimator estimate and, therefore, could be tested even if testing compliance with the legacy driver.
+            if ( traceOutcome.HasValue && (( int ) FirmwareOutcomes.Unknown != (traceOutcome.Value & ( int ) FirmwareOutcomes.Unknown)) )
+            {
+                string command = $"ttm.{ttmElement}:estimate( ttm.{ttmTrace}.coldResistance, ttm.{ttmTrace} ) ";
+                Asserts.AssertCommandShouldExecute( session, command, true );
+            }
+        }
+
+        temperatureChange = session.QueryNullableDoubleThrowIfError( $"print(ttm.{ttmElement}.temperatureChange) ", $"{ttmElementName} Temperature Change" );
+        Assert.IsNotNull( temperatureChange, $"{nameof( temperatureChange )} should not be null." );
+        double? thermalConductance = session.QueryNullableDoubleThrowIfError( $"print(ttm.{ttmElement}.thermalConductance) ", $"{ttmElementName} Thermal Conductance" );
+        Assert.IsNotNull( thermalConductance, $"{nameof( thermalConductance )} should not be null." );
+        double? thermalTimeConstant = session.QueryNullableDoubleThrowIfError( $"print(ttm.{ttmElement}.thermalTimeConstant) ", $"{ttmElementName} Thermal Time Constant" );
+        Assert.IsNotNull( thermalTimeConstant, $"{nameof( thermalTimeConstant )} should not be null." );
+        double? thermalCapacitance = session.QueryNullableDoubleThrowIfError( $"print(ttm.{ttmElement}.thermalCapacitance) ", $"{ttmElementName} Thermal Capacitance" );
+        Assert.IsNotNull( thermalCapacitance, $"{nameof( thermalCapacitance )} should not be null." );
+        if ( ( int ) FirmwareOutcomes.Unknown == (outcome.Value & ( int ) FirmwareOutcomes.Unknown) )
+        {
+            Assert.AreEqual( 0, initialVoltage, $"{nameof( initialVoltage )} {initialVoltage} should be zero if {nameof( outcome )} is not known." );
+            Assert.AreEqual( 0, finalVoltage, $"{nameof( finalVoltage )} {finalVoltage} should be zero if {nameof( outcome )} is not known." );
+            Assert.AreEqual( 0, voltageChange, $"{nameof( voltageChange )} {finalVoltage} should be zero if {nameof( outcome )} is not known." );
+            Assert.AreEqual( 0, temperatureChange, $"{nameof( temperatureChange )} {temperatureChange} should be zero if {nameof( outcome )} is not known." );
+            Assert.AreEqual( 0, thermalConductance, $"{nameof( thermalConductance )} {thermalConductance} should be zero if {nameof( outcome )} is not known." );
+            Assert.AreEqual( 0, thermalTimeConstant, $"{nameof( thermalTimeConstant )} {thermalTimeConstant} should be zero if {nameof( outcome )} is not known." );
+            Assert.AreEqual( 0, thermalCapacitance, $"{nameof( thermalCapacitance )} {thermalCapacitance} should be zero if {nameof( outcome )} is not known." );
+        }
+        else if ( 0 == initialVoltage )
+        {
+            // !@# Kludge until we initialize outcome to unknown
+            Assert.AreEqual( 0, initialVoltage, $"{nameof( initialVoltage )} {initialVoltage} should be zero if {nameof( outcome )} is not known." );
+            Assert.AreEqual( 0, finalVoltage, $"{nameof( finalVoltage )} {finalVoltage} should be zero if {nameof( outcome )} is not known." );
+            Assert.AreEqual( 0, voltageChange, $"{nameof( voltageChange )} {finalVoltage} should be zero if {nameof( outcome )} is not known." );
+            Assert.AreEqual( 0, temperatureChange, $"{nameof( temperatureChange )} {temperatureChange} should be zero if {nameof( outcome )} is not known." );
+            Assert.AreEqual( 0, thermalConductance, $"{nameof( thermalConductance )} {thermalConductance} should be zero if {nameof( outcome )} is not known." );
+            Assert.AreEqual( 0, thermalTimeConstant, $"{nameof( thermalTimeConstant )} {thermalTimeConstant} should be zero if {nameof( outcome )} is not known." );
+            Assert.AreEqual( 0, thermalCapacitance, $"{nameof( thermalCapacitance )} {thermalCapacitance} should be zero if {nameof( outcome )} is not known." );
+        }
+        else
+        {
+            Assert.AreNotEqual( 0, initialVoltage, $"{nameof( initialVoltage )} {initialVoltage} should not be zero if {nameof( outcome )} is known." );
+            Assert.AreNotEqual( 0, finalVoltage, $"{nameof( finalVoltage )} {finalVoltage} should be zero if {nameof( outcome )} is known." );
+            Assert.AreNotEqual( 0, voltageChange, $"{nameof( voltageChange )} {finalVoltage} should be zero if {nameof( outcome )} is known." );
+            Assert.AreNotEqual( 0, temperatureChange, $"{nameof( temperatureChange )} {temperatureChange} should not be zero if {nameof( outcome )} is known." );
+            Assert.AreNotEqual( 0, thermalConductance, $"{nameof( thermalConductance )} {thermalConductance} should not be zero if {nameof( outcome )} is known." );
+            Assert.AreNotEqual( 0, thermalTimeConstant, $"{nameof( thermalTimeConstant )} {thermalTimeConstant} should not be zero if {nameof( outcome )} is known." );
+            Assert.AreNotEqual( 0, thermalCapacitance, $"{nameof( thermalCapacitance )} {thermalCapacitance} should not be zero if {nameof( outcome )} is known." );
+        }
+    }
+
 
     /// <summary>   Parse pass fail outcome. </summary>
     /// <remarks>   2025-01-27. </remarks>
@@ -361,30 +500,44 @@ internal static partial class Asserts
         Assert.IsNotNull( highR, $"{nameof( highR)} must have a value." );
         Assert.IsNotNull( dutR, $"{nameof( dutR )} must have a value." );
 
-        if ( (0 == (options.Value & ( int ) option)) || (( int ) FirmwareOutcomes.Unknown == (outcomes & ( int ) FirmwareOutcomes.Unknown)) )
+        if ( 0 == (options.Value & ( int ) option) )
         {
-            // if the specified option is net enabled, the contact check values should be unknow.
+            // if the specified option is net enabled the contact check values should be unknown.
             Assert.AreEqual( ( int ) LeadsStatusBits.Unknown, leadsStatus.Value, $"{nameof( leadsStatus )} value {leadsStatus} must be unknow if the options {options} do not include {option}." );
-            Assert.AreEqual( cc.isr.VI.Syntax.ScpiSyntax.NotANumber, lowR.Value, $"{nameof( lowR )} contact resistance value should be unknown if the options {options} do not include {option}." );
-            Assert.AreEqual( cc.isr.VI.Syntax.ScpiSyntax.NotANumber, highR.Value, $"{nameof( highR )} contact resistance value should be unknown if the options {options} do not include {option}." );
-            Assert.AreEqual( cc.isr.VI.Syntax.ScpiSyntax.NotANumber, dutR.Value, $"{nameof( dutR )} contact resistance value should be unknown if the options {options} do not include {option}." );
+            Assert.AreEqual( cc.isr.VI.Syntax.ScpiSyntax.NotANumber, lowR.Value, 0.001 * cc.isr.VI.Syntax.ScpiSyntax.NotANumber,
+                $"{nameof( lowR )} contact resistance value should be unknown if the options {options} do not include {option}." );
+            Assert.AreEqual( cc.isr.VI.Syntax.ScpiSyntax.NotANumber, highR.Value, 0.001 * cc.isr.VI.Syntax.ScpiSyntax.NotANumber,
+                $"{nameof( highR )} contact resistance value should be unknown if the options {options} do not include {option}." );
+            Assert.AreEqual( cc.isr.VI.Syntax.ScpiSyntax.NotANumber, dutR.Value, 0.001 * cc.isr.VI.Syntax.ScpiSyntax.NotANumber,
+                $"{nameof( dutR )} contact resistance value should be unknown if the options {options} do not include {option}." );
         }
         else
         {
-            if ( 0 == (( FirmwareOutcomes ) outcomes & FirmwareOutcomes.openLeads) )
+            if ( ( int ) FirmwareOutcomes.Unknown == (outcomes & ( int ) FirmwareOutcomes.Unknown) )
             {
-                // if leads are not open okay should be true and low and high should be zero
-                Assert.AreEqual( ( int ) LeadsStatusBits.Okay, leadsStatus, $"{nameof( leadsStatus )} value should not be {leadsStatus} if contact check did not fail if outcome has no value." );
-                Assert.IsTrue( lowR.Value < limit.Value, $"{nameof( lowR )} ({lowR}) contact value should be lower than the contact check threshold {limit}." );
-                Assert.IsTrue( highR.Value > limit.Value, $"{nameof( highR )} ({highR}) contact value should be lower than the contact check threshold {limit}." );
+                // if outcome is not known, measurements were not started.
+                Assert.AreEqual( ( int ) LeadsStatusBits.Unknown, leadsStatus.Value, $"{nameof( leadsStatus )} value {leadsStatus} must be unknow if the options {options} do not include {option}." );
+                Assert.AreEqual( cc.isr.VI.Syntax.ScpiSyntax.NotANumber, lowR.Value, 0.001 * cc.isr.VI.Syntax.ScpiSyntax.NotANumber,
+                    $"{nameof( lowR )} contact resistance value should be unknown if the options {options} do not include {option}." );
+                Assert.AreEqual( cc.isr.VI.Syntax.ScpiSyntax.NotANumber, highR.Value, 0.001 * cc.isr.VI.Syntax.ScpiSyntax.NotANumber,
+                    $"{nameof( highR )} contact resistance value should be unknown if the options {options} do not include {option}." );
+                Assert.AreEqual( cc.isr.VI.Syntax.ScpiSyntax.NotANumber, dutR.Value, 0.001 * cc.isr.VI.Syntax.ScpiSyntax.NotANumber,
+                    $"{nameof( dutR )} contact resistance value should be unknown if the options {options} do not include {option}." );
             }
-            else
+            else if ( ( int ) FirmwareOutcomes.OpenLeads == (outcomes & ( int ) FirmwareOutcomes.OpenLeads) )
             {
                 // if leads are open okay should be false and low and high should be higher than the limit
                 Assert.AreNotEqual( ( int ) LeadsStatusBits.Okay, leadsStatus, $"{nameof( leadsStatus )} value should not be {LeadsStatusBits.Okay} if contact check did not fail if outcome has no value." );
                 Assert.IsNotNull( highR, $"{nameof( highR )} contact resistance should not be null if leads are open." );
                 Assert.IsTrue( (lowR.Value > limit.Value) || (highR.Value > limit.Value),
                     $"{nameof( lowR )} ({lowR}) and/or {nameof( highR )} ({highR}) contact values should exceed the contact check threshold {limit}." );
+            }
+            else
+            {
+                // if leads are not open okay should be true and low and high should be zero
+                Assert.AreEqual( ( int ) LeadsStatusBits.Okay, leadsStatus, $"{nameof( leadsStatus )} value should not be {leadsStatus} if contact check did not fail if outcome has no value." );
+                Assert.IsTrue( lowR.Value < limit.Value, $"{nameof( lowR )} ({lowR}) contact value should be lower than the contact check threshold {limit}." );
+                Assert.IsTrue( highR.Value < limit.Value, $"{nameof( highR )} ({highR}) contact value should be lower than the contact check threshold {limit}." );
             }
         }
     }
@@ -424,7 +577,7 @@ internal static partial class Asserts
                     Assert.AreEqual( low, measurement < lowLimit,
                         $"{nameof( low )} {low} should equals {measurement < lowLimit} if {nameof( measurement )} {measurement} is less than {nameof( lowLimit )} {lowLimit}." );
                     Assert.AreEqual( high, measurement > highLimit,
-                        $"{nameof( high )} {high} should equals {measurement > highLimit} if {nameof( measurement )} {measurement} is greater than {nameof( highLimit )} {highLimit}." );
+                        $"{nameof( high )} {high} should equals {measurement > highLimit} if {nameof( measurement )} {measurement} is higher than {nameof( highLimit )} {highLimit}." );
                 }
             }
             else
@@ -435,12 +588,12 @@ internal static partial class Asserts
 
                 if ( !Asserts.LegacyFirmware )
                 {
-                    if ( 0 != (firmwareOutcome & cc.isr.VI.Tsp.K2600.Ttm.Syntax.FirmwareOutcomes.openLeads) )
+                    if ( 0 != (firmwareOutcome & cc.isr.VI.Tsp.K2600.Ttm.Syntax.FirmwareOutcomes.OpenLeads) )
                     {
-                        // if contact check failed, the voltage change reading should be NaN in millivolts
+                        // if contact check failed, the measurement should be NaN
                         Assert.IsNotNull( measurement, $"{nameof( measurement )} should have a value after contact check." );
-                        if ( (0.001 * cc.isr.VI.Syntax.ScpiSyntax.NotANumber) > measurement )
-                            Assert.Fail( $"{nameof( measurement )} should be set to {cc.isr.VI.Syntax.ScpiSyntax.NotANumber} or {0.001 * cc.isr.VI.Syntax.ScpiSyntax.NotANumber} if contact check failed." );
+                        Assert.AreEqual( cc.isr.VI.Syntax.ScpiSyntax.NotANumber, measurement.Value, 0.001 * cc.isr.VI.Syntax.ScpiSyntax.NotANumber,
+                            $"{nameof( measurement )} should be set to {cc.isr.VI.Syntax.ScpiSyntax.NotANumber} if contact check failed." );
                     }
                 }
             }
@@ -463,7 +616,8 @@ internal static partial class Asserts
     {
         // the TTM initializes pass and measurement to NaN
         Assert.IsTrue( measurement.HasValue, $"'{nameof( measurement )}' should have a value." );
-        Assert.AreEqual( cc.isr.VI.Syntax.ScpiSyntax.NotANumber, measurement.Value, $"'{nameof( measurement )}' should have a SCPI.NAN value." );
+        Assert.AreEqual( cc.isr.VI.Syntax.ScpiSyntax.NotANumber, measurement.Value, 0.001 * cc.isr.VI.Syntax.ScpiSyntax.NotANumber,
+            $"'{nameof( measurement )}' should have a SCPI.NAN value." );
 
         Assert.IsFalse( okayAndPass, $"'{nameof( okayAndPass )}' must not be true if outcome is nil." );
 
@@ -513,6 +667,17 @@ internal static partial class Asserts
         (int? outcome, int? status, bool okayAndPass, double? measurement) = Asserts.AssertTtmElementShouldBeFetched( session, ttmElement );
         (bool? low, bool? high, bool? pass) = Asserts.AssertTtmElementShouldReadLowHighPass( session, ttmElement );
         (double lowLimit, double highLimit) = Asserts.AssertTtmElementShouldReadLimits( session, ttmElement );
+        Assert.IsNotNull( measurement, $"{nameof( measurement )} must not be null." );
+
+        // scale the NaN which is set as 'volts' because it is scaled up to 'millivolts' for display.
+        if ( string.Equals( Asserts.TR, ttmElement, System.StringComparison.Ordinal ) )
+        {
+            if ( 0.00001 * cc.isr.VI.Syntax.ScpiSyntax.NotANumber > Math.Abs( (0.001 * cc.isr.VI.Syntax.ScpiSyntax.NotANumber) - measurement.Value ) )
+            {
+                measurement *= 1000;
+            }
+        }
+
         Asserts.AssertMeasurementShouldConform( outcome, status, okayAndPass, measurement, lowLimit, highLimit, low, high, pass );
 
         if ( !outcome.HasValue )
@@ -534,9 +699,10 @@ internal static partial class Asserts
             {
                 if ( leadsStatus.HasValue && (( int ) LeadsStatusBits.Okay != leadsStatus.Value) )
                 {
-                    // if contact check failed, the voltage change reading should be NaN in millivolts
+                    // if contact check failed, the measurement reading should be NaN
                     Assert.IsNotNull( measurement, $"{nameof( measurement )} should have a value after contact check." );
-                    Assert.AreEqual( cc.isr.VI.Syntax.ScpiSyntax.NotANumber, measurement, $"{nameof( measurement )} should be set to NaN if contact check failed." );
+                    Assert.AreEqual( cc.isr.VI.Syntax.ScpiSyntax.NotANumber, measurement.Value, 0.001 * cc.isr.VI.Syntax.ScpiSyntax.NotANumber,
+                        $"{nameof( measurement )} should be set to NaN if contact check failed." );
                 }
             }
         }

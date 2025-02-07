@@ -112,13 +112,13 @@ internal static partial class Asserts
 
         // get actual value
         query = "_G.print(string.format('%9.3f',_G.ttm.postTransientDelayGetter()))";
-        double posttransientDelay = session.QueryDoubleThrowIfError( query, "actual post transient delay" );
+        double postTransientDelay = session.QueryDoubleThrowIfError( query, "actual post transient delay" );
 
-        expectedDouble = postTransientDelayDefault + 0.001;
+        expectedDouble = postTransientDelay + 0.001;
         command = $"_G.ttm.postTransientDelaySetter({expectedDouble})";
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.0001, logEnabled );
 
-        expectedDouble = postTransientDelayDefault;
+        expectedDouble = postTransientDelay;
         command = $"_G.ttm.postTransientDelaySetter({expectedDouble})";
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.0001, logEnabled );
 

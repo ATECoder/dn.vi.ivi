@@ -1,6 +1,5 @@
 using System;
 using System.Diagnostics;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 
 namespace cc.isr.VI.Tsp.K2600.Ttm.Legacy.Tests;
 
@@ -63,8 +62,7 @@ public class DeviceTests
     [TestInitialize()]
     public void InitializeBeforeEachTest()
     {
-        // reported in the base class
-        // Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
+        Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
         Console.WriteLine( $"Testing {typeof( LegacyDevice ).Assembly.FullName}" );
 
         // create an instance of the Serilog logger. 
@@ -211,7 +209,8 @@ public class DeviceTests
 
         Stopwatch sw = Stopwatch.StartNew();
         bool validateTriggerCycleReplyMessage = true;
-        Asserts.AssertTriggerCycleShouldStart( this.LegacyDevice, validateTriggerCycleReplyMessage );
+        TimeSpan timeout = TimeSpan.FromSeconds( 1 );
+        Asserts.AssertTriggerCycleShouldStart( this.LegacyDevice, timeout, validateTriggerCycleReplyMessage );
         Asserts.AssertMeasurementsShouldRead( this.LegacyDevice, !validateTriggerCycleReplyMessage );
         sw.Stop();
         TimeSpan timeSpan = sw.Elapsed;
@@ -247,7 +246,8 @@ public class DeviceTests
 
         Stopwatch sw = Stopwatch.StartNew();
         bool validateTriggerCycleReplyMessage = true;
-        Asserts.AssertTriggerCycleShouldStart( this.LegacyDevice, validateTriggerCycleReplyMessage );
+        TimeSpan timeout = TimeSpan.FromSeconds( 1 );
+        Asserts.AssertTriggerCycleShouldStart( this.LegacyDevice, timeout, validateTriggerCycleReplyMessage );
         Asserts.AssertMeasurementsShouldRead( this.LegacyDevice, !validateTriggerCycleReplyMessage );
         sw.Stop();
         TimeSpan timeSpan = sw.Elapsed;
