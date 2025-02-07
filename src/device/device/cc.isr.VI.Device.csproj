@@ -39,6 +39,11 @@
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
 
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="VI\Tsp\Syntax\**" />
+    <EmbeddedResource Remove="VI\Tsp\Syntax\**" />
+    <None Remove="VI\Tsp\Syntax\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <None Include="readme.md" Pack="true" PackagePath="" />
@@ -92,10 +97,6 @@
     
   <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
-  </ItemGroup>
-    
-  <ItemGroup>
-    <Folder Include="VI\Tsp\Syntax\" />
   </ItemGroup>
 
 </Project>

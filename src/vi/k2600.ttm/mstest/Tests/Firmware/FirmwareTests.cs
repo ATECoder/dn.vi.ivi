@@ -163,28 +163,79 @@ public class FirmwareTests
         }
     }
 
-    /// <summary>   (Unit Test Method) firmware syntax should not fail. </summary>
-    /// <remarks>   David, 2020-10-12. </remarks>
-    [TestMethod( "04. Firmware Syntax Should Not Fail" )]
-    public void FirmwareSyntaxShouldNotFail()
+    /// <summary>   (Unit Test Method) tsp syntax should not fail. </summary>
+    /// <remarks>   2025-02-06. </remarks>
+    [TestMethod( "04. TSP Syntax Should Not Fail" )]
+    public void TspSyntaxShouldNotFail()
     {
         string resourceName = this.ResourceSettings.ResourceName;
         using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( resourceName );
 
         Asserts.AssertTspSyntaxShouldNotFail( session, true );
         Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertTspSyntaxShouldNotFail )}" );
+    }
+
+    /// <summary>   (Unit Test Method) meter value should reset. </summary>
+    /// <remarks>   2025-02-06. </remarks>
+    [TestMethod( "05. Meter Value Should Reset" )]
+    public void MeterValueShouldReset()
+    {
+        string resourceName = this.ResourceSettings.ResourceName;
+        using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( resourceName );
 
         Asserts.AssertMeterValueShouldReset( session );
         Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertMeterValueShouldReset )}" );
+    }
 
-        Asserts.AssertColdResistanceDefaultsShouldBeFetched( session );
-        Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertColdResistanceDefaultsShouldBeFetched )}" );
+    /// <summary>   (Unit Test Method) cold resistance defaults should equal settings. </summary>
+    /// <remarks>   2025-02-06. </remarks>
+    [TestMethod( "06. Cold Resistance Defaults Should Equal Settings" )]
+    public void ColdResistanceDefaultsShouldEqualSettings()
+    {
+        string resourceName = this.ResourceSettings.ResourceName;
+        using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( resourceName );
 
-        Asserts.AssertInitialResistanceShouldReset( session );
-        Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertInitialResistanceShouldReset )}" );
+        Asserts.AssertColdResistanceDefaultsShouldEqualSettings( session );
+        Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertColdResistanceDefaultsShouldEqualSettings )}" );
+    }
+
+    /// <summary>   (Unit Test Method) initial resistance should reset. </summary>
+    /// <remarks>   2025-02-06. </remarks>
+    [TestMethod( "07. InitialResistanceShouldReset" )]
+    public void InitialResistanceShouldReset()
+    {
+        string resourceName = this.ResourceSettings.ResourceName;
+        using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( resourceName );
+
+        Asserts.AssertColdResistanceShouldReset( session, Asserts.IR );
+        Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertColdResistanceShouldReset )}" );
+    }
+
+    [TestMethod( "08. Final Resistance Should Reset" )]
+    public void FinalResistanceShouldReset()
+    {
+        string resourceName = this.ResourceSettings.ResourceName;
+        using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( resourceName );
+
+        Asserts.AssertColdResistanceShouldReset( session, Asserts.FR );
+        Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertColdResistanceShouldReset )}" );
+    }
+
+    [TestMethod( "09. Estimator Should Reset" )]
+    public void EstimatorShouldReset()
+    {
+        string resourceName = this.ResourceSettings.ResourceName;
+        using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( resourceName );
 
         Asserts.AssertEstimatorShouldReset( session, true );
         Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertEstimatorShouldReset )}" );
+    }
+
+    [TestMethod( "10. ThermalTransientShouldReset" )]
+    public void ThermalTransientShouldReset()
+    {
+        string resourceName = this.ResourceSettings.ResourceName;
+        using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( resourceName );
 
         Asserts.AssertThermalTransientShouldReset( session );
         Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertThermalTransientShouldReset )}" );
@@ -192,20 +243,20 @@ public class FirmwareTests
 
     /// <summary>   (Unit Test Method) framework should clear known state. </summary>
     /// <remarks>   2024-10-31. </remarks>
-    [TestMethod( "05. Framework should clear known state" )]
+    [TestMethod( "11. Framework should clear known state" )]
     public void FrameworkShouldClearKnownState()
     {
         string resourceName = this.ResourceSettings.ResourceName;
         using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( resourceName );
 
-        Asserts.AssertInitialResistanceReadings( session );
-        Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertInitialResistanceReadings )}" );
+        Asserts.AssertTtmElementReadings( session, Asserts.IR );
+        Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertTtmElementReadings )} TTM Elements {Asserts.IR}" );
 
-        Asserts.AssertThermalTransientReadings( session );
-        Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertThermalTransientReadings )}" );
+        Asserts.AssertTtmElementReadings( session, Asserts.TR );
+        Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertTtmElementReadings )} TTM Elements {Asserts.TR}" );
 
-        Asserts.AssertFinalResistanceReadings( session );
-        Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertFinalResistanceReadings )}" );
+        Asserts.AssertTtmElementReadings( session, Asserts.FR );
+        Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertTtmElementReadings )} TTM Elements {Asserts.FR}" );
 
         Asserts.AssertEstimatesShouldRead( session );
         Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertEstimatesShouldRead )}" );
@@ -214,7 +265,7 @@ public class FirmwareTests
 
     /// <summary>   (Unit Test Method) *TRG command should trigger measurements. </summary>
     /// <remarks>   2024-10-26. </remarks>
-    [TestMethod( "06. TRG command should trigger measurements" )]
+    [TestMethod( "12. TRG command should trigger measurements" )]
     public void TRGCommandShouldTriggerMeasurements()
     {
         string resourceName = this.ResourceSettings.ResourceName;
@@ -223,14 +274,14 @@ public class FirmwareTests
         Asserts.AssertTheTRGCommandShouldTriggerMeasurements( session, TimeSpan.FromMilliseconds( 1000 ) );
         Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertTheTRGCommandShouldTriggerMeasurements )}" );
 
-        Asserts.AssertInitialResistanceReadings( session );
-        Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertInitialResistanceReadings )}" );
+        Asserts.AssertTtmElementReadings( session, Asserts.IR );
+        Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertTtmElementReadings )} TTM Elements {Asserts.IR}" );
 
-        Asserts.AssertThermalTransientReadings( session );
-        Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertThermalTransientReadings )}" );
+        Asserts.AssertTtmElementReadings( session, Asserts.TR );
+        Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertTtmElementReadings )} TTM Elements {Asserts.TR}" );
 
-        Asserts.AssertFinalResistanceReadings( session );
-        Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertFinalResistanceReadings )}" );
+        Asserts.AssertTtmElementReadings( session, Asserts.FR );
+        Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertTtmElementReadings )} TTM Elements {Asserts.FR}" );
 
         Asserts.AssertEstimatesShouldRead( session );
         Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertEstimatesShouldRead )}" );

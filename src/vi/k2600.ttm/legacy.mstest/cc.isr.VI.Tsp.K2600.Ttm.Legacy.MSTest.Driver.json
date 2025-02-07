@@ -119,7 +119,7 @@
     "TracePointsMinimum": 10,
     "VoltageChange": 0.099,
     "VoltageChangeDefault": 0.099,
-    "VoltageChangeMaximum": 1.0,
+    "VoltageChangeMaximum": 0.099,
     "VoltageChangeMinimum": 0.001,
     "VoltageLimit": 0.99,
     "VoltageLimitDefault": 0.99,

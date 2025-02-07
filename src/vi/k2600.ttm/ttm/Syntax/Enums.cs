@@ -58,13 +58,17 @@ public enum ContactCheckOptions
     [Description( "Initial" )]
     Initial = 1,
 
-    /// <summary>   A binary constant representing the pre trace  contact check option. </summary>
-    [Description( "Pre-Trace" )]
-    PreTrace = 2,
+    /// <summary>   A binary constant representing the pre trace contact check option. </summary>
+    [Description( "Trace" )]
+    Trace = 2,
 
     /// <summary>   A binary constant representing the pre final resistance contact check option. </summary>
     [Description( "Final" )]
     Final = 4,
+
+    /// <summary>   A binary constant representing the pre start contact check option. </summary>
+    [Description( "Start" )]
+    Start = 8,
 }
 
 /// <summary>   Values that represent source output options. </summary>

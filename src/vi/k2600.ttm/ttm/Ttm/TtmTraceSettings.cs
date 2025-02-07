@@ -387,11 +387,11 @@ public class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
         set => this.SetProperty( ref this._voltageChangeDefault, value );
     }
 
-    private double _voltageChangeMaximum = 1;
+    private double _voltageChangeMaximum = 0.099;
 
     /// <summary>   Gets or sets the Thermal Transient voltage Change Maximum. </summary>
     /// <value> The Thermal Transient voltage Change Maximum. </value>
-	[Description( "Thermal Transient Maximum Voltage Change {1)." )]
+	[Description( "Thermal Transient Maximum Voltage Change {0.099)." )]
     public double VoltageChangeMaximum
     {
         get => this._voltageChangeMaximum;

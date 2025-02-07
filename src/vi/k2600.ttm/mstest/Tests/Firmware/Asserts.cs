@@ -16,6 +16,49 @@ internal static partial class Asserts
     /// <voltageChange> True if legacy firmware, false if not. </voltageChange>
     public static bool LegacyFirmware { get; set; }
 
+    /// <summary>   (Immutable) the Initial Resistance element. </summary>
+    public const string IR = "ir";
+
+    /// <summary>   (Immutable) the final Resistance element. </summary>
+    public const string FR = "fr";
+
+    /// <summary>   (Immutable) the trace element. </summary>
+    public const string TR = "tr";
+
+    public const string EST = "est";
+
+    /// <summary>   Ttm element name. </summary>
+    /// <remarks>   2025-02-06. </remarks>
+    /// <param name="ttmElement">   (ir) Type of the cold resistance. </param>
+    /// <returns>   A string. </returns>
+    public static string TtmElementName( string ttmElement )
+    {
+        return string.Equals( Asserts.IR, ttmElement, StringComparison.Ordinal )
+            ? "Initial Resistance"
+            : string.Equals( Asserts.FR, ttmElement, StringComparison.Ordinal )
+                ? "Final Resistance"
+                : string.Equals( Asserts.TR, ttmElement, StringComparison.Ordinal )
+                    ? "Trace"
+                    : string.Equals( Asserts.EST, ttmElement, StringComparison.Ordinal )
+                        ? "Estimator"
+                        : string.Empty;
+    }
+
+    /// <summary>   Contact check option. </summary>
+    /// <remarks>   2025-02-06. </remarks>
+    /// <param name="ttmElement">   (ir) Type of the cold resistance. </param>
+    /// <returns>   The ContactCheckOptions. </returns>
+    public static ContactCheckOptions ContactCheckOption( string ttmElement )
+    {
+        return string.Equals( Asserts.IR, ttmElement, StringComparison.Ordinal )
+          ? ContactCheckOptions.Initial
+          : string.Equals( Asserts.FR, ttmElement, StringComparison.Ordinal )
+            ? ContactCheckOptions.Final
+            : string.Equals( Asserts.TR, ttmElement, StringComparison.Ordinal )
+              ? ContactCheckOptions.Trace
+              : ContactCheckOptions.None;
+    }
+
     /// <summary> Logs an iterator. </summary>
     /// <remarks> David, 2020-10-12. </remarks>
     /// <param name="value"> The voltageChange. </param>
@@ -71,7 +114,7 @@ internal static partial class Asserts
         Assert.AreEqual( expectedReading, reading, "The triggered output should match the expected reading" );
     }
 
-    /// <summary>   Assert estimates should read. </summary>
+    /// <summary>   Assert estimate should read. </summary>
     /// <remarks>   2024-10-31. </remarks>
     /// <param name="session">              The session. </param>
     /// <param name="initialResistance">    The initial resistance. </param>
@@ -79,20 +122,26 @@ internal static partial class Asserts
     {
         Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
         Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
-        int? outcome = session.QueryNullableIntegerThrowIfError( "print(ttm.est.outcome) ", "Estimator outcome" );
-        double? initialVoltage = session.QueryNullableIntegerThrowIfError( "print(ttm.est.initialVoltage) ", "Estimator Initial Voltage" );
-        double? finalVoltage = session.QueryNullableDoubleThrowIfError( "print(ttm.est.finalVoltage) ", "Estimator Final Voltage" );
-        double? voltageChange = session.QueryNullableDoubleThrowIfError( "print(ttm.est.voltageChange) ", "Estimator Voltage Change" );
+
+        string ttmElement = Asserts.EST;
+        string ttmElementName = "Estimator";
+
+        int? outcome = session.QueryNullableIntegerThrowIfError( $"print(ttm.{ttmElement}.outcome) ", $"{ttmElementName} outcome" );
+        double? initialVoltage = session.QueryNullableIntegerThrowIfError( $"print(ttm.{ttmElement}.initialVoltage) ", $"{ttmElementName} Initial Voltage" );
+        double? finalVoltage = session.QueryNullableDoubleThrowIfError( $"print(ttm.{ttmElement}.finalVoltage) ", $"{ttmElementName} Final Voltage" );
+        double? voltageChange = session.QueryNullableDoubleThrowIfError( $"print(ttm.{ttmElement}.voltageChange) ", $"{ttmElementName} Voltage Change" );
+
+        string ttmTrace = Asserts.TR;
 
         // the legacy driver does not call the estimator estimate and, therefore, could be tested even if testing compliance with the legacy driver.
 
         if ( !Asserts.LegacyFirmware && outcome.HasValue )
-            _ = session.WriteLine( "ttm.est:estimate( ttm.ir.resistance, ttm.tr ) " );
+            _ = session.WriteLine( $"ttm.{ttmElement}:estimate( ttm.{ttmTrace}.resistance, ttm.{ttmTrace} ) " );
 
-        double? temperatureChange = session.QueryNullableDoubleThrowIfError( "print(ttm.est.temperatureChange) ", "Estimator Temperature Change" );
-        double? thermalConductance = session.QueryNullableDoubleThrowIfError( "print(ttm.est.thermalConductance) ", "Estimator Thermal Conductance" );
-        double? thermalTimeConstant = session.QueryNullableDoubleThrowIfError( "print(ttm.est.thermalTimeConstant) ", "Estimator Thermal Time Constant" );
-        double? thermalCapacitance = session.QueryNullableDoubleThrowIfError( "print(ttm.est.thermalCapacitance) ", "Estimator Thermal Capacitance" );
+        double? temperatureChange = session.QueryNullableDoubleThrowIfError( $"print(ttm.{ttmElement}.temperatureChange) ", $"{ttmElementName} Temperature Change" );
+        double? thermalConductance = session.QueryNullableDoubleThrowIfError( $"print(ttm.{ttmElement}.thermalConductance) ", $"{ttmElementName} Thermal Conductance" );
+        double? thermalTimeConstant = session.QueryNullableDoubleThrowIfError( $"print(ttm.{ttmElement}.thermalTimeConstant) ", $"{ttmElementName} Thermal Time Constant" );
+        double? thermalCapacitance = session.QueryNullableDoubleThrowIfError( $"print(ttm.{ttmElement}.thermalCapacitance) ", $"{ttmElementName} Thermal Capacitance" );
         if ( outcome.HasValue )
         {
             Assert.IsNotNull( initialVoltage, $"{nameof( initialVoltage )} should not be null if {nameof( outcome )} is not null." );
@@ -153,190 +202,109 @@ internal static partial class Asserts
     }
 
 
-    /// <summary>   Assert Initial Resistance should read low, high and pass. </summary>
+    /// <summary>   Assert TTM Element should read low, high and pass. </summary>
     /// <remarks>   2024-10-26. </remarks>
-    /// <param name="session">  The session. </param>
+    /// <param name="session">      The session. </param>
+    /// <param name="ttmElement">   TTM Element abbreviation, e.g., ir, fr, tr or est. </param>
     /// <returns>   A Tuple. </returns>
-    public static (bool? Low, bool? High, bool? Pass) AssertInitialResistanceShouldReadLowHighPass( Pith.SessionBase? session )
+    public static (bool? Low, bool? High, bool? Pass) AssertTtmElementShouldReadLowHighPass( Pith.SessionBase? session, string ttmElement )
     {
         Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
         Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
+
+        Assert.IsNotNull( ttmElement, $"{nameof( ttmElement )} must not be null." );
+        Assert.AreNotEqual( string.Empty, ttmElement, $"{nameof( ttmElement )} must not be empty." );
+        string ttmElementName = Asserts.TtmElementName( ttmElement );
+        Assert.AreNotEqual( string.Empty, ttmElementName, $"Failed getting element name from {nameof( ttmElementName )}='{ttmElementName}'." );
+        Assert.IsTrue( string.Equals( Asserts.IR, ttmElement, System.StringComparison.Ordinal )
+            | string.Equals( Asserts.FR, ttmElement, System.StringComparison.Ordinal )
+            | string.Equals( Asserts.TR, ttmElement, System.StringComparison.Ordinal ),
+            $"{nameof( ttmElement )} must be either '{Asserts.IR}' or '{Asserts.FR}' or '{Asserts.TR}'." );
 
         // the legacy driver is agnostic to the low and high properties and, therefore, could be tested even if testing the legacy driver.
 
         int? passFailOutcome = Asserts.LegacyFirmware
             ? 0
-            : session.QueryNullableIntegerThrowIfError( "print(ttm.ir.passFailOutcome) ", "Initial resistance pass fail outcome" );
+            : session.QueryNullableIntegerThrowIfError( $"print(ttm.{ttmElement}.passFailOutcome) ", $"{ttmElementName} pass fail outcome" );
 
         Assert.IsNotNull( passFailOutcome, $"{nameof( passFailOutcome )} should not be null." );
         return Asserts.ParsePassFailOutcome( passFailOutcome );
     }
 
-    /// <summary>   Assert final resistance should read low, high and pass. </summary>
+    /// <summary>   Assert TTM Element should read limits. </summary>
     /// <remarks>   2024-10-26. </remarks>
     /// <param name="session">  The session. </param>
     /// <returns>   A Tuple. </returns>
-    public static (bool? Low, bool? High, bool? Pass) AssertFinalResistanceShouldReadLowHighPass( Pith.SessionBase? session )
+    public static (double LowLimit, double HighLimit) AssertTtmElementShouldReadLimits( Pith.SessionBase? session, string ttmElement )
     {
         Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
         Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
 
-        // the legacy driver is agnostic to the low and high properties and, therefore, could be tested even if testing the legacy driver.
+        Assert.IsNotNull( ttmElement, $"{nameof( ttmElement )} must not be null." );
+        Assert.AreNotEqual( string.Empty, ttmElement, $"{nameof( ttmElement )} must not be empty." );
+        string ttmElementName = Asserts.TtmElementName( ttmElement );
+        Assert.AreNotEqual( string.Empty, ttmElementName, $"Failed getting element name from {nameof( ttmElementName )}='{ttmElementName}'." );
+        Assert.IsTrue( string.Equals( Asserts.IR, ttmElement, System.StringComparison.Ordinal )
+            | string.Equals( Asserts.FR, ttmElement, System.StringComparison.Ordinal )
+            | string.Equals( Asserts.TR, ttmElement, System.StringComparison.Ordinal ),
+            $"{nameof( ttmElement )} must be either '{Asserts.IR}' or '{Asserts.FR}' or '{Asserts.TR}'." );
 
-        int? passFailOutcome = Asserts.LegacyFirmware
-            ? 0
-            : session.QueryNullableIntegerThrowIfError( "print(ttm.fr.passFailOutcome) ", "Final resistance pass fail outcome" );
-
-        Assert.IsNotNull( passFailOutcome, $"{nameof( passFailOutcome )} should not be null." );
-        return Asserts.ParsePassFailOutcome( passFailOutcome );
-    }
-
-    /// <summary>   Assert thermal transient should read low, high and pass. </summary>
-    /// <remarks>   2024-10-26. </remarks>
-    /// <param name="session">  The session. </param>
-    /// <returns>   A Tuple. </returns>
-    public static (bool? Low, bool? High, bool? Pass) AssertThermalTransientShouldReadLowHighPass( Pith.SessionBase? session )
-    {
-        Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
-        Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
-
-        // the low and high properties are not used by the legacy driver and, therefore, could be tested even if testing the legacy driver.
-
-        int? passFailOutcome = Asserts.LegacyFirmware
-            ? 0
-            : session.QueryNullableIntegerThrowIfError( "print(ttm.tr.passFailOutcome) ", "Thermal transient pass fail outcome" );
-
-        Assert.IsNotNull( passFailOutcome, $"{nameof( passFailOutcome )} should not be null." );
-        return Asserts.ParsePassFailOutcome( passFailOutcome );
-    }
-
-
-    /// <summary>   Assert Initial Resistance should read limits. </summary>
-    /// <remarks>   2024-10-26. </remarks>
-    /// <param name="session">  The session. </param>
-    /// <returns>   A Tuple. </returns>
-    public static (double LowLimit, double HighLimit) AssertInitialResistanceShouldReadLimits( Pith.SessionBase? session )
-    {
-        Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
-        Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
-        double lowLimit = session.QueryDoubleThrowIfError( "print(ttm.ir.lowLimit) ", "Initial MeasuredValue Low Limit" );
-        double highLimit = session.QueryDoubleThrowIfError( "print(ttm.ir.highLimit) ", "Initial MeasuredValue High Limit" );
+        double lowLimit = session.QueryDoubleThrowIfError( $"print(ttm.{ttmElement}.lowLimit) ", $"{ttmElementName} Low Limit" );
+        double highLimit = session.QueryDoubleThrowIfError( $"print(ttm.{ttmElement}.highLimit) ", $"{ttmElementName} High Limit" );
         return (lowLimit, highLimit);
     }
 
-    /// <summary>   Assert Final Resistance should read limits. </summary>
+    /// <summary>   Assert TTM Element Measurements should be fetched. </summary>
     /// <remarks>   2024-10-26. </remarks>
-    /// <param name="session">  The session. </param>
+    /// <param name="session">      The session. </param>
+    /// <param name="ttmElement">   TTM Element abbreviation, e.g., ir, fr, tr or est. </param>
     /// <returns>   A Tuple. </returns>
-    public static (double LowLimit, double HighLimit) AssertFinalResistanceShouldReadLimits( Pith.SessionBase? session )
+    public static (int? Outcome, int? status, bool okayAndPass, double? Measurement) AssertTtmElementShouldBeFetched( Pith.SessionBase? session, string ttmElement )
     {
         Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
         Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
-        double lowLimit = session.QueryDoubleThrowIfError( "print(ttm.fr.lowLimit) ", "Final MeasuredValue Low Limit" );
-        double highLimit = session.QueryDoubleThrowIfError( "print(ttm.fr.highLimit) ", "Final MeasuredValue High Limit" );
-        return (lowLimit, highLimit);
+
+        Assert.IsNotNull( ttmElement, $"{nameof( ttmElement )} must not be null." );
+        Assert.AreNotEqual( string.Empty, ttmElement, $"{nameof( ttmElement )} must not be empty." );
+        string ttmElementName = Asserts.TtmElementName( ttmElement );
+        Assert.AreNotEqual( string.Empty, ttmElementName, $"Failed getting element name from {nameof( ttmElementName )}='{ttmElementName}'." );
+        Assert.IsTrue( string.Equals( Asserts.IR, ttmElement, System.StringComparison.Ordinal )
+            | string.Equals( Asserts.FR, ttmElement, System.StringComparison.Ordinal )
+            | string.Equals( Asserts.TR, ttmElement, System.StringComparison.Ordinal ),
+            $"{nameof( ttmElement )} must be either '{Asserts.IR}' or '{Asserts.FR}' or '{Asserts.TR}'." );
+
+        bool okayAndPass = session.QueryBoolThrowIfError( $"print(ttm.{ttmElement}:isOkayAndPass()) ", $"{ttmElementName} Is Okay and Pass" );
+        int? outcome = session.QueryNullableIntegerThrowIfError( $"print(ttm.{ttmElement}.outcome) ", $"{ttmElementName} Measurement Outcome" );
+        int? status = session.QueryNullableIntegerThrowIfError( $"print(ttm.{ttmElement}.status) ", $"{ttmElementName} Buffer Status Reading" );
+        double? measurement = string.Equals( Asserts.TR, ttmElement, StringComparison.Ordinal )
+            ? session.QueryNullableDoubleThrowIfError( $"print(ttm.{ttmElement}.voltageChange) ", $"{ttmElementName}" )
+            : session.QueryNullableDoubleThrowIfError( $"print(ttm.{ttmElement}.resistance) ", $"{ttmElementName}" );
+        return (outcome, status, okayAndPass, measurement);
     }
 
-    /// <summary>   Assert thermal transient should read limits. </summary>
-    /// <remarks>   2024-10-26. </remarks>
-    /// <param name="session">  The session. </param>
-    /// <returns>   A Tuple. </returns>
-    public static (double LowLimit, double HighLimit) AssertThermalTransientShouldReadLimits( Pith.SessionBase? session )
-    {
-        Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
-        Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
-        double lowLimit = session.QueryDoubleThrowIfError( "print(ttm.tr.lowLimit) ", "Thermal Transient Low Limit" );
-        double highLimit = session.QueryDoubleThrowIfError( "print(ttm.tr.highLimit) ", "Thermal Transient High Limit" );
-        return (lowLimit, highLimit);
-    }
-
-    /// <summary>   Assert Initial Resistance should be fetched. </summary>
-    /// <remarks>   2024-10-26. </remarks>
-    /// <param name="session">  The session. </param>
-    /// <returns>   A Tuple. </returns>
-    public static (int? Outcome, int? status, bool okayAndPass, double? Resistance) AssertInitialResistanceShouldBeFetched( Pith.SessionBase? session )
-    {
-        Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
-        Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
-        bool okayAndPass = session.QueryBoolThrowIfError( "print(ttm.ir:isOkayAndPass()) ", "Initial MeasuredValue Initial and Pass" );
-        int? outcome = session.QueryNullableIntegerThrowIfError( "print(ttm.ir.outcome) ", "Initial MeasuredValue MeasurementOutcome" );
-        int? status = session.QueryNullableIntegerThrowIfError( "print(ttm.ir.status) ", "Initial MeasuredValue Buffer StatusReading" );
-        double? resistance = session.QueryNullableDoubleThrowIfError( "print(ttm.ir.resistance) ", "Initial MeasuredValue" );
-        return (outcome, status, okayAndPass, resistance);
-    }
-
-    /// <summary>   Assert thermal transient should be fetched. </summary>
-    /// <remarks>   2024-10-26. </remarks>
-    /// <param name="session">  The session. </param>
-    /// <returns>   A Tuple. </returns>
-    public static (int? Outcome, int? Status, bool okayAndPass, double? VoltageChange) AssertThermalTransientShouldBeFetched( Pith.SessionBase? session )
-    {
-        Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
-        Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
-        bool okayAndPass = session.QueryBoolThrowIfError( "print(ttm.tr:isOkayAndPass()) ", "Initial MeasuredValue Initial and Pass" );
-        int? outcome = session.QueryNullableIntegerThrowIfError( "print(ttm.tr.outcome) ", "Thermal Transient MeasurementOutcome" );
-        int? status = session.QueryNullableIntegerThrowIfError( "print(ttm.tr.status) ", "Thermal Transient Buffer StatusReading" );
-        double? value = session.QueryNullableDoubleThrowIfError( "print(ttm.tr.voltageChange) ", "Thermal Transient" );
-        return (outcome, status, okayAndPass, value);
-    }
-
-    /// <summary>   Assert Final Resistance should be fetched. </summary>
-    /// <remarks>   2024-10-26. </remarks>
-    /// <param name="session">  The session. </param>
-    /// <returns>   A Tuple. </returns>
-    public static (int? Outcome, int? Status, bool okayAndPass, double? Resistance) AssertFinalResistanceShouldBeFetched( Pith.SessionBase? session )
-    {
-        Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
-        Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
-        bool okayAndPass = session.QueryBoolThrowIfError( "print(ttm.fr:isOkayAndPass()) ", "Initial MeasuredValue Initial and Pass" );
-        int? outcome = session.QueryNullableIntegerThrowIfError( "print(ttm.fr.outcome) ", "Final MeasuredValue MeasurementOutcome" );
-        int? status = session.QueryNullableIntegerThrowIfError( "print(ttm.fr.status) ", "Final MeasuredValue Buffer StatusReading" );
-        double? resistance = session.QueryNullableDoubleThrowIfError( "print(ttm.fr.resistance) ", "Final MeasuredValue" );
-        return (outcome, status, okayAndPass, resistance);
-    }
-
-    /// <summary>   Assert initial resistance should read contact check. </summary>
+    /// <summary>   Assert TTM Element Measurements should read contact check. </summary>
     /// <remarks>   2024-10-31. </remarks>
-    /// <param name="session">  The session. </param>
+    /// <param name="session">      The session. </param>
+    /// <param name="ttmElement">   TTM Element abbreviation, e.g., ir, fr, tr or est. </param>
     /// <returns>   A Tuple. </returns>
-    public static (int? openLeadsStatus, double? LowLeadsResistance, double? HighLeadsResistance, double? dutResistance) AssertInitialResistanceShouldReadContactCheck( Pith.SessionBase? session )
+    public static (int? openLeadsStatus, double? LowLeadsResistance, double? HighLeadsResistance, double? dutResistance) AssertTtmElementShouldReadContactCheck( Pith.SessionBase? session, string ttmElement )
     {
         Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
         Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
-        int? openLeadsStatus = session.QueryNullableIntegerThrowIfError( "print(ttm.ir.openLeadsStatus) ", "Initial resistance open leads status" );
-        double? low = session.QueryNullableDoubleThrowIfError( "print(ttm.ir.lowLeadsR) ", "Initial resistance low leads contact resistance" );
-        double? high = session.QueryNullableDoubleThrowIfError( "print(ttm.ir.highLeadsR) ", "Initial resistance high leads contact resistance" );
-        double? dut = session.QueryNullableDoubleThrowIfError( "print(ttm.ir.dutR) ", "Initial resistance DUT leads contact resistance" );
-        return (openLeadsStatus, low, high, dut);
-    }
 
-    /// <summary>   Assert final resistance should read contact check. </summary>
-    /// <remarks>   2024-10-31. </remarks>
-    /// <param name="session">  The session. </param>
-    /// <returns>   A Tuple. </returns>
-    public static (int? openLeadsStatus, double? LowLeadsResistance, double? HighLeadsResistance, double? dutResistance) AssertFinalResistanceShouldReadContactCheck( Pith.SessionBase? session )
-    {
-        Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
-        Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
-        int? openLeadsStatus = session.QueryNullableIntegerThrowIfError( "print(ttm.fr.openLeadsStatus) ", "Final resistance open leads status" );
-        double? low = session.QueryNullableDoubleThrowIfError( "print(ttm.fr.lowLeadsR) ", "Final resistance low leads contact resistance" );
-        double? high = session.QueryNullableDoubleThrowIfError( "print(ttm.fr.highLeadsR) ", "Final resistance high leads contact resistance" );
-        double? dut = session.QueryNullableDoubleThrowIfError( "print(ttm.fr.dutR) ", "Final resistance DUT leads contact resistance" );
-        return (openLeadsStatus, low, high, dut);
-    }
+        Assert.IsNotNull( ttmElement, $"{nameof( ttmElement )} must not be null." );
+        Assert.AreNotEqual( string.Empty, ttmElement, $"{nameof( ttmElement )} must not be empty." );
+        string ttmElementName = Asserts.TtmElementName( ttmElement );
+        Assert.AreNotEqual( string.Empty, ttmElementName, $"Failed getting element name from {nameof( ttmElementName )}='{ttmElementName}'." );
+        Assert.IsTrue( string.Equals( Asserts.IR, ttmElement, System.StringComparison.Ordinal )
+            | string.Equals( Asserts.FR, ttmElement, System.StringComparison.Ordinal )
+            | string.Equals( Asserts.TR, ttmElement, System.StringComparison.Ordinal ),
+            $"{nameof( ttmElement )} must be either '{Asserts.IR}' or '{Asserts.FR}' or '{Asserts.TR}'." );
 
-    /// <summary>   Assert trace should read contact check. </summary>
-    /// <remarks>   2024-10-31. </remarks>
-    /// <param name="session">  The session. </param>
-    /// <returns>   A Tuple. </returns>
-    public static (int? openLeadsStatus, double? LowLeadsResistance, double? HighLeadsResistance, double? dutResistance) AssertTraceShouldReadContactCheck( Pith.SessionBase? session )
-    {
-        Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
-        Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
-        int? openLeadsStatus = session.QueryNullableIntegerThrowIfError( "print(ttm.tr.openLeadsStatus) ", "Trace open leads status" );
-        double? low = session.QueryNullableDoubleThrowIfError( "print(ttm.tr.lowLeadsR) ", "Trace low leads contact resistance" );
-        double? high = session.QueryNullableDoubleThrowIfError( "print(ttm.tr.highLeadsR) ", "Trace high leads contact resistance" );
-        double? dut = session.QueryNullableDoubleThrowIfError( "print(ttm.tr.dutR) ", "Trace DUT leads contact resistance" );
+        int? openLeadsStatus = session.QueryNullableIntegerThrowIfError( $"print(ttm.{ttmElement}.openLeadsStatus) ", $"{ttmElementName}open leads status" );
+        double? low = session.QueryNullableDoubleThrowIfError( $"print(ttm.{ttmElement}.lowLeadsR) ", $"{ttmElementName}low leads contact resistance" );
+        double? high = session.QueryNullableDoubleThrowIfError( $"print(ttm.{ttmElement}.highLeadsR) ", $"{ttmElementName}high leads contact resistance" );
+        double? dut = session.QueryNullableDoubleThrowIfError( $"print(ttm.{ttmElement}.dutR) ", $"{ttmElementName}DUT leads contact resistance" );
         return (openLeadsStatus, low, high, dut);
     }
 
@@ -353,7 +321,7 @@ internal static partial class Asserts
 
         return Asserts.LegacyFirmware
             ? new int?()
-            : session.QueryIntegerThrowIfError( "print(ttm.contactCheckOptionsGetter()) ", "Meter Values Contact Check Options" );
+            : session.QueryIntegerThrowIfError( $"print(ttm.contactCheckOptionsGetter()) ", "Meter Values Contact Check Options" );
     }
 
     /// <summary>   Assert meter should read contact check limit. </summary>
@@ -369,7 +337,7 @@ internal static partial class Asserts
 
         return Asserts.LegacyFirmware
             ? new double?()
-            : session.QueryDoubleThrowIfError( "print(ttm.contactLimitGetter()) ", "Meter Values Contact Check Options" );
+            : session.QueryDoubleThrowIfError( $"print(ttm.contactLimitGetter()) ", "Meter Values Contact Check Options" );
     }
 
     /// <summary>   Assert contact check should conform. </summary>
@@ -387,46 +355,36 @@ internal static partial class Asserts
     {
         Assert.IsNotNull( options, $"Meter Contact Check {nameof( options )} should not be null." );
         Assert.IsNotNull( limit, $"Leads resistance {nameof( limit )} should not be null." );
+        Assert.IsNotNull( outcomes, $"{nameof( outcomes )} must have a value." );
+        Assert.IsNotNull( leadsStatus, $"{nameof( leadsStatus )} must have a value." );
+        Assert.IsNotNull( lowR, $"{nameof( lowR )} must have a value." );
+        Assert.IsNotNull( highR, $"{nameof( highR)} must have a value." );
+        Assert.IsNotNull( dutR, $"{nameof( dutR )} must have a value." );
 
-        if ( 0 == (options.Value & ( int ) option) )
+        if ( (0 == (options.Value & ( int ) option)) || (( int ) FirmwareOutcomes.Unknown == (outcomes & ( int ) FirmwareOutcomes.Unknown)) )
         {
-            // if the specified option is net enabled, the contact check values should be null.
-            Assert.IsFalse( leadsStatus.HasValue, $"{nameof( leadsStatus )} should not have a value {leadsStatus} if the options {options} do not include {option}." );
-            Assert.IsFalse( lowR.HasValue, $"{nameof( lowR )} contact resistance should not have a value {lowR}if the options {options} do not include {option}." );
-            Assert.IsFalse( highR.HasValue, $"{nameof( highR )} contact resistance should not have a value {highR}if the options {options} do not include {option}." );
-            Assert.IsFalse( dutR.HasValue, $"{nameof( dutR )} contact resistance should not have a value {dutR}if the options {options} do not include {option}." );
+            // if the specified option is net enabled, the contact check values should be unknow.
+            Assert.AreEqual( ( int ) LeadsStatusBits.Unknown, leadsStatus.Value, $"{nameof( leadsStatus )} value {leadsStatus} must be unknow if the options {options} do not include {option}." );
+            Assert.AreEqual( cc.isr.VI.Syntax.ScpiSyntax.NotANumber, lowR.Value, $"{nameof( lowR )} contact resistance value should be unknown if the options {options} do not include {option}." );
+            Assert.AreEqual( cc.isr.VI.Syntax.ScpiSyntax.NotANumber, highR.Value, $"{nameof( highR )} contact resistance value should be unknown if the options {options} do not include {option}." );
+            Assert.AreEqual( cc.isr.VI.Syntax.ScpiSyntax.NotANumber, dutR.Value, $"{nameof( dutR )} contact resistance value should be unknown if the options {options} do not include {option}." );
         }
         else
         {
-            if ( outcomes.HasValue )
+            if ( 0 == (( FirmwareOutcomes ) outcomes & FirmwareOutcomes.openLeads) )
             {
-                if ( 0 == (( FirmwareOutcomes ) outcomes & FirmwareOutcomes.openLeads) )
-                {
-                    // if leads are not open okay should be true and low and high should be zero
-                    Assert.AreEqual( ( int ) LeadsStatusBits.Okay, leadsStatus, $"{nameof( leadsStatus )} value should not be {leadsStatus} if contact check did not fail if outcome has no value." );
-                    double expectedValue = 0;
-                    Assert.IsNotNull( lowR, $"{nameof( lowR )} contact resistance should not be null if leads are not open." );
-                    Assert.AreEqual( expectedValue, lowR.Value, $"{nameof( lowR )} contact resistance should equal the expected value if leads are not open." );
-                    Assert.IsNotNull( highR, $"{nameof( highR )} contact resistance should not be null if leads are not open." );
-                    Assert.AreEqual( expectedValue, highR.Value, $"{nameof( highR )} contact resistance should equal the expected value if leads are not open." );
-                }
-                else
-                {
-                    // if leads are open okay should be false and low and high should be higher than the limit
-                    Assert.AreEqual( ( int ) LeadsStatusBits.Okay, leadsStatus, $"{nameof( leadsStatus )} value should not be {leadsStatus} if contact check did not fail if outcome has no value." );
-
-                    Assert.IsNotNull( lowR, $"{nameof( lowR )} contact resistance should not be null if leads are open." );
-                    Assert.IsNotNull( highR, $"{nameof( highR )} contact resistance should not be null if leads are open." );
-                    Assert.IsTrue( (lowR.Value > limit.Value) || (highR.Value > limit.Value),
-                        $"{nameof( lowR )} ({lowR}) and/or {nameof( highR )} ({highR}) contact values should exceed the contact check threshold {limit}." );
-                }
+                // if leads are not open okay should be true and low and high should be zero
+                Assert.AreEqual( ( int ) LeadsStatusBits.Okay, leadsStatus, $"{nameof( leadsStatus )} value should not be {leadsStatus} if contact check did not fail if outcome has no value." );
+                Assert.IsTrue( lowR.Value < limit.Value, $"{nameof( lowR )} ({lowR}) contact value should be lower than the contact check threshold {limit}." );
+                Assert.IsTrue( highR.Value > limit.Value, $"{nameof( highR )} ({highR}) contact value should be lower than the contact check threshold {limit}." );
             }
             else
             {
-                // if outcome has no value., than the rest of the items should not have values
-                Assert.IsFalse( leadsStatus.HasValue, $"{nameof( leadsStatus )} should not have a value {leadsStatus} if outcome has no value." );
-                Assert.IsFalse( lowR.HasValue, $"{nameof( lowR )} contact resistance should not have a value {lowR} if outcome has no value." );
-                Assert.IsFalse( highR.HasValue, $"{nameof( highR )} contact resistance should not have a value {highR} if outcome has no value." );
+                // if leads are open okay should be false and low and high should be higher than the limit
+                Assert.AreNotEqual( ( int ) LeadsStatusBits.Okay, leadsStatus, $"{nameof( leadsStatus )} value should not be {LeadsStatusBits.Okay} if contact check did not fail if outcome has no value." );
+                Assert.IsNotNull( highR, $"{nameof( highR )} contact resistance should not be null if leads are open." );
+                Assert.IsTrue( (lowR.Value > limit.Value) || (highR.Value > limit.Value),
+                    $"{nameof( lowR )} ({lowR}) and/or {nameof( highR )} ({highR}) contact values should exceed the contact check threshold {limit}." );
             }
         }
     }
@@ -503,28 +461,23 @@ internal static partial class Asserts
     /// <param name="pass">         True to pass. </param>
     public static void AssertMeasurementShouldConformOnNotOkay( int? status, bool okayAndPass, double? measurement, bool? low, bool? high, bool? pass )
     {
-        // the TTM initializes pass and measurement to nil
-        Assert.IsFalse( measurement.HasValue, $"'{nameof( measurement )}' should not have a value if measurements were not made." );
-        Assert.IsFalse( pass.HasValue, $"'{nameof( pass )}' should not hae a value if measurements were not made." );
+        // the TTM initializes pass and measurement to NaN
+        Assert.IsTrue( measurement.HasValue, $"'{nameof( measurement )}' should have a value." );
+        Assert.AreEqual( cc.isr.VI.Syntax.ScpiSyntax.NotANumber, measurement.Value, $"'{nameof( measurement )}' should have a SCPI.NAN value." );
+
         Assert.IsFalse( okayAndPass, $"'{nameof( okayAndPass )}' must not be true if outcome is nil." );
 
-        // the legacy driver is agnostic to the low and high properties and, therefore, could be tested even if testing the legacy driver.
+        Assert.IsTrue( pass.HasValue, $"'{nameof( pass )}' should have a value event if measurements were not made." );
+        Assert.IsFalse( pass.Value, $"'{nameof( pass )}' should not pass if measurements were not made." );
 
-        // if outcome is null, the measurement was not made.
-        if ( Asserts.LegacyFirmware )
-        {
-            Assert.IsFalse( low.HasValue, "'Low' is not set with the legacy TTM." );
-            Assert.IsFalse( high.HasValue, "'High' is not set with the legacy TTM." );
-        }
-        else
-        {
-            // status is not initialized to nil with trace
-            Assert.IsFalse( status.HasValue, $"'{nameof( status )}' should not have a value if measurements were not made." );
+        Assert.IsTrue( low.HasValue, $"'{nameof( low )}' should have a value event if measurements were not made." );
+        Assert.IsFalse( low.Value, $"'{nameof( low )}' should be false if measurements were not made." );
 
-            // the TTM initializes the low, high, and pass to nil
-            Assert.IsFalse( low.HasValue, "'Low' should not have a value if measurements were not made." );
-            Assert.IsFalse( high.HasValue, "'High' should not have a value if measurements were not made." );
-        }
+        Assert.IsTrue( high.HasValue, $"'{nameof( high )}' should have a value event if measurements were not made." );
+        Assert.IsFalse( high.Value, $"'{nameof( high )}' should be false if measurements were not made." );
+
+        Assert.IsTrue( status.HasValue, $"'{nameof( status )}' should have a value event if measurements were not made." );
+        Assert.AreEqual( 1, status, $"'{nameof( status )}' should have a value of 1 if measurements were not made." );
     }
 
     /// <summary>   Assert framework should clear known state. </summary>
@@ -539,20 +492,32 @@ internal static partial class Asserts
         _ = session.WriteLine( "ttm.clearMeasurements() " );
     }
 
-    /// <summary>   Assert Initial Resistance readings. </summary>
+    /// <summary>   Assert TTM Element has readings. </summary>
     /// <remarks>   2024-10-26. </remarks>
-    /// <param name="session">  The session. </param>
-    public static void AssertInitialResistanceReadings( Pith.SessionBase? session )
+    /// <param name="session">              The session. </param>
+    /// <param name="ttmElement">   TTM Element abbreviation, e.g., ir, fr, tr or est. </param>
+    public static void AssertTtmElementReadings( Pith.SessionBase? session, string ttmElement )
     {
         Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
         Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
-        (int? outcome, int? status, bool okayAndPass, double? resistance) = Asserts.AssertInitialResistanceShouldBeFetched( session );
-        (bool? low, bool? high, bool? pass) = Asserts.AssertInitialResistanceShouldReadLowHighPass( session );
-        (double lowLimit, double highLimit) = Asserts.AssertInitialResistanceShouldReadLimits( session );
-        Asserts.AssertMeasurementShouldConform( outcome, status, okayAndPass, resistance, lowLimit, highLimit, low, high, pass );
+
+        Assert.IsNotNull( ttmElement, $"{nameof( ttmElement )} must not be null." );
+        Assert.AreNotEqual( string.Empty, ttmElement, $"{nameof( ttmElement )} must not be empty." );
+        string ttmElementName = Asserts.TtmElementName( ttmElement );
+        Assert.AreNotEqual( string.Empty, ttmElementName, $"Failed getting element name from {nameof( ttmElementName )}='{ttmElementName}'." );
+        Assert.IsTrue( string.Equals( Asserts.IR, ttmElement, System.StringComparison.Ordinal )
+            | string.Equals( Asserts.FR, ttmElement, System.StringComparison.Ordinal )
+            | string.Equals( Asserts.TR, ttmElement, System.StringComparison.Ordinal ),
+            $"{nameof( ttmElement )} must be either '{Asserts.IR}' or '{Asserts.FR}' or '{Asserts.TR}'." );
+
+        (int? outcome, int? status, bool okayAndPass, double? measurement) = Asserts.AssertTtmElementShouldBeFetched( session, ttmElement );
+        (bool? low, bool? high, bool? pass) = Asserts.AssertTtmElementShouldReadLowHighPass( session, ttmElement );
+        (double lowLimit, double highLimit) = Asserts.AssertTtmElementShouldReadLimits( session, ttmElement );
+        Asserts.AssertMeasurementShouldConform( outcome, status, okayAndPass, measurement, lowLimit, highLimit, low, high, pass );
+
         if ( !outcome.HasValue )
             // status is initialized to nil with cold resistance
-            Assert.IsFalse( status.HasValue, $"'{nameof( status )}' should not have a value if measurements were not made." );
+            Assert.IsFalse( status.HasValue, $"{ttmElementName} '{nameof( status )}' should not have a value if measurements were not made." );
 
         // the legacy driver is oblivious to contact check but will see the NaN result if contact check failed.
 
@@ -560,92 +525,20 @@ internal static partial class Asserts
         {
             int? contactOptions = Asserts.AssertMeterShouldReadContactCheckOptions( session );
             double? limit = Asserts.AssertMeterShouldReadContactCheckLimit( session );
-            (int? leadsStatus, double? lowR, double? highR, double? dutR) = Asserts.AssertInitialResistanceShouldReadContactCheck( session );
+            (int? leadsStatus, double? lowR, double? highR, double? dutR) = Asserts.AssertTtmElementShouldReadContactCheck( session, ttmElement );
             Asserts.AssertContactCheckShouldConform( outcome, contactOptions, ContactCheckOptions.Initial, limit, leadsStatus, lowR, highR, dutR );
 
-            if ( ( int ) ContactCheckOptions.Initial == (contactOptions & ( int ) ContactCheckOptions.Initial) )
+            ContactCheckOptions contactCheckOption = Asserts.ContactCheckOption( ttmElement );
+
+            if ( ( int ) contactCheckOption == (contactOptions & ( int ) contactCheckOption) )
             {
                 if ( leadsStatus.HasValue && (( int ) LeadsStatusBits.Okay != leadsStatus.Value) )
                 {
                     // if contact check failed, the voltage change reading should be NaN in millivolts
-                    Assert.IsNotNull( resistance, $"{nameof( resistance )} should have a value after contact check." );
-                    Assert.AreEqual( cc.isr.VI.Syntax.ScpiSyntax.NotANumber, resistance, $"{nameof( resistance )} should be set to NaN if contact check failed." );
+                    Assert.IsNotNull( measurement, $"{nameof( measurement )} should have a value after contact check." );
+                    Assert.AreEqual( cc.isr.VI.Syntax.ScpiSyntax.NotANumber, measurement, $"{nameof( measurement )} should be set to NaN if contact check failed." );
                 }
             }
         }
     }
-
-    /// <summary>   Assert Final Resistance readings. </summary>
-    /// <remarks>   2024-10-26. </remarks>
-    /// <param name="session">  The session. </param>
-    public static void AssertFinalResistanceReadings( Pith.SessionBase? session )
-    {
-        Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
-        Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
-        (int? outcome, int? status, bool okayAndPass, double? resistance) = Asserts.AssertFinalResistanceShouldBeFetched( session );
-        (bool? low, bool? high, bool? pass) = Asserts.AssertFinalResistanceShouldReadLowHighPass( session );
-        (double lowLimit, double highLimit) = Asserts.AssertFinalResistanceShouldReadLimits( session );
-        Asserts.AssertMeasurementShouldConform( outcome, status, okayAndPass, resistance, lowLimit, highLimit, low, high, pass );
-        if ( !outcome.HasValue )
-            // status is initialized to nil with cold resistance
-            Assert.IsFalse( status.HasValue, $"'{nameof( status )}' should not have a value if measurements were not made." );
-
-        // the legacy driver is oblivious to contact check but will see the NaN result if contact check failed.
-
-        if ( !Asserts.LegacyFirmware )
-        {
-            int? contactOptions = Asserts.AssertMeterShouldReadContactCheckOptions( session );
-            double? limit = Asserts.AssertMeterShouldReadContactCheckLimit( session );
-            (int? leadsStatus, double? lowR, double? highR, double? dutR) = Asserts.AssertFinalResistanceShouldReadContactCheck( session );
-            Asserts.AssertContactCheckShouldConform( outcome, contactOptions, ContactCheckOptions.Final, limit, leadsStatus, lowR, highR, dutR );
-
-            if ( ( int ) ContactCheckOptions.Final == (contactOptions & ( int ) ContactCheckOptions.Final) )
-            {
-                if ( leadsStatus.HasValue && (( int ) LeadsStatusBits.Okay != leadsStatus.Value) )
-                {
-                    // if contact check failed, the voltage change reading should be NaN in millivolts
-                    Assert.IsNotNull( resistance, $"{nameof( resistance )} should have a value after contact check." );
-                    Assert.AreEqual( cc.isr.VI.Syntax.ScpiSyntax.NotANumber, resistance, $"{nameof( resistance )} should be set to NaN if contact check failed." );
-                }
-            }
-        }
-    }
-
-    /// <summary>   Assert thermal transient readings. </summary>
-    /// <remarks>   2024-10-26. </remarks>
-    /// <param name="session">  The session. </param>
-    public static void AssertThermalTransientReadings( Pith.SessionBase? session )
-    {
-        Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
-        Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
-        (int? outcome, int? status, bool okayAndPass, double? voltageChange) = Asserts.AssertThermalTransientShouldBeFetched( session );
-
-        // the low and high properties are not used by the legacy driver and, therefore, could be tested even if testing the legacy driver.
-
-        (bool? low, bool? high, bool? pass) = Asserts.AssertThermalTransientShouldReadLowHighPass( session );
-        (double lowLimit, double highLimit) = Asserts.AssertThermalTransientShouldReadLimits( session );
-        Asserts.AssertMeasurementShouldConform( outcome, status, okayAndPass, voltageChange, lowLimit, highLimit, low, high, pass );
-
-        // the legacy driver is oblivious to contact check but will see the NaN result if contact check failed.
-
-        if ( !Asserts.LegacyFirmware )
-        {
-            int? contactOptions = Asserts.AssertMeterShouldReadContactCheckOptions( session );
-            Assert.IsNotNull( contactOptions, nameof( contactOptions ) );
-            double? limit = Asserts.AssertMeterShouldReadContactCheckLimit( session );
-            (int? leadsStatus, double? lowR, double? highR, double? dutR) = Asserts.AssertTraceShouldReadContactCheck( session );
-            Asserts.AssertContactCheckShouldConform( outcome, contactOptions, ContactCheckOptions.Final, limit, leadsStatus, lowR, highR, dutR );
-
-            if ( ( int ) ContactCheckOptions.PreTrace == (contactOptions & ( int ) ContactCheckOptions.PreTrace) )
-            {
-                if ( leadsStatus.HasValue && (( int ) LeadsStatusBits.Okay != leadsStatus.Value) )
-                {
-                    // if contact check failed, the voltage change reading should be NaN in millivolts
-                    Assert.IsNotNull( voltageChange, $"{nameof( voltageChange )} should have a value after contact check." );
-                    Assert.AreEqual( cc.isr.VI.Syntax.ScpiSyntax.NotANumber, 1000 * voltageChange, $"{nameof( voltageChange )} should be set to NaN if contact check failed." );
-                }
-            }
-        }
-    }
-
 }

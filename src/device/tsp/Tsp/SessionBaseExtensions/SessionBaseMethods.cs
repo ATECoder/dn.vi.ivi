@@ -164,7 +164,8 @@ public static class SessionBaseMethods
     public static int QueryIntegerThrowIfError( this Pith.SessionBase? session, string query, string caption = "" )
     {
         string reading = QueryStringThrowIfError( session, query, caption );
-        if ( int.TryParse( reading, out int value ) )
+        if ( int.TryParse( reading, System.Globalization.NumberStyles.AllowExponent | System.Globalization.NumberStyles.AllowDecimalPoint,
+            System.Globalization.CultureInfo.CurrentCulture, out int value ) )
             return value;
         else
             throw new InvalidOperationException( $"The reading '{reading}' for the {(caption is null ? query : caption)} query failed to parse." );
