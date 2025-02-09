@@ -68,7 +68,7 @@ public partial class LegacyDevice : CommunityToolkit.Mvvm.ComponentModel.Observa
         this.ThermalTransientVoltageChange = 0f; // 0.099
         this.ThermalTransientHighLimit = 0f;
         this.ThermalTransientLowLimit = 0f;
-        this.PostTransientDelay = 0; // 0.5
+        this.PostTransientDelay = 0; // 0.01
     }
 
     #region " i disposable support "

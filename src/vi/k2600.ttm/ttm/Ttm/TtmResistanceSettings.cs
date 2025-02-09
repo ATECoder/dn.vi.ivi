@@ -315,11 +315,11 @@ public class TtmResistanceSettings : CommunityToolkit.Mvvm.ComponentModel.Observ
         set => this.SetProperty( ref this._voltageLimitDefault, value );
     }
 
-    private double _voltageMaximum = 10;
+    private double _voltageMaximum = 0.1;
 
     /// <summary>   Gets or sets the bridge-wire resistance measurement voltage maximum. </summary>
     /// <value> The bridge-wire resistance measurement voltage maximum. </value>
-	[Description( "Specifies the Bridge-Wire MeasuredValue Maximum Voltage Limit (9.999)." )]
+	[Description( "Specifies the Bridge-Wire MeasuredValue Maximum Voltage Limit (0.1)." )]
     public double VoltageMaximum
     {
         get => this._voltageMaximum;

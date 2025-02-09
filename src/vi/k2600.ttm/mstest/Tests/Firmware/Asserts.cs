@@ -266,7 +266,7 @@ internal static partial class Asserts
             // the legacy driver does not call the estimator estimate and, therefore, could be tested even if testing compliance with the legacy driver.
             if ( traceOutcome.HasValue && (( int ) FirmwareOutcomes.Unknown != (traceOutcome.Value & ( int ) FirmwareOutcomes.Unknown)) )
             {
-                string command = $"ttm.{ttmElement}:estimate( ttm.{ttmTrace}.coldResistance, ttm.{ttmTrace} ) ";
+                string command = $"ttm.{ttmElement}:estimate( ttm.{ttmTrace} ) ";
                 Asserts.AssertCommandShouldExecute( session, command, true );
             }
         }

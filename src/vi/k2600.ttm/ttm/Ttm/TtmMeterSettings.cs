@@ -71,7 +71,7 @@ public class TtmMeterSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     #region " contact check "
 
-    private cc.isr.VI.Tsp.K2600.Ttm.Syntax.ContactCheckOptions _contactCheckOptions = cc.isr.VI.Tsp.K2600.Ttm.Syntax.ContactCheckOptions.Initial;
+    private cc.isr.VI.Tsp.K2600.Ttm.Syntax.ContactCheckOptions _contactCheckOptions = cc.isr.VI.Tsp.K2600.Ttm.Syntax.ContactCheckOptions.Start;
 
     /// <summary>   Gets or sets options for controlling the contact check. </summary>
     /// <value> Options that control the contact check. </value>
@@ -82,7 +82,7 @@ public class TtmMeterSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
         set => this.SetProperty( ref this._contactCheckOptions, value );
     }
 
-    private cc.isr.VI.Tsp.K2600.Ttm.Syntax.ContactCheckOptions _contactCheckOptionsDefault = cc.isr.VI.Tsp.K2600.Ttm.Syntax.ContactCheckOptions.Initial;
+    private cc.isr.VI.Tsp.K2600.Ttm.Syntax.ContactCheckOptions _contactCheckOptionsDefault = cc.isr.VI.Tsp.K2600.Ttm.Syntax.ContactCheckOptions.Start;
 
     /// <summary>   Gets or sets options for controlling the contact check. </summary>
     /// <value> Options that control the contact check. </value>
@@ -143,43 +143,19 @@ public class TtmMeterSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     #region " post transient "
 
-    private double _postTransientDelay = 0.5;
+    private double _postTransientDelay = 0.01;
 
     /// <summary>   Gets or sets the post transient delay. </summary>
     /// <value> The post transient delay. </value>
-	[Description( "The Post Transient Delay Time in Seconds (0.5)." )]
+	[Description( "The Post Transient Delay Time in Seconds (0.01)." )]
     public double PostTransientDelay
     {
         get => this._postTransientDelay;
         set => this.SetProperty( ref this._postTransientDelay, value );
     }
 
-    private double _postTransientDelayDefault = 0.5;
-
-    /// <summary>   Gets or sets the post transient delay default. </summary>
-    /// <value> The post transient delay default. </value>
-	[Description( "The Default Post Transient Delay Time in Seconds (0.5)." )]
-    public double PostTransientDelayDefault
-    {
-        get => this._postTransientDelayDefault;
-        set => this.SetProperty( ref this._postTransientDelayDefault, value );
-    }
-
-    private double _postTransientDelayMaximum = 10;
-
-    /// <summary>   Gets or sets the post transient delay maximum. </summary>
-    /// <value> The post transient delay maximum. </value>
-	[Description( "The Maximum Post Transient Delay Time in Seconds (10)." )]
-    public double PostTransientDelayMaximum
-    {
-        get => this._postTransientDelayMaximum;
-        set => this.SetProperty( ref this._postTransientDelayMaximum, value );
-    }
-
-    private double _postTransientDelayMinimum = 0.001;
-
-    /// <summary>   Gets or sets the post transient delay minimum. </summary>
-    /// <value> The post transient delay minimum. </value>
+    private double _postTransientDelayDefault = 0.01;
+    /// <summary>   Gets or sets the post transient delay default. </summary>    /// <value> The post transient delay default. </value>	[Description( "The Default Post Transient Delay Time in Seconds (0.01)." )]    public double PostTransientDelayDefault    {        get => this._postTransientDelayDefault;        set => this.SetProperty( ref this._postTransientDelayDefault, value );    }    private double _postTransientDelayMaximum = 10;    /// <summary>   Gets or sets the post transient delay maximum. </summary>    /// <value> The post transient delay maximum. </value>	[Description( "The Maximum Post Transient Delay Time in Seconds (10)." )]    public double PostTransientDelayMaximum    {        get => this._postTransientDelayMaximum;        set => this.SetProperty( ref this._postTransientDelayMaximum, value );    }    private double _postTransientDelayMinimum = 0.001;    /// <summary>   Gets or sets the post transient delay minimum. </summary>    /// <value> The post transient delay minimum. </value>
 	[Description( "The Minimum Post Transient Delay Time in Seconds (0.001)." )]
     public double PostTransientDelayMinimum
     {

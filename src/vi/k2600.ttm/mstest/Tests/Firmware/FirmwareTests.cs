@@ -287,9 +287,9 @@ public class FirmwareTests
         Asserts.AssertEstimatesShouldRead( session );
         Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertEstimatesShouldRead )}" );
 
-        // !@# estimate needs to be fixed.
-        // Asserts.AssertEstimatesShouldEstimate( session );
-        // Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertEstimatesShouldRead )}" );
+        // hopefully fixed in 9172
+        Asserts.AssertEstimatesShouldEstimate( session );
+        Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertEstimatesShouldRead )}" );
 
     }
 }
