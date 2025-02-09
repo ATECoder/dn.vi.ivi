@@ -4,6 +4,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 Current overall binaries revision: 8.1.9159
 
+## [8.1.9171] - 2025-02-08
+- Version properties:
+  - Set release numbers to 103.
+- Json Settings:
+  - Set JSON maximum voltage change to 0.099.
+- Meter:
+  - Display the current version when starting the meter.
+- TTM MS Test
+  - Use TTM Element values to unify test methods for the IR, FR, TR and EST tests.
+  - Test both voltage and current sources for the legacy driver.
+  - Split framework syntax tests to smaller methods.
+  - Fix bugs in unit tests.
+  - Update tests of reading to match the new firmware.
+- Legacy MS Test:
+  - Add timeout to trigger test.
+
 ## [8.1.9161] - 2025-01-30
 Device Tsp: Fix parsing nullable integer by adding exponent and period.
 Legacy driver tester: Fix reading the outcome.
