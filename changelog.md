@@ -4,6 +4,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 Current overall binaries revision: 8.1.9159
 
+## [8.1.9172] - 2025-02-10
+- Update versions to 9174.
+
 ## [8.1.9171] - 2025-02-08
 - Version properties:
   - Set release numbers to 103.

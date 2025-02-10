@@ -440,7 +440,7 @@ public partial class Meter : CommunityToolkit.Mvvm.ComponentModel.ObservableObje
         this.ShuntResistance.DefineClearExecutionState();
 
         _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"Displaying title;. " );
-        this.TspDevice.DisplaySubsystem.DisplayTitle( "TTM 2.4.9161", "Integrated Scientific Resources" );
+        this.TspDevice.DisplaySubsystem.DisplayTitle( "TTM 2.4.9174", "Integrated Scientific Resources" );
         cc.isr.VI.Pith.SessionBase.DoEventsAction?.Invoke();
     }
 

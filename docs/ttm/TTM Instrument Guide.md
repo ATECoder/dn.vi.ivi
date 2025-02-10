@@ -294,7 +294,7 @@ Testing for open contacts is done by forcing a small 300µA current into the sen
 
 For instance the following values where measured:
 
-}DUT   | Source Low | Sense Low | Sense High | Source High | Max Volts | Min Volts |
+|DUT   | Source Low | Sense Low | Sense High | Source High | Max Volts | Min Volts |
 |------|------------|-----------|------------|-------------|-----------|-----------|
 |Open  | Wired      | Wired     | Wired      | Wired       | 0.3       | -0.64     |
 |Open  | Wired      | Open      | Wired      | Wired       | 0.32      | -0.22     |
