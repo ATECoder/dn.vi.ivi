@@ -17,7 +17,7 @@
 	  - [Open Source Lead Limit Menu](#open_source_lead_limit_menu)
         - [Contact Check Algorithm](#Contact_Check_Algorithm)
         - [Contact Check DUT Voltage](#Contact_Check_DUT_Voltage)
-	  - [Shunts Menu](#Meter_Shunts_Menu)
+	  - [Shunt Menu](#Meter_Shunt_Menu)
 	- [Resistance Menu](#Resistance_menu)
 	  - [Source Menu](#Source_menu)
 	  - [Level Menu](#Level_menu)
@@ -46,6 +46,9 @@
   - [Triggering](#Triggering)
   - [Reading the Outcome](#Reading)
   - [Measurement Readings](#RMeasurement_Readings)
+- [Display](#Display)
+  - [Measurements Display](#Measurements_Display)
+  - [Contact Check Display](#Contact_Check_Display)
 - [Specifications](#Specifications)
   - [Thermal Transient Response](#Thermal_Transient_Response)
     - [Initial And Final Resistance](#Initial_And_Final_Resistance)
@@ -171,9 +174,10 @@ Selecting _Meter_ from the [Main Menu](#Main_menu) displays the [Meter Menu](#me
 | Option | Description |
 |--------|-------------|
 | [Channel](#channel_menu) | Selects the source channel (only for meters with dual source channels ) |
-| [Driver](#driver_menu) | Selects compatibility with the legacy TTM drivers.
-| [Leads](#leads_menu) | Sets the leads resistance for contact check.
-| [Checks](#Checks_menu) | Sets the contact checks options.
+| [Driver](#driver_menu) | Selects compatibility with the legacy TTM drivers. |
+| [Leads](#leads_menu) | Sets the leads resistance for contact check. |
+| [Checks](#Checks_menu) | Sets the contact checks options. |
+| [Shunt](#Shunt_menu) | Sets the sense shunt resistance. |
 
 <a name="channel_menu"></a>
 #### Channel Menu
@@ -232,14 +236,15 @@ Selecting _Checks_ from the [Meter Menu](#meter_menu) displays the [Checks Menu]
 
 |Bit|Name|Hex Value|Decimal Value|Description|
 |----|----|----|----|
-|B0|Pre-Initial-Resistance|0x01|1|Check contacts before making the initial cold resistance measurement. This value is always set.|
-|B1|Pre-Thermal-Transient|0x02|2|Check contacts before making the thermal transient measurement|
-|B2|Pre-Final-Resistance|0x04|4|Check contacts before making the final cold resistance measurement|
+|B0|Pre-Start Measurement|0x01|1|Check contacts upon receiving the trigger signal but before starting the test sequence.|
+|B1|Pre-Initial-Resistance|0x02|1|Check contacts before making the initial cold resistance measurement.|
+|B2|Pre-Thermal-Transient|0x04|2|Check contacts before making the thermal transient measurement|
+|B3|Pre-Final-Resistance|0x08|4|Check contacts before making the final cold resistance measurement|
 
 - Title: __01__
-- Description: _Pre-IR[1]+TR[2]+FR[3]_
+- Description: _Pre-ST(1)+IR[2]+TR[4]+FR[8]_
 
-The expected range are: 1, 3, 5, 7.
+The expected range is 0 to 15.
 
 Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or `ENTER` and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or `ENTER` selects the new value.
 
@@ -282,7 +287,7 @@ To this end, the custom algorithm work as follows:
  lower than the high leads resistance.
 1. If the nominal contact check did not fail then the custom algorithm kicks in.
 1. If the _Limit_ set in the [Open Source Lead Limit Menu](#open_source_lead_limit_menu) is zero, the algorithm sets a _dutR_ value to zero.
-1. If the _Limit_ set in the [Open Source Lead Limit Menu](#open_source_lead_limit_menu) is positive, _dutR_ is set to the measured resistances using a current source of 100µA of 0.1 power line cycles with a voltage limit of one volt (most likely leading to taking the measurement under a compliance state, which is fine). The measured _dut_R_ is not corrected for the presence of shunt resistors, which means that the actual open DUT value is likely higher.
+1. If the _Limit_ set in the [Open Source Lead Limit Menu](#open_source_lead_limit_menu) is positive, _dutR_ is set to the measured resistances using a current source of 100µA of 0.1 power line cycles with a voltage limit of one volt (most likely leading to taking the measurement under a compliance state, which is fine). The measured _dut_R_ is not corrected for the presence of a shunt resistor across the sense terminals, which means that the actual open DUT value is likely higher.
 1. If _dutR_ exceeds the _Limit_, the _openLeadsStatus_ is set to _openDutLeads_.
 1. If the algorithm found open leads, the measured resistance of the TTM entity, either _Initial Reisstance_, _Final Resistance_ or _Trace_initial, is the to the _NaN_ (9.91e+37).
 1. If the algorithm found an open DUT, the measured resistance of the TTM entity, either _Initial Reisstance_, _Final Resistance_ or _Trace_initial, is the to the measured _dutR_.
@@ -305,47 +310,23 @@ For instance the following values where measured:
 |3.3KΩ | Open       | Wired     | Wired      | Open        | 1.09      | -1.33     |
 |~2Ω   | any        | any       | any        | any         | < 50mv    | < 50mv    |
 
-Apparently, the contact check circuit current runs through the device under test causing a significant voltage drop if the DUT resistance is high or open. Shunt resistors of 3.3KΩ were wired across both the source and sense terminal to limit the voltage across an open device under test.
+Apparently, the contact check circuit current runs through the device under test causing a significant voltage drop if the DUT resistance is high or open. This voltage drop can be limited to about 1 volt (resistance time 300µA) by placing a shunt resistor of 3.3KΩ across both the sense terminals. A sense shunt is sufficient. Placing a shunt across the source terminals adversely affects the measurements.
 
-<a name="Meter_Shunts_Menu"></a>
-### Shunts Menu
+<a name="Meter_Shunt_Menu"></a>
+### Shunt Menu
 
-Selecting _Shunts_ from the [Meter Menu](#meter_menu) displays the [Shunts Menu](#Meter_Shunts_Menu). This menu sets the values of the shunt resistances that are placed across the source and sense leads. The value is set to 0 if no shunt resistances are used. The front panel displays __Shunts__ with the following options: 
-
-| Option | Description |
-|--------|-------------|
-| Source | Selects the [Source Shunt Menu](#Source_Shunt_menu) |
-| Sense  | Selects the [Sense Shunt Menu](#Sense_Shunt_menu) |
-
-Moving the cursor over an option and pressing the _Wheel_ or `ENTER` selects this option. Pressing `EXIT` returns to the [Meter Menu](#meter_menu).
-
-The shunt resistances are used to limit the voltage drop across the DUT in case the contact check fails and the contact check current flows through the DUT. 
-
-The shunt resistances thus entered are used to correct the measured resistance such that the measured resistance equals the corrected resistance in parallel with the effective shunt, which is the parallel of the two shunt resistances. The shunt resistances are ignored if set to zero. The resistance range is 0 to 9999 ohms.
-
-<a name="Source_Sunt_Menu"></a>
-##### Source Shunt Menu
-
-Selecting _Source_ from the [Shunts Menu](#Meter_Shunts_Menu) displays the [Source Shunt Menu](#Source_Shunt_Menu). This menu sets the resistance of the shunt resistor that is connected across the source terminals of the instrument:
-
-- Title: __03300 Ω__.
-- Description: _Source shunt or 0 if none_
-
-The range is: 0 - 9999 Ω.
-
-Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or `ENTER` and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or `ENTER` selects the new value.
-
-<a name="Sense_Sunt_Menu"></a>
-##### Sense Shunt Menu
-
-Selecting _Sense_ from the [Shunts Menu](#Meter_Shunts_Menu) displays the [Sense Shunt Menu](#Sense_Shunt_Menu). This menu sets the resistance of the shunt resistor that is connected across the Sense terminals of the instrument:
+Selecting _Shunt_ from the [Meter Menu](#meter_menu) displays the resistance of the shunt resistance across the sense terminals of the instrument. This menu sets the resistance of the shunt resistor that is connected across the Sense terminals of the instrument:
 
 - Title: __03300 Ω__.
 - Description: _Sense shunt or 0 if none_
 
-The range is: 0 - 9999 Ω.
+The range is: 0 - 999999 Ω.
 
 Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or `ENTER` and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or `ENTER` selects the new value.
+
+The shunt resistance is used to limit the voltage drop across the DUT in case the contact check fails and the contact check current flows through the DUT. 
+
+The shunt resistance thus entered is used to correct the measured resistance such that the measured resistance equals the corrected resistance in parallel with the shunt. The shunt resistance is ignored if is set to zero. 
 
 <a name="Resistance_menu"></a>
 ### Resistance Menu
@@ -795,8 +776,78 @@ The following Special readings might be output (SCPI-Standard Commands for Progr
 `SCPI Not A Number (NaN) 9.91E+37` if the the resistance contact check failed.
 `SCPI Not A Number (NaN) 9.91E+34` if the the thermal transient contact check failed, which the driver multiplies by 1000.
 
+<a name="Display"></a>
+## Display
+
+<a name="Measurements_Display"></a>
+### Measurements Display
+
+Upon the completion of a measurement, the instrument displays the following typical screen:
+
+```
+R: 2.576Ω δ: 65mV
+r: 2.587Ω <TRIG MENU RUN>
+```
+
+Where 'R' points to the initial resistance, 'δ:' to the thermal transient voltage and 'r:' to the final resistance.
+
+<a name="Contact_Check_Display"></a>
+### Contact Check Display
+
+Is a contact check fails, the  the instrument displays the contact check data, which depend upon the cause of the contact check failure.
+
+If a source lead a DUT lead or is open the display might look like this:
+```
+S: r: 2.1E+6 hi,lo:
+3.2e-01,2.2e+0 <TRIG MENU RUN>
+```
+Where 'S:' indicates when the failed contact check was done. This could be either 'S:' before starting the measurement sequence, 'I:' before taking the initial resistance measurement, 'T:' before taking the thermal transient measurement or 'F:' before taking the final resistance measurement, 
+
+'r:' signifies the measurement resistance, which exceeds the maximum DUT resistance (e.g., 1000 Ω) these is set for these measurements. 
+
+The bottom row displays the high and low leads resistances as measured by the instrument.
+
+If a sense lead is open the display might look like this:
+
+```
+S: open low hi,lo:
+1.4e-01,3.9e+37 <TRIG MENU RUN>
+```
+
+Where 3.9E+37 represents infinity for the measured low leads. For an open high sense lead the display might look like this:
+
+```
+S: open high hi,lo:
+3.9e+37,1.4e-01 <TRIG MENU RUN>
+```
+
+If both sense leads are open  display might look like this:
+
+```
+S: open leads hi,lo:
+3.9e+37,3.9e+37 <TRIG MENU RUN>
+```
+
 <a name="Specifications"></a>
 ## Specifications
+
+<a name="Digital_Lines"></a>
+### Digital Lines
+
+The following digital lines are provided
+
+| line Number | Type | Action |
+|-------------|------|--------|
+| 01 | Event | starts a measurement |
+| 02 | Level | Done: Turns low at the onset of the test cycle and high once measurements are available for reading |
+| 03 | Level | Acknowledge: Turns high at the onset of the test cycle and low once measurements are available for reading |
+| 04 | Level | Initial resistance pass (high) or fail (low) |
+| 05 | Level | Final resistance pass (high) or fail (low) |
+| 06 | Level | Thermal Transient in range (high) or out of range (low) |
+| 07 | Level | All above tests passed (high) or one of them failed (low) |
+| 08 | Level | Commanded from he API using the assertTrigger(() method as a trigger if connected to line 1 |
+| 09 | Level | Checking contact: Used ion test start. Turns low when contacts are checked. |
+| 10 | Level | Contacts Failed: Turns high if contact check failed |
 
 <a name="Meter-Settings"></a>
 ### Meter Settings
@@ -804,7 +855,8 @@ The following Special readings might be output (SCPI-Standard Commands for Progr
 - Channel: `smua` or `smub`.
 - Driver: 0 or 1.
 - Leads Maximum Resistance: 10 - 999.
-- Contact Checks: 1, 3, 5, or 7.
+- Contact Checks: 0 to 15.
+- Sense Shunt: 3300 Ohms.
 
 <a name="Thermal_Transient_Response"></a>
 ### Thermal Transient Response
