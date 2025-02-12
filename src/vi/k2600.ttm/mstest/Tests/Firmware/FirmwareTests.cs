@@ -79,7 +79,7 @@ public class FirmwareTests
         Assert.IsTrue( meterSettings.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmMeterSettings )} should exist." );
         cc.isr.VI.Tsp.K2600.Ttm.TtmResistanceSettings resistanceSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmResistanceSettings;
         Assert.IsTrue( resistanceSettings.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmResistanceSettings )} should exist." );
-        Assert.AreEqual( 9.999, resistanceSettings.VoltageMaximum );
+        Assert.AreEqual( 0.1, resistanceSettings.VoltageMaximum );
         Asserts.LegacyDriver = this.TtmSettings.TtmMeterSettings.LegacyDriver;
 
         cc.isr.VI.Tsp.VisaSession visaSession = new();

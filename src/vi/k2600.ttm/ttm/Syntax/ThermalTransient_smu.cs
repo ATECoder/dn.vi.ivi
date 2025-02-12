@@ -59,10 +59,14 @@ public static partial class ThermalTransient
                 smuNameGetter = $"{entityName}.smuI";
             foreach ( string smuName in Syntax.ThermalTransient.SourceMeasureUnitNames.Split( ',' ) )
             {
-                if ( !session.IsNil( $"_G.{smuName}" ) && session.IsTrue( $"{smuNameGetter}==_G.{smuName}" ) )
+                if ( !session.IsNil( $"{smuName}" ) )
                 {
-                    foundName = smuName;
-                    break;
+                    // string boolValue = session.QueryTrimEnd( $"_G.print(_G.ttm.smuNameGetter()=='{smuName}')" );
+                    if ( !session.IsNil( $"{smuName}" ) && session.IsTrue( $"{smuNameGetter}=='{smuName}'" ) )
+                    {
+                        foundName = smuName;
+                        break;
+                    }
                 }
             }
             if ( string.IsNullOrWhiteSpace( foundName ) )
@@ -114,10 +118,12 @@ public static partial class ThermalTransient
             if ( meterEntity is ThermalTransientMeterEntity.MeterMain )
             {
                 if ( !MeterSubsystem.LegacyFirmware )
-                    _ = session.WriteLine( $"{entityName}:smuNameSetter({defaultsName}.smuName)" );
+                {
+                    _ = session.WriteLine( $"{entityName}.smuNameSetter({defaultsName}.smuName)" );
+                }
             }
             else
-                _ = session.WriteLine( $"{entityName}:currentSourceChannelSetter({{defaultsName}}.smuI)" );
+                _ = session.WriteLine( $"{entityName}:currentSourceChannelSetter({defaultsName}.smuI)" );
 
             _ = session.QueryOperationCompleted();
         }

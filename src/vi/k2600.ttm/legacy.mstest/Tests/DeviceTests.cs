@@ -230,7 +230,11 @@ public class DeviceTests
 
         using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( this.LegacyDevice, this.ResourceSettings.ResourceName );
 
+        Stopwatch sw = Stopwatch.StartNew();
         Asserts.AssertTriggerCycleShouldAbort( this.LegacyDevice );
+        sw.Stop();
+        TimeSpan timeSpan = sw.Elapsed;
+        Console.WriteLine( $"Abort Time: {timeSpan:s\\.fff}s" );
 
         _ = this.LegacyDevice.Disconnect();
     }

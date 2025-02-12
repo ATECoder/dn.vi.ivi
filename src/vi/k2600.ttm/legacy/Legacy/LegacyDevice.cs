@@ -11,9 +11,6 @@ public partial class LegacyDevice : CommunityToolkit.Mvvm.ComponentModel.Observa
 {
     #region " construction and cleanup "
 
-    private readonly Type _settingAssemblyMemberType;
-    private readonly string _settingsFileSuffix;
-
     /// <summary>   Default constructor. </summary>
     /// <remarks>   David, 2020-10-12. </remarks>
     /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
@@ -25,8 +22,6 @@ public partial class LegacyDevice : CommunityToolkit.Mvvm.ComponentModel.Observa
     ///                                             cc.isr.VI.Tsp.K2600.Ttm.MSTest.suffix.json. </param>
     public LegacyDevice( Type settingAssemblyMemberType, string settingsFileSuffix = ".Driver" ) : base()
     {
-        this._settingsFileSuffix = settingsFileSuffix;
-        this._settingAssemblyMemberType = settingAssemblyMemberType;
         this.Meter = new();
         if ( this.Meter is null ) throw new InvalidOperationException( $"{nameof( this.Meter )} is null." );
 
@@ -247,9 +242,47 @@ public partial class LegacyDevice : CommunityToolkit.Mvvm.ComponentModel.Observa
     #region " Trigger "
 
     /// <summary>   Sends a signal to abort the triggered measurement. </summary>
-    /// <remarks>   2024-11-07. </remarks>
+    /// <remarks>   2025-02-11. <para>
+    /// Modified to wait for message available. </para></remarks>
+    /// <param name="timeout">  (Optional) The timeout to wait for the completion of triggered
+    ///                         measurement. </param>
     /// <returns>   True if it succeeds, false if it fails. </returns>
-    public bool AbortMeasurement()
+    public bool AbortMeasurement( double timeout = 1.0 )
+    {
+        if ( !this.IsConnected ) return false;
+        Pith.SessionBase session = this.Meter!.TspDevice!.Session!;
+
+        // allow time for the measurement to terminate.
+        if ( this.Meter!.IsAwaitingTrigger )
+        {
+            this.Meter!.IsAwaitingTrigger = false;
+
+            session.SetLastAction( "asserting trigger" );
+
+            // send the trigger command
+            session.AssertTrigger();
+
+            bool messageAvailable = false;
+            Stopwatch sw = Stopwatch.StartNew();
+            while ( !messageAvailable && sw.Elapsed < TimeSpan.FromSeconds( timeout ) )
+            {
+                _ = Pith.SessionBase.AsyncDelay( TimeSpan.FromMilliseconds( 10 ) );
+                messageAvailable = this.IsMeasurementCompleted();
+            }
+
+            // clear the complete message from the output buffer
+            _ = this.FlushRead();
+        }
+        // this.Meter.AbortTriggerSequenceIf();
+        return true;
+    }
+
+    /// <summary>   Sends a signal to abort the triggered measurement. </summary>
+    /// <remarks>   2024-11-07. </remarks>
+    /// <param name="duration">  (Optional) The expected measurement duration. </param>
+    /// <returns>   True if it succeeds, false if it fails. </returns>
+    [Obsolete]
+    public bool AbortMeasurementDeprecated( double duration = 0.4 )
     {
         if ( !this.IsConnected ) return false;
         Pith.SessionBase session = this.Meter!.TspDevice!.Session!;
@@ -265,7 +298,7 @@ public partial class LegacyDevice : CommunityToolkit.Mvvm.ComponentModel.Observa
             session.AssertTrigger();
 
             // allow time for the measurement to terminate.
-            _ = SessionBase.AsyncDelay( TimeSpan.FromSeconds( 0.4 + this.PostTransientDelay ) );
+            _ = SessionBase.AsyncDelay( TimeSpan.FromSeconds( duration + this.PostTransientDelay ) );
 
             // clear the complete message from the output buffer
             _ = this.FlushRead();
@@ -553,16 +586,6 @@ public partial class LegacyDevice : CommunityToolkit.Mvvm.ComponentModel.Observa
     {
         exception.Data.Add( "Synopsis", shortSynopsis );
         this.OnExceptionAvailable( new System.Threading.ThreadExceptionEventArgs( exception ) );
-    }
-
-    /// <summary> Raises the Exception Available event. </summary>
-    /// <remarks> This method raises the exception if the exception messaging is not handled. </remarks>
-    /// <param name="exception"> . </param>
-    /// <param name="format">    . </param>
-    /// <param name="args">      . </param>
-    private void OnExceptionAvailable( Exception exception, string format, params object[] args )
-    {
-        this.OnExceptionAvailable( exception, string.Format( System.Globalization.CultureInfo.CurrentCulture, format, args ) );
     }
 
     #endregion

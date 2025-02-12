@@ -4,7 +4,6 @@ using cc.isr.VI.Tsp.SessionBaseExtensions;
 using cc.isr.VI.Tsp.ParseStringExtensions;
 using cc.isr.VI.Pith;
 using cc.isr.VI.Tsp.K2600.Ttm.Syntax;
-using Serilog.Sinks.File;
 
 namespace cc.isr.VI.Tsp.K2600.Ttm.Legacy.Tests;
 
@@ -417,7 +416,7 @@ internal static partial class Asserts
             if ( ( int ) PassFailBits.Unknown == passFailOutcome.Value )
             {
                 // failed contact check.
-                Assert.AreEqual( ( int ) FirmwareOutcomes.BadStatus, ( int ) FirmwareOutcomes.BadStatus & outcomeValue.Value, 
+                Assert.AreEqual( ( int ) FirmwareOutcomes.BadStatus, ( int ) FirmwareOutcomes.BadStatus & outcomeValue.Value,
                     $"Outcome value {outcomeValue.Value} bad status bit {FirmwareOutcomes.BadStatus} should be set if contact check failed." );
             }
             else if ( resistanceValue < low )
@@ -480,11 +479,10 @@ internal static partial class Asserts
         //allow some time for the trigger loop to start..
         _ = Pith.SessionBase.AsyncDelay( TimeSpan.FromMilliseconds( 100 ) );
 
-        _ = legacyDevice.AbortMeasurement();
+        _ = legacyDevice.AbortMeasurement( 1.0 );
 
         Assert.IsFalse( legacyDevice.Meter.IsAwaitingTrigger, "awaiting trigger should be false after trigger." );
 
         Asserts.AssertOrphanMessagesOrDeviceErrors( session );
     }
-
 }

@@ -158,7 +158,7 @@ public class MeterSubsystem : MeterSubsystemBase
         bool localTryQueryPrintPostTransientDelay()
         {
             double result = Properties.Settings.Instance.TtmMeterSettings.PostTransientDelayDefault;
-            bool ret = this.Session.TryQueryPrint( 7.4m, ref result, "{0}.postTransientDelayGetter()", this.DefaultsName );
+            bool ret = this.Session.TryQueryPrint( 7.4m, ref result, "{0}.postTransientDelay", this.DefaultsName );
             Properties.Settings.Instance.TtmMeterSettings.PostTransientDelayDefault = result;
             return ret;
         }
