@@ -25,6 +25,52 @@ public static partial class ThermalTransient
             or ThermalTransientMeterEntity.InitialResistance or ThermalTransientMeterEntity.Transient;
     }
 
+    /// <summary>   Looks up a given key to find its associated source measure unit name. </summary>
+    /// <remarks>   2025-02-12. </remarks>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <param name="session">          The session. </param>
+    /// <param name="candidateNames">   A comma-separated list of names of the candidates. </param>
+    /// <param name="isSmuQueryFormat"> The is smu query format. </param>
+    /// <returns>   A string. </returns>
+    public static string LookupSourceMeasureUnitName( Pith.SessionBase session, string candidateNames, string isSmuQueryFormat )
+    {
+        if ( string.IsNullOrWhiteSpace( candidateNames ) ) return string.Empty;
+        if ( string.IsNullOrWhiteSpace( isSmuQueryFormat ) ) return string.Empty;
+
+        string foundName = string.Empty;
+
+        foreach ( string smuName in candidateNames.Split( ',' ) )
+        {
+            string isSmuQuery = string.Format( isSmuQueryFormat, smuName );
+            if ( !session.IsNil( $"{smuName}" ) )
+            {
+                // string boolValue = session.QueryTrimEnd( $"_G.print(_G.ttm.smuNameGetter()=='{smuName}')" );
+                // if ( !session.IsNil( $"{smuName}" ) && session.IsTrue( $"{isSmuQuery}=='{smuName}'" ) )
+                if ( !session.IsNil( $"{smuName}" ) && session.IsTrue( isSmuQuery ) )
+                {
+                    foundName = smuName;
+                    break;
+                }
+            }
+        }
+        if ( string.IsNullOrWhiteSpace( foundName ) )
+            throw new InvalidOperationException( $"Failed finding source Measure Unit;. {isSmuQueryFormat} matched none of the candidate names: '{candidateNames}'." );
+
+        return foundName;
+    }
+
+    /// <summary>   Looks up a given key to find its associated source measure unit name. </summary>
+    /// <remarks>   2025-02-12. </remarks>
+    /// <param name="session">          The session. </param>
+    /// <param name="isSmuQueryFormat"> The is smu query format. </param>
+    /// <returns>   A string. </returns>
+    public static string LookupSourceMeasureUnitName( Pith.SessionBase session, string isSmuQueryFormat )
+    {
+        return LookupSourceMeasureUnitName( session, Syntax.ThermalTransient.SourceMeasureUnitNames, isSmuQueryFormat );
+    }
+
+
     /// <summary>
     /// Queries the Source Measure Unit. Also sets the <see cref="SourceMeasureUnit">Source Measure
     /// Unit</see>.
@@ -36,7 +82,7 @@ public static partial class ThermalTransient
     {
         if ( !ThermalTransient.RequiresSourceMeasureUnit( meterEntity ) ) return string.Empty;
 
-        string foundName = string.Empty;
+        string foundName;
 
         string entityName = ThermalTransient.SelectEntityName( meterEntity );
 
@@ -52,25 +98,10 @@ public static partial class ThermalTransient
         }
         else
         {
-            string smuNameGetter;
-            if ( meterEntity is ThermalTransientMeterEntity.MeterMain )
-                smuNameGetter = $"{entityName}.smuNameGetter()";
-            else
-                smuNameGetter = $"{entityName}.smuI";
-            foreach ( string smuName in Syntax.ThermalTransient.SourceMeasureUnitNames.Split( ',' ) )
-            {
-                if ( !session.IsNil( $"{smuName}" ) )
-                {
-                    // string boolValue = session.QueryTrimEnd( $"_G.print(_G.ttm.smuNameGetter()=='{smuName}')" );
-                    if ( !session.IsNil( $"{smuName}" ) && session.IsTrue( $"{smuNameGetter}=='{smuName}'" ) )
-                    {
-                        foundName = smuName;
-                        break;
-                    }
-                }
-            }
-            if ( string.IsNullOrWhiteSpace( foundName ) )
-                throw new InvalidOperationException( $"Failed reading Source Measure Unit;. {entityName}.smuI is neither one of {Syntax.ThermalTransient.SourceMeasureUnitNames}." );
+            string isSmuQueryFormat = meterEntity is ThermalTransientMeterEntity.MeterMain
+                ? $"{entityName}.smuNameGetter()=='{{0}}'"
+                : $"{entityName}.smuI=={{0}}";
+            foundName = ThermalTransient.LookupSourceMeasureUnitName( session, isSmuQueryFormat );
         }
         return foundName;
     }
@@ -96,10 +127,10 @@ public static partial class ThermalTransient
             if ( meterEntity is ThermalTransientMeterEntity.MeterMain )
             {
                 if ( !MeterSubsystem.LegacyFirmware )
-                    _ = session.WriteLine( "{0}:smuNameSetter('{1}')", entityName, sourceMeasureUnitName );
+                    _ = session.WriteLine( $"{entityName}:smuNameSetter('{sourceMeasureUnitName}')" );
             }
             else
-                _ = session.WriteLine( "{0}:currentSourceChannelSetter('{1}')", entityName, sourceMeasureUnitName );
+                _ = session.WriteLine( $"{entityName}:currentSourceChannelSetter({sourceMeasureUnitName})" );
         }
         return sourceMeasureUnitName;
     }
@@ -150,7 +181,10 @@ public static partial class ThermalTransient
                     smuName = session.QueryTrimEnd( $"_G.print({defaultsName}.smuName)" );
             }
             else
-                smuName = session.QueryTrimEnd( $"_G.print({defaultsName}.smuI)" );
+            {
+                string isSmuQueryFormat = $"{defaultsName}.smuI=={{0}}";
+                smuName = ThermalTransient.LookupSourceMeasureUnitName( session, isSmuQueryFormat );
+            }
 
             if ( string.IsNullOrWhiteSpace( smuName ) )
                 throw new InvalidOperationException( $"failed reading default source measure unit name;. Sent:'{session.LastMessageSent}; Received:'{session.LastMessageReceived}'." );

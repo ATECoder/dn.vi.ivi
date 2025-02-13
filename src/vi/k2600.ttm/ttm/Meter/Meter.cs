@@ -317,7 +317,7 @@ public partial class Meter : CommunityToolkit.Mvvm.ComponentModel.ObservableObje
             // if ( this.IsDeviceOpen ) _ = this.TspDevice.Session!.WriteLine( "ttm=_G.isr.meters.thermalTransient" );
 
             // read the firmware version to determine if using hte legacy software.
-            MeterSubsystem.FirmwareVersion = new Version( this.TspDevice.Session.QueryTrimEnd( cc.isr.VI.Tsp.K2600.Ttm.Syntax.SupportSyntax.VersionQueryCommand ) );
+            MeterSubsystem.FirmwareVersion = new Version( this.TspDevice.Session.QueryTrimEnd( cc.isr.VI.Tsp.K2600.Ttm.Syntax.ThermalTransient.VersionQueryCommand ) );
 
             // meter subsystem must be first
             this.BindMeterSubsystem( new MeterSubsystem( this.TspDevice.StatusSubsystem, this.ConfigInfo.MeterMain!, ThermalTransientMeterEntity.MeterMain ) );
@@ -424,6 +424,7 @@ public partial class Meter : CommunityToolkit.Mvvm.ComponentModel.ObservableObje
     public virtual void DefineClearExecutionState()
     {
         if ( this.TspDevice is null ) throw new InvalidOperationException( $"Meter {nameof( this.TspDevice )} is null." );
+        if ( this.TspDevice.Session is null ) throw new InvalidOperationException( $"Meter {nameof( this.TspDevice )}.{nameof( this.TspDevice.Session )} is null." );
         if ( this.TspDevice.DisplaySubsystem is null ) throw new InvalidOperationException( $"Meter {nameof( this.TspDevice )}.{nameof( this.TspDevice.DisplaySubsystem )} is null." );
         if ( this.ConfigInfo is null ) throw new InvalidOperationException( $"Meter {nameof( this.ConfigInfo )} is null." );
         if ( this.ConfigInfo.InitialResistance is null ) throw new InvalidOperationException( $"Meter {nameof( this.ConfigInfo )}.{nameof( this.ConfigInfo.InitialResistance )} is null." );
@@ -440,7 +441,8 @@ public partial class Meter : CommunityToolkit.Mvvm.ComponentModel.ObservableObje
         this.ShuntResistance.DefineClearExecutionState();
 
         _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"Displaying title;. " );
-        this.TspDevice.DisplaySubsystem.DisplayTitle( "TTM 2.4.9174", "Integrated Scientific Resources" );
+
+        this.TspDevice.DisplaySubsystem.DisplayTitle( $"TTM {MeterSubsystem.FirmwareVersion}", "Integrated Scientific Resources" );
         cc.isr.VI.Pith.SessionBase.DoEventsAction?.Invoke();
     }
 

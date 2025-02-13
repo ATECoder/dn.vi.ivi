@@ -78,7 +78,7 @@ public class MeterSubsystem : MeterSubsystemBase
     /// <value> The device under test element base of the Meter element. </value>
     protected override DeviceUnderTestElementBase DeviceUnderTestElement => this.MeterMain;
 
-    /// <summary>   Gets or sets a value indicating whether the meter addresses the legacy firmware. </summary>
+    /// <summary>   Parses the firmware version returns true if this code is addressing the legacy firmware version 2.3.x. </summary>
     /// <value> True if legacy firmware, false if not. </value>
     public static bool LegacyFirmware => (2 == FirmwareVersion.Major) && (3 == FirmwareVersion.Minor);
 
