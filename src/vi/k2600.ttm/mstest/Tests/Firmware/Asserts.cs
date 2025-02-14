@@ -13,10 +13,6 @@ internal static partial class Asserts
     /// <voltageChange> The legacy driver. </voltageChange>
     public static int LegacyDriver { get; set; } = 1;
 
-    /// <summary>   Gets or sets a value indicating whether the legacy firmware. </summary>
-    /// <voltageChange> True if legacy firmware, false if not. </voltageChange>
-    public static bool LegacyFirmware { get; set; }
-
     /// <summary>   (Immutable) the Initial Resistance element. </summary>
     public const string IR = "ir";
 
@@ -361,7 +357,7 @@ internal static partial class Asserts
 
         // the legacy driver is agnostic to the low and high properties and, therefore, could be tested even if testing the legacy driver.
 
-        int? passFailOutcome = Asserts.LegacyFirmware
+        int? passFailOutcome = MeterSubsystem.LegacyFirmware
             ? 0
             : session.QueryNullableIntegerThrowIfError( $"print(ttm.{ttmElement}.passFailOutcome) ", $"{ttmElementName} pass fail outcome" );
 
@@ -457,7 +453,7 @@ internal static partial class Asserts
 
         // the legacy driver is agnostic of contact checks and, therefore, these attributes can be tested
 
-        return Asserts.LegacyFirmware
+        return MeterSubsystem.LegacyFirmware
             ? new int?()
             : session.QueryIntegerThrowIfError( $"print(ttm.contactCheckOptionsGetter()) ", "Meter Values Contact Check Options" );
     }
@@ -473,7 +469,7 @@ internal static partial class Asserts
 
         // the legacy driver is agnostic of contact checks and, therefore, these attributes can be tested
 
-        return Asserts.LegacyFirmware
+        return MeterSubsystem.LegacyFirmware
             ? new double?()
             : session.QueryDoubleThrowIfError( $"print(ttm.contactLimitGetter()) ", "Meter Values Contact Check Options" );
     }
@@ -567,7 +563,7 @@ internal static partial class Asserts
 
                 // the legacy driver is agnostic to the low and high properties and, therefore, could be tested even if testing the legacy driver.
 
-                if ( !Asserts.LegacyFirmware )
+                if ( !MeterSubsystem.LegacyFirmware )
                 {
                     Assert.IsNotNull( low, $"{nameof( low )} should not be null if outcome {firmwareOutcome} is okay." );
                     Assert.IsNotNull( high, $"{nameof( high )} should not be null if outcome {firmwareOutcome} is okay." );
@@ -585,7 +581,7 @@ internal static partial class Asserts
 
                 // legacy driver is oblivious to contact check but expects NaN if contact check failed, therefore, this needs to be tested.
 
-                if ( !Asserts.LegacyFirmware )
+                if ( !MeterSubsystem.LegacyFirmware )
                 {
                     if ( 0 != (firmwareOutcome & cc.isr.VI.Tsp.K2600.Ttm.Syntax.FirmwareOutcomes.OpenLeads) )
                     {
@@ -685,7 +681,7 @@ internal static partial class Asserts
 
         // the legacy driver is oblivious to contact check but will see the NaN result if contact check failed.
 
-        if ( !Asserts.LegacyFirmware )
+        if ( !MeterSubsystem.LegacyFirmware )
         {
             int? contactOptions = Asserts.AssertMeterShouldReadContactCheckOptions( session );
             double? limit = Asserts.AssertMeterShouldReadContactCheckLimit( session );

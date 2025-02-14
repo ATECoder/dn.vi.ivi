@@ -103,15 +103,18 @@ internal static partial class Asserts
         query = "_G.print(_G.isr.access.loaded())";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedBoolean, logEnabled );
 
-        double postTransientDelayDefault; // = 0.5;
-        query = "_G.print(string.format('%9.3f',_G.ttm.meterDefaults.postTransientDelay))";
-
-        postTransientDelayDefault = session.QueryDoubleThrowIfError( query, "post transient delay" );
-        Assert.AreEqual( meterSettings.PostTransientDelayDefault, postTransientDelayDefault, $"{nameof( postTransientDelayDefault )} should equal the settings value." );
-        Asserts.LogIT( $"{query} returned {postTransientDelayDefault}" );
+        double expectedPostTransientDelayDefault; // = 0.5;
+        if ( !MeterSubsystem.LegacyFirmware )
+        {
+            expectedPostTransientDelayDefault = meterSettings.PostTransientDelayDefault;
+            query = "_G.print(string.format('%9.3f',_G.ttm.meterDefaults.postTransientDelay))";
+            double postTransientDelayDefault = session.QueryDoubleThrowIfError( query, "post transient delay" );
+            Assert.AreEqual( expectedPostTransientDelayDefault, postTransientDelayDefault, $"{nameof( postTransientDelayDefault )} should equal the settings value." );
+            Asserts.LogIT( $"{query} returned {postTransientDelayDefault}" );
+        }
 
         // get actual value
-        query = "_G.print(string.format('%9.3f',_G.ttm.postTransientDelayGetter()))";
+        query = "_G.print(string.format('%9.4f',_G.ttm.postTransientDelayGetter()))";
         double postTransientDelay = session.QueryDoubleThrowIfError( query, "actual post transient delay" );
 
         expectedDouble = postTransientDelay + 0.001;
@@ -124,7 +127,7 @@ internal static partial class Asserts
 
         // the legacy driver is agnostic to the meter settings other than the post transient delay and, therefore, could be tested even if testing the legacy driver.
 
-        if ( !Asserts.LegacyFirmware )
+        if ( !MeterSubsystem.LegacyFirmware )
         {
             int contactLimit; // 100;
             query = "_G.print(string.format('%d',_G.ttm.meterDefaults.contactLimit))";
@@ -257,11 +260,11 @@ internal static partial class Asserts
         cc.isr.VI.Tsp.K2600.Ttm.TtmResistanceSettings resistanceSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmResistanceSettings;
         Assert.IsTrue( resistanceSettings.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmResistanceSettings )} should exist." );
 
-        expectedDouble = resistanceSettings.CurrentMinimum;
+        expectedDouble = MeterSubsystem.LegacyFirmware ? 0.0001 : resistanceSettings.CurrentMinimum;
         query = "_G.print(string.format('%9.6f',_G.ttm.coldResistance.Defaults.minCurrent))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedDouble, 0.0001, logEnabled );
 
-        expectedDouble = resistanceSettings.CurrentMaximum;
+        expectedDouble = MeterSubsystem.LegacyFirmware ? 0.01 : resistanceSettings.CurrentMaximum;
         query = "_G.print(string.format('%9.6f',_G.ttm.coldResistance.Defaults.maxCurrent))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedDouble, 0.0001, logEnabled );
 
@@ -277,7 +280,7 @@ internal static partial class Asserts
         query = "_G.print(string.format('%9.6f',_G.ttm.coldResistance.Defaults.minVoltage))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedDouble, 0.0001, logEnabled );
 
-        expectedDouble = resistanceSettings.VoltageMaximum;
+        expectedDouble = MeterSubsystem.LegacyFirmware ? 10 : resistanceSettings.VoltageMaximum;
         query = "_G.print(string.format('%9.6f',_G.ttm.coldResistance.Defaults.maxVoltage))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedDouble, 0.0001, logEnabled );
     }

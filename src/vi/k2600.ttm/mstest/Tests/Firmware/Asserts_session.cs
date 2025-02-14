@@ -13,7 +13,7 @@ internal static partial class Asserts
 
         Pith.SessionBase? session = SessionFactory.Instance.Factory.Session();
 
-        Assert.IsNotNull( session, $"{nameof( SessionFactory )} should provide a valid session." );
+        Assert.IsNotNull( session, $"{nameof( SessionFactory )} should provide a session." );
 
         // read settings and throw if not found.
         session.ReadSettings( typeof( Asserts ), ".Session" );
@@ -45,17 +45,17 @@ internal static partial class Asserts
         // initialize the device must be done after clear (5892)
         // session.InitKnownState();
 
+        // set the MeterSubsystem legacy firmware
+        MeterSubsystem.FirmwareVersion = new System.Version( session.QueryTrimEnd( Syntax.ThermalTransient.VersionQueryCommand ) );
+
         // detect the legacy firmware
-        string ttmObjectName = "ttm";
+        string ttmObjectName = Syntax.ThermalTransient.ThermalTransientBaseEntityName;
         Assert.IsFalse( session.IsNil( ttmObjectName ), $"{ttmObjectName} should not be nil." );
-        ttmObjectName = "ttm.OutcomeBits";
+        ttmObjectName = Syntax.ThermalTransient.OutcomeBitsName;
         Assert.IsFalse( session.IsNil( ttmObjectName ), $"{ttmObjectName} should not be nil." );
-        ttmObjectName = "ttm.OutcomeBits.okay";
+        ttmObjectName = Syntax.ThermalTransient.OutcomeBitsOkayName;
         Assert.IsFalse( session.IsNil( ttmObjectName ), $"{ttmObjectName} should not be nil." );
 
-        // the legacy software has no definition for open leads.
-        ttmObjectName = "ttm.OutcomeBits.openLeads";
-        Asserts.LegacyFirmware = session.IsNil( ttmObjectName );
         return session;
     }
 }

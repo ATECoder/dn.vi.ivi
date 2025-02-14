@@ -2,11 +2,11 @@
   "ResourceSettings": {
     "Exists": true,
     "ClosedCaption": "closed",
-    "FirmwareRevision": "2.2.6",
+    "FirmwareRevision": "3.0.1",
     "Language": "TSP",
     "PingTimeout": "00:00:01.0000000",
     "PingHops": 2,
-    "ResourceModel": "2612A",
+    "ResourceModel": "2601B",
     "ResourceName": "TCPIP0::192.168.0.150::inst0::INSTR",
     "ResourceNameSelectionTimeout": "00:00:10"
   },
