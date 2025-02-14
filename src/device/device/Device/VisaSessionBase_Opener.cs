@@ -96,6 +96,7 @@ public partial class VisaSessionBase : cc.isr.Std.Notifiers.OpenResourceBase
 
     /// <summary> Gets or sets the resource name validation asynchronous task. </summary>
     /// <value> The resource name validation asynchronous task. </value>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0052:Remove unread private members", Justification = "<Pending>" )]
     private Task? ResourceNameValidationAsyncTask { get; set; }
 
     /// <summary> Gets or sets the resource name validation task. </summary>

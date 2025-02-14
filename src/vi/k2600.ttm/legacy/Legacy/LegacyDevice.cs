@@ -64,6 +64,7 @@ public partial class LegacyDevice : CommunityToolkit.Mvvm.ComponentModel.Observa
         this.ThermalTransientHighLimit = 0f;
         this.ThermalTransientLowLimit = 0f;
         this.PostTransientDelay = 0; // 0.01
+        this.ResetKnownStateInternal();
     }
 
     #region " i disposable support "
@@ -203,12 +204,19 @@ public partial class LegacyDevice : CommunityToolkit.Mvvm.ComponentModel.Observa
     /// <value> The is connected. </value>
     public bool IsConnected => this.Meter.IsSessionOpen;
 
+    /// <summary> Restores defaults. </summary>
+    private void ResetKnownStateInternal()
+    {
+        this.PostTransientDelayConfig = 0.01f;
+    }
+
     /// <summary> Aborts execution, resets the device to known state and clears queues and register. </summary>
     /// <remarks> Issues <see cref="SessionBase.Clear">clear active
     /// state</see>, *RST, and *CLS Typically implements SDC, RST, CLS and clearing error queue. </remarks>
     public bool ResetAndClear()
     {
         if ( !this.IsConnected ) return false;
+        this.ResetKnownStateInternal();
         K2600Device device = this.Meter!.TspDevice!;
         device.ClearActiveState();
         this.Meter?.ResetKnownState();

@@ -21,9 +21,6 @@ internal static partial class Asserts
         Meter meter = legacyDevice.Meter;
         Pith.SessionBase session = legacyDevice.Meter.TspDevice.Session;
 
-        // the legacy software has no definition for open leads.
-        Asserts.LegacyFirmware = MeterSubsystem.LegacyFirmware;
-
         // initialize meter state: this reads the meter model number.
         meter.InitKnownState();
 
@@ -43,17 +40,14 @@ internal static partial class Asserts
         Pith.SessionBase session = legacyDevice.Meter.TspDevice.Session;
 
         // detect the legacy firmware
-        string ttmObjectName = "ttm";
+        string ttmObjectName = cc.isr.VI.Tsp.K2600.Ttm.Syntax.ThermalTransient.ThermalTransientBaseEntityName;
         Assert.IsFalse( session.IsNil( ttmObjectName ), $"{ttmObjectName} should not be nil." );
 
-        ttmObjectName = "ttm.OutcomeBits";
+        ttmObjectName = cc.isr.VI.Tsp.K2600.Ttm.Syntax.ThermalTransient.OutcomeBitsName;
         Assert.IsFalse( session.IsNil( ttmObjectName ), $"{ttmObjectName} should not be nil." );
 
-        ttmObjectName = "ttm.OutcomeBits.okay";
+        ttmObjectName = cc.isr.VI.Tsp.K2600.Ttm.Syntax.ThermalTransient.OutcomeBitsOkayName;
         Assert.IsFalse( session.IsNil( ttmObjectName ), $"{ttmObjectName} should not be nil." );
-
-        // the legacy software has no definition for open leads.
-        Asserts.LegacyFirmware = MeterSubsystem.LegacyFirmware;
 
         // preset the meter configuration
         meter.PresetKnownState();
@@ -75,6 +69,54 @@ internal static partial class Asserts
         Assert.IsNotNull( meter.TriggerSequencer, $"{nameof( Meter )}.{nameof( Meter.TriggerSequencer )} should not be null." );
     }
 
+    /// <summary>   Current level getter. </summary>
+    /// <remarks>   2025-02-13. </remarks>
+    /// <param name="legacyDevice">         The legacy device. </param>
+    /// <param name="sourceOutputOption">   The current source output option. </param>
+    /// <returns>   A double. </returns>
+    private static double CurrentLevelGetter( LegacyDevice? legacyDevice, SourceOutputOption sourceOutputOption )
+    {
+        Assert.IsNotNull( legacyDevice, $"{nameof( legacyDevice )} should not be null." );
+        Assert.IsTrue( legacyDevice.IsConnected, "The driver should be connected if the session opened." );
+        if ( Ttm.MeterSubsystem.LegacyFirmware || SourceOutputOption.Current == sourceOutputOption )
+        {
+            bool success = legacyDevice.ColdResistanceCurrentLevelGetter();
+            Assert.IsTrue( success, "The current level getter should succeed." );
+            return legacyDevice.ColdResistanceCurrentLevel;
+        }
+        else
+        {
+            // with new software and voltage source, the current level setter sets the ir.limit or fr.limit, which called voltage limit
+            bool success = legacyDevice.ColdResistanceVoltageLimitGetter();
+            Assert.IsTrue( success, "The voltage limit current getter should succeed." );
+            return legacyDevice.ColdResistanceVoltageLimit;
+        }
+    }
+
+    /// <summary>   Voltage limit getter. </summary>
+    /// <remarks>   2025-02-13. </remarks>
+    /// <param name="legacyDevice">         The legacy device. </param>
+    /// <param name="sourceOutputOption">   The current source output option. </param>
+    /// <returns>   A double. </returns>
+    private static double VoltageLimitGetter( LegacyDevice? legacyDevice, SourceOutputOption sourceOutputOption )
+    {
+        Assert.IsNotNull( legacyDevice, $"{nameof( legacyDevice )} should not be null." );
+        Assert.IsTrue( legacyDevice.IsConnected, "The driver should be connected if the session opened." );
+        if ( Ttm.MeterSubsystem.LegacyFirmware || SourceOutputOption.Current == sourceOutputOption )
+        {
+            bool success = legacyDevice.ColdResistanceVoltageLimitGetter();
+            Assert.IsTrue( success, "The voltage limit getter should succeed." );
+            return legacyDevice.ColdResistanceVoltageLimit;
+        }
+        else
+        {
+            // with new software and voltage source, the current level setter sets the ir.limit or fr.limit, which called voltage limit
+            bool success = legacyDevice.ColdResistanceCurrentLevelGetter();
+            Assert.IsTrue( success, "The current level voltage getter should succeed." );
+            return legacyDevice.ColdResistanceCurrentLevel;
+        }
+    }
+
     /// <summary>   Assert source should configure. </summary>
     /// <remarks>   2024-11-27. </remarks>
     /// <param name="legacyDevice">         The legacy device. </param>
@@ -88,55 +130,58 @@ internal static partial class Asserts
         Meter meter = legacyDevice.Meter;
         Pith.SessionBase session = legacyDevice.Meter.TspDevice.Session;
 
-        float value = 0.01f;
+        double expectedValue = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmResistanceSettings.CurrentLevelDefault;
+        double actualValue = legacyDevice.ColdResistanceConfig.CurrentLevel;
+        Assert.AreEqual( expectedValue, actualValue, 0.001 * expectedValue,
+            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ColdResistanceConfig )}.{nameof( LegacyDevice.ColdResistanceConfig.CurrentLevel )} should equal the settings value." );
 
-        legacyDevice.ColdResistanceConfig.CurrentLevel = value;
-        Assert.AreEqual( value, legacyDevice.ColdResistanceConfig.CurrentLevel, value * 0.001,
-            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ColdResistanceConfig )}.{nameof( LegacyDevice.ColdResistanceConfig.CurrentLevel )} should be assigned to the expected value." );
-        value *= 0.9f;
-        _ = legacyDevice.ColdResistanceCurrentLevelSetter( value );
+        // get actual value
+        double actualCurrentLevel = Asserts.CurrentLevelGetter( legacyDevice, sourceOutputOption );
+        Assert.IsTrue( actualCurrentLevel > 0, "The actual current limit must be positive." );
 
-        if ( Ttm.MeterSubsystem.LegacyFirmware || SourceOutputOption.Current == sourceOutputOption )
-        {
-            Assert.AreEqual( value, legacyDevice.ColdResistanceCurrentLevel, value * 0.001,
-                $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ColdResistanceCurrentLevel )} should be set to the expected value." );
-            _ = legacyDevice.ColdResistanceCurrentLevelGetter();
-            Assert.AreEqual( value, legacyDevice.ColdResistanceCurrentLevel, value * 0.001,
-                $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ColdResistanceCurrentLevel )} should be gotten equal to the expected value." );
-        }
-        else
-        {
-            // with new software and voltage source, the current level setter sets the ir.limit or fr.limit, which called voltage limit
-            _ = legacyDevice.ColdResistanceVoltageLimitGetter();
-            Assert.AreEqual( value, legacyDevice.ColdResistanceVoltageLimit, value * 0.001,
-                $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ColdResistanceVoltageLimit )} should be gotten equal to the expected value." );
+        // alter the actual value
+        expectedValue = 0.9 * actualCurrentLevel;
+        bool success = legacyDevice.ColdResistanceCurrentLevelSetter( ( float ) expectedValue );
+        Assert.IsTrue( success, "The current level setter should succeed." );
+        actualValue = Asserts.CurrentLevelGetter( legacyDevice, sourceOutputOption );
+        Assert.AreEqual( expectedValue, actualValue, 0.001 * expectedValue,
+            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ColdResistanceCurrentLevel )} should equal the changed value." );
 
-        }
+        // restore the value
+        expectedValue = actualCurrentLevel;
+        success = legacyDevice.ColdResistanceCurrentLevelSetter( ( float ) expectedValue );
+        Assert.IsTrue( success, "The current level setter should succeed." );
+        actualValue = Asserts.CurrentLevelGetter( legacyDevice, sourceOutputOption );
+        Assert.AreEqual( expectedValue, actualValue, 0.001 * expectedValue,
+            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ColdResistanceCurrentLevel )} should equal the restored value." );
+
         Asserts.AssertOrphanMessagesOrDeviceErrors( session );
 
-        value = 0.02f;
-        legacyDevice.ColdResistanceConfig.VoltageLimit = value;
-        Assert.AreEqual( value, legacyDevice.ColdResistanceConfig.VoltageLimit, value * 0.001,
-            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ColdResistanceConfig )}.{nameof( LegacyDevice.ColdResistanceConfig.VoltageLimit )} should be assigned to the expected value." );
-        value *= 0.9f;
-        _ = legacyDevice.ColdResistanceVoltageLimitSetter( value );
+        expectedValue = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmResistanceSettings.VoltageLimitDefault;
+        actualValue = legacyDevice.ColdResistanceConfig.VoltageLimit;
+        Assert.AreEqual( expectedValue, actualValue, 0.001 * expectedValue,
+            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ColdResistanceConfig )}.{nameof( LegacyDevice.ColdResistanceConfig.VoltageLimit )} should equal the settings value." );
 
-        if ( Ttm.MeterSubsystem.LegacyFirmware || SourceOutputOption.Current == sourceOutputOption )
-        {
-            Assert.AreEqual( value, legacyDevice.ColdResistanceVoltageLimit, value * 0.001,
-                $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ColdResistanceVoltageLimit )} should be set to the expected value." );
-            _ = legacyDevice.ColdResistanceVoltageLimitGetter();
-            Assert.AreEqual( value, legacyDevice.ColdResistanceVoltageLimit, value * 0.001,
-                $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ColdResistanceVoltageLimit )} should be gotten equal to the expected value." );
+        // get actual value
+        double actualVoltageLimit = Asserts.VoltageLimitGetter( legacyDevice, sourceOutputOption );
+        Assert.IsTrue( actualVoltageLimit > 0, $"{nameof( actualVoltageLimit )} must be positive." );
 
-        }
-        else
-        {
-            // with new software and voltage source, the voltage limit setter sets the level, which is called current level
-            _ = legacyDevice.ColdResistanceCurrentLevelGetter();
-            Assert.AreEqual( value, legacyDevice.ColdResistanceCurrentLevel, value * 0.001,
-                $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ColdResistanceCurrentLevel )} should be gotten equal to the expected value." );
-        }
+        // alter the actual value
+        expectedValue = 0.9 * actualVoltageLimit;
+        success = legacyDevice.ColdResistanceVoltageLimitSetter( ( float ) expectedValue );
+        Assert.IsTrue( success, "The voltage Limit setter should succeed." );
+        actualValue = Asserts.VoltageLimitGetter( legacyDevice, sourceOutputOption );
+        Assert.AreEqual( expectedValue, actualValue, 0.001 * expectedValue,
+            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ColdResistanceVoltageLimit )} should equal the changed value." );
+
+        // restore the value
+        expectedValue = actualVoltageLimit;
+        success = legacyDevice.ColdResistanceVoltageLimitSetter( ( float ) expectedValue );
+        Assert.IsTrue( success, "The voltage Limit setter should succeed." );
+        actualValue = Asserts.VoltageLimitGetter( legacyDevice, sourceOutputOption );
+        Assert.AreEqual( expectedValue, actualValue, 0.001 * expectedValue,
+            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ColdResistanceVoltageLimit )} should equal the restored value." );
+
         Asserts.AssertOrphanMessagesOrDeviceErrors( session );
     }
 
@@ -183,109 +228,234 @@ internal static partial class Asserts
 
         }
 
-        float value = 2.6f;
-        legacyDevice.ColdResistanceConfig.HighLimit = value;
-        Assert.AreEqual( value, legacyDevice.ColdResistanceConfig.HighLimit, value * 0.001,
-            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ColdResistanceConfig )}.{nameof( LegacyDevice.ColdResistanceConfig.HighLimit )} should be assigned to the expected value." );
-        value *= 1.1f;
-        _ = legacyDevice.ColdResistanceHighLimitSetter( value );
-        Assert.AreEqual( value, legacyDevice.InitialResistance.HighLimit, value * 0.001,
-            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.InitialResistance )}.{nameof( LegacyDevice.InitialResistance.HighLimit )} should be set to the expected value." );
-        Assert.AreEqual( value, legacyDevice.FinalResistance.HighLimit, value * 0.001,
-            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.FinalResistance )}.{nameof( LegacyDevice.FinalResistance.HighLimit )} should be set to the expected value." );
-        _ = legacyDevice.ColdResistanceHighLimitGetter();
-        Assert.AreEqual( value, legacyDevice.InitialResistance.HighLimit, value * 0.001,
-            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.InitialResistance )}.{nameof( LegacyDevice.InitialResistance.HighLimit )} should be gotten equal to the expected value." );
-        Assert.AreEqual( value, legacyDevice.FinalResistance.HighLimit, value * 0.001,
-            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.FinalResistance )}.{nameof( LegacyDevice.FinalResistance.HighLimit )} should be gotten equal to the expected value." );
+        double expectedValue = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmResistanceSettings.HighLimitDefault;
+        double actualValue = legacyDevice.ColdResistanceConfig.HighLimit;
+        Assert.AreEqual( expectedValue, actualValue, 0.001 * expectedValue,
+            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ColdResistanceConfig )}.{nameof( LegacyDevice.ColdResistanceConfig.HighLimit )} should equal the settings value." );
+
+        // get actual value
+        bool success = legacyDevice.ColdResistanceHighLimitGetter();
+        Assert.IsTrue( success, "The cold resistance high limit getter should succeed." );
+        double actualHighLimit = legacyDevice.ColdResistanceHighLimit;
+        Assert.IsTrue( actualHighLimit > 0, $"{nameof( actualHighLimit )} must be positive." );
+
+        // alter the actual value
+        expectedValue = 0.9 * actualHighLimit;
+        success = legacyDevice.ColdResistanceHighLimitSetter( ( float ) expectedValue );
+        Assert.IsTrue( success, "The cold resistance high limit setter should succeed." );
+        success = legacyDevice.ColdResistanceHighLimitGetter();
+        Assert.IsTrue( success, "The cold resistance high limit getter should succeed." );
+        actualValue = legacyDevice.ColdResistanceHighLimit;
+        Assert.AreEqual( expectedValue, actualValue, 0.001 * expectedValue,
+            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ColdResistanceHighLimit )} should equal the changed value." );
+
+        // restore the actual value
+        expectedValue = actualHighLimit;
+        success = legacyDevice.ColdResistanceHighLimitSetter( ( float ) expectedValue );
+        Assert.IsTrue( success, "The cold resistance high limit setter should succeed." );
+        success = legacyDevice.ColdResistanceHighLimitGetter();
+        Assert.IsTrue( success, "The cold resistance high limit getter should succeed." );
+        actualValue = legacyDevice.ColdResistanceHighLimit;
+        Assert.AreEqual( expectedValue, actualValue, 0.001 * expectedValue,
+            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ColdResistanceHighLimit )} should equal the restored value." );
 
         Asserts.AssertOrphanMessagesOrDeviceErrors( session );
 
-        value = 1.8f;
-        legacyDevice.ColdResistanceConfig.LowLimit = value;
-        Assert.AreEqual( value, legacyDevice.ColdResistanceConfig.LowLimit, value * 0.001,
-            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ColdResistanceConfig )}.{nameof( LegacyDevice.ColdResistanceConfig.LowLimit )} should be assigned to the expected value." );
-        value *= 0.9f;
-        _ = legacyDevice.ColdResistanceLowLimitSetter( value );
-        Assert.AreEqual( value, legacyDevice.InitialResistance.LowLimit, value * 0.001,
-            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.InitialResistance )}.{nameof( LegacyDevice.InitialResistance.LowLimit )} should be set to the expected value." );
-        Assert.AreEqual( value, legacyDevice.FinalResistance.LowLimit, value * 0.001,
-            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.FinalResistance )}.{nameof( LegacyDevice.FinalResistance.LowLimit )} should be set to the expected value." );
-        _ = legacyDevice.ColdResistanceLowLimitGetter();
-        Assert.AreEqual( value, legacyDevice.InitialResistance.LowLimit, value * 0.001,
-            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.InitialResistance )}.{nameof( LegacyDevice.InitialResistance.LowLimit )} should be gotten equal to the expected value." );
-        Assert.AreEqual( value, legacyDevice.FinalResistance.LowLimit, value * 0.001,
-            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.FinalResistance )}.{nameof( LegacyDevice.FinalResistance.LowLimit )} should be gotten equal to the expected value." );
+        expectedValue = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmResistanceSettings.LowLimitDefault;
+        actualValue = legacyDevice.ColdResistanceConfig.LowLimit;
+        Assert.AreEqual( expectedValue, actualValue, 0.001 * expectedValue,
+            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ColdResistanceConfig )}.{nameof( LegacyDevice.ColdResistanceConfig.LowLimit )} should equal the settings value." );
+
+        // get actual value
+        success = legacyDevice.ColdResistanceLowLimitGetter();
+        Assert.IsTrue( success, "The cold resistance low limit getter should succeed." );
+        double actualLowLimit = legacyDevice.ColdResistanceLowLimit;
+        Assert.IsTrue( actualLowLimit > 0, $"{nameof( actualLowLimit )} must be positive." );
+
+        // alter the actual value
+        expectedValue = 0.9 * actualLowLimit;
+        success = legacyDevice.ColdResistanceLowLimitSetter( ( float ) expectedValue );
+        Assert.IsTrue( success, "The cold resistance low limit setter should succeed." );
+        success = legacyDevice.ColdResistanceLowLimitGetter();
+        Assert.IsTrue( success, "The cold resistance low limit getter should succeed." );
+        actualValue = legacyDevice.ColdResistanceLowLimit;
+        Assert.AreEqual( expectedValue, actualValue, 0.001 * expectedValue,
+            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ColdResistanceLowLimit )} should equal the changed value." );
+
+        // restore the actual value
+        expectedValue = actualLowLimit;
+        success = legacyDevice.ColdResistanceLowLimitSetter( ( float ) expectedValue );
+        Assert.IsTrue( success, "The cold resistance low limit setter should succeed." );
+        success = legacyDevice.ColdResistanceLowLimitGetter();
+        Assert.IsTrue( success, "The cold resistance low limit getter should succeed." );
+        actualValue = legacyDevice.ColdResistanceLowLimit;
+        Assert.AreEqual( expectedValue, actualValue, 0.001 * expectedValue,
+            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ColdResistanceLowLimit )} should equal the restored value." );
 
         Asserts.AssertOrphanMessagesOrDeviceErrors( session );
 
-        value = 0.01f;
-        legacyDevice.PostTransientDelayConfig = value;
-        Assert.AreEqual( value, legacyDevice.PostTransientDelayConfig, value * 0.001,
-            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.PostTransientDelayConfig )} should be assigned to the expected value." );
-        value *= 1.1f;
-        _ = legacyDevice.PostTransientDelaySetter( value );
-        Assert.AreEqual( value, legacyDevice.PostTransientDelay, value * 0.001,
-            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.PostTransientDelay )} should be set to the expected value." );
-        _ = legacyDevice.PostTransientDelayGetter();
-        Assert.AreEqual( value, legacyDevice.PostTransientDelay, value * 0.001,
-            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.PostTransientDelay )} should be gotten equal to the expected value." );
+        expectedValue = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmMeterSettings.PostTransientDelayDefault;
+        actualValue = legacyDevice.PostTransientDelayConfig;
+        Assert.AreEqual( expectedValue, actualValue, 0.001 * expectedValue,
+            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.PostTransientDelay )} should equal the settings value." );
+
+        // get actual value
+        success = legacyDevice.PostTransientDelayGetter();
+        Assert.IsTrue( success, "The Post Transient Delay getter should succeed." );
+        double actualPostTransientDelay = legacyDevice.PostTransientDelay;
+        Assert.IsTrue( actualPostTransientDelay > 0, $"{nameof( actualPostTransientDelay )} must be positive." );
+
+        // alter the actual value
+        expectedValue = 0.9 * actualPostTransientDelay;
+        success = legacyDevice.PostTransientDelaySetter( ( float ) expectedValue );
+        Assert.IsTrue( success, "The Post Transient Delay setter should succeed." );
+        success = legacyDevice.PostTransientDelayGetter();
+        Assert.IsTrue( success, "The Post Transient Delay getter should succeed." );
+        actualValue = legacyDevice.PostTransientDelay;
+        Assert.AreEqual( expectedValue, actualValue, 0.01 * expectedValue,
+            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.PostTransientDelay )} should equal the changed value." );
+
+        // restore the actual value
+        expectedValue = actualPostTransientDelay;
+        success = legacyDevice.PostTransientDelaySetter( ( float ) expectedValue );
+        Assert.IsTrue( success, "The Post Transient Delay setter should succeed." );
+        success = legacyDevice.PostTransientDelayGetter();
+        Assert.IsTrue( success, "The Post Transient Delay getter should succeed." );
+        actualValue = legacyDevice.PostTransientDelay;
+        Assert.AreEqual( expectedValue, actualValue, 0.01 * expectedValue,
+            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.PostTransientDelay )} should equal the restored value." );
 
         Asserts.AssertOrphanMessagesOrDeviceErrors( session );
 
-        value = 0.27f;
-        legacyDevice.ThermalTransientConfig.CurrentLevel = value;
-        Assert.AreEqual( value, legacyDevice.ThermalTransientConfig.CurrentLevel, value * 0.001,
-            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ThermalTransientConfig )}.{nameof( LegacyDevice.ThermalTransientConfig.CurrentLevel )} should be assigned to the expected value." );
-        value *= 1.1f;
-        _ = legacyDevice.ThermalTransientCurrentLevelSetter( value );
-        Assert.AreEqual( value, legacyDevice.ThermalTransientCurrentLevel, value * 0.001,
-            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ThermalTransientCurrentLevel )} should be set to the expected value." );
-        _ = legacyDevice.ThermalTransientCurrentLevelGetter();
-        Assert.AreEqual( value, legacyDevice.ThermalTransientCurrentLevel, value * 0.001,
-            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ThermalTransientCurrentLevel )} should be gotten equal to the expected value." );
+        expectedValue = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmTraceSettings.CurrentLevelDefault;
+        actualValue = legacyDevice.ThermalTransientConfig.CurrentLevel;
+        Assert.AreEqual( expectedValue, actualValue, 0.01 * expectedValue,
+            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ThermalTransientConfig )}.{nameof( LegacyDevice.ThermalTransientConfig.CurrentLevel )} should equal the settings value." );
+
+        // get actual value
+        success = legacyDevice.ThermalTransientCurrentLevelGetter();
+        Assert.IsTrue( success, "The thermal transient current level getter should succeed." );
+        double actualCurrentLevel = legacyDevice.ThermalTransientCurrentLevel;
+        Assert.IsTrue( actualCurrentLevel > 0, $"{nameof( actualCurrentLevel )} must be positive." );
+
+        // alter the actual value
+        expectedValue = 0.9 * actualCurrentLevel;
+        success = legacyDevice.ThermalTransientCurrentLevelSetter( ( float ) expectedValue );
+        Assert.IsTrue( success, "The thermal transient current level setter should succeed." );
+        success = legacyDevice.ThermalTransientCurrentLevelGetter();
+        Assert.IsTrue( success, "The thermal transient current level getter should succeed." );
+        actualValue = legacyDevice.ThermalTransientCurrentLevel;
+        Assert.AreEqual( expectedValue, actualValue, 0.01 * expectedValue,
+            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ThermalTransientCurrentLevel )} should equal the changed value." );
+
+        // restore the actual value
+        expectedValue = actualCurrentLevel;
+        success = legacyDevice.ThermalTransientCurrentLevelSetter( ( float ) expectedValue );
+        Assert.IsTrue( success, "The thermal transient current level setter should succeed." );
+        success = legacyDevice.ThermalTransientCurrentLevelGetter();
+        Assert.IsTrue( success, "The thermal transient current level getter should succeed." );
+        actualValue = legacyDevice.ThermalTransientCurrentLevel;
+        Assert.AreEqual( expectedValue, actualValue, 0.01 * expectedValue,
+            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ThermalTransientCurrentLevel )} should equal the restored value." );
 
         Asserts.AssertOrphanMessagesOrDeviceErrors( session );
 
-        value = 0.099f;
-        legacyDevice.ThermalTransientConfig.AllowedVoltageChange = value;
-        Assert.AreEqual( value, legacyDevice.ThermalTransientConfig.AllowedVoltageChange, value * 0.001,
-            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ThermalTransientConfig )}.{nameof( LegacyDevice.ThermalTransientConfig.AllowedVoltageChange )} should be assigned to the expected value." );
-        value *= 0.9f;
-        _ = legacyDevice.ThermalTransientVoltageChangeSetter( value );
-        Assert.AreEqual( value, legacyDevice.ThermalTransientVoltageChange, value * 0.001,
-            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ThermalTransientVoltageChange )} should be set to the expected value." );
-        _ = legacyDevice.ThermalTransientVoltageChangeGetter();
-        Assert.AreEqual( value, legacyDevice.ThermalTransientVoltageChange, value * 0.001,
-            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ThermalTransientVoltageChange )} should be gotten equal to the expected value." );
+        expectedValue = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmTraceSettings.VoltageChangeDefault;
+        actualValue = legacyDevice.ThermalTransientConfig.AllowedVoltageChange;
+        Assert.AreEqual( expectedValue, actualValue, 0.01 * expectedValue,
+            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ThermalTransientConfig )}.{nameof( LegacyDevice.ThermalTransientConfig.AllowedVoltageChange )} should equal the settings value." );
+
+        // get actual value
+        success = legacyDevice.ThermalTransientVoltageChangeGetter();
+        Assert.IsTrue( success, "The thermal transient voltage change getter should succeed." );
+        double actualAllowedVoltageChange = legacyDevice.ThermalTransientVoltageChange;
+        Assert.IsTrue( actualAllowedVoltageChange > 0, $"{nameof( actualAllowedVoltageChange )} must be positive." );
+
+        // alter the actual value
+        expectedValue = 0.9 * actualAllowedVoltageChange;
+        success = legacyDevice.ThermalTransientVoltageChangeSetter( ( float ) expectedValue );
+        Assert.IsTrue( success, "The thermal transient voltage change setter should succeed." );
+        success = legacyDevice.ThermalTransientVoltageChangeGetter();
+        Assert.IsTrue( success, "The thermal transient voltage change getter should succeed." );
+        actualValue = legacyDevice.ThermalTransientVoltageChange;
+        Assert.AreEqual( expectedValue, actualValue, 0.01 * expectedValue,
+            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ThermalTransientVoltageChange )} should equal the changed value." );
+
+        // restore the actual value
+        expectedValue = actualAllowedVoltageChange;
+        success = legacyDevice.ThermalTransientVoltageChangeSetter( ( float ) expectedValue );
+        Assert.IsTrue( success, "The thermal transient voltage change setter should succeed." );
+        success = legacyDevice.ThermalTransientVoltageChangeGetter();
+        Assert.IsTrue( success, "The thermal transient voltage change getter should succeed." );
+        actualValue = legacyDevice.ThermalTransientVoltageChange;
+        Assert.AreEqual( expectedValue, actualValue, 0.01 * expectedValue,
+            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ThermalTransientVoltageChange )} should equal the restored value." );
 
         Asserts.AssertOrphanMessagesOrDeviceErrors( session );
 
-        value = 0.19f;
-        legacyDevice.ThermalTransientConfig.HighLimit = value;
-        Assert.AreEqual( value, legacyDevice.ThermalTransientConfig.HighLimit, value * 0.001,
-            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ThermalTransientConfig )}.{nameof( LegacyDevice.ThermalTransientConfig.HighLimit )} should be assigned to the expected value." );
-        value *= 1.1f;
-        _ = legacyDevice.ThermalTransientHighLimitSetter( value );
-        Assert.AreEqual( value, legacyDevice.ThermalTransient.HighLimit, value * 0.001,
-            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ThermalTransient )}.{nameof( LegacyDevice.ThermalTransient.HighLimit )} should be set to the expected value." );
-        _ = legacyDevice.ThermalTransientHighLimitGetter();
-        Assert.AreEqual( value, legacyDevice.ThermalTransient.HighLimit, value * 0.001,
-            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ThermalTransient )}.{nameof( LegacyDevice.ThermalTransient.HighLimit )} should be gotten equal to the expected value." );
+        expectedValue = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmTraceSettings.HighLimitDefault;
+        actualValue = legacyDevice.ThermalTransientConfig.HighLimit;
+        Assert.AreEqual( expectedValue, actualValue, 0.01 * expectedValue,
+            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ThermalTransientConfig )}.{nameof( LegacyDevice.ThermalTransientConfig.HighLimit )} should equal the settings value." );
+
+        // get actual value
+        success = legacyDevice.ThermalTransientHighLimitGetter();
+        Assert.IsTrue( success, "The cold resistance High limit getter should succeed." );
+        actualHighLimit = legacyDevice.ThermalTransientHighLimit;
+        Assert.IsTrue( actualHighLimit > 0, $"{nameof( actualHighLimit )} must be positive." );
+
+        // alter the actual value
+        expectedValue = 0.9 * actualHighLimit;
+        success = legacyDevice.ThermalTransientHighLimitSetter( ( float ) expectedValue );
+        Assert.IsTrue( success, "The cold resistance High limit setter should succeed." );
+        success = legacyDevice.ThermalTransientHighLimitGetter();
+        Assert.IsTrue( success, "The cold resistance High limit getter should succeed." );
+        actualValue = legacyDevice.ThermalTransientHighLimit;
+        Assert.AreEqual( expectedValue, actualValue, 0.01 * expectedValue,
+            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ThermalTransientHighLimit )} should equal the changed value." );
+
+        // restore the actual value
+        expectedValue = actualHighLimit;
+        success = legacyDevice.ThermalTransientHighLimitSetter( ( float ) expectedValue );
+        Assert.IsTrue( success, "The cold resistance High limit setter should succeed." );
+        success = legacyDevice.ThermalTransientHighLimitGetter();
+        Assert.IsTrue( success, "The cold resistance High limit getter should succeed." );
+        actualValue = legacyDevice.ThermalTransientHighLimit;
+        Assert.AreEqual( expectedValue, actualValue, 0.001 * expectedValue,
+            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ThermalTransientHighLimit )} should equal the restored value." );
 
         Asserts.AssertOrphanMessagesOrDeviceErrors( session );
 
-        value = 0.006f;
-        legacyDevice.ThermalTransientConfig.LowLimit = value;
-        Assert.AreEqual( value, legacyDevice.ThermalTransientConfig.LowLimit, value * 0.001,
-            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ThermalTransientConfig )}.{nameof( LegacyDevice.ThermalTransientConfig.LowLimit )} should be assigned to the expected value." );
-        value *= 0.9f;
-        _ = legacyDevice.ThermalTransientLowLimitSetter( value );
-        Assert.AreEqual( value, legacyDevice.ThermalTransient.LowLimit, value * 0.001,
-            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ThermalTransient )}.{nameof( LegacyDevice.ThermalTransient.LowLimit )} should be set to the expected value." );
-        _ = legacyDevice.ThermalTransientLowLimitGetter();
-        Assert.AreEqual( value, legacyDevice.ThermalTransient.LowLimit, value * 0.001,
-            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ThermalTransient )}.{nameof( LegacyDevice.ThermalTransient.LowLimit )} should be gotten equal to the expected value." );
+        expectedValue = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmTraceSettings.LowLimitDefault;
+        actualValue = legacyDevice.ThermalTransientConfig.LowLimit;
+        Assert.AreEqual( expectedValue, actualValue, 0.01 * expectedValue,
+            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ThermalTransientConfig )}.{nameof( LegacyDevice.ThermalTransientConfig.LowLimit )} should equal the settings value." );
+
+        // get actual value
+        success = legacyDevice.ThermalTransientLowLimitGetter();
+        Assert.IsTrue( success, "The cold resistance low limit getter should succeed." );
+        actualLowLimit = legacyDevice.ThermalTransientLowLimit;
+        Assert.IsTrue( actualLowLimit > 0, $"{nameof( actualLowLimit )} must be positive." );
+
+        // alter the actual value
+        expectedValue = 0.9 * actualLowLimit;
+        success = legacyDevice.ThermalTransientLowLimitSetter( ( float ) expectedValue );
+        Assert.IsTrue( success, "The cold resistance low limit setter should succeed." );
+        success = legacyDevice.ThermalTransientLowLimitGetter();
+        Assert.IsTrue( success, "The cold resistance low limit getter should succeed." );
+        actualValue = legacyDevice.ThermalTransientLowLimit;
+        Assert.AreEqual( expectedValue, actualValue, 0.01 * expectedValue,
+            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ThermalTransientLowLimit )} should equal the changed value." );
+
+        // restore the actual value
+        expectedValue = actualLowLimit;
+        success = legacyDevice.ThermalTransientLowLimitSetter( ( float ) expectedValue );
+        Assert.IsTrue( success, "The cold resistance low limit setter should succeed." );
+        success = legacyDevice.ThermalTransientLowLimitGetter();
+        Assert.IsTrue( success, "The cold resistance low limit getter should succeed." );
+        actualValue = legacyDevice.ThermalTransientLowLimit;
+        Assert.AreEqual( expectedValue, actualValue, 0.01 * expectedValue,
+            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ThermalTransientLowLimit )} should equal the restored value." );
 
         Asserts.AssertOrphanMessagesOrDeviceErrors( session );
     }
@@ -399,53 +569,100 @@ internal static partial class Asserts
         }
         else
         {
+            resistance.ReadLimits( session );
+            Assert.IsTrue( resistance.LowLimit > 0, $"{nameof( ColdResistance.LowLimit )} should be positive." );   
+            Assert.IsTrue( resistance.HighLimit > 0, $"{nameof( ColdResistance.HighLimit )} should be positive." );
+
             Assert.IsTrue( resistance.OutcomeReading.TryParseNullableInteger( out int? outcomeValue ) );
             Assert.IsNotNull( outcomeValue, $"{nameof( ColdResistance.OutcomeReading )} should be not not be null if measurement was made." );
 
-            Assert.IsNotNull( resistance.Resistance, $"{nameof( ColdResistance.Resistance )} should be not be null if measurement was made." );
-            int? status = ( int? ) session.QueryNullableDoubleThrowIfError( $"print({resistance.EntityName}.status) ", "Cold Resistance status" );
+            int? status = session.QueryNullableIntegerThrowIfError( $"print({resistance.EntityName}.status) ", "Cold Resistance status" );
             Assert.IsNotNull( status, $"{resistance.EntityName}.status should be not be null if measurement was made." );
-
-            int? passFailOutcome = ( int? ) session.QueryNullableDoubleThrowIfError( $"print({resistance.EntityName}.passFailOutcome) ", "Cold Resistance pass fail outcome" );
-            Assert.IsNotNull( passFailOutcome, $"{resistance.EntityName}.passFailOutcome should be not be null if measurement was made." );
-
-            float resistanceValue = resistance.Resistance.Value;
-            // if measurement was made
-            float low = legacyDevice.ColdResistanceConfig.LowLimit;
-            float high = legacyDevice.ColdResistanceConfig.HighLimit;
-            if ( ( int ) PassFailBits.Unknown == passFailOutcome.Value )
-            {
-                // failed contact check.
-                Assert.AreEqual( ( int ) FirmwareOutcomes.BadStatus, ( int ) FirmwareOutcomes.BadStatus & outcomeValue.Value,
-                    $"Outcome value {outcomeValue.Value} bad status bit {FirmwareOutcomes.BadStatus} should be set if contact check failed." );
-            }
-            else if ( resistanceValue < low )
-            {
-                Assert.AreEqual( ( int ) PassFailBits.Low, passFailOutcome.Value,
-                    $"Pass fail value {passFailOutcome.Value} must be 'low' if resistance {resistanceValue} is lower than {low}." );
-            }
-            else if ( resistanceValue > high )
-            {
-                Assert.AreEqual( ( int ) PassFailBits.High, passFailOutcome.Value,
-                    $"Pass fail value {passFailOutcome.Value} must be 'high' if resistance {resistanceValue} is high than {high}." );
-            }
-            else
-            {
-                Assert.AreEqual( ( int ) PassFailBits.Pass, passFailOutcome.Value,
-                    $"Pass fail value {passFailOutcome.Value} must be 'pass' if resistance {resistanceValue} is within [{low},{high}]." );
-            }
 
             Assert.IsTrue( resistance.StatusReading.TryParseNullableInteger( out int? statusValue ) );
             Assert.IsNotNull( statusValue, $"status {statusValue} should not be null if measurement was made." );
             int bitValue;
-            if ( outcomeValue.Value == 0 )
+            if ( outcomeValue == ( int ) FirmwareOutcomes.Okay )
             {
-                bitValue = 2;
+                bitValue = ( int ) cc.isr.VI.BufferElementStatusBits.OverTemp;
                 Assert.AreEqual( bitValue & statusValue, 0,
                     $"status {statusValue} must not have the over temp bit {bitValue} set if measurement was made." );
                 // compliance is acceptable
                 // bitValue = 64;
                 // Assert.IsTrue( 0 == (bitValue & statusValue), $"status {statusValue} must not have the compliance bit {bitValue} set if measurement was made." );
+            }
+
+            if ( MeterSubsystem.LegacyFirmware )
+            {
+                if ( outcomeValue == ( int ) FirmwareOutcomes.Okay )
+                {
+                    Assert.IsNotNull( resistance.Resistance, $"{nameof( ColdResistance.Resistance )} should be not be null if measurement was made." );
+
+                    float resistanceValue = resistance.Resistance.Value;
+                    // if measurement was made
+                    float low = resistance.LowLimit;
+                    float high = resistance.HighLimit;
+                    bool? passed = session.QueryNullableBoolThrowIfError( $"print({resistance.EntityName}.pass) ", "Cold Resistance pass value" );
+                    Assert.IsNotNull( passed, $"Cold Resistance {nameof( passed )} should be not be null if measurement was made." );
+
+                    if ( resistanceValue < low )
+                    {
+                        Assert.IsFalse( passed.Value,
+                             $"Cold Resistance {nameof( passed )} should be false if resistance {resistanceValue:#0.###} is lower than {low:#0.###}." );
+                    }
+                    else if ( resistanceValue > high )
+                    {
+                        Assert.IsFalse( passed.Value,
+                             $"Cold Resistance {nameof( passed )} should be false if resistance {resistanceValue:#0.###} is higher than {high:#0.###}." );
+                    }
+                    else
+                    {
+                        Assert.IsTrue( passed.Value,
+                             $"Cold Resistance {nameof( passed )} should be true if resistance {resistanceValue:#0.###} is within[{low:#0.###}, {high:#0.###}]." );
+                    }
+                }
+                else if ( outcomeValue == ( int ) FirmwareOutcomes.BadStatus )
+                {
+                    Assert.IsNull( resistance.Resistance, $"{nameof( ColdResistance.Resistance )} should be null if measurement failed." );
+
+                    bitValue = ( int ) cc.isr.VI.BufferElementStatusBits.Compliance;
+                    Assert.AreEqual( bitValue & statusValue, bitValue,
+                        $"status {statusValue} must report compliance if measurement failed with bad status." );
+                }
+            }
+            else
+            {
+                Assert.IsNotNull( resistance.Resistance, $"{nameof( ColdResistance.Resistance )} should be not be null if measurement was made." );
+
+                int? passFailOutcome = session.QueryNullableIntegerThrowIfError( $"print({resistance.EntityName}.passFailOutcome) ", "Cold Resistance pass fail outcome" );
+                Assert.IsNotNull( passFailOutcome, $"{resistance.EntityName}.passFailOutcome should be not be null if measurement was made." );
+
+                float resistanceValue = resistance.Resistance.Value;
+                // if measurement was made
+                float low = resistance.LowLimit;
+                float high = resistance.HighLimit;
+                if ( ( int ) PassFailBits.Unknown == passFailOutcome.Value )
+                {
+                    // failed contact check.
+                    Assert.AreEqual( ( int ) FirmwareOutcomes.BadStatus, ( int ) FirmwareOutcomes.BadStatus & outcomeValue.Value,
+                        $"Outcome value {outcomeValue.Value} bad status bit {FirmwareOutcomes.BadStatus} should be set if contact check failed." );
+                }
+                else if ( resistanceValue < low )
+                {
+                    Assert.AreEqual( ( int ) PassFailBits.Low, passFailOutcome.Value,
+                        $"Pass fail value {passFailOutcome.Value} must be 'low' if resistance {resistanceValue} is lower than {low}." );
+                }
+                else if ( resistanceValue > high )
+                {
+                    Assert.AreEqual( ( int ) PassFailBits.High, passFailOutcome.Value,
+                        $"Pass fail value {passFailOutcome.Value} must be 'high' if resistance {resistanceValue} is high than {high}." );
+                }
+                else
+                {
+                    Assert.AreEqual( ( int ) PassFailBits.Pass, passFailOutcome.Value,
+                        $"Pass fail value {passFailOutcome.Value} must be 'pass' if resistance {resistanceValue} is within [{low},{high}]." );
+                }
+
             }
         }
 

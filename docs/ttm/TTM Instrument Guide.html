@@ -462,7 +462,9 @@ lower than the high leads resistance.</li>
 </tr>
 </tbody>
 </table>
-<p>Apparently, the contact check circuit current runs through the device under test causing a significant voltage drop if the DUT resistance is high or open. This voltage drop can be limited to about 1 volt (resistance time 300µA) by placing a shunt resistor of 3.3KΩ across both the sense terminals. A sense shunt is sufficient. Placing a shunt across the source terminals adversely affects the measurements.</p>
+<p>Apparently, the contact check circuit current runs through the device under test causing a significant voltage drop if the DUT resistance is high or open. This voltage drop can be limited to about 1 volt (resistance time 300µA) by placing a shunt resistor of 3.3KΩ across the sense terminals.</p>
+<p><img src="VoltageLimitShuntDiagram.png" alt="" /></p>
+<p>A sense shunt is sufficient. Placing a shunt across the source terminals adversely affects the measurements.</p>
 <p><a name="Meter_Shunt_Menu"></a></p>
 <h3 id="shunt-menu">Shunt Menu</h3>
 <p>Selecting <em>Shunt</em> from the <a href="#meter_menu">Meter Menu</a> displays the resistance of the shunt resistance across the sense terminals of the instrument. This menu sets the resistance of the shunt resistor that is connected across the Sense terminals of the instrument:</p>

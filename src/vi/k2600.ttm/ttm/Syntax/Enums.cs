@@ -209,7 +209,15 @@ public enum DigitalLines
 
     /// <summary>   A constant representing the Start Trigger line. </summary>
     [Description( "StartTriggerLine" )]
-    StartTriggerLine = 8
+    StartTriggerLine = 8,
+    /// <summary>   An enum constant representing the contact check active option. </summary>
+
+    [Description( "Contact Check Active" )]
+    ContactCheckActive = 9,
+    /// <summary>   An enum constant representing the contact check failed option. </summary>
+
+    [Description( "Contact Check failed" )]
+    ContactCheckFailed = 10
 
 }
 

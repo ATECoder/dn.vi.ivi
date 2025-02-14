@@ -310,7 +310,11 @@ For instance the following values where measured:
 |3.3KΩ | Open       | Wired     | Wired      | Open        | 1.09      | -1.33     |
 |~2Ω   | any        | any       | any        | any         | < 50mv    | < 50mv    |
 
-Apparently, the contact check circuit current runs through the device under test causing a significant voltage drop if the DUT resistance is high or open. This voltage drop can be limited to about 1 volt (resistance time 300µA) by placing a shunt resistor of 3.3KΩ across both the sense terminals. A sense shunt is sufficient. Placing a shunt across the source terminals adversely affects the measurements.
+Apparently, the contact check circuit current runs through the device under test causing a significant voltage drop if the DUT resistance is high or open. This voltage drop can be limited to about 1 volt (resistance time 300µA) by placing a shunt resistor of 3.3KΩ across the sense terminals.
+
+![](VoltageLimitShuntDiagram.png)
+
+A sense shunt is sufficient. Placing a shunt across the source terminals adversely affects the measurements.
 
 <a name="Meter_Shunt_Menu"></a>
 ### Shunt Menu

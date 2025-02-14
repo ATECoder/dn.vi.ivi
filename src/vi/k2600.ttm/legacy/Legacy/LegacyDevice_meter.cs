@@ -25,7 +25,8 @@ public partial class LegacyDevice : CommunityToolkit.Mvvm.ComponentModel.Observa
         if ( !this.IsConnected ) return false;
         Pith.SessionBase session = this.Meter!.TspDevice!.Session!;
 
-        const string printFormat = "%9.3f";
+        // increase resolution for unit test equals comparison at the 0.1% level.
+        const string printFormat = "%9.6f";
 
         string synopsis = "Getting Post Transient Delay";
         this.OnMessageAvailable( TraceEventType.Verbose, synopsis, "Instrument '{0}' getting post transient delay", this.ResourceName );

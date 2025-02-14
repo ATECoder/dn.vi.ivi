@@ -11,21 +11,21 @@ public interface IApparatus : IDisposable
 {
     /// <summary> Gets or sets the cold resistance configuration parameters. </summary>
     /// <value> The cold resistance configuration. </value>
-    IColdResistanceConfig ColdResistanceConfig { get; set; }
+    public IColdResistanceConfig ColdResistanceConfig { get; set; }
 
     /// <summary> Gets or sets reference to the <see cref="IColdResistance">Final cold resistance</see> </summary>
     /// <value> The final resistance. </value>
-    IColdResistance FinalResistance { get; set; }
+    public IColdResistance FinalResistance { get; set; }
 
     /// <summary> Gets or sets reference to the <see cref="IColdResistance">initial cold
     /// resistance</see> </summary>
     /// <value> The initial resistance. </value>
-    IColdResistance InitialResistance { get; set; }
+    public IColdResistance InitialResistance { get; set; }
 
     /// <summary> Gets or sets the delay time in seconds between the end of the thermal transient and
     /// the start of the final cold resistance measurement. </summary>
     /// <value> The post transient delay. </value>
-    float PostTransientDelay { get; set; }
+    public float PostTransientDelay { get; set; }
 
     /// <summary> Gets the delay time in seconds between the end of the thermal transient and the start
     /// of the final cold resistance measurement. </summary>
@@ -35,13 +35,13 @@ public interface IApparatus : IDisposable
     /// <summary> Gets or sets reference to the <see cref="IColdResistance">initial cold
     /// resistance</see> </summary>
     /// <value> The thermal transient. </value>
-    IThermalTransient ThermalTransient { get; set; }
+    public IThermalTransient ThermalTransient { get; set; }
 
     /// <summary> Gets or sets the thermal transient configuration parameters. </summary>
     /// <value> The thermal transient configuration. </value>
-    IThermalTransientConfig ThermalTransientConfig { get; set; }
+    public IThermalTransientConfig ThermalTransientConfig { get; set; }
 
     /// <summary> Initializes known state. </summary>
     /// <remarks> This erases the last reading. </remarks>
-    void InitializeKnownState();
+    public void InitializeKnownState();
 }

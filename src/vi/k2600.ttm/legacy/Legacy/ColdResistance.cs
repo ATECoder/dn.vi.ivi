@@ -1,4 +1,5 @@
 using cc.isr.VI.Pith;
+using cc.isr.VI.Tsp.SessionBaseExtensions;
 
 namespace cc.isr.VI.Tsp.K2600.Ttm.Legacy;
 
@@ -108,5 +109,16 @@ public class ColdResistance( string entityName ) : object(), IColdResistance
         this.StatusReading = session.QueryPrintTrimEnd( $"{this.EntityName}.status" ) ?? string.Empty;
         this.OutcomeReading = session.QueryPrintTrimEnd( $"{this.EntityName}.outcome" ) ?? string.Empty;
         this.OkayReading = session.QueryPrintTrimEnd( $"{this.EntityName}:isOkay() " ) ?? string.Empty;
+    }
+
+    /// <summary>   Reads the limits. </summary>
+    /// <remarks>   2025-02-13. </remarks>
+    /// <param name="session">  The session. </param>
+    public void ReadLimits( Pith.SessionBase session )
+    {
+        this.LowLimit = ( float ) session.QueryNullableDoubleThrowIfError( $"print({this.EntityName}.lowLimit) ",
+            "Cold Resistance Low Limit" ).GetValueOrDefault( 0 );
+        this.HighLimit = ( float ) session.QueryNullableDoubleThrowIfError( $"print({this.EntityName}.highLimit) ",
+            "Cold Resistance High Limit" ).GetValueOrDefault( 0 );
     }
 }

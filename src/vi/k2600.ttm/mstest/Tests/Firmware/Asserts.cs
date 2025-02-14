@@ -2,7 +2,6 @@ using System;
 using System.Diagnostics;
 using cc.isr.VI.Tsp.SessionBaseExtensions;
 using cc.isr.VI.Tsp.K2600.Ttm.Syntax;
-using System.Diagnostics.Metrics;
 using cc.isr.VI.Pith;
 
 namespace cc.isr.VI.Tsp.K2600.Ttm.Tests.Firmware;
@@ -497,7 +496,7 @@ internal static partial class Asserts
         Assert.IsNotNull( outcomes, $"{nameof( outcomes )} must have a value." );
         Assert.IsNotNull( leadsStatus, $"{nameof( leadsStatus )} must have a value." );
         Assert.IsNotNull( lowR, $"{nameof( lowR )} must have a value." );
-        Assert.IsNotNull( highR, $"{nameof( highR)} must have a value." );
+        Assert.IsNotNull( highR, $"{nameof( highR )} must have a value." );
         Assert.IsNotNull( dutR, $"{nameof( dutR )} must have a value." );
 
         if ( 0 == (options.Value & ( int ) option) )

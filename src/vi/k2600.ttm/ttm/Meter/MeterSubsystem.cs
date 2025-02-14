@@ -163,7 +163,8 @@ public class MeterSubsystem : MeterSubsystemBase
             return ret;
         }
 
-        if ( !localTryQueryPrintPostTransientDelay() )
+        // the legacy firmware post transient delay default is a local member.
+        if ( !(MeterSubsystem.LegacyFirmware || localTryQueryPrintPostTransientDelay()) )
             _ = cc.isr.VI.SessionLogger.Instance.LogWarning( $"failed reading default cold meterMain aperture;. Sent:'{this.Session.LastMessageSent}; Received:'{this.Session.LastMessageReceived}'." );
 
         cc.isr.VI.Pith.SessionBase.DoEventsAction?.Invoke();

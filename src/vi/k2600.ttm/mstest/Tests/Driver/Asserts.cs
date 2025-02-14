@@ -10,10 +10,6 @@ internal static partial class Asserts
     /// <value> The legacy driver. </value>
     public static int LegacyDriver { get; set; } = 1;
 
-    /// <summary>   Gets or sets a value indicating whether the legacy firmware. </summary>
-    /// <value> True if legacy firmware, false if not. </value>
-    public static bool LegacyFirmware { get; set; }
-
     /// <summary> Logs an iterator. </summary>
     /// <remarks> David, 2020-10-12. </remarks>
     /// <param name="value"> The value. </param>

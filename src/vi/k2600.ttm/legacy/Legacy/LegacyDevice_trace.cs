@@ -172,7 +172,7 @@ public partial class LegacyDevice : CommunityToolkit.Mvvm.ComponentModel.Observa
         if ( !this.IsConnected ) return false;
         Pith.SessionBase session = this.Meter!.TspDevice!.Session!;
 
-        const string printFormat = "%9.3f";
+        const string printFormat = "%9.6f";
 
         string synopsis = "Getting Thermal Transient Current Level";
         this.OnMessageAvailable( TraceEventType.Verbose, synopsis, "Instrument '{0}' Getting thermal transient current level", this.ResourceName );

@@ -1,4 +1,5 @@
 using cc.isr.VI.Pith;
+using cc.isr.VI.Tsp.SessionBaseExtensions;
 
 namespace cc.isr.VI.Tsp.K2600.Ttm.Legacy;
 
@@ -108,7 +109,7 @@ public class ThermalTransient : IThermalTransient
     public string OutcomeReading { get; set; } = string.Empty;
 
     /// <summary>
-    /// Reads resistance, outcome, status and okay attributes of the cold resistance entity. </summary>
+    /// Reads voltage change, outcome, status and okay attributes of the thermal transient entity. </summary>
     /// <remarks>   2024-11-07. </remarks>
     /// <param name="session">  The session. </param>
     /// <returns>   A Tuple. </returns>
@@ -119,5 +120,17 @@ public class ThermalTransient : IThermalTransient
         this.OutcomeReading = session.QueryPrintTrimEnd( $"{this.EntityName}.outcome" ) ?? string.Empty;
         this.OkayReading = session.QueryPrintTrimEnd( $"{this.EntityName}:isOkay() " ) ?? string.Empty;
     }
+
+    /// <summary>   Reads the limits. </summary>
+    /// <remarks>   2025-02-13. </remarks>
+    /// <param name="session">  The session. </param>
+    public void ReadLimits( Pith.SessionBase session )
+    {
+        this.LowLimit = ( float ) session.QueryNullableDoubleThrowIfError( $"print({this.EntityName}.lowLimit) ",
+            "Voltage Change Low Limit" ).GetValueOrDefault( 0 );
+        this.HighLimit = ( float ) session.QueryNullableDoubleThrowIfError( $"print({this.EntityName}.highLimit) ",
+            "Voltage Change High Limit" ).GetValueOrDefault( 0 );
+    }
+
 
 }

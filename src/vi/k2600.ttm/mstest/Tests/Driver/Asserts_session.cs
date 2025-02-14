@@ -53,18 +53,14 @@ internal static partial class Asserts
         // session.InitKnownState();
 
         // detect the legacy firmware
-        string ttmObjectName = "ttm";
+        string ttmObjectName = cc.isr.VI.Tsp.K2600.Ttm.Syntax.ThermalTransient.ThermalTransientBaseEntityName;
         Assert.IsFalse( session.IsNil( ttmObjectName ), $"{ttmObjectName} should not be nil." );
 
-        ttmObjectName = "ttm.OutcomeBits";
+        ttmObjectName = cc.isr.VI.Tsp.K2600.Ttm.Syntax.ThermalTransient.OutcomeBitsName;
         Assert.IsFalse( session.IsNil( ttmObjectName ), $"{ttmObjectName} should not be nil." );
 
-        ttmObjectName = "ttm.OutcomeBits.okay";
+        ttmObjectName = cc.isr.VI.Tsp.K2600.Ttm.Syntax.ThermalTransient.OutcomeBitsOkayName;
         Assert.IsFalse( session.IsNil( ttmObjectName ), $"{ttmObjectName} should not be nil." );
-
-        // the legacy software has no definition for open leads.
-        ttmObjectName = "ttm.OutcomeBits.openLeads";
-        Asserts.LegacyFirmware = session.IsNil( ttmObjectName );
 
         // prepare the device under test.
         DeviceUnderTest deviceUnderTest = meter.ConfigInfo;

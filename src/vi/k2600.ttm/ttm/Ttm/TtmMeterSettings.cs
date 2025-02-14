@@ -155,7 +155,31 @@ public class TtmMeterSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
     }
 
     private double _postTransientDelayDefault = 0.01;
-    /// <summary>   Gets or sets the post transient delay default. </summary>    /// <value> The post transient delay default. </value>	[Description( "The Default Post Transient Delay Time in Seconds (0.01)." )]    public double PostTransientDelayDefault    {        get => this._postTransientDelayDefault;        set => this.SetProperty( ref this._postTransientDelayDefault, value );    }    private double _postTransientDelayMaximum = 10;    /// <summary>   Gets or sets the post transient delay maximum. </summary>    /// <value> The post transient delay maximum. </value>	[Description( "The Maximum Post Transient Delay Time in Seconds (10)." )]    public double PostTransientDelayMaximum    {        get => this._postTransientDelayMaximum;        set => this.SetProperty( ref this._postTransientDelayMaximum, value );    }    private double _postTransientDelayMinimum = 0.001;    /// <summary>   Gets or sets the post transient delay minimum. </summary>    /// <value> The post transient delay minimum. </value>
+
+    /// <summary>   The Default Post Transient Delay Time in Seconds (0.01). </summary>
+    /// <value> The post transient delay default. </value>
+    [Description( "The Default Post Transient Delay Time in Seconds (0.01)." )]
+    public double PostTransientDelayDefault
+    {
+        get => this._postTransientDelayDefault;
+        set => this.SetProperty( ref this._postTransientDelayDefault, value );
+    }
+
+    private double _postTransientDelayMaximum = 10;
+
+    /// <summary>   The Maximum Post Transient Delay Time in Seconds (10). </summary>
+    /// <value> The post transient delay maximum. </value>
+    [Description( "The Maximum Post Transient Delay Time in Seconds (10)." )]
+    public double PostTransientDelayMaximum
+    {
+        get => this._postTransientDelayMaximum;
+        set => this.SetProperty( ref this._postTransientDelayMaximum, value );
+    }
+
+    private double _postTransientDelayMinimum = 0.001;
+
+    /// <summary>   Gets or sets the post transient delay minimum. </summary>
+    /// <value> The post transient delay minimum. </value>
 	[Description( "The Minimum Post Transient Delay Time in Seconds (0.001)." )]
     public double PostTransientDelayMinimum
     {

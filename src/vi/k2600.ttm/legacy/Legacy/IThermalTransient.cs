@@ -11,41 +11,53 @@ public interface IThermalTransient : ICloneable
 {
     /// <summary> Initializes known state. </summary>
     /// <remarks> This erases the last reading. </remarks>
-    void InitializeKnownState();
+    public void InitializeKnownState();
 
     /// <summary> Gets or sets the high limit for determining measurement pass fail condition. </summary>
     /// <value> The high limit. </value>
-    float HighLimit { get; set; }
+    public float HighLimit { get; set; }
 
     /// <summary> Gets or sets the low limit for determining measurement pass fail condition. </summary>
     /// <value> The low limit. </value>
-    float LowLimit { get; set; }
+    public float LowLimit { get; set; }
 
     /// <summary> Parses the reading and sets the voltage and outcome. </summary>
     /// <param name="voltageReading"> Specifies the voltage reading. </param>
-    void ParseReading( string voltageReading );
+    public void ParseReading( string voltageReading );
 
     /// <summary> Gets or sets the reading. </summary>
     /// <value> The reading. </value>
-    string Reading { get; }
+    public string Reading { get; }
 
     /// <summary> Gets or sets the voltage change. </summary>
     /// <value> The voltage. </value>
-    float? Voltage { get; }
+    public float? Voltage { get; }
 
     /// <summary>   Gets or sets the Okay reading. </summary>
     /// <value> The Okay reading. </value>
-    string OkayReading { get; set; }
+    public string OkayReading { get; set; }
 
     /// <summary>   Gets or sets the status reading. </summary>
     /// <value> The status reading. </value>
-    string StatusReading { get; set; }
+    public string StatusReading { get; set; }
 
     /// <summary>   Gets or sets the outcome reading. </summary>
     /// <value> The outcome reading. </value>
-    string OutcomeReading { get; set; }
+    public string OutcomeReading { get; set; }
 
     /// <summary>   Gets or sets the firmware name of the entity. </summary>
     /// <value> The the firmware name of the . </value>
-    string EntityName { get; set; }
+    public string EntityName { get; set; }
+
+    /// <summary>
+    /// Reads voltage change, outcome, status and okay attributes of the thermal transient entity. </summary>
+    /// <remarks>   2024-11-07. </remarks>
+    /// <param name="session">  The session. </param>
+    /// <returns>   A Tuple. </returns>
+    public void Read( Pith.SessionBase session );
+
+    /// <summary>   Reads the limits. </summary>
+    /// <remarks>   2025-02-13. </remarks>
+    /// <param name="session">  The session. </param>
+    public void ReadLimits( Pith.SessionBase session );
 }

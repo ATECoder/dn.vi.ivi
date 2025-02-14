@@ -55,4 +55,17 @@ public static partial class ThermalTransient
     /// <summary>   Gets or sets a list of names of the source measure units. </summary>
     /// <value> A list of names of the source measure units. </value>
     public static string SourceMeasureUnitNames { get; set; } = "smua,smub,smu";
+
+    /// <summary>   Gets the name of the outcome bits. </summary>
+    /// <value> The name of the outcome bits. </value>
+    public static string OutcomeBitsName => MeterSubsystem.LegacyFirmware ? "_G.ttm.Outcomes" : "_G.ttm.OutcomeBits";
+
+    /// <summary>   Gets the name of the outcome bits okay. </summary>
+    /// <value> The name of the outcome bits okay. </value>
+    public static string OutcomeBitsOkayName => $"{ThermalTransient.OutcomeBitsName}.okay";
+
+    /// <summary>   Gets the name of the outcome bits open leads. </summary>
+    /// <value> The name of the outcome bits open leads. </value>
+    public static string OutcomeBitsOpenLeadsName => MeterSubsystem.LegacyFirmware ? "" : "_G.ttm.OutcomeBits.openLeads";
+
 }

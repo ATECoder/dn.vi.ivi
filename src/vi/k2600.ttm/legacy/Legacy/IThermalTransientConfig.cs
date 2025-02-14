@@ -12,38 +12,38 @@ public interface IThermalTransientConfig : ICloneable
     /// <summary> Gets or sets the current level to apply to the device for measuring the thermal
     /// resistance. </summary>
     /// <value> The current level. </value>
-    float CurrentLevel { get; set; }
+    public float CurrentLevel { get; set; }
 
     /// <summary> Gets or sets the maximum expected transient voltage. </summary>
     /// <value> The allowed voltage change. </value>
-    float AllowedVoltageChange { get; set; }
+    public float AllowedVoltageChange { get; set; }
 
     /// <summary> Gets or sets the integration period in power line cycles for measuring the thermal
     /// resistance. </summary>
     /// <remarks> Defaults to 0.004. </remarks>
     /// <value> The aperture. </value>
-    float Aperture { get; set; }
+    public float Aperture { get; set; }
 
     /// <summary> Gets or sets the high limit for determining measurement pass fail condition. </summary>
     /// <value> The high limit. </value>
-    float HighLimit { get; set; }
+    public float HighLimit { get; set; }
 
     /// <summary> Gets or sets the low limit for determining measurement pass fail condition. </summary>
     /// <value> The low limit. </value>
-    float LowLimit { get; set; }
+    public float LowLimit { get; set; }
 
     /// <summary> Restores known state. </summary>
-    void ResetKnownState();
+    public void ResetKnownState();
 
     /// <summary> Gets or sets the sampling interval. </summary>
     /// <remarks> Defaults to 0.0001. </remarks>
     /// <value> The sampling interval. </value>
-    float SamplingInterval { get; set; }
+    public float SamplingInterval { get; set; }
 
     /// <summary> Gets or sets the number of trace points to measure. </summary>
     /// <remarks> Defaults to 100. </remarks>
     /// <value> The trace points. </value>
-    int TracePoints { get; set; }
+    public int TracePoints { get; set; }
 
 
 }
