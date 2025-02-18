@@ -356,12 +356,28 @@ internal static partial class Asserts
             $"{nameof( ttmElement )} must be either '{Asserts.IR}' or '{Asserts.FR}' or '{Asserts.TR}'." );
 
         // the legacy driver is agnostic to the low and high properties and, therefore, could be tested even if testing the legacy driver.
-
-        int? passFailOutcome = MeterSubsystem.LegacyFirmware
-            ? 0
-            : session.QueryNullableIntegerThrowIfError( $"print(ttm.{ttmElement}.passFailOutcome) ", $"{ttmElementName} pass fail outcome" );
-
-        Assert.IsNotNull( passFailOutcome, $"{nameof( passFailOutcome )} should not be null." );
+        int? passFailOutcome;
+        if ( MeterSubsystem.LegacyFirmware )
+        {
+            bool? pass = session.QueryNullableBoolThrowIfError( $"print(ttm.{ttmElement}.pass) ", $"{ttmElementName} pass" );
+            double lowLimit = session.QueryDoubleThrowIfError( $"print(ttm.{ttmElement}.lowLimit) ", $"{ttmElementName} Low Limit" );
+            double highLimit = session.QueryDoubleThrowIfError( $"print(ttm.{ttmElement}.highLimit) ", $"{ttmElementName} High Limit" );
+            double value = string.Equals( Asserts.TR, ttmElement, System.StringComparison.Ordinal )
+                ? session.QueryDoubleThrowIfError( $"print(ttm.{ttmElement}.voltageChange) ", $"{ttmElementName}" )
+                : session.QueryDoubleThrowIfError( $"print(ttm.{ttmElement}.resistance) ", $"{ttmElementName}" );
+            passFailOutcome = pass.HasValue
+                 ? ( int ) PassFailBits.Pass
+                 : value < lowLimit
+                   ? ( int ) PassFailBits.Low
+                   : value > highLimit
+                     ? ( int ) PassFailBits.High
+                     : ( int ) PassFailBits.Unknown;
+        }
+        else
+        {
+            passFailOutcome = session.QueryNullableIntegerThrowIfError( $"print(ttm.{ttmElement}.passFailOutcome) ", $"{ttmElementName} pass fail outcome" );
+            Assert.IsNotNull( passFailOutcome, $"{nameof( passFailOutcome )} should not be null." );
+        }
         return Asserts.ParsePassFailOutcome( passFailOutcome );
     }
 
@@ -407,7 +423,15 @@ internal static partial class Asserts
             | string.Equals( Asserts.TR, ttmElement, System.StringComparison.Ordinal ),
             $"{nameof( ttmElement )} must be either '{Asserts.IR}' or '{Asserts.FR}' or '{Asserts.TR}'." );
 
-        bool okayAndPass = session.QueryBoolThrowIfError( $"print(ttm.{ttmElement}:isOkayAndPass()) ", $"{ttmElementName} Is Okay and Pass" );
+        bool okayAndPass;
+        if ( MeterSubsystem.LegacyFirmware )
+        {
+            okayAndPass = session.QueryBoolThrowIfError( $"print(ttm.{ttmElement}:isOkay()) ", $"{ttmElementName} Is Okay and Pass" );
+        }
+        else
+        {
+            okayAndPass = session.QueryBoolThrowIfError( $"print(ttm.{ttmElement}:isOkayAndPass()) ", $"{ttmElementName} Is Okay and Pass" );
+        }
         int? outcome = session.QueryNullableIntegerThrowIfError( $"print(ttm.{ttmElement}.outcome) ", $"{ttmElementName} Measurement Outcome" );
         int? status = session.QueryNullableIntegerThrowIfError( $"print(ttm.{ttmElement}.status) ", $"{ttmElementName} Buffer Status Reading" );
         double? measurement = string.Equals( Asserts.TR, ttmElement, StringComparison.Ordinal )

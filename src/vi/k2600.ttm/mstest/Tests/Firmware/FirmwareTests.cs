@@ -231,7 +231,21 @@ public class FirmwareTests
         Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertEstimatorShouldReset )}" );
     }
 
-    [TestMethod( "10. ThermalTransientShouldReset" )]
+    /// <summary>   (Unit Test Method) thermal transient defaults should equal settings. </summary>
+    /// <remarks>   2025-02-18. </remarks>
+    [TestMethod( "10. Thermal Transient Defaults Should Equal Settings" )]
+    public void ThermalTransientDefaultsShouldEqualSettings()
+    {
+        string resourceName = this.ResourceSettings.ResourceName;
+        using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( resourceName );
+
+        Asserts.AssertThermalTransientDefaultsShouldEqualSettings( session );
+        Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertThermalTransientShouldReset )}" );
+    }
+
+    /// <summary>   (Unit Test Method) thermal transient should reset. </summary>
+    /// <remarks>   2025-02-18. </remarks>
+    [TestMethod( "11. ThermalTransientShouldReset" )]
     public void ThermalTransientShouldReset()
     {
         string resourceName = this.ResourceSettings.ResourceName;
@@ -243,7 +257,7 @@ public class FirmwareTests
 
     /// <summary>   (Unit Test Method) framework should clear known state. </summary>
     /// <remarks>   2024-10-31. </remarks>
-    [TestMethod( "11. Framework should clear known state" )]
+    [TestMethod( "12. Framework should clear known state" )]
     public void FrameworkShouldClearKnownState()
     {
         string resourceName = this.ResourceSettings.ResourceName;
@@ -265,7 +279,7 @@ public class FirmwareTests
 
     /// <summary>   (Unit Test Method) measurement should be triggered. </summary>
     /// <remarks>   2025-02-07. </remarks>
-    [TestMethod( "12. Measurement should be triggered" )]
+    [TestMethod( "13. Measurement should be triggered" )]
     public void MeasurementShouldBeTriggered()
     {
         string resourceName = this.ResourceSettings.ResourceName;
@@ -287,9 +301,10 @@ public class FirmwareTests
         Asserts.AssertEstimatesShouldRead( session );
         Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertEstimatesShouldRead )}" );
 
-        // hopefully fixed in 9174
-        Asserts.AssertEstimatesShouldEstimate( session );
-        Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertEstimatesShouldRead )}" );
-
+        if ( !MeterSubsystem.LegacyFirmware )
+        {
+            Asserts.AssertEstimatesShouldEstimate( session );
+            Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertEstimatesShouldRead )}" );
+        }
     }
 }
