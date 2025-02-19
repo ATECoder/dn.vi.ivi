@@ -584,12 +584,12 @@ internal static partial class Asserts
 
                 // set a new value
                 expectedDouble = levelV - 0.001;
-                command = $"_G.ttm.{coldResistanceType}:levelSetter({expectedDouble},_G.ttm.{coldResistanceType}:sourceVoltage())";
+                command = $"_G.ttm.{coldResistanceType}:levelSetter({expectedDouble})";
                 Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.001, logEnabled );
 
                 // restore actual value
                 expectedDouble = levelV;
-                command = $"_G.ttm.{coldResistanceType}:levelSetter({expectedDouble},_G.ttm.{coldResistanceType}:sourceVoltage())";
+                command = $"_G.ttm.{coldResistanceType}:levelSetter({expectedDouble})";
                 Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.001, logEnabled );
 
                 // get actual value
@@ -598,12 +598,12 @@ internal static partial class Asserts
 
                 // set a new value
                 expectedDouble = limitI - 0.001;
-                command = $"_G.ttm.{coldResistanceType}:limitSetter({expectedDouble},_G.ttm.{coldResistanceType}:sourceVoltage())";
+                command = $"_G.ttm.{coldResistanceType}:limitSetter({expectedDouble})";
                 Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.001, logEnabled );
 
                 // restore actual value
                 expectedDouble = limitI;
-                command = $"_G.ttm.{coldResistanceType}:limitSetter({expectedDouble},_G.ttm.{coldResistanceType}:sourceVoltage())";
+                command = $"_G.ttm.{coldResistanceType}:limitSetter({expectedDouble})";
                 Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.001, logEnabled );
             }
             else
@@ -614,12 +614,12 @@ internal static partial class Asserts
 
                 // set a new value
                 expectedDouble = levelI - 0.001;
-                command = $"_G.ttm.{coldResistanceType}:levelSetter({expectedDouble},_G.ttm.{coldResistanceType}:sourceVoltage())";
+                command = $"_G.ttm.{coldResistanceType}:levelSetter({expectedDouble})";
                 Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.001, logEnabled );
 
                 // restore actual value
                 expectedDouble = levelI;
-                command = $"_G.ttm.{coldResistanceType}:levelSetter({expectedDouble},_G.ttm.{coldResistanceType}:sourceVoltage())";
+                command = $"_G.ttm.{coldResistanceType}:levelSetter({expectedDouble})";
                 Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.001, logEnabled );
 
                 // get actual value
@@ -628,12 +628,12 @@ internal static partial class Asserts
 
                 // set a new value
                 expectedDouble = limitV - 0.001;
-                command = $"_G.ttm.{coldResistanceType}:limitSetter({expectedDouble},_G.ttm.{coldResistanceType}:sourceVoltage())";
+                command = $"_G.ttm.{coldResistanceType}:limitSetter({expectedDouble})";
                 Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.001, logEnabled );
 
                 // restore actual value
                 expectedDouble = limitV;
-                command = $"_G.ttm.{coldResistanceType}:limitSetter({expectedDouble},_G.ttm.{coldResistanceType}:sourceVoltage())";
+                command = $"_G.ttm.{coldResistanceType}:limitSetter({expectedDouble})";
                 Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.001, logEnabled );
             }
         }

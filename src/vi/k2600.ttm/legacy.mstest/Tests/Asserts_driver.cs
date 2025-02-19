@@ -570,7 +570,7 @@ internal static partial class Asserts
         else
         {
             resistance.ReadLimits( session );
-            Assert.IsTrue( resistance.LowLimit > 0, $"{nameof( ColdResistance.LowLimit )} should be positive." );   
+            Assert.IsTrue( resistance.LowLimit > 0, $"{nameof( ColdResistance.LowLimit )} should be positive." );
             Assert.IsTrue( resistance.HighLimit > 0, $"{nameof( ColdResistance.HighLimit )} should be positive." );
 
             Assert.IsTrue( resistance.OutcomeReading.TryParseNullableInteger( out int? outcomeValue ) );

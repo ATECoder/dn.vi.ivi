@@ -125,7 +125,7 @@ public static class SessionBaseMethods
     /// <returns>   The returned boolean value. </returns>
     public static bool QueryBoolThrowIfError( this Pith.SessionBase? session, string query, string caption = "" )
     {
-        string reading = QueryStringThrowIfError( session, query, caption );
+        string reading = QueryStringThrowIfError(session, query, caption).Trim();
         if ( bool.TryParse( reading, out bool value ) )
             return value;
         else
@@ -144,7 +144,7 @@ public static class SessionBaseMethods
     /// <returns>   A bool? </returns>
     public static bool? QueryNullableBoolThrowIfError( this Pith.SessionBase? session, string query, string caption = "" )
     {
-        string reading = QueryStringOrNilThrowIfError( session, query, caption );
+        string reading = QueryStringOrNilThrowIfError( session, query, caption ).Trim();
         if ( reading.TryParseNullableBool( out bool? result ) )
             return result;
         else
@@ -163,7 +163,7 @@ public static class SessionBaseMethods
     /// <returns>   An int. </returns>
     public static int QueryIntegerThrowIfError( this Pith.SessionBase? session, string query, string caption = "" )
     {
-        string reading = QueryStringThrowIfError( session, query, caption );
+        string reading = QueryStringThrowIfError( session, query, caption ).Trim();
         if ( int.TryParse( reading, System.Globalization.NumberStyles.AllowExponent | System.Globalization.NumberStyles.AllowDecimalPoint,
             System.Globalization.CultureInfo.CurrentCulture, out int value ) )
             return value;
@@ -183,7 +183,7 @@ public static class SessionBaseMethods
     /// <returns>   An int? </returns>
     public static int? QueryNullableIntegerThrowIfError( this Pith.SessionBase? session, string query, string caption = "" )
     {
-        string reading = QueryStringOrNilThrowIfError( session, query, caption );
+        string reading = QueryStringOrNilThrowIfError(session, query, caption).Trim();
         if ( reading.TryParseNullableInteger( out int? result ) )
             return result;
         else
@@ -202,7 +202,7 @@ public static class SessionBaseMethods
     /// <returns>   A double. </returns>
     public static double QueryDoubleThrowIfError( this Pith.SessionBase? session, string query, string caption = "" )
     {
-        string reading = QueryStringThrowIfError( session, query, caption );
+        string reading = QueryStringThrowIfError(session, query, caption).Trim();
         if ( double.TryParse( reading, out double value ) )
             return value;
         else
@@ -221,7 +221,7 @@ public static class SessionBaseMethods
     /// <returns>   A double? </returns>
     public static double? QueryNullableDoubleThrowIfError( this Pith.SessionBase? session, string query, string caption = "" )
     {
-        string reading = QueryStringOrNilThrowIfError( session, query, caption );
+        string reading = QueryStringOrNilThrowIfError(session, query, caption).Trim();
         if ( reading.TryParseNullableDouble( out double? result ) )
             return result;
         else
