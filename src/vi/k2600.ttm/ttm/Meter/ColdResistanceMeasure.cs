@@ -521,7 +521,33 @@ public class ColdResistanceMeasure : MeasureSubsystemBase
     public override void ReadInstrumentDefaults()
     {
         base.ReadInstrumentDefaults();
-        string fieldCaption = "cold resistance aperture";
+
+        string fieldCaption = "cold resistance current level";
+        bool localTryQuerySourceOutput()
+        {
+            bool ret;
+            Syntax.SourceOutputOption result = Properties.Settings.Instance.TtmResistanceSettings.SourceOutputDefault;
+            if ( MeterSubsystem.LegacyFirmware )
+            {
+                result = Syntax.SourceOutputOption.Current;
+                ret = true;
+            }
+            else
+            {
+                string? reply = this.Session.QueryPrintTrimEnd( "{0}.sourceOutput", this.EntityName );
+                ret = reply is not null && !string.IsNullOrEmpty( reply ) && Enum.TryParse( reply, out result );
+            }
+            Properties.Settings.Instance.TtmResistanceSettings.SourceOutputDefault = result; return ret;
+        }
+
+        if ( !localTryQuerySourceOutput() )
+            _ = cc.isr.VI.SessionLogger.Instance.LogWarning( $"failed reading default {fieldCaption};. Sent:'{this.Session.LastMessageSent}; Received:'{this.Session.LastMessageReceived}'." );
+
+        Syntax.SourceOutputOption sourceOutput = Properties.Settings.Instance.TtmResistanceSettings.SourceOutputDefault;
+
+        cc.isr.VI.Pith.SessionBase.DoEventsAction?.Invoke();
+
+        fieldCaption = "cold resistance aperture";
         bool localTryQueryAperture()
         {
             double result = Properties.Settings.Instance.TtmResistanceSettings.ApertureDefault;
@@ -545,7 +571,7 @@ public class ColdResistanceMeasure : MeasureSubsystemBase
             Properties.Settings.Instance.TtmResistanceSettings.CurrentLevelDefault = result; return ret;
         }
 
-        if ( !localTryQueryCurrentLevel() )
+        if ( (sourceOutput == Syntax.SourceOutputOption.Current) && !localTryQueryCurrentLevel() )
             _ = cc.isr.VI.SessionLogger.Instance.LogWarning( $"failed reading default {fieldCaption};. Sent:'{this.Session.LastMessageSent}; Received:'{this.Session.LastMessageReceived}'." );
 
         cc.isr.VI.Pith.SessionBase.DoEventsAction?.Invoke();
@@ -558,7 +584,7 @@ public class ColdResistanceMeasure : MeasureSubsystemBase
             Properties.Settings.Instance.TtmResistanceSettings.CurrentLimitDefault = result; return ret;
         }
 
-        if ( !localTryQueryCurrentLimit() )
+        if ( !MeterSubsystem.LegacyFirmware && (sourceOutput == Syntax.SourceOutputOption.Voltage) && !localTryQueryCurrentLimit() )
             _ = cc.isr.VI.SessionLogger.Instance.LogWarning( $"failed reading default {fieldCaption};. Sent:'{this.Session.LastMessageSent}; Received:'{this.Session.LastMessageReceived}'." );
 
         cc.isr.VI.Pith.SessionBase.DoEventsAction?.Invoke();
@@ -600,7 +626,7 @@ public class ColdResistanceMeasure : MeasureSubsystemBase
             return ret;
         }
 
-        if ( !localTryQueryVoltageLevel() )
+        if ( !MeterSubsystem.LegacyFirmware && (sourceOutput == Syntax.SourceOutputOption.Voltage) && !localTryQueryVoltageLevel() )
             _ = cc.isr.VI.SessionLogger.Instance.LogWarning( $"failed reading default {fieldCaption};. Sent:'{this.Session.LastMessageSent}; Received:'{this.Session.LastMessageReceived}'." );
 
         cc.isr.VI.Pith.SessionBase.DoEventsAction?.Invoke();
@@ -616,7 +642,7 @@ public class ColdResistanceMeasure : MeasureSubsystemBase
             return ret;
         }
 
-        if ( !localTryQueryVoltageLimit() )
+        if ( (sourceOutput == Syntax.SourceOutputOption.Current) && !localTryQueryVoltageLimit() )
             _ = cc.isr.VI.SessionLogger.Instance.LogWarning( $"failed reading default {fieldCaption};. Sent:'{this.Session.LastMessageSent}; Received:'{this.Session.LastMessageReceived}'." );
 
         cc.isr.VI.Pith.SessionBase.DoEventsAction?.Invoke();
@@ -715,26 +741,35 @@ public class ColdResistanceMeasure : MeasureSubsystemBase
         if ( resistance is null ) throw new ArgumentNullException( nameof( resistance ) );
         base.Configure( resistance );
 
-        _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"Setting {this.EntityName} Current Level to {resistance.CurrentLevel};. " );
-        _ = this.ApplyCurrentLevel( resistance.CurrentLevel );
+        _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"Setting {this.EntityName} Source Output to {resistance.SourceOutputOption};. " );
+        _ = this.ApplySourceOutputOption( resistance.SourceOutputOption );
 
         cc.isr.VI.Pith.SessionBase.DoEventsAction?.Invoke();
 
-        _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"Setting {this.EntityName} Current Limit to {resistance.CurrentLimit};. " );
-        _ = this.ApplyCurrentLimit( resistance.CurrentLimit );
+        if ( resistance.SourceOutputOption == Syntax.SourceOutputOption.Current )
+        {
+            _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"Setting {this.EntityName} Current Level to {resistance.CurrentLevel};. " );
+            _ = this.ApplyCurrentLevel( resistance.CurrentLevel );
 
-        cc.isr.VI.Pith.SessionBase.DoEventsAction?.Invoke();
+            cc.isr.VI.Pith.SessionBase.DoEventsAction?.Invoke();
 
-        _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"Setting {this.EntityName} Voltage Level to {resistance.VoltageLevel};. " );
-        _ = this.ApplyVoltageLevel( resistance.VoltageLevel );
+            _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"Setting {this.EntityName} Voltage Limit to {resistance.VoltageLimit};. " );
+            _ = this.ApplyVoltageLimit( resistance.VoltageLimit );
 
-        cc.isr.VI.Pith.SessionBase.DoEventsAction?.Invoke();
+            cc.isr.VI.Pith.SessionBase.DoEventsAction?.Invoke();
+        }
+        else
+        {
+            _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"Setting {this.EntityName} Voltage Level to {resistance.VoltageLevel};. " );
+            _ = this.ApplyVoltageLevel( resistance.VoltageLevel );
 
-        _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"Setting {this.EntityName} Voltage Limit to {resistance.VoltageLimit};. " );
-        _ = this.ApplyVoltageLimit( resistance.VoltageLimit );
+            cc.isr.VI.Pith.SessionBase.DoEventsAction?.Invoke();
 
-        cc.isr.VI.Pith.SessionBase.DoEventsAction?.Invoke();
+            _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"Setting {this.EntityName} Current Limit to {resistance.CurrentLimit};. " );
+            _ = this.ApplyCurrentLimit( resistance.CurrentLimit );
 
+            cc.isr.VI.Pith.SessionBase.DoEventsAction?.Invoke();
+        }
         this.Session.ThrowDeviceExceptionIfError();
         this.ColdResistance.CheckThrowUnequalConfiguration( resistance );
     }
@@ -750,30 +785,35 @@ public class ColdResistanceMeasure : MeasureSubsystemBase
         base.ConfigureChanged( resistance );
         if ( !this.ColdResistance.ConfigurationEquals( resistance ) )
         {
-            if ( !this.CurrentLevel.Equals( resistance.CurrentLevel ) )
+            if ( !this.SourceOutputOption.Equals( resistance.SourceOutputOption ) )
+            {
+                _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"Setting {this.EntityName} Source Output to {resistance.SourceOutputOption};. " );
+                _ = this.ApplySourceOutputOption( resistance.SourceOutputOption );
+            }
+
+            if ( (resistance.SourceOutputOption == Syntax.SourceOutputOption.Current) && !this.CurrentLevel.Equals( resistance.CurrentLevel ) )
             {
                 _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"Setting {this.EntityName} Current Level to {resistance.CurrentLevel};. " );
                 _ = this.ApplyCurrentLevel( resistance.CurrentLevel );
             }
 
-            if ( !this.CurrentLimit.Equals( resistance.CurrentLimit ) )
-            {
-                _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"Setting {this.EntityName} Current Limit to {resistance.CurrentLimit};. " );
-                _ = this.ApplyCurrentLimit( resistance.CurrentLimit );
-            }
-
-            if ( !this.VoltageLevel.Equals( resistance.VoltageLevel ) )
-            {
-                _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"Setting {this.EntityName} Voltage Level to {resistance.VoltageLevel};. " );
-                _ = this.ApplyVoltageLevel( resistance.VoltageLevel );
-            }
-
-            if ( !this.VoltageLimit.Equals( resistance.VoltageLimit ) )
+            if ( (resistance.SourceOutputOption == Syntax.SourceOutputOption.Current) && !this.VoltageLimit.Equals( resistance.VoltageLimit ) )
             {
                 _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"Setting {this.EntityName} Voltage Limit to {resistance.VoltageLimit};. " );
                 _ = this.ApplyVoltageLimit( resistance.VoltageLimit );
             }
 
+            if ( (resistance.SourceOutputOption == Syntax.SourceOutputOption.Voltage) && !this.VoltageLevel.Equals( resistance.VoltageLevel ) )
+            {
+                _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"Setting {this.EntityName} Voltage Level to {resistance.VoltageLevel};. " );
+                _ = this.ApplyVoltageLevel( resistance.VoltageLevel );
+            }
+
+            if ( (resistance.SourceOutputOption == Syntax.SourceOutputOption.Voltage) && !this.CurrentLimit.Equals( resistance.CurrentLimit ) )
+            {
+                _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"Setting {this.EntityName} Current Limit to {resistance.CurrentLimit};. " );
+                _ = this.ApplyCurrentLimit( resistance.CurrentLimit );
+            }
         }
 
         this.Session.ThrowDeviceExceptionIfError();
@@ -785,11 +825,17 @@ public class ColdResistanceMeasure : MeasureSubsystemBase
     public override void QueryConfiguration()
     {
         base.QueryConfiguration();
-        _ = this.QueryCurrentLevel();
-        _ = this.QueryCurrentLimit();
-        _ = this.QueryVoltageLevel();
-        _ = this.QueryVoltageLimit();
         _ = this.QuerySourceOutputOption();
+        if ( this.SourceOutputOption == Syntax.SourceOutputOption.Current )
+        {
+            _ = this.QueryCurrentLevel();
+            _ = this.QueryVoltageLimit();
+        }
+        else
+        {
+            _ = this.QueryVoltageLevel();
+            _ = this.QueryCurrentLimit();
+        }
         _ = this.QueryFailStatus();
         this.Session.ThrowDeviceExceptionIfError();
     }
