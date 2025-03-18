@@ -14,8 +14,8 @@ public partial class ColdResistance
         details = affirmative
             ? string.Empty
             : value < Properties.Settings.Instance.TtmResistanceSettings.ApertureMinimum
-                ? $"Cold MeasuredValue aperture value of {value} is lower than the minimum of {Properties.Settings.Instance.TtmResistanceSettings.ApertureMinimum}."
-                : $"Cold MeasuredValue aperture value of {value} is higher than the maximum of {Properties.Settings.Instance.TtmResistanceSettings.ApertureMaximum}.";
+                ? $"Cold Resistance aperture value of {value} is lower than the minimum of {Properties.Settings.Instance.TtmResistanceSettings.ApertureMinimum}."
+                : $"Cold Resistance aperture value of {value} is higher than the maximum of {Properties.Settings.Instance.TtmResistanceSettings.ApertureMaximum}.";
 
         return affirmative;
     }
@@ -25,15 +25,15 @@ public partial class ColdResistance
     /// <param name="value">    The value. </param>
     /// <param name="details">  [out] The details. </param>
     /// <returns>   <c>true</c> if value is in range; otherwise, <c>false</c>. </returns>
-    public static bool ValidateCurrentLevel( double value, out string details )
+    public static bool ValidateCurrentRange( double value, out string details )
     {
         bool affirmative = value >= ( double ) Properties.Settings.Instance.TtmResistanceSettings.CurrentMinimum
             && value <= ( double ) Properties.Settings.Instance.TtmResistanceSettings.CurrentMaximum;
         details = affirmative
             ? string.Empty
             : value < ( double ) Properties.Settings.Instance.TtmResistanceSettings.CurrentMinimum
-                ? $"Cold MeasuredValue Current value of {value} is lower than the minimum of {Properties.Settings.Instance.TtmResistanceSettings.CurrentMinimum}."
-                : $"Cold MeasuredValue Current value of {value} is high than the maximum of {Properties.Settings.Instance.TtmResistanceSettings.CurrentMaximum}.";
+                ? $"Cold Resistance Current value of {value} is lower than the minimum of {Properties.Settings.Instance.TtmResistanceSettings.CurrentMinimum}."
+                : $"Cold Resistance Current value of {value} is high than the maximum of {Properties.Settings.Instance.TtmResistanceSettings.CurrentMaximum}.";
 
         return affirmative;
     }
@@ -50,8 +50,8 @@ public partial class ColdResistance
         details = affirmative
             ? string.Empty
             : value < Properties.Settings.Instance.TtmResistanceSettings.Minimum
-                ? $"Cold MeasuredValue Limit value of {value} is lower than the minimum of {Properties.Settings.Instance.TtmResistanceSettings.Minimum}."
-                : $"Cold MeasuredValue Limit value of {value} is high than the maximum of {Properties.Settings.Instance.TtmResistanceSettings.Maximum}.";
+                ? $"Cold Resistance Limit value of {value} is lower than the minimum of {Properties.Settings.Instance.TtmResistanceSettings.Minimum}."
+                : $"Cold Resistance Limit value of {value} is high than the maximum of {Properties.Settings.Instance.TtmResistanceSettings.Maximum}.";
 
         return affirmative;
     }
@@ -61,15 +61,15 @@ public partial class ColdResistance
     /// <param name="value">    The value. </param>
     /// <param name="details">  [out] The details. </param>
     /// <returns>   <c>true</c> if value is in range; otherwise, <c>false</c>. </returns>
-    public static bool ValidateVoltageLevel( double value, out string details )
+    public static bool ValidateVoltageRange( double value, out string details )
     {
         bool affirmative = value >= Properties.Settings.Instance.TtmResistanceSettings.VoltageMinimum
             && value <= Properties.Settings.Instance.TtmResistanceSettings.VoltageMaximum;
         details = affirmative
             ? string.Empty
             : value < Properties.Settings.Instance.TtmResistanceSettings.VoltageMinimum
-                ? $"Cold MeasuredValue Voltage Limit value of {value} is lower than the minimum of {Properties.Settings.Instance.TtmResistanceSettings.VoltageMinimum}."
-                : $"Cold MeasuredValue Voltage Limit value of {value} is high than the maximum of {Properties.Settings.Instance.TtmResistanceSettings.VoltageMaximum}.";
+                ? $"Cold Resistance Voltage Limit value of {value} is lower than the minimum of {Properties.Settings.Instance.TtmResistanceSettings.VoltageMinimum}."
+                : $"Cold Resistance Voltage Limit value of {value} is high than the maximum of {Properties.Settings.Instance.TtmResistanceSettings.VoltageMaximum}.";
 
         return affirmative;
     }

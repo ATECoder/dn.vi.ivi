@@ -77,7 +77,7 @@
     <None Update="cc.isr.VI.WinControls.MSTest.Settings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <PackageReference Update="Microsoft.Testing.Extensions.CodeCoverage" Version="17.12.6" />
+    <PackageReference Update="Microsoft.Testing.Extensions.CodeCoverage" Version="17.14.2" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)'=='net472' or '$(TargetFramework)'=='net48'">

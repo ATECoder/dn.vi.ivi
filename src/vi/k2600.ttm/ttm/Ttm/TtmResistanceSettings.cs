@@ -138,7 +138,7 @@ public class TtmResistanceSettings : CommunityToolkit.Mvvm.ComponentModel.Observ
         set => this.SetProperty( ref this._currentLimitDefault, value );
     }
 
-    private double _currentMaximum = 0.01;
+    private double _currentMaximum = 0.05;
 
     /// <summary>   Gets or sets the bridge-wire resistance measurement current Maximum. </summary>
     /// <value> The bridge-wire resistance measurement current Maximum. </value>

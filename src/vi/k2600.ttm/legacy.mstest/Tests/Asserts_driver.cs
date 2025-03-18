@@ -69,52 +69,79 @@ internal static partial class Asserts
         Assert.IsNotNull( meter.TriggerSequencer, $"{nameof( Meter )}.{nameof( Meter.TriggerSequencer )} should not be null." );
     }
 
-    /// <summary>   Current level getter. </summary>
+    /// <summary>   Current source current level or voltage source current limit getter. </summary>
     /// <remarks>   2025-02-13. </remarks>
     /// <param name="legacyDevice">         The legacy device. </param>
     /// <param name="sourceOutputOption">   The current source output option. </param>
     /// <returns>   A double. </returns>
-    private static double CurrentLevelGetter( LegacyDevice? legacyDevice, SourceOutputOption sourceOutputOption )
+    private static double CurrentGetter( LegacyDevice? legacyDevice, SourceOutputOption sourceOutputOption )
     {
         Assert.IsNotNull( legacyDevice, $"{nameof( legacyDevice )} should not be null." );
         Assert.IsTrue( legacyDevice.IsConnected, "The driver should be connected if the session opened." );
+        string modality = (Ttm.MeterSubsystem.LegacyFirmware || SourceOutputOption.Current == sourceOutputOption)
+            ? "current source current level"
+            : "voltage source current limit";
+        double current;
+        bool success;
+        // The legacy driver level setter sets a current value. 
+        // This is the current level of the current source or the current limit of a voltage source.
         if ( Ttm.MeterSubsystem.LegacyFirmware || SourceOutputOption.Current == sourceOutputOption )
         {
-            bool success = legacyDevice.ColdResistanceCurrentLevelGetter();
-            Assert.IsTrue( success, "The current level getter should succeed." );
-            return legacyDevice.ColdResistanceCurrentLevel;
+            // With the legacy firmware or with the current source, the level setter sets the current level (ir.level and fr.level) of the source.
+            // The legacy driver current level getter reads these levels (ir.level and fr.level) thus reading 
+            // the current level that was set by the level setter.
+            success = legacyDevice.ColdResistanceCurrentLevelGetter();
+            Assert.IsTrue( success, $"The {modality} getter should succeed." );
+            current = legacyDevice.ColdResistanceCurrentLevel;
         }
         else
         {
-            // with new software and voltage source, the current level setter sets the ir.limit or fr.limit, which called voltage limit
-            bool success = legacyDevice.ColdResistanceVoltageLimitGetter();
-            Assert.IsTrue( success, "The voltage limit current getter should succeed." );
-            return legacyDevice.ColdResistanceVoltageLimit;
+            // With the new firmware and voltage source, the level setter sets the current limit (ir.limit and fr.limit) of the source.
+            // The legacy driver voltage limit getter reads these limits (ir.limit and fr.limit) thus reading 
+            // current that was set by the level setter.
+            success = legacyDevice.ColdResistanceVoltageLimitGetter();
+            Assert.IsTrue( success, $"The {modality} getter should succeed." );
+            current = legacyDevice.ColdResistanceVoltageLimit;
         }
+        Assert.IsTrue( current > 0, $"The {modality} must be positive." );
+        return current;
     }
 
-    /// <summary>   Voltage limit getter. </summary>
+    /// <summary>   Current source voltage limit or voltage source voltage level getter. </summary>
     /// <remarks>   2025-02-13. </remarks>
     /// <param name="legacyDevice">         The legacy device. </param>
     /// <param name="sourceOutputOption">   The current source output option. </param>
     /// <returns>   A double. </returns>
-    private static double VoltageLimitGetter( LegacyDevice? legacyDevice, SourceOutputOption sourceOutputOption )
+    private static double VoltageGetter( LegacyDevice? legacyDevice, SourceOutputOption sourceOutputOption )
     {
         Assert.IsNotNull( legacyDevice, $"{nameof( legacyDevice )} should not be null." );
         Assert.IsTrue( legacyDevice.IsConnected, "The driver should be connected if the session opened." );
+        double voltage;
+        // The legacy driver limit setter sets a voltage value. 
+        // This is the voltage limit of the current source or the voltage level of a voltage source.
+        string modality = (Ttm.MeterSubsystem.LegacyFirmware || SourceOutputOption.Current == sourceOutputOption)
+            ? "current source voltage limit"
+            : "voltage source voltage level";
         if ( Ttm.MeterSubsystem.LegacyFirmware || SourceOutputOption.Current == sourceOutputOption )
         {
+            // With the legacy firmware or with the current source, the limit setter sets the voltage limits (ir.limit and fr.limit) of the source.
+            // The legacy driver voltage limit getter reads these limits (ir.limit and fr.limit) thus reading
+            // the voltage limit that was set by the limit setter.
             bool success = legacyDevice.ColdResistanceVoltageLimitGetter();
-            Assert.IsTrue( success, "The voltage limit getter should succeed." );
-            return legacyDevice.ColdResistanceVoltageLimit;
+            Assert.IsTrue( success, $"The {modality} getter should succeed." );
+            voltage = legacyDevice.ColdResistanceVoltageLimit;
         }
         else
         {
-            // with new software and voltage source, the current level setter sets the ir.limit or fr.limit, which called voltage limit
+            // With the new firmware and voltage source, the limit setter sets the voltage level (ir.level and fr.level) of the source.
+            // The legacy driver current level getter reads these levels (ir.level and fr.level) thus reading
+            // voltage that was set by the limit setter.
             bool success = legacyDevice.ColdResistanceCurrentLevelGetter();
-            Assert.IsTrue( success, "The current level voltage getter should succeed." );
-            return legacyDevice.ColdResistanceCurrentLevel;
+            Assert.IsTrue( success, $"The {modality} getter should succeed." );
+            voltage = legacyDevice.ColdResistanceCurrentLevel;
         }
+        Assert.IsTrue( voltage > 0, $"The {modality} must be positive." );
+        return voltage;
     }
 
     /// <summary>   Assert source should configure. </summary>
@@ -130,30 +157,39 @@ internal static partial class Asserts
         Meter meter = legacyDevice.Meter;
         Pith.SessionBase session = legacyDevice.Meter.TspDevice.Session;
 
+        // the following values are set to allow testing for both voltage and current source to make sure
+        // the the preset values do not become out of range when changing the source output option.
+        double maxValue = Ttm.Properties.Settings.Instance.TtmResistanceSettings.VoltageMaximum;
+        maxValue = Math.Min( maxValue, Ttm.Properties.Settings.Instance.TtmResistanceSettings.CurrentMaximum );
+
         double expectedValue = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmResistanceSettings.CurrentLevelDefault;
         double actualValue = legacyDevice.ColdResistanceConfig.CurrentLevel;
         Assert.AreEqual( expectedValue, actualValue, 0.001 * expectedValue,
             $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ColdResistanceConfig )}.{nameof( LegacyDevice.ColdResistanceConfig.CurrentLevel )} should equal the settings value." );
 
-        // get actual value
-        double actualCurrentLevel = Asserts.CurrentLevelGetter( legacyDevice, sourceOutputOption );
-        Assert.IsTrue( actualCurrentLevel > 0, "The actual current limit must be positive." );
+        // get actual current source current level or voltage source current limit
+        double actualCurrent = Asserts.CurrentGetter( legacyDevice, sourceOutputOption );
+
+        // ensure that the value is below the internal maximum limit.
+        actualCurrent = Math.Min( maxValue, actualCurrent );
+
+        string modality = (Ttm.MeterSubsystem.LegacyFirmware || SourceOutputOption.Current == sourceOutputOption)
+            ? "current source current level"
+            : "voltage source current limit";
 
         // alter the actual value
-        expectedValue = 0.9 * actualCurrentLevel;
+        expectedValue = 0.9 * actualCurrent;
         bool success = legacyDevice.ColdResistanceCurrentLevelSetter( ( float ) expectedValue );
-        Assert.IsTrue( success, "The current level setter should succeed." );
-        actualValue = Asserts.CurrentLevelGetter( legacyDevice, sourceOutputOption );
-        Assert.AreEqual( expectedValue, actualValue, 0.001 * expectedValue,
-            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ColdResistanceCurrentLevel )} should equal the changed value." );
+        Assert.IsTrue( success, $"The {modality} setter should succeed." );
+        actualValue = Asserts.CurrentGetter( legacyDevice, sourceOutputOption );
+        Assert.AreEqual( expectedValue, actualValue, 0.001 * expectedValue, $"{modality} should equal the changed value." );
 
         // restore the value
-        expectedValue = actualCurrentLevel;
+        expectedValue = actualCurrent;
         success = legacyDevice.ColdResistanceCurrentLevelSetter( ( float ) expectedValue );
-        Assert.IsTrue( success, "The current level setter should succeed." );
-        actualValue = Asserts.CurrentLevelGetter( legacyDevice, sourceOutputOption );
-        Assert.AreEqual( expectedValue, actualValue, 0.001 * expectedValue,
-            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ColdResistanceCurrentLevel )} should equal the restored value." );
+        Assert.IsTrue( success, $"The {modality} setter should succeed." );
+        actualValue = Asserts.CurrentGetter( legacyDevice, sourceOutputOption );
+        Assert.AreEqual( expectedValue, actualValue, 0.001 * expectedValue, $"{modality} should equal the restored value." );
 
         Asserts.AssertOrphanMessagesOrDeviceErrors( session );
 
@@ -162,25 +198,29 @@ internal static partial class Asserts
         Assert.AreEqual( expectedValue, actualValue, 0.001 * expectedValue,
             $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ColdResistanceConfig )}.{nameof( LegacyDevice.ColdResistanceConfig.VoltageLimit )} should equal the settings value." );
 
+        modality = (Ttm.MeterSubsystem.LegacyFirmware || SourceOutputOption.Current == sourceOutputOption)
+            ? "current source voltage limit"
+            : "voltage source voltage level";
+
         // get actual value
-        double actualVoltageLimit = Asserts.VoltageLimitGetter( legacyDevice, sourceOutputOption );
-        Assert.IsTrue( actualVoltageLimit > 0, $"{nameof( actualVoltageLimit )} must be positive." );
+        double actualVoltage = Asserts.VoltageGetter( legacyDevice, sourceOutputOption );
+
+        // ensure that the value is below the internal maximum limit.
+        actualVoltage = Math.Min( maxValue, actualVoltage );
 
         // alter the actual value
-        expectedValue = 0.9 * actualVoltageLimit;
+        expectedValue = 0.9 * actualVoltage;
         success = legacyDevice.ColdResistanceVoltageLimitSetter( ( float ) expectedValue );
-        Assert.IsTrue( success, "The voltage Limit setter should succeed." );
-        actualValue = Asserts.VoltageLimitGetter( legacyDevice, sourceOutputOption );
-        Assert.AreEqual( expectedValue, actualValue, 0.001 * expectedValue,
-            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ColdResistanceVoltageLimit )} should equal the changed value." );
+        Assert.IsTrue( success, $"The {modality} setter should succeed." );
+        actualValue = Asserts.VoltageGetter( legacyDevice, sourceOutputOption );
+        Assert.AreEqual( expectedValue, actualValue, 0.001 * expectedValue, $"{modality} should equal the changed value." );
 
         // restore the value
-        expectedValue = actualVoltageLimit;
+        expectedValue = actualVoltage;
         success = legacyDevice.ColdResistanceVoltageLimitSetter( ( float ) expectedValue );
-        Assert.IsTrue( success, "The voltage Limit setter should succeed." );
-        actualValue = Asserts.VoltageLimitGetter( legacyDevice, sourceOutputOption );
-        Assert.AreEqual( expectedValue, actualValue, 0.001 * expectedValue,
-            $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ColdResistanceVoltageLimit )} should equal the restored value." );
+        Assert.IsTrue( success, $"The {modality} setter should succeed." );
+        actualValue = Asserts.VoltageGetter( legacyDevice, sourceOutputOption );
+        Assert.AreEqual( expectedValue, actualValue, 0.001 * expectedValue, $"{modality} should equal the restored value." );
 
         Asserts.AssertOrphanMessagesOrDeviceErrors( session );
     }
@@ -225,7 +265,6 @@ internal static partial class Asserts
 
             // validate the initial option settings.
             Asserts.AssertSourceShouldConfigure( legacyDevice, initialSourceOutputOption );
-
         }
 
         double expectedValue = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmResistanceSettings.HighLimitDefault;

@@ -148,6 +148,9 @@ public class ThermalTransientMeasure : MeasureSubsystemBase
 
     #region " voltage limit "
 
+    /// <summary>   (Immutable) the voltage limit default. </summary>
+    public const double VoltageLimitDefault = 0.999d;
+
     /// <summary> The Voltage Limit. </summary>
     private double? _voltageLimit;
 
@@ -184,7 +187,7 @@ public class ThermalTransientMeasure : MeasureSubsystemBase
     public double? QueryVoltageLimit()
     {
         const decimal printFormat = 9.6m;
-        this.VoltageLimit = this.Session.QueryPrint( this.VoltageLimit.GetValueOrDefault( 0.1d ), printFormat, "{0}.limit", this.EntityName );
+        this.VoltageLimit = this.Session.QueryPrint( this.VoltageLimit.GetValueOrDefault( ThermalTransientMeasure.VoltageLimitDefault ), printFormat, "{0}.limit", this.EntityName );
         return this.VoltageLimit;
     }
 

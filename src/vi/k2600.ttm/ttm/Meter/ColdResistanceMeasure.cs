@@ -1,6 +1,6 @@
 namespace cc.isr.VI.Tsp.K2600.Ttm;
 
-/// <summary> The Cold MeasuredValue Measure Subsystem. </summary>
+/// <summary> The Cold Resistance Measure Subsystem. </summary>
 /// <remarks>
 /// (c) 2013 Integrated Scientific Resources, Inc. All rights reserved.<para>
 /// Licensed under The MIT License.</para><para>
@@ -91,6 +91,9 @@ public class ColdResistanceMeasure : MeasureSubsystemBase
 
     #region " current level "
 
+    /// <summary>   (Immutable) the default current level. </summary>
+    public const double DefaultCurrentLevel = 0.01d;
+
     private double? _currentLevel;
 
     /// <summary> Gets or sets the cached Source Current Level. </summary>
@@ -125,10 +128,12 @@ public class ColdResistanceMeasure : MeasureSubsystemBase
     /// <returns> The Current Level or none if unknown. </returns>
     public double? QueryCurrentLevel()
     {
+        if ( this.SourceOutputOption is null ) throw new InvalidOperationException( "Source output option must not be null." );
+        if ( this.SourceOutputOption != Syntax.SourceOutputOption.Current ) throw new InvalidOperationException( $"Invalid source output option of '{this.SourceOutputOption}'. Source output must be {Syntax.SourceOutputOption.Current} for getting the current level." );
         const decimal printFormat = 9.6m;
         this.CurrentLevel = MeterSubsystem.LegacyFirmware
-            ? this.Session.QueryPrint( this.CurrentLevel.GetValueOrDefault( 0.27d ), printFormat, "{0}.level", this.EntityName )
-            : this.Session.QueryPrint( this.CurrentLevel.GetValueOrDefault( 0.27d ), printFormat, "{0}.levelI", this.EntityName );
+            ? this.Session.QueryPrint( this.CurrentLevel.GetValueOrDefault( ColdResistanceMeasure.DefaultCurrentLevel ), printFormat, "{0}.level", this.EntityName )
+            : this.Session.QueryPrint( this.CurrentLevel.GetValueOrDefault( ColdResistanceMeasure.DefaultCurrentLevel ), printFormat, "{0}.levelI", this.EntityName );
         return this.CurrentLevel;
     }
 
@@ -145,13 +150,11 @@ public class ColdResistanceMeasure : MeasureSubsystemBase
     /// <returns> The Source Current Level. </returns>
     public double? WriteCurrentLevel( double value )
     {
-        if ( !ColdResistance.ValidateCurrentLevel( value, out string details ) )
-            throw new ArgumentOutOfRangeException( nameof( value ), details );
-
-        _ = MeterSubsystem.LegacyFirmware
+        if ( this.SourceOutputOption is null ) throw new InvalidOperationException( "Source output option must not be null." );
+        if ( this.SourceOutputOption != Syntax.SourceOutputOption.Current ) throw new InvalidOperationException( $"Invalid source output option of '{this.SourceOutputOption}'. Source output must be {Syntax.SourceOutputOption.Current} for writing the current level." );
+        _ = ColdResistance.ValidateCurrentRange( value, out string details )
             ? this.Session.WriteLine( "{0}:levelSetter({1})", this.EntityName, value )
-            : this.Session.WriteLine( "{0}:levelSetter({1}, false)", this.EntityName, value );
-
+            : throw new ArgumentOutOfRangeException( nameof( value ), details );
         this.CurrentLevel = value;
         return this.CurrentLevel;
     }
@@ -159,6 +162,9 @@ public class ColdResistanceMeasure : MeasureSubsystemBase
     #endregion
 
     #region " current limit "
+
+    /// <summary>   (Immutable) the default current limit. </summary>
+    public const double DefaultCurrentLimit = 0.01d;
 
     private double? _currentLimit;
 
@@ -194,10 +200,11 @@ public class ColdResistanceMeasure : MeasureSubsystemBase
     /// <returns> The Current Limit or none if unknown. </returns>
     public double? QueryCurrentLimit()
     {
+        if ( MeterSubsystem.LegacyFirmware ) throw new InvalidOperationException( "Invalid query of current limit. The legacy firmware does not support using a voltage source." );
+        if ( this.SourceOutputOption is null ) throw new InvalidOperationException( "Source output option must not be null." );
+        if ( this.SourceOutputOption != Syntax.SourceOutputOption.Voltage ) throw new InvalidOperationException( $"Invalid source output option of '{this.SourceOutputOption}'. Source output must be {Syntax.SourceOutputOption.Voltage} for querying the current limit." );
         const decimal printFormat = 9.6m;
-        this.CurrentLimit = MeterSubsystem.LegacyFirmware
-            ? this.CurrentLimit // the legacy source does not support a voltage source
-            : this.Session.QueryPrint( this.CurrentLimit.GetValueOrDefault( 0.27d ), printFormat, "{0}.limitI", this.EntityName );
+        this.CurrentLimit = this.Session.QueryPrint( this.CurrentLimit.GetValueOrDefault( ColdResistanceMeasure.DefaultCurrentLimit ), printFormat, "{0}.limitI", this.EntityName );
         return this.CurrentLimit;
     }
 
@@ -214,10 +221,11 @@ public class ColdResistanceMeasure : MeasureSubsystemBase
     /// <returns> The Source Current Limit. </returns>
     public double? WriteCurrentLimit( double value )
     {
-        _ = ColdResistance.ValidateCurrentLevel( value, out string details )
-            ? MeterSubsystem.LegacyFirmware
-                ? value.ToString() // the legacy firmware does not support using a voltage source.
-                : this.Session.WriteLine( "{0}:limitSetter({1}, true)", this.EntityName, value )
+        if ( MeterSubsystem.LegacyFirmware ) throw new InvalidOperationException( "Invalid wiring of current limit. The legacy firmware does not support using a voltage source." );
+        if ( this.SourceOutputOption is null ) throw new InvalidOperationException( "Source output option must not be null." );
+        if ( this.SourceOutputOption != Syntax.SourceOutputOption.Voltage ) throw new InvalidOperationException( $"Invalid source output option of '{this.SourceOutputOption}'. Source output must be {Syntax.SourceOutputOption.Voltage} when setting a current limit." );
+        _ = ColdResistance.ValidateCurrentRange( value, out string details )
+            ? this.Session.WriteLine( "{0}:limitSetter({1})", this.EntityName, value )
             : throw new ArgumentOutOfRangeException( nameof( value ), details );
 
         this.CurrentLimit = value;
@@ -227,6 +235,9 @@ public class ColdResistanceMeasure : MeasureSubsystemBase
     #endregion
 
     #region " voltage level "
+
+    /// <summary>   (Immutable) the default voltage Level. </summary>
+    public const double DefaultVoltageLevel = 0.1d;
 
     private double? _voltageLevel;
 
@@ -262,10 +273,11 @@ public class ColdResistanceMeasure : MeasureSubsystemBase
     /// <returns> The Voltage Level or none if unknown. </returns>
     public double? QueryVoltageLevel()
     {
+        if ( MeterSubsystem.LegacyFirmware ) throw new InvalidOperationException( "Invalid query of voltage level. The legacy firmware does not support using a voltage source." );
+        if ( this.SourceOutputOption is null ) throw new InvalidOperationException( "Source output option must not be null." );
+        if ( this.SourceOutputOption != Syntax.SourceOutputOption.Voltage ) throw new InvalidOperationException( $"Invalid source output option of '{this.SourceOutputOption}'. Source output must be {Syntax.SourceOutputOption.Voltage} for querying the voltage level." );
         const decimal printFormat = 9.6m;
-        this.VoltageLevel = MeterSubsystem.LegacyFirmware
-            ? this.VoltageLevel // the legacy source does not support a voltage source/
-            : this.Session.QueryPrint( this.VoltageLevel.GetValueOrDefault( 0.1d ), printFormat, "{0}.levelV", this.EntityName );
+        this.VoltageLevel = this.Session.QueryPrint( this.VoltageLevel.GetValueOrDefault( ColdResistanceMeasure.DefaultVoltageLevel ), printFormat, "{0}.levelV", this.EntityName );
 
         return this.VoltageLevel;
     }
@@ -283,12 +295,12 @@ public class ColdResistanceMeasure : MeasureSubsystemBase
     /// <returns> The Source Voltage Level. </returns>
     public double? WriteVoltageLevel( double value )
     {
-        _ = ColdResistance.ValidateVoltageLevel( value, out string details )
-            ? MeterSubsystem.LegacyFirmware
-                ? value.ToString() // the legacy firmware does not support using a voltage source.
-                : this.Session.WriteLine( "{0}:levelSetter({1}, true)", this.EntityName, value )
+        if ( MeterSubsystem.LegacyFirmware ) throw new InvalidOperationException( "Invalid writing of voltage level. The legacy firmware does not support using a voltage source." );
+        if ( this.SourceOutputOption is null ) throw new InvalidOperationException( "Source output option must not be null." );
+        if ( this.SourceOutputOption != Syntax.SourceOutputOption.Voltage ) throw new InvalidOperationException( $"Invalid source output option of '{this.SourceOutputOption}'. Source output must be {Syntax.SourceOutputOption.Voltage} for setting the voltage level." );
+        _ = ColdResistance.ValidateVoltageRange( value, out string details )
+            ? this.Session.WriteLine( "{0}:levelSetter({1})", this.EntityName, value )
             : throw new ArgumentOutOfRangeException( nameof( value ), details );
-
         this.VoltageLevel = value;
         return this.VoltageLevel;
     }
@@ -296,6 +308,9 @@ public class ColdResistanceMeasure : MeasureSubsystemBase
     #endregion
 
     #region " voltage limit "
+
+    /// <summary>   (Immutable) the default voltage limit. </summary>
+    public const double DefaultVoltageLimit = 0.1d;
 
     private double? _voltageLimit;
 
@@ -331,11 +346,12 @@ public class ColdResistanceMeasure : MeasureSubsystemBase
     /// <returns> The Voltage Limit or none if unknown. </returns>
     public double? QueryVoltageLimit()
     {
+        if ( this.SourceOutputOption is null ) throw new InvalidOperationException( "Source output option must not be null." );
+        if ( this.SourceOutputOption != Syntax.SourceOutputOption.Current ) throw new InvalidOperationException( $"Invalid source output option of '{this.SourceOutputOption}'. Source output must be {Syntax.SourceOutputOption.Current} when querying the voltage limit." );
         const decimal printFormat = 9.6m;
         this.VoltageLimit = MeterSubsystem.LegacyFirmware
-            ? this.Session.QueryPrint( this.VoltageLimit.GetValueOrDefault( 0.1d ), printFormat, "{0}.limit", this.EntityName )
-            : this.Session.QueryPrint( this.VoltageLimit.GetValueOrDefault( 0.1d ), printFormat, "{0}.limitV", this.EntityName );
-
+            ? this.Session.QueryPrint( this.VoltageLimit.GetValueOrDefault( ColdResistanceMeasure.DefaultVoltageLimit ), printFormat, "{0}.limit", this.EntityName )
+            : this.Session.QueryPrint( this.VoltageLimit.GetValueOrDefault( ColdResistanceMeasure.DefaultVoltageLimit ), printFormat, "{0}.limitV", this.EntityName );
         return this.VoltageLimit;
     }
 
@@ -352,10 +368,10 @@ public class ColdResistanceMeasure : MeasureSubsystemBase
     /// <returns> The Source Voltage Limit. </returns>
     public double? WriteVoltageLimit( double value )
     {
-        _ = ColdResistance.ValidateVoltageLevel( value, out string details )
-            ? MeterSubsystem.LegacyFirmware
-                ? this.Session.WriteLine( "{0}:limitSetter({1})", this.EntityName, value )
-                : this.Session.WriteLine( "{0}:limitSetter({1}, false)", this.EntityName, value )
+        if ( this.SourceOutputOption is null ) throw new InvalidOperationException( "Source output option must not be null." );
+        if ( this.SourceOutputOption != Syntax.SourceOutputOption.Current ) throw new InvalidOperationException( $"Invalid source output option of '{this.SourceOutputOption}'. Source output must be {Syntax.SourceOutputOption.Current} when setting the voltage limit." );
+        _ = ColdResistance.ValidateVoltageRange( value, out string details )
+            ? this.Session.WriteLine( "{0}:limitSetter({1})", this.EntityName, value )
             : throw new ArgumentOutOfRangeException( nameof( value ), details );
         this.VoltageLimit = value;
         return this.VoltageLimit;
@@ -730,7 +746,7 @@ public class ColdResistanceMeasure : MeasureSubsystemBase
     public void ConfigureChanged( ColdResistanceBase resistance )
     {
         if ( resistance is null ) throw new ArgumentNullException( nameof( resistance ) );
-        this.Session.SetLastAction( "configuring Cold MeasuredValue measurement" );
+        this.Session.SetLastAction( "configuring Cold Resistance measurement" );
         base.ConfigureChanged( resistance );
         if ( !this.ColdResistance.ConfigurationEquals( resistance ) )
         {

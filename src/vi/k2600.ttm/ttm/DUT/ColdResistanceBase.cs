@@ -80,6 +80,7 @@ public abstract class ColdResistanceBase : MeasureBase, IEquatable<ColdResistanc
     public override void PresetKnownState()
     {
         base.PresetKnownState();
+        this.SourceOutputOption = Properties.Settings.Instance.TtmResistanceSettings.SourceOutput;
         this.Aperture = ( double ) Properties.Settings.Instance.TtmResistanceSettings.ApertureDefault;
         this.LowLimit = ( double ) Properties.Settings.Instance.TtmResistanceSettings.LowLimitDefault;
         this.HighLimit = ( double ) Properties.Settings.Instance.TtmResistanceSettings.HighLimitDefault;
@@ -88,7 +89,6 @@ public abstract class ColdResistanceBase : MeasureBase, IEquatable<ColdResistanc
         this.VoltageLimit = ( double ) Properties.Settings.Instance.TtmResistanceSettings.VoltageLimitDefault;
         this.VoltageLevel = ( double ) Properties.Settings.Instance.TtmResistanceSettings.VoltageLevelDefault;
         this.FailStatus = Properties.Settings.Instance.TtmResistanceSettings.FailStatusDefault;
-        this.SourceOutputOption = Properties.Settings.Instance.TtmResistanceSettings.SourceOutput;
         cc.isr.VI.Pith.SessionBase.DoEventsAction?.Invoke();
     }
 
@@ -253,7 +253,6 @@ public abstract class ColdResistanceBase : MeasureBase, IEquatable<ColdResistanc
     public double VoltageLevel
     {
         get => this._voltageLevel;
-
         set => _ = this.SetProperty( ref this._voltageLevel, value );
     }
 
@@ -264,7 +263,6 @@ public abstract class ColdResistanceBase : MeasureBase, IEquatable<ColdResistanc
     public double VoltageLimit
     {
         get => this._voltageLimit;
-
         set => _ = this.SetProperty( ref this._voltageLimit, value );
     }
 
