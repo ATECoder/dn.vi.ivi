@@ -1,0 +1,10 @@
+<Project>
+  <PropertyGroup>
+    <AssemblyVersion>7.2.9209.2738</AssemblyVersion>
+    <FileVersion>7.2.9209.2738</FileVersion>
+    <InformationalVersion>7.2.9209.2738</InformationalVersion>
+    <Version>7.2.9209</Version>
+    <ApplicationDisplayVersion>7.2.9209</ApplicationDisplayVersion>
+    <ApplicationVersion>7</ApplicationVersion>
+  </PropertyGroup>
+</Project>

@@ -6,14 +6,10 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ni", "ni", "{078A7662-800E-44DC-B6B9-7B2890579C77}"
 	ProjectSection(SolutionItems) = preProject
 		ni\directory.build.props = ni\directory.build.props
+		ni\IviVisaApps.ni.changelog.md = ni\IviVisaApps.ni.changelog.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "`build", "`build", "{286AA6FE-67D4-4818-8C77-F3AFFF3CCD7D}"
-	ProjectSection(SolutionItems) = preProject
-		items\version.build.bat = items\version.build.bat
-		items\version.build.props = items\version.build.props
-		items\version.build.tt = items\version.build.tt
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NI.SimpleReadWrite", "ni\simple.read.write\NI.SimpleReadWrite.csproj", "{0ACC4152-2F4F-0572-16E2-76FBB894CC20}"
 EndProject
@@ -24,6 +20,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "rohde", "rohde", "{2D0E4EF2-A157-4426-9BFB-1C91D78D9032}"
 	ProjectSection(SolutionItems) = preProject
 		rohde\directory.build.props = rohde\directory.build.props
+		rohde\IviVisaApps.rohde.changelog.md = rohde\IviVisaApps.rohde.changelog.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rohde.IdnQuery", "rohde\idn.query\Rohde.IdnQuery.csproj", "{F03568A2-248C-4408-BB93-7A487BF97EB8}"
@@ -31,17 +28,22 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NI.ServiceRequest", "ni\service.request\NI.ServiceRequest.csproj", "{3931B74F-0655-4860-92B0-67137A845FBA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Kelary", "Kelary", "{D835C90A-895B-4C8A-97C0-3D58060DD47A}"
+	ProjectSection(SolutionItems) = preProject
+		kelary\IviVisaCompatibility.changelog.md = kelary\IviVisaCompatibility.changelog.md
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IviVisaNetSample", "Kelary\IviVisaNetSample\IviVisaNetSample.csproj", "{2D8E7668-2112-4873-8E49-A5B6F6E49CF6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "`docs", "`docs", "{EE27935A-1259-4A41-9164-9030753B6549}"
 	ProjectSection(SolutionItems) = preProject
-		..\changelog.md = ..\changelog.md
+		..\developer.md = ..\developer.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IviVisaCompatibility", "Kelary\IviVisaCompatibility\IviVisaCompatibility.csproj", "{AB4A83FD-2327-4D0A-BB97-16DC57DDB0FC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IviVisaCompatibilityDemo", "Kelary\IviVisaCompatibilityDemo\IviVisaCompatibilityDemo.csproj", "{FFDB123C-38C9-4805-AB46-55666349CCCC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IviVisaCompatibilityTester", "kelary\IviVisaCompatibiityTester\IviVisaCompatibilityTester.csproj", "{B8D3A47C-0DE1-A63A-F204-524B40814D8C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -149,6 +151,18 @@ Global
 		{FFDB123C-38C9-4805-AB46-55666349CCCC}.Release|x64.Build.0 = Release|x64
 		{FFDB123C-38C9-4805-AB46-55666349CCCC}.Release|x86.ActiveCfg = Release|x86
 		{FFDB123C-38C9-4805-AB46-55666349CCCC}.Release|x86.Build.0 = Release|x86
+		{B8D3A47C-0DE1-A63A-F204-524B40814D8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8D3A47C-0DE1-A63A-F204-524B40814D8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8D3A47C-0DE1-A63A-F204-524B40814D8C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B8D3A47C-0DE1-A63A-F204-524B40814D8C}.Debug|x64.Build.0 = Debug|Any CPU
+		{B8D3A47C-0DE1-A63A-F204-524B40814D8C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B8D3A47C-0DE1-A63A-F204-524B40814D8C}.Debug|x86.Build.0 = Debug|Any CPU
+		{B8D3A47C-0DE1-A63A-F204-524B40814D8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8D3A47C-0DE1-A63A-F204-524B40814D8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8D3A47C-0DE1-A63A-F204-524B40814D8C}.Release|x64.ActiveCfg = Release|Any CPU
+		{B8D3A47C-0DE1-A63A-F204-524B40814D8C}.Release|x64.Build.0 = Release|Any CPU
+		{B8D3A47C-0DE1-A63A-F204-524B40814D8C}.Release|x86.ActiveCfg = Release|Any CPU
+		{B8D3A47C-0DE1-A63A-F204-524B40814D8C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -162,6 +176,7 @@ Global
 		{2D8E7668-2112-4873-8E49-A5B6F6E49CF6} = {D835C90A-895B-4C8A-97C0-3D58060DD47A}
 		{AB4A83FD-2327-4D0A-BB97-16DC57DDB0FC} = {D835C90A-895B-4C8A-97C0-3D58060DD47A}
 		{FFDB123C-38C9-4805-AB46-55666349CCCC} = {D835C90A-895B-4C8A-97C0-3D58060DD47A}
+		{B8D3A47C-0DE1-A63A-F204-524B40814D8C} = {D835C90A-895B-4C8A-97C0-3D58060DD47A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {629A4500-0A50-4F53-88C6-402E2360A282}

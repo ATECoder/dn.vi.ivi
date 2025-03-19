@@ -101,13 +101,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "`docs", "`docs", "{7DB60340-1A19-41FE-A38B-2C51C86D6B34}"
 	ProjectSection(SolutionItems) = preProject
 		..\changelog.md = ..\changelog.md
-		..\DEVELOPER.md = ..\DEVELOPER.md
-		vi\k2600.ttm\k2600.Ttm.ChangeLog.md = vi\k2600.ttm\k2600.Ttm.ChangeLog.md
-		vi\k2600.ttm\k2600.Ttm.readme.md = vi\k2600.ttm\k2600.Ttm.readme.md
-		vi\k2600.ttm\k2600.Ttm.todo.md = vi\k2600.ttm\k2600.Ttm.todo.md
-		vi\k2600.ttmware\k2600.Ttmware.ChangeLog.md = vi\k2600.ttmware\k2600.Ttmware.ChangeLog.md
-		vi\k2600.ttmware\k2600.Ttmware.readme.md = vi\k2600.ttmware\k2600.Ttmware.readme.md
-		vi\k2600.ttmware\k2600.Ttmware.todo.md = vi\k2600.ttmware\k2600.Ttmware.todo.md
+		..\developer.md = ..\developer.md
 		..\readme.md = ..\readme.md
 		..\todo.md = ..\todo.md
 	EndProjectSection
@@ -135,6 +129,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cc.isr.VI.WinControls", "ui\win.controls\cc.isr.VI.WinControls.csproj", "{4CF5F077-3285-4693-95F2-6EC2BE13A647}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "visa", "visa", "{1DE6370F-3D44-4C27-8FC0-8C5BBCACABED}"
+	ProjectSection(SolutionItems) = preProject
+		visa\isr.visa.changelog.md = visa\isr.visa.changelog.md
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cc.isr.Visa", "visa\visa\cc.isr.Visa.csproj", "{13CD53B6-1C32-4717-ABAD-639B2485974D}"
 EndProject
@@ -147,6 +144,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cc.isr.Visa.WinControls.Demo", "visa\visa.win.controls.demo\cc.isr.Visa.WinControls.Demo.csproj", "{53F06A2A-3B72-49C4-A383-E8BA148C358E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "kelary", "kelary", "{4E8D5E4B-DA9C-4E0C-BABC-F5EA648DFCC9}"
+	ProjectSection(SolutionItems) = preProject
+		kelary\IviVisaCompatibility.changelog.md = kelary\IviVisaCompatibility.changelog.md
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IviVisaCompatibility", "kelary\IviVisaCompatibility\IviVisaCompatibility.csproj", "{5E46D11A-C8D8-4A07-BAED-1A96B8222B4D}"
 EndProject
@@ -155,6 +155,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IviVisaNetSample", "kelary\IviVisaNetSample\IviVisaNetSample.csproj", "{5079BF8F-C162-4CB8-A4F6-7F90D98CEACE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ni", "ni", "{15ECA413-0E4B-4B8B-AC96-7794BB1CE7B0}"
+	ProjectSection(SolutionItems) = preProject
+		ni\IviVisaApps.ni.changelog.md = ni\IviVisaApps.ni.changelog.md
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NI.FindResources", "ni\find.resources\NI.FindResources.csproj", "{17FC1D05-50C7-4FE7-B047-B4252BCE15BC}"
 EndProject
@@ -169,6 +172,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cc.isr.Visa.MSTest", "visa\visa.mstest\cc.isr.Visa.MSTest.csproj", "{648E69E7-DD94-4FDC-BECE-C0ECADFB7BD0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "rohde", "rohde", "{3E540F10-27FA-4E69-A548-32E5702FB5ED}"
+	ProjectSection(SolutionItems) = preProject
+		rohde\exclusion.dic = rohde\exclusion.dic
+		rohde\IviVisaApps.rohde.changelog.md = rohde\IviVisaApps.rohde.changelog.md
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rohde.IdnQuery", "rohde\idn.query\Rohde.IdnQuery.csproj", "{242349C8-142C-450C-9B48-C0885E3265B4}"
 EndProject
@@ -199,6 +206,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cc.isr.Std.EventContext", "..\..\..\core\std\src\event.context\event.context\cc.isr.Std.EventContext.csproj", "{E9968458-CD06-4464-BFA4-662B81293861}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cc.isr.Std.Timers", "..\..\..\core\std\src\timers\timers\cc.isr.Std.Timers.csproj", "{72614C4D-5636-44E9-8FCA-430E7858B212}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IviVisaCompatibilityTester", "kelary\IviVisaCompatibiityTester\IviVisaCompatibilityTester.csproj", "{B8D3A47C-0DE1-A63A-F204-524B40814D8C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1074,6 +1083,18 @@ Global
 		{72614C4D-5636-44E9-8FCA-430E7858B212}.Release|x64.Build.0 = Release|Any CPU
 		{72614C4D-5636-44E9-8FCA-430E7858B212}.Release|x86.ActiveCfg = Release|Any CPU
 		{72614C4D-5636-44E9-8FCA-430E7858B212}.Release|x86.Build.0 = Release|Any CPU
+		{B8D3A47C-0DE1-A63A-F204-524B40814D8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8D3A47C-0DE1-A63A-F204-524B40814D8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8D3A47C-0DE1-A63A-F204-524B40814D8C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B8D3A47C-0DE1-A63A-F204-524B40814D8C}.Debug|x64.Build.0 = Debug|Any CPU
+		{B8D3A47C-0DE1-A63A-F204-524B40814D8C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B8D3A47C-0DE1-A63A-F204-524B40814D8C}.Debug|x86.Build.0 = Debug|Any CPU
+		{B8D3A47C-0DE1-A63A-F204-524B40814D8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8D3A47C-0DE1-A63A-F204-524B40814D8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8D3A47C-0DE1-A63A-F204-524B40814D8C}.Release|x64.ActiveCfg = Release|Any CPU
+		{B8D3A47C-0DE1-A63A-F204-524B40814D8C}.Release|x64.Build.0 = Release|Any CPU
+		{B8D3A47C-0DE1-A63A-F204-524B40814D8C}.Release|x86.ActiveCfg = Release|Any CPU
+		{B8D3A47C-0DE1-A63A-F204-524B40814D8C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1158,6 +1179,7 @@ Global
 		{23E1EF66-FABE-4E36-86B1-F2D3972A285E} = {57B31108-C959-4B3C-9957-F6C94C483874}
 		{E9968458-CD06-4464-BFA4-662B81293861} = {94591076-345F-4183-8726-022256F835E8}
 		{72614C4D-5636-44E9-8FCA-430E7858B212} = {94591076-345F-4183-8726-022256F835E8}
+		{B8D3A47C-0DE1-A63A-F204-524B40814D8C} = {4E8D5E4B-DA9C-4E0C-BABC-F5EA648DFCC9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {629A4500-0A50-4F53-88C6-402E2360A282}

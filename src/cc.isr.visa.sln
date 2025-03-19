@@ -15,16 +15,22 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "`docs", "`docs", "{7DB60340-1A19-41FE-A38B-2C51C86D6B34}"
 	ProjectSection(SolutionItems) = preProject
 		..\changelog.md = ..\changelog.md
-		..\DEVELOPER.md = ..\DEVELOPER.md
+		..\developer.md = ..\developer.md
 		..\readme.md = ..\readme.md
 		..\todo.md = ..\todo.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "visa", "visa", "{76EDB5EA-335F-4FD2-A5E9-096D58740739}"
+	ProjectSection(SolutionItems) = preProject
+		visa\isr.visa.changelog.md = visa\isr.visa.changelog.md
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cc.isr.Visa.WinControls", "visa\visa.win.controls\cc.isr.Visa.WinControls.csproj", "{8E586690-CAEF-4D68-A679-A7B6F8A9A727}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "kelary", "kelary", "{D77B2BC9-AA9C-4624-9AB9-6904E9061EDA}"
+	ProjectSection(SolutionItems) = preProject
+		kelary\IviVisaCompatibility.changelog.md = kelary\IviVisaCompatibility.changelog.md
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IviVisaNetSample", "Kelary\IviVisaNetSample\IviVisaNetSample.csproj", "{6218EF05-586D-4466-B8CC-3457C4089E7B}"
 EndProject
@@ -39,8 +45,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cc.isr.Visa", "visa\visa\cc.isr.Visa.csproj", "{6981F807-0E31-42F4-925E-8BD26506F4E4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cc.isr.Visa.MSTest", "visa\visa.mstest\cc.isr.Visa.MSTest.csproj", "{3BFA27B7-6760-46F9-91E8-D5E9DB3A1186}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ni", "ni", "{8268F859-E339-44A1-94E1-8F18AAFC841A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cc.isr.Visa.IO.Demo", "visa\visa.io.demo\cc.isr.Visa.IO.Demo.csproj", "{A22D157D-7F9F-4236-8B3A-B91B2A75F7B7}"
 EndProject
@@ -63,6 +67,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cc.isr.Json.AppSettings.ViewModels", "..\..\..\core\json\src\app.settings\app.settings.view.models\cc.isr.Json.AppSettings.ViewModels.csproj", "{1308BE52-6A68-4FC8-9709-5A2BF45F20BF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cc.isr.Json.AppSettings.WinForms", "..\..\..\core\json\src\app.settings\app.settings.win.forms\cc.isr.Json.AppSettings.WinForms.csproj", "{AC3F3E9D-6F99-428E-A536-4A8A5DA4520E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IviVisaCompatibilityTester", "kelary\IviVisaCompatibiityTester\IviVisaCompatibilityTester.csproj", "{B8D3A47C-0DE1-A63A-F204-524B40814D8C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -290,6 +296,18 @@ Global
 		{AC3F3E9D-6F99-428E-A536-4A8A5DA4520E}.Release|x64.Build.0 = Release|Any CPU
 		{AC3F3E9D-6F99-428E-A536-4A8A5DA4520E}.Release|x86.ActiveCfg = Release|Any CPU
 		{AC3F3E9D-6F99-428E-A536-4A8A5DA4520E}.Release|x86.Build.0 = Release|Any CPU
+		{B8D3A47C-0DE1-A63A-F204-524B40814D8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8D3A47C-0DE1-A63A-F204-524B40814D8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8D3A47C-0DE1-A63A-F204-524B40814D8C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B8D3A47C-0DE1-A63A-F204-524B40814D8C}.Debug|x64.Build.0 = Debug|Any CPU
+		{B8D3A47C-0DE1-A63A-F204-524B40814D8C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B8D3A47C-0DE1-A63A-F204-524B40814D8C}.Debug|x86.Build.0 = Debug|Any CPU
+		{B8D3A47C-0DE1-A63A-F204-524B40814D8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8D3A47C-0DE1-A63A-F204-524B40814D8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8D3A47C-0DE1-A63A-F204-524B40814D8C}.Release|x64.ActiveCfg = Release|Any CPU
+		{B8D3A47C-0DE1-A63A-F204-524B40814D8C}.Release|x64.Build.0 = Release|Any CPU
+		{B8D3A47C-0DE1-A63A-F204-524B40814D8C}.Release|x86.ActiveCfg = Release|Any CPU
+		{B8D3A47C-0DE1-A63A-F204-524B40814D8C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -313,6 +331,7 @@ Global
 		{CFCE52AD-E859-41E8-87F8-5FD38E1AD4BF} = {D59B7EBC-91BB-406B-A4FE-133384A168A9}
 		{1308BE52-6A68-4FC8-9709-5A2BF45F20BF} = {D59B7EBC-91BB-406B-A4FE-133384A168A9}
 		{AC3F3E9D-6F99-428E-A536-4A8A5DA4520E} = {D59B7EBC-91BB-406B-A4FE-133384A168A9}
+		{B8D3A47C-0DE1-A63A-F204-524B40814D8C} = {D77B2BC9-AA9C-4624-9AB9-6904E9061EDA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {629A4500-0A50-4F53-88C6-402E2360A282}
