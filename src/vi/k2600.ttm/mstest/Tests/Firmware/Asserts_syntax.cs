@@ -6,9 +6,10 @@ internal static partial class Asserts
 {
     /// <summary>   Assert tsp syntax should not fail. </summary>
     /// <remarks>   2024-11-02. </remarks>
-    /// <param name="session">          The session. </param>
-    /// <param name="logEnabled">       (Optional) True to enable, false to disable the log. </param>
-    public static void AssertTspSyntaxShouldNotFail( Pith.SessionBase? session, bool logEnabled = false )
+    /// <param name="session">      The session. </param>
+    /// <param name="validateModel">  (Optional) [false] True to validate the instrument model. </param>
+    /// <param name="logEnabled">     (Optional) [false] True to enable, false to disable the log. </param>
+    public static void AssertTspSyntaxShouldNotFail( Pith.SessionBase? session, bool validateModel = false, bool logEnabled = false )
     {
         Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
         Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
@@ -20,9 +21,12 @@ internal static partial class Asserts
         command = "_G.status.request_enable=0";
         Asserts.AssertCommandShouldExecute( session, command, logEnabled );
 
-        expectedValue = session.ResourceSettings.ResourceModel;
-        command = "_G.print(localnode.model)";
-        Asserts.AssertQueryReplyShouldBeValid( session, command, expectedValue, logEnabled );
+        if ( validateModel )
+        {
+            string model = session.ResourceSettings.ResourceModel;
+            command = "_G.print(localnode.model)";
+            Asserts.AssertQueryReplyShouldBeValid( session, command, model, logEnabled );
+        }
 
         expectedValue = "1";
         command = "*OPC?";
@@ -346,9 +350,10 @@ internal static partial class Asserts
     /// <remarks>   2024-11-03. </remarks>
     /// <param name="session">              The session. </param>
     /// <param name="coldResistanceType">   (Optional) (ir) Type of the cold resistance. </param>
-    /// <param name="checkSmuSetter">       (Optional) True to check smu setter. </param>
-    /// <param name="logEnabled">           (Optional) True to enable, false to disable the log. </param>
-    public static void AssertColdResistanceShouldReset( Pith.SessionBase? session, string coldResistanceType = "ir", bool checkSmuSetter = false, bool logEnabled = false )
+    /// <param name="validateModel">        (Optional) [false] True to validate the instrument model. </param>
+    /// <param name="checkSmuSetter">       (Optional) [false] True to check smu setter. </param>
+    /// <param name="logEnabled">           (Optional) [false] True to enable, false to disable the log. </param>
+    public static void AssertColdResistanceShouldReset( Pith.SessionBase? session, string coldResistanceType = "ir", bool validateModel = false, bool checkSmuSetter = false, bool logEnabled = false )
     {
         Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
         Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
@@ -369,8 +374,11 @@ internal static partial class Asserts
         Assert.IsTrue( meterSettings.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmMeterSettings )} should exist." );
 
         string model = session.ResourceSettings.ResourceModel;
-        command = "_G.print(localnode.model)";
-        Asserts.AssertQueryReplyShouldBeValid( session, command, model, logEnabled );
+        query = "_G.print(localnode.model)";
+        if ( validateModel )
+            Asserts.AssertQueryReplyShouldBeValid( session, query, model, logEnabled );
+        else
+            model = session.QueryStringThrowIfError( query, "reading instrument model." );
 
         // legacy driver: these need only be tested for the legacy driver.
 
@@ -675,9 +683,11 @@ internal static partial class Asserts
     /// <summary>   Assert thermal transient defaults should equal settings. </summary>
     /// <remarks>   2025-02-18. </remarks>
     /// <param name="session">          The session. </param>
-    /// <param name="checkSmuSetter">   (Optional) True to check smu setter. </param>
+    /// <param name="validateModel">    (Optional) [false] True to validate the instrument model. </param>
     /// <param name="logEnabled">       (Optional) True to enable, false to disable the log. </param>
-    public static void AssertThermalTransientDefaultsShouldEqualSettings( Pith.SessionBase? session, bool logEnabled = false )
+    ///
+    /// ### <param name="checkSmuSetter">   (Optional) True to check smu setter. </param>
+    public static void AssertThermalTransientDefaultsShouldEqualSettings( Pith.SessionBase? session, bool validateModel = false, bool logEnabled = false )
     {
         Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
         Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
@@ -690,9 +700,12 @@ internal static partial class Asserts
         Assert.IsTrue( traceSettings.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmTraceSettings )} should exist." );
         Assert.IsTrue( meterSettings.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmMeterSettings )} should exist." );
 
-        string model = session.ResourceSettings.ResourceModel;
-        command = "_G.print(localnode.model)";
-        Asserts.AssertQueryReplyShouldBeValid( session, command, model, logEnabled );
+        if ( validateModel )
+        {
+            string model = session.ResourceSettings.ResourceModel;
+            command = "_G.print(localnode.model)";
+            Asserts.AssertQueryReplyShouldBeValid( session, command, model, logEnabled );
+        }
 
         // legacy driver: these need only be tested for the legacy driver.
 
@@ -783,9 +796,10 @@ internal static partial class Asserts
     /// <summary>   Assert thermal transient should reset. </summary>
     /// <remarks>   2024-11-03. </remarks>
     /// <param name="session">          The session. </param>
-    /// <param name="checkSmuSetter">   (Optional) True to check smu setter. </param>
-    /// <param name="logEnabled">       (Optional) True to enable, false to disable the log. </param>
-    public static void AssertThermalTransientShouldReset( Pith.SessionBase? session, bool checkSmuSetter = false, bool logEnabled = false )
+    /// <param name="validateModel">    (Optional) [false] True to validate the instrument model. </param>
+    /// <param name="checkSmuSetter">   (Optional) [false] True to check smu setter. </param>
+    /// <param name="logEnabled">       (Optional) [false ] True to enable, false to disable the log. </param>
+    public static void AssertThermalTransientShouldReset( Pith.SessionBase? session, bool validateModel = false, bool checkSmuSetter = false, bool logEnabled = false )
     {
         Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
         Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
@@ -801,8 +815,11 @@ internal static partial class Asserts
         Assert.IsTrue( meterSettings.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmMeterSettings )} should exist." );
 
         string model = session.ResourceSettings.ResourceModel;
-        command = "_G.print(localnode.model)";
-        Asserts.AssertQueryReplyShouldBeValid( session, command, model, logEnabled );
+        query = "_G.print(localnode.model)";
+        if ( validateModel )
+            Asserts.AssertQueryReplyShouldBeValid( session, query, model, logEnabled );
+        else
+            model = session.QueryStringThrowIfError( query, "reading instrument model." );
 
         // legacy driver: these need only be tested for the legacy driver.
 

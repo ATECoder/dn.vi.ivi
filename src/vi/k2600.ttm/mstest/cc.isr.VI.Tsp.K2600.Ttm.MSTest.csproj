@@ -90,7 +90,9 @@
     <None Update="cc.isr.VI.Tsp.K2600.Ttm.MSTest.Settings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <PackageReference Update="Microsoft.Testing.Extensions.CodeCoverage" Version="17.14.2" />
+    <!-- Already included with the default profile of the MSTest.SDK
+      <PackageReference Update="Microsoft.Testing.Extensions.CodeCoverage" />
+    -->
   </ItemGroup>
 
   <Import Project="..\ttm\version.build.props" />

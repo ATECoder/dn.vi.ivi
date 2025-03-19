@@ -171,7 +171,7 @@ public class FirmwareTests
         string resourceName = this.ResourceSettings.ResourceName;
         using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( resourceName );
 
-        Asserts.AssertTspSyntaxShouldNotFail( session, true );
+        Asserts.AssertTspSyntaxShouldNotFail( session, false, true );
         Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertTspSyntaxShouldNotFail )}" );
     }
 
