@@ -7,9 +7,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "`build", "`build", "{286AA6
 	ProjectSection(SolutionItems) = preProject
 		exclusion.dic = exclusion.dic
 		global.json = global.json
-		items\version.build.bat = items\version.build.bat
-		items\version.build.props = items\version.build.props
-		items\version.build.tt = items\version.build.tt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "`docs", "`docs", "{7DB60340-1A19-41FE-A38B-2C51C86D6B34}"

@@ -5,6 +5,14 @@
 [*.{cs,md,txt,vb,cake,csx,vbx}]
 
 spelling_exclusion_path = .\exclusion.dic
+spelling_use_default_exclusion_dictionary = true
+csharp_spell_checker_enabled = true
+
+# Spell checker settings for Markdown files
+[*.md]
+csharp_spell_checker_exclusion_file = .\exclusion.dic
+# csharp_spell_checker_exclusion_file = .spellcheckerignore
+csharp_spell_checker_enabled = true
 
 # # # # # # # # # # # # #
 # .NET Naming Rules

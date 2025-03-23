@@ -91,21 +91,7 @@
     </EmbeddedResource>
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="version.build.props">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>version.build.tt</DependentUpon>
-    </None>
-    <None Update="version.build.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>version.build.props</LastGenOutput>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
-  </ItemGroup>
+  <Import Project="..\visa.win.controls\version.build.props" />
 
   <PropertyGroup>
     <!-- WiX Toolset; See https://github.com/wixtoolset/issues/issues/5705

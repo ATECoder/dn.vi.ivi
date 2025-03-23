@@ -2,7 +2,11 @@
 All notable changes to these libraries will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-## [7.2.9209] - 2025-03-19
+Current IVI Visa Compatibility: 7.2.7619
+
+## [7.2.9213] - 2025-03-23
+* Kelary: Update version build tools to user current date and time.
+* Visa: Update version build tools to user current date and time. 
 
 ## [7.2.9124] - 2024-12-24
 * Kelary: Add IVI Visa Compatibility Test.
@@ -34,6 +38,6 @@ GAC Loader:
 
 &copy; 2012 Integrated Scientific Resources, Inc. All rights reserved.
 
-[7.2.9209]: https://www.github.com/atecoder/dn.vi.ivi
+[7.2.9213]: https://www.github.com/atecoder/dn.vi.ivi
 [vs.VI]: https://www.github.com/atecoder/dn.vi.ivi
 [vs.Visa]: https://bitbucket.org/davidhary/vs.io.visa
