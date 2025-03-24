@@ -102,6 +102,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- 
+    This Service element runs the C:\Program Files\Microsoft Visual Studio 9.0\Common7\IDE\UserControlTestContainer.exe executable, passing the assembly path as a parameter.
+    -->
     <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
     <EmbeddedResource Update="properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -110,6 +113,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
     <None Update="version.build.props">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -122,10 +126,6 @@
   </ItemGroup>
 
   <Import Project="version.build.props" />
-    
-  <ItemGroup>
-    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
-  </ItemGroup>
     
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">

@@ -73,7 +73,9 @@ The TTM Instrument is part of the ISR TTM Framework as described in the [TTM Fra
 
 The device under test must be connected to the TTM Instrument using a [Four-Terminal Sensing] circuit:
 
-![](KelvinDiagram.jpg)
+![Kelvin Diagram](KelvinDiagram.jpg)
+
+Fig 1. Four Wire Sensing Ciruit.
 
 <a name="Remote_Local"></a>
 ### Taking the instrument from Remote to Local Mode
@@ -216,7 +218,9 @@ The leads contacts are checked if the maximum leads resistance (see below) is se
 
 Check [Open Source Lead Limit Menu](#open_source_lead_limit_menu) for a workaround that is aimed to overcome an issue with the standard contact check.
 
-![](ContactCheckDiagram.png)
+![Contact check diagram](ContactCheckDiagram.png)
+
+Fig. 2. Contact check Diagram.
 
 To enable and set the maximum allowed leads resistance:
 
@@ -234,8 +238,8 @@ Moving the cursor over the digits, the digit blinks. Pressing the _Wheel_ or `EN
 
 Selecting _Checks_ from the [Meter Menu](#meter_menu) displays the [Checks Menu](#Checks_menu). This menu selects when contact checks are to be performed. This is done by setting a bit value that toggles the contact check for Initial Resistance (IR) (binary 001), Thermal Transient (TR) (binary 010) or Final Resistance (FR) (binary 100). For example, setting the value to 5 (binary 101), enables contact checks before the Initial and Final Resistance measurements whereas setting the value to 7 (binary 111 or 1+2+4), enables contact checks before the initial, final, and thermal transient measurements.
 
-|Bit|Name|Hex Value|Decimal Value|Description|
-|----|----|----|----|
+|Bit|Name|Hex|Decimal|Description|
+|:--|:---|:-:|:-----:|:----------|
 |B0|Pre-Start Measurement|0x01|1|Check contacts upon receiving the trigger signal but before starting the test sequence.|
 |B1|Pre-Initial-Resistance|0x02|1|Check contacts before making the initial cold resistance measurement.|
 |B2|Pre-Thermal-Transient|0x04|2|Check contacts before making the thermal transient measurement|
@@ -269,8 +273,6 @@ Moving the cursor over the digits, the digit blinks. Pressing the _Wheel_ or `EN
 
 The contact check function prevents measurements that may be in error due to excessive resistance in the force or sense leads when making remotely sensed (Kelvin) measurements. Potential sources for this resistance include a poor contact at the device under test (DUT), a failing relay contacts on a switching card or wires that are too long or thin. The contact check function also detects an open circuit that may occur when a four-point probe is misplaced or misaligned. This relationship is shown schematically in the figure below, where R~C~ is the resistance of the mechanical contact at the DUT, and R~S~ is the series resistance of cables and any series relays.
 
-![](ContactCheckDiagram.png)
-
 The leads contacts are checked if the maximum leads resistance (see below) is set to a non-zero positive value. Contacts are measured before taking the initial resistance measurement. The measurement is aborted and the lead resistances are displayed if the measured lead resistances exceeds the maximum limit. 
 
 A custom contact check algorithm is implemented in the TTM firmware as a workaround for the instrument failure to detect an open lead if either the low or high source lead is open. 
@@ -300,7 +302,7 @@ Testing for open contacts is done by forcing a small 300µA current into the sen
 For instance the following values where measured:
 
 |DUT   | Source Low | Sense Low | Sense High | Source High | Max Volts | Min Volts |
-|------|------------|-----------|------------|-------------|-----------|-----------|
+|:-----|:-----------|:----------|:-----------|:------------|:----------|:----------|
 |Open  | Wired      | Wired     | Wired      | Wired       | 0.3       | -0.64     |
 |Open  | Wired      | Open      | Wired      | Wired       | 0.32      | -0.22     |
 |Open  | Open       | Wired     | Wired      | Wired       | 2.81      | -5.39     |
@@ -312,7 +314,9 @@ For instance the following values where measured:
 
 Apparently, the contact check circuit current runs through the device under test causing a significant voltage drop if the DUT resistance is high or open. This voltage drop can be limited to about 1 volt (resistance time 300µA) by placing a shunt resistor of 3.3KΩ across the sense terminals.
 
-![](VoltageLimitShuntDiagram.png)
+![Voltage Limiting Shunt](VoltageLimitShuntDiagram.png)
+
+Fig. 3. Voltage limiting shunt diagram.
 
 A sense shunt is sufficient. Placing a shunt across the source terminals adversely affects the measurements.
 
@@ -708,7 +712,9 @@ Digital I/O Interface:
 - Absolute Maximum Sink Current (flowing into digital I/O bit): -11.0mA  
 - Maximum Sink Current: -5.0mA @ 0.7V
 
-![](TriggerDiagram.png)
+![Trigger Diagram](TriggerDiagram.png)
+
+Fig. 4. Digital input triggering diagram.
 
 <a name="Triggering"></a>
 ## Triggering
@@ -734,8 +740,8 @@ Measurement outcomes are signaled by lines 4 through 6 of the digital I/O. Value
 
 Upon a failure of the initial resistance measurement the instrument display the resistance, the high or low indication, the outcome value and status (see [status] above"></a>. The outcome bit values are:
 
-|Bit|Name|Hex Value|Decimal Value|Description|
-|----|----|----|----|
+|Bit|Name| Hex  | Decimal | Description |
+|:--|:---|:----:|:-------:|:------------|
 |B0|badStatus|0x01|1|Sampling returned bad status from the buffer| 
 |B1|badTimeStamps|0x02|2|Sampling returned bad time stamps|
 |B2|configFailed|0x04|4|Configuration failed|

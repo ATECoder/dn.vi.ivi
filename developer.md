@@ -6,7 +6,8 @@ These libraries includes the source code for accessing the Virtual Instrument So
 
 This [VI Repository] class libraries targets  VISA implementation such as [NI VISA] or [Keysight I/O Suite] from .NET Standard 2.0 using the [.Net Standard Compatibility Mode], which means that *... .NET Standard and .NET Core projects [can] reference .NET Framework libraries. Referencing .NET Framework libraries doesn't work for all projects, such as if the library uses Windows Presentation Foundation (WPF) APIs, but it does unblock many porting scenarios.*
 
-As noted by [Kelary.Ivi.Visa], IVI can be called via the [Kelary.Ivi.Visa] package from .NET 5.0 and above by pre-loading the support libraries. This library demonstrated that Ivi.Visa can be called from .NET Standard 2.0 by pre-loading the support libraries.
+As noted by [Kelary.Ivi.Visa]
+> IVI can be called via the [Kelary.Ivi.Visa] package from .NET 5.0 and above by pre-loading the support libraries. This library demonstrated that Ivi.Visa can be called from .NET Standard 2.0 by pre-loading the support libraries.
 
 #### [Kelary Notes](https://www.nuget.org/packages/Kelary.Ivi.Visa)
 

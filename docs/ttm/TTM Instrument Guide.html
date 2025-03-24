@@ -122,7 +122,8 @@ td, h1, h2, h3, h4, h5, p, ul, ol, li {
 <p><a name="Wiring"></a></p>
 <h3 id="wiring-the-device-under-test">Wiring the Device Under Test</h3>
 <p>The device under test must be connected to the TTM Instrument using a <a href="https://en.wikipedia.org/wiki/Four-terminal_sensing">Four-Terminal Sensing</a> circuit:</p>
-<p><img src="KelvinDiagram.jpg" alt="" /></p>
+<p><img src="KelvinDiagram.jpg" alt="Kelvin Diagram" /></p>
+<p>Fig 1. Four Wire Sensing Ciruit.</p>
 <p><a name="Remote_Local"></a></p>
 <h3 id="taking-the-instrument-from-remote-to-local-mode">Taking the instrument from Remote to Local Mode</h3>
 <p>When controlling the instrument from an application program the instrument goes into Remote mode.</p>
@@ -279,7 +280,8 @@ SrcA:+000.0000mV LimA:1.00000 A
 <p>The contact check function also detects an open circuit that may occur when a four-point probe is misplaced or misaligned. This relationship is shown schematically in the figure below, where R<sub>C</sub> is the resistance of the mechanical contact at the DUT, and R<sub>S</sub> is the series resistance of cables and any series relays.</p>
 <p>The leads contacts are checked if the maximum leads resistance (see below) is set to a non-zero positive value. Contacts are measured before taking the initial resistance measurement. The measurement is aborted and the lead resistances are displayed if the measured lead resistances exceeds the maximum limit.</p>
 <p>Check <a href="#open_source_lead_limit_menu">Open Source Lead Limit Menu</a> for a workaround that is aimed to overcome an issue with the standard contact check.</p>
-<p><img src="ContactCheckDiagram.png" alt="" /></p>
+<p><img src="ContactCheckDiagram.png" alt="Contact check diagram" /></p>
+<p>Fig. 2. Contact check Diagram.</p>
 <p>To enable and set the maximum allowed leads resistance:</p>
 <p>Selecting <em>Leads</em> from the <a href="#meter_menu">Meter Menu</a> displays the <a href="#leads_menu">Leads Menu</a> displaying the maximum resistance beyond which the leads are taken as open. The resistance is in Ohms between 10 and 999:</p>
 <ul>
@@ -294,41 +296,41 @@ SrcA:+000.0000mV LimA:1.00000 A
 <table>
 <thead>
 <tr>
-<th>Bit</th>
-<th>Name</th>
-<th>Hex Value</th>
-<th>Decimal Value</th>
-<th>Description</th>
+<th style="text-align: left;">Bit</th>
+<th style="text-align: left;">Name</th>
+<th style="text-align: center;">Hex</th>
+<th style="text-align: center;">Decimal</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>B0</td>
-<td>Pre-Start Measurement</td>
-<td>0x01</td>
-<td>1</td>
-<td>Check contacts upon receiving the trigger signal but before starting the test sequence.</td>
+<td style="text-align: left;">B0</td>
+<td style="text-align: left;">Pre-Start Measurement</td>
+<td style="text-align: center;">0x01</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">Check contacts upon receiving the trigger signal but before starting the test sequence.</td>
 </tr>
 <tr>
-<td>B1</td>
-<td>Pre-Initial-Resistance</td>
-<td>0x02</td>
-<td>1</td>
-<td>Check contacts before making the initial cold resistance measurement.</td>
+<td style="text-align: left;">B1</td>
+<td style="text-align: left;">Pre-Initial-Resistance</td>
+<td style="text-align: center;">0x02</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">Check contacts before making the initial cold resistance measurement.</td>
 </tr>
 <tr>
-<td>B2</td>
-<td>Pre-Thermal-Transient</td>
-<td>0x04</td>
-<td>2</td>
-<td>Check contacts before making the thermal transient measurement</td>
+<td style="text-align: left;">B2</td>
+<td style="text-align: left;">Pre-Thermal-Transient</td>
+<td style="text-align: center;">0x04</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">Check contacts before making the thermal transient measurement</td>
 </tr>
 <tr>
-<td>B3</td>
-<td>Pre-Final-Resistance</td>
-<td>0x08</td>
-<td>4</td>
-<td>Check contacts before making the final cold resistance measurement</td>
+<td style="text-align: left;">B3</td>
+<td style="text-align: left;">Pre-Final-Resistance</td>
+<td style="text-align: center;">0x08</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">Check contacts before making the final cold resistance measurement</td>
 </tr>
 </tbody>
 </table>
@@ -352,7 +354,6 @@ SrcA:+000.0000mV LimA:1.00000 A
 <p><a name="Contact_Check_Algorithm"></a></p>
 <h5 id="contact-check-algorithm">Contact Check Algorithm</h5>
 <p>The contact check function prevents measurements that may be in error due to excessive resistance in the force or sense leads when making remotely sensed (Kelvin) measurements. Potential sources for this resistance include a poor contact at the device under test (DUT), a failing relay contacts on a switching card or wires that are too long or thin. The contact check function also detects an open circuit that may occur when a four-point probe is misplaced or misaligned. This relationship is shown schematically in the figure below, where R<sub>C</sub> is the resistance of the mechanical contact at the DUT, and R<sub>S</sub> is the series resistance of cables and any series relays.</p>
-<p><img src="ContactCheckDiagram.png" alt="" /></p>
 <p>The leads contacts are checked if the maximum leads resistance (see below) is set to a non-zero positive value. Contacts are measured before taking the initial resistance measurement. The measurement is aborted and the lead resistances are displayed if the measured lead resistances exceeds the maximum limit.</p>
 <p>A custom contact check algorithm is implemented in the TTM firmware as a workaround for the instrument failure to detect an open lead if either the low or high source lead is open.</p>
 <p>The custom algorithm measured the DUT resistance measurement after conducting the standard contact check if this check did find open contacts. This measurement yields a high resistance if a source lead is open or if the DUT leads are open. Thus, this measurement can be used to detect an open source lead.</p>
@@ -378,92 +379,93 @@ lower than the high leads resistance.</li>
 <table>
 <thead>
 <tr>
-<th>DUT</th>
-<th>Source Low</th>
-<th>Sense Low</th>
-<th>Sense High</th>
-<th>Source High</th>
-<th>Max Volts</th>
-<th>Min Volts</th>
+<th style="text-align: left;">DUT</th>
+<th style="text-align: left;">Source Low</th>
+<th style="text-align: left;">Sense Low</th>
+<th style="text-align: left;">Sense High</th>
+<th style="text-align: left;">Source High</th>
+<th style="text-align: left;">Max Volts</th>
+<th style="text-align: left;">Min Volts</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Open</td>
-<td>Wired</td>
-<td>Wired</td>
-<td>Wired</td>
-<td>Wired</td>
-<td>0.3</td>
-<td>-0.64</td>
+<td style="text-align: left;">Open</td>
+<td style="text-align: left;">Wired</td>
+<td style="text-align: left;">Wired</td>
+<td style="text-align: left;">Wired</td>
+<td style="text-align: left;">Wired</td>
+<td style="text-align: left;">0.3</td>
+<td style="text-align: left;">-0.64</td>
 </tr>
 <tr>
-<td>Open</td>
-<td>Wired</td>
-<td>Open</td>
-<td>Wired</td>
-<td>Wired</td>
-<td>0.32</td>
-<td>-0.22</td>
+<td style="text-align: left;">Open</td>
+<td style="text-align: left;">Wired</td>
+<td style="text-align: left;">Open</td>
+<td style="text-align: left;">Wired</td>
+<td style="text-align: left;">Wired</td>
+<td style="text-align: left;">0.32</td>
+<td style="text-align: left;">-0.22</td>
 </tr>
 <tr>
-<td>Open</td>
-<td>Open</td>
-<td>Wired</td>
-<td>Wired</td>
-<td>Wired</td>
-<td>2.81</td>
-<td>-5.39</td>
+<td style="text-align: left;">Open</td>
+<td style="text-align: left;">Open</td>
+<td style="text-align: left;">Wired</td>
+<td style="text-align: left;">Wired</td>
+<td style="text-align: left;">Wired</td>
+<td style="text-align: left;">2.81</td>
+<td style="text-align: left;">-5.39</td>
 </tr>
 <tr>
-<td>3.3KΩ</td>
-<td>Open</td>
-<td>Wired</td>
-<td>Wired</td>
-<td>Wired</td>
-<td>1.07</td>
-<td>-1.15</td>
+<td style="text-align: left;">3.3KΩ</td>
+<td style="text-align: left;">Open</td>
+<td style="text-align: left;">Wired</td>
+<td style="text-align: left;">Wired</td>
+<td style="text-align: left;">Wired</td>
+<td style="text-align: left;">1.07</td>
+<td style="text-align: left;">-1.15</td>
 </tr>
 <tr>
-<td>Open</td>
-<td>Wired</td>
-<td>Open</td>
-<td>Open</td>
-<td>Wired</td>
-<td>0.12</td>
-<td>-0.16</td>
+<td style="text-align: left;">Open</td>
+<td style="text-align: left;">Wired</td>
+<td style="text-align: left;">Open</td>
+<td style="text-align: left;">Open</td>
+<td style="text-align: left;">Wired</td>
+<td style="text-align: left;">0.12</td>
+<td style="text-align: left;">-0.16</td>
 </tr>
 <tr>
-<td>Open</td>
-<td>Open</td>
-<td>Wired</td>
-<td>Wired</td>
-<td>Open</td>
-<td>1.29</td>
-<td>-2.73</td>
+<td style="text-align: left;">Open</td>
+<td style="text-align: left;">Open</td>
+<td style="text-align: left;">Wired</td>
+<td style="text-align: left;">Wired</td>
+<td style="text-align: left;">Open</td>
+<td style="text-align: left;">1.29</td>
+<td style="text-align: left;">-2.73</td>
 </tr>
 <tr>
-<td>3.3KΩ</td>
-<td>Open</td>
-<td>Wired</td>
-<td>Wired</td>
-<td>Open</td>
-<td>1.09</td>
-<td>-1.33</td>
+<td style="text-align: left;">3.3KΩ</td>
+<td style="text-align: left;">Open</td>
+<td style="text-align: left;">Wired</td>
+<td style="text-align: left;">Wired</td>
+<td style="text-align: left;">Open</td>
+<td style="text-align: left;">1.09</td>
+<td style="text-align: left;">-1.33</td>
 </tr>
 <tr>
-<td>~2Ω</td>
-<td>any</td>
-<td>any</td>
-<td>any</td>
-<td>any</td>
-<td>&lt; 50mv</td>
-<td>&lt; 50mv</td>
+<td style="text-align: left;">~2Ω</td>
+<td style="text-align: left;">any</td>
+<td style="text-align: left;">any</td>
+<td style="text-align: left;">any</td>
+<td style="text-align: left;">any</td>
+<td style="text-align: left;">&lt; 50mv</td>
+<td style="text-align: left;">&lt; 50mv</td>
 </tr>
 </tbody>
 </table>
 <p>Apparently, the contact check circuit current runs through the device under test causing a significant voltage drop if the DUT resistance is high or open. This voltage drop can be limited to about 1 volt (resistance time 300µA) by placing a shunt resistor of 3.3KΩ across the sense terminals.</p>
-<p><img src="VoltageLimitShuntDiagram.png" alt="" /></p>
+<p><img src="VoltageLimitShuntDiagram.png" alt="Voltage Limiting Shunt" /></p>
+<p>Fig. 3. Voltage limiting shunt diagram.</p>
 <p>A sense shunt is sufficient. Placing a shunt across the source terminals adversely affects the measurements.</p>
 <p><a name="Meter_Shunt_Menu"></a></p>
 <h3 id="shunt-menu">Shunt Menu</h3>
@@ -907,7 +909,8 @@ lower than the high leads resistance.</li>
 <li>Absolute Maximum Sink Current (flowing into digital I/O bit): -11.0mA</li>
 <li>Maximum Sink Current: -5.0mA @ 0.7V</li>
 </ul>
-<p><img src="TriggerDiagram.png" alt="" /></p>
+<p><img src="TriggerDiagram.png" alt="Trigger Diagram" /></p>
+<p>Fig. 4. Digital input triggering diagram.</p>
 <p><a name="Triggering"></a></p>
 <h2 id="triggering">Triggering</h2>
 <p>The instrument provides full hand shake for controlling the measurement by way of the <a href="#F186A3EE9ED4B6DB25D2650896E4DA3333AE075B">Digital I/O</a> port:</p>
@@ -931,69 +934,69 @@ lower than the high leads resistance.</li>
 <table>
 <thead>
 <tr>
-<th>Bit</th>
-<th>Name</th>
-<th>Hex Value</th>
-<th>Decimal Value</th>
-<th>Description</th>
+<th style="text-align: left;">Bit</th>
+<th style="text-align: left;">Name</th>
+<th style="text-align: center;">Hex</th>
+<th style="text-align: center;">Decimal</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>B0</td>
-<td>badStatus</td>
-<td>0x01</td>
-<td>1</td>
-<td>Sampling returned bad status from the buffer</td>
+<td style="text-align: left;">B0</td>
+<td style="text-align: left;">badStatus</td>
+<td style="text-align: center;">0x01</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">Sampling returned bad status from the buffer</td>
 </tr>
 <tr>
-<td>B1</td>
-<td>badTimeStamps</td>
-<td>0x02</td>
-<td>2</td>
-<td>Sampling returned bad time stamps</td>
+<td style="text-align: left;">B1</td>
+<td style="text-align: left;">badTimeStamps</td>
+<td style="text-align: center;">0x02</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">Sampling returned bad time stamps</td>
 </tr>
 <tr>
-<td>B2</td>
-<td>configFailed</td>
-<td>0x04</td>
-<td>4</td>
-<td>Configuration failed</td>
+<td style="text-align: left;">B2</td>
+<td style="text-align: left;">configFailed</td>
+<td style="text-align: center;">0x04</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">Configuration failed</td>
 </tr>
 <tr>
-<td>B3</td>
-<td>initiationFailed</td>
-<td>0x08</td>
-<td>8</td>
-<td>Pulse initiation failed</td>
+<td style="text-align: left;">B3</td>
+<td style="text-align: left;">initiationFailed</td>
+<td style="text-align: center;">0x08</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: left;">Pulse initiation failed</td>
 </tr>
 <tr>
-<td>B4</td>
-<td>loadFailed</td>
-<td>0x10</td>
-<td>16</td>
-<td>Scripts not loaded completely</td>
+<td style="text-align: left;">B4</td>
+<td style="text-align: left;">loadFailed</td>
+<td style="text-align: center;">0x10</td>
+<td style="text-align: center;">16</td>
+<td style="text-align: left;">Scripts not loaded completely</td>
 </tr>
 <tr>
-<td>B5</td>
-<td>notMeasured</td>
-<td>0x20</td>
-<td>32</td>
-<td>Measurement not completed</td>
+<td style="text-align: left;">B5</td>
+<td style="text-align: left;">notMeasured</td>
+<td style="text-align: center;">0x20</td>
+<td style="text-align: center;">32</td>
+<td style="text-align: left;">Measurement not completed</td>
 </tr>
 <tr>
-<td>B6</td>
-<td>measurementFailed</td>
-<td>0x40</td>
-<td>64</td>
-<td>Measurement failed (e.g., infinite reading due to open sense lines)</td>
+<td style="text-align: left;">B6</td>
+<td style="text-align: left;">measurementFailed</td>
+<td style="text-align: center;">0x40</td>
+<td style="text-align: center;">64</td>
+<td style="text-align: left;">Measurement failed (e.g., infinite reading due to open sense lines)</td>
 </tr>
 <tr>
-<td>B7</td>
-<td>openLeads</td>
-<td>0x80</td>
-<td>128</td>
-<td>open leads</td>
+<td style="text-align: left;">B7</td>
+<td style="text-align: left;">openLeads</td>
+<td style="text-align: center;">0x80</td>
+<td style="text-align: center;">128</td>
+<td style="text-align: left;">open leads</td>
 </tr>
 </tbody>
 </table>
