@@ -12,45 +12,45 @@ public interface IVisaView : IDisposable
 {
     /// <summary> Gets or sets the visa session base. </summary>
     /// <value> The visa session base. </value>
-    VisaSessionBase? VisaSessionBase { get; }
+    public VisaSessionBase? VisaSessionBase { get; }
 
     /// <summary> Gets or sets the display view. </summary>
     /// <value> The display view. </value>
-    DisplayView? DisplayView { get; }
+    public DisplayView? DisplayView { get; }
 
     /// <summary> Gets or sets the status view. </summary>
     /// <value> The status view. </value>
-    StatusView? StatusView { get; }
+    public StatusView? StatusView { get; }
 
     /// <summary> Gets or sets the number of views. </summary>
     /// <value> The number of views. </value>
-    int ViewsCount { get; }
+    public int ViewsCount { get; }
 
     /// <summary> Adds (inserts) a View. </summary>
     /// <param name="view"> The control. </param>
-    void AddView( VisaViewControl view );
+    public void AddView( VisaViewControl view );
 
     /// <summary> Adds (inserts) a View. </summary>
     /// <param name="view">        The View control. </param>
     /// <param name="viewIndex">   Zero-based index of the view. </param>
     /// <param name="viewName">    Name of the view. </param>
     /// <param name="viewCaption"> The view caption. </param>
-    void AddView( Control view, int viewIndex, string viewName, string viewCaption );
+    public void AddView( Control view, int viewIndex, string viewName, string viewCaption );
 
     /// <summary> Adds (inserts) a View. </summary>
     /// <param name="view">        The control. </param>
     /// <param name="viewIndex">   Zero-based index of the view. </param>
     /// <param name="viewName">    The name of the view. </param>
     /// <param name="viewCaption"> The caption of the view. </param>
-    void AddView( isr.WinControls.ModelViewLoggerBase view, int viewIndex, string viewName, string viewCaption );
+    public void AddView( isr.WinControls.ModelViewLoggerBase view, int viewIndex, string viewName, string viewCaption );
 
     /// <summary> Gets or sets the number of internal resource names. </summary>
     /// <value> The number of internal resource names. </value>
-    int ResourceNamesCount { get; }
+    public int ResourceNamesCount { get; }
 
     /// <summary> Gets or sets the name of the internal selected resource. </summary>
     /// <value> The name of the internal selected resource. </value>
-    string SelectedResourceName { get; }
+    public string SelectedResourceName { get; }
 }
 
 /// <summary> A visa view control. </summary>

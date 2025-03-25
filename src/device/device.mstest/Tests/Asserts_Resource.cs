@@ -16,7 +16,7 @@ public sealed partial class Asserts
 
         if ( Asserts.TraceListener is null ) throw new ArgumentException( nameof( Asserts.TraceListener ) );
 
-        if ( !AssetIfTraceErrorMessages ) return;
+        if ( !AssertIfTraceErrorMessages ) return;
 
         string payload = "Device message";
         _ = cc.isr.VI.SessionLogger.Instance.LogWarning( payload );

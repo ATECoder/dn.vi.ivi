@@ -3,12 +3,12 @@ using cc.isr.Std.Tests;
 using cc.isr.Std.Tests.Extensions;
 using cc.isr.VI.Pith.Settings;
 
-namespace cc.isr.VI.Device.Tests.Base;
+namespace cc.isr.VI.DeviceWinControls.Tests.Base;
 
-/// <summary>  A Visa Session service request tests base class. </summary>
+/// <summary>  A Visa View Interface tests base class. </summary>
 /// <remarks>   David, 2021-03-25. </remarks>
 [TestClass]
-public abstract class VisaSessionServiceRequestTests
+public abstract class IVisaViewTests
 {
     #region " construction and cleanup "
 
@@ -40,7 +40,7 @@ public abstract class VisaSessionServiceRequestTests
 
             try
             {
-                CleanupBaseTestClass();
+                CleanupTestBaseClass();
             }
             finally
             {
@@ -51,21 +51,21 @@ public abstract class VisaSessionServiceRequestTests
 
     /// <summary> Cleans up the test class after all tests in the class have run. </summary>
     /// <remarks> Use <see cref="CleanupTestClass"/> to run code after all tests in the class have run. </remarks>
-    public static void CleanupBaseTestClass()
+    public static void CleanupTestBaseClass()
     { }
 
     private IDisposable? _loggerScope;
 
     /// <summary>   Gets or sets the trace listener. </summary>
     /// <value> The trace listener. </value>
-    public LoggerTraceListener<VisaSessionServiceRequestTests>? TraceListener { get; set; }
+    public LoggerTraceListener<IVisaViewTests>? TraceListener { get; set; }
 
     /// <summary> Initializes the test class instance before each test runs. </summary>											   
     [TestInitialize()]
     public virtual void InitializeBeforeEachTest()
     {
         Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {TimeZoneInfo.Local}" );
-        Console.WriteLine( $"Testing {typeof( VisaSessionBase ).Assembly.FullName}" );
+        Console.WriteLine( $"Testing {typeof( VisaSession ).Assembly.FullName}" );
 
         // assert reading of test settings from the configuration file.
         Assert.IsNotNull( this.TestSiteSettings, $"{nameof( this.TestSiteSettings )} should not be null." );
@@ -84,7 +84,7 @@ public abstract class VisaSessionServiceRequestTests
         if ( Logger is not null )
         {
             this._loggerScope = Logger.BeginScope( this.TestContext?.TestName ?? string.Empty );
-            this.TraceListener = new LoggerTraceListener<VisaSessionServiceRequestTests>( Logger );
+            this.TraceListener = new LoggerTraceListener<IVisaViewTests>( Logger );
             _ = Trace.Listeners.Add( this.TraceListener );
         }
 
@@ -118,7 +118,7 @@ public abstract class VisaSessionServiceRequestTests
 
     /// <summary>   Gets a logger instance for this category. </summary>
     /// <value> The logger. </value>
-    public static ILogger<VisaSessionServiceRequestTests>? Logger { get; } = LoggerProvider.CreateLogger<VisaSessionServiceRequestTests>();
+    public static ILogger<IVisaViewTests>? Logger { get; } = LoggerProvider.CreateLogger<IVisaViewTests>();
 
     #endregion
 
@@ -138,56 +138,14 @@ public abstract class VisaSessionServiceRequestTests
 
     #endregion
 
-    #region " session service request handling "
+    #region " trace message tests "
 
-    /// <summary>   (Unit Test Method) service request handling should toggle. </summary>
-    /// <remarks>   David, 2021-07-04. </remarks>
-    [TestMethod( "01. Service Request Handling Should Toggle" )]
-    public void ServiceRequestHandlingShouldToggle()
+    /// <summary>   (Unit Test Method) tests that a trace message should be queued. </summary>
+    /// <remarks>   Checks if the a trace message is added to the trace listener. </remarks>
+    [TestMethod( "01. Trace Message Should Be Queued" )]
+    public void TraceMessageShouldBeQueued()
     {
-        using VisaSession session = VisaSession.Create();
-        Assert.IsNotNull( session.Session );
-        session.Session.ReadSettings( this.GetType(), ".Session" );
-        Assert.IsTrue( session.Session.TimingSettings.Exists );
-
-        try
-        {
-            Asserts.AssertVisaSessionShouldOpen( session, this.ResourceSettings );
-            Asserts.AssertServiceRequestHandlingShouldToggle( session.Session );
-        }
-        catch
-        {
-            throw;
-        }
-        finally
-        {
-            Asserts.AssertVisaSessionShouldClose( session );
-        }
-    }
-
-    /// <summary>   (Unit Test Method) should wait for operation completion. </summary>
-    /// <remarks>   David, 2021-07-04. </remarks>
-    [TestMethod( "02. Operation Completion Should Wait For" )]
-    public void OperationCompletionShouldWaitFor()
-    {
-        using VisaSession session = VisaSession.Create();
-        Assert.IsNotNull( session.Session );
-        session.Session.ReadSettings( this.GetType(), ".Session" );
-        Assert.IsTrue( session.Session.TimingSettings.Exists );
-
-        try
-        {
-            Asserts.AssertVisaSessionShouldOpen( session, this.ResourceSettings );
-            Asserts.AssertSessionShouldWaitForServiceRequestOperationCompletion( session.Session, session.Session.OperationCompleteCommand );
-        }
-        catch
-        {
-            throw;
-        }
-        finally
-        {
-            Asserts.AssertVisaSessionShouldClose( session );
-        }
+        Asserts.AssertTraceMessageShouldBeQueued();
     }
 
     #endregion

@@ -1,4 +1,6 @@
 using System;
+using cc.isr.Std.Tests;
+using cc.isr.VI.Pith.Settings;
 
 namespace cc.isr.VI.DeviceWinControls.Tests;
 
@@ -78,7 +80,7 @@ public class AllSettings
     /// <returns>   The new instance. </returns>
     private AppSettingsScribe CreateScribe( AssemblyFileInfo settingsFileInfo )
     {
-        AppSettingsScribe scribe = new( [this.TestSiteSettings, this.DisplayViewSettings],
+        AppSettingsScribe scribe = new( [this.TestSiteSettings, this.ResourceSettings, this.DisplayViewSettings],
             settingsFileInfo.AppContextAssemblyFilePath!, settingsFileInfo.AllUsersAssemblyFilePath! )
         {
             AllUsersSettingsPath = settingsFileInfo.AllUsersAssemblyFilePath,
@@ -120,6 +122,8 @@ public class AllSettings
     {
         if ( this.TestSiteSettings is null || !this.TestSiteSettings.Exists )
             details = $"{nameof( this.TestSiteSettings )} not found.";
+        else if ( this.ResourceSettings is null || !this.ResourceSettings.Exists )
+            details = $"{nameof( this.ResourceSettings )} not found.";
         else if ( this.DisplayViewSettings is null || !this.DisplayViewSettings.Exists )
             details = $"{nameof( AllSettings.DisplayViewSettings )} not found.";
         else
@@ -135,6 +139,10 @@ public class AllSettings
     /// <summary>   Gets or sets the test site settings. </summary>
     /// <value> The test site settings. </value>
     internal TestSiteSettings TestSiteSettings { get; private set; } = new();
+
+    /// <summary>   Gets or sets the resource settings. </summary>
+    /// <value> The resource settings. </value>
+    internal ResourceSettings ResourceSettings { get; set; } = new();
 
     /// <summary>   Gets or sets the display view settings. </summary>
     /// <value> The display view settings. </value>

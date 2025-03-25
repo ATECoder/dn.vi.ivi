@@ -1,21 +1,9 @@
-namespace cc.isr.VI.Device.Tests;
-/// <summary>
-/// Test manager for <see cref="VisaSessionBase"/> and <see cref="SubsystemBase"/> Tests.
-/// </summary>
-/// <remarks>
-/// David, 2019-12-12 <para>
-/// (c) 2019 Integrated Scientific Resources, Inc. All rights reserved. </para><para>
-/// Licensed under The MIT License.</para>
-/// </remarks>
+using System;
+
+namespace cc.isr.VI.DeviceWinControls.Tests;
+
 public sealed partial class Asserts
 {
-    /// <summary>
-    /// Constructor that prevents a default instance of this class from being created.
-    /// </summary>
-    private Asserts()
-    {
-    }
-
     private static cc.isr.Std.Tests.TraceMessageListener? TraceListener { get; set; }
     /// <summary>   Defines the trace listener. </summary>
     /// <remarks>   David, 2021-06-29. </remarks>
@@ -58,6 +46,36 @@ public sealed partial class Asserts
             Assert.IsFalse( Asserts.TraceListener.Any( TraceEventType.Warning ),
             $"{nameof( Asserts.TraceListener )} should have no {TraceEventType.Warning} messages:" +
             $"\n{string.Join( "\n", [.. Asserts.TraceListener!.Messages[TraceEventType.Warning].ToArray()] )}" );
+    }
+
+    /// <summary>   Asserts that a trace message should be queued. </summary>
+    /// <remarks>   David, 2021-07-07. </remarks>
+    public static void AssertTraceMessageShouldBeQueued()
+    {
+        if ( Asserts.TraceListener is null ) throw new ArgumentException( nameof( Asserts.TraceListener ) );
+
+        if ( !AssertIfTraceErrorMessages ) return;
+
+        string payload = "Device message";
+        _ = cc.isr.VI.SessionLogger.Instance.LogWarning( payload );
+
+        // with the new talker, the device identifies the following libraries: 
+        // 0x0100 core agnostic; 0x01006 vi device and 0x01026 Keithley Meter
+        // so these test looks for the first warning
+        int fetchNumber = 0;
+        if ( TraceListener.Messages.TryGetValue( TraceEventType.Warning, out System.Collections.Generic.List<string>? traceMessages ) )
+            fetchNumber += 1;
+
+        if ( traceMessages is null )
+            Assert.Fail( $"Failed tracing the warning message." );
+
+        string traceMessage = traceMessages[0];
+
+        if ( string.IsNullOrWhiteSpace( traceMessage ) )
+            Assert.Fail( $"{payload} failed to trace message {fetchNumber}" );
+
+        Assert.AreEqual( 1, traceMessages.Count, $"{payload} expected on warning message." );
+        Assert.IsTrue( traceMessage.Contains( payload ), $"'{payload}' should be contained in the trace message {traceMessage}" );
     }
 
 }

@@ -1,4 +1,4 @@
-<Project Sdk="MSTest.Sdk">
+﻿<Project Sdk="MSTest.Sdk">
 
   <PropertyGroup>
     <EnablePreviewFeatures>true</EnablePreviewFeatures>
@@ -78,6 +78,12 @@
     <!-- Suppress warning about newton soft 9.0.1 which is part of the .net fx testing extensions code coverage. -->
     <NuGetAuditSuppress Include="https://github.com/advisories/GHSA-5crp-9r3c-p9vr" />
     <None Update="cc.isr.VI.DeviceWinControls.MSTest.Settings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="cc.isr.VI.DeviceWinControls.MSTest.Serilog.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="cc.isr.VI.DeviceWinControls.MSTest.Session.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <!-- Already included with the default profile of the MSTest.SDK

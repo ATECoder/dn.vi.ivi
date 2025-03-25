@@ -1,7 +1,6 @@
 using System;
 using cc.isr.Std.Tests;
 using cc.isr.Std.Tests.Extensions;
-using cc.isr.VI.Device.Tests;
 using cc.isr.VI.Pith;
 using cc.isr.VI.Pith.Settings;
 
