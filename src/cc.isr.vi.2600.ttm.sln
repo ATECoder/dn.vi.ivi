@@ -233,6 +233,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cc.isr.VI.Tsp.K2600.Ttm.Leg
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IviVisaCompatibilityTester", "kelary\IviVisaCompatibiityTester\IviVisaCompatibilityTester.csproj", "{B8D3A47C-0DE1-A63A-F204-524B40814D8C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cc.isr.Visa.Console", "visa\visa.console\cc.isr.Visa.Console.csproj", "{580FD653-64E2-62DB-1BF2-EDB88968E374}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -1215,6 +1217,18 @@ Global
 		{B8D3A47C-0DE1-A63A-F204-524B40814D8C}.Release|x64.Build.0 = Release|Any CPU
 		{B8D3A47C-0DE1-A63A-F204-524B40814D8C}.Release|x86.ActiveCfg = Release|Any CPU
 		{B8D3A47C-0DE1-A63A-F204-524B40814D8C}.Release|x86.Build.0 = Release|Any CPU
+		{580FD653-64E2-62DB-1BF2-EDB88968E374}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{580FD653-64E2-62DB-1BF2-EDB88968E374}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{580FD653-64E2-62DB-1BF2-EDB88968E374}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{580FD653-64E2-62DB-1BF2-EDB88968E374}.Debug|x64.Build.0 = Debug|Any CPU
+		{580FD653-64E2-62DB-1BF2-EDB88968E374}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{580FD653-64E2-62DB-1BF2-EDB88968E374}.Debug|x86.Build.0 = Debug|Any CPU
+		{580FD653-64E2-62DB-1BF2-EDB88968E374}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{580FD653-64E2-62DB-1BF2-EDB88968E374}.Release|Any CPU.Build.0 = Release|Any CPU
+		{580FD653-64E2-62DB-1BF2-EDB88968E374}.Release|x64.ActiveCfg = Release|Any CPU
+		{580FD653-64E2-62DB-1BF2-EDB88968E374}.Release|x64.Build.0 = Release|Any CPU
+		{580FD653-64E2-62DB-1BF2-EDB88968E374}.Release|x86.ActiveCfg = Release|Any CPU
+		{580FD653-64E2-62DB-1BF2-EDB88968E374}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1310,6 +1324,7 @@ Global
 		{20F0E206-AC84-4693-AEF6-5912C1A4DE5C} = {4495C774-04F5-487A-BCEA-FB61B64B7724}
 		{A889A963-B190-4A23-876B-92D56C15E2AB} = {4495C774-04F5-487A-BCEA-FB61B64B7724}
 		{B8D3A47C-0DE1-A63A-F204-524B40814D8C} = {4E8D5E4B-DA9C-4E0C-BABC-F5EA648DFCC9}
+		{580FD653-64E2-62DB-1BF2-EDB88968E374} = {1DE6370F-3D44-4C27-8FC0-8C5BBCACABED}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {629A4500-0A50-4F53-88C6-402E2360A282}

@@ -3,7 +3,7 @@
     <TargetFrameworks>net9.0-windows</TargetFrameworks>
     <OutputType>WinExe</OutputType>
     <UseWindowsForms>true</UseWindowsForms>
-    <StartupObject>cc.isr.Visa.IO.Demo.Program</StartupObject>
+    <StartupObject>cc.isr.Visa.Console.Program</StartupObject>
 
     <LangVersion>latest</LangVersion>
 
@@ -11,8 +11,8 @@
     <Nullable>enable</Nullable>
 
     <!-- Assembly Info -->
-    <RootNamespace>cc.isr.Visa.IO.Demo</RootNamespace>
-    <Description>VISA input and output demo</Description>
+    <RootNamespace>cc.isr.Visa.Console</RootNamespace>
+    <Description>VISA console</Description>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <ApplicationIcon>..\..\items\favicon.ico</ApplicationIcon>
 
@@ -24,6 +24,7 @@
     <OptionCompare>Binary</OptionCompare>
     <OptionStrict>On</OptionStrict>
     <OptionInfer>Off</OptionInfer>
+
 
     <!-- Signature -->
     <SignAssembly>true</SignAssembly>
@@ -60,17 +61,17 @@
   </Choose>
 
   <ItemGroup>
-    <Content Include="cc.isr.Visa.IO.Demo.Serilog.json">
+    <Content Include="cc.isr.Visa.Console.Serilog.json">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>isr.Visa.IO.Demo.SerilogSettings.tt</DependentUpon>
+      <DependentUpon>isr.Visa.Console.SerilogSettings.tt</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Update="cc.isr.Visa.IO.Demo.SerilogSettings.tt">
+    <None Update="cc.isr.Visa.Console.SerilogSettings.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>isr.Visa.IO.Demo.Serilog.json</LastGenOutput>
+      <LastGenOutput>isr.Visa.Console.Serilog.json</LastGenOutput>
     </None>
-    <Content Include="cc.isr.Visa.IO.Demo.Settings.json">
+    <Content Include="cc.isr.Visa.Console.Settings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

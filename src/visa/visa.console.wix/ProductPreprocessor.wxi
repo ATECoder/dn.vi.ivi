@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Include>
+  <!-- Preprocessor variables used within this product -->
+  <?ifndef ProductName ?>
+    <?define ProductNameBase      = 'isr.Visa.Console' ?>
+    <?if $(var.build) = "rc" ?>
+      <?define ProductDescription  = 'Visa Console Release Candidate' ?>
+      <?define ProductName        = '$(var.ProductNameBase).rc' ?>
+      <?define UpgradeCode        = '795ba165-8877-4b8a-89ad-576493fb9d05' ?>
+      <?define BundleCode         = 'deb804ca-df7e-47a3-833b-a309bd7b8032' ?>
+      <?define CommandLine        = '' ?>
+      <?define BinFolderName       = 'rc' ?>
+    <?else ?>
+      <?define ProductDescription  = 'Visa Console' ?>
+      <?define ProductName        = '$(var.ProductNameBase)' ?>
+      <?define UpgradeCode        = 'a89f8d0f-e9c4-4903-9ed8-f0b1f307a937' ?>
+      <?define BundleCode         = '56b9b30c-1e1f-434d-ba52-bf50b6fa84ce' ?>
+      <?define CommandLine        = '' ?>
+      <?define BinFolderName       = 'rtm' ?>
+    <?endif?>
+    <?define ProductAuthor       = 'Integrated Scientific Resources, Inc.' ?>
+    <?define ProductManufacturer = 'Integrated.Scientific.Resources' ?>
+    <?define ProductVersion      = '!(bind.assemblyVersion.isr.Visa.WinControls.dll)' ?>
+	<!-- awaits VS 2022 WiX tool set fix
+    <?define ProductVersion      = '!(bind.assemblyVersion.fid.isr.Visa.Console.exe)' ?>
+	-->
+    <?define ProductCopyright    = '(c) 2021 by Integrated Scientific Resources, Inc. All rights reserved.' ?>
+    <?define ProductPlatform     = $(var.isr.Visa.Console.Platform) ?>
+    <?define TargetFramework     = 'net8.0-windows' ?>
+    <?define DocsFolderName      = 'Docs' ?>
+    <?define ProductIcon         = '$(var.isr.Visa.Console.ProjectDir)..\..\..\src\items\favicon.ico' ?>
+    <?define ProductLogo         = '$(var.isr.Visa.Console.ProjectDir)..\..\..\src\items\logo48.png' ?>
+    <?define HelpURL             = 'http:\www.integratedscientificresources.com' ?>
+    <?define LicenseFilePath     = '$(var.isr.Visa.Console.ProjectDir)..\..\..\src\items\license.rtf' ?>
+    <?define UpdateBaseURL       = 'ftp://irctt%40integratedscientificresources.com:IrcTT.201x@ftp.integratedscientificresources.com/Taper/' ?>
+    <?define UpdateSetupURL      = '$(var.UpdateBaseURL)$(var.ProductName).Setup.msi' ?>
+    <?define SourceRegistryKey   = 'Software\$(var.ProductManufacturer)\$(var.ProductName)\SourceCodeFile' ?>
+    <!--
+    <?define ProductVersion      = '!(bind.assemblyVersion.isr.Visa.WinControls.dll)' ?>
+    -->
+  <?endif?>
+</Include>

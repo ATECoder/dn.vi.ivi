@@ -1,0 +1,14 @@
+{
+  "Settings": {
+    "ApplicationLogLevel": "Trace",
+    "AssemblyLogLevel": "Trace",
+    "MessageDisplayLevel": "Verbose",
+    "MultiSessionEnabled": true,
+    "ServiceRequestEnabled": true,
+    "ResourceName": "tcpip0::192.168.0.254::gpib0,26::INSTR",
+    "ResourceName2601": "tcpip0::192.168.0.150::inst0::INSTR",
+    "ResourceName2602": "tcpip0::192.168.0.254::gpib0,26::INSTR",
+    "ResourceName7510": "tcpip0::192.168.0.144::inst0::INSTR",
+    "ServiceRequestCommands": "*SRE 16|SS,0"
+  }
+}
