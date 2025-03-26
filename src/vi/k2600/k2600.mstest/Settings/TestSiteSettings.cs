@@ -19,7 +19,9 @@ internal sealed class TestSiteSettings : isr.Std.Tests.TestSiteSettings
     /// <remarks>   2024-08-03. </remarks>
     public void ReadSettings()
     {
-        AppSettingsScribe.ReadSettings( Settings.AllSettings.Instance.Scribe!.AllUsersSettingsPath!, nameof( Settings.TestSiteSettings ), Settings.AllSettings.Instance.TestSiteSettings );
+        AppSettingsScribe.ReadSettings( Settings.AllSettings.Instance.Scribe!.AllUsersSettingsPath!, nameof( Settings.TestSiteSettings ),
+            Settings.AllSettings.Instance.TestSiteSettings,
+            AppSettingsScribe.DefaultSerializerOptions, AppSettingsScribe.DefaultDocumentOptions );
     }
 
     #endregion

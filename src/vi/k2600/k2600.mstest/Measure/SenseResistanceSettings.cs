@@ -11,7 +11,9 @@ public class SenseResistanceSettings() : VI.Settings.SenseSubsystemSettings
     /// <remarks>   2024-08-03. </remarks>
     public void ReadSettings()
     {
-        AppSettingsScribe.ReadSettings( Settings.AllSettings.Instance.Scribe!.AllUsersSettingsPath!, nameof( SenseResistanceSettings ), Settings.AllSettings.Instance.SenseResistanceSettings );
+        AppSettingsScribe.ReadSettings( Settings.AllSettings.Instance.Scribe!.AllUsersSettingsPath!, nameof( SenseResistanceSettings ),
+            Settings.AllSettings.Instance.SenseResistanceSettings,
+            AppSettingsScribe.DefaultSerializerOptions, AppSettingsScribe.DefaultDocumentOptions );
     }
 
     #endregion

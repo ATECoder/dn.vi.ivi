@@ -31,7 +31,8 @@ public class Settings : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
         Settings.TtmSettings.ReadSettings( Settings.TtmSettings.GetType(), ".Driver" );
         Settings.ControlSettings.ReadSettings( Settings.ControlSettings.GetType(), ".Lot" );
         Settings ti = new();
-        AppSettingsScribe.ReadSettings( Settings.SettingsFileInfo.AllUsersAssemblyFilePath!, nameof( Settings ), ti );
+        AppSettingsScribe.ReadSettings( Settings.SettingsFileInfo.AllUsersAssemblyFilePath!, nameof( Settings ), ti,
+            AppSettingsScribe.DefaultSerializerOptions, AppSettingsScribe.DefaultDocumentOptions );
         return ti;
     }
 

@@ -28,7 +28,8 @@ public class Settings : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
     private static Settings CreateInstance()
     {
         Settings ti = new();
-        AppSettingsScribe.ReadSettings( Settings.SettingsFileInfo.AllUsersAssemblyFilePath!, nameof( Settings ), ti );
+        AppSettingsScribe.ReadSettings( Settings.SettingsFileInfo.AllUsersAssemblyFilePath!, nameof( Settings ), ti,
+            AppSettingsScribe.DefaultSerializerOptions, AppSettingsScribe.DefaultDocumentOptions );
         return ti;
     }
 

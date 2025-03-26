@@ -11,7 +11,9 @@ public class SourceCurrentSettings() : VI.Settings.SourceSubsystemSettings
     /// <remarks>   2024-08-03. </remarks>
     public void ReadSettings()
     {
-        AppSettingsScribe.ReadSettings( Settings.AllSettings.Instance.Scribe!.AllUsersSettingsPath!, nameof( SourceCurrentSettings ), Settings.AllSettings.Instance.SourceCurrentSettings );
+        AppSettingsScribe.ReadSettings( Settings.AllSettings.Instance.Scribe!.AllUsersSettingsPath!, nameof( SourceCurrentSettings ),
+            Settings.AllSettings.Instance.SourceCurrentSettings,
+            AppSettingsScribe.DefaultSerializerOptions, AppSettingsScribe.DefaultDocumentOptions );
     }
 
     #endregion

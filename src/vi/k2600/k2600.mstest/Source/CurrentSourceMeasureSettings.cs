@@ -103,7 +103,9 @@ public class CurrentSourceMeasureSettings() : INotifyPropertyChanged
     /// <remarks>   2024-08-03. </remarks>
     public void ReadSettings()
     {
-        AppSettingsScribe.ReadSettings( Settings.AllSettings.Instance.Scribe!.AllUsersSettingsPath!, nameof( CurrentSourceMeasureSettings ), Settings.AllSettings.Instance.CurrentSourceMeasureSettings );
+        AppSettingsScribe.ReadSettings( Settings.AllSettings.Instance.Scribe!.AllUsersSettingsPath!, nameof( CurrentSourceMeasureSettings ),
+            Settings.AllSettings.Instance.CurrentSourceMeasureSettings,
+            AppSettingsScribe.DefaultSerializerOptions, AppSettingsScribe.DefaultDocumentOptions );
     }
 
     #endregion

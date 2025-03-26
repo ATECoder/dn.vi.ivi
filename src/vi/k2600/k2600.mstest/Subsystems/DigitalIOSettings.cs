@@ -19,7 +19,9 @@ public class DigitalIOSettings : VI.Settings.DigitalIOSubsystemSettings
     /// <remarks>   2024-08-03. </remarks>
     public void ReadSettings()
     {
-        AppSettingsScribe.ReadSettings( Settings.AllSettings.Instance.Scribe!.AllUsersSettingsPath!, nameof( DigitalIOSettings ), Settings.AllSettings.Instance.DigitalIOSettings );
+        AppSettingsScribe.ReadSettings( Settings.AllSettings.Instance.Scribe!.AllUsersSettingsPath!, nameof( DigitalIOSettings ),
+            Settings.AllSettings.Instance.DigitalIOSettings,
+            AppSettingsScribe.DefaultSerializerOptions, AppSettingsScribe.DefaultDocumentOptions );
     }
 
     #endregion
