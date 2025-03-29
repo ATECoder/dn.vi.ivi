@@ -14,7 +14,7 @@ public class ScpiExceptionsSettings() : CommunityToolkit.Mvvm.ComponentModel.Obs
     /// fetched from the settings file.
     /// </summary>
     /// <value> True if this settings section exists in the settings file, false if not. </value>
-	[Description( "True if this settings were found and read from the settings file." )]
+    [Description( "True if this settings were found and read from the settings file." )]
     public bool Exists
     {
         get => this._exists;
@@ -30,7 +30,7 @@ public class ScpiExceptionsSettings() : CommunityToolkit.Mvvm.ComponentModel.Obs
     /// <value>
     /// True if *CLS commands clear the event enable registers, false if not.
     /// </value>
-	[Description( "True if *CLS clears the event enable registers [false]" )]
+    [Description( "True if *CLS clears the event enable registers [false]" )]
     public bool StatusClearDistractive
     {
         get => this._statusClearDistractive;

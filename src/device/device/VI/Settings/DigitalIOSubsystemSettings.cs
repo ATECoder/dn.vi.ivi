@@ -9,7 +9,7 @@ namespace cc.isr.VI.Settings;
 /// David, 2018-02-12 </para>
 /// </remarks>
 [CLSCompliant( false )]
-public class DigitalIOSubsystemSettings() : INotifyPropertyChanged
+public class DigitalIOSubsystemSettings() : System.ComponentModel.INotifyPropertyChanged
 {
     #region " notify property change implementation "
 
@@ -109,7 +109,7 @@ public class DigitalIOSubsystemSettings() : INotifyPropertyChanged
     /// fetched from the settings file.
     /// </summary>
     /// <value> True if this settings section exists in the settings file, false if not. </value>
-	[Description( "True if this settings section exists and was read from the JSon settings file." )]
+    [Description( "True if this settings section exists and was read from the JSon settings file." )]
     public bool Exists
     {
         get => this._exists;
@@ -124,7 +124,7 @@ public class DigitalIOSubsystemSettings() : INotifyPropertyChanged
 
     /// <summary>   Gets or sets the digital output line number. </summary>
     /// <value> The digital output line number. </value>
-	public virtual int DigitalOutputLineNumber
+    public virtual int DigitalOutputLineNumber
     {
         get => this._digitalOutputLineNumber;
         set => this.SetProperty( ref this._digitalOutputLineNumber, value );
@@ -134,7 +134,7 @@ public class DigitalIOSubsystemSettings() : INotifyPropertyChanged
 
     /// <summary>   Gets or sets the digital input line number. </summary>
     /// <value> The digital input line number. </value>
-	public virtual int DigitalInputLineNumber
+    public virtual int DigitalInputLineNumber
     {
         get => this._digitalInputLineNumber;
         set => this.SetProperty( ref this._digitalInputLineNumber, value );
@@ -144,7 +144,7 @@ public class DigitalIOSubsystemSettings() : INotifyPropertyChanged
 
     /// <summary>   Gets or sets the number of digital lines. </summary>
     /// <value> The number of digital lines. </value>
-	public virtual int DigitalLineCount
+    public virtual int DigitalLineCount
     {
         get => this._digitalLineCount;
         set => this.SetProperty( ref this._digitalLineCount, value );

@@ -9,7 +9,7 @@ namespace cc.isr.VI.Settings;
 /// David, 2018-02-12 </para>
 /// </remarks>
 [CLSCompliant( false )]
-public class SenseSubsystemSettings() : INotifyPropertyChanged
+public class SenseSubsystemSettings() : System.ComponentModel.INotifyPropertyChanged
 {
     #region " notify property change implementation "
 
@@ -109,7 +109,7 @@ public class SenseSubsystemSettings() : INotifyPropertyChanged
     /// fetched from the settings file.
     /// </summary>
     /// <value> True if this settings section exists in the settings file, false if not. </value>
-	[Description( "True if this settings section exists and was read from the JSon settings file." )]
+    [Description( "True if this settings section exists and was read from the JSon settings file." )]
     public bool Exists
     {
         get => this._exists;
@@ -127,7 +127,7 @@ public class SenseSubsystemSettings() : INotifyPropertyChanged
     /// would normally be set to <c><see langword="False"/></c>.
     /// </summary>
     /// <value> The front terminals control enabled. </value>
-	public virtual bool FrontTerminalsControlEnabled
+    public virtual bool FrontTerminalsControlEnabled
     {
         get => this._frontTerminalsControlEnabled;
         set => _ = this.SetProperty( ref this._frontTerminalsControlEnabled, value );
@@ -137,7 +137,7 @@ public class SenseSubsystemSettings() : INotifyPropertyChanged
 
     /// <summary> Gets or sets the initial front terminals selected. </summary>
     /// <value> The initial front terminals selected. </value>
-	public virtual bool InitialFrontTerminalsSelected
+    public virtual bool InitialFrontTerminalsSelected
     {
         get => this._initialFrontTerminalsSelected;
         set => _ = this.SetProperty( ref this._initialFrontTerminalsSelected, value );
@@ -147,7 +147,7 @@ public class SenseSubsystemSettings() : INotifyPropertyChanged
 
     /// <summary> Gets or sets the Initial power line cycles settings. </summary>
     /// <value> The power line cycles settings. </value>
-	public virtual double InitialPowerLineCycles
+    public virtual double InitialPowerLineCycles
     {
         get => this._initialPowerLineCycles;
         set => _ = this.SetProperty( ref this._initialPowerLineCycles, value );
@@ -157,7 +157,7 @@ public class SenseSubsystemSettings() : INotifyPropertyChanged
 
     /// <summary> Gets or sets the Initial auto Delay Exists settings. </summary>
     /// <value> The auto Delay settings. </value>
-	public virtual bool InitialAutoDelayEnabled
+    public virtual bool InitialAutoDelayEnabled
     {
         get => this._initialAutoDelayEnabled;
         set => _ = this.SetProperty( ref this._initialAutoDelayEnabled, value );
@@ -167,7 +167,7 @@ public class SenseSubsystemSettings() : INotifyPropertyChanged
 
     /// <summary> Gets or sets the Initial auto Range enabled settings. </summary>
     /// <value> The auto Range settings. </value>
-	public virtual bool InitialAutoRangeEnabled
+    public virtual bool InitialAutoRangeEnabled
     {
         get => this._initialAutoRangeEnabled;
         set => _ = this.SetProperty( ref this._initialAutoRangeEnabled, value );
@@ -177,7 +177,7 @@ public class SenseSubsystemSettings() : INotifyPropertyChanged
 
     /// <summary> Gets or sets the Initial auto zero Exists settings. </summary>
     /// <value> The auto zero settings. </value>
-	public virtual bool InitialAutoZeroEnabled
+    public virtual bool InitialAutoZeroEnabled
     {
         get => this._initialAutoZeroEnabled;
         set => _ = this.SetProperty( ref this._initialAutoZeroEnabled, value );
@@ -187,7 +187,7 @@ public class SenseSubsystemSettings() : INotifyPropertyChanged
 
     /// <summary> Gets or sets the initial sense function. </summary>
     /// <value> The initial sense function. </value>
-	public virtual SenseFunctionModes InitialSenseFunction
+    public virtual SenseFunctionModes InitialSenseFunction
     {
         get => this._initialSenseFunction;
         set => _ = this.SetProperty( ref this._initialSenseFunction, value );
@@ -197,7 +197,7 @@ public class SenseSubsystemSettings() : INotifyPropertyChanged
 
     /// <summary> Gets or sets the initial multimeter function. </summary>
     /// <value> The initial multimeter function. </value>
-	public virtual MultimeterFunctionModes InitialMultimeterFunction
+    public virtual MultimeterFunctionModes InitialMultimeterFunction
     {
         get => this._initialMultimeterFunction;
         set => _ = this.SetProperty( ref this._initialMultimeterFunction, value );
@@ -207,7 +207,7 @@ public class SenseSubsystemSettings() : INotifyPropertyChanged
 
     /// <summary> Gets or sets the initial filter enabled. </summary>
     /// <value> The initial filter enabled. </value>
-	public virtual bool InitialFilterEnabled
+    public virtual bool InitialFilterEnabled
     {
         get => this._initialFilterEnabled;
         set => _ = this.SetProperty( ref this._initialFilterEnabled, value );
@@ -217,7 +217,7 @@ public class SenseSubsystemSettings() : INotifyPropertyChanged
 
     /// <summary> Gets or sets the initial moving average filter enabled. </summary>
     /// <value> The initial moving average filter enabled. </value>
-	public virtual bool InitialMovingAverageFilterEnabled
+    public virtual bool InitialMovingAverageFilterEnabled
     {
         get => this._initialMovingAverageFilterEnabled;
         set => _ = this.SetProperty( ref this._initialMovingAverageFilterEnabled, value );
@@ -227,7 +227,7 @@ public class SenseSubsystemSettings() : INotifyPropertyChanged
 
     /// <summary> Gets or sets the number of initial filter points. </summary>
     /// <value> The number of initial filter points. </value>
-	public virtual int InitialFilterCount
+    public virtual int InitialFilterCount
     {
         get => this._initialFilterCount;
         set => _ = this.SetProperty( ref this._initialFilterCount, value );
@@ -237,7 +237,7 @@ public class SenseSubsystemSettings() : INotifyPropertyChanged
 
     /// <summary> Gets or sets the initial filter window. </summary>
     /// <value> The initial filter window. </value>
-	public virtual double InitialFilterWindow
+    public virtual double InitialFilterWindow
     {
         get => this._initialFilterWindow;
         set => _ = this.SetProperty( ref this._initialFilterWindow, value );
@@ -247,7 +247,7 @@ public class SenseSubsystemSettings() : INotifyPropertyChanged
 
     /// <summary> Gets or sets the initial remote sense selected. </summary>
     /// <value> The initial remote sense selected. </value>
-	public virtual bool InitialRemoteSenseSelected
+    public virtual bool InitialRemoteSenseSelected
     {
         get => this._initialRemoteSenseSelected;
         set => _ = this.SetProperty( ref this._initialRemoteSenseSelected, value );
@@ -261,7 +261,7 @@ public class SenseSubsystemSettings() : INotifyPropertyChanged
 
     /// <summary>   Gets or sets a value indicating whether the automatic zero is enabled. </summary>
     /// <value> True if automatic zero enabled, false if not. </value>
-	public bool AutoZeroEnabled
+    public bool AutoZeroEnabled
     {
         get => this._autoZeroEnabled;
         set => this.SetProperty( ref this._autoZeroEnabled, value );
@@ -273,7 +273,7 @@ public class SenseSubsystemSettings() : INotifyPropertyChanged
     /// Gets or sets a value indicating whether the automatic range is enabled.
     /// </summary>
     /// <value> True if automatic range enabled, false if not. </value>
-	public bool AutoRangeEnabled
+    public bool AutoRangeEnabled
     {
         get => this._autoRangeEnabled;
         set => this.SetProperty( ref this._autoRangeEnabled, value );
@@ -283,7 +283,7 @@ public class SenseSubsystemSettings() : INotifyPropertyChanged
 
     /// <summary>   Gets or sets the sense function. </summary>
     /// <value> The sense function. </value>
-	public SenseFunctionModes SenseFunction
+    public SenseFunctionModes SenseFunction
     {
         get => this._senseFunction;
         set => this.SetProperty( ref this._senseFunction, value );
@@ -293,7 +293,7 @@ public class SenseSubsystemSettings() : INotifyPropertyChanged
 
     /// <summary>   Gets or sets the power line cycles. </summary>
     /// <value> The power line cycles. </value>
-	public double PowerLineCycles
+    public double PowerLineCycles
     {
         get => this._powerLineCycles;
         set => this.SetProperty( ref this._powerLineCycles, value );
@@ -303,7 +303,7 @@ public class SenseSubsystemSettings() : INotifyPropertyChanged
 
     /// <summary>   Gets or sets a value indicating whether the remote sense selected. </summary>
     /// <value> True if remote sense selected, false if not. </value>
-	public bool RemoteSenseSelected
+    public bool RemoteSenseSelected
     {
         get => this._remoteSenseSelected;
         set => this.SetProperty( ref this._remoteSenseSelected, value );

@@ -18,9 +18,9 @@ namespace cc.isr.Visa.WinControls
             this.topToolStrip.SuspendLayout();
             Panel1.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // topToolStrip
-            // 
+            //
             this.topToolStrip.Items.AddRange( new System.Windows.Forms.ToolStripItem[] {
             this.pinButton,
             this.titleLabel} );
@@ -32,9 +32,9 @@ namespace cc.isr.Visa.WinControls
             this.topToolStrip.Size = new System.Drawing.Size( 150, 25 );
             this.topToolStrip.TabIndex = 0;
             this.topToolStrip.Text = "Top Tool Strip";
-            // 
+            //
             // pinButton
-            // 
+            //
             this.pinButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.pinButton.CheckOnClick = true;
             this.pinButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -44,25 +44,25 @@ namespace cc.isr.Visa.WinControls
             this.pinButton.Size = new System.Drawing.Size( 23, 22 );
             this.pinButton.Text = "pin";
             this.pinButton.ToolTipText = "Click to pin";
-            // 
+            //
             // titleLabel
-            // 
+            //
             this.titleLabel.Name = "titleLabel";
             this.titleLabel.Size = new System.Drawing.Size( 29, 22 );
             this.titleLabel.Text = "Title";
             this.titleLabel.ToolTipText = "Title";
-            // 
+            //
             // navigatorTreeView
-            // 
+            //
             this.navigatorTreeView.Dock = DockStyle.Fill;
             this.navigatorTreeView.LineColor = Color.Empty;
             this.navigatorTreeView.Location = new Point(0, 0);
             this.navigatorTreeView.Name = "navigatorTreeView";
             this.navigatorTreeView.Size = new Size(50, 100);
             this.navigatorTreeView.TabIndex = 0;
-            // 
+            //
             // TreePanel
-            // 
+            //
             Font = new Font("Segoe UI", 9f, FontStyle.Regular, GraphicsUnit.Point, 0);
             this.AutoScaleDimensions = new System.Drawing.SizeF( 7F, 15F );
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;

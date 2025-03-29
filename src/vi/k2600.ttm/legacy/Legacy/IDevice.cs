@@ -4,7 +4,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Legacy;
 /// device address. </summary>
 /// <remarks>
 /// (c) 2009 Integrated Scientific Resources, Inc. All rights reserved. <para>
-/// Licensed under The MIT License. </para><para>  
+/// Licensed under The MIT License. </para><para>
 /// David, 2024-11-07, 8.1.9077.x. A minimal interface stripped to match the current FET implementation. </para><para>
 /// David, 2013-12-12, 3.0.3053.x. </para>
 /// </remarks>

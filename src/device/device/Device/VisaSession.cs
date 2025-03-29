@@ -77,7 +77,7 @@ public class VisaSession : VisaSessionBase
     protected override void ProcessServiceRequest()
     {
         // device errors will be read if the error available bit is set upon reading the status byte.
-        // 20240830: changed to read but not apply the status byte so as to prevent 
+        // 20240830: changed to read but not apply the status byte so as to prevent
         // a query interrupt error.
         if ( this.Session is not null )
         {
@@ -102,7 +102,7 @@ public class VisaSession : VisaSessionBase
             }
             else
 
-                // at this point we can allow the status subsystem to process 
+                // at this point we can allow the status subsystem to process
                 // other status byte events
                 this.Session.ApplyStatusByte( statusByte );
         }

@@ -23,7 +23,7 @@ public class TtmMeterSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
     /// fetched from the settings file.
     /// </summary>
     /// <value> True if this settings section exists in the settings file, false if not. </value>
-	[Description( "True if this settings section exists and was read from the JSon settings file." )]
+    [Description( "True if this settings section exists and was read from the JSon settings file." )]
     public bool Exists
     {
         get => this._exists;
@@ -38,7 +38,7 @@ public class TtmMeterSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the line frequency. </summary>
     /// <value> The line frequency. </value>
-	[Description( "The Instrument Line Frequency (60)." )]
+    [Description( "The Instrument Line Frequency (60)." )]
     public double LineFrequency
     {
         get => this._lineFrequency;
@@ -49,7 +49,7 @@ public class TtmMeterSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the legacy driver flag. </summary>
     /// <value> The legacy driver flag. </value>
-	[Description( "The Post Transient Delay Time in Seconds (0.5)." )]
+    [Description( "The Post Transient Delay Time in Seconds (0.5)." )]
     public int LegacyDriver
     {
         get => this._legacyDriver;
@@ -60,7 +60,7 @@ public class TtmMeterSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the default legacy driver flag. </summary>
     /// <value> The default legacy driver flag. </value>
-	[Description( "The Default Legacy Driver Flag (1)." )]
+    [Description( "The Default Legacy Driver Flag (1)." )]
     public int LegacyDriverDefault
     {
         get => this._legacyDriverDefault;
@@ -75,7 +75,7 @@ public class TtmMeterSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets options for controlling the contact check. </summary>
     /// <value> Options that control the contact check. </value>
-	[Description( "The Contact Check Options (1)." )]
+    [Description( "The Contact Check Options (1)." )]
     public cc.isr.VI.Tsp.K2600.Ttm.Syntax.ContactCheckOptions ContactCheckOptions
     {
         get => this._contactCheckOptions;
@@ -86,7 +86,7 @@ public class TtmMeterSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets options for controlling the contact check. </summary>
     /// <value> Options that control the contact check. </value>
-	[Description( "The Default Contact Check Options (1)." )]
+    [Description( "The Default Contact Check Options (1)." )]
     public cc.isr.VI.Tsp.K2600.Ttm.Syntax.ContactCheckOptions ContactCheckOptionsDefault
     {
         get => this._contactCheckOptionsDefault;
@@ -97,7 +97,7 @@ public class TtmMeterSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets a value indicating whether the contact check is enabled. </summary>
     /// <value> True if contact check enabled, false if not. </value>
-	[Description( "The Contact Check Enabled State (false)." )]
+    [Description( "The Contact Check Enabled State (false)." )]
     public bool ContactCheckEnabled
     {
         get => this._contactCheckEnabled;
@@ -110,7 +110,7 @@ public class TtmMeterSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
     /// Gets or sets a value indicating whether the contact check enabled default.
     /// </summary>
     /// <value> True if contact check enabled default, false if not. </value>
-	[Description( "The Default Contact Check Enabled State (false)." )]
+    [Description( "The Default Contact Check Enabled State (false)." )]
     public bool ContactCheckEnabledDefault
     {
         get => this._contactCheckEnabledDefault;
@@ -121,7 +121,7 @@ public class TtmMeterSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the contact check threshold. </summary>
     /// <value> The contact check threshold. </value>
-	[Description( "The Contact Check Threshold (100)." )]
+    [Description( "The Contact Check Threshold (100)." )]
     public int ContactCheckThreshold
     {
         get => this._contactCheckThreshold;
@@ -132,7 +132,7 @@ public class TtmMeterSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the contact check threshold default. </summary>
     /// <value> The contact check threshold default. </value>
-	[Description( "The Default Contact Check Threshold (100)." )]
+    [Description( "The Default Contact Check Threshold (100)." )]
     public int ContactCheckThresholdDefault
     {
         get => this._contactCheckThresholdDefault;
@@ -147,7 +147,7 @@ public class TtmMeterSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the post transient delay. </summary>
     /// <value> The post transient delay. </value>
-	[Description( "The Post Transient Delay Time in Seconds (0.01)." )]
+    [Description( "The Post Transient Delay Time in Seconds (0.01)." )]
     public double PostTransientDelay
     {
         get => this._postTransientDelay;
@@ -180,7 +180,7 @@ public class TtmMeterSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the post transient delay minimum. </summary>
     /// <value> The post transient delay minimum. </value>
-	[Description( "The Minimum Post Transient Delay Time in Seconds (0.001)." )]
+    [Description( "The Minimum Post Transient Delay Time in Seconds (0.001)." )]
     public double PostTransientDelayMinimum
     {
         get => this._postTransientDelayMinimum;
@@ -195,7 +195,7 @@ public class TtmMeterSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets source measure unit. </summary>
     /// <value> The source measure unit. </value>
-	[Description( "The Source Measure Unit Name (smua)." )]
+    [Description( "The Source Measure Unit Name (smua)." )]
     public string SourceMeasureUnit
     {
         get => this._sourceMeasureUnit;
@@ -206,7 +206,7 @@ public class TtmMeterSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets source measure unit default. </summary>
     /// <value> The source measure unit default. </value>
-	[Description( "The Default Source Measure Unit Name (smua)." )]
+    [Description( "The Default Source Measure Unit Name (smua)." )]
     public string SourceMeasureUnitDefault
     {
         get => this._sourceMeasureUnitDefault;

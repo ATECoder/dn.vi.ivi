@@ -9,7 +9,7 @@ namespace cc.isr.VI.Settings;
 /// David, 2018-02-12 </para>
 /// </remarks>
 [CLSCompliant( false )]
-public class ScannerSubsystemSettings() : INotifyPropertyChanged
+public class ScannerSubsystemSettings() : System.ComponentModel.INotifyPropertyChanged
 {
     #region " notify property change implementation "
 
@@ -109,7 +109,7 @@ public class ScannerSubsystemSettings() : INotifyPropertyChanged
     /// fetched from the settings file.
     /// </summary>
     /// <value> True if this settings section exists in the settings file, false if not. </value>
-	[Description( "True if this settings section exists and was read from the JSon settings file." )]
+    [Description( "True if this settings section exists and was read from the JSon settings file." )]
     public bool Exists
     {
         get => this._exists;
@@ -124,7 +124,7 @@ public class ScannerSubsystemSettings() : INotifyPropertyChanged
 
     /// <summary> Gets or sets the scan card installed. </summary>
     /// <value> The scan card installed. </value>
-	public virtual bool ScanCardInstalled
+    public virtual bool ScanCardInstalled
     {
         get => this._scanCardInstalled;
         set => _ = this.SetProperty( ref this._scanCardInstalled, value );
@@ -134,7 +134,7 @@ public class ScannerSubsystemSettings() : INotifyPropertyChanged
 
     /// <summary> Gets or sets the number of scan cards. </summary>
     /// <value> The number of scan cards. </value>
-	public virtual int? ScanCardCount
+    public virtual int? ScanCardCount
     {
         get => this._scanCardCount;
         set => _ = this.SetProperty( ref this._scanCardCount, value );

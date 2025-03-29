@@ -231,7 +231,7 @@ public static class Lua
             chunkLine = retainOutline ? chunkLine.TrimEnd() : chunkLine.Trim();
             wasInCommentBlock = isInCommentBlock;
 
-            // this just gets the line type. 
+            // this just gets the line type.
             lineType = ParseLuaChuckLine( chunkLine, isInCommentBlock );
 
             if ( lineType == LuaChunkLineContentType.None )

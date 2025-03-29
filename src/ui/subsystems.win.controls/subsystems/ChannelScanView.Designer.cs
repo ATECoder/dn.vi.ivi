@@ -11,7 +11,7 @@ namespace cc.isr.VI.SubsystemsWinControls
         private System.ComponentModel.IContainer components;
 
         // NOTE: The following procedure is required by the Windows Form Designer
-        // It can be modified using the Windows Form Designer.  
+        // It can be modified using the Windows Form Designer.
         // Do not modify it using the code editor.
         [DebuggerStepThrough()]
         private void InitializeComponent()
@@ -28,9 +28,9 @@ namespace cc.isr.VI.SubsystemsWinControls
             _layout.SuspendLayout();
             _routeToolStrip.SuspendLayout();
             SuspendLayout();
-            // 
+            //
             // _layout
-            // 
+            //
             _layout.ColumnCount = 2;
             _layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100.0f));
             _layout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 2.0f));
@@ -48,9 +48,9 @@ namespace cc.isr.VI.SubsystemsWinControls
             _layout.RowStyles.Add(new RowStyle(SizeType.Percent, 100.0f));
             _layout.Size = new System.Drawing.Size(397, 274);
             _layout.TabIndex = 0;
-            // 
+            //
             // _infoTextBox
-            // 
+            //
             _infoTextBox.Dock = DockStyle.Fill;
             _infoTextBox.Location = new System.Drawing.Point(3, 95);
             _infoTextBox.Margin = new Padding(3, 4, 3, 4);
@@ -61,9 +61,9 @@ namespace cc.isr.VI.SubsystemsWinControls
             _infoTextBox.Size = new System.Drawing.Size(389, 175);
             _infoTextBox.TabIndex = 27;
             _infoTextBox.Text = "<info>";
-            // 
+            //
             // _channelView
-            // 
+            //
             _channelView.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             _channelView.BorderStyle = BorderStyle.FixedSingle;
             _channelView.Dock = DockStyle.Top;
@@ -73,9 +73,9 @@ namespace cc.isr.VI.SubsystemsWinControls
             _channelView.Padding = new Padding(1);
             _channelView.Size = new System.Drawing.Size(389, 27);
             _channelView.TabIndex = 10;
-            // 
+            //
             // _scanView
-            // 
+            //
             ScanView.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             ScanView.BorderStyle = BorderStyle.FixedSingle;
             ScanView.Dock = DockStyle.Top;
@@ -85,9 +85,9 @@ namespace cc.isr.VI.SubsystemsWinControls
             ScanView.Padding = new Padding(1);
             ScanView.Size = new System.Drawing.Size(389, 27);
             ScanView.TabIndex = 11;
-            // 
+            //
             // _routeToolStrip
-            // 
+            //
             _routeToolStrip.AutoSize = false;
             _routeToolStrip.BackColor = System.Drawing.Color.Transparent;
             _routeToolStrip.Dock = DockStyle.None;
@@ -99,9 +99,9 @@ namespace cc.isr.VI.SubsystemsWinControls
             _routeToolStrip.Stretch = true;
             _routeToolStrip.TabIndex = 9;
             _routeToolStrip.Text = "Trigger";
-            // 
+            //
             // _subsystemSplitButton
-            // 
+            //
             _subsystemSplitButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
             _subsystemSplitButton.DropDownItems.AddRange(new ToolStripItem[] { _readSettingsMenuItem });
             _subsystemSplitButton.Font = new System.Drawing.Font("Segoe UI", 9.0f, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, 0);
@@ -111,16 +111,16 @@ namespace cc.isr.VI.SubsystemsWinControls
             _subsystemSplitButton.Size = new System.Drawing.Size(53, 22);
             _subsystemSplitButton.Text = "Route";
             _subsystemSplitButton.ToolTipText = "Subsystem actions split button";
-            // 
+            //
             // _readSettingsMenuItem
-            // 
+            //
             _readSettingsMenuItem.Name = "_ReadSettingsMenuItem";
             _readSettingsMenuItem.Size = new System.Drawing.Size(146, 22);
             _readSettingsMenuItem.Text = "Read Settings";
             _readSettingsMenuItem.ToolTipText = "Reads settings";
-            // 
+            //
             // ChannelScanView
-            // 
+            //
             AutoScaleDimensions = new System.Drawing.SizeF(7.0f, 17.0f);
             AutoScaleMode = AutoScaleMode.Font;
             BorderStyle = BorderStyle.FixedSingle;

@@ -73,7 +73,7 @@ public partial class LegacyDevice : CommunityToolkit.Mvvm.ComponentModel.Observa
             this.LastReading = SessionBase.NilValue;
             this.LastOkayReading = SessionBase.NilValue;
             this.OnMessageAvailable( TraceEventType.Verbose, "Final Resistance measurement not made", "Instrument '{0}' Final Resistance measurement not made", this.ResourceName );
-            // return false if measurement was not made 
+            // return false if measurement was not made
             return false;
         }
         else
@@ -164,7 +164,7 @@ public partial class LegacyDevice : CommunityToolkit.Mvvm.ComponentModel.Observa
             this.LastOkayReading = SessionBase.NilValue;
 
             this.OnMessageAvailable( TraceEventType.Verbose, "Initial resistance measurement not made", "Instrument '{0}' Initial Resistance measurement not made", this.ResourceName );
-            // return false if measurement was not made 
+            // return false if measurement was not made
             return false;
         }
         else
@@ -254,7 +254,7 @@ public partial class LegacyDevice : CommunityToolkit.Mvvm.ComponentModel.Observa
             this.LastReading = SessionBase.NilValue;
             this.LastOkayReading = SessionBase.NilValue;
 
-            // return false if measurement was not made 
+            // return false if measurement was not made
             this.OnMessageAvailable( TraceEventType.Verbose, "Thermal Transient measurement not made", "Instrument '{0}' thermal transient measurement not made", this.ResourceName );
             return false;
         }

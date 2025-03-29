@@ -64,7 +64,7 @@ public static partial class FirmwareManager
     /// <exception cref="NativeException">          Thrown when a Native error condition occurs. </exception>
     /// <param name="session">      The session. </param>
     /// <param name="scriptName">   Name of the script. </param>
-    /// <param name="filePath">     Full pathname of the file. </param>
+    /// <param name="filePath">     full path name of the file. </param>
     /// <param name="compress">     (Optional) Specifies the compression condition. True to compress
     ///                             the source before saving. </param>
     /// <returns>   <c>true</c> if okay; otherwise, <c>false</c>. </returns>

@@ -10,8 +10,8 @@
 
 namespace cc.isr.VI.Tsp.K2600.Ttm.Controls.Properties {
     using System;
-    
-    
+
+
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -23,15 +23,15 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls.Properties {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
-        
+
         private static global::System.Resources.ResourceManager resourceMan;
-        
+
         private static global::System.Globalization.CultureInfo resourceCulture;
-        
+
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Resources() {
         }
-        
+
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
@@ -45,7 +45,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls.Properties {
                 return resourceMan;
             }
         }
-        
+
         /// <summary>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
@@ -59,7 +59,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls.Properties {
                 resourceCulture = value;
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
@@ -69,7 +69,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls.Properties {
                 return ((byte[])(obj));
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
@@ -79,7 +79,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls.Properties {
                 return ((byte[])(obj));
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Integrated Scientific Resources.
         /// </summary>
@@ -88,7 +88,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls.Properties {
                 return ResourceManager.GetString("AuthorTitle", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
@@ -98,7 +98,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls.Properties {
                 return ((byte[])(obj));
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
@@ -108,7 +108,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls.Properties {
                 return ((byte[])(obj));
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
@@ -118,7 +118,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls.Properties {
                 return ((byte[])(obj));
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
@@ -128,7 +128,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls.Properties {
                 return ((byte[])(obj));
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to TTM.
         /// </summary>
@@ -137,7 +137,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls.Properties {
                 return ResourceManager.GetString("FrameworkName", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to TTM 2.3.4009.
         /// </summary>
@@ -146,7 +146,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls.Properties {
                 return ResourceManager.GetString("FrameworkTitle", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
@@ -156,7 +156,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls.Properties {
                 return ((byte[])(obj));
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
@@ -166,7 +166,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls.Properties {
                 return ((byte[])(obj));
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
@@ -176,7 +176,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls.Properties {
                 return ((byte[])(obj));
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
@@ -186,7 +186,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls.Properties {
                 return ((byte[])(obj));
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
@@ -196,7 +196,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls.Properties {
                 return ((byte[])(obj));
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
@@ -206,7 +206,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls.Properties {
                 return ((byte[])(obj));
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
@@ -216,7 +216,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls.Properties {
                 return ((byte[])(obj));
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>

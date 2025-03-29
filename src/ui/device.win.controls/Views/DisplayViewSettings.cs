@@ -9,7 +9,7 @@ using cc.isr.Json.AppSettings.ViewModels;
 namespace cc.isr.VI.DeviceWinControls.Views;
 /// <summary>   A display view settings. </summary>
 /// <remarks>   2025-01-14. </remarks>
-public class DisplayViewSettings() : INotifyPropertyChanged
+public class DisplayViewSettings() : System.ComponentModel.INotifyPropertyChanged
 {
     #region " notify property change implementation "
 
@@ -141,8 +141,11 @@ public class DisplayViewSettings() : INotifyPropertyChanged
         AssemblyFileInfo ai = new( callingEntity.Assembly, null, settingsFileSuffix, ".json" );
 
         // must copy application context settings here to clear any bad settings files.
-        AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.AllUsersAssemblyFilePath! );
-        AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.ThisUserAssemblyFilePath! );
+        if ( !System.IO.File.Exists( ai.AllUsersAssemblyFilePath! ) )
+            AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.AllUsersAssemblyFilePath! );
+
+        if ( !System.IO.File.Exists( ai.ThisUserAssemblyFilePath! ) )
+            AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.ThisUserAssemblyFilePath! );
 
         this.Scribe = new( [_instance.Value], ai.AppContextAssemblyFilePath!, ai.AllUsersAssemblyFilePath! )
         {
@@ -175,7 +178,7 @@ public class DisplayViewSettings() : INotifyPropertyChanged
     /// fetched from the settings file.
     /// </summary>
     /// <value> True if this settings section exists in the settings file, false if not. </value>
-	[Description( "True if this settings section exists and was read from the JSon settings file." )]
+    [Description( "True if this settings section exists and was read from the JSon settings file." )]
     public bool Exists
     {
         get => this._exists;
@@ -190,7 +193,7 @@ public class DisplayViewSettings() : INotifyPropertyChanged
 
     /// <summary>   Gets or sets the color of the charcoal. </summary>
     /// <value> The color of the charcoal. </value>
-	public System.Drawing.Color CharcoalColor
+    public System.Drawing.Color CharcoalColor
     {
         get => this._charcoalColor;
         set => _ = this.SetProperty( ref this._charcoalColor, value );
@@ -200,7 +203,7 @@ public class DisplayViewSettings() : INotifyPropertyChanged
 
     /// <summary>   Gets or sets the color of the Background. </summary>
     /// <value> The color of the Background. </value>
-	public System.Drawing.Color BackgroundColor
+    public System.Drawing.Color BackgroundColor
     {
         get => this._backgroundColor;
         set => _ = this.SetProperty( ref this._backgroundColor, value );
@@ -212,7 +215,7 @@ public class DisplayViewSettings() : INotifyPropertyChanged
     /// Gets or sets a value indicating whether the display standard service requests.
     /// </summary>
     /// <value> True if display standard service requests, false if not. </value>
-	public bool DisplayStandardServiceRequests
+    public bool DisplayStandardServiceRequests
     {
         get => this._displayStandardServiceRequests;
         set => _ = this.SetProperty( ref this._displayStandardServiceRequests, value );

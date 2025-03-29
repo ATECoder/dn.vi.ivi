@@ -7,7 +7,7 @@ namespace cc.isr.VI.Tsp.K2600.MSTest.Measure;
 /// <summary> A Resistance measurement Test settings. </summary>
 /// <remarks> <para>
 /// David, 2018-02-12 </para></remarks>
-public class ResistanceSettings() : INotifyPropertyChanged
+public class ResistanceSettings() : System.ComponentModel.INotifyPropertyChanged
 {
     #region " notify property change implementation "
 
@@ -120,7 +120,7 @@ public class ResistanceSettings() : INotifyPropertyChanged
     /// fetched from the settings file.
     /// </summary>
     /// <value> True if this settings section exists in the settings file, false if not. </value>
-	[System.ComponentModel.Description( "True if this settings section exists and was read from the JSon settings file." )]
+    [System.ComponentModel.Description( "True if this settings section exists and was read from the JSon settings file." )]
     public bool Exists
     {
         get => this._exists;
@@ -135,7 +135,7 @@ public class ResistanceSettings() : INotifyPropertyChanged
 
     /// <summary>   Gets or sets the expected resistance. </summary>
     /// <value> The expected resistance. </value>
-	public double ExpectedResistance
+    public double ExpectedResistance
     {
         get => this._expectedResistance;
         set => this.SetProperty( ref this._expectedResistance, value );
@@ -145,7 +145,7 @@ public class ResistanceSettings() : INotifyPropertyChanged
 
     /// <summary>   Gets or sets the resistance tolerance. </summary>
     /// <value> The resistance tolerance. </value>
-	public double ResistanceTolerance
+    public double ResistanceTolerance
     {
         get => this._resistanceTolerance;
         set => this.SetProperty( ref this._resistanceTolerance, value );

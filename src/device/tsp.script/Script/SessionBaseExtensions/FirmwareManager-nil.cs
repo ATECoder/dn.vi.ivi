@@ -60,7 +60,7 @@ public static partial class FirmwareManager
         session.LastNodeNumber = nodeNumber;
         session.SetLastAction( $"enabling service request on operation completion" );
 
-        // TODO: Should we wait complete on the node as well as the controller. 
+        // TODO: Should we wait complete on the node as well as the controller.
         // possibly, waiting on the controller waits for all nodes.
         session.EnableServiceRequestOnOperationCompletion();
 

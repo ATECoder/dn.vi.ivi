@@ -186,7 +186,7 @@ public partial class SessionBase
 
     #endregion
 
-    #region " boolean query and parse 
+    #region " boolean query and parse
 
     /// <summary>
     /// Performs a synchronous write of ASCII-encoded string data, followed by a synchronous read and
@@ -1125,7 +1125,7 @@ public partial class SessionBase
 
     /// <summary>
     /// Queries and parses a <see cref="TimeSpan">TimeSpan</see> value using the given <paramref name="timespanFormat"/>
-    /// returning the provided value if the <paramref name="dataToWrite"/> or <paramref name="timespanFormat"/> are 
+    /// returning the provided value if the <paramref name="dataToWrite"/> or <paramref name="timespanFormat"/> are
     /// empty.
     /// </summary>
     /// <remarks>   2024-07-05. </remarks>
@@ -1196,8 +1196,8 @@ public partial class SessionBase
     }
 
     /// <summary>
-    /// Writes the <see cref="TimeSpan">TimeSpan</see> value building the data to write using the 
-    /// given <paramref name="commandFormat"/> returning the provided value if the <paramref name="commandFormat"/> 
+    /// Writes the <see cref="TimeSpan">TimeSpan</see> value building the data to write using the
+    /// given <paramref name="commandFormat"/> returning the provided value if the <paramref name="commandFormat"/>
     /// is empty.
     /// </summary>
     /// <param name="value">         The present value to return if the command is null or empty or white space. </param>

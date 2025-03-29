@@ -115,7 +115,7 @@ public partial class SessionBase
     /// Sends the '*CLS' message. <para>
     /// A query unterminated error (-420) will occur if the instrument output buffer has pending
     /// messages. </para><para>
-    /// This method restores the service request and standard event enable registers if the  
+    /// This method restores the service request and standard event enable registers if the
     /// <see cref="StatusClearDistractive"/> is true. </para>
     /// </remarks>
     /// <param name="queryCompleteTimeout"> (Optional) (10000) The query complete timeout
@@ -204,7 +204,7 @@ public partial class SessionBase
     /// <value> <c>true</c> if the instrument supports reset known state. </value>
     public bool SupportsResetKnownState => !string.IsNullOrWhiteSpace( this.ResetKnownStateCommand );
 
-    /// <summary> 
+    /// <summary>
     /// Sends a <see cref="ResetKnownStateCommand">reset (*RST)</see> command to the instrument to set
     /// the known reset (default) state.
     /// </summary>

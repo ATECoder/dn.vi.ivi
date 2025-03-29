@@ -33,9 +33,9 @@ namespace cc.isr.Visa.WinControls
             this.IgnoreButton = new System.Windows.Forms.Button();
             this.ResourceNamesSelector = new cc.isr.Visa.WinControls.ResourceNamesSelector();
             this.SuspendLayout();
-            // 
+            //
             // OkayButton
-            // 
+            //
             this.OkayButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.OkayButton.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.OkayButton.Location = new System.Drawing.Point(120, 387);
@@ -44,9 +44,9 @@ namespace cc.isr.Visa.WinControls
             this.OkayButton.TabIndex = 0;
             this.OkayButton.Text = "&Okay";
             this.OkayButton.UseVisualStyleBackColor = true;
-            // 
+            //
             // IgnoreButton
-            // 
+            //
             this.IgnoreButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.IgnoreButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.IgnoreButton.Location = new System.Drawing.Point(201, 387);
@@ -55,11 +55,11 @@ namespace cc.isr.Visa.WinControls
             this.IgnoreButton.TabIndex = 1;
             this.IgnoreButton.Text = "&Cancel";
             this.IgnoreButton.UseVisualStyleBackColor = true;
-            // 
+            //
             // ResourceNamesSelector
-            // 
-            this.ResourceNamesSelector.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.ResourceNamesSelector.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ResourceNamesSelector.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ResourceNamesSelector.Location = new System.Drawing.Point(3, 3);
@@ -67,9 +67,9 @@ namespace cc.isr.Visa.WinControls
             this.ResourceNamesSelector.SelectedResourceNameFilter = "(ASRL|GPIB|TCPIP|USB)?*";
             this.ResourceNamesSelector.Size = new System.Drawing.Size(277, 377);
             this.ResourceNamesSelector.TabIndex = 2;
-            // 
+            //
             // ResourceNamesSelectorForm
-            // 
+            //
             this.AcceptButton = this.OkayButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;

@@ -1,12 +1,13 @@
 using cc.isr.Json.AppSettings.Models;
 using cc.isr.VI.Tsp.K2600.Ttm.Controls;
+using System.ComponentModel;
 using System.Text.Json.Serialization;
 
 namespace cc.isr.VI.Tsp.K2600.Ttm.Console.Properties;
 
 /// <summary>   A settings. </summary>
 /// <remarks>   David, 2021-02-01. </remarks>
-public class Settings : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
+public class Settings : System.ComponentModel.INotifyPropertyChanged
 {
     #region " construction "
 
@@ -15,6 +16,95 @@ public class Settings : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
     /// </summary>
     /// <remarks>   2023-04-24. </remarks>
     public Settings() { }
+
+    #endregion
+
+    #region " notify property change implementation "
+
+    /// <summary>   Occurs when a property value changes. </summary>
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    /// <summary>   Executes the 'property changed' action. </summary>
+    /// <param name="propertyName"> Name of the property. </param>
+    protected virtual void OnPropertyChanged( string? propertyName )
+    {
+        if ( !string.IsNullOrEmpty( propertyName ) )
+            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
+    }
+
+    /// <summary>   Executes the 'property changed' action. </summary>
+    /// <typeparam name="T">    Generic type parameter. </typeparam>
+    /// <param name="backingField"> [in,out] The backing field. </param>
+    /// <param name="value">        The value. </param>
+    /// <param name="propertyName"> (Optional) Name of the property. </param>
+    /// <returns>   <see langword="true"/> if it succeeds; otherwise, <see langword="false"/>. </returns>
+    protected virtual bool OnPropertyChanged<T>( ref T backingField, T value, [System.Runtime.CompilerServices.CallerMemberName] string? propertyName = "" )
+    {
+        if ( EqualityComparer<T>.Default.Equals( backingField, value ) )
+            return false;
+
+        backingField = value;
+        this.OnPropertyChanged( propertyName );
+        return true;
+    }
+
+    /// <summary>   Sets a property. </summary>
+    /// <typeparam name="T">    Generic type parameter. </typeparam>
+    /// <param name="prop">         [in,out] The property. </param>
+    /// <param name="value">        The value. </param>
+    /// <param name="propertyName"> (Optional) Name of the property. </param>
+    /// <returns>   <see langword="true"/> if it succeeds; otherwise, <see langword="false"/>. </returns>
+    protected bool SetProperty<T>( ref T prop, T value, [System.Runtime.CompilerServices.CallerMemberName] string? propertyName = null )
+    {
+        if ( EqualityComparer<T>.Default.Equals( prop, value ) ) return false;
+        prop = value;
+        this.OnPropertyChanged( propertyName );
+        return true;
+    }
+
+    /// <summary>   Sets a property. </summary>
+    /// <remarks>   2023-03-24. </remarks>
+    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
+    ///                                             null. </exception>
+    /// <typeparam name="T">    Generic type parameter. </typeparam>
+    /// <param name="oldValue">     The old value. </param>
+    /// <param name="newValue">     The new value. </param>
+    /// <param name="callback">     The callback. </param>
+    /// <param name="propertyName"> (Optional) Name of the property. </param>
+    /// <returns>   <see langword="true"/> if it succeeds; otherwise, <see langword="false"/>. </returns>
+    protected bool SetProperty<T>( T oldValue, T newValue, Action callback, [System.Runtime.CompilerServices.CallerMemberName] string? propertyName = null )
+    {
+#if NET8_0_OR_GREATER
+        ArgumentNullException.ThrowIfNull( callback, nameof( callback ) );
+#else
+        if ( callback is null ) throw new ArgumentNullException( nameof( callback ) );
+#endif
+
+        if ( EqualityComparer<T>.Default.Equals( oldValue, newValue ) )
+        {
+            return false;
+        }
+
+        callback();
+
+        this.OnPropertyChanged( propertyName );
+
+        return true;
+    }
+
+    /// <summary>   Removes the property changed event handlers. </summary>
+    /// <remarks>   David, 2021-06-28. </remarks>
+    protected void RemovePropertyChangedEventHandlers()
+    {
+        PropertyChangedEventHandler? handler = this.PropertyChanged;
+        if ( handler is not null )
+        {
+            foreach ( Delegate? item in handler.GetInvocationList() )
+            {
+                handler -= ( PropertyChangedEventHandler ) item;
+            }
+        }
+    }
 
     #endregion
 
@@ -54,14 +144,20 @@ public class Settings : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
     /// <returns>   The new settings file information. </returns>
     private static AssemblyFileInfo CreateSettingsFileInfo()
     {
-        // get assembly files using the .Logging suffix.
+        // Get the method declaring type for the assembly file information and the settings section name.
+        Type declaringType = System.Reflection.MethodBase.GetCurrentMethod()!.DeclaringType!;
 
-        AssemblyFileInfo ai = new( typeof( Settings ).Assembly, null, ".Settings", ".json" );
+        // get assembly files using the .Settings suffix.
+
+        AssemblyFileInfo ai = new( declaringType.Assembly, null, ".Settings", ".json" );
 
         // must copy application context settings here to clear any bad settings files.
 
-        AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.AllUsersAssemblyFilePath! );
-        AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.ThisUserAssemblyFilePath! );
+        if ( !System.IO.File.Exists( ai.AllUsersAssemblyFilePath! ) )
+            AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.AllUsersAssemblyFilePath! );
+
+        if ( !System.IO.File.Exists( ai.ThisUserAssemblyFilePath! ) )
+            AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.ThisUserAssemblyFilePath! );
 
         return ai;
     }
@@ -86,12 +182,7 @@ public class Settings : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
         // get an instance of the settings file info first.
         AssemblyFileInfo settingsFileInfo = Settings.SettingsFileInfo;
 
-        AppSettingsScribe scribe = new( [ConsoleSettings, LotSettings],
-            settingsFileInfo.AppContextAssemblyFilePath!, settingsFileInfo.AllUsersAssemblyFilePath! )
-        {
-            AllUsersSettingsPath = settingsFileInfo.AllUsersAssemblyFilePath,
-            ThisUserSettingsPath = settingsFileInfo.ThisUserAssemblyFilePath
-        };
+        AppSettingsScribe scribe = new( [ConsoleSettings, LotSettings], settingsFileInfo );
         scribe.ReadSettings();
 
         return scribe;
@@ -104,15 +195,15 @@ public class Settings : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
 
     private static readonly Lazy<AppSettingsScribe> _scribe = new( CreateScribe, true );
 
-    /// <summary>   Gets the full pathname of the settings file. </summary>
-    /// <value> The full pathname of the settings file. </value>
+    /// <summary>   Gets the full path name of the settings file. </summary>
+    /// <value> The full path name of the settings file. </value>
     [JsonIgnore]
     public static string FilePath => Settings.Scribe.UserSettingsPath;
 
     /// <summary>   Check if the settings file exits. </summary>
     /// <remarks>   2024-07-06. </remarks>
     /// <returns>   True if it the settings file exists; otherwise false. </returns>
-    public static bool Exists()
+    public static bool FileExists()
     {
         return System.IO.File.Exists( Settings.FilePath );
     }
@@ -135,5 +226,5 @@ public class Settings : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
 
     public static Controls.Settings ControlSettings { get; set; } = Controls.Settings.Instance;
 
-    #endregion 
+    #endregion
 }

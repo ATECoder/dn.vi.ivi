@@ -37,7 +37,7 @@ public class TriggerSequencer : CommunityToolkit.Mvvm.ComponentModel.ObservableO
     public void Dispose()
     {
         this.Dispose( true );
-        // Take this object off the finalization(Queue) and prevent finalization code 
+        // Take this object off the finalization(Queue) and prevent finalization code
         // from executing a second time.
         GC.SuppressFinalize( this );
     }
@@ -578,7 +578,7 @@ public class TriggerSequencer : CommunityToolkit.Mvvm.ComponentModel.ObservableO
                             case TriggerSequenceSignal.Stop:
                                 {
                                     this.RestartSignal = signal;
-                                    // request a trigger. 
+                                    // request a trigger.
                                     this.AssertRequested = true;
                                     break;
                                 }

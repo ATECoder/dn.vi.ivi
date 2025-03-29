@@ -208,7 +208,7 @@ public partial class SessionBase
     /// <summary> Gets or sets the service request enable query command. </summary>
     /// <remarks>
     /// <code>
-    /// SCPI: "*SRE?". 
+    /// SCPI: "*SRE?".
     /// TSP: _G.status.request_enable={0}
     /// </code>
     /// <see cref="VI.Syntax.Ieee488Syntax.ServiceRequestEnableQueryCommand"> </see>
@@ -357,8 +357,8 @@ public partial class SessionBase
 
     /// <summary> Applies the service request described by statusByte. </summary>
     /// <remarks>
-    /// This method is called only upon reading a new status byte. Therefore, the property change event is 
-    /// invoked for all status byte events. 
+    /// This method is called only upon reading a new status byte. Therefore, the property change event is
+    /// invoked for all status byte events.
     /// </remarks>
     /// <param name="statusByte"> Specifies the status byte that was read from the service request register. </param>
     public void ApplyStatusByte( ServiceRequests statusByte )
@@ -366,7 +366,7 @@ public partial class SessionBase
         // save the new status statusByte
         this.ServiceRequestStatus = statusByte;
 
-        // note that the status byte reflects that actual relevant statusByte. This statusByte might be the same as the 
+        // note that the status byte reflects that actual relevant statusByte. This statusByte might be the same as the
         // last statusByte that was fetched from the instrument. Therefore, all status events must elicit a property change
         // event.
 

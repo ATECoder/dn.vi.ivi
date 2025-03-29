@@ -48,7 +48,7 @@ public abstract partial class InstrumentTests
     public static void CleanupBaseTestClass()
     { }
 
-    /// <summary> Initializes the test class instance before each test runs. </summary>											   
+    /// <summary> Initializes the test class instance before each test runs. </summary>
     [TestInitialize()]
     public virtual void InitializeBeforeEachTest()
     {
@@ -56,7 +56,7 @@ public abstract partial class InstrumentTests
         Console.WriteLine( $"Testing {typeof( Gac.Vendor ).Assembly.FullName}" );
     }
 
-    /// <summary> Cleans up the test class instance after each test has run. </summary>	   
+    /// <summary> Cleans up the test class instance after each test has run. </summary>
     [TestCleanup()]
     public virtual void CleanupAfterEachTest()
     {

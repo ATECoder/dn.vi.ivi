@@ -23,7 +23,7 @@ public class TtmEstimatorSettings : CommunityToolkit.Mvvm.ComponentModel.Observa
     /// fetched from the settings file.
     /// </summary>
     /// <value> True if this settings section exists in the settings file, false if not. </value>
-	[Description( "True if this settings section exists and was read from the JSon settings file." )]
+    [Description( "True if this settings section exists and was read from the JSon settings file." )]
     public bool Exists
     {
         get => this._exists;
@@ -38,7 +38,7 @@ public class TtmEstimatorSettings : CommunityToolkit.Mvvm.ComponentModel.Observa
 
     /// <summary>   Gets or sets the thermal coefficient in inverse degrees centigrade. </summary>
     /// <value> The thermal coefficient. </value>
-	[Description( "The Bridge-Wire Thermal Coefficient in Inverse Degrees Centigrade (0.0005)." )]
+    [Description( "The Bridge-Wire Thermal Coefficient in Inverse Degrees Centigrade (0.0005)." )]
     public double ThermalCoefficient
     {
         get => this._thermalCoefficient;
@@ -49,7 +49,7 @@ public class TtmEstimatorSettings : CommunityToolkit.Mvvm.ComponentModel.Observa
 
     /// <summary>   Gets or sets the default thermal coefficient in inverse degrees centigrade. </summary>
     /// <value> The default thermal coefficient. </value>
-	[Description( "The Default Bridge-Wire Thermal Coefficient (0.0005)." )]
+    [Description( "The Default Bridge-Wire Thermal Coefficient (0.0005)." )]
     public double ThermalCoefficientDefault
     {
         get => this._thermalCoefficientDefault;
@@ -60,7 +60,7 @@ public class TtmEstimatorSettings : CommunityToolkit.Mvvm.ComponentModel.Observa
 
     /// <summary>   Gets or sets the thermal coefficient maximum. </summary>
     /// <value> The thermal coefficient maximum. </value>
-	[Description( "The Maximum Bridge-Wire Thermal Coefficient (0.001)." )]
+    [Description( "The Maximum Bridge-Wire Thermal Coefficient (0.001)." )]
     public double ThermalCoefficientMaximum
     {
         get => this._thermalCoefficientMaximum;
@@ -71,7 +71,7 @@ public class TtmEstimatorSettings : CommunityToolkit.Mvvm.ComponentModel.Observa
 
     /// <summary>   Gets or sets the thermal coefficient minimum. </summary>
     /// <value> The thermal coefficient minimum. </value>
-	[Description( "The Minimum Bridge-Wire Thermal Coefficient (0.0001)." )]
+    [Description( "The Minimum Bridge-Wire Thermal Coefficient (0.0001)." )]
     public double ThermalCoefficientMinimum
     {
         get => this._thermalCoefficientMinimum;

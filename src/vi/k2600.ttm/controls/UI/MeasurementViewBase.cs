@@ -262,7 +262,7 @@ public partial class MeasurementViewBase : cc.isr.WinControls.ModelViewBase
         }
         finally
         {
-            // SS reported an exception from this test possibly indicating that Windows allowed writing the file 
+            // SS reported an exception from this test possibly indicating that Windows allowed writing the file
             // by failed report deletion. Or else, Windows raised another exception type.
             try
             {

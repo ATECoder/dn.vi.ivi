@@ -11,7 +11,7 @@ namespace cc.isr.VI.SubsystemsWinControls
         private System.ComponentModel.IContainer components;
 
         // NOTE: The following procedure is required by the Windows Form Designer
-        // It can be modified using the Windows Form Designer.  
+        // It can be modified using the Windows Form Designer.
         // Do not modify it using the code editor.
         [DebuggerStepThrough()]
         private void InitializeComponent()
@@ -41,9 +41,9 @@ namespace cc.isr.VI.SubsystemsWinControls
             _toolStripPanel.SuspendLayout();
             _subsystemToolStrip.SuspendLayout();
             SuspendLayout();
-            // 
+            //
             // _toolStripPanel
-            // 
+            //
             _toolStripPanel.BackColor = System.Drawing.Color.Transparent;
             _toolStripPanel.Controls.Add(_subsystemToolStrip);
             _toolStripPanel.Dock = DockStyle.Top;
@@ -52,9 +52,9 @@ namespace cc.isr.VI.SubsystemsWinControls
             _toolStripPanel.Orientation = Orientation.Horizontal;
             _toolStripPanel.RowMargin = new Padding(0);
             _toolStripPanel.Size = new System.Drawing.Size(451, 28);
-            // 
+            //
             // _subsystemToolStrip
-            // 
+            //
             _subsystemToolStrip.BackColor = System.Drawing.Color.Transparent;
             _subsystemToolStrip.Dock = DockStyle.None;
             _subsystemToolStrip.GripMargin = new Padding(0);
@@ -64,9 +64,9 @@ namespace cc.isr.VI.SubsystemsWinControls
             _subsystemToolStrip.Size = new System.Drawing.Size(451, 28);
             _subsystemToolStrip.Stretch = true;
             _subsystemToolStrip.TabIndex = 3;
-            // 
+            //
             // _subsystemSplitButton
-            // 
+            //
             _subsystemSplitButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
             _subsystemSplitButton.DoubleClickEnabled = true;
             _subsystemSplitButton.DropDownItems.AddRange(new ToolStripItem[] { _applySettingsMenuItem, _readSettingsMenuItem });
@@ -75,29 +75,29 @@ namespace cc.isr.VI.SubsystemsWinControls
             _subsystemSplitButton.Name = "_SubsystemSplitButton";
             _subsystemSplitButton.Size = new System.Drawing.Size(45, 25);
             _subsystemSplitButton.Text = "Line";
-            // 
+            //
             // _applySettingsMenuItem
-            // 
+            //
             _applySettingsMenuItem.Name = "_applySettingsMenuItem";
             _applySettingsMenuItem.Size = new System.Drawing.Size(150, 22);
             _applySettingsMenuItem.Text = "Apply Settings";
             _applySettingsMenuItem.ToolTipText = "Applies settings onto the instrument";
-            // 
+            //
             // _readSettingsMenuItem
-            // 
+            //
             _readSettingsMenuItem.Name = "_ReadSettingsMenuItem";
             _readSettingsMenuItem.Size = new System.Drawing.Size(150, 22);
             _readSettingsMenuItem.Text = "Read Settings";
             _readSettingsMenuItem.ToolTipText = "Reads settings from the instrument";
-            // 
+            //
             // _lineNumberNumericLabel
-            // 
+            //
             _lineNumberNumericLabel.Name = "_LineNumberNumericLabel";
             _lineNumberNumericLabel.Size = new System.Drawing.Size(14, 25);
             _lineNumberNumericLabel.Text = "#";
-            // 
+            //
             // _lineNumberBox
-            // 
+            //
             _lineNumberBox.BackColor = System.Drawing.SystemColors.Window;
             _lineNumberBox.ForeColor = System.Drawing.SystemColors.ControlText;
             _lineNumberBox.MaxValue = 4.0d;
@@ -118,24 +118,24 @@ namespace cc.isr.VI.SubsystemsWinControls
             _lineNumberBox.ValueAsUInt16 = 0;
             _lineNumberBox.ValueAsUInt32 = 0U;
             _lineNumberBox.ValueAsUInt64 = 0UL;
-            // 
+            //
             // _activeLevelComboBoxLabel
-            // 
+            //
             _activeLevelComboBoxLabel.Name = "_activeLevelComboBoxLabel";
             _activeLevelComboBoxLabel.Size = new System.Drawing.Size(43, 25);
             _activeLevelComboBoxLabel.Text = "Active:";
-            // 
+            //
             // _activeLevelComboBox
-            // 
+            //
             _activeLevelComboBox.AutoSize = false;
             _activeLevelComboBox.Items.AddRange(new object[] { "Low", "High" });
             _activeLevelComboBox.Name = "_activeLevelComboBox";
             _activeLevelComboBox.Size = new System.Drawing.Size(50, 23);
             _activeLevelComboBox.Text = "Low";
             _activeLevelComboBox.ToolTipText = "Selects the active level";
-            // 
+            //
             // _readButton
-            // 
+            //
             _readButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
             _readButton.Image = (System.Drawing.Image)resources.GetObject("_ReadButton.Image");
             _readButton.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -143,9 +143,9 @@ namespace cc.isr.VI.SubsystemsWinControls
             _readButton.Size = new System.Drawing.Size(37, 25);
             _readButton.Text = "Read";
             _readButton.ToolTipText = "Read the digital level";
-            // 
+            //
             // _lineLevelNumberBox
-            // 
+            //
             _lineLevelNumberBox.BackColor = System.Drawing.SystemColors.Window;
             _lineLevelNumberBox.ForeColor = System.Drawing.SystemColors.ControlText;
             _lineLevelNumberBox.MaxValue = 1.0d;
@@ -167,9 +167,9 @@ namespace cc.isr.VI.SubsystemsWinControls
             _lineLevelNumberBox.ValueAsUInt16 = 0;
             _lineLevelNumberBox.ValueAsUInt32 = 0U;
             _lineLevelNumberBox.ValueAsUInt64 = 0UL;
-            // 
+            //
             // _writeButton
-            // 
+            //
             _writeButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
             _writeButton.Image = (System.Drawing.Image)resources.GetObject("_WriteButton.Image");
             _writeButton.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -177,9 +177,9 @@ namespace cc.isr.VI.SubsystemsWinControls
             _writeButton.Size = new System.Drawing.Size(39, 25);
             _writeButton.Text = "Write";
             _writeButton.ToolTipText = "Output the value";
-            // 
+            //
             // _pulseButton
-            // 
+            //
             _pulseButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
             _pulseButton.Image = (System.Drawing.Image)resources.GetObject("_PulseButton.Image");
             _pulseButton.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -187,9 +187,9 @@ namespace cc.isr.VI.SubsystemsWinControls
             _pulseButton.Size = new System.Drawing.Size(61, 25);
             _pulseButton.Text = "Pulse";
             _pulseButton.ToolTipText = "Output a pulse for the specified duration in milliseconds";
-            // 
+            //
             // _toggleButton
-            // 
+            //
             _toggleButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
             _toggleButton.Image = (System.Drawing.Image)resources.GetObject("_ToggleButton.Image");
             _toggleButton.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -197,9 +197,9 @@ namespace cc.isr.VI.SubsystemsWinControls
             _toggleButton.Size = new System.Drawing.Size(46, 25);
             _toggleButton.Text = "Toggle";
             _toggleButton.ToolTipText = "Toggle the line level";
-            // 
+            //
             // _pulseWidthNumberBox
-            // 
+            //
             _pulseWidthNumberBox.BackColor = System.Drawing.SystemColors.Window;
             _pulseWidthNumberBox.ForeColor = System.Drawing.SystemColors.ControlText;
             _pulseWidthNumberBox.MaxValue = 10000.0d;
@@ -221,9 +221,9 @@ namespace cc.isr.VI.SubsystemsWinControls
             _pulseWidthNumberBox.ValueAsUInt16 = 0;
             _pulseWidthNumberBox.ValueAsUInt32 = 0U;
             _pulseWidthNumberBox.ValueAsUInt64 = 0UL;
-            // 
+            //
             // DigitalOutputLineView
-            // 
+            //
             AutoScaleDimensions = new System.Drawing.SizeF(7.0f, 17.0f);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(_toolStripPanel);

@@ -9,7 +9,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
         private System.ComponentModel.IContainer components;
 
         // NOTE: The following procedure is required by the Windows Form Designer
-        // It can be modified using the Windows Form Designer.  
+        // It can be modified using the Windows Form Designer.
         // Do not modify it using the code editor.
         [DebuggerStepThrough()]
         private void InitializeComponent()
@@ -70,16 +70,16 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _splitContainer.Panel2.SuspendLayout();
             _splitContainer.SuspendLayout();
             SuspendLayout();
-            // 
+            //
             // _ttmToolStripContainer
-            // 
-            // 
+            //
+            //
             // _ttmToolStripContainer.BottomToolStripPanel
-            // 
+            //
             _ttmToolStripContainer.BottomToolStripPanel.Controls.Add(_ttmMeasureControlsToolStrip);
-            // 
+            //
             // _ttmToolStripContainer.ContentPanel
-            // 
+            //
             _ttmToolStripContainer.ContentPanel.Controls.Add(_splitContainer);
             _ttmToolStripContainer.ContentPanel.Size = new System.Drawing.Size(523, 427);
             _ttmToolStripContainer.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -88,9 +88,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _ttmToolStripContainer.Size = new System.Drawing.Size(523, 477);
             _ttmToolStripContainer.TabIndex = 7;
             _ttmToolStripContainer.Text = "ToolStripContainer1";
-            // 
+            //
             // _ttmMeasureControlsToolStrip
-            // 
+            //
             _ttmMeasureControlsToolStrip.Dock = System.Windows.Forms.DockStyle.None;
             _ttmMeasureControlsToolStrip.Font = new System.Drawing.Font("Segoe UI", 9.0f, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
             _ttmMeasureControlsToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { _measureToolStripDropDownButton, _ttmToolStripProgressBar, _toolStripSeparator1, _triggerToolStripDropDownButton, _triggerActionToolStripLabel, _toolStripSeparator2, _traceToolStripDropDownButton });
@@ -99,9 +99,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _ttmMeasureControlsToolStrip.Size = new System.Drawing.Size(389, 25);
             _ttmMeasureControlsToolStrip.TabIndex = 0;
             _ttmMeasureControlsToolStrip.Text = "TTM Measure Controls";
-            // 
+            //
             // _measureToolStripDropDownButton
-            // 
+            //
             _measureToolStripDropDownButton.AutoToolTip = false;
             _measureToolStripDropDownButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             _measureToolStripDropDownButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { _abortSequenceToolStripMenuItem, _measureAllToolStripMenuItem, _finalResistanceToolStripMenuItem, _thermalTransientToolStripMenuItem, _initialResistanceToolStripMenuItem, _clearToolStripMenuItem, _logTraceLevelComboBox, _displayTraceLevelComboBox });
@@ -111,75 +111,75 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _measureToolStripDropDownButton.Size = new System.Drawing.Size(78, 22);
             _measureToolStripDropDownButton.Text = "MEASURE:";
             _measureToolStripDropDownButton.ToolTipText = "Measure thermal transient elements";
-            // 
+            //
             // _abortSequenceToolStripMenuItem
-            // 
+            //
             _abortSequenceToolStripMenuItem.Image = ( System.Drawing.Bitmap ) Ttm.Controls.Properties.Resources.ResourceManager.GetObject( "media-playback-stop-2" );
             _abortSequenceToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             _abortSequenceToolStripMenuItem.Name = "_abortSequenceToolStripMenuItem";
             _abortSequenceToolStripMenuItem.Size = new System.Drawing.Size(223, 38);
             _abortSequenceToolStripMenuItem.Text = "ABORT";
             _abortSequenceToolStripMenuItem.ToolTipText = "Abort measurement sequence";
-            // 
+            //
             // _measureAllToolStripMenuItem
-            // 
+            //
             _measureAllToolStripMenuItem.Image = ( System.Drawing.Bitmap ) Ttm.Controls.Properties.Resources.ResourceManager.GetObject( "arrow-right-double" );
             _measureAllToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             _measureAllToolStripMenuItem.Name = "_MeasureAllToolStripMenuItem";
             _measureAllToolStripMenuItem.Size = new System.Drawing.Size(223, 38);
             _measureAllToolStripMenuItem.Text = "ALL";
             _measureAllToolStripMenuItem.ToolTipText = "Measure initial resistance, thermal transient, and final resistance";
-            // 
+            //
             // _finalResistanceToolStripMenuItem
-            // 
+            //
             _finalResistanceToolStripMenuItem.Image = ( System.Drawing.Bitmap ) Ttm.Controls.Properties.Resources.ResourceManager.GetObject( "arrow-right-2" );
             _finalResistanceToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             _finalResistanceToolStripMenuItem.Name = "_FinalResistanceToolStripMenuItem";
             _finalResistanceToolStripMenuItem.Size = new System.Drawing.Size(223, 38);
             _finalResistanceToolStripMenuItem.Text = "FINAL RESISTANCE";
             _finalResistanceToolStripMenuItem.ToolTipText = "Measure Final MeasuredValue";
-            // 
+            //
             // _thermalTransientToolStripMenuItem
-            // 
+            //
             _thermalTransientToolStripMenuItem.Image = ( System.Drawing.Bitmap ) Ttm.Controls.Properties.Resources.ResourceManager.GetObject( "arrow-right-2" );
             _thermalTransientToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             _thermalTransientToolStripMenuItem.Name = "_ThermalTransientToolStripMenuItem";
             _thermalTransientToolStripMenuItem.Size = new System.Drawing.Size(223, 38);
             _thermalTransientToolStripMenuItem.Text = "THERMAL TRANSIENT";
             _thermalTransientToolStripMenuItem.ToolTipText = "Measure Thermal Transient";
-            // 
+            //
             // _initialResistanceToolStripMenuItem
-            // 
+            //
             _initialResistanceToolStripMenuItem.Image = ( System.Drawing.Bitmap ) Ttm.Controls.Properties.Resources.ResourceManager.GetObject( "arrow-right-2" );
             _initialResistanceToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             _initialResistanceToolStripMenuItem.Name = "_InitialResistanceToolStripMenuItem";
             _initialResistanceToolStripMenuItem.Size = new System.Drawing.Size(223, 38);
             _initialResistanceToolStripMenuItem.Text = "INITIAL RESISTANCE";
             _initialResistanceToolStripMenuItem.ToolTipText = "Measure Initial MeasuredValue";
-            // 
+            //
             // _clearToolStripMenuItem
-            // 
+            //
             _clearToolStripMenuItem.Image = ( System.Drawing.Bitmap ) Ttm.Controls.Properties.Resources.ResourceManager.GetObject( "edit-clear-2" );
             _clearToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             _clearToolStripMenuItem.Name = "_ClearToolStripMenuItem";
             _clearToolStripMenuItem.Size = new System.Drawing.Size(223, 38);
             _clearToolStripMenuItem.Text = "CLEAR MEASUREMENTS";
             _clearToolStripMenuItem.ToolTipText = "Clear measurements on next Initial MeasuredValue measurement";
-            // 
+            //
             // _ttmToolStripProgressBar
-            // 
+            //
             _ttmToolStripProgressBar.AutoSize = false;
             _ttmToolStripProgressBar.Name = "_TtmToolStripProgressBar";
             _ttmToolStripProgressBar.Size = new System.Drawing.Size(100, 15);
             _ttmToolStripProgressBar.ToolTipText = "Measurement sequence progress";
-            // 
+            //
             // _toolStripSeparator1
-            // 
+            //
             _toolStripSeparator1.Name = "_ToolStripSeparator1";
             _toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
+            //
             // _triggerToolStripDropDownButton
-            // 
+            //
             _triggerToolStripDropDownButton.AutoToolTip = false;
             _triggerToolStripDropDownButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             _triggerToolStripDropDownButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { _waitForTriggerToolStripMenuItem, _assertTriggerToolStripMenuItem, _abortToolStripMenuItem });
@@ -189,9 +189,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _triggerToolStripDropDownButton.Size = new System.Drawing.Size(71, 22);
             _triggerToolStripDropDownButton.Text = "TRIGGER";
             _triggerToolStripDropDownButton.ToolTipText = "Trigger Options";
-            // 
+            //
             // _waitForTriggerToolStripMenuItem
-            // 
+            //
             _waitForTriggerToolStripMenuItem.CheckOnClick = true;
             _waitForTriggerToolStripMenuItem.Image = ( System.Drawing.Bitmap ) Ttm.Controls.Properties.Resources.ResourceManager.GetObject( "view-refresh-7" );
             _waitForTriggerToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
@@ -199,9 +199,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _waitForTriggerToolStripMenuItem.Size = new System.Drawing.Size(179, 38);
             _waitForTriggerToolStripMenuItem.Text = "Wait for Trigger";
             _waitForTriggerToolStripMenuItem.ToolTipText = "Check to enable waiting for trigger";
-            // 
+            //
             // _assertTriggerToolStripMenuItem
-            // 
+            //
             _assertTriggerToolStripMenuItem.Enabled = false;
             _assertTriggerToolStripMenuItem.Image = ( System.Drawing.Bitmap ) Ttm.Controls.Properties.Resources.ResourceManager.GetObject( "edit-add" );
             _assertTriggerToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
@@ -209,30 +209,30 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _assertTriggerToolStripMenuItem.Size = new System.Drawing.Size(179, 38);
             _assertTriggerToolStripMenuItem.Text = "Assert Trigger";
             _assertTriggerToolStripMenuItem.ToolTipText = "Assert instrument trigger";
-            // 
+            //
             // _abortToolStripMenuItem
-            // 
+            //
             _abortToolStripMenuItem.Image = ( System.Drawing.Bitmap ) Ttm.Controls.Properties.Resources.ResourceManager.GetObject( "process-stop" );
             _abortToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             _abortToolStripMenuItem.Name = "_abortToolStripMenuItem";
             _abortToolStripMenuItem.Size = new System.Drawing.Size(179, 38);
             _abortToolStripMenuItem.Text = "ABORT";
             _abortToolStripMenuItem.ToolTipText = "Forces abort";
-            // 
+            //
             // _triggerActionToolStripLabel
-            // 
+            //
             _triggerActionToolStripLabel.Font = new System.Drawing.Font("Segoe UI", 9.0f, System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, 0);
             _triggerActionToolStripLabel.Name = "_TriggerActionToolStripLabel";
             _triggerActionToolStripLabel.Size = new System.Drawing.Size(52, 22);
             _triggerActionToolStripLabel.Text = "Inactive";
-            // 
+            //
             // _toolStripSeparator2
-            // 
+            //
             _toolStripSeparator2.Name = "_ToolStripSeparator2";
             _toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
-            // 
+            //
             // _traceToolStripDropDownButton
-            // 
+            //
             _traceToolStripDropDownButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             _traceToolStripDropDownButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { _modelTraceToolStripMenuItem, _saveTraceToolStripMenuItem, _clearTraceToolStripMenuItem, _readTraceToolStripMenuItem });
             _traceToolStripDropDownButton.Image = (System.Drawing.Image)resources.GetObject("_TraceToolStripDropDownButton.Image");
@@ -240,44 +240,44 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _traceToolStripDropDownButton.Name = "_TraceToolStripDropDownButton";
             _traceToolStripDropDownButton.Size = new System.Drawing.Size(62, 22);
             _traceToolStripDropDownButton.Text = "TRACE: ";
-            // 
+            //
             // _modelTraceToolStripMenuItem
-            // 
+            //
             _modelTraceToolStripMenuItem.Image = ( System.Drawing.Bitmap ) Ttm.Controls.Properties.Resources.ResourceManager.GetObject( "games-solve" );
             _modelTraceToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             _modelTraceToolStripMenuItem.Name = "_ModelTraceToolStripMenuItem";
             _modelTraceToolStripMenuItem.Size = new System.Drawing.Size(148, 38);
             _modelTraceToolStripMenuItem.Text = "CURVE FIT";
             _modelTraceToolStripMenuItem.ToolTipText = "Fix a model to the trace";
-            // 
+            //
             // _saveTraceToolStripMenuItem
-            // 
+            //
             _saveTraceToolStripMenuItem.Image = ( System.Drawing.Bitmap ) Ttm.Controls.Properties.Resources.ResourceManager.GetObject( "document-export" );
             _saveTraceToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             _saveTraceToolStripMenuItem.Name = "_SaveTraceToolStripMenuItem";
             _saveTraceToolStripMenuItem.Size = new System.Drawing.Size(148, 38);
             _saveTraceToolStripMenuItem.Text = "SAVE";
             _saveTraceToolStripMenuItem.ToolTipText = "Save trace values to file";
-            // 
+            //
             // _clearTraceToolStripMenuItem
-            // 
+            //
             _clearTraceToolStripMenuItem.Image = ( System.Drawing.Bitmap ) Ttm.Controls.Properties.Resources.ResourceManager.GetObject( "edit-clear-2" );
             _clearTraceToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             _clearTraceToolStripMenuItem.Name = "_ClearTraceToolStripMenuItem";
             _clearTraceToolStripMenuItem.Size = new System.Drawing.Size(148, 38);
             _clearTraceToolStripMenuItem.Text = "CLEAR";
             _clearTraceToolStripMenuItem.ToolTipText = "Clear trace chart and list";
-            // 
+            //
             // _readTraceToolStripMenuItem
-            // 
+            //
             _readTraceToolStripMenuItem.Image = ( System.Drawing.Bitmap ) Ttm.Controls.Properties.Resources.ResourceManager.GetObject( "view-object-histogram-logarithmic" );
             _readTraceToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             _readTraceToolStripMenuItem.Name = "_ReadTraceToolStripMenuItem";
             _readTraceToolStripMenuItem.Size = new System.Drawing.Size(148, 38);
             _readTraceToolStripMenuItem.Text = "READ";
-            // 
+            //
             // _chart
-            // 
+            //
             _chart.BorderlineColor = System.Drawing.Color.Aqua;
             _chart.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
             _chart.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -286,49 +286,49 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _chart.Size = new System.Drawing.Size(330, 427);
             _chart.TabIndex = 0;
             _chart.Text = "Chart1";
-            // 
+            //
             // _traceDataGridView
-            // 
+            //
             _traceDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             _traceDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             _traceDataGridView.Location = new System.Drawing.Point(0, 0);
             _traceDataGridView.Name = "_TraceDataGridView";
             _traceDataGridView.Size = new System.Drawing.Size(189, 427);
             _traceDataGridView.TabIndex = 1;
-            // 
+            //
             // _splitContainer
-            // 
+            //
             _splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             _splitContainer.Location = new System.Drawing.Point(0, 0);
             _splitContainer.Name = "_SplitContainer";
-            // 
+            //
             // _splitContainer.Panel1
-            // 
+            //
             _splitContainer.Panel1.Controls.Add(_chart);
-            // 
+            //
             // _splitContainer.Panel2
-            // 
+            //
             _splitContainer.Panel2.Controls.Add(_traceDataGridView);
             _splitContainer.Size = new System.Drawing.Size(523, 427);
             _splitContainer.SplitterDistance = 330;
             _splitContainer.TabIndex = 2;
-            // 
+            //
             // _logTraceLevelComboBox
-            // 
+            //
             _logTraceLevelComboBox.Name = "_LogTraceLevelComboBox";
             _logTraceLevelComboBox.Size = new System.Drawing.Size(100, 22);
             _logTraceLevelComboBox.Text = "Verbose";
             _logTraceLevelComboBox.ToolTipText = "Log Trace Level";
-            // 
+            //
             // _displayTraceLevelComboBox
-            // 
+            //
             _displayTraceLevelComboBox.Name = "_DisplayTraceLevelComboBox";
             _displayTraceLevelComboBox.Size = new System.Drawing.Size(100, 22);
             _displayTraceLevelComboBox.Text = "Warning";
             _displayTraceLevelComboBox.ToolTipText = "Display trace level";
-            // 
+            //
             // MeasurementPanelBase
-            // 
+            //
             AutoScaleDimensions = new System.Drawing.SizeF(7.0f, 17.0f);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             Controls.Add(_ttmToolStripContainer);

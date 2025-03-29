@@ -80,7 +80,7 @@ public partial class LegacyDevice : CommunityToolkit.Mvvm.ComponentModel.Observa
     public void Dispose()
     {
         this.Dispose( true );
-        // Take this object off the finalization(Queue) and prevent finalization code 
+        // Take this object off the finalization(Queue) and prevent finalization code
         // from executing a second time.
         GC.SuppressFinalize( this );
     }
@@ -418,7 +418,7 @@ public partial class LegacyDevice : CommunityToolkit.Mvvm.ComponentModel.Observa
 
     #region " i device: message available "
 
-    /// <summary> 
+    /// <summary>
     /// Sends a message to the client.
     /// </summary>
     public event EventHandler<MessageEventArgs>? MessageAvailable;
@@ -552,7 +552,7 @@ public partial class LegacyDevice : CommunityToolkit.Mvvm.ComponentModel.Observa
         return this.ReportVisaOperationOkay( synopsis, format, args );
         // these are now the same because we are no longer reporting the visa status code
         // which is specific to the defunct NI VISA NS. This code, which was storing the error code
-        // of unhandled VISA exception, is no longer necessary because the ISR framework 
+        // of unhandled VISA exception, is no longer necessary because the ISR framework
         // attempts to handle all exceptions. It is also assumed that the calling assembly traps unhandled exceptions
         //  && this.ReportDeviceOperationOkay( synopsis, format, args );
     }
@@ -561,7 +561,7 @@ public partial class LegacyDevice : CommunityToolkit.Mvvm.ComponentModel.Observa
 
     #region " i device: exception available "
 
-    /// <summary> 
+    /// <summary>
     /// Sends an Exception message to the client.
     /// </summary>
     public event EventHandler<System.Threading.ThreadExceptionEventArgs>? ExceptionAvailable;

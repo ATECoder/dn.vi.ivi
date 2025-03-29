@@ -11,7 +11,7 @@ namespace cc.isr.VI.SubsystemsWinControls
         private System.ComponentModel.IContainer components;
 
         // NOTE: The following procedure is required by the Windows Form Designer
-        // It can be modified using the Windows Form Designer.  
+        // It can be modified using the Windows Form Designer.
         // Do not modify it using the code editor.
         [DebuggerStepThrough()]
         private void InitializeComponent()
@@ -45,9 +45,9 @@ namespace cc.isr.VI.SubsystemsWinControls
             _subsystemToolStrip.SuspendLayout();
             _toolStripPanel.SuspendLayout();
             SuspendLayout();
-            // 
+            //
             // _subsystemToolStrip
-            // 
+            //
             _subsystemToolStrip.AutoSize = false;
             _subsystemToolStrip.BackColor = System.Drawing.Color.Transparent;
             _subsystemToolStrip.Dock = DockStyle.None;
@@ -58,45 +58,45 @@ namespace cc.isr.VI.SubsystemsWinControls
             _subsystemToolStrip.Size = new System.Drawing.Size(403, 28);
             _subsystemToolStrip.Stretch = true;
             _subsystemToolStrip.TabIndex = 0;
-            // 
+            //
             // _subsystemSplitButton
-            // 
+            //
             _subsystemSplitButton.DropDownItems.AddRange(new ToolStripItem[] { _applySettingsMenuItem, _readSettingsMenuItem, _preformLimitTestMenuItem, _readLimitTestStateMenuItem, _digitalOutputActiveHighMenuItem });
             _subsystemSplitButton.Font = new System.Drawing.Font("Segoe UI", 9.0f, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, 0);
             _subsystemSplitButton.Name = "_SubsystemSplitButton";
             _subsystemSplitButton.Size = new System.Drawing.Size(42, 25);
             _subsystemSplitButton.Text = "Bin";
-            // 
+            //
             // _applySettingsMenuItem
-            // 
+            //
             _applySettingsMenuItem.Name = "_applySettingsMenuItem";
             _applySettingsMenuItem.Size = new System.Drawing.Size(215, 22);
             _applySettingsMenuItem.Text = "Apply Settings";
             _applySettingsMenuItem.ToolTipText = "Applies the limit settings to the instrument";
-            // 
+            //
             // _readSettingsMenuItem
-            // 
+            //
             _readSettingsMenuItem.Name = "_ReadSettingsMenuItem";
             _readSettingsMenuItem.Size = new System.Drawing.Size(215, 22);
             _readSettingsMenuItem.Text = "Read Settings";
             _readSettingsMenuItem.ToolTipText = "Read current settings from the instrument";
-            // 
+            //
             // _preformLimitTestMenuItem
-            // 
+            //
             _preformLimitTestMenuItem.Name = "_PreformLimitTestMenuItem";
             _preformLimitTestMenuItem.Size = new System.Drawing.Size(215, 22);
             _preformLimitTestMenuItem.Text = "Preform Limit Test";
             _preformLimitTestMenuItem.ToolTipText = "Performs the limit test";
-            // 
+            //
             // _readLimitTestStateMenuItem
-            // 
+            //
             _readLimitTestStateMenuItem.Name = "_ReadLimitTestStateMenuItem";
             _readLimitTestStateMenuItem.Size = new System.Drawing.Size(215, 22);
             _readLimitTestStateMenuItem.Text = "Read Limit Test State";
             _readLimitTestStateMenuItem.ToolTipText = "Performs and reads limit test results";
-            // 
+            //
             // _passBitPatternNumericButton
-            // 
+            //
             _passBitPatternNumericButton.CheckOnClick = true;
             _passBitPatternNumericButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
             _passBitPatternNumericButton.Image = (System.Drawing.Image)resources.GetObject("_PassBitPatternNumericButton.Image");
@@ -104,17 +104,17 @@ namespace cc.isr.VI.SubsystemsWinControls
             _passBitPatternNumericButton.Name = "_PassBitPatternNumericButton";
             _passBitPatternNumericButton.Size = new System.Drawing.Size(52, 25);
             _passBitPatternNumericButton.Text = "Pass: 0x";
-            // 
+            //
             // _passBitPatternNumeric
-            // 
+            //
             _passBitPatternNumeric.Name = "_PassBitPatternNumeric";
             _passBitPatternNumeric.Size = new System.Drawing.Size(41, 25);
             _passBitPatternNumeric.Text = "2";
             _passBitPatternNumeric.ToolTipText = "Pass bit pattern";
             _passBitPatternNumeric.Value = new decimal(new int[] { 2, 0, 0, 0 });
-            // 
+            //
             // _BinningStrobeToggleButton
-            // 
+            //
             _BinningStrobeToggleButton.Checked = true;
             _BinningStrobeToggleButton.CheckOnClick = true;
             _BinningStrobeToggleButton.CheckState = CheckState.Indeterminate;
@@ -125,9 +125,9 @@ namespace cc.isr.VI.SubsystemsWinControls
             _BinningStrobeToggleButton.Size = new System.Drawing.Size(52, 25);
             _BinningStrobeToggleButton.Text = "Strobe: ?";
             _BinningStrobeToggleButton.ToolTipText = "Toggle to enable or disable binning strobe";
-            // 
+            //
             // _limitFailedButton
-            // 
+            //
             _limitFailedButton.Checked = true;
             _limitFailedButton.CheckState = CheckState.Indeterminate;
             _limitFailedButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
@@ -137,30 +137,30 @@ namespace cc.isr.VI.SubsystemsWinControls
             _limitFailedButton.Size = new System.Drawing.Size(47, 25);
             _limitFailedButton.Text = "Failed?";
             _limitFailedButton.ToolTipText = "Displays limit state";
-            // 
+            //
             // _binningStrobeDurationNumericLabel
-            // 
+            //
             _binningStrobeDurationNumericLabel.Margin = new Padding(3, 1, 0, 2);
             _binningStrobeDurationNumericLabel.Name = "_BinningStrobeDurationNumericLabel";
             _binningStrobeDurationNumericLabel.Size = new System.Drawing.Size(56, 25);
             _binningStrobeDurationNumericLabel.Text = "Duration:";
-            // 
+            //
             // _binningStrobeDurationNumeric
-            // 
+            //
             _binningStrobeDurationNumeric.Name = "_BinningStrobeDurationNumeric";
             _binningStrobeDurationNumeric.Size = new System.Drawing.Size(41, 25);
             _binningStrobeDurationNumeric.Text = "0";
             _binningStrobeDurationNumeric.ToolTipText = "Duration of binning strobe to use for timing the trigger plan";
             _binningStrobeDurationNumeric.Value = new decimal(new int[] { 0, 0, 0, 0 });
-            // 
+            //
             // _binningStrobeDurationNumericUnitLabel
-            // 
+            //
             _binningStrobeDurationNumericUnitLabel.Name = "_BinningStrobeDurationNumericUnitLabel";
             _binningStrobeDurationNumericUnitLabel.Size = new System.Drawing.Size(23, 25);
             _binningStrobeDurationNumericUnitLabel.Text = "ms";
-            // 
+            //
             // _limit2View
-            // 
+            //
             _limit2View.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             _limit2View.Dock = DockStyle.Top;
             _limit2View.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
@@ -169,9 +169,9 @@ namespace cc.isr.VI.SubsystemsWinControls
             _limit2View.Padding = new Padding(1);
             _limit2View.Size = new System.Drawing.Size(403, 82);
             _limit2View.TabIndex = 3;
-            // 
+            //
             // _limit1View
-            // 
+            //
             _limit1View.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             _limit1View.Dock = DockStyle.Top;
             _limit1View.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
@@ -180,9 +180,9 @@ namespace cc.isr.VI.SubsystemsWinControls
             _limit1View.Padding = new Padding(1);
             _limit1View.Size = new System.Drawing.Size(403, 82);
             _limit1View.TabIndex = 1;
-            // 
+            //
             // _toolStripPanel
-            // 
+            //
             _toolStripPanel.BackColor = System.Drawing.Color.Transparent;
             _toolStripPanel.Controls.Add(_subsystemToolStrip);
             _toolStripPanel.Dock = DockStyle.Top;
@@ -191,9 +191,9 @@ namespace cc.isr.VI.SubsystemsWinControls
             _toolStripPanel.Orientation = Orientation.Horizontal;
             _toolStripPanel.RowMargin = new Padding(3, 0, 0, 0);
             _toolStripPanel.Size = new System.Drawing.Size(403, 28);
-            // 
+            //
             // _infoTextBox
-            // 
+            //
             _infoTextBox.Dock = DockStyle.Fill;
             _infoTextBox.Location = new System.Drawing.Point(1, 193);
             _infoTextBox.Margin = new Padding(3, 4, 3, 4);
@@ -204,17 +204,17 @@ namespace cc.isr.VI.SubsystemsWinControls
             _infoTextBox.Size = new System.Drawing.Size(403, 147);
             _infoTextBox.TabIndex = 26;
             _infoTextBox.Text = "<info>";
-            // 
+            //
             // _digitalOutputActiveHighMenuItem
-            // 
+            //
             _digitalOutputActiveHighMenuItem.CheckOnClick = true;
             _digitalOutputActiveHighMenuItem.Name = "_DigitalOutputActiveHighMenuItem";
             _digitalOutputActiveHighMenuItem.Size = new System.Drawing.Size(215, 22);
             _digitalOutputActiveHighMenuItem.Text = "Digital Output Active High";
             _digitalOutputActiveHighMenuItem.ToolTipText = "Toggles binning digital output polarity";
-            // 
+            //
             // BinningView
-            // 
+            //
             AutoScaleDimensions = new System.Drawing.SizeF(7.0f, 17.0f);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(_infoTextBox);

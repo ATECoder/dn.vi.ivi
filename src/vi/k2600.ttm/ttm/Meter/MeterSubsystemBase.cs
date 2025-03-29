@@ -7,7 +7,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm;
 /// </summary>
 /// <remarks>
 /// (c) 2012 Integrated Scientific Resources, Inc. All rights reserved. <para>
-/// Licensed under The MIT License. </para><para>  
+/// Licensed under The MIT License. </para><para>
 /// David, 2013-12-12, 3.0.5093. </para>
 /// </remarks>
 /// <remarks>
@@ -28,7 +28,7 @@ public abstract class MeterSubsystemBase( VI.StatusSubsystemBase statusSubsystem
         this.LastReading = string.Empty;
         this.LastOutcome = string.Empty;
         this.LastMeasurementStatus = string.Empty;
-        // this is not required -- is done internally 
+        // this is not required -- is done internally
         // this.Session.WriteLine("{0}:clear()", this.EntityName)
         cc.isr.VI.Pith.SessionBase.DoEventsAction?.Invoke();
     }
@@ -63,7 +63,7 @@ public abstract class MeterSubsystemBase( VI.StatusSubsystemBase statusSubsystem
         this.ApplyInstrumentDefaults();
         cc.isr.VI.Pith.SessionBase.DoEventsAction?.Invoke();
 
-        // this causes a problem requiring the make an initial resistance measurement before 
+        // this causes a problem requiring the make an initial resistance measurement before
         // the thermal transient.
         // this.Session.WriteLine("{0}:init()", this.EntityName)
         this.QueryConfiguration();

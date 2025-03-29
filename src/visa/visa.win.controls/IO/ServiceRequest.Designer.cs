@@ -3,15 +3,15 @@ namespace cc.isr.Visa.WinControls
 {
     partial class ServiceRequest
     {
-        /// <summary> 
+        /// <summary>
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
         #region " component designer generated code "
 
-        /// <summary> 
-        /// Required method for Designer support - do not modify 
+        /// <summary>
+        /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
@@ -41,10 +41,10 @@ namespace cc.isr.Visa.WinControls
             this.ReadingGroupBox.SuspendLayout();
             this.ConfiguringGroupBox.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // ResourceNameComboBox
-            // 
-            this.ResourceNameComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.ResourceNameComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ResourceNameComboBox.FormattingEnabled = true;
             this.ResourceNameComboBox.Location = new System.Drawing.Point(100, 17);
@@ -52,9 +52,9 @@ namespace cc.isr.Visa.WinControls
             this.ResourceNameComboBox.Size = new System.Drawing.Size(269, 23);
             this.ResourceNameComboBox.TabIndex = 4;
             this.ToolTip?.SetToolTip(this.ResourceNameComboBox, "Enter or select a resource name from the list.");
-            // 
+            //
             // CloseButton
-            // 
+            //
             this.CloseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.CloseButton.Location = new System.Drawing.Point(264, 76);
             this.CloseButton.Name = "CloseButton";
@@ -63,10 +63,10 @@ namespace cc.isr.Visa.WinControls
             this.CloseButton.Text = "Close Session";
             this.ToolTip?.SetToolTip(this.CloseButton, "Closes the session by releasing the VISA handle to the device");
             this.CloseButton.Click += new System.EventHandler(this.CloseButton_Click);
-            // 
+            //
             // WritingGroupBox
-            // 
-            this.WritingGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.WritingGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.WritingGroupBox.Controls.Add(this.WriteTextBox);
             this.WritingGroupBox.Controls.Add(this.WriteButton);
@@ -76,19 +76,19 @@ namespace cc.isr.Visa.WinControls
             this.WritingGroupBox.TabIndex = 33;
             this.WritingGroupBox.TabStop = false;
             this.WritingGroupBox.Text = "Writing";
-            // 
+            //
             // WriteTextBox
-            // 
-            this.WriteTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.WriteTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.WriteTextBox.Location = new System.Drawing.Point(8, 24);
             this.WriteTextBox.Name = "WriteTextBox";
             this.WriteTextBox.Size = new System.Drawing.Size(256, 23);
             this.WriteTextBox.TabIndex = 2;
             this.WriteTextBox.Text = "*IDN?\\n";
-            // 
+            //
             // WriteButton
-            // 
+            //
             this.WriteButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.WriteButton.Location = new System.Drawing.Point(264, 24);
             this.WriteButton.Name = "WriteButton";
@@ -98,9 +98,9 @@ namespace cc.isr.Visa.WinControls
             this.ToolTip?.SetToolTip(this.WriteButton, "Click Write to send a query to device. The reply will be read and displayed upon " +
         "receiving the service request.");
             this.WriteButton.Click += new System.EventHandler(this.WriteButton_Click);
-            // 
+            //
             // ReadTerminationEnabledCheckBox
-            // 
+            //
             this.ReadTerminationEnabledCheckBox.AutoSize = true;
             this.ReadTerminationEnabledCheckBox.BackColor = System.Drawing.Color.Transparent;
             this.ReadTerminationEnabledCheckBox.Checked = true;
@@ -112,9 +112,9 @@ namespace cc.isr.Visa.WinControls
             this.ReadTerminationEnabledCheckBox.Text = "&Enabled";
             this.ToolTip?.SetToolTip(this.ReadTerminationEnabledCheckBox, "Check to enable read termination.");
             this.ReadTerminationEnabledCheckBox.UseVisualStyleBackColor = false;
-            // 
+            //
             // ReadTerminationLabel
-            // 
+            //
             this.ReadTerminationLabel.AutoSize = true;
             this.ReadTerminationLabel.BackColor = System.Drawing.Color.Transparent;
             this.ReadTerminationLabel.Location = new System.Drawing.Point(8, 52);
@@ -122,9 +122,9 @@ namespace cc.isr.Visa.WinControls
             this.ReadTerminationLabel.Size = new System.Drawing.Size(128, 15);
             this.ReadTerminationLabel.TabIndex = 17;
             this.ReadTerminationLabel.Text = "Read Termination Byte:";
-            // 
+            //
             // OpenButton
-            // 
+            //
             this.OpenButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.OpenButton.Location = new System.Drawing.Point(264, 49);
             this.OpenButton.Name = "OpenButton";
@@ -133,9 +133,9 @@ namespace cc.isr.Visa.WinControls
             this.OpenButton.Text = "Open Session";
             this.ToolTip?.SetToolTip(this.OpenButton, "Sets the resource name and attempts to connect to the device.");
             this.OpenButton.Click += new System.EventHandler(this.OpenButton_Click);
-            // 
+            //
             // EnableSRQButton
-            // 
+            //
             this.EnableSRQButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.EnableSRQButton.Location = new System.Drawing.Point(264, 194);
             this.EnableSRQButton.Name = "EnableSRQButton";
@@ -144,10 +144,10 @@ namespace cc.isr.Visa.WinControls
             this.EnableSRQButton.Text = "Enable SRQ";
             this.ToolTip?.SetToolTip(this.EnableSRQButton, "Click to send the SRQ enable command to the device.");
             this.EnableSRQButton.Click += new System.EventHandler(this.EnableSRQButton_Click);
-            // 
+            //
             // CommandTextBox
-            // 
-            this.CommandTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.CommandTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.CommandTextBox.Location = new System.Drawing.Point(8, 194);
             this.CommandTextBox.Name = "CommandTextBox";
@@ -156,9 +156,9 @@ namespace cc.isr.Visa.WinControls
             this.CommandTextBox.Text = "*CLS; *ESE 253; *SRE 255\\n";
             this.ToolTip?.SetToolTip(this.CommandTextBox, "This instrument dependent command enables the instrument\'s SRQ event on a Message" +
         " Available (MAV) event.");
-            // 
+            //
             // CommandLabel
-            // 
+            //
             this.CommandLabel.BackColor = System.Drawing.Color.Transparent;
             this.CommandLabel.Location = new System.Drawing.Point(8, 173);
             this.CommandLabel.Name = "CommandLabel";
@@ -166,9 +166,9 @@ namespace cc.isr.Visa.WinControls
             this.CommandLabel.TabIndex = 28;
             this.CommandLabel.Text = "Type the command to enable the instrument\'s SRQ event on MAV:";
             this.CommandLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
+            //
             // ClearButton
-            // 
+            //
             this.ClearButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.ClearButton.Location = new System.Drawing.Point(264, 142);
             this.ClearButton.Name = "ClearButton";
@@ -176,11 +176,11 @@ namespace cc.isr.Visa.WinControls
             this.ClearButton.TabIndex = 1;
             this.ClearButton.Text = "Clear";
             this.ClearButton.Click += new System.EventHandler(this.ClearButton_Click);
-            // 
+            //
             // ReadTextBox
-            // 
-            this.ReadTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.ReadTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ReadTextBox.Location = new System.Drawing.Point(6, 24);
             this.ReadTextBox.Multiline = true;
@@ -188,9 +188,9 @@ namespace cc.isr.Visa.WinControls
             this.ReadTextBox.ReadOnly = true;
             this.ReadTextBox.Size = new System.Drawing.Size(362, 112);
             this.ReadTextBox.TabIndex = 0;
-            // 
+            //
             // ResourceNameComboBoxLabel
-            // 
+            //
             this.ResourceNameComboBoxLabel.AutoSize = true;
             this.ResourceNameComboBoxLabel.BackColor = System.Drawing.Color.Transparent;
             this.ResourceNameComboBoxLabel.Location = new System.Drawing.Point(8, 77);
@@ -199,9 +199,9 @@ namespace cc.isr.Visa.WinControls
             this.ResourceNameComboBoxLabel.TabIndex = 27;
             this.ResourceNameComboBoxLabel.Text = "Resource Name:";
             this.ResourceNameComboBoxLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
+            //
             // ReadTerminationCharacterNumeric
-            // 
+            //
             this.ReadTerminationCharacterNumeric.Location = new System.Drawing.Point(139, 49);
             this.ReadTerminationCharacterNumeric.Maximum = new decimal(new int[] {
             255,
@@ -218,11 +218,11 @@ namespace cc.isr.Visa.WinControls
             0,
             0,
             0});
-            // 
+            //
             // ReadingGroupBox
-            // 
-            this.ReadingGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.ReadingGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ReadingGroupBox.Controls.Add(this.ClearButton);
             this.ReadingGroupBox.Controls.Add(this.ReadTextBox);
@@ -232,10 +232,10 @@ namespace cc.isr.Visa.WinControls
             this.ReadingGroupBox.TabIndex = 34;
             this.ReadingGroupBox.TabStop = false;
             this.ReadingGroupBox.Text = "Reading";
-            // 
+            //
             // ConfiguringGroupBox
-            // 
-            this.ConfiguringGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.ConfiguringGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ConfiguringGroupBox.Controls.Add(this.ReadTerminationCharacterNumeric);
             this.ConfiguringGroupBox.Controls.Add(this.ReadTerminationEnabledCheckBox);
@@ -249,10 +249,10 @@ namespace cc.isr.Visa.WinControls
             this.ConfiguringGroupBox.TabIndex = 31;
             this.ConfiguringGroupBox.TabStop = false;
             this.ConfiguringGroupBox.Text = "Configuring";
-            // 
+            //
             // SelectResourceLabel
-            // 
-            this.SelectResourceLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.SelectResourceLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.SelectResourceLabel.Location = new System.Drawing.Point(3, 1);
             this.SelectResourceLabel.Name = "SelectResourceLabel";
@@ -260,9 +260,9 @@ namespace cc.isr.Visa.WinControls
             this.SelectResourceLabel.TabIndex = 32;
             this.SelectResourceLabel.Text = "Select the Resource Name associated with your device; Press Open Session; Enter t" +
     "he command string that enables SRQ and click the Enable SRQ button.";
-            // 
+            //
             // ServiceRequest
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.WritingGroupBox);

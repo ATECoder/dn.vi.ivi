@@ -3,12 +3,12 @@ namespace cc.isr.Visa.WinControls
 {
     partial class ResourceNamesSelector
     {
-        /// <summary> 
+        /// <summary>
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary> 
+        /// <summary>
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
@@ -23,8 +23,8 @@ namespace cc.isr.Visa.WinControls
 
         #region " component designer generated code "
 
-        /// <summary> 
-        /// Required method for Designer support - do not modify 
+        /// <summary>
+        /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
@@ -41,9 +41,9 @@ namespace cc.isr.Visa.WinControls
             this.SelectedResourceNamesListBox = new System.Windows.Forms.ListBox();
             this.RefreshButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            // 
+            //
             // SelectedResourceNamesListBoxLabel
-            // 
+            //
             this.SelectedResourceNamesListBoxLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.SelectedResourceNamesListBoxLabel.AutoSize = true;
             this.SelectedResourceNamesListBoxLabel.Location = new System.Drawing.Point(3, 200);
@@ -51,29 +51,29 @@ namespace cc.isr.Visa.WinControls
             this.SelectedResourceNamesListBoxLabel.Size = new System.Drawing.Size(140, 15);
             this.SelectedResourceNamesListBoxLabel.TabIndex = 5;
             this.SelectedResourceNamesListBoxLabel.Text = "Selected Resource Name:";
-            // 
+            //
             // AvailableResourceNamesListBoxLabel
-            // 
+            //
             this.AvailableResourceNamesListBoxLabel.AutoSize = true;
             this.AvailableResourceNamesListBoxLabel.Location = new System.Drawing.Point(3, 3);
             this.AvailableResourceNamesListBoxLabel.Name = "AvailableResourceNamesListBoxLabel";
             this.AvailableResourceNamesListBoxLabel.Size = new System.Drawing.Size(114, 15);
             this.AvailableResourceNamesListBoxLabel.TabIndex = 0;
             this.AvailableResourceNamesListBoxLabel.Text = "Available Resources:";
-            // 
+            //
             // AvailableResourceNamesListBox
-            // 
-            this.AvailableResourceNamesListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.AvailableResourceNamesListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.AvailableResourceNamesListBox.ItemHeight = 15;
             this.AvailableResourceNamesListBox.Location = new System.Drawing.Point(3, 21);
             this.AvailableResourceNamesListBox.Name = "AvailableResourceNamesListBox";
             this.AvailableResourceNamesListBox.Size = new System.Drawing.Size(304, 124);
             this.AvailableResourceNamesListBox.TabIndex = 1;
-            // 
+            //
             // FilterComboBoxLabel
-            // 
+            //
             this.FilterComboBoxLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.FilterComboBoxLabel.AutoSize = true;
             this.FilterComboBoxLabel.Location = new System.Drawing.Point(3, 150);
@@ -83,9 +83,9 @@ namespace cc.isr.Visa.WinControls
             this.FilterComboBoxLabel.Text = "Resource Name Filter:";
             this.ToolTip?.SetToolTip(this.FilterComboBoxLabel, "Select or enter a filter for searching the resource  from the available resources" +
         "");
-            // 
+            //
             // RemoveResourceNameButton
-            // 
+            //
             this.RemoveResourceNameButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.RemoveResourceNameButton.Image = global::cc.isr.Visa.WinControls.Properties.Resources.Remove_color_16x;
             this.RemoveResourceNameButton.Location = new System.Drawing.Point(285, 316);
@@ -95,9 +95,9 @@ namespace cc.isr.Visa.WinControls
             this.ToolTip?.SetToolTip(this.RemoveResourceNameButton, "Remove the selected resource name from the list");
             this.RemoveResourceNameButton.UseVisualStyleBackColor = true;
             this.RemoveResourceNameButton.Click += new System.EventHandler(this.RemoveResourceNameButton_Click);
-            // 
+            //
             // AddResourceNameButton
-            // 
+            //
             this.AddResourceNameButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.AddResourceNameButton.Image = global::cc.isr.Visa.WinControls.Properties.Resources.Add_16x;
             this.AddResourceNameButton.Location = new System.Drawing.Point(257, 316);
@@ -107,20 +107,20 @@ namespace cc.isr.Visa.WinControls
             this.ToolTip?.SetToolTip(this.AddResourceNameButton, "Add the selected resource name to the list");
             this.AddResourceNameButton.UseVisualStyleBackColor = true;
             this.AddResourceNameButton.Click += new System.EventHandler(this.AddResourceNameButton_Click);
-            // 
+            //
             // FilterComboBox
-            // 
-            this.FilterComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.FilterComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.FilterComboBox.FormattingEnabled = true;
             this.FilterComboBox.Location = new System.Drawing.Point(3, 169);
             this.FilterComboBox.Name = "FilterComboBox";
             this.FilterComboBox.Size = new System.Drawing.Size(272, 23);
             this.FilterComboBox.TabIndex = 3;
-            // 
+            //
             // SelectedResourceNamesListBox
-            // 
-            this.SelectedResourceNamesListBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.SelectedResourceNamesListBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.SelectedResourceNamesListBox.FormattingEnabled = true;
             this.SelectedResourceNamesListBox.ItemHeight = 15;
@@ -128,9 +128,9 @@ namespace cc.isr.Visa.WinControls
             this.SelectedResourceNamesListBox.Name = "SelectedResourceNamesListBox";
             this.SelectedResourceNamesListBox.Size = new System.Drawing.Size(304, 94);
             this.SelectedResourceNamesListBox.TabIndex = 6;
-            // 
+            //
             // RefreshButton
-            // 
+            //
             this.RefreshButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.RefreshButton.BackColor = System.Drawing.Color.Transparent;
             this.RefreshButton.Image = global::cc.isr.Visa.WinControls.Properties.Resources.refresh;
@@ -140,9 +140,9 @@ namespace cc.isr.Visa.WinControls
             this.RefreshButton.TabIndex = 4;
             this.RefreshButton.UseVisualStyleBackColor = false;
             this.RefreshButton.Click += new System.EventHandler(this.RefreshButton_Click);
-            // 
+            //
             // ResourceNamesSelector
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.RemoveResourceNameButton);

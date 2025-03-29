@@ -119,7 +119,7 @@ public static partial class FirmwareManager
                 {
                     if ( displaySubsystem.DeleteSavedUserScript( script, savedScripts, false ) )
                     {
-                        // mark that scripts were deleted, i.e., that any script was deleted 
+                        // mark that scripts were deleted, i.e., that any script was deleted
                         // or if a script that existed no longer exists.
                         scriptsDeleted = true;
                     }

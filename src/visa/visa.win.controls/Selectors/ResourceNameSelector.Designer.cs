@@ -3,12 +3,12 @@ namespace cc.isr.Visa.WinControls
 {
     partial class ResourceNameSelector
     {
-        /// <summary> 
+        /// <summary>
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary> 
+        /// <summary>
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
@@ -23,8 +23,8 @@ namespace cc.isr.Visa.WinControls
 
         #region " component designer generated code "
 
-        /// <summary> 
-        /// Required method for Designer support - do not modify 
+        /// <summary>
+        /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
@@ -39,9 +39,9 @@ namespace cc.isr.Visa.WinControls
             this.RefreshButton = new System.Windows.Forms.Button();
             this.FilterComboBox = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
-            // 
+            //
             // SelectedResourceNameTextBoxLabel
-            // 
+            //
             this.SelectedResourceNameTextBoxLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.SelectedResourceNameTextBoxLabel.AutoSize = true;
             this.SelectedResourceNameTextBoxLabel.Location = new System.Drawing.Point(3, 244);
@@ -49,30 +49,30 @@ namespace cc.isr.Visa.WinControls
             this.SelectedResourceNameTextBoxLabel.Size = new System.Drawing.Size(140, 15);
             this.SelectedResourceNameTextBoxLabel.TabIndex = 5;
             this.SelectedResourceNameTextBoxLabel.Text = "Selected Resource Name:";
-            // 
+            //
             // AvailableResourceNamesListBoxLabel
-            // 
+            //
             this.AvailableResourceNamesListBoxLabel.AutoSize = true;
             this.AvailableResourceNamesListBoxLabel.Location = new System.Drawing.Point(3, 3);
             this.AvailableResourceNamesListBoxLabel.Name = "AvailableResourceNamesListBoxLabel";
             this.AvailableResourceNamesListBoxLabel.Size = new System.Drawing.Size(114, 15);
             this.AvailableResourceNamesListBoxLabel.TabIndex = 0;
             this.AvailableResourceNamesListBoxLabel.Text = "Available Resources:";
-            // 
+            //
             // SelectedResourceNameTextBox
-            // 
-            this.SelectedResourceNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.SelectedResourceNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.SelectedResourceNameTextBox.Location = new System.Drawing.Point(3, 263);
             this.SelectedResourceNameTextBox.Name = "SelectedResourceNameTextBox";
             this.SelectedResourceNameTextBox.Size = new System.Drawing.Size(287, 23);
             this.SelectedResourceNameTextBox.TabIndex = 6;
             this.SelectedResourceNameTextBox.Text = "GPIB0::2::INSTR";
-            // 
+            //
             // AvailableResourceNamesListBox
-            // 
-            this.AvailableResourceNamesListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.AvailableResourceNamesListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.AvailableResourceNamesListBox.ItemHeight = 15;
             this.AvailableResourceNamesListBox.Location = new System.Drawing.Point(3, 22);
@@ -80,9 +80,9 @@ namespace cc.isr.Visa.WinControls
             this.AvailableResourceNamesListBox.Size = new System.Drawing.Size(287, 169);
             this.AvailableResourceNamesListBox.TabIndex = 1;
             this.AvailableResourceNamesListBox.SelectedIndexChanged += new System.EventHandler(this.AvailableResourcesListBox_SelectedIndexChanged);
-            // 
+            //
             // FilterComboBoxLabel
-            // 
+            //
             this.FilterComboBoxLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.FilterComboBoxLabel.AutoSize = true;
             this.FilterComboBoxLabel.Location = new System.Drawing.Point(3, 194);
@@ -92,9 +92,9 @@ namespace cc.isr.Visa.WinControls
             this.FilterComboBoxLabel.Text = "Resource Name Filter:";
             this.ToolTip?.SetToolTip(this.FilterComboBoxLabel, "Select or enter a filter for searching the resource  from the available resources" +
         "");
-            // 
+            //
             // RefreshButton
-            // 
+            //
             this.RefreshButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.RefreshButton.BackColor = System.Drawing.Color.Transparent;
             this.RefreshButton.Image = global::cc.isr.Visa.WinControls.Properties.Resources.refresh;
@@ -104,19 +104,19 @@ namespace cc.isr.Visa.WinControls
             this.RefreshButton.TabIndex = 4;
             this.RefreshButton.UseVisualStyleBackColor = false;
             this.RefreshButton.Click += new System.EventHandler(this.RefreshButton_Click);
-            // 
+            //
             // FilterComboBox
-            // 
-            this.FilterComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.FilterComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.FilterComboBox.FormattingEnabled = true;
             this.FilterComboBox.Location = new System.Drawing.Point(3, 213);
             this.FilterComboBox.Name = "FilterComboBox";
             this.FilterComboBox.Size = new System.Drawing.Size(255, 23);
             this.FilterComboBox.TabIndex = 3;
-            // 
+            //
             // ResourceNameSelector
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.FilterComboBox);

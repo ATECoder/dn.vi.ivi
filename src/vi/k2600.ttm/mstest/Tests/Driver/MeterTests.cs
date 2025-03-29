@@ -66,7 +66,7 @@ public class MeterTests
         Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
         Console.WriteLine( $"Testing {typeof( K2600Device ).Assembly.FullName}" );
 
-        // create an instance of the Serilog logger. 
+        // create an instance of the Serilog logger.
         SessionLogger.Instance.CreateSerilogLogger( typeof( MeterTests ) );
 
         // read settings and throw if not found.

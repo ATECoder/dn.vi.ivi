@@ -46,7 +46,7 @@ public class CurrentSourceTests : Device.Tests.Base.TestBase
         // Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
         Console.WriteLine( $"Testing {typeof( cc.isr.VI.Tsp.K2600.CurrentSourceSubsystem ).Assembly.FullName}" );
 
-        // create an instance of the Serilog logger. 
+        // create an instance of the Serilog logger.
         SessionLogger.Instance.CreateSerilogLogger( typeof( CurrentSourceTests ) );
 
         this.TestSiteSettings = Settings.AllSettings.Instance.TestSiteSettings;
@@ -107,8 +107,8 @@ public class CurrentSourceTests : Device.Tests.Base.TestBase
             }
             finally
             {
-                // TODO: change source subsystem to inherit from vi.source subsystem base have the SMU pass the session to this class with the 
-                // and use a builder to build the commands adding the SMU prefix. 
+                // TODO: change source subsystem to inherit from vi.source subsystem base have the SMU pass the session to this class with the
+                // and use a builder to build the commands adding the SMU prefix.
                 // cc.isr.VI.Device.MSTest.Asserts.ToggleOutput(device.SourceSubsystem, False)
             }
         }

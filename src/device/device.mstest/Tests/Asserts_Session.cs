@@ -79,7 +79,7 @@ public sealed partial class Asserts
 
         Assert.IsNotNull( session, $"{nameof( session )} should not be null." );
         Assert.IsNotNull( ioSettings, $"{nameof( ioSettings )} should not be null." );
-        // read termination is enabled from the status subsystem. It is disabled at the IVI Visa level. 
+        // read termination is enabled from the status subsystem. It is disabled at the IVI Visa level.
         bool actualReadTerminationEnabled = session.ReadTerminationCharacterEnabled;
         bool expectedReadTerminationEnabled = ioSettings.ReadTerminationEnabled;
         string propertyName = nameof( cc.isr.VI.Pith.SessionBase.ReadTerminationCharacterEnabled ).SplitWords();

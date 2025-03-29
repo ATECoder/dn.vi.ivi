@@ -24,7 +24,7 @@ public partial class SessionBase
 
         (bool timedOut, int readyStatusByte, TimeSpan elapsed) = this.AwaitStatus( readyToQueryTimeout, isStatusReady );
 #if false
-        // instrument may timeout while still able to proceed. The wait status is effectively used to determine if an error exists from the 
+        // instrument may timeout while still able to proceed. The wait status is effectively used to determine if an error exists from the
         // previous operation
         if ( timedOut )
             throw new InvalidOperationException( $"Timeout awaiting status ready before executing '{dataToWrite}'" );
@@ -166,7 +166,7 @@ public partial class SessionBase
 
         (bool timedOut, int waitStatusByte, TimeSpan elapsed) = this.AwaitStatus( readyToQueryTimeout, isStatusReady );
 #if false
-        // instrument may timeout while still able to proceed. The wait status is effectively used to determine if an error exists from the 
+        // instrument may timeout while still able to proceed. The wait status is effectively used to determine if an error exists from the
         // previous operation
         if ( timedOut )
             throw new InvalidOperationException( $"Timeout awaiting status ready before querying '{dataToWrite}'" );
@@ -188,7 +188,7 @@ public partial class SessionBase
         // wait while busy
         (timedOut, waitStatusByte, elapsed) = this.AwaitStatus( readyToReadTimeout, isStatusReady );
 #if false
-        // instrument may timeout while still able to proceed. The wait status is effectively used to determine if an error exists from the 
+        // instrument may timeout while still able to proceed. The wait status is effectively used to determine if an error exists from the
         // previous operation
         if ( timedOut )
             throw new InvalidOperationException( $"Timeout awaiting status ready reading '{dataToWrite}'" );
@@ -236,7 +236,7 @@ public partial class SessionBase
 
         (bool timedOut, int waitStatusByte, TimeSpan elapsed) = this.AwaitStatus( readyToQueryTimeout, isStatusReady );
 #if false
-        // instrument may timeout while still able to proceed. The wait status is effectively used to determine if an error exists from the 
+        // instrument may timeout while still able to proceed. The wait status is effectively used to determine if an error exists from the
         // previous operation
         if ( timedOut )
             throw new InvalidOperationException( $"Timeout awaiting status ready before querying '{dataToWrite}'" );
@@ -321,7 +321,7 @@ public partial class SessionBase
         // wait while busy
         (bool timedOut, int waitStatusByte, TimeSpan elapsed) = this.AwaitStatus( readyToReadTimeout, isStatusReady );
 #if false
-        // instrument may timeout while still able to proceed. The wait status is effectively used to determine if an error exists from the 
+        // instrument may timeout while still able to proceed. The wait status is effectively used to determine if an error exists from the
         // previous operation
         if ( timedOut )
             throw new InvalidOperationException( $"Timeout awaiting status ready after querying '{dataToWrite}'" );
@@ -366,7 +366,7 @@ public partial class SessionBase
 
         (bool timedOut, int waitStatusByte, TimeSpan elapsed) = this.AwaitStatus( readyToQueryTimeout, isStatusReady );
 #if false
-        // instrument may timeout while still able to proceed. The wait status is effectively used to determine if an error exists from the 
+        // instrument may timeout while still able to proceed. The wait status is effectively used to determine if an error exists from the
         // previous operation
         if ( timedOut )
             throw new InvalidOperationException( $"Timeout awaiting status ready before querying '{dataToWrite}'" );
@@ -388,7 +388,7 @@ public partial class SessionBase
         // wait while busy
         (timedOut, waitStatusByte, elapsed) = this.AwaitStatus( readyToReadTimeout, isStatusReady );
 #if false
-        // instrument may timeout while still able to proceed. The wait status is effectively used to determine if an error exists from the 
+        // instrument may timeout while still able to proceed. The wait status is effectively used to determine if an error exists from the
         // previous operation
         if ( timedOut )
             throw new InvalidOperationException( $"Timeout awaiting status ready after querying '{dataToWrite}'" );
@@ -424,7 +424,7 @@ public partial class SessionBase
         // wait while busy
         (bool timedOut, int waitStatusByte, TimeSpan elapsed) = this.AwaitStatus( readyToReadTimeout, isStatusReady );
 #if false
-        // instrument may timeout while still able to proceed. The wait status is effectively used to determine if an error exists from the 
+        // instrument may timeout while still able to proceed. The wait status is effectively used to determine if an error exists from the
         // previous operation
         if ( timedOut )
             throw new InvalidOperationException( $"Timeout awaiting status ready after querying '{dataToWrite}'" );
@@ -487,7 +487,7 @@ public partial class SessionBase
         // wait while busy
         (bool timedOut, int waitStatusByte, TimeSpan elapsed) = this.AwaitStatus( readyToReadTimeout, isStatusReady );
 #if false
-        // instrument may timeout while still able to proceed. The wait status is effectively used to determine if an error exists from the 
+        // instrument may timeout while still able to proceed. The wait status is effectively used to determine if an error exists from the
         // previous operation
         if ( timedOut )
             throw new InvalidOperationException( $"Timeout awaiting status ready after querying '{dataToWrite}'" );
@@ -547,7 +547,7 @@ public partial class SessionBase
 
         (bool timedOut, int waitStatusByte, TimeSpan elapsed) = this.AwaitStatus( readyToWriteTimeout, isStatusReady );
 #if false
-        // instrument may timeout while still able to proceed. The wait status is effectively used to determine if an error exists from the 
+        // instrument may timeout while still able to proceed. The wait status is effectively used to determine if an error exists from the
         // previous operation
         if ( timedOut )
             throw new InvalidOperationException( $"Timeout awaiting status ready before writing '{dataToWrite}'" );

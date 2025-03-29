@@ -32,11 +32,11 @@ partial class Switchboard
         this.AvailableForms = new System.Windows.Forms.ListBox();
         this.OpenFormButton = new System.Windows.Forms.Button();
         this.SuspendLayout();
-        // 
+        //
         // AvailableForms
-        // 
-        this.AvailableForms.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-        | System.Windows.Forms.AnchorStyles.Left) 
+        //
+        this.AvailableForms.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+        | System.Windows.Forms.AnchorStyles.Left)
         | System.Windows.Forms.AnchorStyles.Right)));
         this.AvailableForms.FormattingEnabled = true;
         this.AvailableForms.ItemHeight = 15;
@@ -44,9 +44,9 @@ partial class Switchboard
         this.AvailableForms.Name = "AvailableForms";
         this.AvailableForms.Size = new System.Drawing.Size(422, 109);
         this.AvailableForms.TabIndex = 0;
-        // 
+        //
         // OpenFormButton
-        // 
+        //
         this.OpenFormButton.DialogResult = System.Windows.Forms.DialogResult.OK;
         this.OpenFormButton.Location = new System.Drawing.Point(14, 130);
         this.OpenFormButton.Name = "OpenFormButton";
@@ -55,9 +55,9 @@ partial class Switchboard
         this.OpenFormButton.Text = "Open Selected Form";
         this.OpenFormButton.UseVisualStyleBackColor = true;
         this.OpenFormButton.Click += new System.EventHandler(this.OpenFormButton_Click);
-        // 
+        //
         // Switchboard
-        // 
+        //
         this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
         this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         this.ClientSize = new System.Drawing.Size(450, 166);

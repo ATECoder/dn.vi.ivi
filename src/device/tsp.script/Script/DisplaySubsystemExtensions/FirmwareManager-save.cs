@@ -62,7 +62,7 @@ public static partial class FirmwareManager
     }
 
     /// <summary>   Saves the user script in non-volatile memory. </summary>
-    /// <remarks>   2024-09-05. 
+    /// <remarks>   2024-09-05.
     /// Save validation is done after all scripts are saved. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>

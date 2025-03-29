@@ -39,9 +39,9 @@ namespace NI.ServiceRequest
             this._writingGroupBox.SuspendLayout();
             this._readingGroupBox.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // _resourceNameComboBoxLabel
-            // 
+            //
             this._resourceNameComboBoxLabel.AutoSize = true;
             this._resourceNameComboBoxLabel.BackColor = System.Drawing.Color.Transparent;
             this._resourceNameComboBoxLabel.Location = new System.Drawing.Point(16, 82);
@@ -50,9 +50,9 @@ namespace NI.ServiceRequest
             this._resourceNameComboBoxLabel.TabIndex = 1;
             this._resourceNameComboBoxLabel.Text = "Resource Name:";
             this._resourceNameComboBoxLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
+            //
             // _openButton
-            // 
+            //
             this._openButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this._openButton.Location = new System.Drawing.Point(275, 49);
             this._openButton.Name = "_OpenButton";
@@ -60,9 +60,9 @@ namespace NI.ServiceRequest
             this._openButton.TabIndex = 2;
             this._openButton.Text = "Open Session";
             this._openButton.Click += new System.EventHandler(this.OpenButton_Click);
-            // 
+            //
             // _closeButton
-            // 
+            //
             this._closeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this._closeButton.Location = new System.Drawing.Point(275, 76);
             this._closeButton.Name = "_CloseButton";
@@ -70,10 +70,10 @@ namespace NI.ServiceRequest
             this._closeButton.TabIndex = 3;
             this._closeButton.Text = "Close Session";
             this._closeButton.Click += new System.EventHandler(this.CloseButton_Click);
-            // 
+            //
             // _commandLabel
-            // 
-            this._commandLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this._commandLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this._commandLabel.BackColor = System.Drawing.Color.Transparent;
             this._commandLabel.Location = new System.Drawing.Point(16, 174);
@@ -82,19 +82,19 @@ namespace NI.ServiceRequest
             this._commandLabel.TabIndex = 4;
             this._commandLabel.Text = "Type the command to enable the instrument\'s SRQ event on MAV:";
             this._commandLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
+            //
             // _commandTextBox
-            // 
-            this._commandTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this._commandTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this._commandTextBox.Location = new System.Drawing.Point(16, 197);
             this._commandTextBox.Name = "_CommandTextBox";
             this._commandTextBox.Size = new System.Drawing.Size(268, 23);
             this._commandTextBox.TabIndex = 5;
             this._commandTextBox.Text = "*CLS; *ESE 253; *SRE 255\\n";
-            // 
+            //
             // _enableSRQButton
-            // 
+            //
             this._enableSRQButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this._enableSRQButton.Location = new System.Drawing.Point(284, 197);
             this._enableSRQButton.Name = "_EnableSRQButton";
@@ -102,10 +102,10 @@ namespace NI.ServiceRequest
             this._enableSRQButton.TabIndex = 6;
             this._enableSRQButton.Text = "Enable SRQ";
             this._enableSRQButton.Click += new System.EventHandler(this.EnableSRQButton_Click);
-            // 
+            //
             // _configuringGroupBox
-            // 
-            this._configuringGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this._configuringGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this._configuringGroupBox.Controls.Add(this._readTerminationCharacterNumeric);
             this._configuringGroupBox.Controls.Add(this._readTerminationEnabledCheckBox);
@@ -119,9 +119,9 @@ namespace NI.ServiceRequest
             this._configuringGroupBox.TabIndex = 7;
             this._configuringGroupBox.TabStop = false;
             this._configuringGroupBox.Text = "Configuring";
-            // 
+            //
             // _readTerminationCharacterNumeric
-            // 
+            //
             this._readTerminationCharacterNumeric.Location = new System.Drawing.Point(137, 49);
             this._readTerminationCharacterNumeric.Maximum = new decimal(new int[] {
             255,
@@ -136,9 +136,9 @@ namespace NI.ServiceRequest
             0,
             0,
             0});
-            // 
+            //
             // _readTerminationEnabledCheckBox
-            // 
+            //
             this._readTerminationEnabledCheckBox.AutoSize = true;
             this._readTerminationEnabledCheckBox.BackColor = System.Drawing.Color.Transparent;
             this._readTerminationEnabledCheckBox.Checked = true;
@@ -149,9 +149,9 @@ namespace NI.ServiceRequest
             this._readTerminationEnabledCheckBox.TabIndex = 18;
             this._readTerminationEnabledCheckBox.Text = "&Enabled";
             this._readTerminationEnabledCheckBox.UseVisualStyleBackColor = false;
-            // 
+            //
             // _readTerminationLabel
-            // 
+            //
             this._readTerminationLabel.AutoSize = true;
             this._readTerminationLabel.BackColor = System.Drawing.Color.Transparent;
             this._readTerminationLabel.Location = new System.Drawing.Point(16, 52);
@@ -159,20 +159,20 @@ namespace NI.ServiceRequest
             this._readTerminationLabel.Size = new System.Drawing.Size(128, 15);
             this._readTerminationLabel.TabIndex = 17;
             this._readTerminationLabel.Text = "Read Termination Byte:";
-            // 
+            //
             // _resourceNameComboBox
-            // 
-            this._resourceNameComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this._resourceNameComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this._resourceNameComboBox.FormattingEnabled = true;
             this._resourceNameComboBox.Location = new System.Drawing.Point(107, 17);
             this._resourceNameComboBox.Name = "_ResourceNameComboBox";
             this._resourceNameComboBox.Size = new System.Drawing.Size(272, 23);
             this._resourceNameComboBox.TabIndex = 4;
-            // 
+            //
             // _selectResourceLabel
-            // 
-            this._selectResourceLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this._selectResourceLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this._selectResourceLabel.Location = new System.Drawing.Point(8, 8);
             this._selectResourceLabel.Name = "_SelectResourceLabel";
@@ -181,10 +181,10 @@ namespace NI.ServiceRequest
             this._selectResourceLabel.Text = "Select the Resource Name associated with your device and press the Configure Devi" +
     "ce button. Then enter the command string that enables SRQ and click the Enable S" +
     "RQ button.";
-            // 
+            //
             // _writingGroupBox
-            // 
-            this._writingGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this._writingGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this._writingGroupBox.Controls.Add(this._writeTextBox);
             this._writingGroupBox.Controls.Add(this._writeButton);
@@ -194,19 +194,19 @@ namespace NI.ServiceRequest
             this._writingGroupBox.TabIndex = 9;
             this._writingGroupBox.TabStop = false;
             this._writingGroupBox.Text = "Writing";
-            // 
+            //
             // _writeTextBox
-            // 
-            this._writeTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this._writeTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this._writeTextBox.Location = new System.Drawing.Point(8, 24);
             this._writeTextBox.Name = "_WriteTextBox";
             this._writeTextBox.Size = new System.Drawing.Size(268, 23);
             this._writeTextBox.TabIndex = 2;
             this._writeTextBox.Text = "*IDN?\\n";
-            // 
+            //
             // _writeButton
-            // 
+            //
             this._writeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this._writeButton.Location = new System.Drawing.Point(276, 24);
             this._writeButton.Name = "_WriteButton";
@@ -214,11 +214,11 @@ namespace NI.ServiceRequest
             this._writeButton.TabIndex = 1;
             this._writeButton.Text = "Write";
             this._writeButton.Click += new System.EventHandler(this.WriteButton_Click);
-            // 
+            //
             // _readingGroupBox
-            // 
-            this._readingGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this._readingGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this._readingGroupBox.Controls.Add(this._clearButton);
             this._readingGroupBox.Controls.Add(this._readTextBox);
@@ -228,9 +228,9 @@ namespace NI.ServiceRequest
             this._readingGroupBox.TabIndex = 10;
             this._readingGroupBox.TabStop = false;
             this._readingGroupBox.Text = "Reading";
-            // 
+            //
             // _clearButton
-            // 
+            //
             this._clearButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this._clearButton.Location = new System.Drawing.Point(276, 86);
             this._clearButton.Name = "_ClearButton";
@@ -238,11 +238,11 @@ namespace NI.ServiceRequest
             this._clearButton.TabIndex = 1;
             this._clearButton.Text = "Clear";
             this._clearButton.Click += new System.EventHandler(this.ClearButton_Click);
-            // 
+            //
             // _readTextBox
-            // 
-            this._readTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this._readTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this._readTextBox.Location = new System.Drawing.Point(8, 24);
             this._readTextBox.Multiline = true;
@@ -250,9 +250,9 @@ namespace NI.ServiceRequest
             this._readTextBox.ReadOnly = true;
             this._readTextBox.Size = new System.Drawing.Size(372, 56);
             this._readTextBox.TabIndex = 0;
-            // 
+            //
             // MainForm
-            // 
+            //
             this.AutoScaleBaseSize = new System.Drawing.Size(6, 16);
             this.ClientSize = new System.Drawing.Size(404, 448);
             this.Controls.Add(this._readingGroupBox);

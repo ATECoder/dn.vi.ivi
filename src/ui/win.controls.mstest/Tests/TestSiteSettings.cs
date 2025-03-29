@@ -19,10 +19,18 @@ internal sealed class TestSiteSettings : Std.Tests.TestSiteSettings
 
     /// <summary>   Reads the settings. </summary>
     /// <remarks>   2024-08-03. </remarks>
-    public void ReadSettings()
+    public override void ReadSettings()
     {
         AppSettingsScribe.ReadSettings( AllSettings.Instance.Scribe!.AllUsersSettingsPath!, nameof( AllSettings.TestSiteSettings ), this,
             AppSettingsScribe.DefaultSerializerOptions, AppSettingsScribe.DefaultDocumentOptions );
+    }
+
+    /// <summary>   Saves the settings. </summary>
+    /// <remarks>   2025-03-28. </remarks>
+    public override void SaveSettings()
+    {
+        AppSettingsScribe.WriteSettings( AllSettings.Instance.Scribe!.AllUsersSettingsPath!, nameof( AllSettings.TestSiteSettings ), this,
+            AppSettingsScribe.DefaultSerializerOptions );
     }
 
     #endregion

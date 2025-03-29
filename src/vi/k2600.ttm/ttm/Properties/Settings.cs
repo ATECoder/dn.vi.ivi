@@ -45,8 +45,11 @@ public class Settings
 
         // must copy application context settings here to clear any bad settings files.
 
-        AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.AllUsersAssemblyFilePath! );
-        AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.ThisUserAssemblyFilePath! );
+        if ( !System.IO.File.Exists( ai.AllUsersAssemblyFilePath! ) )
+            AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.AllUsersAssemblyFilePath! );
+
+        if ( !System.IO.File.Exists( ai.ThisUserAssemblyFilePath! ) )
+            AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.ThisUserAssemblyFilePath! );
 
         this.Scribe = new( [this.TraceLogSettings, this.TtmEstimatorSettings, this.TtmMeterSettings, this.TtmResistanceSettings,
             this.TtmShuntSettings, this.TtmTraceSettings],
@@ -85,10 +88,8 @@ public class Settings
 
         this.Scribe!.ReadSettings();
 
-        if ( !System.IO.File.Exists( this.Scribe.UserSettingsPath ) )
-            throw new InvalidOperationException( $"{nameof( Settings )} settings file {this.Scribe.UserSettingsPath} not found." );
-        else if ( !this.SettingsExist( out string details ) )
-            throw new InvalidOperationException( details );
+        if ( !this.SettingsExist( out string settingsClassName ) )
+            throw new InvalidOperationException( $"{settingsClassName} not found or failed to read from {this.Scribe.UserSettingsPath}." );
     }
 
     /// <summary>   Reads the settings. </summary>
@@ -105,8 +106,8 @@ public class Settings
         this.ReadSettings( callingEntity.Assembly, settingsFileSuffix );
     }
 
-    /// <summary>   Gets the full pathname of the settings file. </summary>
-    /// <value> The full pathname of the settings file. </value>
+    /// <summary>   Gets the full path name of the settings file. </summary>
+    /// <value> The full path name of the settings file. </value>
     [JsonIgnore]
     public string? FilePath => this.Scribe?.UserSettingsPath;
 
@@ -120,25 +121,26 @@ public class Settings
 
     /// <summary>   Checks if all settings exist. </summary>
     /// <remarks>   2025-01-18. </remarks>
-    /// <returns>   A Tuple. </returns>
-    public bool SettingsExist( out string details )
+    /// <param name="settingsClassName"> The name of the settings class that failed to read. </param>
+    /// <returns>   True if all settings exit; otherwise false. </returns>
+    public bool SettingsExist( out string settingsClassName )
     {
         if ( this.TraceLogSettings is null || !this.TraceLogSettings.Exists )
-            details = $"{nameof( this.TraceLogSettings )} not found.";
+            settingsClassName = $"{nameof( Settings.TraceLogSettings )}";
         else if ( this.TtmEstimatorSettings is null || !this.TtmEstimatorSettings.Exists )
-            details = $"{nameof( this.TtmEstimatorSettings )} not found.";
+            settingsClassName = $"{nameof( Settings.TtmEstimatorSettings )}";
         else if ( this.TtmMeterSettings is null || !this.TtmMeterSettings.Exists )
-            details = $"{nameof( this.TtmMeterSettings )} not found.";
+            settingsClassName = $"{nameof( Settings.TtmMeterSettings )}";
         else if ( this.TtmResistanceSettings is null || !this.TtmResistanceSettings.Exists )
-            details = $"{nameof( this.TtmResistanceSettings )} not found.";
+            settingsClassName = $"{nameof( Settings.TtmResistanceSettings )}";
         else if ( this.TtmShuntSettings is null || !this.TtmShuntSettings.Exists )
-            details = $"{nameof( this.TtmShuntSettings )} not found.";
+            settingsClassName = $"{nameof( Settings.TtmShuntSettings )}";
         else if ( this.TtmTraceSettings is null || !this.TtmTraceSettings.Exists )
-            details = $"{nameof( this.TtmTraceSettings )} not found.";
+            settingsClassName = $"{nameof( Settings.TtmTraceSettings )}";
         else
-            details = string.Empty;
+            settingsClassName = string.Empty;
 
-        return details.Length == 0;
+        return settingsClassName.Length == 0;
     }
 
     #endregion

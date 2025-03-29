@@ -1180,7 +1180,7 @@ public partial class MeterView : cc.isr.WinControls.ModelViewBase
                 }
             // todo: Handle auto delay mode; might be just on or off.
             // If subsystem.AutoDelayMode.HasValue Then Me.AutoDelayMode = subsystem.AutoDelayMode.Value
-            // 
+            //
             case nameof( MultimeterSubsystemBase.AutoDelayEnabled ):
                 {
                     this._autoDelayToggleButton.CheckState = subsystem.AutoDelayEnabled.ToCheckState();
@@ -2373,8 +2373,8 @@ public partial class MeterView : cc.isr.WinControls.ModelViewBase
             activity = $"{this.Device.ResourceNameCaption} Turning on measurement events";
             _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"{activity};. " );
             _ = this.Device.StatusSubsystemBase?.ApplyMeasurementEventEnableBitmask( this.Device.StatusSubsystemBase.MeasurementEventsBitmasks.All );
-            // 
-            // if handling buffer full, use the 4917 event to detect buffer full. 
+            //
+            // if handling buffer full, use the 4917 event to detect buffer full.
 
             activity = $"{this.Device.ResourceNameCaption} Turning on status service request";
             _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"{activity};. " );

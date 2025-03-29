@@ -11,7 +11,7 @@ namespace cc.isr.VI.SubsystemsWinControls
         private System.ComponentModel.IContainer components;
 
         // NOTE: The following procedure is required by the Windows Form Designer
-        // It can be modified using the Windows Form Designer.  
+        // It can be modified using the Windows Form Designer.
         // Do not modify it using the code editor.
         [DebuggerStepThrough()]
         private void InitializeComponent()
@@ -37,9 +37,9 @@ namespace cc.isr.VI.SubsystemsWinControls
             _layout.SuspendLayout();
             _subsystemToolStrip.SuspendLayout();
             SuspendLayout();
-            // 
+            //
             // _layout
-            // 
+            //
             _layout.ColumnCount = 2;
             _layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100.0f));
             _layout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 2.0f));
@@ -61,9 +61,9 @@ namespace cc.isr.VI.SubsystemsWinControls
             _layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 20.0f));
             _layout.Size = new System.Drawing.Size(415, 352);
             _layout.TabIndex = 0;
-            // 
+            //
             // _infoTextBox
-            // 
+            //
             _infoTextBox.Dock = DockStyle.Fill;
             _infoTextBox.Location = new System.Drawing.Point(3, 310);
             _infoTextBox.Margin = new Padding(3, 4, 3, 4);
@@ -74,9 +74,9 @@ namespace cc.isr.VI.SubsystemsWinControls
             _infoTextBox.Size = new System.Drawing.Size(407, 38);
             _infoTextBox.TabIndex = 14;
             _infoTextBox.Text = "<info>";
-            // 
+            //
             // _armLayer1View
-            // 
+            //
             _armLayer1View.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             _armLayer1View.Dock = DockStyle.Top;
             _armLayer1View.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
@@ -86,9 +86,9 @@ namespace cc.isr.VI.SubsystemsWinControls
             _armLayer1View.Padding = new Padding(1);
             _armLayer1View.Size = new System.Drawing.Size(407, 88);
             _armLayer1View.TabIndex = 0;
-            // 
+            //
             // _armLayer2View
-            // 
+            //
             _armLayer2View.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             _armLayer2View.Dock = DockStyle.Top;
             _armLayer2View.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
@@ -98,9 +98,9 @@ namespace cc.isr.VI.SubsystemsWinControls
             _armLayer2View.Padding = new Padding(1);
             _armLayer2View.Size = new System.Drawing.Size(407, 88);
             _armLayer2View.TabIndex = 1;
-            // 
+            //
             // _triggerLayer1View
-            // 
+            //
             _triggerLayer1View.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             _triggerLayer1View.Dock = DockStyle.Top;
             _triggerLayer1View.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
@@ -110,9 +110,9 @@ namespace cc.isr.VI.SubsystemsWinControls
             _triggerLayer1View.Padding = new Padding(1);
             _triggerLayer1View.Size = new System.Drawing.Size(407, 87);
             _triggerLayer1View.TabIndex = 2;
-            // 
+            //
             // _subsystemToolStrip
-            // 
+            //
             _subsystemToolStrip.AutoSize = false;
             _subsystemToolStrip.BackColor = System.Drawing.Color.Transparent;
             _subsystemToolStrip.GripMargin = new Padding(0);
@@ -123,9 +123,9 @@ namespace cc.isr.VI.SubsystemsWinControls
             _subsystemToolStrip.Stretch = true;
             _subsystemToolStrip.TabIndex = 9;
             _subsystemToolStrip.Text = "Trigger";
-            // 
+            //
             // _subsystemSplitButton
-            // 
+            //
             _subsystemSplitButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
             _subsystemSplitButton.DropDownItems.AddRange(new ToolStripItem[] { _applySettingsMenuItem, _readSettingsMenuItem });
             _subsystemSplitButton.Font = new System.Drawing.Font("Segoe UI", 9.0f, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, 0);
@@ -135,21 +135,21 @@ namespace cc.isr.VI.SubsystemsWinControls
             _subsystemSplitButton.Size = new System.Drawing.Size(60, 22);
             _subsystemSplitButton.Text = "Trigger";
             _subsystemSplitButton.ToolTipText = "Subsystem actions split button";
-            // 
+            //
             // _applySettingsMenuItem
-            // 
+            //
             _applySettingsMenuItem.Name = "_applySettingsMenuItem";
             _applySettingsMenuItem.Size = new System.Drawing.Size(180, 22);
             _applySettingsMenuItem.Text = "Apply Settings";
-            // 
+            //
             // _readSettingsMenuItem
-            // 
+            //
             _readSettingsMenuItem.Name = "_ReadSettingsMenuItem";
             _readSettingsMenuItem.Size = new System.Drawing.Size(180, 22);
             _readSettingsMenuItem.Text = "Read Settings";
-            // 
+            //
             // _initiateButton
-            // 
+            //
             _initiateButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
             _initiateButton.Image = (System.Drawing.Image)resources.GetObject("_InitiateButton.Image");
             _initiateButton.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -157,9 +157,9 @@ namespace cc.isr.VI.SubsystemsWinControls
             _initiateButton.Size = new System.Drawing.Size(47, 22);
             _initiateButton.Text = "Initiate";
             _initiateButton.ToolTipText = "Starts the trigger plan";
-            // 
+            //
             // _abortButton
-            // 
+            //
             _abortButton.Alignment = ToolStripItemAlignment.Right;
             _abortButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
             _abortButton.Image = (System.Drawing.Image)resources.GetObject("_abortButton.Image");
@@ -169,9 +169,9 @@ namespace cc.isr.VI.SubsystemsWinControls
             _abortButton.Size = new System.Drawing.Size(41, 22);
             _abortButton.Text = "Abort";
             _abortButton.ToolTipText = "Aborts a trigger plan";
-            // 
+            //
             // _sendBusTriggerButton
-            // 
+            //
             _sendBusTriggerButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
             _sendBusTriggerButton.Image = (System.Drawing.Image)resources.GetObject("_SendBusTriggerButton.Image");
             _sendBusTriggerButton.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -179,9 +179,9 @@ namespace cc.isr.VI.SubsystemsWinControls
             _sendBusTriggerButton.Size = new System.Drawing.Size(43, 22);
             _sendBusTriggerButton.Text = "Assert";
             _sendBusTriggerButton.ToolTipText = "Sends a bus trigger to the instrument";
-            // 
+            //
             // TriggerView
-            // 
+            //
             AutoScaleDimensions = new System.Drawing.SizeF(7.0f, 17.0f);
             AutoScaleMode = AutoScaleMode.Font;
             BorderStyle = BorderStyle.FixedSingle;

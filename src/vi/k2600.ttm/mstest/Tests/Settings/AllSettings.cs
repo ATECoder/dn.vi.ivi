@@ -26,10 +26,10 @@ public class AllSettings
     /// <returns>   The new instance. </returns>
     private static AllSettings CreateInstance()
     {
-        AllSettings ti = new();
         AssemblyFileInfo settingsFileInfo = AllSettings.CreateSettingsFileInfo();
+
+        AllSettings ti = new();
         ti.Scribe = ti.CreateScribe( settingsFileInfo );
-        // AppSettingsScribe.ReadSettings( SettingsFileInfo.AllUsersAssemblyFilePath!, nameof( AllSettings ), ti );
         return ti;
     }
 
@@ -51,14 +51,20 @@ public class AllSettings
     /// <returns>   The new settings file information. </returns>
     private static AssemblyFileInfo CreateSettingsFileInfo()
     {
-        // get assembly files using the .Logging suffix.
+        // Get the method declaring type for the assembly file information and the settings section name.
+        Type declaringType = System.Reflection.MethodBase.GetCurrentMethod()!.DeclaringType!;
 
-        AssemblyFileInfo ai = new( typeof( AllSettings ).Assembly, null, ".Settings", ".json" );
+        // get assembly files using the .Settings suffix.
+
+        AssemblyFileInfo ai = new( declaringType.Assembly, null, ".Settings", ".json" );
 
         // must copy application context settings here to clear any bad settings files.
 
-        AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.AllUsersAssemblyFilePath! );
-        AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.ThisUserAssemblyFilePath! );
+        if ( !System.IO.File.Exists( ai.AllUsersAssemblyFilePath! ) )
+            AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.AllUsersAssemblyFilePath! );
+
+        if ( !System.IO.File.Exists( ai.ThisUserAssemblyFilePath! ) )
+            AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.ThisUserAssemblyFilePath! );
 
         return ai;
     }
@@ -78,18 +84,11 @@ public class AllSettings
     /// <returns>   The new instance. </returns>
     private AppSettingsScribe CreateScribe( AssemblyFileInfo settingsFileInfo )
     {
-        AppSettingsScribe scribe = new( [this.TestSiteSettings],
-            settingsFileInfo.AppContextAssemblyFilePath!, settingsFileInfo.AllUsersAssemblyFilePath! )
-        {
-            AllUsersSettingsPath = settingsFileInfo.AllUsersAssemblyFilePath,
-            ThisUserSettingsPath = settingsFileInfo.ThisUserAssemblyFilePath
-        };
+        AppSettingsScribe scribe = new( [this.TestSiteSettings], settingsFileInfo );
         scribe.ReadSettings();
 
-        if ( !System.IO.File.Exists( scribe.UserSettingsPath ) )
-            throw new InvalidOperationException( $"{nameof( AllSettings )} settings file {scribe.UserSettingsPath} not found." );
-        else if ( !this.SettingsExist( out string details ) )
-            throw new InvalidOperationException( details );
+        if ( !this.SettingsExist( out string settingsClassName ) )
+            throw new InvalidOperationException( $"{settingsClassName} not found or failed to read from {scribe.UserSettingsPath}." );
 
         return scribe;
     }
@@ -99,8 +98,8 @@ public class AllSettings
     [JsonIgnore]
     public AppSettingsScribe? Scribe { get; private set; }
 
-    /// <summary>   Gets the full pathname of the settings file. </summary>
-    /// <value> The full pathname of the settings file. </value>
+    /// <summary>   Gets the full path name of the settings file. </summary>
+    /// <value> The full path name of the settings file. </value>
     [JsonIgnore]
     public string? FilePath => this.Scribe?.UserSettingsPath;
 
@@ -114,15 +113,16 @@ public class AllSettings
 
     /// <summary>   Checks if all settings exist. </summary>
     /// <remarks>   2025-01-18. </remarks>
-    /// <returns>   A Tuple. </returns>
-    public bool SettingsExist( out string details )
+    /// <param name="settingsClassName"> The name of the settings class that failed to read. </param>
+    /// <returns>   True if all settings exit; otherwise false. </returns>
+    public bool SettingsExist( out string settingsClassName )
     {
         if ( this.TestSiteSettings is null || !this.TestSiteSettings.Exists )
-            details = $"{nameof( this.TestSiteSettings )} not found.";
+            settingsClassName = $"{nameof( AllSettings.TestSiteSettings )}";
         else
-            details = string.Empty;
+            settingsClassName = string.Empty;
 
-        return details.Length == 0;
+        return settingsClassName.Length == 0;
     }
 
     #endregion

@@ -9,7 +9,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
         private System.ComponentModel.IContainer components;
 
         // NOTE: The following procedure is required by the Windows Form Designer
-        // It can be modified using the Windows Form Designer.  
+        // It can be modified using the Windows Form Designer.
         // Do not modify it using the code editor.
         [DebuggerStepThrough()]
         private void InitializeComponent()
@@ -59,9 +59,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             ((System.ComponentModel.ISupportInitialize)_coldVoltageNumeric).BeginInit();
             ((System.ComponentModel.ISupportInitialize)_coldCurrentNumeric).BeginInit();
             SuspendLayout();
-            // 
+            //
             // _groupBox
-            // 
+            //
             _groupBox.Controls.Add(_restoreDefaultsButton);
             _groupBox.Controls.Add(_applyNewConfigurationButton);
             _groupBox.Controls.Add(_applyConfigurationButton);
@@ -73,9 +73,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _groupBox.TabIndex = 2;
             _groupBox.TabStop = false;
             _groupBox.Text = "TTM CONFIGURATION";
-            // 
+            //
             // _restoreDefaultsButton
-            // 
+            //
             _restoreDefaultsButton.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Bold);
             _restoreDefaultsButton.Location = new System.Drawing.Point(364, 294);
             _restoreDefaultsButton.Name = "_RestoreDefaultsButton";
@@ -83,9 +83,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _restoreDefaultsButton.TabIndex = 4;
             _restoreDefaultsButton.Text = "RESTORE DEFAULTS";
             _restoreDefaultsButton.UseVisualStyleBackColor = true;
-            // 
+            //
             // _applyNewConfigurationButton
-            // 
+            //
             _applyNewConfigurationButton.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Bold);
             _applyNewConfigurationButton.Location = new System.Drawing.Point(196, 294);
             _applyNewConfigurationButton.Name = "_applyNewConfigurationButton";
@@ -93,9 +93,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _applyNewConfigurationButton.TabIndex = 3;
             _applyNewConfigurationButton.Text = "APPLY CHANGES";
             _applyNewConfigurationButton.UseVisualStyleBackColor = true;
-            // 
+            //
             // _applyConfigurationButton
-            // 
+            //
             _applyConfigurationButton.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Bold);
             _applyConfigurationButton.Location = new System.Drawing.Point(28, 294);
             _applyConfigurationButton.Name = "_applyConfigurationButton";
@@ -103,9 +103,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _applyConfigurationButton.TabIndex = 2;
             _applyConfigurationButton.Text = "APPLY ALL";
             _applyConfigurationButton.UseVisualStyleBackColor = true;
-            // 
+            //
             // _thermalTransientGroupBox
-            // 
+            //
             _thermalTransientGroupBox.Controls.Add(_thermalVoltageLimitLabel);
             _thermalTransientGroupBox.Controls.Add(_thermalVoltageLimitNumeric);
             _thermalTransientGroupBox.Controls.Add(_thermalVoltageLowLimitNumeric);
@@ -122,9 +122,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _thermalTransientGroupBox.TabIndex = 0;
             _thermalTransientGroupBox.TabStop = false;
             _thermalTransientGroupBox.Text = "THERMAL TRANSIENT";
-            // 
+            //
             // _thermalVoltageLimitLabel
-            // 
+            //
             _thermalVoltageLimitLabel.AutoSize = true;
             _thermalVoltageLimitLabel.Location = new System.Drawing.Point(45, 113);
             _thermalVoltageLimitLabel.Name = "_ThermalVoltageLimitLabel";
@@ -132,9 +132,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _thermalVoltageLimitLabel.TabIndex = 4;
             _thermalVoltageLimitLabel.Text = "VOLTAGE LIMIT &[V]:";
             _thermalVoltageLimitLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
+            //
             // _thermalVoltageLimitNumeric
-            // 
+            //
             _thermalVoltageLimitNumeric.DecimalPlaces = 3;
             _thermalVoltageLimitNumeric.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Bold);
             _thermalVoltageLimitNumeric.Location = new System.Drawing.Point(168, 109);
@@ -145,9 +145,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _thermalVoltageLimitNumeric.TabIndex = 5;
             _thermalVoltageLimitNumeric.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             _thermalVoltageLimitNumeric.Value = new decimal(new int[] { 99, 0, 0, 131072 });
-            // 
+            //
             // _thermalVoltageLowLimitNumeric
-            // 
+            //
             _thermalVoltageLowLimitNumeric.DecimalPlaces = 3;
             _thermalVoltageLowLimitNumeric.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Bold);
             _thermalVoltageLowLimitNumeric.Increment = new decimal(new int[] { 1, 0, 0, 196608 });
@@ -159,9 +159,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _thermalVoltageLowLimitNumeric.TabIndex = 9;
             _thermalVoltageLowLimitNumeric.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             _thermalVoltageLowLimitNumeric.Value = new decimal(new int[] { 1, 0, 0, 196608 });
-            // 
+            //
             // _thermalVoltageLowLimitNumericLabel
-            // 
+            //
             _thermalVoltageLowLimitNumericLabel.AutoSize = true;
             _thermalVoltageLowLimitNumericLabel.Location = new System.Drawing.Point(72, 193);
             _thermalVoltageLowLimitNumericLabel.Name = "_ThermalVoltageLowLimitNumericLabel";
@@ -169,9 +169,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _thermalVoltageLowLimitNumericLabel.TabIndex = 8;
             _thermalVoltageLowLimitNumericLabel.Text = "LOW LIMI&T [V]:";
             _thermalVoltageLowLimitNumericLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
+            //
             // _thermalVoltageHighLimitNumeric
-            // 
+            //
             _thermalVoltageHighLimitNumeric.DecimalPlaces = 3;
             _thermalVoltageHighLimitNumeric.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Bold);
             _thermalVoltageHighLimitNumeric.Increment = new decimal(new int[] { 1, 0, 0, 196608 });
@@ -183,9 +183,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _thermalVoltageHighLimitNumeric.TabIndex = 7;
             _thermalVoltageHighLimitNumeric.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             _thermalVoltageHighLimitNumeric.Value = new decimal(new int[] { 1, 0, 0, 196608 });
-            // 
+            //
             // _thermalVoltageHighLimitNumericLabel
-            // 
+            //
             _thermalVoltageHighLimitNumericLabel.AutoSize = true;
             _thermalVoltageHighLimitNumericLabel.Location = new System.Drawing.Point(70, 153);
             _thermalVoltageHighLimitNumericLabel.Name = "_ThermalVoltageHighLimitNumericLabel";
@@ -193,9 +193,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _thermalVoltageHighLimitNumericLabel.TabIndex = 6;
             _thermalVoltageHighLimitNumericLabel.Text = "HI&GH LIMIT [V]:";
             _thermalVoltageHighLimitNumericLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
+            //
             // _thermalVoltageNumeric
-            // 
+            //
             _thermalVoltageNumeric.DecimalPlaces = 3;
             _thermalVoltageNumeric.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Bold);
             _thermalVoltageNumeric.Increment = new decimal(new int[] { 1, 0, 0, 131072 });
@@ -206,9 +206,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _thermalVoltageNumeric.TabIndex = 3;
             _thermalVoltageNumeric.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             _thermalVoltageNumeric.Value = new decimal(new int[] { 1, 0, 0, 196608 });
-            // 
+            //
             // _thermalVoltageNumericLabel
-            // 
+            //
             _thermalVoltageNumericLabel.AutoSize = true;
             _thermalVoltageNumericLabel.Location = new System.Drawing.Point(25, 73);
             _thermalVoltageNumericLabel.Name = "_ThermalVoltageNumericLabel";
@@ -216,9 +216,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _thermalVoltageNumericLabel.TabIndex = 2;
             _thermalVoltageNumericLabel.Text = "VOLTAGE C&HANGE [V]:";
             _thermalVoltageNumericLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
+            //
             // _thermalCurrentNumeric
-            // 
+            //
             _thermalCurrentNumeric.DecimalPlaces = 3;
             _thermalCurrentNumeric.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Bold);
             _thermalCurrentNumeric.Increment = new decimal(new int[] { 1, 0, 0, 196608 });
@@ -229,9 +229,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _thermalCurrentNumeric.TabIndex = 1;
             _thermalCurrentNumeric.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             _thermalCurrentNumeric.Value = new decimal(new int[] { 1, 0, 0, 196608 });
-            // 
+            //
             // _thermalCurrentNumericLabel
-            // 
+            //
             _thermalCurrentNumericLabel.AutoSize = true;
             _thermalCurrentNumericLabel.Location = new System.Drawing.Point(40, 33);
             _thermalCurrentNumericLabel.Name = "_ThermalCurrentNumericLabel";
@@ -239,9 +239,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _thermalCurrentNumericLabel.TabIndex = 0;
             _thermalCurrentNumericLabel.Text = "CURR&ENT LEVEL [A]:";
             _thermalCurrentNumericLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
+            //
             // _coldResistanceConfigGroupBox
-            // 
+            //
             _coldResistanceConfigGroupBox.Controls.Add(_checkContactsCheckBox);
             _coldResistanceConfigGroupBox.Controls.Add(_postTransientDelayNumeric);
             _coldResistanceConfigGroupBox.Controls.Add(_postTransientDelayNumericLabel);
@@ -259,9 +259,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _coldResistanceConfigGroupBox.TabIndex = 0;
             _coldResistanceConfigGroupBox.TabStop = false;
             _coldResistanceConfigGroupBox.Text = "COLD RESISTANCE";
-            // 
+            //
             // _checkContactsCheckBox
-            // 
+            //
             _checkContactsCheckBox.AutoSize = true;
             _checkContactsCheckBox.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             _checkContactsCheckBox.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
@@ -272,9 +272,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _checkContactsCheckBox.Text = "CHECK CONTACTS:";
             _checkContactsCheckBox.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             _checkContactsCheckBox.UseVisualStyleBackColor = true;
-            // 
+            //
             // _postTransientDelayNumeric
-            // 
+            //
             _postTransientDelayNumeric.DecimalPlaces = 2;
             _postTransientDelayNumeric.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Bold);
             _postTransientDelayNumeric.Increment = new decimal(new int[] { 1, 0, 0, 65536 });
@@ -285,9 +285,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _postTransientDelayNumeric.TabIndex = 9;
             _postTransientDelayNumeric.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             _postTransientDelayNumeric.Value = new decimal(new int[] { 1, 0, 0, 65536 });
-            // 
+            //
             // _postTransientDelayNumericLabel
-            // 
+            //
             _postTransientDelayNumericLabel.AutoSize = true;
             _postTransientDelayNumericLabel.Location = new System.Drawing.Point(28, 193);
             _postTransientDelayNumericLabel.Name = "_PostTransientDelayNumericLabel";
@@ -295,9 +295,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _postTransientDelayNumericLabel.TabIndex = 8;
             _postTransientDelayNumericLabel.Text = "POST TTM &DELAY [S]:";
             _postTransientDelayNumericLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
+            //
             // _coldResistanceLowLimitNumeric
-            // 
+            //
             _coldResistanceLowLimitNumeric.DecimalPlaces = 3;
             _coldResistanceLowLimitNumeric.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Bold);
             _coldResistanceLowLimitNumeric.Increment = new decimal(new int[] { 1, 0, 0, 65536 });
@@ -309,9 +309,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _coldResistanceLowLimitNumeric.TabIndex = 7;
             _coldResistanceLowLimitNumeric.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             _coldResistanceLowLimitNumeric.Value = new decimal(new int[] { 1, 0, 0, 196608 });
-            // 
+            //
             // _resistanceLowLimitNumericLabel
-            // 
+            //
             _resistanceLowLimitNumericLabel.AutoSize = true;
             _resistanceLowLimitNumericLabel.Location = new System.Drawing.Point(64, 153);
             _resistanceLowLimitNumericLabel.Name = "_ResistanceLowLimitNumericLabel";
@@ -319,9 +319,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _resistanceLowLimitNumericLabel.TabIndex = 6;
             _resistanceLowLimitNumericLabel.Text = "LO&W LIMIT [Ω]:";
             _resistanceLowLimitNumericLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
+            //
             // _coldResistanceHighLimitNumeric
-            // 
+            //
             _coldResistanceHighLimitNumeric.DecimalPlaces = 3;
             _coldResistanceHighLimitNumeric.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Bold);
             _coldResistanceHighLimitNumeric.Increment = new decimal(new int[] { 1, 0, 0, 65536 });
@@ -333,9 +333,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _coldResistanceHighLimitNumeric.TabIndex = 5;
             _coldResistanceHighLimitNumeric.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             _coldResistanceHighLimitNumeric.Value = new decimal(new int[] { 1, 0, 0, 196608 });
-            // 
+            //
             // _resistanceHighLimitNumericLabel
-            // 
+            //
             _resistanceHighLimitNumericLabel.AutoSize = true;
             _resistanceHighLimitNumericLabel.Location = new System.Drawing.Point(62, 113);
             _resistanceHighLimitNumericLabel.Name = "_ResistanceHighLimitNumericLabel";
@@ -343,9 +343,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _resistanceHighLimitNumericLabel.TabIndex = 4;
             _resistanceHighLimitNumericLabel.Text = "&HIGH LIMIT [Ω]:";
             _resistanceHighLimitNumericLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
+            //
             // _coldVoltageNumeric
-            // 
+            //
             _coldVoltageNumeric.DecimalPlaces = 2;
             _coldVoltageNumeric.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Bold);
             _coldVoltageNumeric.Increment = new decimal(new int[] { 1, 0, 0, 65536 });
@@ -356,9 +356,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _coldVoltageNumeric.TabIndex = 3;
             _coldVoltageNumeric.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             _coldVoltageNumeric.Value = new decimal(new int[] { 1, 0, 0, 131072 });
-            // 
+            //
             // _coldVoltageNumericLabel
-            // 
+            //
             _coldVoltageNumericLabel.AutoSize = true;
             _coldVoltageNumericLabel.Location = new System.Drawing.Point(39, 73);
             _coldVoltageNumericLabel.Name = "_ColdVoltageNumericLabel";
@@ -366,9 +366,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _coldVoltageNumericLabel.TabIndex = 2;
             _coldVoltageNumericLabel.Text = "&VOLTAGE LIMIT [V]:";
             _coldVoltageNumericLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
+            //
             // _coldCurrentNumeric
-            // 
+            //
             _coldCurrentNumeric.DecimalPlaces = 4;
             _coldCurrentNumeric.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Bold);
             _coldCurrentNumeric.Increment = new decimal(new int[] { 1, 0, 0, 196608 });
@@ -379,9 +379,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _coldCurrentNumeric.TabIndex = 1;
             _coldCurrentNumeric.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             _coldCurrentNumeric.Value = new decimal(new int[] { 1, 0, 0, 262144 });
-            // 
+            //
             // _coldCurrentNumericLabel
-            // 
+            //
             _coldCurrentNumericLabel.AutoSize = true;
             _coldCurrentNumericLabel.Location = new System.Drawing.Point(34, 33);
             _coldCurrentNumericLabel.Name = "_ColdCurrentNumericLabel";
@@ -389,9 +389,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _coldCurrentNumericLabel.TabIndex = 0;
             _coldCurrentNumericLabel.Text = "C&URRENT LEVEL [A]:";
             _coldCurrentNumericLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
+            //
             // ConfigurationPanel
-            // 
+            //
             BackColor = System.Drawing.Color.Transparent;
             Controls.Add(_groupBox);
             Name = "ConfigurationPanel";

@@ -31,8 +31,8 @@ public enum StandardEvents
     OperationComplete = 1,
 
     /// <summary>
-    /// Bit B1, Request Control (RQC). Set bit indicates that the device 
-    /// wants to become the active GPIB controller. 
+    /// Bit B1, Request Control (RQC). Set bit indicates that the device
+    /// wants to become the active GPIB controller.
     /// </summary>
     [Description( "Request Control (RQC)" )]
     RequestControl = 0x2,

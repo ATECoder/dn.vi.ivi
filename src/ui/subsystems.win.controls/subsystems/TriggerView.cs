@@ -261,7 +261,7 @@ public partial class TriggerView : cc.isr.WinControls.ModelViewBase
             // Me.Device.Session.Write("*SRE 1") ' Set MSB bit of SRE register
             // Me.Device.Session.Write("stat:MEAS:ptr 32767; ntr 0; ENAB 512") ' Set all PTR bits and clear all NTR bits for measurement events Set Buffer Full bit of Measurement
             // Me.Device.Session.Write(":trac:feed calc") ' Select Calculate as reading source
-            // Me.Device.Session.Write(":trac:POIN 10")   ' Set buffer size to 10 points 
+            // Me.Device.Session.Write(":trac:POIN 10")   ' Set buffer size to 10 points
             // Me.Device.Session.Write(":trac:egr full")  ' Select Full element group
 
             // trigger the initiation of the measurement letting the triggering or service request do the rest.

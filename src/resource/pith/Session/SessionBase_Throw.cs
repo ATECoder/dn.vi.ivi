@@ -10,7 +10,7 @@ public partial class SessionBase
     /// <param name="communicationTimeoutMilliseconds"> (Optional) (10000) The communication timeout in
     ///                                                 milliseconds. </param>
     /// <param name="memberName">                       (Optional) Name of the member. </param>
-    /// <param name="sourcePath">                       (Optional) Full pathname of the source file. </param>
+    /// <param name="sourcePath">                       (Optional) full path name of the source file. </param>
     /// <param name="sourceLineNumber">                 (Optional) Source line number. </param>
     public void QueryAndThrowIfOperationIncomplete( string failureMessage = "",
         int readAfterWriteDelayMilliseconds = 0,
@@ -39,7 +39,7 @@ public partial class SessionBase
     /// <param name="communicationTimeoutMilliseconds"> (Optional) (10000) The communication timeout
     ///                                                 in milliseconds. </param>
     /// <param name="memberName">                       (Optional) Name of the member. </param>
-    /// <param name="sourcePath">                       (Optional) Full pathname of the source file. </param>
+    /// <param name="sourcePath">                       (Optional) full path name of the source file. </param>
     /// <param name="sourceLineNumber">                 (Optional) Source line number. </param>
     public void ReadAndThrowIfOperationIncomplete( string failureMessage = "",
         int readAfterWriteDelayMilliseconds = 0,
@@ -76,7 +76,7 @@ public partial class SessionBase
     }
 
     /// <summary>
-    /// Check if status error. If so, discard unread data and throw a <see cref="DeviceException"/>. 
+    /// Check if status error. If so, discard unread data and throw a <see cref="DeviceException"/>.
     /// </summary>
     /// <remarks>   2024-09-02. </remarks>
     /// <exception cref="DeviceException">  Thrown when a Device error condition occurs. </exception>
@@ -85,7 +85,7 @@ public partial class SessionBase
     /// <param name="useLastActionDetails"> (Optional) (false) True to use last action details. </param>
     /// <param name="failureMessage">       (Optional) (empty) Message describing the failure. </param>
     /// <param name="memberName">           (Optional) Name of the member. </param>
-    /// <param name="sourcePath">           (Optional) Full pathname of the source file. </param>
+    /// <param name="sourcePath">           (Optional) full path name of the source file. </param>
     /// <param name="sourceLineNumber">     (Optional) Source line number. </param>
     public void ThrowDeviceExceptionIfError( TimeSpan messageBitTimeout, bool useLastActionDetails = false,
         string failureMessage = "failed",
@@ -107,7 +107,7 @@ public partial class SessionBase
     /// <param name="useLastActionDetails"> (Optional) (false) True to use last action details. </param>
     /// <param name="failureMessage">       (Optional) (empty) Message describing the failure. </param>
     /// <param name="memberName">           (Optional) Name of the member. </param>
-    /// <param name="sourcePath">           (Optional) Full pathname of the source file. </param>
+    /// <param name="sourcePath">           (Optional) full path name of the source file. </param>
     /// <param name="sourceLineNumber">     (Optional) Source line number. </param>
     public void ThrowDeviceExceptionIfError( ServiceRequests statusByte, TimeSpan messageBitTimeout, bool useLastActionDetails = false,
         string failureMessage = "failed",
@@ -133,7 +133,7 @@ public partial class SessionBase
     /// <param name="useLastActionDetails"> (Optional) (false) True to use last action detains. </param>
     /// <param name="failureMessage">       (Optional) (empty) The failure message. </param>
     /// <param name="memberName">           (Optional) Name of the member. </param>
-    /// <param name="sourcePath">           (Optional) Full pathname of the source file. </param>
+    /// <param name="sourcePath">           (Optional) full path name of the source file. </param>
     /// <param name="sourceLineNumber">     (Optional) Source line number. </param>
     public void ThrowDeviceExceptionIfError( bool useLastActionDetails = false,
         string failureMessage = "failed",
@@ -155,7 +155,7 @@ public partial class SessionBase
     /// <param name="useLastActionDetails"> (Optional) (false) True to use last action detains. </param>
     /// <param name="failureMessage">       (Optional) (empty) The failure message. </param>
     /// <param name="memberName">           (Optional) Name of the member. </param>
-    /// <param name="sourcePath">           (Optional) Full pathname of the source file. </param>
+    /// <param name="sourcePath">           (Optional) full path name of the source file. </param>
     /// <param name="sourceLineNumber">     (Optional) Source line number. </param>
     public void ThrowDeviceExceptionIfError( ServiceRequests statusByte, bool useLastActionDetails = false,
         string failureMessage = "failed",
@@ -177,7 +177,7 @@ public partial class SessionBase
     /// <param name="useLastActionDetails"> (Optional) (false) True to use last action detains. </param>
     /// <param name="failureMessage">       (Optional) (empty) The failure message. </param>
     /// <param name="memberName">           (Optional) Name of the member. </param>
-    /// <param name="sourcePath">           (Optional) Full pathname of the source file. </param>
+    /// <param name="sourcePath">           (Optional) full path name of the source file. </param>
     /// <param name="sourceLineNumber">     (Optional) Source line number. </param>
     public void ThrowDeviceException( bool useLastActionDetails = false, string failureMessage = "failed ",
         [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",

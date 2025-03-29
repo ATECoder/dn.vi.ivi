@@ -327,7 +327,7 @@ public partial class SessionBase
     }
 
     /// <summary>
-    /// Wait until the status byte message available <see cref="MessageAvailableBitmask"/> 
+    /// Wait until the status byte message available <see cref="MessageAvailableBitmask"/>
     /// or the <see cref="ErrorAvailableBitmask"/> bits are set or count out.
     /// </summary>
     /// <remarks>

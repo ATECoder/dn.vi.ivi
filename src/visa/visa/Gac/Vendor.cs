@@ -80,7 +80,7 @@ public static partial class Vendor
 
     /// <summary>   Checks if an assembly with the specified full name exists in the specified path. </summary>
     /// <remarks>   2024-07-13. </remarks>
-    /// <param name="path">             Full pathname of the file. </param>
+    /// <param name="path">             full path name of the file. </param>
     /// <param name="fileName">         Filename of the file. </param>
     /// <param name="expectedFullName"> The expected full name of the assembly. </param>
     /// <returns>   A Tuple. </returns>

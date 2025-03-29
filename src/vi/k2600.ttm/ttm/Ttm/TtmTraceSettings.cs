@@ -23,7 +23,7 @@ public class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
     /// fetched from the settings file.
     /// </summary>
     /// <value> True if this settings section exists in the settings file, false if not. </value>
-	[Description( "True if this settings section exists and was read from the JSon settings file." )]
+    [Description( "True if this settings section exists and was read from the JSon settings file." )]
     public bool Exists
     {
         get => this._exists;
@@ -38,7 +38,7 @@ public class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the Thermal Transient aperture. </summary>
     /// <value> The Thermal Transient aperture. </value>
-	[Description( "Thermal Transient Aperture {0.004)." )]
+    [Description( "Thermal Transient Aperture {0.004)." )]
     public double Aperture
     {
         get => this._aperture;
@@ -49,7 +49,7 @@ public class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the Thermal Transient aperture default. </summary>
     /// <value> The Thermal Transient aperture default. </value>
-	[Description( "Thermal Transient Default Aperture {0.004)." )]
+    [Description( "Thermal Transient Default Aperture {0.004)." )]
     public double ApertureDefault
     {
         get => this._apertureDefault;
@@ -60,7 +60,7 @@ public class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the Thermal Transient aperture Maximum. </summary>
     /// <value> The Thermal Transient aperture Maximum. </value>
-	[Description( "Thermal Transient Maximum Aperture {0.01)." )]
+    [Description( "Thermal Transient Maximum Aperture {0.01)." )]
     public double ApertureMaximum
     {
         get => this._apertureMaximum;
@@ -71,7 +71,7 @@ public class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the Thermal Transient aperture minimum. </summary>
     /// <value> The Thermal Transient aperture minimum. </value>
-	[Description( "Thermal Transient Minimum Aperture {0.001)." )]
+    [Description( "Thermal Transient Minimum Aperture {0.001)." )]
     public double ApertureMinimum
     {
         get => this._apertureMinimum;
@@ -82,7 +82,7 @@ public class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the Thermal Transient current level. </summary>
     /// <value> The Thermal Transient current level. </value>
-	[Description( "Thermal Transient Current Level {0.27)." )]
+    [Description( "Thermal Transient Current Level {0.27)." )]
     public double CurrentLevel
     {
         get => this._currentLevel;
@@ -93,7 +93,7 @@ public class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the Thermal Transient current level default. </summary>
     /// <value> The Thermal Transient current level default. </value>
-	[Description( "Thermal Transient Default Current Level {0.27)." )]
+    [Description( "Thermal Transient Default Current Level {0.27)." )]
     public double CurrentLevelDefault
     {
         get => this._currentLevelDefault;
@@ -104,7 +104,7 @@ public class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the Thermal Transient current Maximum. </summary>
     /// <value> The Thermal Transient current Maximum. </value>
-	[Description( "Thermal Transient Maximum Current {0.999)." )]
+    [Description( "Thermal Transient Maximum Current {0.999)." )]
     public double CurrentMaximum
     {
         get => this._currentMaximum;
@@ -115,7 +115,7 @@ public class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the Thermal Transient current minimum. </summary>
     /// <value> The Thermal Transient current minimum. </value>
-	[Description( "Thermal Transient Minimum Current {0.01)." )]
+    [Description( "Thermal Transient Minimum Current {0.01)." )]
     public double CurrentMinimum
     {
         get => this._currentMinimum;
@@ -126,7 +126,7 @@ public class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the Thermal Transient Duration. </summary>
     /// <value> The Thermal Transient Duration. </value>
-	[Description( "Thermal Transient Duration {0.01)." )]
+    [Description( "Thermal Transient Duration {0.01)." )]
     public double Duration
     {
         get => this._duration;
@@ -137,7 +137,7 @@ public class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the Thermal Transient Duration default. </summary>
     /// <value> The Thermal Transient Duration default. </value>
-	[Description( "Thermal Transient Default Duration {0.01)." )]
+    [Description( "Thermal Transient Default Duration {0.01)." )]
     public double DurationDefault
     {
         get => this._durationDefault;
@@ -148,7 +148,7 @@ public class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the Thermal Transient Duration Maximum. </summary>
     /// <value> The Thermal Transient Duration Maximum. </value>
-	[Description( "Thermal Transient Duration Maximum Value {0.01)." )]
+    [Description( "Thermal Transient Duration Maximum Value {0.01)." )]
     public double DurationMaximum
     {
         get => this._durationMaximum;
@@ -159,7 +159,7 @@ public class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the Thermal Transient Duration minimum. </summary>
     /// <value> The Thermal Transient Duration minimum. </value>
-	[Description( "Thermal Transient Duration Minimum Value {0.01)." )]
+    [Description( "Thermal Transient Duration Minimum Value {0.01)." )]
     public double DurationMinimum
     {
         get => this._durationMinimum;
@@ -170,7 +170,7 @@ public class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the Thermal Transient voltage change high limit . </summary>
     /// <value> The Thermal Transient voltage change high limit . </value>
-	[Description( "Thermal Transient Voltage Change High Limit {0.017)." )]
+    [Description( "Thermal Transient Voltage Change High Limit {0.017)." )]
     public double HighLimit
     {
         get => this._highLimit;
@@ -181,7 +181,7 @@ public class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the Thermal Transient High limit default. </summary>
     /// <value> The Thermal Transient High limit default. </value>
-	[Description( "Thermal Transient Default Voltage Change High Limit {0.017)." )]
+    [Description( "Thermal Transient Default Voltage Change High Limit {0.017)." )]
     public double HighLimitDefault
     {
         get => this._highLimitDefault;
@@ -193,7 +193,7 @@ public class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
     /// <summary>   Gets or sets the Thermal Transient Latency. </summary>
     /// <remarks> This is the estimated time from the onset of the current pulse to the onset of data acquisition. </remarks>
     /// <value> The Thermal Transient Latency. </value>
-	[Description( "Thermal Transient Latency {0.00035)." )]
+    [Description( "Thermal Transient Latency {0.00035)." )]
     public double Latency
     {
         get => this._latency;
@@ -204,7 +204,7 @@ public class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the Thermal Transient Latency default. </summary>
     /// <value> The Thermal Transient Latency default. </value>
-	[Description( "Thermal Transient Default Latency {0.00035)." )]
+    [Description( "Thermal Transient Default Latency {0.00035)." )]
     public double LatencyDefault
     {
         get => this._latencyDefault;
@@ -215,7 +215,7 @@ public class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the Thermal Transient low limit . </summary>
     /// <value> The Thermal Transient low limit . </value>
-	[Description( "Thermal Voltage Change Default Low Limit {0.006)." )]
+    [Description( "Thermal Voltage Change Default Low Limit {0.006)." )]
     public double LowLimit
     {
         get => this._lowLimit;
@@ -226,7 +226,7 @@ public class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the Thermal Transient low limit default. </summary>
     /// <value> The Thermal Transient low limit default. </value>
-	[Description( "Thermal Transient Voltage Change Default Low Limit {0.006)." )]
+    [Description( "Thermal Transient Voltage Change Default Low Limit {0.006)." )]
     public double LowLimitDefault
     {
         get => this._lowLimitDefault;
@@ -237,7 +237,7 @@ public class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the Thermal Transient Median Filter Length. </summary>
     /// <value> The Thermal Transient Median Filter Length. </value>
-	[Description( "Thermal Transient Median Filter Length {3)." )]
+    [Description( "Thermal Transient Median Filter Length {3)." )]
     public int MedianFilterLength
     {
         get => this._medianFilterLength;
@@ -248,7 +248,7 @@ public class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the Thermal Transient Trace Median Filter Length default. </summary>
     /// <value> The Thermal Transient Median Filter Length default. </value>
-	[Description( "Thermal Transient Default Median Filter Length {3)." )]
+    [Description( "Thermal Transient Default Median Filter Length {3)." )]
     public int MedianFilterLengthDefault
     {
         get => this._medianFilterLengthDefault;
@@ -259,7 +259,7 @@ public class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the Thermal Transient Median Filter Length Maximum. </summary>
     /// <value> The Thermal Transient Median Filter Length Maximum. </value>
-	[Description( "Thermal Transient Maximum Median Filter Length {9)." )]
+    [Description( "Thermal Transient Maximum Median Filter Length {9)." )]
     public int MedianFilterLengthMaximum
     {
         get => this._medianFilterLengthMaximum;
@@ -270,7 +270,7 @@ public class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the Thermal Transient Median Filter Length minimum. </summary>
     /// <value> The Thermal Transient Median Filter Length minimum. </value>
-	[Description( "Thermal Transient Minimum Median Filter Length {3)." )]
+    [Description( "Thermal Transient Minimum Median Filter Length {3)." )]
     public int MedianFilterLengthMinimum
     {
         get => this._medianFilterLengthMinimum;
@@ -281,7 +281,7 @@ public class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the Thermal Transient Sampling Interval. </summary>
     /// <value> The Thermal Transient Sampling Interval. </value>
-	[Description( "Thermal Transient Maximum Sampling Interval {0.0001)." )]
+    [Description( "Thermal Transient Maximum Sampling Interval {0.0001)." )]
     public double SamplingInterval
     {
         get => this._samplingInterval;
@@ -292,7 +292,7 @@ public class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the Thermal Transient Sampling Interval default. </summary>
     /// <value> The Thermal Transient Sampling Interval default. </value>
-	[Description( "Thermal Transient Default Sampling Interval {0.0001)." )]
+    [Description( "Thermal Transient Default Sampling Interval {0.0001)." )]
     public double SamplingIntervalDefault
     {
         get => this._samplingIntervalDefault;
@@ -303,7 +303,7 @@ public class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the Thermal Transient Sampling Interval Maximum. </summary>
     /// <value> The Thermal Transient Sampling Interval Maximum. </value>
-	[Description( "Thermal Transient Maximum Sampling Interval {0.001)." )]
+    [Description( "Thermal Transient Maximum Sampling Interval {0.001)." )]
     public double SamplingIntervalMaximum
     {
         get => this._samplingIntervalMaximum;
@@ -314,7 +314,7 @@ public class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the Thermal Transient SamplingInterval minimum. </summary>
     /// <value> The Thermal Transient SamplingInterval minimum. </value>
-	[Description( "Thermal Transient Minimum Sampling Interval {0.00008)." )]
+    [Description( "Thermal Transient Minimum Sampling Interval {0.00008)." )]
     public double SamplingIntervalMinimum
     {
         get => this._samplingIntervalMinimum;
@@ -325,7 +325,7 @@ public class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the Thermal Transient Trace Points. </summary>
     /// <value> The Thermal Transient Trace Points. </value>
-	[Description( "Thermal Transient Trace Points {100)." )]
+    [Description( "Thermal Transient Trace Points {100)." )]
     public int TracePoints
     {
         get => this._tracePoints;
@@ -336,7 +336,7 @@ public class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the Thermal Transient Trace Points default. </summary>
     /// <value> The Thermal Transient Trace Points default. </value>
-	[Description( "Thermal Transient Default Trace Points {100)." )]
+    [Description( "Thermal Transient Default Trace Points {100)." )]
     public int TracePointsDefault
     {
         get => this._tracePointsDefault;
@@ -347,7 +347,7 @@ public class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the Thermal Transient Median Filter Length Maximum. </summary>
     /// <value> The Thermal Transient Trace Points Maximum. </value>
-	[Description( "Thermal Transient Maximum Trace Points {10000)." )]
+    [Description( "Thermal Transient Maximum Trace Points {10000)." )]
     public int TracePointsMaximum
     {
         get => this._tracePointsMaximum;
@@ -358,7 +358,7 @@ public class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the Thermal Transient Trace Points minimum. </summary>
     /// <value> The Thermal Transient Trace Points minimum. </value>
-	[Description( "Thermal Transient Minimum Trace Points {10)." )]
+    [Description( "Thermal Transient Minimum Trace Points {10)." )]
     public int TracePointsMinimum
     {
         get => this._tracePointsMinimum;
@@ -369,7 +369,7 @@ public class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the Thermal Transient voltage Change . </summary>
     /// <value> The Thermal Transient voltage Change . </value>
-	[Description( "Thermal Transient Voltage Change {0.099)." )]
+    [Description( "Thermal Transient Voltage Change {0.099)." )]
     public double VoltageChange
     {
         get => this._voltageChange;
@@ -380,7 +380,7 @@ public class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the Thermal Transient voltage Change default. </summary>
     /// <value> The Thermal Transient voltage Change default. </value>
-	[Description( "Thermal Transient Default Voltage Change {0.099)." )]
+    [Description( "Thermal Transient Default Voltage Change {0.099)." )]
     public double VoltageChangeDefault
     {
         get => this._voltageChangeDefault;
@@ -391,7 +391,7 @@ public class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the Thermal Transient voltage Change Maximum. </summary>
     /// <value> The Thermal Transient voltage Change Maximum. </value>
-	[Description( "Thermal Transient Maximum Voltage Change {0.099)." )]
+    [Description( "Thermal Transient Maximum Voltage Change {0.099)." )]
     public double VoltageChangeMaximum
     {
         get => this._voltageChangeMaximum;
@@ -402,7 +402,7 @@ public class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the Thermal Transient voltage Change Minimum. </summary>
     /// <value> The Thermal Transient voltage Change Minimum. </value>
-	[Description( "Thermal Transient Minimum Voltage Change {0.001)." )]
+    [Description( "Thermal Transient Minimum Voltage Change {0.001)." )]
     public double VoltageChangeMinimum
     {
         get => this._voltageChangeMinimum;
@@ -413,7 +413,7 @@ public class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the Thermal Transient voltage limit . </summary>
     /// <value> The Thermal Transient voltage limit . </value>
-	[Description( "Thermal Transient Voltage Limit {0.99)." )]
+    [Description( "Thermal Transient Voltage Limit {0.99)." )]
     public double VoltageLimit
     {
         get => this._voltageLimit;
@@ -424,7 +424,7 @@ public class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the Thermal Transient voltage limit default. </summary>
     /// <value> The Thermal Transient voltage limit default. </value>
-	[Description( "Thermal Transient Default Voltage Limit {0.99)." )]
+    [Description( "Thermal Transient Default Voltage Limit {0.99)." )]
     public double VoltageLimitDefault
     {
         get => this._voltageLimitDefault;
@@ -435,7 +435,7 @@ public class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the Thermal Transient voltage maximum. </summary>
     /// <value> The Thermal Transient voltage maximum. </value>
-	[Description( "Thermal Transient Maximum Voltage {9.99)." )]
+    [Description( "Thermal Transient Maximum Voltage {9.99)." )]
     public double VoltageMaximum
     {
         get => this._voltageMaximum;
@@ -446,7 +446,7 @@ public class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the Thermal Transient voltage Minimum. </summary>
     /// <value> The Thermal Transient voltage Minimum. </value>
-	[Description( "Thermal Transient Minimum Voltage {0.01)." )]
+    [Description( "Thermal Transient Minimum Voltage {0.01)." )]
     public double VoltageMinimum
     {
         get => this._voltageMinimum;

@@ -130,7 +130,7 @@ public abstract partial class StatusSubsystemBase : CommunityToolkit.Mvvm.Compon
 
         Pith.SessionBase.DoEventsAction?.Invoke();
 
-        // 20240916 cleanup 
+        // 20240916 cleanup
 #if false
         // ?todo: testing using OPC in place of the refractory periods.
         if ( this.Session.SupportsOperationComplete )
@@ -747,7 +747,7 @@ public abstract partial class StatusSubsystemBase : CommunityToolkit.Mvvm.Compon
     public (bool Success, string Details) TryApplyExpectedLanguage()
     {
         (bool Success, string Details) result = (true, string.Empty);
-        // check the language status. 
+        // check the language status.
         _ = this.QueryLanguage();
         if ( this.LanguageValidated )
         {

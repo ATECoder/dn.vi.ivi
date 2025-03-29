@@ -130,8 +130,8 @@ public class FirmwareScriptBaseCollection<TItem> : System.Collections.ObjectMode
     /// <summary>   Builds the commands to auto run these scripts. </summary>
     /// <remarks>   2024-09-05. </remarks>
     /// <param name="indent">         The indent. </param>
-    /// <param name="postRunDelay">   (optional) (0.5) The time in seconds to hold the display after the run. 
-	///                                Set to zero to disable display. </param>
+    /// <param name="postRunDelay">   (optional) (0.5) The time in seconds to hold the display after the run.
+    ///                                Set to zero to disable display. </param>
     /// <returns>   The auto run commands. </returns>
     public string BuildAutoRunScript( string indent, double postRunDelay = 0.5 )
     {

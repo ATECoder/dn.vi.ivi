@@ -33,20 +33,20 @@ namespace cc.isr.Visa.WinControls
             this.IgnoreButton = new System.Windows.Forms.Button();
             this.OkayButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            // 
+            //
             // ServiceRequest
-            // 
-            this.ServiceRequest.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.ServiceRequest.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ServiceRequest.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ServiceRequest.Location = new System.Drawing.Point(7, 11);
             this.ServiceRequest.Name = "ServiceRequest";
             this.ServiceRequest.Size = new System.Drawing.Size(377, 439);
             this.ServiceRequest.TabIndex = 5;
-            // 
+            //
             // IgnoreButton
-            // 
+            //
             this.IgnoreButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.IgnoreButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.IgnoreButton.Location = new System.Drawing.Point(302, 461);
@@ -55,9 +55,9 @@ namespace cc.isr.Visa.WinControls
             this.IgnoreButton.TabIndex = 4;
             this.IgnoreButton.Text = "&Cancel";
             this.IgnoreButton.UseVisualStyleBackColor = true;
-            // 
+            //
             // OkayButton
-            // 
+            //
             this.OkayButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.OkayButton.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.OkayButton.Location = new System.Drawing.Point(221, 461);
@@ -66,9 +66,9 @@ namespace cc.isr.Visa.WinControls
             this.OkayButton.TabIndex = 3;
             this.OkayButton.Text = "&Okay";
             this.OkayButton.UseVisualStyleBackColor = true;
-            // 
+            //
             // ServiceRequestForm
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(390, 501);

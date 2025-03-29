@@ -39,18 +39,18 @@ partial class ExplorerForm
         this.toolStrip1.SuspendLayout();
         this.statusStrip1.SuspendLayout();
         this.SuspendLayout();
-        // 
+        //
         // globalTextBox
-        // 
+        //
         this.globalTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
         this.globalTextBox.Location = new System.Drawing.Point(0, 25);
         this.globalTextBox.Multiline = true;
         this.globalTextBox.Name = "globalTextBox";
         this.globalTextBox.Size = new System.Drawing.Size(686, 343);
         this.globalTextBox.TabIndex = 0;
-        // 
+        //
         // toolStrip1
-        // 
+        //
         this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
         this.fileToolStripSplitButton,
         this.implementationsToolStripSplitButton});
@@ -59,9 +59,9 @@ partial class ExplorerForm
         this.toolStrip1.Size = new System.Drawing.Size(686, 25);
         this.toolStrip1.TabIndex = 1;
         this.toolStrip1.Text = "toolStrip1";
-        // 
+        //
         // fileToolStripSplitButton
-        // 
+        //
         this.fileToolStripSplitButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
         this.fileToolStripSplitButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
         this.fileExitMenuItem});
@@ -70,17 +70,17 @@ partial class ExplorerForm
         this.fileToolStripSplitButton.Size = new System.Drawing.Size(41, 22);
         this.fileToolStripSplitButton.Text = "&File";
         this.fileToolStripSplitButton.ToolTipText = "File split button";
-        // 
+        //
         // fileExitMenuItem
-        // 
+        //
         this.fileExitMenuItem.Name = "fileExitMenuItem";
         this.fileExitMenuItem.Size = new System.Drawing.Size(180, 22);
         this.fileExitMenuItem.Text = "&Exit";
         this.fileExitMenuItem.ToolTipText = "Close ";
         this.fileExitMenuItem.Click += new System.EventHandler(this.FileExitMenuItem_Click);
-        // 
+        //
         // implementationsToolStripSplitButton
-        // 
+        //
         this.implementationsToolStripSplitButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
         this.implementationsToolStripSplitButton.DoubleClickEnabled = true;
         this.implementationsToolStripSplitButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -90,17 +90,17 @@ partial class ExplorerForm
         this.implementationsToolStripSplitButton.Size = new System.Drawing.Size(113, 22);
         this.implementationsToolStripSplitButton.Text = "&Implementations";
         this.implementationsToolStripSplitButton.ToolTipText = "Implementations menu";
-        // 
+        //
         // implementationsListAllMenuItem
-        // 
+        //
         this.implementationsListAllMenuItem.Name = "implementationsListAllMenuItem";
         this.implementationsListAllMenuItem.Size = new System.Drawing.Size(180, 22);
         this.implementationsListAllMenuItem.Text = "List &All";
         this.implementationsListAllMenuItem.ToolTipText = "Lists all implementations";
         this.implementationsListAllMenuItem.Click += new System.EventHandler(this.ImplementationsListAllMenuItem_Click);
-        // 
+        //
         // statusStrip1
-        // 
+        //
         this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
         this.statusToolStripStatusLabel});
         this.statusStrip1.Location = new System.Drawing.Point(0, 368);
@@ -109,15 +109,15 @@ partial class ExplorerForm
         this.statusStrip1.Size = new System.Drawing.Size(686, 22);
         this.statusStrip1.TabIndex = 2;
         this.statusStrip1.Text = "statusStrip1";
-        // 
+        //
         // statusToolStripStatusLabel
-        // 
+        //
         this.statusToolStripStatusLabel.Name = "statusToolStripStatusLabel";
         this.statusToolStripStatusLabel.Size = new System.Drawing.Size(54, 17);
         this.statusToolStripStatusLabel.Text = "<status>";
-        // 
+        //
         // ExplorerForm
-        // 
+        //
         this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
         this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         this.ClientSize = new System.Drawing.Size(686, 390);

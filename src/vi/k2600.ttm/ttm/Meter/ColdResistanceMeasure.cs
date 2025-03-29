@@ -70,7 +70,7 @@ public class ColdResistanceMeasure : MeasureSubsystemBase
 
         this.ColdResistance.PresetKnownState();
 
-        // query the actual source output. 
+        // query the actual source output.
         // the unit tests must be aware of the actual source output for validations.
         _ = this.QuerySourceOutputOption();
     }

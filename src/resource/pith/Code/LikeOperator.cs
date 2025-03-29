@@ -58,7 +58,7 @@ public sealed class LikeOperator
 
         sourceLength = source is null ? 0 : source.Length;
 
-        // 
+        //
         // We expand ligatures up front, but we need to keep track of
         // where they were.  We need the source ligature positions so
         // that "?" in the pattern will match both characters of the
@@ -66,7 +66,7 @@ public sealed class LikeOperator
         // bracketed character lists (e.g. [abc0-9]), because a
         // ligature would look like two separate characters. But note
         // that we do this only for option compare text mode.
-        // 
+        //
 
         if ( compareOption == CompareOptions.Ordinal )
         {
@@ -87,11 +87,11 @@ public sealed class LikeOperator
         // The first phase is an optimization for anything in the pattern
         // before the first "*".  (If the pattern has no "*" in it, this
         // will do the whole thing.)
-        // 
+        //
         // Visit each character in the pattern, and see if it matches the
         // source.
-        // 
-        // 
+        //
+        //
         char p;
         while ( patternIndex < patternLength && sourceIndex < sourceLength )
         {
@@ -159,7 +159,7 @@ public sealed class LikeOperator
                 default:
                     {
                         // Not a special pattern character.  Just see if we have a match.
-                        // 
+                        //
                         if ( CompareChars( source!, sourceLength, sourceIndex, ref sourceIndex, sourceLigatureInfo, pattern, patternLength,
                             patternIndex, ref patternIndex, patternLigatureInfo, comparer!, options ) != 0 )
                         {
@@ -176,7 +176,7 @@ public sealed class LikeOperator
 
         // Check for the special case that we're at the end of the source,
         // and the pattern has nothing left in it but *'s or empty []'s.
-        // 
+        //
         while ( patternIndex < patternLength )
         {
             p = pattern![patternIndex];
@@ -419,7 +419,7 @@ public sealed class LikeOperator
             SkipToEndOfExpandedChar( rightLigatureInfo, rightLength, ref rightEnd );
 
             // If matching both expanded characters on the right, then consider multiple characters on the left too
-            // 
+            //
             if ( savedRightEnd < rightEnd )
             {
                 int numberOfExtraCharsToCompare = 0;
@@ -460,7 +460,7 @@ public sealed class LikeOperator
         if ( options == CompareOptions.Ordinal )
         {
             // Ordinal compare
-            // 
+            //
             return left[0] - right[0];
         }
 
@@ -583,8 +583,8 @@ public sealed class LikeOperator
         {
             if ( seenNot )
             {
-                // We got "[!]" ?	Treat it as the single literal character "!".
-                // 
+                // We got "[!]" ?    Treat it as the single literal character "!".
+                //
                 seenNot = false;
                 if ( !validatePatternWithoutMatching )
                 {
@@ -606,7 +606,7 @@ public sealed class LikeOperator
         }
 
         // Scan through character list
-        // 
+        //
         do
         {
             if ( p is ']' or '］' )
@@ -616,13 +616,13 @@ public sealed class LikeOperator
             }
 
             // Try to match the expanded ligature
-            // 
+            //
             int sourceNextIndex = default, patternNextIndex = default;
             int compareResult;
             if ( !validatePatternWithoutMatching && patternLigatureInfo is not null && patternLigatureInfo[patternIndex].Kind == CharKind.ExpandedChar1 )
             {
                 // VB6 compat - Match expanded char and return in this case without even validating RangeStart > RangeEnd
-                // 
+                //
                 compareResult = CompareChars( source, sourceLength, sourceIndex, ref sourceNextIndex, sourceLigatureInfo!, pattern, patternLength,
                     patternIndex, ref patternNextIndex, patternLigatureInfo, comparer, options, matchBothCharsOfExpandedCharInRight: true );
                 if ( compareResult == 0 )
@@ -646,7 +646,7 @@ public sealed class LikeOperator
             range.StartLength = patternNextIndex - patternIndex + 1;
 
             // Store the range start char
-            // 
+            //
             if ( options == CompareOptions.Ordinal )
             {
                 rangeStart = pattern[patternIndex].ToString();
@@ -665,15 +665,15 @@ public sealed class LikeOperator
             if ( patternNextIndex + 2 < patternLength && (pattern[patternNextIndex + 1] == '-' || pattern[patternNextIndex + 1] == '－') && pattern[patternNextIndex + 2] != ']' && pattern[patternNextIndex + 2] != '］' )
             {
                 // We're at the last character of a range.
-                // 
+                //
                 patternIndex += 2;
 
                 // Try to match one char
-                // 
+                //
                 if ( !validatePatternWithoutMatching && patternLigatureInfo is not null && patternLigatureInfo[patternIndex].Kind == CharKind.ExpandedChar1 )
                 {
                     // VB6 compat - Match expanded char and return in this case without even validating RangeStart > RangeEnd
-                    // 
+                    //
                     compareResult = CompareChars( source, sourceLength, sourceIndex, ref sourceNextIndex, sourceLigatureInfo!, pattern, patternLength, patternIndex, ref patternNextIndex, patternLigatureInfo, comparer, options, matchBothCharsOfExpandedCharInRight: true );
                     if ( compareResult == 0 )
                     {
@@ -694,7 +694,7 @@ public sealed class LikeOperator
                 range.EndLength = patternNextIndex - patternIndex + 1;
 
                 // Store the range end char
-                // 
+                //
                 if ( options == CompareOptions.Ordinal )
                 {
                     rangeEnd = pattern[patternIndex].ToString();
@@ -729,35 +729,35 @@ public sealed class LikeOperator
                     return;
                     // OneCharMatch:
 #if false
-					OneCharMatch:
-					;
-					Debug.Assert(!ValidatePatternWithoutMatching, "Unexpected string matching when validating pattern string");
-					if (SeenNot)
-					{
-						Mismatch = true;
-						return;
-					}
+                    OneCharMatch:
+                    ;
+                    Debug.Assert(!ValidatePatternWithoutMatching, "Unexpected string matching when validating pattern string");
+                    if (SeenNot)
+                    {
+                        Mismatch = true;
+                        return;
+                    }
 
-					do
-					{
-						PatternIndex += 1;
-						if (PatternIndex >= PatternLength)
-						{
-							PatternError = true;
-							return;
-						}
-					}
-					while (Pattern[PatternIndex] != ']' && Pattern[PatternIndex] != '］');
-					SourceIndex = SourceNextIndex;
-					return;  // Match
+                    do
+                    {
+                        PatternIndex += 1;
+                        if (PatternIndex >= PatternLength)
+                        {
+                            PatternError = true;
+                            return;
+                        }
+                    }
+                    while (Pattern[PatternIndex] != ']' && Pattern[PatternIndex] != '］');
+                    SourceIndex = SourceNextIndex;
+                    return;  // Match
 #endif
                 }
             }
             else
             {
                 // Single character match
-                // 
-                // 
+                //
+                //
                 int argRightEnd2 = default;
                 if ( !validatePatternWithoutMatching && CompareChars( source, sourceLength, sourceIndex, ref sourceNextIndex, sourceLigatureInfo!,
                     pattern, range.Start + range.StartLength, range.Start, ref argRightEnd2, patternLigatureInfo!, comparer, options, useUnexpandedCharForRight: true ) == 0 )
@@ -769,7 +769,7 @@ public sealed class LikeOperator
                 }
 
                 // No range end for single characters in list
-                // 
+                //
                 range.End = -1;
                 range.EndLength = 0;
             }
@@ -976,7 +976,7 @@ public sealed class LikeOperator
     }
 
     /// <summary>   Builds pattern groups. </summary>
-    /// <remarks>   2024-07-16. 
+    /// <remarks>   2024-07-16.
     /// Pattern groups: <para>
     /// 1. A <see cref="string" /> of characters not containing a special pattern character. </para><para>
     /// 2. Any number of consecutive "?". </para><para>
@@ -1015,7 +1015,7 @@ public sealed class LikeOperator
         do
         {
             // Increase the size of the Pattern groups array if required
-            // 
+            //
             if ( pgIndex >= pGLast )
             {
                 PatternGroup[] newPatternGroups = new PatternGroup[pGLast + pgMaxCount + 1];
@@ -1031,7 +1031,7 @@ public sealed class LikeOperator
                 case '＊':
                     {
                         // Record the "*" pattern and collapse multiple contiguous "*"'s if possible
-                        // 
+                        //
                         if ( prevPatType != PatternType.STAR )
                         {
                             prevPatType = PatternType.STAR;
@@ -1055,7 +1055,7 @@ public sealed class LikeOperator
                         }
 
                         // Ignore empty "[]" and don't build a pattern group for it
-                        // 
+                        //
                         if ( rangeList.Count == 0 )
                         {
                             break;
@@ -1139,12 +1139,12 @@ public sealed class LikeOperator
         while ( patternIndex < patternLength );
 
         // Add ending mark
-        // 
+        //
         patternGroups[pgIndex].PatType = PatternType.NONE;
         patternGroups[pgIndex].MinSourceIndex = sourceLength;
 
         // Pattern is compiled into an array of Pattern groups.  Walk backward through list to assign max positions.
-        // 
+        //
         int maxPossibleStart = sourceLength;
         while ( pgIndex > 0 )
         {
@@ -1218,7 +1218,7 @@ public sealed class LikeOperator
         // We've found a "*" in the pattern that is not at the end.
         // Now we need to scan ahead in the pattern and compile it
         // into an array of structures describing each pattern group.
-        // 
+        //
 
         PatternGroup[] patternGroups = [];
         int pgIndex;
@@ -1232,15 +1232,15 @@ public sealed class LikeOperator
         Debug.Assert( patternGroups is not null && patternGroups.Length > 0 && patternGroups[0].PatType == PatternType.STAR, "Pattern parsing failed" );
 
         // Start the search
-        // 
+        //
 
         if ( patternGroups![pgIndexForLastAsterisk + 1].PatType != PatternType.NONE )
         {
-            // 
+            //
             // Optimize for the "<AnyPattern>*<NonStarPatterns>" case
             // Helps discard mismatches faster and in some cases, the match are also
             // faster
-            // 
+            //
             int savedSourceIndex = sourceIndex;
             int numberOfCharsToMatch = default;
             pgIndex = pgIndexForLastAsterisk + 1;
@@ -1266,7 +1266,7 @@ public sealed class LikeOperator
 
             // Move the end marker to just after the last asterisk because everything afterwards have been
             // matched successfully.
-            // 
+            //
             Debug.Assert( patternGroups[pgIndex].PatType == PatternType.NONE, "Unexpected pattern end" );
             patternGroups[pgIndex].MaxSourceIndex = sourceLength;
             patternGroups[pgIndex].MinSourceIndex = sourceLength;
@@ -1275,7 +1275,7 @@ public sealed class LikeOperator
 
             // Reset the pattern group corresponding to the last asterisk because it needs to be reused in
             // the next phase of matching
-            // 
+            //
             patternGroups[pgIndexForLastAsterisk].MinSourceIndex = 0;
             patternGroups[pgIndexForLastAsterisk].StartIndexOfPossibleMatch = 0;
             pgIndex = pgIndexForLastAsterisk + 1;
@@ -1533,7 +1533,7 @@ public sealed class LikeOperator
                         // new minimum position in the source string.  Then
                         // we can start the search over from the new minimum
                         // position.
-                        // 
+                        //
 
                         Debug.Assert( patternGroups[pgPrevMismatchIndex].PatType != PatternType.NONE, "Bad previous mismatch index" );
                         if ( patternGroups[pgPrevMismatchIndex].PatType != PatternType.STAR )
@@ -1576,7 +1576,7 @@ public sealed class LikeOperator
                 {
                     // Reached a point where we've matched before.  Jump ahead
                     // to where that left off.
-                    // 
+                    //
                     sourceIndex = patternGroups[pgSaved].MinSourceIndex;
                     pgIndex = pgSaved;
                     pgPrevMismatchIndex = pgSaved;
@@ -1586,7 +1586,7 @@ public sealed class LikeOperator
                     // In certain cases involving ligatures/modifiers, the source
                     // index could be moved too far back and thus result in this
                     // scenario.
-                    // 
+                    //
                     patternGroups[pgRestartAsteriskIndex].MinSourceIndex += 1;
                     sourceIndex = patternGroups[pgRestartAsteriskIndex].MinSourceIndex;
                     pgIndex = pgRestartAsteriskIndex + 1;
@@ -1599,7 +1599,7 @@ public sealed class LikeOperator
                     // groups where PGIndex > PGPrevMismatchIndex may be matched
                     // against the pattern groups between the "*" and PGPrevMismatchIndex
                     // and thus result in this scenario.
-                    // 
+                    //
                     pgIndex += 1;
                     pgPrevMismatchIndex = pgRestartAsteriskIndex;
                 }

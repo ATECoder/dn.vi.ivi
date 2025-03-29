@@ -112,19 +112,19 @@ public static class Status
     /// </summary>
     public const string StandardServiceEnableCommandFormat = "_G.status.standard.enable={0} _G.status.request_enable={1}";
 
-    /// <summary> The  Standard Event and Service Request Enable wait complete command format preceded by clear execution state. 
+    /// <summary> The  Standard Event and Service Request Enable wait complete command format preceded by clear execution state.
     /// <code>
     /// Lua: _G.status.reset() _G.waitcomplete() _G.status.standard.enable={0} _G.status.request_enable={1} _G.opc()
     /// SCPI: *CLS; *WAI; *ESE {0:D}; *SRE {1:D}; *OPC
     /// <para>Using line feed delimiter causes the 2600 instrument to fail when initializing.</para>
     /// </code>
     /// </summary>
-    /// 
+    ///
     /// <remarks>
     /// </remarks>
     public const string StandardServiceEnableOperationCompleteCommandFormat = "_G.status.reset() _G.waitcomplete() _G.status.standard.enable={0} _G.status.request_enable={1} _G.opc()";
 
-    /// <summary>   (Immutable) the standard service enable query complete command format. 
+    /// <summary>   (Immutable) the standard service enable query complete command format.
     /// <code>
     /// Lua: _G.status.reset() _G.waitcomplete() _G.status.standard.enable={0} _G.status.request_enable={1} _G.waitcomplete() print('1')
     /// SCPI: *CLS; *WAI; *ESE {0:D}; *SRE {1:D}; *OPC?

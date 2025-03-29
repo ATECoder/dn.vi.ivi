@@ -2032,7 +2032,7 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
     {
         string? value = this.Session.EmulatedReply;
         string? result = this.Session.QueryTrimEnd( value, string.Format( this.ReadBufferQueryCommandFormat, bufferName ) );
-        // the emulator will set the last reading. 
+        // the emulator will set the last reading.
         return this.ParsePrimaryReading( result! );
     }
 

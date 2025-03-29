@@ -48,8 +48,11 @@ public partial class SessionBase
 
         // must copy application context settings here to clear any bad settings files.
 
-        AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.AllUsersAssemblyFilePath! );
-        AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.ThisUserAssemblyFilePath! );
+        if ( !System.IO.File.Exists( ai.AllUsersAssemblyFilePath! ) )
+            AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.AllUsersAssemblyFilePath! );
+
+        if ( !System.IO.File.Exists( ai.ThisUserAssemblyFilePath! ) )
+            AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.ThisUserAssemblyFilePath! );
 
         this.Scribe = new( [this.TimingSettings, this.CommandsSettings, this.IOSettings,
             this.RegistersBitmasksSettings, this.ScpiExceptionsSettings, this.ResourceSettings],
@@ -88,8 +91,8 @@ public partial class SessionBase
 
         this.Scribe!.ReadSettings();
 
-        if ( !this.SettingsExist( out string details ) )
-            throw new InvalidOperationException( details );
+        if ( !this.SettingsExist( out string settingsClassName ) )
+            throw new InvalidOperationException( $"{settingsClassName} not found or failed to read from {this.Scribe.UserSettingsPath}." );
 
         this.ApplySettings( this.TimingSettings );
         this.ApplySettings( this.IOSettings );
@@ -118,8 +121,8 @@ public partial class SessionBase
         this.ReadSettings( callingEntity.Assembly, settingsFileSuffix );
     }
 
-    /// <summary>   Gets the full pathname of the settings file. </summary>
-    /// <value> The full pathname of the settings file. </value>
+    /// <summary>   Gets the full path name of the settings file. </summary>
+    /// <value> The full path name of the settings file. </value>
     [JsonIgnore]
     public string FilePath => this.Scribe!.UserSettingsPath;
 
@@ -133,26 +136,26 @@ public partial class SessionBase
 
     /// <summary>   Checks if all settings exist. </summary>
     /// <remarks>   2025-01-18. </remarks>
-    /// <returns>   A Tuple. </returns>
-    public bool SettingsExist( out string details )
+    /// <param name="settingsClassName"> The name of the settings class that failed to read. </param>
+    /// <returns>   True if all settings exit; otherwise false. </returns>
+    public bool SettingsExist( out string settingsClassName )
     {
-        details = string.Empty;
-        if ( !this.SettingsFileExists() )
-            details = $"{this.FilePath} not found.";
-        else if ( this.TimingSettings is null || !this.TimingSettings.Exists )
-            details = $"{nameof( SessionBase.TimingSettings )} not found.";
+        if ( this.TimingSettings is null || !this.TimingSettings.Exists )
+            settingsClassName = $"{nameof( SessionBase.TimingSettings )}";
         else if ( this.IOSettings is null || !this.IOSettings.Exists )
-            details = $"{nameof( SessionBase.IOSettings )} not found.";
+            settingsClassName = $"{nameof( SessionBase.IOSettings )}";
         else if ( this.ResourceSettings is null || !this.ResourceSettings.Exists )
-            details = $"{nameof( SessionBase.ResourceSettings )} not found.";
+            settingsClassName = $"{nameof( SessionBase.ResourceSettings )}";
         else if ( this.CommandsSettings is null || !this.CommandsSettings.Exists )
-            details = $"{nameof( SessionBase.CommandsSettings )} not found.";
+            settingsClassName = $"{nameof( SessionBase.CommandsSettings )}";
         else if ( this.RegistersBitmasksSettings is null || !this.RegistersBitmasksSettings.Exists )
-            details = $"{nameof( SessionBase.RegistersBitmasksSettings )} not found.";
+            settingsClassName = $"{nameof( SessionBase.RegistersBitmasksSettings )}";
         else if ( this.ScpiExceptionsSettings is null || !this.ScpiExceptionsSettings.Exists )
-            details = $"{nameof( SessionBase.ScpiExceptionsSettings )} not found.";
+            settingsClassName = $"{nameof( SessionBase.ScpiExceptionsSettings )}";
+        else
+            settingsClassName = string.Empty;
 
-        return details.Length == 0;
+        return settingsClassName.Length == 0;
     }
 
     #endregion

@@ -12,9 +12,9 @@ public partial class MainForm : Form
     /// <remarks> David, 2020-10-11. </remarks>
     public MainForm()
     {
-        // 
+        //
         // Required for Windows Form Designer support
-        // 
+        //
         this.InitializeComponent();
         this.SetupControlState( false );
 
@@ -120,7 +120,7 @@ public partial class MainForm : Form
                         {
                         }
                         // Error
-                        // getting error -286 TSP Runtime error 
+                        // getting error -286 TSP Runtime error
                         // instrument reports User Abort Error
                         // Visa reports USRE ABORT
                         else if ( solution == 1 )
@@ -140,12 +140,12 @@ public partial class MainForm : Form
                         }
 
                     }
-                    // this is the culprit: 
+                    // this is the culprit:
                     visaSession.Clear();
                     if ( solution == 0 )
                     {
                     }
-                    // error 
+                    // error
                     else if ( solution == 1 )
                     {
                         Thread.Sleep( 11 );

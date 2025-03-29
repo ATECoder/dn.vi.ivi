@@ -81,7 +81,7 @@ public sealed partial class Asserts
         _ = device.Session.WriteLine( erroneousCommand );
         TimeSpan appliedDelay = TimeSpan.FromMilliseconds( deviceErrorSettings.ErrorAvailableMillisecondsDelay ).AsyncWaitElapsed();
 
-        // read the service request status; this should generate an error available 
+        // read the service request status; this should generate an error available
         _ = cc.isr.VI.Pith.SessionBase.AsyncDelay( device.Session.StatusReadDelay );
         cc.isr.VI.Pith.ServiceRequests statusByte = device.Session.ReadStatusByte();
         device.Session.ApplyStatusByte( statusByte );
@@ -132,7 +132,7 @@ public sealed partial class Asserts
         _ = session.WriteLine( erroneousCommand );
         TimeSpan appliedDelay = TimeSpan.FromMilliseconds( deviceErrorsSettings.ErrorAvailableMillisecondsDelay ).AsyncWaitElapsed();
 
-        // read the service request status; this should generate an error available 
+        // read the service request status; this should generate an error available
         _ = cc.isr.VI.Pith.SessionBase.AsyncDelay( session.StatusReadDelay );
         cc.isr.VI.Pith.ServiceRequests statusByte = session.ReadStatusByte();
         Assert.IsTrue( session.IsErrorBitSet( statusByte ),
@@ -179,7 +179,7 @@ public sealed partial class Asserts
         _ = session.WriteLine( erroneousCommand );
         _ = TimeSpan.FromMilliseconds( deviceErrorsSettings.ErrorAvailableMillisecondsDelay ).AsyncWaitElapsed();
 
-        // read the service request status; this should generate an error available 
+        // read the service request status; this should generate an error available
         _ = cc.isr.VI.Pith.SessionBase.AsyncDelay( session.StatusReadDelay );
         cc.isr.VI.Pith.ServiceRequests statusByte = session.ReadStatusByte();
         Assert.IsTrue( session.IsErrorBitSet( statusByte ),
@@ -188,7 +188,7 @@ public sealed partial class Asserts
         // issue a reset.
         session.ResetKnownState();
 
-        // get the status byte.  
+        // get the status byte.
         statusByte = session.ReadStatusByte();
 
         // status byte should not be affected by the reset.
@@ -198,7 +198,7 @@ public sealed partial class Asserts
         // issue a clear without fixing the CLS 2600 issue.
         session.ClearExecutionStateQueryComplete();
 
-        // get the status byte.  
+        // get the status byte.
         statusByte = session.ReadStatusByte();
 
         if ( session.ClearsDeviceStructures )
@@ -239,7 +239,7 @@ public sealed partial class Asserts
 
         _ = device.Session.TimingSettings.ReadAfterWriteDelay.AsyncWaitElapsed();
 
-        // read the service status byte; this should generate an error available 
+        // read the service status byte; this should generate an error available
         // check the error available status
         _ = cc.isr.VI.Pith.SessionBase.AsyncDelay( device.Session.StatusReadDelay );
         Assert.IsFalse( device.Session.IsErrorBitSet( device.Session.ReadStatusByte() ),

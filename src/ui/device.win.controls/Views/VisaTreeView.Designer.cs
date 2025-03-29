@@ -11,7 +11,7 @@ namespace cc.isr.VI.DeviceWinControls
         private System.ComponentModel.IContainer components;
 
         // NOTE: The following procedure is required by the Windows Form Designer
-        // It can be modified using the Windows Form Designer.  
+        // It can be modified using the Windows Form Designer.
         // Do not modify it using the code editor.
         [DebuggerStepThrough()]
         private void InitializeComponent()
@@ -36,9 +36,9 @@ namespace cc.isr.VI.DeviceWinControls
             _sessionPanel.SuspendLayout();
             _layout.SuspendLayout();
             SuspendLayout();
-            // 
+            //
             // _sessionView
-            // 
+            //
             _sessionView.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             _sessionView.Dock = DockStyle.Fill;
             _sessionView.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
@@ -48,9 +48,9 @@ namespace cc.isr.VI.DeviceWinControls
             _sessionView.Padding = new Padding(1);
             _sessionView.Size = new System.Drawing.Size(217, 117);
             _sessionView.TabIndex = 25;
-            // 
+            //
             // _statusView
-            // 
+            //
             StatusView.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             StatusView.BackColor = System.Drawing.Color.Transparent;
             StatusView.Dock = DockStyle.Bottom;
@@ -61,9 +61,9 @@ namespace cc.isr.VI.DeviceWinControls
             StatusView.Size = new System.Drawing.Size(217, 31);
             StatusView.TabIndex = 27;
             StatusView.UsingStatusSubsystemOnly = false;
-            // 
+            //
             // _selectorOpener
-            // 
+            //
             _selectorOpener.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             _selectorOpener.BackColor = System.Drawing.Color.Transparent;
             _selectorOpener.Dock = DockStyle.Bottom;
@@ -73,9 +73,9 @@ namespace cc.isr.VI.DeviceWinControls
             _selectorOpener.Name = "_SelectorOpener";
             _selectorOpener.Size = new System.Drawing.Size(217, 29);
             _selectorOpener.TabIndex = 26;
-            // 
+            //
             // _traceMessagesBox
-            // 
+            //
             _traceMessagesBox.BackColor = System.Drawing.SystemColors.Info;
             _traceMessagesBox.CausesValidation = false;
             _traceMessagesBox.Font = new System.Drawing.Font("Consolas", 8.0f, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
@@ -86,9 +86,9 @@ namespace cc.isr.VI.DeviceWinControls
             _traceMessagesBox.ScrollBars = ScrollBars.Both;
             _traceMessagesBox.Size = new System.Drawing.Size(134, 49);
             _traceMessagesBox.TabIndex = 1;
-            // 
+            //
             // _statusStrip
-            // 
+            //
             _statusStrip.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Bold);
             _statusStrip.GripMargin = new Padding(0);
             _statusStrip.Items.AddRange(new ToolStripItem[] { _statusPromptLabel });
@@ -100,9 +100,9 @@ namespace cc.isr.VI.DeviceWinControls
             _statusStrip.SizingGrip = false;
             _statusStrip.TabIndex = 15;
             _statusStrip.Text = "StatusStrip1";
-            // 
+            //
             // _statusPromptLabel
-            // 
+            //
             _statusPromptLabel.DisplayStyle = ToolStripItemDisplayStyle.Text;
             _statusPromptLabel.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Bold);
             _statusPromptLabel.Name = "_StatusPromptLabel";
@@ -112,9 +112,9 @@ namespace cc.isr.VI.DeviceWinControls
             _statusPromptLabel.Text = "<Status>";
             _statusPromptLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             _statusPromptLabel.ToolTipText = "Status prompt";
-            // 
+            //
             // _panel
-            // 
+            //
             _panel.Controls.Add(_treePanel);
             _panel.Controls.Add(_traceMessagesBox);
             _panel.Controls.Add(_sessionPanel);
@@ -126,18 +126,18 @@ namespace cc.isr.VI.DeviceWinControls
             _panel.Name = "_Panel";
             _panel.Size = new System.Drawing.Size(495, 448);
             _panel.TabIndex = 16;
-            // 
+            //
             // _treePanel
-            // 
+            //
             _treePanel.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
             _treePanel.Location = new System.Drawing.Point(27, 174);
             _treePanel.Name = "_TreePanel";
             _treePanel.Size = new System.Drawing.Size(78, 84);
             _treePanel.SplitterDistance = 25;
             _treePanel.TabIndex = 18;
-            // 
+            //
             // _sessionPanel
-            // 
+            //
             _sessionPanel.Controls.Add(_sessionView);
             _sessionPanel.Controls.Add(_selectorOpener);
             _sessionPanel.Controls.Add(StatusView);
@@ -146,9 +146,9 @@ namespace cc.isr.VI.DeviceWinControls
             _sessionPanel.Padding = new Padding(0, 3, 0, 0);
             _sessionPanel.Size = new System.Drawing.Size(217, 180);
             _sessionPanel.TabIndex = 17;
-            // 
+            //
             // _displayView
-            // 
+            //
             DisplayView.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             DisplayView.Dock = DockStyle.Top;
             DisplayView.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
@@ -158,9 +158,9 @@ namespace cc.isr.VI.DeviceWinControls
             DisplayView.Padding = new Padding(1);
             DisplayView.Size = new System.Drawing.Size(495, 152);
             DisplayView.TabIndex = 16;
-            // 
+            //
             // _layout
-            // 
+            //
             _layout.ColumnCount = 1;
             _layout.ColumnStyles.Add(new ColumnStyle());
             _layout.Controls.Add(_panel, 0, 1);
@@ -173,9 +173,9 @@ namespace cc.isr.VI.DeviceWinControls
             _layout.RowStyles.Add(new RowStyle(SizeType.Percent, 100.0f));
             _layout.Size = new System.Drawing.Size(495, 448);
             _layout.TabIndex = 17;
-            // 
+            //
             // VisaTreeView
-            // 
+            //
             Controls.Add(_layout);
             Name = "VisaTreeView";
             Size = new System.Drawing.Size(495, 448);

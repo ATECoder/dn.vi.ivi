@@ -28,7 +28,7 @@ public class VisaResourceInfo( string resourceName )
 
     /// <summary> Gets the resource pinged. </summary>
     /// <value> The resource pinged. </value>
-	public virtual bool ResourcePinged
+    public virtual bool ResourcePinged
     {
         get
         {

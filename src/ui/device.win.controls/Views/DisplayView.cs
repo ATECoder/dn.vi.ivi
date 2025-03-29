@@ -106,8 +106,11 @@ public partial class DisplayView : cc.isr.WinControls.ModelViewBase
 
         // must copy application context settings here to clear any bad settings files.
 
-        AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.AllUsersAssemblyFilePath! );
-        AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.ThisUserAssemblyFilePath! );
+        if ( !System.IO.File.Exists( ai.AllUsersAssemblyFilePath! ) )
+            AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.AllUsersAssemblyFilePath! );
+
+        if ( !System.IO.File.Exists( ai.ThisUserAssemblyFilePath! ) )
+            AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.ThisUserAssemblyFilePath! );
 
         DisplayView.Scribe = new( [DisplayView.DisplayViewSettings],
             ai.AppContextAssemblyFilePath!, ai.AllUsersAssemblyFilePath! )

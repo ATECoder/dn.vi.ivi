@@ -14,7 +14,7 @@ public class TimingSettings() : CommunityToolkit.Mvvm.ComponentModel.ObservableO
     /// fetched from the settings file.
     /// </summary>
     /// <value> True if this settings section exists in the settings file, false if not. </value>
-	[Description( "True if this settings were found and read from the settings file." )]
+    [Description( "True if this settings were found and read from the settings file." )]
     public bool Exists
     {
         get => this._exists;
@@ -25,7 +25,7 @@ public class TimingSettings() : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the default open session timeout. </summary>
     /// <value> The default open session timeout. </value>
-	[Description( "The time to wait for a session to open [0.5s]" )]
+    [Description( "The time to wait for a session to open [0.5s]" )]
     public TimeSpan OpenSessionTimeout
     {
         get => this._openSessionTimeout;
@@ -36,7 +36,7 @@ public class TimingSettings() : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the default open session timeout. </summary>
     /// <value> The default open session timeout. </value>
-	[Description( "The time to wait query turnaround [3.05s]" )]
+    [Description( "The time to wait query turnaround [3.05s]" )]
     public TimeSpan CommunicationTimeout
     {
         get => this._communicationTimeout;
@@ -47,7 +47,7 @@ public class TimingSettings() : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the timeout for initializing all subsystem following a reset and clear. </summary>
     /// <value> The timeout for initialize the post reset clear state. </value>
-	[Description( "The VISA session timeout for initializing all subsystems following a reset and clear [10s]" )]
+    [Description( "The VISA session timeout for initializing all subsystems following a reset and clear [10s]" )]
     public TimeSpan InitKnownStateTimeout
     {
         get => this._initKnownStateTimeout;
@@ -58,7 +58,7 @@ public class TimingSettings() : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the device clear refractory period. </summary>
     /// <value> The device clear refractory period. </value>
-	[Description( "The time to wait before returning control after a device clearing the instrument (*DCl) [500ms]" )]
+    [Description( "The time to wait before returning control after a device clearing the instrument (*DCl) [500ms]" )]
     public TimeSpan DeviceClearRefractoryPeriod
     {
         get => this._deviceClearRefractoryPeriod;
@@ -69,7 +69,7 @@ public class TimingSettings() : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the interface clear refractory period. </summary>
     /// <value> The interface clear refractory period. </value>
-	[Description( "The time to wait before returning control after a clearing the instrument interface (selective device clear) [0.5s]" )]
+    [Description( "The time to wait before returning control after a clearing the instrument interface (selective device clear) [0.5s]" )]
     public TimeSpan InterfaceClearRefractoryPeriod
     {
         get => this._interfaceClearRefractoryPeriod;
@@ -80,7 +80,7 @@ public class TimingSettings() : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the reset refractory period. </summary>
     /// <value> The reset refractory period. </value>
-	[Description( "The time to wait before returning control after resetting the session to its know state (*RST) [0.2s]" )]
+    [Description( "The time to wait before returning control after resetting the session to its know state (*RST) [0.2s]" )]
     public TimeSpan ResetRefractoryPeriod
     {
         get => this._resetRefractoryPeriod;
@@ -91,7 +91,7 @@ public class TimingSettings() : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the clear refractory period. </summary>
     /// <value> The clear refractory period. </value>
-	[Description( "The time to wait before returning control after clearing the instrument (*CLS) [100ms]" )]
+    [Description( "The time to wait before returning control after clearing the instrument (*CLS) [100ms]" )]
     public TimeSpan ClearRefractoryPeriod
     {
         get => this._clearRefractoryPeriod;
@@ -102,7 +102,7 @@ public class TimingSettings() : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the status read turnaround time. </summary>
     /// <value> The status read turnaround time. </value>
-	[Description( "The time it takes to read the status byte [10ms]" )]
+    [Description( "The time it takes to read the status byte [10ms]" )]
     public TimeSpan StatusReadTurnaroundTime
     {
         get => this._statusReadTurnaroundTime;
@@ -113,7 +113,7 @@ public class TimingSettings() : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the status read delay. </summary>
     /// <value> The status read delay. </value>
-	[Description( "The time to wait after a reading the status byte [10ms]" )]
+    [Description( "The time to wait after a reading the status byte [10ms]" )]
     public TimeSpan StatusReadDelay
     {
         get => this._statusReadDelay;
@@ -124,7 +124,7 @@ public class TimingSettings() : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the read after write delay. </summary>
     /// <value> The read delay. </value>
-	[Description( "The time to wait before reading the instrument after a write [10ms]" )]
+    [Description( "The time to wait before reading the instrument after a write [10ms]" )]
     public TimeSpan ReadAfterWriteDelay
     {
         get => this._readAfterWriteDelay;
@@ -135,7 +135,7 @@ public class TimingSettings() : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the time to wait for garbage collection. </summary>
     /// <value> The time to wait for garbage collection. </value>
-	[Description( "The time to wait for garbage collection [0.5s]" )]
+    [Description( "The time to wait for garbage collection [0.5s]" )]
     public TimeSpan CollectGarbageTimeout
     {
         get => this._collectGarbageTimeout;
@@ -149,7 +149,7 @@ public class TimingSettings() : CommunityToolkit.Mvvm.ComponentModel.ObservableO
     /// period) for instruments that do not support operation completion.
     /// </summary>
     /// <value> The operation completion timeout. </value>
-	[Description( "Specifies the time to wait for operation completion [100ms]" )]
+    [Description( "Specifies the time to wait for operation completion [100ms]" )]
     public TimeSpan OperationCompletionRefractoryPeriod
     {
         get => this._operationCompletionRefractoryPeriod;

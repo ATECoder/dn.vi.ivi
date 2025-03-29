@@ -9,7 +9,7 @@ namespace cc.isr.VI.Settings;
 /// David, 2018-02-12 </para>
 /// </remarks>
 [CLSCompliant( false )]
-public class SystemSubsystemSettings() : INotifyPropertyChanged
+public class SystemSubsystemSettings() : System.ComponentModel.INotifyPropertyChanged
 {
     #region " notify property change implementation "
 
@@ -109,7 +109,7 @@ public class SystemSubsystemSettings() : INotifyPropertyChanged
     /// fetched from the settings file.
     /// </summary>
     /// <value> True if this settings section exists in the settings file, false if not. </value>
-	[Description( "True if this settings section exists and was read from the JSon settings file." )]
+    [Description( "True if this settings section exists and was read from the JSon settings file." )]
     public bool Exists
     {
         get => this._exists;
@@ -124,7 +124,7 @@ public class SystemSubsystemSettings() : INotifyPropertyChanged
 
     /// <summary> Gets or sets the line frequency. </summary>
     /// <value> The line frequency. </value>
-	public virtual double LineFrequency
+    public virtual double LineFrequency
     {
         get => this._lineFrequency;
         set => _ = this.SetProperty( ref this._lineFrequency, value );

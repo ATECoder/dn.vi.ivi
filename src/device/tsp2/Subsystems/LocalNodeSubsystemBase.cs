@@ -281,7 +281,7 @@ namespace cc.isr.VI.Tsp2
             // check status of the prompt flag.
             if ( this.PromptsState != PromptsState.None )
             {
-                // if prompts are on, 
+                // if prompts are on,
                 if ( this.PromptsState == PromptsState.Enable )
                 {
                     // do a read. This raises an event that parses the state
@@ -296,10 +296,10 @@ namespace cc.isr.VI.Tsp2
                 }
             }
 
-            // check if we have data in the output buffer.  
+            // check if we have data in the output buffer.
             else if ( this.Session.AwaitErrorOrMessageAvailableBits( TimeSpan.FromMilliseconds( 1d ), 3 ) )
             {
-                // if data exists in the buffer, it may indicate that the prompts are already on 
+                // if data exists in the buffer, it may indicate that the prompts are already on
                 // so just go read the output buffer. Once read, the status will be parsed.
                 _ = this.Session.ReadLine();
             }

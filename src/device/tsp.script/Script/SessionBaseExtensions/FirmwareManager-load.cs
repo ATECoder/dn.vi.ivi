@@ -10,7 +10,7 @@ public static partial class FirmwareManager
     /// <remarks>   2024-12-12. </remarks>
     /// <param name="session">      The session. </param>
     /// <param name="scriptName">   Contains the script name. </param>
-    /// <param name="filePath">     Full pathname of the file. </param>
+    /// <param name="filePath">     full path name of the file. </param>
     public static bool LoadScriptFile( this Pith.SessionBase? session, string scriptName, string filePath )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
@@ -129,7 +129,7 @@ public static partial class FirmwareManager
     /// <exception cref="FileNotFoundException">    Thrown when the requested file is not present. </exception>
     /// <param name="session">          The session. </param>
     /// <param name="scriptName">       Name of the script. </param>
-    /// <param name="resourceFilePath"> Full pathname of the resource file. </param>
+    /// <param name="resourceFilePath"> full path name of the resource file. </param>
     /// <param name="retainOutline">    Specifies if the code outline is retained or trimmed. </param>
     /// <param name="loadTimeout">      The load timeout. </param>
     /// <returns>   The script file wait complete. </returns>
@@ -269,8 +269,8 @@ public static partial class FirmwareManager
     /// <exception cref="FileNotFoundException">    Thrown when the requested file is not present. </exception>
     /// <param name="session">          The session. </param>
     /// <param name="scriptName">       Name of the script. </param>
-    /// <param name="scriptFilePath">   Full pathname of the script file. </param>
-    /// <param name="trimmedFilePath">  Full pathname of the trimmed file. </param>
+    /// <param name="scriptFilePath">   full path name of the script file. </param>
+    /// <param name="trimmedFilePath">  full path name of the trimmed file. </param>
     /// <param name="retainOutline">    Specifies if the code outline is retained or trimmed. </param>
     /// <returns>   The script file. </returns>
     public static (bool TimedOut, ServiceRequests Status, TimeSpan Elapsed) ParseAndLoadScriptFromFile( this Pith.SessionBase session, string scriptName,

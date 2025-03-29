@@ -11,7 +11,7 @@ namespace cc.isr.VI.WinControls
         private System.ComponentModel.IContainer components;
 
         // NOTE: The following procedure is required by the Windows Form Designer
-        // It can be modified using the Windows Form Designer.  
+        // It can be modified using the Windows Form Designer.
         // Do not modify it using the code editor.
         [DebuggerStepThrough()]
         private void InitializeComponent()
@@ -29,9 +29,9 @@ namespace cc.isr.VI.WinControls
             ((System.ComponentModel.ISupportInitialize)_treePanel).BeginInit();
             _treePanel.SuspendLayout();
             SuspendLayout();
-            // 
+            //
             // _statusLabel
-            // 
+            //
             StatusLabel.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Bold);
             StatusLabel.Name = "_StatusLabel";
             StatusLabel.Overflow = ToolStripItemOverflow.Never;
@@ -39,9 +39,9 @@ namespace cc.isr.VI.WinControls
             StatusLabel.Spring = true;
             StatusLabel.Text = "Loading...";
             StatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
+            //
             // _statusStrip
-            // 
+            //
             StatusStrip.Items.AddRange(new ToolStripItem[] { StatusLabel, ProgressBar });
             StatusStrip.Location = new System.Drawing.Point(0, 615);
             StatusStrip.Name = "_StatusStrip";
@@ -49,17 +49,17 @@ namespace cc.isr.VI.WinControls
             StatusStrip.Size = new System.Drawing.Size(780, 25);
             StatusStrip.TabIndex = 7;
             StatusStrip.Text = "StatusStrip1";
-            // 
+            //
             // _progressBar
-            // 
+            //
             ProgressBar.Maximum = 100;
             ProgressBar.Name = "_ProgressBar";
             ProgressBar.Size = new System.Drawing.Size(100, 23);
             ProgressBar.Text = "0 %";
             ProgressBar.Value = 0;
-            // 
+            //
             // _layout
-            // 
+            //
             _layout.ColumnCount = 3;
             _layout.ColumnStyles.Add(new ColumnStyle());
             _layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100.0f));
@@ -73,9 +73,9 @@ namespace cc.isr.VI.WinControls
             _layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 3.0f));
             _layout.Size = new System.Drawing.Size(341, 217);
             _layout.TabIndex = 13;
-            // 
+            //
             // _traceMessagesBox
-            // 
+            //
             TraceMessagesBox.BackColor = System.Drawing.SystemColors.Info;
             TraceMessagesBox.CausesValidation = false;
             TraceMessagesBox.Font = new System.Drawing.Font("Consolas", 8.0f, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
@@ -86,9 +86,9 @@ namespace cc.isr.VI.WinControls
             TraceMessagesBox.ScrollBars = ScrollBars.Both;
             TraceMessagesBox.Size = new System.Drawing.Size(601, 471);
             TraceMessagesBox.TabIndex = 15;
-            // 
+            //
             // _treePanel
-            // 
+            //
             _treePanel.Dock = DockStyle.Fill;
             _treePanel.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
             _treePanel.Location = new System.Drawing.Point(3, 6);
@@ -96,9 +96,9 @@ namespace cc.isr.VI.WinControls
             _treePanel.Size = new System.Drawing.Size(335, 205);
             _treePanel.SplitterDistance = 111;
             _treePanel.TabIndex = 0;
-            // 
+            //
             // SplitVisaView
-            // 
+            //
             AutoScaleDimensions = new System.Drawing.SizeF(7.0f, 17.0f);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(TraceMessagesBox);

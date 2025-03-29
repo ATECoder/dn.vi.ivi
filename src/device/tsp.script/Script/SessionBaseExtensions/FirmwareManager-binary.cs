@@ -12,7 +12,7 @@ public static partial class FirmwareManager
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>
     /// <param name="session">  The session. </param>
-    /// <param name="filePath"> Full pathname of the file. </param>
+    /// <param name="filePath"> full path name of the file. </param>
     /// <returns>   True if it the binary scripts function were loaded; otherwise, false. </returns>
     public static bool LoadBinaryScriptFunction( this Pith.SessionBase? session, string filePath )
     {

@@ -44,7 +44,7 @@ public class DeviceTests : Device.Tests.Base.DeviceTests
         // Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
         Console.WriteLine( $"Testing {typeof( cc.isr.VI.Tsp.K2600.K2600Device ).Assembly.FullName}" );
 
-        // create an instance of the Serilog logger. 
+        // create an instance of the Serilog logger.
         SessionLogger.Instance.CreateSerilogLogger( typeof( DeviceTests ) );
 
         this.TestSiteSettings = Settings.AllSettings.Instance.TestSiteSettings;

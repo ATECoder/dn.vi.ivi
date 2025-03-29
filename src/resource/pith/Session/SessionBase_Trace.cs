@@ -17,7 +17,7 @@ public partial class SessionBase
     /// <param name="useLastActionDetails"> (Optional) True to use last action details. </param>
     /// <param name="failureMessage">       (Optional) Message describing the failure. </param>
     /// <param name="memberName">           (Optional) Name of the member. </param>
-    /// <param name="sourcePath">           (Optional) Full pathname of the source file. </param>
+    /// <param name="sourcePath">           (Optional) full path name of the source file. </param>
     /// <param name="sourceLineNumber">     (Optional) Source line number. </param>
     /// <returns>   <c>true</c> if okay; otherwise, <c>false</c>. </returns>
     public (ServiceRequests StatusByte, string Details) TraceDeviceExceptionIfError( int controllerNodeNumber, bool useLastActionDetails = false,
@@ -48,7 +48,7 @@ public partial class SessionBase
     /// <param name="useLastActionDetails"> (Optional) True to use last action message. </param>
     /// <param name="failureMessage">       (Optional) Message describing the failure. </param>
     /// <param name="memberName">           (Optional) Name of the member. </param>
-    /// <param name="sourcePath">           (Optional) Full pathname of the source file. </param>
+    /// <param name="sourcePath">           (Optional) full path name of the source file. </param>
     /// <param name="sourceLineNumber">     (Optional) Source line number. </param>
     /// <returns>   <c>true</c> if no errors; otherwise, <c>false</c>. </returns>
     public (ServiceRequests StatusByte, string Details) TraceDeviceExceptionIfError( bool useLastActionDetails = false,
@@ -70,7 +70,7 @@ public partial class SessionBase
     /// <param name="useLastActionDetails"> (Optional) True to use last action message. </param>
     /// <param name="failureMessage">       (Optional) Message describing the failure. </param>
     /// <param name="memberName">           (Optional) Name of the member. </param>
-    /// <param name="sourcePath">           (Optional) Full pathname of the source file. </param>
+    /// <param name="sourcePath">           (Optional) full path name of the source file. </param>
     /// <param name="sourceLineNumber">     (Optional) Source line number. </param>
     /// <returns>   <c>true</c> if no errors; otherwise, <c>false</c>. </returns>
     public (ServiceRequests StatusByte, string Details) TraceDeviceExceptionIfError( ServiceRequests statusByte, bool useLastActionDetails = false,
@@ -101,7 +101,7 @@ public partial class SessionBase
     /// <param name="useLastActionDetails"> (Optional) True to use last action details. </param>
     /// <param name="failureMessage">       (Optional) Message describing the failure. </param>
     /// <param name="memberName">           (Optional) Name of the member. </param>
-    /// <param name="sourcePath">           (Optional) Full pathname of the source file. </param>
+    /// <param name="sourcePath">           (Optional) full path name of the source file. </param>
     /// <param name="sourceLineNumber">     (Optional) Source line number. </param>
     /// <returns>   <c>true</c> if okay; otherwise, <c>false</c>. </returns>
     public (ServiceRequests StatusByte, string Details) TraceDeviceExceptionIfError( TimeSpan messageBitTimeout, bool useLastActionDetails = false,
@@ -127,7 +127,7 @@ public partial class SessionBase
     /// <param name="useLastActionDetails"> (Optional) True to use last action details. </param>
     /// <param name="failureMessage">       (Optional) Message describing the failure. </param>
     /// <param name="memberName">           (Optional) Name of the member. </param>
-    /// <param name="sourcePath">           (Optional) Full pathname of the source file. </param>
+    /// <param name="sourcePath">           (Optional) full path name of the source file. </param>
     /// <param name="sourceLineNumber">     (Optional) Source line number. </param>
     /// <returns>   <c>true</c> if okay; otherwise, <c>false</c>. </returns>
     public (ServiceRequests StatusByte, string Details) TraceDeviceExceptionIfError( ServiceRequests statusByte, TimeSpan messageBitTimeout, bool useLastActionDetails = false,
@@ -153,7 +153,7 @@ public partial class SessionBase
     /// <param name="useLastActionDetails"> (Optional) True to use last action message. </param>
     /// <param name="failureMessage">       (Optional) Message describing the failure. </param>
     /// <param name="memberName">           (Optional) Name of the member. </param>
-    /// <param name="sourcePath">           (Optional) Full pathname of the source file. </param>
+    /// <param name="sourcePath">           (Optional) full path name of the source file. </param>
     /// <param name="sourceLineNumber">     (Optional) Source line number. </param>
     /// <returns>   A string. </returns>
     public string TraceDeviceException( bool useLastActionDetails = false, string failureMessage = "failed",
@@ -184,7 +184,7 @@ public partial class SessionBase
     /// <param name="useLastActionDetails"> (Optional) True to use last action message. </param>
     /// <param name="failureMessage">       (Optional) Message describing the failure. </param>
     /// <param name="memberName">           (Optional) Name of the member. </param>
-    /// <param name="sourcePath">           (Optional) Full pathname of the source file. </param>
+    /// <param name="sourcePath">           (Optional) full path name of the source file. </param>
     /// <param name="sourceLineNumber">     (Optional) Source line number. </param>
     public string TraceException( Exception ex, bool useLastActionDetails = false, string failureMessage = "exception",
         [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
@@ -211,7 +211,7 @@ public partial class SessionBase
     /// <param name="useLastActionDetails"> (Optional) True to use last action message. </param>
     /// <param name="failureMessage">       (Optional) Message describing the failure. </param>
     /// <param name="memberName">           (Optional) Name of the member. </param>
-    /// <param name="sourcePath">           (Optional) Full pathname of the source file. </param>
+    /// <param name="sourcePath">           (Optional) full path name of the source file. </param>
     /// <param name="sourceLineNumber">     (Optional) Source line number. </param>
     public string TraceException( Pith.NativeException ex, bool useLastActionDetails = false, string failureMessage = "VISA error",
         [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
@@ -228,7 +228,7 @@ public partial class SessionBase
     /// <param name="useLastActionDetails"> (Optional) True to use last action message. </param>
     /// <param name="message">              (Optional) The message. </param>
     /// <param name="memberName">           (Optional) Name of the member. </param>
-    /// <param name="sourcePath">           (Optional) Full pathname of the source file. </param>
+    /// <param name="sourcePath">           (Optional) full path name of the source file. </param>
     /// <param name="sourceLineNumber">     (Optional) Source line number. </param>
     public string TraceInformation( bool useLastActionDetails = false, string message = "done",
         [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
@@ -245,7 +245,7 @@ public partial class SessionBase
     /// <param name="useLastActionDetails"> (Optional) True to use last action message. </param>
     /// <param name="message">              (Optional) The message. </param>
     /// <param name="memberName">           (Optional) Name of the member. </param>
-    /// <param name="sourcePath">           (Optional) Full pathname of the source file. </param>
+    /// <param name="sourcePath">           (Optional) full path name of the source file. </param>
     /// <param name="sourceLineNumber">     (Optional) Source line number. </param>
     public string TraceWarning( bool useLastActionDetails = false, string message = "done",
         [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",

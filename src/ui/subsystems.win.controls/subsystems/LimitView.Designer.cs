@@ -11,7 +11,7 @@ namespace cc.isr.VI.SubsystemsWinControls
         private System.ComponentModel.IContainer components;
 
         // NOTE: The following procedure is required by the Windows Form Designer
-        // It can be modified using the Windows Form Designer.  
+        // It can be modified using the Windows Form Designer.
         // Do not modify it using the code editor.
         [DebuggerStepThrough()]
         private void InitializeComponent()
@@ -59,9 +59,9 @@ namespace cc.isr.VI.SubsystemsWinControls
             _upperLimitToolStrip.SuspendLayout();
             _lowerLimitToolStrip.SuspendLayout();
             SuspendLayout();
-            // 
+            //
             // _limitToolStripPanel
-            // 
+            //
             _limitToolStripPanel.BackColor = System.Drawing.Color.Transparent;
             _limitToolStripPanel.Controls.Add(_subsystemToolStrip);
             _limitToolStripPanel.Controls.Add(_upperLimitToolStrip);
@@ -72,9 +72,9 @@ namespace cc.isr.VI.SubsystemsWinControls
             _limitToolStripPanel.Orientation = Orientation.Horizontal;
             _limitToolStripPanel.RowMargin = new Padding(0);
             _limitToolStripPanel.Size = new System.Drawing.Size(387, 81);
-            // 
+            //
             // _subsystemToolStrip
-            // 
+            //
             _subsystemToolStrip.BackColor = System.Drawing.Color.Transparent;
             _subsystemToolStrip.Dock = DockStyle.None;
             _subsystemToolStrip.GripMargin = new Padding(0);
@@ -84,9 +84,9 @@ namespace cc.isr.VI.SubsystemsWinControls
             _subsystemToolStrip.Size = new System.Drawing.Size(387, 25);
             _subsystemToolStrip.Stretch = true;
             _subsystemToolStrip.TabIndex = 3;
-            // 
+            //
             // _subsystemSplitButton
-            // 
+            //
             _subsystemSplitButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
             _subsystemSplitButton.DoubleClickEnabled = true;
             _subsystemSplitButton.DropDownItems.AddRange(new ToolStripItem[] { _applySettingsMenuItem, _readSettingsMenuItem, _performLimitStripMenuItem, _readLimitTestMenuItem });
@@ -97,37 +97,37 @@ namespace cc.isr.VI.SubsystemsWinControls
             _subsystemSplitButton.Size = new System.Drawing.Size(57, 22);
             _subsystemSplitButton.Text = "Limit1";
             _subsystemSplitButton.ToolTipText = "Double-click to read limit state";
-            // 
+            //
             // _applySettingsMenuItem
-            // 
+            //
             _applySettingsMenuItem.Name = "_applySettingsMenuItem";
             _applySettingsMenuItem.Size = new System.Drawing.Size(184, 22);
             _applySettingsMenuItem.Text = "Apply Settings";
             _applySettingsMenuItem.ToolTipText = "Applies settings onto the instrument";
-            // 
+            //
             // _readSettingsMenuItem
-            // 
+            //
             _readSettingsMenuItem.Name = "_ReadSettingsMenuItem";
             _readSettingsMenuItem.Size = new System.Drawing.Size(184, 22);
             _readSettingsMenuItem.Text = "Read Settings";
             _readSettingsMenuItem.ToolTipText = "Reads settings from the instrument";
-            // 
+            //
             // _performLimitStripMenuItem
-            // 
+            //
             _performLimitStripMenuItem.Name = "_PerformLimitStripMenuItem";
             _performLimitStripMenuItem.Size = new System.Drawing.Size(184, 22);
             _performLimitStripMenuItem.Text = "Perform Limit Test";
             _performLimitStripMenuItem.ToolTipText = "Perform limit test";
-            // 
+            //
             // _readLimitTestMenuItem
-            // 
+            //
             _readLimitTestMenuItem.Name = "_ReadLimitTestMenuItem";
             _readLimitTestMenuItem.Size = new System.Drawing.Size(184, 22);
             _readLimitTestMenuItem.Text = "Read Limit Test State";
             _readLimitTestMenuItem.ToolTipText = "Read limit test result";
-            // 
+            //
             // _limitEnabledToggleButton
-            // 
+            //
             _limitEnabledToggleButton.Checked = true;
             _limitEnabledToggleButton.CheckOnClick = true;
             _limitEnabledToggleButton.CheckState = CheckState.Indeterminate;
@@ -138,9 +138,9 @@ namespace cc.isr.VI.SubsystemsWinControls
             _limitEnabledToggleButton.Size = new System.Drawing.Size(56, 22);
             _limitEnabledToggleButton.Text = "Disabled";
             _limitEnabledToggleButton.ToolTipText = "toggle to enable or disable this limit";
-            // 
+            //
             // _autoClearToggleButton
-            // 
+            //
             _autoClearToggleButton.Checked = true;
             _autoClearToggleButton.CheckOnClick = true;
             _autoClearToggleButton.CheckState = CheckState.Indeterminate;
@@ -151,9 +151,9 @@ namespace cc.isr.VI.SubsystemsWinControls
             _autoClearToggleButton.Size = new System.Drawing.Size(90, 22);
             _autoClearToggleButton.Text = "Auto Clear: Off";
             _autoClearToggleButton.ToolTipText = "Toggle to turn auto clear on or off";
-            // 
+            //
             // _limitFailedButton
-            // 
+            //
             _limitFailedButton.Checked = true;
             _limitFailedButton.CheckState = CheckState.Indeterminate;
             _limitFailedButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
@@ -163,9 +163,9 @@ namespace cc.isr.VI.SubsystemsWinControls
             _limitFailedButton.Size = new System.Drawing.Size(47, 22);
             _limitFailedButton.Text = "Failed?";
             _limitFailedButton.ToolTipText = "displays fail state";
-            // 
+            //
             // _upperLimitToolStrip
-            // 
+            //
             _upperLimitToolStrip.BackColor = System.Drawing.Color.Transparent;
             _upperLimitToolStrip.Dock = DockStyle.None;
             _upperLimitToolStrip.GripMargin = new Padding(0);
@@ -174,46 +174,46 @@ namespace cc.isr.VI.SubsystemsWinControls
             _upperLimitToolStrip.Name = "_UpperLimitToolStrip";
             _upperLimitToolStrip.Size = new System.Drawing.Size(340, 28);
             _upperLimitToolStrip.TabIndex = 2;
-            // 
+            //
             // _upperLimitLabel
-            // 
+            //
             _upperLimitLabel.Font = new System.Drawing.Font("Segoe UI", 9.0f, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, 0);
             _upperLimitLabel.Margin = new Padding(6, 1, 0, 2);
             _upperLimitLabel.Name = "_UpperLimitLabel";
             _upperLimitLabel.Size = new System.Drawing.Size(39, 25);
             _upperLimitLabel.Text = "Upper";
-            // 
+            //
             // _upperLimitDecimalsNumericLabel
-            // 
+            //
             _upperLimitDecimalsNumericLabel.Name = "_UpperLimitDecimalsNumericLabel";
             _upperLimitDecimalsNumericLabel.Size = new System.Drawing.Size(58, 25);
             _upperLimitDecimalsNumericLabel.Text = "Decimals:";
-            // 
+            //
             // _upperLimitDecimalsNumeric
-            // 
+            //
             _upperLimitDecimalsNumeric.Name = "_UpperLimitDecimalsNumeric";
             _upperLimitDecimalsNumeric.Size = new System.Drawing.Size(41, 25);
             _upperLimitDecimalsNumeric.Text = "3";
             _upperLimitDecimalsNumeric.ToolTipText = "Number of decimal places for setting the limits";
             _upperLimitDecimalsNumeric.Value = new decimal(new int[] { 3, 0, 0, 0 });
-            // 
+            //
             // _upperLimitNumericLabel
-            // 
+            //
             _upperLimitNumericLabel.Margin = new Padding(3, 1, 0, 2);
             _upperLimitNumericLabel.Name = "_UpperLimitNumericLabel";
             _upperLimitNumericLabel.Size = new System.Drawing.Size(38, 25);
             _upperLimitNumericLabel.Text = "Value:";
-            // 
+            //
             // _upperLimitNumeric
-            // 
+            //
             _upperLimitNumeric.Name = "_UpperLimitNumeric";
             _upperLimitNumeric.Size = new System.Drawing.Size(41, 25);
             _upperLimitNumeric.Text = "0";
             _upperLimitNumeric.ToolTipText = "Upper limit";
             _upperLimitNumeric.Value = new decimal(new int[] { 0, 0, 0, 0 });
-            // 
+            //
             // _upperLimitBitPatternNumericButton
-            // 
+            //
             _upperLimitBitPatternNumericButton.CheckOnClick = true;
             _upperLimitBitPatternNumericButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
             _upperLimitBitPatternNumericButton.Image = (System.Drawing.Image)resources.GetObject("_UpperLimitBitPatternNumericButton.Image");
@@ -222,17 +222,17 @@ namespace cc.isr.VI.SubsystemsWinControls
             _upperLimitBitPatternNumericButton.Size = new System.Drawing.Size(65, 25);
             _upperLimitBitPatternNumericButton.Text = "Source: 0x";
             _upperLimitBitPatternNumericButton.ToolTipText = "Toggle to switch between decimal and hex display";
-            // 
+            //
             // _upperLimitBitPatternNumeric
-            // 
+            //
             _upperLimitBitPatternNumeric.Name = "_UpperLimitBitPatternNumeric";
             _upperLimitBitPatternNumeric.Size = new System.Drawing.Size(41, 25);
             _upperLimitBitPatternNumeric.Text = "0";
             _upperLimitBitPatternNumeric.ToolTipText = "Upper limit bit pattern";
             _upperLimitBitPatternNumeric.Value = new decimal(new int[] { 0, 0, 0, 0 });
-            // 
+            //
             // _lowerLimitToolStrip
-            // 
+            //
             _lowerLimitToolStrip.BackColor = System.Drawing.Color.Transparent;
             _lowerLimitToolStrip.Dock = DockStyle.None;
             _lowerLimitToolStrip.GripMargin = new Padding(0);
@@ -241,46 +241,46 @@ namespace cc.isr.VI.SubsystemsWinControls
             _lowerLimitToolStrip.Name = "_LowerLimitToolStrip";
             _lowerLimitToolStrip.Size = new System.Drawing.Size(341, 28);
             _lowerLimitToolStrip.TabIndex = 1;
-            // 
+            //
             // _lowerLimitLabel
-            // 
+            //
             _lowerLimitLabel.Font = new System.Drawing.Font("Segoe UI", 9.0f, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, 0);
             _lowerLimitLabel.Margin = new Padding(6, 1, 2, 2);
             _lowerLimitLabel.Name = "_LowerLimitLabel";
             _lowerLimitLabel.Size = new System.Drawing.Size(38, 25);
             _lowerLimitLabel.Text = "Lower";
-            // 
+            //
             // _lowerLimitDecimalsNumericLabel
-            // 
+            //
             _lowerLimitDecimalsNumericLabel.Name = "_LowerLimitDecimalsNumericLabel";
             _lowerLimitDecimalsNumericLabel.Size = new System.Drawing.Size(58, 25);
             _lowerLimitDecimalsNumericLabel.Text = "Decimals:";
-            // 
+            //
             // _lowerLimitDecimalsNumeric
-            // 
+            //
             _lowerLimitDecimalsNumeric.Name = "_LowerLimitDecimalsNumeric";
             _lowerLimitDecimalsNumeric.Size = new System.Drawing.Size(41, 25);
             _lowerLimitDecimalsNumeric.Text = "3";
             _lowerLimitDecimalsNumeric.ToolTipText = "Number of decimal places for setting the limits";
             _lowerLimitDecimalsNumeric.Value = new decimal(new int[] { 3, 0, 0, 0 });
-            // 
+            //
             // _lowerLimitNumericLabel
-            // 
+            //
             _lowerLimitNumericLabel.Margin = new Padding(3, 1, 0, 2);
             _lowerLimitNumericLabel.Name = "_LowerLimitNumericLabel";
             _lowerLimitNumericLabel.Size = new System.Drawing.Size(38, 25);
             _lowerLimitNumericLabel.Text = "Value:";
-            // 
+            //
             // _lowerLimitNumeric
-            // 
+            //
             _lowerLimitNumeric.Name = "_LowerLimitNumeric";
             _lowerLimitNumeric.Size = new System.Drawing.Size(41, 25);
             _lowerLimitNumeric.Text = "0";
             _lowerLimitNumeric.ToolTipText = "Start delay in seconds";
             _lowerLimitNumeric.Value = new decimal(new int[] { 20, 0, 0, 196608 });
-            // 
+            //
             // _lowerLimitBitPatternNumericButton
-            // 
+            //
             _lowerLimitBitPatternNumericButton.CheckOnClick = true;
             _lowerLimitBitPatternNumericButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
             _lowerLimitBitPatternNumericButton.Image = (System.Drawing.Image)resources.GetObject("_LowerLimitBitPatternNumericButton.Image");
@@ -289,17 +289,17 @@ namespace cc.isr.VI.SubsystemsWinControls
             _lowerLimitBitPatternNumericButton.Size = new System.Drawing.Size(65, 25);
             _lowerLimitBitPatternNumericButton.Text = "Source: 0x";
             _lowerLimitBitPatternNumericButton.ToolTipText = "Toggle to switch between decimal and hex display";
-            // 
+            //
             // _lowerLimitBitPatternNumeric
-            // 
+            //
             _lowerLimitBitPatternNumeric.Name = "_LowerLimitBitPatternNumeric";
             _lowerLimitBitPatternNumeric.Size = new System.Drawing.Size(41, 25);
             _lowerLimitBitPatternNumeric.Text = "1";
             _lowerLimitBitPatternNumeric.ToolTipText = "Lower limit bit pattern";
             _lowerLimitBitPatternNumeric.Value = new decimal(new int[] { 1, 0, 0, 0 });
-            // 
+            //
             // LimitView
-            // 
+            //
             AutoScaleDimensions = new System.Drawing.SizeF(7.0f, 17.0f);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(_limitToolStripPanel);

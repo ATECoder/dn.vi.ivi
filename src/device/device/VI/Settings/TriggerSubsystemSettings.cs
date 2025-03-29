@@ -9,7 +9,7 @@ namespace cc.isr.VI.Settings;
 /// David, 2018-02-12 </para>
 /// </remarks>
 [CLSCompliant( false )]
-public class TriggerSubsystemSettings() : INotifyPropertyChanged
+public class TriggerSubsystemSettings() : System.ComponentModel.INotifyPropertyChanged
 {
     #region " notify property change implementation "
 
@@ -109,7 +109,7 @@ public class TriggerSubsystemSettings() : INotifyPropertyChanged
     /// fetched from the settings file.
     /// </summary>
     /// <value> True if this settings section exists in the settings file, false if not. </value>
-	[Description( "True if this settings section exists and was read from the JSon settings file." )]
+    [Description( "True if this settings section exists and was read from the JSon settings file." )]
     public bool Exists
     {
         get => this._exists;
@@ -124,7 +124,7 @@ public class TriggerSubsystemSettings() : INotifyPropertyChanged
 
     /// <summary> Gets or sets the initial trigger source. </summary>
     /// <value> The initial trigger source. </value>
-	public virtual TriggerSources InitialTriggerSource
+    public virtual TriggerSources InitialTriggerSource
     {
         get => this._initialTriggerSource;
         set => _ = this.SetProperty( ref this._initialTriggerSource, value );

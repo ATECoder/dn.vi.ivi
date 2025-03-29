@@ -81,40 +81,40 @@ namespace cc.isr.VI.Tsp2
 
         #region " service request "
 
-		/// <summary> Processes the service request. </summary>
-		protected override void ProcessServiceRequest()
-		{
-			// device errors will be read if the error available bit is set upon reading the status byte.
-			// 20240830: changed to read but not apply the status byte so as to prevent 
-			// a query interrupt error.
-			if ( this.Session is not null )
-			{
-				Pith.ServiceRequests statusByte = this.Session.ReadStatusByte();
-				if ( this.Session.IsErrorBitSet( statusByte ) )
+        /// <summary> Processes the service request. </summary>
+        protected override void ProcessServiceRequest()
+        {
+            // device errors will be read if the error available bit is set upon reading the status byte.
+            // 20240830: changed to read but not apply the status byte so as to prevent
+            // a query interrupt error.
+            if ( this.Session is not null )
+            {
+                Pith.ServiceRequests statusByte = this.Session.ReadStatusByte();
+                if ( this.Session.IsErrorBitSet( statusByte ) )
 
-					// if an error occurred, let the status subsystem handle the error
-					this.Session.ApplyStatusByte( statusByte );
+                    // if an error occurred, let the status subsystem handle the error
+                    this.Session.ApplyStatusByte( statusByte );
 
-				else if ( this.Session.IsMessageAvailableBitSet( statusByte ) )
-				{
-					// read the message after delay
-					_ = SessionBase.AsyncDelay( this.Session.ReadAfterWriteDelay );
+                else if ( this.Session.IsMessageAvailableBitSet( statusByte ) )
+                {
+                    // read the message after delay
+                    _ = SessionBase.AsyncDelay( this.Session.ReadAfterWriteDelay );
 
-					// result is also stored in the last message received.
-					this.ServiceRequestReading = this.Session.ReadFreeLineTrimEnd();
+                    // result is also stored in the last message received.
+                    this.ServiceRequestReading = this.Session.ReadFreeLineTrimEnd();
 
-					// at this point we can allow the status subsystem to process the
-					// next status byte in case reading elicited an error.
-					_ = SessionBase.AsyncDelay( this.Session.StatusReadDelay );
-					this.Session.ApplyStatusByte( this.Session.ReadStatusByte() );
-				}
-				else
+                    // at this point we can allow the status subsystem to process the
+                    // next status byte in case reading elicited an error.
+                    _ = SessionBase.AsyncDelay( this.Session.StatusReadDelay );
+                    this.Session.ApplyStatusByte( this.Session.ReadStatusByte() );
+                }
+                else
 
-					// at this point we can allow the status subsystem to process 
-					// other status byte events
-					this.Session.ApplyStatusByte( statusByte );
-			}
-		}
+                    // at this point we can allow the status subsystem to process
+                    // other status byte events
+                    this.Session.ApplyStatusByte( statusByte );
+            }
+        }
 
         #endregion
 

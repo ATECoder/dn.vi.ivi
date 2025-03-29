@@ -11,7 +11,7 @@ namespace cc.isr.VI.SubsystemsWinControls
         private System.ComponentModel.IContainer components;
 
         // NOTE: The following procedure is required by the Windows Form Designer
-        // It can be modified using the Windows Form Designer.  
+        // It can be modified using the Windows Form Designer.
         // Do not modify it using the code editor.
         [DebuggerStepThrough()]
         private void InitializeComponent()
@@ -32,9 +32,9 @@ namespace cc.isr.VI.SubsystemsWinControls
             _settlingTimeUnitLabel = new ToolStripLabel();
             _subsystemToolStrip.SuspendLayout();
             SuspendLayout();
-            // 
+            //
             // _subsystemToolStrip
-            // 
+            //
             _subsystemToolStrip.BackColor = System.Drawing.Color.Transparent;
             _subsystemToolStrip.GripMargin = new Padding(0);
             _subsystemToolStrip.Items.AddRange(new ToolStripItem[] { _subsystemSplitButton, _slotNumberComboBoxLabel, _slotNumberNumeric, _cardTypeTextBoxLabel, _cardTypeTextBox, _settlingTimeNumericLabel, _settlingTimeNumeric, _settlingTimeUnitLabel });
@@ -44,9 +44,9 @@ namespace cc.isr.VI.SubsystemsWinControls
             _subsystemToolStrip.Stretch = true;
             _subsystemToolStrip.TabIndex = 1;
             _subsystemToolStrip.Text = "Slot Tool Strip";
-            // 
+            //
             // _subsystemSplitButton
-            // 
+            //
             _subsystemSplitButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
             _subsystemSplitButton.DropDownItems.AddRange(new ToolStripItem[] { _applySettingsMenuItem, _readSettingsMenuItem });
             _subsystemSplitButton.Font = new System.Drawing.Font("Segoe UI", 9.0f, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, 0);
@@ -56,56 +56,56 @@ namespace cc.isr.VI.SubsystemsWinControls
             _subsystemSplitButton.Size = new System.Drawing.Size(42, 24);
             _subsystemSplitButton.Text = "Slot";
             _subsystemSplitButton.ToolTipText = "Select action";
-            // 
+            //
             // _applySettingsMenuItem
-            // 
+            //
             _applySettingsMenuItem.Name = "_applySettingsMenuItem";
             _applySettingsMenuItem.Size = new System.Drawing.Size(180, 22);
             _applySettingsMenuItem.Text = "Apply Settings";
             _applySettingsMenuItem.ToolTipText = "Applies the settings onto the instrument";
-            // 
+            //
             // _readSettingsMenuItem
-            // 
+            //
             _readSettingsMenuItem.Name = "_ReadSettingsMenuItem";
             _readSettingsMenuItem.Size = new System.Drawing.Size(180, 22);
             _readSettingsMenuItem.Text = "Read Settings";
-            // 
+            //
             // _slotNumberComboBoxLabel
-            // 
+            //
             _slotNumberComboBoxLabel.Margin = new Padding(3, 1, 0, 2);
             _slotNumberComboBoxLabel.Name = "_SlotNumberComboBoxLabel";
             _slotNumberComboBoxLabel.Size = new System.Drawing.Size(14, 24);
             _slotNumberComboBoxLabel.Text = "#";
-            // 
+            //
             // _slotNumberNumeric
-            // 
+            //
             _slotNumberNumeric.Name = "_SlotNumberNumeric";
             _slotNumberNumeric.Size = new System.Drawing.Size(41, 24);
             _slotNumberNumeric.Text = "0";
             _slotNumberNumeric.Value = new decimal(new int[] { 0, 0, 0, 0 });
-            // 
+            //
             // _cardTypeTextBoxLabel
-            // 
+            //
             _cardTypeTextBoxLabel.Name = "_CardTypeTextBoxLabel";
             _cardTypeTextBoxLabel.Size = new System.Drawing.Size(34, 24);
             _cardTypeTextBoxLabel.Text = "Type:";
-            // 
+            //
             // _cardTypeTextBox
-            // 
+            //
             _cardTypeTextBox.Font = new System.Drawing.Font("Segoe UI", 9.0f);
             _cardTypeTextBox.Name = "_CardTypeTextBox";
             _cardTypeTextBox.Size = new System.Drawing.Size(100, 27);
             _cardTypeTextBox.ToolTipText = "Card type";
-            // 
+            //
             // _settlingTimeNumericLabel
-            // 
+            //
             _settlingTimeNumericLabel.Margin = new Padding(2, 1, 0, 2);
             _settlingTimeNumericLabel.Name = "_SettlingTimeNumericLabel";
             _settlingTimeNumericLabel.Size = new System.Drawing.Size(50, 24);
             _settlingTimeNumericLabel.Text = "Settling:";
-            // 
+            //
             // _settlingTimeNumeric
-            // 
+            //
             _settlingTimeNumeric.AutoSize = false;
             _settlingTimeNumeric.Margin = new Padding(0, 1, 0, 1);
             _settlingTimeNumeric.Name = "_SettlingTimeNumeric";
@@ -113,15 +113,15 @@ namespace cc.isr.VI.SubsystemsWinControls
             _settlingTimeNumeric.Text = "0";
             _settlingTimeNumeric.ToolTipText = "Relay settling time";
             _settlingTimeNumeric.Value = new decimal(new int[] { 0, 0, 0, 0 });
-            // 
+            //
             // _settlingTimeUnitLabel
-            // 
+            //
             _settlingTimeUnitLabel.Name = "_SettlingTimeUnitLabel";
             _settlingTimeUnitLabel.Size = new System.Drawing.Size(23, 24);
             _settlingTimeUnitLabel.Text = "ms";
-            // 
+            //
             // SlotView
-            // 
+            //
             AutoScaleDimensions = new System.Drawing.SizeF(7.0f, 17.0f);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(_subsystemToolStrip);

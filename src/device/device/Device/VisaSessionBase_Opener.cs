@@ -38,7 +38,7 @@ public partial class VisaSessionBase : cc.isr.Std.Notifiers.OpenResourceBase
         get
         {
             // enable validation; Validation is disabled by default to facilitate
-            // resource selection in case of resource manager mismatch between 
+            // resource selection in case of resource manager mismatch between
             // VISA implementations.
             if ( this._sessionFactory is not null )
                 this._sessionFactory.ValidationEnabled = this.ValidationEnabled;
@@ -354,7 +354,7 @@ public partial class VisaSessionBase : cc.isr.Std.Notifiers.OpenResourceBase
                     throw new OperationCanceledException( $"{activity} canceled;. " );
                 activity = $"{resourceModel}:{resourceName} handling opened actions";
 
-                // this clears any existing errors using SDC, RST, and CLS.  
+                // this clears any existing errors using SDC, RST, and CLS.
                 this.OnOpened( EventArgs.Empty );
                 if ( this.IsDeviceOpen )
                 {
@@ -516,7 +516,7 @@ public partial class VisaSessionBase : cc.isr.Std.Notifiers.OpenResourceBase
             ResourceNameInfoCollection.AddNewResource( this.OpenResourceName );
         }
 
-        // A talker is assigned to the subsystem when the device is constructed. 
+        // A talker is assigned to the subsystem when the device is constructed.
         // This talker is assigned to each subsystem when it is added.
         // Me.Subsystems.AssignTalker(Me.Talker)
 
@@ -529,8 +529,8 @@ public partial class VisaSessionBase : cc.isr.Std.Notifiers.OpenResourceBase
 
         // 20181219: this is included in the base method: Me.NotifyPropertyChanged(NameOf(VisaSessionBase.IsDeviceOpen))
         // 2016/01/18: this was done before adding listeners, which was useful when using the device
-        // as a class in a 'meter'. As a result, the actions taken when handling the Opened event, 
-        // such as Reset and Initialize do not get reported. 
+        // as a class in a 'meter'. As a result, the actions taken when handling the Opened event,
+        // such as Reset and Initialize do not get reported.
         // The solution was to add the device Initialize event to process publishing and initialization of device
         // and subsystems.
         base.OnOpened( e );

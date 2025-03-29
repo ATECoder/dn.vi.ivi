@@ -45,7 +45,7 @@ public class VisaViewTests : cc.isr.VI.DeviceWinControls.Tests.Base.IVisaViewTes
         // Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
         Console.WriteLine( $"Testing {typeof( cc.isr.VI.DeviceWinControls.VisaView ).Assembly.FullName}" );
 
-        // create an instance of the Serilog logger. 
+        // create an instance of the Serilog logger.
         SessionLogger.Instance.CreateSerilogLogger( typeof( VisaViewTests ) );
 
         this.TestSiteSettings = AllSettings.Instance.TestSiteSettings;

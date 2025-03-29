@@ -60,7 +60,7 @@ public abstract class VisaSessionTests
     /// <value> The trace listener. </value>
     public LoggerTraceListener<VisaSessionTests>? TraceListener { get; set; }
 
-    /// <summary> Initializes the test class instance before each test runs. </summary>											   
+    /// <summary> Initializes the test class instance before each test runs. </summary>
     [TestInitialize()]
     public virtual void InitializeBeforeEachTest()
     {
@@ -95,7 +95,7 @@ public abstract class VisaSessionTests
         // cc.isr.Logging.TraceLog.Tracer.Instance.LogSettingsFileName = cc.isr.Logging.Orlog.Orlogger.BuildAppSettingsFileName( entryAssembly ); ;
     }
 
-    /// <summary> Cleans up the test class instance after each test has run. </summary>	   
+    /// <summary> Cleans up the test class instance after each test has run. </summary>
     [TestCleanup()]
     public virtual void CleanupAfterEachTest()
     {

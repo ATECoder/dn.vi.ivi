@@ -237,14 +237,14 @@ public static class Node
     /// </summary>
     public const string StandardServiceEnableCommandFormat = "_G.Node[{0}].status.standard.enable = {1} _G.Node[{0}].status.request_enable = {2}";
 
-    /// <summary> The  Standard Event and Service Request Enable operation complete command format preceded by clear execution state. 
+    /// <summary> The  Standard Event and Service Request Enable operation complete command format preceded by clear execution state.
     /// <code>
     /// Lua: _G.Node[{0}].status.reset() _G.Node[{0}].status.standard.enable = {1} _G.Node[{0}].status.request_enable = {2} _G.Node[{0}].opc()
     /// SCPI: *CLS; *ESE {0:D}; *SRE {1:D}; *OPC
     /// <para>Using line feed delimiter causes the 2600 instrument to fail when initializing.</para>
     /// </code>
     /// </summary>
-    /// 
+    ///
     /// <remarks>
     /// </remarks>
     public const string StandardServiceEnableOperationCompleteCommandFormat = "_G.Node[{0}].status.reset() _G.Node[{0}].status.standard.enable = {1} _G.Node[{0}].status.request_enable = {2} _G.Node[{0}].opc()";

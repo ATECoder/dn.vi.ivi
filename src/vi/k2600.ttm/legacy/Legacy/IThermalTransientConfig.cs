@@ -3,7 +3,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Legacy;
 /// <summary> Defines an interface for configuring the measurement of thermal resistance. </summary>
 /// <remarks>
 /// (c) 2009 Integrated Scientific Resources, Inc. All rights reserved. <para>
-/// Licensed under The MIT License. </para><para>  
+/// Licensed under The MIT License. </para><para>
 /// David, 2013-12-12, 3.0.3053.x. </para>
 /// </remarks>
 

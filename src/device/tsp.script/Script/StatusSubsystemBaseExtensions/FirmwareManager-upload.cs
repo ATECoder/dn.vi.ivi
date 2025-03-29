@@ -50,7 +50,7 @@ public static partial class FirmwareManager
                 session.ClearDataQueueWaitComplete( script.Node );
                 string scriptLoaderScript = script.FirmwareScript.BuildScriptLoaderScript( tempName, script.Node.Number );
 
-                // load and ran the temporary script. 
+                // load and ran the temporary script.
                 session.SetLastAction( "loading temporary script" );
 
                 // replaced by the code below
@@ -278,7 +278,7 @@ public static partial class FirmwareManager
         }
 
         return false;
-        // run scripts so that we can read their version numbers. ScriptEntities will run only if not ran, namely 
+        // run scripts so that we can read their version numbers. ScriptEntities will run only if not ran, namely
         // if there authorNamespaces are not defined.
 
         // THIS REQUIRES MAJOR EDITING:

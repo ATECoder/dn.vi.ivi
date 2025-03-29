@@ -10,8 +10,8 @@
 
 namespace cc.isr.VI.SubsystemsWinControls.Properties {
     using System;
-    
-    
+
+
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -23,15 +23,15 @@ namespace cc.isr.VI.SubsystemsWinControls.Properties {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
-        
+
         private static global::System.Resources.ResourceManager resourceMan;
-        
+
         private static global::System.Globalization.CultureInfo resourceCulture;
-        
+
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Resources() {
         }
-        
+
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
@@ -45,7 +45,7 @@ namespace cc.isr.VI.SubsystemsWinControls.Properties {
                 return resourceMan;
             }
         }
-        
+
         /// <summary>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
@@ -59,7 +59,7 @@ namespace cc.isr.VI.SubsystemsWinControls.Properties {
                 resourceCulture = value;
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
@@ -69,7 +69,7 @@ namespace cc.isr.VI.SubsystemsWinControls.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
@@ -79,7 +79,7 @@ namespace cc.isr.VI.SubsystemsWinControls.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
@@ -89,7 +89,7 @@ namespace cc.isr.VI.SubsystemsWinControls.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
@@ -99,7 +99,7 @@ namespace cc.isr.VI.SubsystemsWinControls.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
@@ -109,7 +109,7 @@ namespace cc.isr.VI.SubsystemsWinControls.Properties {
                 return ((System.Drawing.Icon)(obj));
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
@@ -119,7 +119,7 @@ namespace cc.isr.VI.SubsystemsWinControls.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
@@ -129,7 +129,7 @@ namespace cc.isr.VI.SubsystemsWinControls.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Enables reading of polled messages.
         ///Checking the Show Polled Reading from the Session panel displays the messages on the Session panel..
@@ -139,7 +139,7 @@ namespace cc.isr.VI.SubsystemsWinControls.Properties {
                 return ResourceManager.GetString("PollAutoReadHint", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Enables reading of service request messages.
         ///Checking the Show Service Request Reading from the Session panel displays the messages on the Session panel..
@@ -149,7 +149,7 @@ namespace cc.isr.VI.SubsystemsWinControls.Properties {
                 return ResourceManager.GetString("ServiceRequestAutoReadHint", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to When checked, the program activates the device status subsystem.
         ///Other subsystems, such as Multimeter, Source, Trigger or Trace, remain inactive..
@@ -159,7 +159,7 @@ namespace cc.isr.VI.SubsystemsWinControls.Properties {
                 return ResourceManager.GetString("StatusSubsystemOnlyHint", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to The terminal state, F (front) or R (rear), appears at the left side of the display panel.
         ///Terminal state is read when supported on instruments such as the Keithley 2002, 7510, 6510 or 2450..
@@ -169,7 +169,7 @@ namespace cc.isr.VI.SubsystemsWinControls.Properties {
                 return ResourceManager.GetString("TerminalsHint", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to When enabled, VISA notifies the program of instrument events.
         ///The event handler Bitmask defines which events are notified.
@@ -182,10 +182,10 @@ namespace cc.isr.VI.SubsystemsWinControls.Properties {
                 return ResourceManager.GetString("ToggleVisaEventHandlerHint", resourceCulture);
             }
         }
-        
+
         /// <summary>
-        ///   Looks up a localized string similar to Controls the amount of information logged or displayed. 
-        ///Setting the level to Verbose permits all messages.  
+        ///   Looks up a localized string similar to Controls the amount of information logged or displayed.
+        ///Setting the level to Verbose permits all messages.
         ///Setting it to Warning permits only Errors and Warnings..
         /// </summary>
         internal static string TraceHint {
@@ -193,7 +193,7 @@ namespace cc.isr.VI.SubsystemsWinControls.Properties {
                 return ResourceManager.GetString("TraceHint", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
@@ -203,7 +203,7 @@ namespace cc.isr.VI.SubsystemsWinControls.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>

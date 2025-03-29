@@ -53,7 +53,7 @@ public class MeasureVoltageSubsystemBase( Tsp.StatusSubsystemBase statusSubsyste
     /// This command enables or disables the over-current Auto Range Voltage (OCP)
     /// function. The enabled state is On (1); the disabled state is Off (0). If the over-current
     /// AutoRangeVoltage function is enabled and the output goes into constant current operation, the
-    /// output is disabled and OCP is set in the Questionable Condition status register. The system reset 
+    /// output is disabled and OCP is set in the Questionable Condition status register. The system reset
     /// (G_reset()) value is Off.
     /// </remarks>
     /// <param name="value"> Enable if set to <c>true</c>; otherwise, disable. </param>
@@ -103,7 +103,7 @@ public class MeasureVoltageSubsystemBase( Tsp.StatusSubsystemBase statusSubsyste
     /// This command enables or disables the over-current AutoRangeVoltage (OCP)
     /// function. The enabled state is On (1); the disabled state is Off (0). If the over-current
     /// AutoRangeVoltage function is enabled and the output goes into constant current operation, the
-    /// output is disabled and OCP is set in the Questionable Condition status register. The system 
+    /// output is disabled and OCP is set in the Questionable Condition status register. The system
     /// reset (G_reset()) value is Off.
     /// </remarks>
     /// <param name="value"> Enable if set to <c>true</c>; otherwise, disable. </param>

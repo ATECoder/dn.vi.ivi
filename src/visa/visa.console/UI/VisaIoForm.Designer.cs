@@ -31,18 +31,18 @@ partial class VisaIoForm
     {
         this.VisaIoControl = new VisaIoControl();
         this.SuspendLayout();
-        // 
+        //
         // VisaIoControl
-        // 
+        //
         this.VisaIoControl.Dock = System.Windows.Forms.DockStyle.Fill;
         this.VisaIoControl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
         this.VisaIoControl.Location = new System.Drawing.Point(0, 0);
         this.VisaIoControl.Name = "VisaIoControl";
         this.VisaIoControl.Size = new System.Drawing.Size(596, 459);
         this.VisaIoControl.TabIndex = 0;
-        // 
+        //
         // VisaIoForm
-        // 
+        //
         this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
         this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         this.ClientSize = new System.Drawing.Size(596, 459);

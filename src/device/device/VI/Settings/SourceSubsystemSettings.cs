@@ -9,7 +9,7 @@ namespace cc.isr.VI.Settings;
 /// David, 2018-02-12 </para>
 /// </remarks>
 [CLSCompliant( false )]
-public class SourceSubsystemSettings() : INotifyPropertyChanged
+public class SourceSubsystemSettings() : System.ComponentModel.INotifyPropertyChanged
 {
     #region " notify property change implementation "
 
@@ -109,7 +109,7 @@ public class SourceSubsystemSettings() : INotifyPropertyChanged
     /// fetched from the settings file.
     /// </summary>
     /// <value> True if this settings section exists in the settings file, false if not. </value>
-	[Description( "True if this settings section exists and was read from the JSon settings file." )]
+    [Description( "True if this settings section exists and was read from the JSon settings file." )]
     public bool Exists
     {
         get => this._exists;
@@ -124,7 +124,7 @@ public class SourceSubsystemSettings() : INotifyPropertyChanged
 
     /// <summary> Gets or sets the initial source function mode. </summary>
     /// <value> The initial source function mode. </value>
-	public virtual SourceFunctionModes InitialSourceFunction
+    public virtual SourceFunctionModes InitialSourceFunction
     {
         get => this._initialSourceFunction;
         set => _ = this.SetProperty( ref this._initialSourceFunction, value );
@@ -134,7 +134,7 @@ public class SourceSubsystemSettings() : INotifyPropertyChanged
 
     /// <summary> Gets or sets the initial source level. </summary>
     /// <value> The initial source level. </value>
-	public virtual double InitialSourceLevel
+    public virtual double InitialSourceLevel
     {
         get => this._initialSourceLevel;
         set => _ = this.SetProperty( ref this._initialSourceLevel, value );
@@ -144,7 +144,7 @@ public class SourceSubsystemSettings() : INotifyPropertyChanged
 
     /// <summary> Gets or sets the initial source limit. </summary>
     /// <value> The initial source limit. </value>
-	public virtual double InitialSourceLimit
+    public virtual double InitialSourceLimit
     {
         get => this._initialSourceLimit;
         set => _ = this.SetProperty( ref this._initialSourceLimit, value );
@@ -154,7 +154,7 @@ public class SourceSubsystemSettings() : INotifyPropertyChanged
 
     /// <summary> Gets or sets the maximum output power of the instrument. </summary>
     /// <value> The maximum output power . </value>
-	public virtual double MaximumOutputPower
+    public virtual double MaximumOutputPower
     {
         get => this._maximumOutputPower;
         set => _ = this.SetProperty( ref this._maximumOutputPower, value );
@@ -170,7 +170,7 @@ public class SourceSubsystemSettings() : INotifyPropertyChanged
     /// Gets or sets a value indicating whether the source read back is enabled.
     /// </summary>
     /// <value> True if source read back enabled, false if not. </value>
-	public bool SourceReadBackEnabled
+    public bool SourceReadBackEnabled
     {
         get => this._sourceReadBackEnabled;
         set => this.SetProperty( ref this._sourceReadBackEnabled, value );
@@ -180,7 +180,7 @@ public class SourceSubsystemSettings() : INotifyPropertyChanged
 
     /// <summary>   Gets or sets a value indicating whether the front terminals selected. </summary>
     /// <value> True if front terminals selected, false if not. </value>
-	public bool FrontTerminalsSelected
+    public bool FrontTerminalsSelected
     {
         get => this._frontTerminalsSelected;
         set => this.SetProperty( ref this._frontTerminalsSelected, value );
@@ -190,7 +190,7 @@ public class SourceSubsystemSettings() : INotifyPropertyChanged
 
     /// <summary>   Gets or sets source level. </summary>
     /// <value> The source level. </value>
-	public double SourceLevel
+    public double SourceLevel
     {
         get => this._sourceLevel;
         set => this.SetProperty( ref this._sourceLevel, value );

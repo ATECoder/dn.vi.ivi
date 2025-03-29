@@ -279,7 +279,7 @@ public abstract class LocalNodeSubsystemBase( Tsp.StatusSubsystemBase statusSubs
         // check status of the prompt flag.
         if ( this.ShowPrompts.HasValue )
         {
-            // if prompts are on, 
+            // if prompts are on,
             if ( this.ShowPrompts.Value )
             {
                 this.Session.SetLastAction( $"calling {nameof( SessionBase.AwaitErrorOrMessageAvailableBits )} #1" );
@@ -297,14 +297,14 @@ public abstract class LocalNodeSubsystemBase( Tsp.StatusSubsystemBase statusSubs
         {
             this.Session.SetLastAction( $"calling {nameof( SessionBase.AwaitErrorOrMessageAvailableBits )} #2" );
 
-            // check if we have data in the output buffer.  
+            // check if we have data in the output buffer.
             ServiceRequests statusByte = this.Session.AwaitErrorOrMessageAvailableBits( TimeSpan.FromMilliseconds( 1d ), 3 );
 
             this.Session.ThrowDeviceExceptionIfError( statusByte );
 
             if ( this.Session.IsMessageAvailableBitSet( statusByte ) )
 
-                // if data exists in the buffer, it may indicate that the prompts are already on 
+                // if data exists in the buffer, it may indicate that the prompts are already on
                 // so just go read the output buffer. Once read, the status will be parsed.
                 _ = this.Session.ReadLine();
 

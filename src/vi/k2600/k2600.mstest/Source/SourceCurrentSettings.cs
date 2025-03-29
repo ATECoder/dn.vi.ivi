@@ -24,7 +24,7 @@ public class SourceCurrentSettings() : VI.Settings.SourceSubsystemSettings
 
     /// <summary>   Gets or sets source function. </summary>
     /// <value> The source function. </value>
-	public SourceFunctionMode SourceFunction
+    public SourceFunctionMode SourceFunction
     {
         get => this._sourceFunction;
         set => this.SetProperty( ref this._sourceFunction, value );

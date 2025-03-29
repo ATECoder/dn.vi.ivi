@@ -6,7 +6,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Legacy;
 
 public partial class LegacyDevice : CommunityToolkit.Mvvm.ComponentModel.ObservableObject, IDevice
 {
-    #region " post transient delay " 
+    #region " post transient delay "
 
     /// <summary> Gets or sets the delay time in seconds between the end of the thermal transient and
     /// the start of the final cold resistance measurement. </summary>

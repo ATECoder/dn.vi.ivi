@@ -6,7 +6,7 @@ namespace cc.isr.VI.Tsp.K2600.MSTest.Source;
 
 /// <summary>   A current source measure settings. </summary>
 /// <remarks>   2025-01-17. </remarks>
-public class CurrentSourceMeasureSettings() : INotifyPropertyChanged
+public class CurrentSourceMeasureSettings() : System.ComponentModel.INotifyPropertyChanged
 {
     #region " notify property change implementation "
 
@@ -119,7 +119,7 @@ public class CurrentSourceMeasureSettings() : INotifyPropertyChanged
     /// fetched from the settings file.
     /// </summary>
     /// <value> True if this settings section exists in the settings file, false if not. </value>
-	[System.ComponentModel.Description( "True if this settings were found and read from the settings file." )]
+    [System.ComponentModel.Description( "True if this settings were found and read from the settings file." )]
     public bool Exists
     {
         get => this._exists;
@@ -134,7 +134,7 @@ public class CurrentSourceMeasureSettings() : INotifyPropertyChanged
 
     /// <summary>   Gets or sets the load resistance. </summary>
     /// <value> The load resistance. </value>
-	public double LoadResistance
+    public double LoadResistance
     {
         get => this._loadResistance;
         set => this.SetProperty( ref this._loadResistance, value );
@@ -144,7 +144,7 @@ public class CurrentSourceMeasureSettings() : INotifyPropertyChanged
 
     /// <summary>   Gets or sets the measurement tolerance. </summary>
     /// <value> The measurement tolerance. </value>
-	public double MeasurementTolerance
+    public double MeasurementTolerance
     {
         get => this._measurementTolerance;
         set => this.SetProperty( ref this._measurementTolerance, value );

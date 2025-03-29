@@ -179,7 +179,7 @@ public class ReadingEntity( ReadingElementTypes readingType ) : object()
     /// <returns> True if it succeeds; otherwise, false. </returns>
     public virtual bool TryApplyReading( string rawValueReading, string rawUnitsReading )
     {
-        // save the readings 
+        // save the readings
         if ( string.IsNullOrWhiteSpace( rawValueReading ) )
             rawValueReading = string.Empty;
         if ( string.IsNullOrWhiteSpace( rawUnitsReading ) )

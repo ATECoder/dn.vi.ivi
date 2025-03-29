@@ -27,7 +27,7 @@ public partial class PartsView : cc.isr.WinControls.ModelViewBase
         this.PartsInternal = [];
         this.ConfigurePartsDisplay( this._partsDataGridView );
         this.OnPartsChanged( this.PartsInternal, EventArgs.Empty );
-#if designMode 
+#if designMode
         Debug.Assert( False, "Illegal call; reset design mode" )
 #endif
     }

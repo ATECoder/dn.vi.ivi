@@ -8,11 +8,15 @@ internal sealed class TestSiteSettings() : isr.Std.Tests.TestSiteSettings
 
     /// <summary>   Reads the settings. </summary>
     /// <remarks>   2024-08-03. </remarks>
-    public void ReadSettings()
+    public override void ReadSettings()
     {
+        isr.Std.Tests.TestSiteSettings.SettingsPath = Settings.AllSettings.Instance.Scribe!.AllUsersSettingsPath!;
+#if false
         AppSettingsScribe.ReadSettings( Settings.AllSettings.Instance.Scribe!.AllUsersSettingsPath!, nameof( Settings.TestSiteSettings ),
             Settings.AllSettings.Instance.TestSiteSettings,
             AppSettingsScribe.DefaultSerializerOptions, AppSettingsScribe.DefaultDocumentOptions );
+#endif
+        base.ReadSettings();
     }
 
     #endregion

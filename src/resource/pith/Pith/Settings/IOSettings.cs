@@ -14,7 +14,7 @@ public class IOSettings() : CommunityToolkit.Mvvm.ComponentModel.ObservableObjec
     /// fetched from the settings file.
     /// </summary>
     /// <value> True if this settings section exists in the settings file, false if not. </value>
-	[Description( "True if this settings were found and read from the settings file." )]
+    [Description( "True if this settings were found and read from the settings file." )]
     public bool Exists
     {
         get => this._exists;
@@ -25,7 +25,7 @@ public class IOSettings() : CommunityToolkit.Mvvm.ComponentModel.ObservableObjec
 
     /// <summary> Gets the ASCII character used to end reading. </summary>
     /// <value> The read termination character. </value>
-	[Description( "The ASCII character used to end reading [10]" )]
+    [Description( "The ASCII character used to end reading [10]" )]
     public byte ReadTerminationCharacter
     {
         get => this._readTerminationCharacter;
@@ -38,7 +38,7 @@ public class IOSettings() : CommunityToolkit.Mvvm.ComponentModel.ObservableObjec
     /// Gets the value indicating whether the read operation ends when a termination character is received.
     /// </summary>
     /// <value> The termination character enabled. </value>
-	[Description( "The value indicating whether the read operation ends when a termination character is received [true]" )]
+    [Description( "The value indicating whether the read operation ends when a termination character is received [true]" )]
     public bool ReadTerminationEnabled
     {
         get => this._readTerminationEnabled;
@@ -49,7 +49,7 @@ public class IOSettings() : CommunityToolkit.Mvvm.ComponentModel.ObservableObjec
 
     /// <summary>   Gets or sets the session message notification modes. </summary>
     /// <value> The session message notification modes. </value>
-	[Description( "Specifies the modes of session notification, e.g., none or message received, sent or both [None; 0]" )]
+    [Description( "Specifies the modes of session notification, e.g., none or message received, sent or both [None; 0]" )]
     public MessageNotificationModes SessionMessageNotificationModes
     {
         get => this._sessionMessageNotificationModes;

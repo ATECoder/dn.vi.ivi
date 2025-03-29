@@ -44,8 +44,11 @@ public class Settings
 
         // must copy application context settings here to clear any bad settings files.
 
-        AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.AllUsersAssemblyFilePath! );
-        AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.ThisUserAssemblyFilePath! );
+        if ( !System.IO.File.Exists( ai.AllUsersAssemblyFilePath! ) )
+            AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.AllUsersAssemblyFilePath! );
+
+        if ( !System.IO.File.Exists( ai.ThisUserAssemblyFilePath! ) )
+            AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.ThisUserAssemblyFilePath! );
 
         this.Scribe = new( [this.LotSettings],
             ai.AppContextAssemblyFilePath!, ai.AllUsersAssemblyFilePath! )
@@ -58,7 +61,7 @@ public class Settings
 
     #endregion
 
-    #region " setting instances 
+    #region " setting instances
 
     /// <summary>   Gets or sets the lot settings. </summary>
     /// <value> The lot settings. </value>

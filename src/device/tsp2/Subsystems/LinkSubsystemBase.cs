@@ -38,7 +38,7 @@ namespace cc.isr.VI.Tsp2
             this.UsingTspLink = false;
             if ( this.IsControllerNode )
             {
-                // establish the current node as the controller node. 
+                // establish the current node as the controller node.
                 this.InitiateControllerNode();
             }
         }
@@ -278,7 +278,7 @@ namespace cc.isr.VI.Tsp2
             {
                 if ( affirmative )
                 {
-                    // to_do: fix 
+                    // to_do: fix
                     this.EnableWaitComplete( 0 );
                     _ = this.Session.ApplyStatusByte( this.Session.AwaitOperationCompletion( timeout ).Status );
                     affirmative = this.StatusSubsystem.TraceVisaDeviceOperationOkay( true, "awaiting completion after collecting garbage after {0};. ", string.Format( System.Globalization.CultureInfo.CurrentCulture, format, args ) );

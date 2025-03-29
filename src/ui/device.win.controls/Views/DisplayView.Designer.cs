@@ -11,7 +11,7 @@ namespace cc.isr.VI.DeviceWinControls
         private System.ComponentModel.IContainer components;
 
         // NOTE: The following procedure is required by the Windows Form Designer
-        // It can be modified using the Windows Form Designer.  
+        // It can be modified using the Windows Form Designer.
         // Do not modify it using the code editor.
         [DebuggerStepThrough()]
         private void InitializeComponent()
@@ -65,9 +65,9 @@ namespace cc.isr.VI.DeviceWinControls
             _errorStatusStrip.SuspendLayout();
             _statusStrip.SuspendLayout();
             SuspendLayout();
-            // 
+            //
             // _measureStatusStrip
-            // 
+            //
             _measureStatusStrip.BackColor = System.Drawing.Color.Transparent;
             _measureStatusStrip.Font = new System.Drawing.Font("Segoe UI", 20.25f, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
             _measureStatusStrip.GripMargin = new Padding(0);
@@ -78,18 +78,18 @@ namespace cc.isr.VI.DeviceWinControls
             _measureStatusStrip.Size = new System.Drawing.Size(441, 42);
             _measureStatusStrip.SizingGrip = false;
             _measureStatusStrip.TabIndex = 18;
-            // 
+            //
             // _terminalsStatusLabel
-            // 
+            //
             _terminalsStatusLabel.Font = new System.Drawing.Font("Segoe UI", 20.25f, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
             _terminalsStatusLabel.ForeColor = System.Drawing.SystemColors.Info;
             _terminalsStatusLabel.Name = "_TerminalsStatusLabel";
             _terminalsStatusLabel.Size = new System.Drawing.Size(30, 37);
             _terminalsStatusLabel.Text = "F";
             _terminalsStatusLabel.ToolTipText = "Terminals status";
-            // 
+            //
             // _measureMetaStatusLabel
-            // 
+            //
             _measureMetaStatusLabel.DisplayStyle = ToolStripItemDisplayStyle.Text;
             _measureMetaStatusLabel.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
             _measureMetaStatusLabel.ForeColor = System.Drawing.Color.LimeGreen;
@@ -99,9 +99,9 @@ namespace cc.isr.VI.DeviceWinControls
             _measureMetaStatusLabel.Size = new System.Drawing.Size(16, 42);
             _measureMetaStatusLabel.Text = "p";
             _measureMetaStatusLabel.ToolTipText = "Measure meta status";
-            // 
+            //
             // _readingAmountLabel
-            // 
+            //
             _readingAmountLabel.AutoSize = false;
             _readingAmountLabel.DisplayStyle = ToolStripItemDisplayStyle.Text;
             _readingAmountLabel.ForeColor = System.Drawing.Color.Aquamarine;
@@ -112,9 +112,9 @@ namespace cc.isr.VI.DeviceWinControls
             _readingAmountLabel.Spring = true;
             _readingAmountLabel.Text = "-.------- mV";
             _readingAmountLabel.ToolTipText = "Reading value and unit";
-            // 
+            //
             // _measureElapsedTimeLabel
-            // 
+            //
             _measureElapsedTimeLabel.DisplayStyle = ToolStripItemDisplayStyle.Text;
             _measureElapsedTimeLabel.Font = new System.Drawing.Font("Segoe UI", 9.0f, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
             _measureElapsedTimeLabel.ForeColor = System.Drawing.SystemColors.Info;
@@ -123,9 +123,9 @@ namespace cc.isr.VI.DeviceWinControls
             _measureElapsedTimeLabel.Size = new System.Drawing.Size(23, 42);
             _measureElapsedTimeLabel.Text = "ms";
             _measureElapsedTimeLabel.ToolTipText = "Measure last action time in ms";
-            // 
+            //
             // _standardRegisterLabel
-            // 
+            //
             _standardRegisterLabel.DisplayStyle = ToolStripItemDisplayStyle.Text;
             _standardRegisterLabel.Font = new System.Drawing.Font("Segoe UI", 6.75f, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
             _standardRegisterLabel.ForeColor = System.Drawing.Color.DarkOrange;
@@ -135,9 +135,9 @@ namespace cc.isr.VI.DeviceWinControls
             _standardRegisterLabel.Text = "0x..";
             _standardRegisterLabel.ToolTipText = "Standard Register Value";
             _standardRegisterLabel.Visible = false;
-            // 
+            //
             // _statusRegisterLabel
-            // 
+            //
             _statusRegisterLabel.DisplayStyle = ToolStripItemDisplayStyle.Text;
             _statusRegisterLabel.Font = new System.Drawing.Font("Segoe UI", 6.75f, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
             _statusRegisterLabel.ForeColor = System.Drawing.Color.LightSkyBlue;
@@ -146,9 +146,9 @@ namespace cc.isr.VI.DeviceWinControls
             _statusRegisterLabel.Size = new System.Drawing.Size(19, 22);
             _statusRegisterLabel.Text = "0x..";
             _statusRegisterLabel.ToolTipText = "Status Register Value";
-            // 
+            //
             // _layout
-            // 
+            //
             _layout.AutoSize = true;
             _layout.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             _layout.BackColor = System.Drawing.Color.FromArgb( 30, 38, 44 );
@@ -173,9 +173,9 @@ namespace cc.isr.VI.DeviceWinControls
             _layout.RowStyles.Add(new RowStyle());
             _layout.Size = new System.Drawing.Size(441, 152);
             _layout.TabIndex = 23;
-            // 
+            //
             // _sessionReadingStatusStrip
-            // 
+            //
             _sessionReadingStatusStrip.BackColor = System.Drawing.Color.FromArgb( 30, 38, 44 );
             _sessionReadingStatusStrip.GripMargin = new Padding(0);
             _sessionReadingStatusStrip.Items.AddRange(new ToolStripItem[] { _measurementEventStatusLabel, _lastReadingLabel, _sessionElapsedTimeLabel });
@@ -186,9 +186,9 @@ namespace cc.isr.VI.DeviceWinControls
             _sessionReadingStatusStrip.SizingGrip = false;
             _sessionReadingStatusStrip.TabIndex = 0;
             _sessionReadingStatusStrip.Text = "Session Status Strip";
-            // 
+            //
             // _lastReadingLabel
-            // 
+            //
             _lastReadingLabel.ForeColor = System.Drawing.Color.Aquamarine;
             _lastReadingLabel.Margin = new Padding(0);
             _lastReadingLabel.Name = "_LastReadingLabel";
@@ -196,18 +196,18 @@ namespace cc.isr.VI.DeviceWinControls
             _lastReadingLabel.Spring = true;
             _lastReadingLabel.Text = "last reading";
             _lastReadingLabel.ToolTipText = "Last reading";
-            // 
+            //
             // _sessionElapsedTimeLabel
-            // 
+            //
             _sessionElapsedTimeLabel.Font = new System.Drawing.Font("Segoe UI", 9.0f, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
             _sessionElapsedTimeLabel.ForeColor = System.Drawing.SystemColors.Info;
             _sessionElapsedTimeLabel.Name = "_SessionElapsedTimeLabel";
             _sessionElapsedTimeLabel.Size = new System.Drawing.Size(23, 17);
             _sessionElapsedTimeLabel.Text = "ms";
             _sessionElapsedTimeLabel.ToolTipText = "Session last action time in ms";
-            // 
+            //
             // _subsystemStatusStrip
-            // 
+            //
             _subsystemStatusStrip.BackColor = System.Drawing.Color.FromArgb( 30, 38, 44 );
             _subsystemStatusStrip.GripMargin = new Padding(0);
             _subsystemStatusStrip.Items.AddRange(new ToolStripItem[] { _subsystemReadingLabel, _subsystemElapsedTimeLabel });
@@ -218,9 +218,9 @@ namespace cc.isr.VI.DeviceWinControls
             _subsystemStatusStrip.SizingGrip = false;
             _subsystemStatusStrip.TabIndex = 19;
             _subsystemStatusStrip.Text = "Subsystem Status Strip";
-            // 
+            //
             // _subsystemReadingLabel
-            // 
+            //
             _subsystemReadingLabel.BackColor = System.Drawing.Color.Transparent;
             _subsystemReadingLabel.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
             _subsystemReadingLabel.ForeColor = System.Drawing.Color.LightSkyBlue;
@@ -229,17 +229,17 @@ namespace cc.isr.VI.DeviceWinControls
             _subsystemReadingLabel.Spring = true;
             _subsystemReadingLabel.Text = "-.-------- mA";
             _subsystemReadingLabel.ToolTipText = "Subsystem reading";
-            // 
+            //
             // _subsystemElapsedTimeLabel
-            // 
+            //
             _subsystemElapsedTimeLabel.ForeColor = System.Drawing.SystemColors.Info;
             _subsystemElapsedTimeLabel.Name = "_SubsystemElapsedTimeLabel";
             _subsystemElapsedTimeLabel.Size = new System.Drawing.Size(23, 17);
             _subsystemElapsedTimeLabel.Text = "ms";
             _subsystemElapsedTimeLabel.ToolTipText = "Subsystem last action time in ms";
-            // 
+            //
             // _titleStatusStrip
-            // 
+            //
             _titleStatusStrip.BackColor = System.Drawing.Color.FromArgb( 30, 38, 44 );
             _titleStatusStrip.GripMargin = new Padding(0);
             _titleStatusStrip.Items.AddRange(new ToolStripItem[] { _titleLabel, _sessionOpenCloseStatusLabel });
@@ -250,9 +250,9 @@ namespace cc.isr.VI.DeviceWinControls
             _titleStatusStrip.SizingGrip = false;
             _titleStatusStrip.TabIndex = 20;
             _titleStatusStrip.Text = "Title Status Strip";
-            // 
+            //
             // _titleLabel
-            // 
+            //
             _titleLabel.BackColor = System.Drawing.Color.Transparent;
             _titleLabel.ForeColor = System.Drawing.SystemColors.Info;
             _titleLabel.Name = "_TitleLabel";
@@ -261,15 +261,15 @@ namespace cc.isr.VI.DeviceWinControls
             _titleLabel.Text = "Multimeter";
             _titleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             _titleLabel.ToolTipText = "Device title";
-            // 
+            //
             // _sessionOpenCloseStatusLabel
-            // 
+            //
             _sessionOpenCloseStatusLabel.Name = "_SessionOpenCloseStatusLabel";
             _sessionOpenCloseStatusLabel.Size = new System.Drawing.Size(0, 17);
             _sessionOpenCloseStatusLabel.ToolTipText = "Session open status";
-            // 
+            //
             // _errorStatusStrip
-            // 
+            //
             _errorStatusStrip.BackColor = System.Drawing.Color.FromArgb( 30, 38, 44 );
             _errorStatusStrip.GripMargin = new Padding(0);
             _errorStatusStrip.Items.AddRange(new ToolStripItem[] { _errorLabel });
@@ -280,9 +280,9 @@ namespace cc.isr.VI.DeviceWinControls
             _errorStatusStrip.SizingGrip = false;
             _errorStatusStrip.TabIndex = 21;
             _errorStatusStrip.Text = "Error Status Strip";
-            // 
+            //
             // _errorLabel
-            // 
+            //
             _errorLabel.BackColor = System.Drawing.Color.Transparent;
             _errorLabel.Font = new System.Drawing.Font("Segoe UI", 9.0f, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
             _errorLabel.ForeColor = System.Drawing.Color.LimeGreen;
@@ -292,9 +292,9 @@ namespace cc.isr.VI.DeviceWinControls
             _errorLabel.Text = "000, No Errors";
             _errorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             _errorLabel.TextChanged += new EventHandler( ErrorLabel_TextChanges );
-            // 
+            //
             // _statusStrip
-            // 
+            //
             _statusStrip.BackColor = System.Drawing.Color.FromArgb( 30, 38, 44 );
             _statusStrip.Font = new System.Drawing.Font("Segoe UI", 6.75f, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
             _statusStrip.GripMargin = new Padding(0);
@@ -306,25 +306,25 @@ namespace cc.isr.VI.DeviceWinControls
             _statusStrip.SizingGrip = false;
             _statusStrip.TabIndex = 22;
             _statusStrip.Text = "Status Strip";
-            // 
+            //
             // _serviceRequestEnableBitmaskLabel
-            // 
+            //
             _serviceRequestEnableBitmaskLabel.ForeColor = System.Drawing.Color.LightSkyBlue;
             _serviceRequestEnableBitmaskLabel.Name = "_ServiceRequestEnableBitmaskLabel";
             _serviceRequestEnableBitmaskLabel.Size = new System.Drawing.Size(19, 17);
             _serviceRequestEnableBitmaskLabel.Text = "0x..";
             _serviceRequestEnableBitmaskLabel.ToolTipText = "Service Request Enable Bitmask";
-            // 
+            //
             // _standardEventEnableBitmaskLabel
-            // 
+            //
             _standardEventEnableBitmaskLabel.ForeColor = System.Drawing.Color.DarkOrange;
             _standardEventEnableBitmaskLabel.Name = "_StandardEventEnableBitmaskLabel";
             _standardEventEnableBitmaskLabel.Size = new System.Drawing.Size(19, 17);
             _standardEventEnableBitmaskLabel.Text = "0x..";
             _standardEventEnableBitmaskLabel.ToolTipText = "Standard Event Enable Bitmask";
-            // 
+            //
             // _serviceRequestEnabledLabel
-            // 
+            //
             _serviceRequestEnabledLabel.DisplayStyle = ToolStripItemDisplayStyle.Image;
             _serviceRequestEnabledLabel.Font = new System.Drawing.Font("Segoe UI", 8.25f, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
             _serviceRequestEnabledLabel.ForeColor = System.Drawing.Color.LightSkyBlue;
@@ -335,9 +335,9 @@ namespace cc.isr.VI.DeviceWinControls
             _serviceRequestEnabledLabel.Text = "SRE";
             _serviceRequestEnabledLabel.ToolTipText = "Service request is enabled";
             _serviceRequestEnabledLabel.Visible = false;
-            // 
+            //
             // _operationSummaryBitLabel
-            // 
+            //
             _operationSummaryBitLabel.Font = new System.Drawing.Font("Segoe UI", 6.75f, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
             _operationSummaryBitLabel.ForeColor = System.Drawing.Color.LightSkyBlue;
             _operationSummaryBitLabel.Margin = new Padding(0);
@@ -346,9 +346,9 @@ namespace cc.isr.VI.DeviceWinControls
             _operationSummaryBitLabel.Text = "osb";
             _operationSummaryBitLabel.ToolTipText = " Operation Summary Bit (OSB) is on";
             _operationSummaryBitLabel.Visible = false;
-            // 
+            //
             // _serviceRequestBitLabel
-            // 
+            //
             _serviceRequestBitLabel.BackColor = System.Drawing.Color.Transparent;
             _serviceRequestBitLabel.Font = new System.Drawing.Font("Segoe UI", 6.75f, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
             _serviceRequestBitLabel.ForeColor = System.Drawing.Color.LightSkyBlue;
@@ -358,9 +358,9 @@ namespace cc.isr.VI.DeviceWinControls
             _serviceRequestBitLabel.Text = "rqs";
             _serviceRequestBitLabel.ToolTipText = "Request for Service (RQS) bit or the Main Summary Status Bit (MSB) bit is on";
             _serviceRequestBitLabel.Visible = false;
-            // 
+            //
             // _eventSummaryBitLabel
-            // 
+            //
             _eventSummaryBitLabel.Font = new System.Drawing.Font("Segoe UI", 6.75f, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
             _eventSummaryBitLabel.ForeColor = System.Drawing.Color.LightSkyBlue;
             _eventSummaryBitLabel.Margin = new Padding(0);
@@ -369,9 +369,9 @@ namespace cc.isr.VI.DeviceWinControls
             _eventSummaryBitLabel.Text = "esb";
             _eventSummaryBitLabel.ToolTipText = "Event Summary Bit (ESB) is on";
             _eventSummaryBitLabel.Visible = false;
-            // 
+            //
             // _messageAvailableBitLabel
-            // 
+            //
             _messageAvailableBitLabel.BackColor = System.Drawing.Color.Transparent;
             _messageAvailableBitLabel.Font = new System.Drawing.Font("Segoe UI", 6.75f, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
             _messageAvailableBitLabel.ForeColor = System.Drawing.Color.LightSkyBlue;
@@ -381,9 +381,9 @@ namespace cc.isr.VI.DeviceWinControls
             _messageAvailableBitLabel.Text = "mav";
             _messageAvailableBitLabel.ToolTipText = "Message Available Bit (MAV) is on";
             _messageAvailableBitLabel.Visible = false;
-            // 
+            //
             // _questionableSummaryBitLabel
-            // 
+            //
             _questionableSummaryBitLabel.Font = new System.Drawing.Font("Segoe UI", 6.75f, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
             _questionableSummaryBitLabel.ForeColor = System.Drawing.Color.LightSkyBlue;
             _questionableSummaryBitLabel.Margin = new Padding(0);
@@ -392,9 +392,9 @@ namespace cc.isr.VI.DeviceWinControls
             _questionableSummaryBitLabel.Text = "qsb";
             _questionableSummaryBitLabel.ToolTipText = "Questionable Summary Bit (QSB) is on";
             _questionableSummaryBitLabel.Visible = false;
-            // 
+            //
             // _errorAvailableBitLabel
-            // 
+            //
             _errorAvailableBitLabel.BackColor = System.Drawing.Color.Transparent;
             _errorAvailableBitLabel.Font = new System.Drawing.Font("Segoe UI", 6.75f, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
             _errorAvailableBitLabel.ForeColor = System.Drawing.Color.Red;
@@ -404,9 +404,9 @@ namespace cc.isr.VI.DeviceWinControls
             _errorAvailableBitLabel.Text = "Eav";
             _errorAvailableBitLabel.ToolTipText = "Error Available Bit (EAV) is on";
             _errorAvailableBitLabel.Visible = false;
-            // 
+            //
             // _systemEventBitLabel
-            // 
+            //
             _systemEventBitLabel.Font = new System.Drawing.Font("Segoe UI", 6.75f, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
             _systemEventBitLabel.ForeColor = System.Drawing.Color.LightSkyBlue;
             _systemEventBitLabel.Margin = new Padding(0);
@@ -415,9 +415,9 @@ namespace cc.isr.VI.DeviceWinControls
             _systemEventBitLabel.Text = "ssb";
             _systemEventBitLabel.ToolTipText = "System Event Bit (SSB) is on";
             _systemEventBitLabel.Visible = false;
-            // 
+            //
             // _measurementEventBitLabel
-            // 
+            //
             _measurementEventBitLabel.Font = new System.Drawing.Font("Segoe UI", 6.75f, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
             _measurementEventBitLabel.ForeColor = System.Drawing.Color.LightSkyBlue;
             _measurementEventBitLabel.Margin = new Padding(0);
@@ -426,88 +426,88 @@ namespace cc.isr.VI.DeviceWinControls
             _measurementEventBitLabel.Text = "msb";
             _measurementEventBitLabel.ToolTipText = "Measurement Event Bit (MEB) is on";
             _measurementEventBitLabel.Visible = false;
-            // 
+            //
             // _powerOnEventLabel
-            // 
+            //
             _powerOnEventLabel.ForeColor = System.Drawing.Color.DarkOrange;
             _powerOnEventLabel.Name = "_PowerOnEventLabel";
             _powerOnEventLabel.Size = new System.Drawing.Size(22, 17);
             _powerOnEventLabel.Text = "pon";
             _powerOnEventLabel.ToolTipText = "Power on";
             _powerOnEventLabel.Visible = false;
-            // 
+            //
             // _userRequestEventLabel
-            // 
+            //
             _userRequestEventLabel.ForeColor = System.Drawing.Color.DarkOrange;
             _userRequestEventLabel.Name = "_UserRequestEventLabel";
             _userRequestEventLabel.Size = new System.Drawing.Size(20, 17);
             _userRequestEventLabel.Text = "urq";
             _userRequestEventLabel.ToolTipText = "User request ";
             _userRequestEventLabel.Visible = false;
-            // 
+            //
             // _commandErrorEventLabel
-            // 
+            //
             _commandErrorEventLabel.ForeColor = System.Drawing.Color.DarkOrange;
             _commandErrorEventLabel.Name = "_CommandErrorEventLabel";
             _commandErrorEventLabel.Size = new System.Drawing.Size(22, 17);
             _commandErrorEventLabel.Text = "cme";
             _commandErrorEventLabel.ToolTipText = "Command error ";
             _commandErrorEventLabel.Visible = false;
-            // 
+            //
             // _executionErrorEventLabel
-            // 
+            //
             _executionErrorEventLabel.ForeColor = System.Drawing.Color.DarkOrange;
             _executionErrorEventLabel.Name = "_ExecutionErrorEventLabel";
             _executionErrorEventLabel.Size = new System.Drawing.Size(20, 17);
             _executionErrorEventLabel.Text = "exe";
             _executionErrorEventLabel.ToolTipText = "Execution error";
             _executionErrorEventLabel.Visible = false;
-            // 
+            //
             // _deviceDependentErrorEventToolLabel
-            // 
+            //
             _deviceDependentErrorEventToolLabel.ForeColor = System.Drawing.Color.DarkOrange;
             _deviceDependentErrorEventToolLabel.Name = "_DeviceDependentErrorEventToolLabel";
             _deviceDependentErrorEventToolLabel.Size = new System.Drawing.Size(22, 17);
             _deviceDependentErrorEventToolLabel.Text = "dde";
             _deviceDependentErrorEventToolLabel.ToolTipText = "Device dependent error";
             _deviceDependentErrorEventToolLabel.Visible = false;
-            // 
+            //
             // _queryErrorEventLabel
-            // 
+            //
             _queryErrorEventLabel.ForeColor = System.Drawing.Color.DarkOrange;
             _queryErrorEventLabel.Name = "_QueryErrorEventLabel";
             _queryErrorEventLabel.Size = new System.Drawing.Size(21, 17);
             _queryErrorEventLabel.Text = "qye";
             _queryErrorEventLabel.ToolTipText = "Query error";
             _queryErrorEventLabel.Visible = false;
-            // 
+            //
             // _operationCompleteEventLabel
-            // 
+            //
             _operationCompleteEventLabel.ForeColor = System.Drawing.Color.DarkOrange;
             _operationCompleteEventLabel.Name = "_OperationCompleteEventLabel";
             _operationCompleteEventLabel.Size = new System.Drawing.Size(21, 17);
             _operationCompleteEventLabel.Text = "opc";
             _operationCompleteEventLabel.ToolTipText = "Operation complete";
             _operationCompleteEventLabel.Visible = false;
-            // 
+            //
             // _serviceRequestHandledLabel
-            // 
+            //
             _serviceRequestHandledLabel.Image = Properties.Resources.EventHandleGreen16;
             _serviceRequestHandledLabel.Name = "_ServiceRequestHandledLabel";
             _serviceRequestHandledLabel.Size = new System.Drawing.Size(16, 17);
             _serviceRequestHandledLabel.ToolTipText = "Service request handler assigned";
             _serviceRequestHandledLabel.Visible = false;
-            // 
+            //
             // _measurementEventStatusLabel
-            // 
+            //
             _measurementEventStatusLabel.ForeColor = System.Drawing.Color.LightSkyBlue;
             _measurementEventStatusLabel.Name = "_MeasurementEventStatusLabel";
             _measurementEventStatusLabel.Size = new System.Drawing.Size(29, 17);
             _measurementEventStatusLabel.Text = "mes";
             _measurementEventStatusLabel.ToolTipText = "Measurement Event Status";
-            // 
+            //
             // DisplayView
-            // 
+            //
             AutoScaleDimensions = new System.Drawing.SizeF(7.0f, 17.0f);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(_layout);

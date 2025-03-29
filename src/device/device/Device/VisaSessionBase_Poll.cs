@@ -95,7 +95,7 @@ public partial class VisaSessionBase
                     this.PollMessageAvailable = false;
                     this.PollStatusByteErrorBitSet = false;
 
-                    // enable only if service request is not enabled. 
+                    // enable only if service request is not enabled.
                     if ( this.PollTimerInternal is not null && this.Session is not null )
                         this.PollTimerInternal.Enabled = !this.Session.ServiceRequestEventEnabled;
                 }

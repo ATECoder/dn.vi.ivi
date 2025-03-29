@@ -3,15 +3,15 @@ namespace cc.isr.Visa.WinControls
 {
     partial class SimpleWriteRead
     {
-        /// <summary> 
+        /// <summary>
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
         #region " component designer generated code "
 
-        /// <summary> 
-        /// Required method for Designer support - do not modify 
+        /// <summary>
+        /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
@@ -41,9 +41,9 @@ namespace cc.isr.Visa.WinControls
             ((System.ComponentModel.ISupportInitialize)(this.TimeoutNumeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ReadTerminationCharacterNumeric)).BeginInit();
             this.SuspendLayout();
-            // 
+            //
             // UsingTspCheckBox
-            // 
+            //
             this.UsingTspCheckBox.AutoSize = true;
             this.UsingTspCheckBox.Location = new System.Drawing.Point(286, 6);
             this.UsingTspCheckBox.Name = "UsingTspCheckBox";
@@ -52,9 +52,9 @@ namespace cc.isr.Visa.WinControls
             this.UsingTspCheckBox.Text = "TSP";
             this.ToolTip?.SetToolTip(this.UsingTspCheckBox, "Check if using a TSP instrument");
             this.UsingTspCheckBox.UseVisualStyleBackColor = true;
-            // 
+            //
             // ReadStatusByteButton
-            // 
+            //
             this.ReadStatusByteButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.ReadStatusByteButton.Location = new System.Drawing.Point(113, 146);
             this.ReadStatusByteButton.Name = "ReadStatusByteButton";
@@ -64,9 +64,9 @@ namespace cc.isr.Visa.WinControls
             this.ToolTip?.SetToolTip(this.ReadStatusByteButton, "Read the status byte");
             this.ReadStatusByteButton.UseVisualStyleBackColor = true;
             this.ReadStatusByteButton.Click += new System.EventHandler(this.ReadStatusByteButton_Click);
-            // 
+            //
             // MultipleResourcesCheckBox
-            // 
+            //
             this.MultipleResourcesCheckBox.AutoSize = true;
             this.MultipleResourcesCheckBox.Location = new System.Drawing.Point(193, 6);
             this.MultipleResourcesCheckBox.Name = "MultipleResourcesCheckBox";
@@ -76,9 +76,9 @@ namespace cc.isr.Visa.WinControls
             this.ToolTip?.SetToolTip(this.MultipleResourcesCheckBox, "Check to open more than one session");
             this.MultipleResourcesCheckBox.UseVisualStyleBackColor = true;
             this.MultipleResourcesCheckBox.CheckedChanged += new System.EventHandler(this.MultipleResourcesCheckBox_CheckedChanged_1);
-            // 
+            //
             // TimeoutNumeric
-            // 
+            //
             this.TimeoutNumeric.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.TimeoutNumeric.Location = new System.Drawing.Point(324, 31);
             this.TimeoutNumeric.Maximum = new decimal(new int[] {
@@ -96,9 +96,9 @@ namespace cc.isr.Visa.WinControls
             0,
             0});
             this.TimeoutNumeric.ValueChanged += new System.EventHandler(this.TimeoutNumeric_ValueChanged);
-            // 
+            //
             // CloseSessionButton
-            // 
+            //
             this.CloseSessionButton.Location = new System.Drawing.Point(95, 3);
             this.CloseSessionButton.Name = "CloseSessionButton";
             this.CloseSessionButton.Size = new System.Drawing.Size(92, 25);
@@ -106,9 +106,9 @@ namespace cc.isr.Visa.WinControls
             this.CloseSessionButton.Text = "&Close Session";
             this.ToolTip?.SetToolTip(this.CloseSessionButton, "Closes the open session(s)");
             this.CloseSessionButton.Click += new System.EventHandler(this.CloseSessionButton_Click);
-            // 
+            //
             // OpenSessionButton
-            // 
+            //
             this.OpenSessionButton.Location = new System.Drawing.Point(3, 3);
             this.OpenSessionButton.Name = "OpenSessionButton";
             this.OpenSessionButton.Size = new System.Drawing.Size(92, 25);
@@ -116,9 +116,9 @@ namespace cc.isr.Visa.WinControls
             this.OpenSessionButton.Text = "&Open Session";
             this.ToolTip?.SetToolTip(this.OpenSessionButton, "Selects a resource name or resource names and opens and VISA session(s)");
             this.OpenSessionButton.Click += new System.EventHandler(this.OpenSessionButton_Click);
-            // 
+            //
             // TimeoutNumericLabel
-            // 
+            //
             this.TimeoutNumericLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.TimeoutNumericLabel.AutoSize = true;
             this.TimeoutNumericLabel.Location = new System.Drawing.Point(272, 35);
@@ -126,9 +126,9 @@ namespace cc.isr.Visa.WinControls
             this.TimeoutNumericLabel.Size = new System.Drawing.Size(49, 15);
             this.TimeoutNumericLabel.TabIndex = 7;
             this.TimeoutNumericLabel.Text = "T/O ms:";
-            // 
+            //
             // ReadTerminationCharacterNumeric
-            // 
+            //
             this.ReadTerminationCharacterNumeric.Location = new System.Drawing.Point(134, 31);
             this.ReadTerminationCharacterNumeric.Maximum = new decimal(new int[] {
             255,
@@ -144,28 +144,28 @@ namespace cc.isr.Visa.WinControls
             0,
             0});
             this.ReadTerminationCharacterNumeric.ValueChanged += new System.EventHandler(this.ReadTerminationCharacterNumeric_ValueChanged);
-            // 
+            //
             // ReadTerminationCharacterNumericLabel
-            // 
+            //
             this.ReadTerminationCharacterNumericLabel.AutoSize = true;
             this.ReadTerminationCharacterNumericLabel.Location = new System.Drawing.Point(3, 35);
             this.ReadTerminationCharacterNumericLabel.Name = "ReadTerminationCharacterNumericLabel";
             this.ReadTerminationCharacterNumericLabel.Size = new System.Drawing.Size(128, 15);
             this.ReadTerminationCharacterNumericLabel.TabIndex = 4;
             this.ReadTerminationCharacterNumericLabel.Text = "Read Termination Byte:";
-            // 
+            //
             // ResourceNamesComboBoxLabel
-            // 
+            //
             this.ResourceNamesComboBoxLabel.AutoSize = true;
             this.ResourceNamesComboBoxLabel.Location = new System.Drawing.Point(3, 55);
             this.ResourceNamesComboBoxLabel.Name = "ResourceNamesComboBoxLabel";
             this.ResourceNamesComboBoxLabel.Size = new System.Drawing.Size(129, 15);
             this.ResourceNamesComboBoxLabel.TabIndex = 9;
             this.ResourceNamesComboBoxLabel.Text = "Active Resource Name:";
-            // 
+            //
             // ResourceNamesComboBox
-            // 
-            this.ResourceNamesComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.ResourceNamesComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ResourceNamesComboBox.FormattingEnabled = true;
             this.ResourceNamesComboBox.Location = new System.Drawing.Point(3, 73);
@@ -173,27 +173,27 @@ namespace cc.isr.Visa.WinControls
             this.ResourceNamesComboBox.Size = new System.Drawing.Size(372, 23);
             this.ResourceNamesComboBox.TabIndex = 10;
             this.ResourceNamesComboBox.SelectedIndexChanged += new System.EventHandler(this.ResourceNamesComboBox_SelectedIndexChanged);
-            // 
+            //
             // ReadTextBoxLabel
-            // 
+            //
             this.ReadTextBoxLabel.AutoSize = true;
             this.ReadTextBoxLabel.Location = new System.Drawing.Point(4, 158);
             this.ReadTextBoxLabel.Name = "ReadTextBoxLabel";
             this.ReadTextBoxLabel.Size = new System.Drawing.Size(57, 15);
             this.ReadTextBoxLabel.TabIndex = 18;
             this.ReadTextBoxLabel.Text = "Received:";
-            // 
+            //
             // WriteTextBoxLabel
-            // 
+            //
             this.WriteTextBoxLabel.AutoSize = true;
             this.WriteTextBoxLabel.Location = new System.Drawing.Point(3, 100);
             this.WriteTextBoxLabel.Name = "WriteTextBoxLabel";
             this.WriteTextBoxLabel.Size = new System.Drawing.Size(194, 15);
             this.WriteTextBoxLabel.TabIndex = 11;
             this.WriteTextBoxLabel.Text = "Message to write to the instrument:";
-            // 
+            //
             // ClearButton
-            // 
+            //
             this.ClearButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.ClearButton.Location = new System.Drawing.Point(327, 146);
             this.ClearButton.Name = "ClearButton";
@@ -201,11 +201,11 @@ namespace cc.isr.Visa.WinControls
             this.ClearButton.TabIndex = 17;
             this.ClearButton.Text = "C&lear";
             this.ClearButton.Click += new System.EventHandler(this.ClearButton_Click);
-            // 
+            //
             // ReadTextBox
-            // 
-            this.ReadTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.ReadTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ReadTextBox.Location = new System.Drawing.Point(3, 176);
             this.ReadTextBox.Multiline = true;
@@ -215,19 +215,19 @@ namespace cc.isr.Visa.WinControls
             this.ReadTextBox.Size = new System.Drawing.Size(372, 219);
             this.ReadTextBox.TabIndex = 1;
             this.ReadTextBox.TabStop = false;
-            // 
+            //
             // WriteTextBox
-            // 
-            this.WriteTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.WriteTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.WriteTextBox.Location = new System.Drawing.Point(3, 118);
             this.WriteTextBox.Name = "WriteTextBox";
             this.WriteTextBox.Size = new System.Drawing.Size(372, 23);
             this.WriteTextBox.TabIndex = 12;
             this.WriteTextBox.Text = "*IDN?\\n";
-            // 
+            //
             // ReadButton
-            // 
+            //
             this.ReadButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.ReadButton.Location = new System.Drawing.Point(274, 146);
             this.ReadButton.Name = "ReadButton";
@@ -235,9 +235,9 @@ namespace cc.isr.Visa.WinControls
             this.ReadButton.TabIndex = 16;
             this.ReadButton.Text = "&Read";
             this.ReadButton.Click += new System.EventHandler(this.ReadButton_Click);
-            // 
+            //
             // WriteButton
-            // 
+            //
             this.WriteButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.WriteButton.Location = new System.Drawing.Point(221, 146);
             this.WriteButton.Name = "WriteButton";
@@ -245,9 +245,9 @@ namespace cc.isr.Visa.WinControls
             this.WriteButton.TabIndex = 15;
             this.WriteButton.Text = "&Write";
             this.WriteButton.Click += new System.EventHandler(this.WriteButton_Click);
-            // 
+            //
             // QueryButton
-            // 
+            //
             this.QueryButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.QueryButton.Location = new System.Drawing.Point(166, 146);
             this.QueryButton.Name = "QueryButton";
@@ -255,9 +255,9 @@ namespace cc.isr.Visa.WinControls
             this.QueryButton.TabIndex = 14;
             this.QueryButton.Text = "&Query";
             this.QueryButton.Click += new System.EventHandler(this.QueryButton_Click);
-            // 
+            //
             // ReadTerminationEnabledCheckBox
-            // 
+            //
             this.ReadTerminationEnabledCheckBox.AutoSize = true;
             this.ReadTerminationEnabledCheckBox.Checked = true;
             this.ReadTerminationEnabledCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
@@ -268,9 +268,9 @@ namespace cc.isr.Visa.WinControls
             this.ReadTerminationEnabledCheckBox.Text = "&Enabled";
             this.ReadTerminationEnabledCheckBox.UseVisualStyleBackColor = true;
             this.ReadTerminationEnabledCheckBox.CheckedChanged += new System.EventHandler(this.ReadTerminationEnabledCheckBox_CheckedChanged);
-            // 
+            //
             // SimpleWriteRead
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.UsingTspCheckBox);

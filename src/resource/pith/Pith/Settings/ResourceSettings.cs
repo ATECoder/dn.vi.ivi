@@ -19,7 +19,7 @@ public class ResourceSettings() : CommunityToolkit.Mvvm.ComponentModel.Observabl
     /// fetched from the settings file.
     /// </summary>
     /// <value> True if this settings section exists in the settings file, false if not. </value>
-	[Description( "True if this settings section exists and was read from the JSon settings file." )]
+    [Description( "True if this settings section exists and was read from the JSon settings file." )]
     public bool Exists
     {
         get => this._exists;
@@ -34,7 +34,7 @@ public class ResourceSettings() : CommunityToolkit.Mvvm.ComponentModel.Observabl
 
     /// <summary>   Gets or sets the name of the resource. </summary>
     /// <value> The name of the resource. </value>
-	[Description( "The instrument VISA resource name" )]
+    [Description( "The instrument VISA resource name" )]
     public string ResourceName
     {
         get => this._resourceName;
@@ -52,7 +52,7 @@ public class ResourceSettings() : CommunityToolkit.Mvvm.ComponentModel.Observabl
 
     /// <summary>   Gets or sets the resource model that is associated with the specified resource name. </summary>
     /// <value> The resource model. </value>
-	[Description( "The the resource models that is associated with the specified resource name [2601A]" )]
+    [Description( "The the resource models that is associated with the specified resource name [2601A]" )]
     public virtual string ResourceModel
     {
         get => this._resourceModel;
@@ -63,7 +63,7 @@ public class ResourceSettings() : CommunityToolkit.Mvvm.ComponentModel.Observabl
 
     /// <summary>   Gets or sets the closed caption. </summary>
     /// <value> The closed caption. </value>
-	[Description( "The caption to display when the resource is closed" )]
+    [Description( "The caption to display when the resource is closed" )]
     public string ClosedCaption
     {
         get => this._closedCaption;
@@ -74,7 +74,7 @@ public class ResourceSettings() : CommunityToolkit.Mvvm.ComponentModel.Observabl
 
     /// <summary>   Gets or sets the resource name selection timeout. </summary>
     /// <value> The resource name selection timeout. </value>
-	[Description( "Specifies the time to wait when selecting a resource name [10s]" )]
+    [Description( "Specifies the time to wait when selecting a resource name [10s]" )]
     public TimeSpan ResourceNameSelectionTimeout
     {
         get => this._resourceNameSelectionTimeout;
@@ -89,7 +89,7 @@ public class ResourceSettings() : CommunityToolkit.Mvvm.ComponentModel.Observabl
 
     /// <summary> Gets or sets the language. </summary>
     /// <value> The language. </value>
-	[Description( "The instrument language model either SCPI or TSP [SCPI]" )]
+    [Description( "The instrument language model either SCPI or TSP [SCPI]" )]
     public virtual string Language
     {
         get => this._language;
@@ -100,7 +100,7 @@ public class ResourceSettings() : CommunityToolkit.Mvvm.ComponentModel.Observabl
 
     /// <summary> Gets or sets the firmware revision. </summary>
     /// <value> The firmware revision. </value>
-	[Description( "The firmware revision associated with this resource model [2.2.6]" )]
+    [Description( "The firmware revision associated with this resource model [2.2.6]" )]
     public virtual string FirmwareRevision
     {
         get => this._firmwareRevision;
@@ -115,7 +115,7 @@ public class ResourceSettings() : CommunityToolkit.Mvvm.ComponentModel.Observabl
 
     /// <summary>   Gets or sets the ping timeout. </summary>
     /// <value> The ping timeout. </value>
-	[Description( "The time to allow for ping results to come back [sms]" )]
+    [Description( "The time to allow for ping results to come back [sms]" )]
     public TimeSpan PingTimeout
     {
         get => this._pingTimeout;
@@ -126,7 +126,7 @@ public class ResourceSettings() : CommunityToolkit.Mvvm.ComponentModel.Observabl
 
     /// <summary>   Gets or sets the PingHops. </summary>
     /// <value> The PingHops. </value>
-	[Description( "The number of hops to set when pinging an instrument [1]" )]
+    [Description( "The number of hops to set when pinging an instrument [1]" )]
     public int PingHops
     {
         get => this._pingHops;
@@ -151,7 +151,7 @@ public class ResourceSettings() : CommunityToolkit.Mvvm.ComponentModel.Observabl
 
     /// <summary> Gets the resource pinged. </summary>
     /// <value> The resource pinged. </value>
-	public virtual bool ResourcePinged
+    public virtual bool ResourcePinged
     {
         get
         {

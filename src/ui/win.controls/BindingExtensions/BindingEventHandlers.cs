@@ -17,7 +17,7 @@ public static class BindingEventHandlers
     internal static ConvertEventHandler DisplayX2EventHandler = ( sender, e ) => e.Value = _hexFormatProvider.Format( ( int ) e.Value! );
 
     /// <summary> The display register event handler. </summary>
-    // this works: 
+    // this works:
     // e.Value = Pith.RegisterValueFormatProvider.Format(Pith.RegisterValueFormatProvider.DefaultFormatString,
     // Pith.RegisterValueFormatProvider.DefaultNullValueCaption,
     // e.Value)

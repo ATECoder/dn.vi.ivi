@@ -55,7 +55,7 @@ public abstract partial class SessionBase : CommunityToolkit.Mvvm.ComponentModel
     public void Dispose()
     {
         this.Dispose( true );
-        // Take this object off the finalization(Queue) and prevent finalization code 
+        // Take this object off the finalization(Queue) and prevent finalization code
         // from executing a second time.
         GC.SuppressFinalize( this );
     }
@@ -620,7 +620,7 @@ public abstract partial class SessionBase : CommunityToolkit.Mvvm.ComponentModel
     /// <remarks>   2024-09-04. </remarks>
     /// <param name="message">          The message. </param>
     /// <param name="memberName">       (Optional) Name of the member. </param>
-    /// <param name="sourcePath">       (Optional) Full pathname of the source file. </param>
+    /// <param name="sourcePath">       (Optional) full path name of the source file. </param>
     /// <param name="sourceLineNumber"> (Optional) Source line number. </param>
     /// <returns>   A string. </returns>
     public static string BuildCallerMemberMessage( string message,
@@ -635,7 +635,7 @@ public abstract partial class SessionBase : CommunityToolkit.Mvvm.ComponentModel
     /// <remarks>   2024-09-04. </remarks>
     /// <param name="message">          The message. </param>
     /// <param name="memberName">       (Optional) Name of the member. </param>
-    /// <param name="sourcePath">       (Optional) Full pathname of the source file. </param>
+    /// <param name="sourcePath">       (Optional) full path name of the source file. </param>
     /// <param name="sourceLineNumber"> (Optional) Source line number. </param>
     public void SetLastAction( string message,
         [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
@@ -659,7 +659,7 @@ public abstract partial class SessionBase : CommunityToolkit.Mvvm.ComponentModel
     /// <remarks>   2024-09-04. </remarks>
     /// <param name="message">          The detailed message. </param>
     /// <param name="memberName">       (Optional) Name of the member. </param>
-    /// <param name="sourcePath">       (Optional) Full pathname of the source file. </param>
+    /// <param name="sourcePath">       (Optional) full path name of the source file. </param>
     /// <param name="sourceLineNumber"> (Optional) Source line number. </param>
     public void SetLastActionDetails( string message,
         [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",

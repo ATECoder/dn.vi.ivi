@@ -102,7 +102,7 @@ public abstract class ReadingAmounts
         }
         else if ( values.Count < this.Readings.Count )
         {
-            // if the queue has fewer values than expected, reset to 
+            // if the queue has fewer values than expected, reset to
             // indicate that the value is invalid
             this.Reset();
             this.RawReading = Empty;

@@ -426,7 +426,7 @@ Write *ESE 255{this.Termination} if opening a stand alone VISA Session";
 
     #region " read and write "
 
-    /// <summary> Reads the status register and handle any errors if 
+    /// <summary> Reads the status register and handle any errors if
     ///           the service request enable bits are set. </summary>
     public void ReadStatusRegister()
     {

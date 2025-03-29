@@ -63,7 +63,7 @@ public abstract partial class SessionBase
 
     /// <summary> Gets or sets the 'Next Error' query command. </summary>
     /// <remarks>
-    /// SCPI: ":STAT:QUE?" <para> 
+    /// SCPI: ":STAT:QUE?" <para>
     /// <c>_G.print(string.format('%d,%s,level=%d',_G.errorqueue.next()))</c> </para><para>
     /// <c>_G.print(string.format('%d,%s,level=%d',_G.eventlog.next(eventlog.SEV_ERROR)))</c> </para>
     /// <see cref="VI.Syntax.ScpiSyntax.NextErrorQueryCommand"> </see>
@@ -252,7 +252,7 @@ public abstract partial class SessionBase
     /// 2024-09-02. <para>
     /// The errors are stored in <see cref="DeviceErrorQueue"/>
     /// and the error messages are accumulated in <see cref="DeviceErrorBuilder"/> and in the <see cref="SessionBase.DeviceErrorReport"/>.
-    /// 
+    ///
     /// <para>
     /// Use <see cref="QueryAndReportDeviceErrors"/> or <see cref="TryQueryAndReportDeviceErrors"/>
     /// to create the <see cref="SessionBase.DeviceErrorReport"/> and standardEventRegisterDetails
@@ -288,8 +288,8 @@ public abstract partial class SessionBase
             _ = cc.isr.VI.SessionLogger.Instance.LogWarning(
                 $"{this.ResourceNameCaption} the following messages '{this.DiscardedData}' were discarded before reading the device errors." );
 
-            // Developer: This is a bug and run condition; 
-            // On reading the status register, the Session Base class is expected to turn off 
+            // Developer: This is a bug and run condition;
+            // On reading the status register, the Session Base class is expected to turn off
             // the error available flag if an message is present in the presence of an error.
             // Please check if a run condition had occurred causing the message to appear after the status
             // register was read as indicating that no such message existed.

@@ -21,7 +21,7 @@ public sealed partial class Asserts
         string payload = "Device message";
         _ = cc.isr.VI.SessionLogger.Instance.LogWarning( payload );
 
-        // with the new talker, the device identifies the following libraries: 
+        // with the new talker, the device identifies the following libraries:
         // 0x0100 core agnostic; 0x01006 vi device and 0x01026 Keithley Meter
         // so these test looks for the first warning
         int fetchNumber = 0;

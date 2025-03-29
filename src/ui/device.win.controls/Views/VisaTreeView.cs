@@ -127,7 +127,7 @@ public partial class VisaTreeView : cc.isr.WinControls.ModelViewLoggerBase, IVis
     {
         if ( this.VisaSessionBase is not null )
         {
-            // this might remove listeners belonging to the assigned talker. 
+            // this might remove listeners belonging to the assigned talker.
             // If Me.VisaSessionBase.Talker IsNot Nothing Then Me.VisaSessionBase.Talker.RemoveListeners()
             this.VisaSessionBase.Opening -= this.HandleDeviceOpening;
             this.VisaSessionBase.Opened -= this.HandleDeviceOpened;

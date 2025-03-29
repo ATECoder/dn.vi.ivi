@@ -144,7 +144,7 @@ public abstract class StatusSubsystemBase( Pith.SessionBase session ) : VI.Statu
     {
         if ( (value & ( int ) OperationEventBits.UserRegister) != 0 )
         {
-            // if enabling the user register, enable all events on the user register. 
+            // if enabling the user register, enable all events on the user register.
             value = 0x4FFF;
         }
 

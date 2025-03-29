@@ -244,16 +244,16 @@ public abstract class FirmwareScriptBase
     /// <value> The released firmware version. </value>
     public string ReleasedFirmwareVersion { get; set; }
 
-    /// <summary>   Gets or sets the full pathname of the folder. </summary>
-    /// <value> The full pathname of the folder. </value>
+    /// <summary>   Gets or sets the full path name of the folder. </summary>
+    /// <value> The full path name of the folder. </value>
     public string FolderPath { get; set; }
 
     /// <summary>   Gets or sets the filename of the script. </summary>
     /// <value> The name of the script file. </value>
     public string FileName { get; set; }
 
-    /// <summary>   Gets the full pathname of the file. </summary>
-    /// <value> The full pathname of the file. </value>
+    /// <summary>   Gets the full path name of the file. </summary>
+    /// <value> The full path name of the file. </value>
     public string FilePath => Path.Combine( this.FolderPath, this.FileName );
 
     /// <summary>
@@ -264,8 +264,8 @@ public abstract class FirmwareScriptBase
     /// <value> The filename of the resource file. </value>
     public string ResourceFileName { get; set; }
 
-    /// <summary>   Gets the full pathname of the resource file. </summary>
-    /// <value> The full pathname of the resource file. </value>
+    /// <summary>   Gets the full path name of the resource file. </summary>
+    /// <value> The full path name of the resource file. </value>
     public string ResourceFilePath => Path.Combine( this.FolderPath, this.ResourceFileName );
 
     /// <summary>
@@ -616,7 +616,7 @@ public abstract class FirmwareScriptBase
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>
     /// <exception cref="FileNotFoundException">    Thrown when the requested file is not present. </exception>
-    /// <param name="scriptsFolderPath">    Full pathname of the scripts folder file. </param>
+    /// <param name="scriptsFolderPath">    full path name of the scripts folder file. </param>
     public void ReadSource( string scriptsFolderPath )
     {
         if ( string.IsNullOrWhiteSpace( scriptsFolderPath ) ) throw new ArgumentNullException( nameof( scriptsFolderPath ) );

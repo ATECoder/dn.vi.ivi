@@ -24,7 +24,7 @@ public class TtmSessionSettings : CommunityToolkit.Mvvm.ComponentModel.Observabl
     /// fetched from the settings file.
     /// </summary>
     /// <value> True if this settings section exists in the settings file, false if not. </value>
-	[Description( "True if this settings section exists and was read from the JSon settings file." )]
+    [Description( "True if this settings section exists and was read from the JSon settings file." )]
     public bool Exists
     {
         get => this._exists;
@@ -39,7 +39,7 @@ public class TtmSessionSettings : CommunityToolkit.Mvvm.ComponentModel.Observabl
 
     /// <summary>   Gets or sets the session message notification modes. </summary>
     /// <value> The session message notification modes. </value>
-	[Description( "Specifies the modes of session notification, e.g., none or message received, sent or both [None; 0]" )]
+    [Description( "Specifies the modes of session notification, e.g., none or message received, sent or both [None; 0]" )]
     public MessageNotificationModes SessionMessageNotificationModes
     {
         get => this._sessionMessageNotificationModes;
@@ -50,7 +50,7 @@ public class TtmSessionSettings : CommunityToolkit.Mvvm.ComponentModel.Observabl
 
     /// <summary>   Gets or sets the trace log level. </summary>
     /// <value> The trace log level. </value>
-	[Description( "Specifies the trace level [Information; 8]" )]
+    [Description( "Specifies the trace level [Information; 8]" )]
     public System.Diagnostics.TraceEventType TraceLogLevel
     {
         get => this._traceLogLevel;
@@ -61,7 +61,7 @@ public class TtmSessionSettings : CommunityToolkit.Mvvm.ComponentModel.Observabl
 
     /// <summary>   Gets or sets the trace Show level. </summary>
     /// <value> The trace Show level. </value>
-	[Description( "Specifies the trace show level [Information; 8]" )]
+    [Description( "Specifies the trace show level [Information; 8]" )]
     public System.Diagnostics.TraceEventType TraceShowLevel
     {
         get => this._traceShowLevel;
@@ -72,7 +72,7 @@ public class TtmSessionSettings : CommunityToolkit.Mvvm.ComponentModel.Observabl
 
     /// <summary>   Gets or sets a value indicating whether the device is enabled. </summary>
     /// <value> True if device enabled, false if not. </value>
-	[Description( "True if the device is enabled [true]" )]
+    [Description( "True if the device is enabled [true]" )]
     public bool DeviceEnabled
     {
         get => this._deviceEnabled;
@@ -83,7 +83,7 @@ public class TtmSessionSettings : CommunityToolkit.Mvvm.ComponentModel.Observabl
 
     /// <summary>   Gets or sets the name of the resource. </summary>
     /// <value> The name of the resource. </value>
-	[Description( "Specified the resource name [TCPIP0::192.168.0.150::inst0::INSTR]" )]
+    [Description( "Specified the resource name [TCPIP0::192.168.0.150::inst0::INSTR]" )]
     public string ResourceName
     {
         get => this._resourceName;

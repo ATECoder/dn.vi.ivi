@@ -22,7 +22,7 @@ namespace NI.SimpleReadWrite
         }
 
         // NOTE: The following procedure is required by the Windows Form Designer
-        // It can be modified using the Windows Form Designer.  
+        // It can be modified using the Windows Form Designer.
         // Do not modify it using the code editor.
         [DebuggerStepThrough()]
         private void InitializeComponent()
@@ -36,9 +36,9 @@ namespace NI.SimpleReadWrite
             this.AddResourceNameButton = new System.Windows.Forms.Button();
             this.RemoveResourceNameButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            // 
+            //
             // _resourceStringsListBoxLabel
-            // 
+            //
             this._resourceStringsListBoxLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this._resourceStringsListBoxLabel.AutoSize = true;
             this._resourceStringsListBoxLabel.Location = new System.Drawing.Point(1, 188);
@@ -46,18 +46,18 @@ namespace NI.SimpleReadWrite
             this._resourceStringsListBoxLabel.Size = new System.Drawing.Size(97, 15);
             this._resourceStringsListBoxLabel.TabIndex = 12;
             this._resourceStringsListBoxLabel.Text = "Resource Strings:";
-            // 
+            //
             // _availableResourcesListBoxLabel
-            // 
+            //
             this._availableResourcesListBoxLabel.AutoSize = true;
             this._availableResourcesListBoxLabel.Location = new System.Drawing.Point(1, 5);
             this._availableResourcesListBoxLabel.Name = "_availableResourcesListBoxLabel";
             this._availableResourcesListBoxLabel.Size = new System.Drawing.Size(114, 15);
             this._availableResourcesListBoxLabel.TabIndex = 11;
             this._availableResourcesListBoxLabel.Text = "Available Resources:";
-            // 
+            //
             // CloseButton
-            // 
+            //
             this.CloseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.CloseButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.CloseButton.Location = new System.Drawing.Point(248, 308);
@@ -65,9 +65,9 @@ namespace NI.SimpleReadWrite
             this.CloseButton.Size = new System.Drawing.Size(77, 29);
             this.CloseButton.TabIndex = 9;
             this.CloseButton.Text = "Cancel";
-            // 
+            //
             // OkButton
-            // 
+            //
             this.OkButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.OkButton.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.OkButton.Location = new System.Drawing.Point(167, 308);
@@ -75,11 +75,11 @@ namespace NI.SimpleReadWrite
             this.OkButton.Size = new System.Drawing.Size(77, 29);
             this.OkButton.TabIndex = 8;
             this.OkButton.Text = "OK";
-            // 
+            //
             // _availableResourcesListBox
-            // 
-            this.AvailableResourceNamesListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.AvailableResourceNamesListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.AvailableResourceNamesListBox.ItemHeight = 15;
             this.AvailableResourceNamesListBox.Location = new System.Drawing.Point(5, 20);
@@ -87,11 +87,11 @@ namespace NI.SimpleReadWrite
             this.AvailableResourceNamesListBox.Size = new System.Drawing.Size(324, 154);
             this.AvailableResourceNamesListBox.TabIndex = 7;
             this.AvailableResourceNamesListBox.DoubleClick += new System.EventHandler(this.AddResourceNameButton_Click);
-            // 
+            //
             // SelectedResourceNamesListBox
-            // 
-            this.SelectedResourceNamesListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.SelectedResourceNamesListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.SelectedResourceNamesListBox.FormattingEnabled = true;
             this.SelectedResourceNamesListBox.ItemHeight = 15;
@@ -100,9 +100,9 @@ namespace NI.SimpleReadWrite
             this.SelectedResourceNamesListBox.Size = new System.Drawing.Size(324, 94);
             this.SelectedResourceNamesListBox.TabIndex = 13;
             this.SelectedResourceNamesListBox.DoubleClick += new System.EventHandler(this.RemoveResourceNameButton_Click);
-            // 
+            //
             // AddResourceNameButton
-            // 
+            //
             this.AddResourceNameButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.AddResourceNameButton.Location = new System.Drawing.Point(5, 308);
             this.AddResourceNameButton.Name = "AddResourceNameButton";
@@ -111,9 +111,9 @@ namespace NI.SimpleReadWrite
             this.AddResourceNameButton.Text = "Add";
             this.AddResourceNameButton.UseVisualStyleBackColor = true;
             this.AddResourceNameButton.Click += new System.EventHandler(this.AddResourceNameButton_Click);
-            // 
+            //
             // RemoveResourceNameButton
-            // 
+            //
             this.RemoveResourceNameButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.RemoveResourceNameButton.Location = new System.Drawing.Point(64, 308);
             this.RemoveResourceNameButton.Name = "RemoveResourceNameButton";
@@ -122,9 +122,9 @@ namespace NI.SimpleReadWrite
             this.RemoveResourceNameButton.Text = "Remove";
             this.RemoveResourceNameButton.UseVisualStyleBackColor = true;
             this.RemoveResourceNameButton.Click += new System.EventHandler(this.RemoveResourceNameButton_Click);
-            // 
+            //
             // SelectResources
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(331, 343);

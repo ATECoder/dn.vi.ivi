@@ -985,7 +985,7 @@ internal static partial class Asserts
         command = $"_G.ttm.tr:pointsSetter({expectedInt})";
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedInt, logEnabled );
 
-        // get the max read estimate 
+        // get the max read estimate
         // set the max
         query = MeterSubsystem.LegacyFirmware
             ? "_G.print(string.format('%9.6f',_G.isr.devices.k2600.estimateMinPeriod(_G.ttm.tr.aperture)))"

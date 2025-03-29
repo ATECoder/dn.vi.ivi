@@ -991,7 +991,7 @@ public class ThermalTransientMeasure : MeasureSubsystemBase
 
             while ( !done )
             {
-                // check if we have data in the output buffer.  
+                // check if we have data in the output buffer.
                 _ = SessionBase.AsyncDelay( this.Session.ReadAfterWriteDelay + this.Session.StatusReadDelay );
                 ServiceRequests statusByte = this.Session.AwaitErrorOrMessageAvailableBits( TimeSpan.FromMilliseconds( 1d ), 3 );
                 this.Session.ThrowDeviceExceptionIfError( statusByte );

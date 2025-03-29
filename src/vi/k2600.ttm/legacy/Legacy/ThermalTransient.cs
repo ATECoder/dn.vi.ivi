@@ -6,7 +6,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Legacy;
 /// <summary> Defines a measured thermal transient resistance and voltage. </summary>
 /// <remarks>
 /// (c) 2009 Integrated Scientific Resources, Inc. All rights reserved. <para>
-/// Licensed under The MIT License. </para><para>  
+/// Licensed under The MIT License. </para><para>
 /// David, 2009-02-02, 2.1.3320.x. </para><para>
 /// David, 2013-08-05, 3.0.3053.x. </para>
 /// </remarks>

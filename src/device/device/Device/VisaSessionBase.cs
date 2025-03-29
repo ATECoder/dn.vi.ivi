@@ -87,7 +87,7 @@ public abstract partial class VisaSessionBase : IDisposable
     public void Dispose()
     {
         this.Dispose( true );
-        // Take this object off the finalization(Queue) and prevent finalization code 
+        // Take this object off the finalization(Queue) and prevent finalization code
         // from executing a second time.
         GC.SuppressFinalize( this );
     }
@@ -450,8 +450,8 @@ public abstract partial class VisaSessionBase : IDisposable
             {
                 this.Session.Dispose();
                 // release the session
-                // Trying to null the session raises an ObjectDisposedException 
-                // if session service request handler was not released. 
+                // Trying to null the session raises an ObjectDisposedException
+                // if session service request handler was not released.
                 this.Session = null;
             }
         }

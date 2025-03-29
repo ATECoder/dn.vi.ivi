@@ -744,7 +744,7 @@ public partial class BufferStreamView : cc.isr.WinControls.ModelViewBase
 
             default:
                 break;
-                // ?? this causes a cross thread exception. 
+                // ?? this causes a cross thread exception.
                 // Me._triggerStateLabel.Invalidate()
         }
     }
@@ -1326,8 +1326,8 @@ public partial class BufferStreamView : cc.isr.WinControls.ModelViewBase
         int failOutputValue = this.Settings.FailBitmask;
         int overflowOutputValue = this.Settings.OverflowBitmask;
 
-        // sets the expected duration of the binning probe, which is used to wait before 
-        // enabling the next measurement cycle. 
+        // sets the expected duration of the binning probe, which is used to wait before
+        // enabling the next measurement cycle.
         this.BinningSubsystem.BinningStrobeDuration = TimeSpan.FromMilliseconds( this.Settings.BinningStrobeDuration );
         _ = this.BinningSubsystem.ApplyPassSource( passOutputValue );
 

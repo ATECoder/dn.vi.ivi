@@ -613,7 +613,7 @@ public partial class BufferStreamMonitorView : cc.isr.WinControls.ModelViewBase
 
             default:
                 break;
-                // ?? this causes a cross thread exception. 
+                // ?? this causes a cross thread exception.
                 // Me._triggerStateLabel.Invalidate()
         }
     }
@@ -1114,8 +1114,8 @@ public partial class BufferStreamMonitorView : cc.isr.WinControls.ModelViewBase
             activity = $"{this.Device.ResourceNameCaption} Turning on measurement events";
             _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"{activity};. " );
             _ = this.Device.StatusSubsystemBase?.ApplyMeasurementEventEnableBitmask( 0x7FFF );
-            // 
-            // if handling buffer full, use the 4917 event to detect buffer full. 
+            //
+            // if handling buffer full, use the 4917 event to detect buffer full.
 
             activity = $"{this.Device.ResourceNameCaption} Turning on status service request";
             _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"{activity};. " );

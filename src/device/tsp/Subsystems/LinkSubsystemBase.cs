@@ -29,7 +29,7 @@ public abstract class LinkSubsystemBase( LinkStatusSubsystem statusSubsystem ) :
         this.UsingTspLink = false;
         if ( this.IsControllerNode )
         {
-            // establish the current node as the controller node. 
+            // establish the current node as the controller node.
             this.InitiateControllerNode();
         }
     }
@@ -800,7 +800,7 @@ public abstract class LinkSubsystemBase( LinkStatusSubsystem statusSubsystem ) :
         _ = SessionBase.AsyncDelay( this.Session.ReadAfterWriteDelay + this.Session.StatusReadDelay );
 
         // old code:
-        // if ( this.TspLinkResetTimeout > TimeSpan.Zero ) 
+        // if ( this.TspLinkResetTimeout > TimeSpan.Zero )
         // this.Session.ThrowDeviceErrorIfError( this.Session.AwaitOperation Completion( this.TspLinkResetTimeout ).Status );
 
         this.Session.SetLastAction( "resetting the node" );

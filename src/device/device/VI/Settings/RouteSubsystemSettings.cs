@@ -9,7 +9,7 @@ namespace cc.isr.VI.Settings;
 /// David, 2018-02-12 </para>
 /// </remarks>
 [CLSCompliant( false )]
-public class RouteSubsystemSettings() : INotifyPropertyChanged
+public class RouteSubsystemSettings() : System.ComponentModel.INotifyPropertyChanged
 {
     #region " notify property change implementation "
 
@@ -109,7 +109,7 @@ public class RouteSubsystemSettings() : INotifyPropertyChanged
     /// fetched from the settings file.
     /// </summary>
     /// <value> True if this settings section exists in the settings file, false if not. </value>
-	[Description( "True if this settings section exists and was read from the JSon settings file." )]
+    [Description( "True if this settings section exists and was read from the JSon settings file." )]
     public bool Exists
     {
         get => this._exists;
@@ -124,7 +124,7 @@ public class RouteSubsystemSettings() : INotifyPropertyChanged
 
     /// <summary> Gets or sets the initial closed channels. </summary>
     /// <value> The initial closed channels. </value>
-	public virtual string InitialClosedChannels
+    public virtual string InitialClosedChannels
     {
         get => this._initialClosedChannels;
         set => _ = this.SetProperty( ref this._initialClosedChannels, value );
@@ -134,7 +134,7 @@ public class RouteSubsystemSettings() : INotifyPropertyChanged
 
     /// <summary> Gets or sets the Initial scan list settings. </summary>
     /// <value> The initial scan list settings. </value>
-	public virtual string InitialScanList
+    public virtual string InitialScanList
     {
         get => this._initialScanList;
         set => _ = this.SetProperty( ref this._initialScanList, value );

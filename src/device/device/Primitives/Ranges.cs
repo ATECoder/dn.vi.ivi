@@ -13,7 +13,7 @@ public static class Ranges
     /// </summary>
     /// <value> The full range. </value>
     public static RangeR FullRange =>
-            // round off of the decimal range cause an exception when converting back. 
+            // round off of the decimal range cause an exception when converting back.
             new( ( double ) decimal.MinValue, ( double ) decimal.MaxValue - 10000000000000.0d );
 
     /// <summary> Gets the non-negative range bound by maximum decimal value minus 1E+14. </summary>

@@ -58,7 +58,7 @@ public abstract class ResourceManagerTests
     /// <value> The trace listener. </value>
     public LoggerTraceListener<ResourceManagerTests>? TraceListener { get; set; }
 
-    /// <summary> Initializes the test class instance before each test runs. </summary>											   
+    /// <summary> Initializes the test class instance before each test runs. </summary>
     public virtual void InitializeBeforeEachTest()
     {
         Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {TimeZoneInfo.Local}" );
@@ -92,7 +92,7 @@ public abstract class ResourceManagerTests
         // cc.isr.Logging.TraceLog.Tracer.Instance.LogSettingsFileName = cc.isr.Logging.Orlog.Orlogger.BuildAppSettingsFileName( entryAssembly ); ;
     }
 
-    /// <summary> Cleans up the test class instance after each test has run. </summary>	   
+    /// <summary> Cleans up the test class instance after each test has run. </summary>
     public virtual void CleanupAfterEachTest()
     {
         this.VisaSessionBase?.Dispose();

@@ -32,7 +32,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
         private System.ComponentModel.IContainer components;
 
         // NOTE: The following procedure is required by the Windows Form Designer
-        // It can be modified using the Windows Form Designer.  
+        // It can be modified using the Windows Form Designer.
         // Do not modify it using the code editor.
         [DebuggerStepThrough()]
         private void InitializeComponent()
@@ -55,9 +55,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _outcomeTextBoxLabel = new System.Windows.Forms.Label();
             _outcomeLayout.SuspendLayout();
             SuspendLayout();
-            // 
+            //
             // _outcomeLayout
-            // 
+            //
             _outcomeLayout.BackColor = System.Drawing.Color.Transparent;
             _outcomeLayout.ColumnCount = 7;
             _outcomeLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667f));
@@ -92,9 +92,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _outcomeLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0f));
             _outcomeLayout.Size = new System.Drawing.Size(968, 65);
             _outcomeLayout.TabIndex = 1;
-            // 
+            //
             // _asymptoteTextBox
-            // 
+            //
             _asymptoteTextBox.BackColor = System.Drawing.Color.Black;
             _asymptoteTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             _asymptoteTextBox.CausesValidation = false;
@@ -109,9 +109,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _asymptoteTextBox.Text = "0.0";
             _asymptoteTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             ToolTip.SetToolTip(_asymptoteTextBox, "Asymptotic voltage");
-            // 
+            //
             // _thermalTransientVoltageTextBoxLabel
-            // 
+            //
             _thermalTransientVoltageTextBoxLabel.AutoSize = true;
             _thermalTransientVoltageTextBoxLabel.BackColor = System.Drawing.Color.Black;
             _thermalTransientVoltageTextBoxLabel.CausesValidation = false;
@@ -123,9 +123,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _thermalTransientVoltageTextBoxLabel.TabIndex = 2;
             _thermalTransientVoltageTextBoxLabel.Text = "V ∞ [mV]";
             _thermalTransientVoltageTextBoxLabel.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            // 
+            //
             // _estimatedVoltageTextBox
-            // 
+            //
             _estimatedVoltageTextBox.BackColor = System.Drawing.Color.Black;
             _estimatedVoltageTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             _estimatedVoltageTextBox.CausesValidation = false;
@@ -140,9 +140,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _estimatedVoltageTextBox.Text = "0.0";
             _estimatedVoltageTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             ToolTip.SetToolTip(_estimatedVoltageTextBox, "Voltage at the end of the pulse");
-            // 
+            //
             // _estimatedVoltageTextBoxLabel
-            // 
+            //
             _estimatedVoltageTextBoxLabel.AutoSize = true;
             _estimatedVoltageTextBoxLabel.BackColor = System.Drawing.Color.Black;
             _estimatedVoltageTextBoxLabel.CausesValidation = false;
@@ -154,9 +154,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _estimatedVoltageTextBoxLabel.TabIndex = 4;
             _estimatedVoltageTextBoxLabel.Text = "V [mV]";
             _estimatedVoltageTextBoxLabel.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            // 
+            //
             // _timeConstantTextBoxLabel
-            // 
+            //
             _timeConstantTextBoxLabel.BackColor = System.Drawing.Color.Black;
             _timeConstantTextBoxLabel.CausesValidation = false;
             _timeConstantTextBoxLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -167,9 +167,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _timeConstantTextBoxLabel.TabIndex = 0;
             _timeConstantTextBoxLabel.Text = "TC [ms]";
             _timeConstantTextBoxLabel.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            // 
+            //
             // _timeConstantTextBox
-            // 
+            //
             _timeConstantTextBox.BackColor = System.Drawing.Color.Black;
             _timeConstantTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             _timeConstantTextBox.CausesValidation = false;
@@ -184,9 +184,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _timeConstantTextBox.Text = "0.00";
             _timeConstantTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             ToolTip.SetToolTip(_timeConstantTextBox, "Time constant");
-            // 
+            //
             // _correlationCoefficientTextBoxLabel
-            // 
+            //
             _correlationCoefficientTextBoxLabel.AutoSize = true;
             _correlationCoefficientTextBoxLabel.BackColor = System.Drawing.Color.Black;
             _correlationCoefficientTextBoxLabel.CausesValidation = false;
@@ -198,9 +198,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _correlationCoefficientTextBoxLabel.TabIndex = 4;
             _correlationCoefficientTextBoxLabel.Text = "R";
             _correlationCoefficientTextBoxLabel.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            // 
+            //
             // _correlationCoefficientTextBox
-            // 
+            //
             _correlationCoefficientTextBox.BackColor = System.Drawing.Color.Black;
             _correlationCoefficientTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             _correlationCoefficientTextBox.CausesValidation = false;
@@ -215,9 +215,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _correlationCoefficientTextBox.Text = "0.0000";
             _correlationCoefficientTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             ToolTip.SetToolTip(_correlationCoefficientTextBox, "Correlation coefficient.");
-            // 
+            //
             // _standardErrorTextBox
-            // 
+            //
             _standardErrorTextBox.BackColor = System.Drawing.Color.Black;
             _standardErrorTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             _standardErrorTextBox.CausesValidation = false;
@@ -232,9 +232,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _standardErrorTextBox.Text = "0.00";
             _standardErrorTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             ToolTip.SetToolTip(_standardErrorTextBox, "Standard Error");
-            // 
+            //
             // _iterationsCountTextBox
-            // 
+            //
             _iterationsCountTextBox.BackColor = System.Drawing.Color.Black;
             _iterationsCountTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             _iterationsCountTextBox.CausesValidation = false;
@@ -249,9 +249,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _iterationsCountTextBox.Text = "0";
             _iterationsCountTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             ToolTip.SetToolTip(_iterationsCountTextBox, "Number of iterations required to estimate the best model");
-            // 
+            //
             // _outcomeTextBox
-            // 
+            //
             _outcomeTextBox.BackColor = System.Drawing.Color.Black;
             _outcomeTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             _outcomeTextBox.CausesValidation = false;
@@ -265,9 +265,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _outcomeTextBox.TabIndex = 8;
             _outcomeTextBox.Text = "OPTIMIZED";
             _outcomeTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
+            //
             // _standardErrorTextBoxLabel
-            // 
+            //
             _standardErrorTextBoxLabel.AutoSize = true;
             _standardErrorTextBoxLabel.BackColor = System.Drawing.Color.Black;
             _standardErrorTextBoxLabel.CausesValidation = false;
@@ -280,9 +280,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _standardErrorTextBoxLabel.Text = "σ [mV]";
             _standardErrorTextBoxLabel.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             ToolTip.SetToolTip(_standardErrorTextBoxLabel, "Standard Error");
-            // 
+            //
             // _iterationsCountTextBoxLabel
-            // 
+            //
             _iterationsCountTextBoxLabel.AutoSize = true;
             _iterationsCountTextBoxLabel.BackColor = System.Drawing.Color.Black;
             _iterationsCountTextBoxLabel.CausesValidation = false;
@@ -294,9 +294,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _iterationsCountTextBoxLabel.TabIndex = 4;
             _iterationsCountTextBoxLabel.Text = "N";
             _iterationsCountTextBoxLabel.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            // 
+            //
             // _outcomeTextBoxLabel
-            // 
+            //
             _outcomeTextBoxLabel.AutoSize = true;
             _outcomeTextBoxLabel.BackColor = System.Drawing.Color.Black;
             _outcomeTextBoxLabel.CausesValidation = false;
@@ -308,9 +308,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _outcomeTextBoxLabel.TabIndex = 4;
             _outcomeTextBoxLabel.Text = "MeasurementOutcome";
             _outcomeTextBoxLabel.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            // 
+            //
             // ThermalTransientHeader
-            // 
+            //
             BackColor = System.Drawing.Color.Black;
             Controls.Add(_outcomeLayout);
             Name = "ThermalTransientHeader";

@@ -10,7 +10,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm;
 /// </summary>
 /// <remarks>
 /// (c) 2009 Integrated Scientific Resources, Inc. All rights reserved. <para>
-/// Licensed under The MIT License. </para><para>  
+/// Licensed under The MIT License. </para><para>
 /// David, 2010-09-17, 2.2.3912.x. </para>
 /// </remarks>
 public partial class Meter : CommunityToolkit.Mvvm.ComponentModel.ObservableObject, IDisposable
@@ -60,7 +60,7 @@ public partial class Meter : CommunityToolkit.Mvvm.ComponentModel.ObservableObje
     public void Dispose()
     {
         this.Dispose( true );
-        // Take this object off the finalization(Queue) and prevent finalization code 
+        // Take this object off the finalization(Queue) and prevent finalization code
         // from executing a second time.
         GC.SuppressFinalize( this );
     }

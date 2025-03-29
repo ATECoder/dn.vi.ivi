@@ -11,7 +11,7 @@ public enum FirmwareOutcomes
     [Description( "Initial" )]
     Okay = 0,
 
-    /// <summary>   A binary constant indicating that sampling return bad status from the buffer. 
+    /// <summary>   A binary constant indicating that sampling return bad status from the buffer.
     ///             Also indicates open leads when the firmware is compatibility is set for the legacy driver.. </summary>
     [Description( "Bad status" )]
     BadStatus = 1,

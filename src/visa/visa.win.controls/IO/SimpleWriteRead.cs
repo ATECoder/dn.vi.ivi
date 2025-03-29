@@ -20,7 +20,7 @@ public partial class SimpleWriteRead : UserControl
         this.SetupControlState( false );
     }
 
-    /// <summary> 
+    /// <summary>
     /// Clean up any resources being used.
     /// </summary>
     /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
@@ -322,7 +322,7 @@ public partial class SimpleWriteRead : UserControl
                         {
                         }
                         // Error
-                        // getting error -286 TSP Runtime error 
+                        // getting error -286 TSP Runtime error
                         // instrument reports User Abort Error
                         // Visa reports USRE ABORT
                         else if ( solution == 1 )
@@ -342,12 +342,12 @@ public partial class SimpleWriteRead : UserControl
                         }
 
                     }
-                    // this is the culprit: 
+                    // this is the culprit:
                     visaSession.Clear();
                     if ( solution == 0 )
                     {
                     }
-                    // error 
+                    // error
                     else if ( solution == 1 )
                     {
                         Thread.Sleep( 11 );

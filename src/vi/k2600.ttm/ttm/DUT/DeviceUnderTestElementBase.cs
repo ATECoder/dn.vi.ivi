@@ -6,7 +6,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm;
 /// <summary> Defines a measured cold resistance element. </summary>
 /// <remarks>
 /// (c) 2009 Integrated Scientific Resources, Inc. All rights reserved. <para>
-/// Licensed under The MIT License. </para><para>  
+/// Licensed under The MIT License. </para><para>
 /// David, 2009-02-02, 2.1.3320.x. </para>
 /// </remarks>
 public abstract partial class DeviceUnderTestElementBase : CommunityToolkit.Mvvm.ComponentModel.ObservableObject, IEquatable<DeviceUnderTestElementBase>

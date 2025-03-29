@@ -5,7 +5,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Legacy;
 /// <summary> Defines an event arguments class for messages. </summary>
 /// <remarks>
 /// (c) 2009 Integrated Scientific Resources, Inc. All rights reserved. <para>
-/// Licensed under The MIT License. </para><para>  
+/// Licensed under The MIT License. </para><para>
 /// David, 2009-05-01, 1.1.3408.x. </para><para>
 /// David, 2013-08-05, 3.0.3053.x. </para>
 /// </remarks>

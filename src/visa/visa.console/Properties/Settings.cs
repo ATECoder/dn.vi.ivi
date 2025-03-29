@@ -5,7 +5,7 @@ namespace cc.isr.Visa.Console.Properties;
 
 /// <summary>   A settings. </summary>
 /// <remarks>   David, 2021-02-01. </remarks>
-public class Settings : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
+public class Settings : System.ComponentModel.INotifyPropertyChanged
 {
     #region " construction "
 
@@ -17,19 +17,105 @@ public class Settings : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
 
     #endregion
 
+    #region " notify property change implementation "
+
+    /// <summary>   Occurs when a property value changes. </summary>
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    /// <summary>   Executes the 'property changed' action. </summary>
+    /// <param name="propertyName"> Name of the property. </param>
+    protected virtual void OnPropertyChanged( string? propertyName )
+    {
+        if ( !string.IsNullOrEmpty( propertyName ) )
+            PropertyChanged?.Invoke( this, new PropertyChangedEventArgs( propertyName ) );
+    }
+
+    /// <summary>   Executes the 'property changed' action. </summary>
+    /// <typeparam name="T">    Generic type parameter. </typeparam>
+    /// <param name="backingField"> [in,out] The backing field. </param>
+    /// <param name="value">        The value. </param>
+    /// <param name="propertyName"> (Optional) Name of the property. </param>
+    /// <returns>   <see langword="true"/> if it succeeds; otherwise, <see langword="false"/>. </returns>
+    protected virtual bool OnPropertyChanged<T>( ref T backingField, T value, [System.Runtime.CompilerServices.CallerMemberName] string? propertyName = "" )
+    {
+        if ( System.Collections.Generic.EqualityComparer<T>.Default.Equals( backingField, value ) )
+            return false;
+
+        backingField = value;
+        this.OnPropertyChanged( propertyName );
+        return true;
+    }
+
+    /// <summary>   Sets a property. </summary>
+    /// <typeparam name="T">    Generic type parameter. </typeparam>
+    /// <param name="prop">         [in,out] The property. </param>
+    /// <param name="value">        The value. </param>
+    /// <param name="propertyName"> (Optional) Name of the property. </param>
+    /// <returns>   <see langword="true"/> if it succeeds; otherwise, <see langword="false"/>. </returns>
+    protected bool SetProperty<T>( ref T prop, T value, [System.Runtime.CompilerServices.CallerMemberName] string? propertyName = null )
+    {
+        if ( System.Collections.Generic.EqualityComparer<T>.Default.Equals( prop, value ) ) return false;
+        prop = value;
+        this.OnPropertyChanged( propertyName );
+        return true;
+    }
+
+    /// <summary>   Sets a property. </summary>
+    /// <remarks>   2023-03-24. </remarks>
+    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
+    ///                                             null. </exception>
+    /// <typeparam name="T">    Generic type parameter. </typeparam>
+    /// <param name="oldValue">     The old value. </param>
+    /// <param name="newValue">     The new value. </param>
+    /// <param name="callback">     The callback. </param>
+    /// <param name="propertyName"> (Optional) Name of the property. </param>
+    /// <returns>   <see langword="true"/> if it succeeds; otherwise, <see langword="false"/>. </returns>
+    protected bool SetProperty<T>( T oldValue, T newValue, Action callback, [System.Runtime.CompilerServices.CallerMemberName] string? propertyName = null )
+    {
+#if NET8_0_OR_GREATER
+        ArgumentNullException.ThrowIfNull( callback, nameof( callback ) );
+#else
+        if ( callback is null ) throw new ArgumentNullException( nameof( callback ) );
+#endif
+
+        if ( System.Collections.Generic.EqualityComparer<T>.Default.Equals( oldValue, newValue ) )
+        {
+            return false;
+        }
+
+        callback();
+
+        this.OnPropertyChanged( propertyName );
+
+        return true;
+    }
+
+    /// <summary>   Removes the property changed event handlers. </summary>
+    /// <remarks>   David, 2021-06-28. </remarks>
+    protected void RemovePropertyChangedEventHandlers()
+    {
+        PropertyChangedEventHandler? handler = this.PropertyChanged;
+        if ( handler is not null )
+        {
+            foreach ( Delegate? item in handler.GetInvocationList() )
+            {
+                handler -= ( PropertyChangedEventHandler ) item;
+            }
+        }
+    }
+
+    #endregion
+
     #region " singleton "
 
     /// <summary>
-    /// Creates an instance of the <see cref="Settings"/> after restoring the application context
-    /// settings to both the user and all user files.
+    /// Creates an instance of the <see cref="Settings"/>.
     /// </summary>
     /// <remarks>   2023-05-15. </remarks>
     /// <returns>   The new instance. </returns>
     private static Settings CreateInstance()
     {
         Settings ti = new();
-        AppSettingsScribe.ReadSettings( Settings.SettingsFileInfo.AllUsersAssemblyFilePath!, nameof( Settings ), ti,
-            AppSettingsScribe.DefaultSerializerOptions, AppSettingsScribe.DefaultDocumentOptions );
         return ti;
     }
 
@@ -51,14 +137,20 @@ public class Settings : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
     /// <returns>   The new settings file information. </returns>
     private static AssemblyFileInfo CreateSettingsFileInfo()
     {
-        // get assembly files using the .Logging suffix.
+        // Get the method declaring type for the assembly file information and the settings section name.
+        Type declaringType = System.Reflection.MethodBase.GetCurrentMethod()!.DeclaringType!;
 
-        AssemblyFileInfo ai = new( typeof( Settings ).Assembly, null, ".Settings", ".json" );
+        // get assembly files using the .Settings suffix.
+
+        AssemblyFileInfo ai = new( declaringType.Assembly, null, ".Settings", ".json" );
 
         // must copy application context settings here to clear any bad settings files.
 
-        AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.AllUsersAssemblyFilePath! );
-        AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.ThisUserAssemblyFilePath! );
+        if ( !System.IO.File.Exists( ai.AllUsersAssemblyFilePath! ) )
+            AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.AllUsersAssemblyFilePath! );
+
+        if ( !System.IO.File.Exists( ai.ThisUserAssemblyFilePath! ) )
+            AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.ThisUserAssemblyFilePath! );
 
         return ai;
     }
@@ -73,23 +165,22 @@ public class Settings : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
     #region " settings scribe "
 
     /// <summary>
-    /// Creates an instance of the <see cref="Settings"/> after restoring the application context
-    /// settings to both the user and all user files.
+    /// Creates an instance of the <see cref="AppSettingsScribe"/> using the constructed <see cref="AssemblyFileInfo"/>,
+	/// reads the settings into a singleton instance of this class and validates that the settings was read.
     /// </summary>
     /// <remarks>   2023-05-15. </remarks>
-    /// <returns>   The new instance. </returns>
+    /// <returns>   The new scribe. </returns>
     private static AppSettingsScribe CreateScribe()
     {
         // get an instance of the settings file info first.
         AssemblyFileInfo settingsFileInfo = Settings.SettingsFileInfo;
 
-        AppSettingsScribe scribe = new( [Settings.Instance],
-            settingsFileInfo.AppContextAssemblyFilePath!, settingsFileInfo.AllUsersAssemblyFilePath! )
-        {
-            AllUsersSettingsPath = settingsFileInfo.AllUsersAssemblyFilePath,
-            ThisUserSettingsPath = settingsFileInfo.ThisUserAssemblyFilePath
-        };
+        AppSettingsScribe scribe = new( [Settings.Instance], settingsFileInfo );
+
         scribe.ReadSettings();
+
+        if ( !Settings.Instance.Exists )
+            throw new InvalidOperationException( $"{nameof( Settings )} not found or failed to read from {scribe.UserSettingsPath}." );
 
         return scribe;
     }
@@ -101,32 +192,56 @@ public class Settings : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
 
     private static readonly Lazy<AppSettingsScribe> _scribe = new( CreateScribe, true );
 
-    /// <summary>   Gets the full pathname of the settings file. </summary>
-    /// <value> The full pathname of the settings file. </value>
+    /// <summary>   Gets the full path name of the settings file. </summary>
+    /// <value> The full path name of the settings file. </value>
     [JsonIgnore]
     public static string FilePath => Settings.Scribe.UserSettingsPath;
 
     /// <summary>   Check if the settings file exits. </summary>
     /// <remarks>   2024-07-06. </remarks>
     /// <returns>   True if it the settings file exists; otherwise false. </returns>
-    public static bool Exists()
+    public static bool FileExists()
     {
         return System.IO.File.Exists( Settings.FilePath );
     }
 
     #endregion
 
+    #region " exists "
+
+    private bool _exists;
+
+    /// <summary>
+    /// Gets or sets a value indicating whether this settings section exists and the values were thus
+    /// fetched from the settings file.
+    /// </summary>
+    /// <value> True if this settings section exists in the settings file, false if not. </value>
+    [Description( "True if this settings section exists and was read from the JSon settings file." )]
+    public bool Exists
+    {
+        get => this._exists;
+        set => _ = this.SetProperty( ref this._exists, value );
+    }
+
+    #endregion
+
     #region " configuration information "
 
-    private TraceLevel _traceLevel = TraceLevel.Verbose;
+    private TraceLevel _messageLevel = TraceLevel.Off;
 
     /// <summary>   Gets or sets the trace level. </summary>
-    /// <value> The trace level. </value>
+    /// <remarks>
+    /// This property name is different from the <see cref="System.Text.Json"/> property name in
+    /// order to ensure that the class is correctly serialized. It's value is initialized as <see cref="TraceLevel.Off"/>
+    /// in order to test the reading from the settings file.
+    /// </remarks>
+    /// <value> The message <see cref="TraceLevel"/>. </value>
     [System.ComponentModel.Description( "Sets the message level" )]
-    public TraceLevel TraceLevel
+    [JsonPropertyName( "TraceLevel" )]
+    public TraceLevel MessageLevel
     {
-        get => this._traceLevel;
-        set => _ = this.SetProperty( ref this._traceLevel, value );
+        get => this._messageLevel;
+        set => _ = this.SetProperty( ref this._messageLevel, value );
     }
 
     private bool _enabled = true;
@@ -153,6 +268,8 @@ public class Settings : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
 
     #endregion
 
+    #region " log and message levels "
+
     private Microsoft.Extensions.Logging.LogLevel _applicationLogLevel = Microsoft.Extensions.Logging.LogLevel.Trace;
 
     /// <summary>   Gets or sets the application log level. </summary>
@@ -161,7 +278,7 @@ public class Settings : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
     /// the message level is the same or higher than this level.
     /// </remarks>
     /// <value> The application log level. </value>
-	[Description( "The minimal level for logging events at the application level. The logger logs the message if the message level is the same or higher than this level" )]
+    [Description( "The minimal level for logging events at the application level. The logger logs the message if the message level is the same or higher than this level" )]
     public Microsoft.Extensions.Logging.LogLevel ApplicationLogLevel
     {
         get => this._applicationLogLevel;
@@ -176,7 +293,7 @@ public class Settings : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
     /// filters the message before it is sent to the Logging program.
     /// </remarks>
     /// <value> The assembly log level. </value>
-	[Description( "The minimum log level for sending the message to the logger by this assembly. This filters the message before it is sent to the Logging program." )]
+    [Description( "The minimum log level for sending the message to the logger by this assembly. This filters the message before it is sent to the Logging program." )]
     public Microsoft.Extensions.Logging.LogLevel AssemblyLogLevel
     {
         get => this._assemblyLogLevel;
@@ -192,18 +309,22 @@ public class Settings : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
     /// this level are displayed.
     /// </remarks>
     /// <value> The message display level. </value>
-	[Description( "The maximum trace event type for displaying logged and trace events. Only messages with a message a level that is same or higher than this level are displayed." )]
+    [Description( "The maximum trace event type for displaying logged and trace events. Only messages with a message a level that is same or higher than this level are displayed." )]
     public TraceEventType MessageDisplayLevel
     {
         get => this._messageDisplayLevel;
         set => this.SetProperty( ref this._messageDisplayLevel, value );
     }
 
+    #endregion
+
+    #region " custom settings "
+
     private bool _multiSessionEnabled;
 
     /// <summary>   Gets or sets a value indicating whether the multi session is enabled. </summary>
     /// <value> True if multi session enabled, false if not. </value>
-	[Description( "Enabled selecting multiple sessions" )]
+    [Description( "Enabled selecting multiple sessions" )]
     public bool MultiSessionEnabled
     {
         get => this._multiSessionEnabled;
@@ -216,7 +337,7 @@ public class Settings : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
     /// Gets or sets a value indicating whether the service request is enabled.
     /// </summary>
     /// <value> True if service request enabled, false if not. </value>
-	[Description( "Enables service request handling" )]
+    [Description( "Enables service request handling" )]
     public bool ServiceRequestEnabled
     {
         get => this._serviceRequestEnabled;
@@ -227,7 +348,7 @@ public class Settings : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
 
     /// <summary>   Gets or sets the name of the resource. </summary>
     /// <value> The name of the resource. </value>
-	[Description( "The default VISA resource name" )]
+    [Description( "The default VISA resource name" )]
     public string ResourceName
     {
         get => this._resourceName;
@@ -238,11 +359,13 @@ public class Settings : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
 
     /// <summary>   Gets or sets the service request commands. </summary>
     /// <value> The service request commands. </value>
-	[Description( "The service request commands to display in the combo box" )]
+    [Description( "The service request commands to display in the combo box" )]
     public string ServiceRequestCommands
     {
         get => this._serviceRequestCommands;
         set => this.SetProperty( ref this._serviceRequestCommands, value );
     }
+
+    #endregion
 }
 

@@ -60,8 +60,11 @@ public class DigitalOutputViewSettings : CommunityToolkit.Mvvm.ComponentModel.Ob
         AssemblyFileInfo ai = new( callingEntity.Assembly, null, settingsFileSuffix, ".json" );
 
         // must copy application context settings here to clear any bad settings files.
-        AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.AllUsersAssemblyFilePath! );
-        AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.ThisUserAssemblyFilePath! );
+        if ( !System.IO.File.Exists( ai.AllUsersAssemblyFilePath! ) )
+            AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.AllUsersAssemblyFilePath! );
+
+        if ( !System.IO.File.Exists( ai.ThisUserAssemblyFilePath! ) )
+            AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.ThisUserAssemblyFilePath! );
 
         this.Scribe = new( [_instance.Value], ai.AppContextAssemblyFilePath!, ai.AllUsersAssemblyFilePath! )
         {
@@ -94,7 +97,7 @@ public class DigitalOutputViewSettings : CommunityToolkit.Mvvm.ComponentModel.Ob
     /// fetched from the settings file.
     /// </summary>
     /// <value> True if this settings section exists in the settings file, false if not. </value>
-	[Description( "True if this settings section exists and was read from the JSon settings file." )]
+    [Description( "True if this settings section exists and was read from the JSon settings file." )]
     public bool Exists
     {
         get => this._exists;
@@ -109,7 +112,7 @@ public class DigitalOutputViewSettings : CommunityToolkit.Mvvm.ComponentModel.Ob
 
     /// <summary>   Gets or sets the strobe line number. </summary>
     /// <value> The strobe line number. </value>
-	public int StrobeLineNumber
+    public int StrobeLineNumber
     {
         get => this._strobeLineNumber;
         set => this.SetProperty( ref this._strobeLineNumber, value );
@@ -119,7 +122,7 @@ public class DigitalOutputViewSettings : CommunityToolkit.Mvvm.ComponentModel.Ob
 
     /// <summary>   Gets or sets the duration of the strobe. </summary>
     /// <value> The strobe duration. </value>
-	public int StrobeDuration
+    public int StrobeDuration
     {
         get => this._strobeDuration;
         set => this.SetProperty( ref this._strobeDuration, value );
@@ -129,7 +132,7 @@ public class DigitalOutputViewSettings : CommunityToolkit.Mvvm.ComponentModel.Ob
 
     /// <summary>   Gets or sets the bin line number. </summary>
     /// <value> The bin line number. </value>
-	public int BinLineNumber
+    public int BinLineNumber
     {
         get => this._binLineNumber;
         set => this.SetProperty( ref this._binLineNumber, value );
@@ -139,7 +142,7 @@ public class DigitalOutputViewSettings : CommunityToolkit.Mvvm.ComponentModel.Ob
 
     /// <summary>   Gets or sets the duration of the bin. </summary>
     /// <value> The bin duration. </value>
-	public int BinDuration
+    public int BinDuration
     {
         get => this._binDuration;
         set => this.SetProperty( ref this._binDuration, value );

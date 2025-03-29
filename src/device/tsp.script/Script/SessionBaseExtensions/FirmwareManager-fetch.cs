@@ -121,7 +121,7 @@ public static partial class FirmwareManager
         if ( names is null || string.IsNullOrWhiteSpace( names ) )
         {
             // if nothing was read; no user scripts stored.
-            // we are assuming that the the tsp prompt ("TSP>") is disabled. 
+            // we are assuming that the the tsp prompt ("TSP>") is disabled.
             // return the empty array as initialized above.
         }
 

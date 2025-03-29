@@ -45,7 +45,7 @@ public class DeviceStatusOnlyTests : Device.Tests.Base.DeviceStatusOnlyTests
         // Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
         Console.WriteLine( $"Testing {typeof( cc.isr.VI.VisaSessionBase ).Assembly.FullName}" );
 
-        // create an instance of the Serilog logger. 
+        // create an instance of the Serilog logger.
         SessionLogger.Instance.CreateSerilogLogger( typeof( DeviceStatusOnlyTests ) );
 
         this.TestSiteSettings = Settings.AllSettings.Instance.TestSiteSettings;

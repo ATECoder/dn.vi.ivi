@@ -9,7 +9,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
         private System.ComponentModel.IContainer components;
 
         // NOTE: The following procedure is required by the Windows Form Designer
-        // It can be modified using the Windows Form Designer.  
+        // It can be modified using the Windows Form Designer.
         // Do not modify it using the code editor.
         [DebuggerStepThrough()]
         private void InitializeComponent()
@@ -102,31 +102,31 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _messagesTabPage.SuspendLayout();
             _statusStrip.SuspendLayout();
             SuspendLayout();
-            // 
+            //
             // _splitContainer
-            // 
+            //
             _splitContainer.Location = new System.Drawing.Point(12, 413);
             _splitContainer.Name = "_SplitContainer";
 
-            // 
+            //
             // _splitContainer.Panel1
-            // 
+            //
             _splitContainer.Panel1.Controls.Add(_navigatorTreeView);
             _splitContainer.Size = new System.Drawing.Size(264, 231);
             _splitContainer.SplitterDistance = 133;
             _splitContainer.TabIndex = 12;
-            // 
+            //
             // _navigatorTreeView
-            // 
+            //
             _navigatorTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
             _navigatorTreeView.Enabled = false;
             _navigatorTreeView.Location = new System.Drawing.Point(0, 0);
             _navigatorTreeView.Name = "_NavigatorTreeView";
             _navigatorTreeView.Size = new System.Drawing.Size(133, 231);
             _navigatorTreeView.TabIndex = 3;
-            // 
+            //
             // _tabs
-            // 
+            //
             _tabs.Controls.Add(_connectTabPage);
             _tabs.Controls.Add(_ttmConfigTabPage);
             _tabs.Controls.Add(_ttmTabPage);
@@ -140,9 +140,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _tabs.SelectedIndex = 0;
             _tabs.Size = new System.Drawing.Size(676, 537);
             _tabs.TabIndex = 8;
-            // 
+            //
             // _connectTabPage
-            // 
+            //
             _connectTabPage.Controls.Add(_connectTabLayout);
             _connectTabPage.Location = new System.Drawing.Point(4, 26);
             _connectTabPage.Name = "_ConnectTabPage";
@@ -150,9 +150,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _connectTabPage.TabIndex = 2;
             _connectTabPage.Text = "CONNECT";
             _connectTabPage.UseVisualStyleBackColor = true;
-            // 
+            //
             // _connectTabLayout
-            // 
+            //
             _connectTabLayout.ColumnCount = 3;
             _connectTabLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0f));
             _connectTabLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
@@ -166,9 +166,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _connectTabLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0f));
             _connectTabLayout.Size = new System.Drawing.Size(644, 403);
             _connectTabLayout.TabIndex = 0;
-            // 
+            //
             // _connectGroupBox
-            // 
+            //
             _connectGroupBox.Controls.Add(_resourceSelectorConnector);
             _connectGroupBox.Controls.Add(_resourceInfoLabel);
             _connectGroupBox.Controls.Add(_identityTextBox);
@@ -178,9 +178,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _connectGroupBox.TabIndex = 2;
             _connectGroupBox.TabStop = false;
             _connectGroupBox.Text = "CONNECT";
-            // 
+            //
             // _resourceSelectorConnector
-            // 
+            //
             _resourceSelectorConnector.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             _resourceSelectorConnector.BackColor = System.Drawing.Color.Transparent;
             _resourceSelectorConnector.Clearable = true;
@@ -193,18 +193,18 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _resourceSelectorConnector.Size = new System.Drawing.Size(578, 29);
             _resourceSelectorConnector.TabIndex = 5;
             ToolTip.SetToolTip(_resourceSelectorConnector, "Find resources and connect");
-            // 
+            //
             // _resourceInfoLabel
-            // 
+            //
             _resourceInfoLabel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             _resourceInfoLabel.Location = new System.Drawing.Point(28, 89);
             _resourceInfoLabel.Name = "_ResourceInfoLabel";
             _resourceInfoLabel.Size = new System.Drawing.Size(578, 102);
             _resourceInfoLabel.TabIndex = 4;
             _resourceInfoLabel.Text = resources.GetString("_ResourceInfoLabel.Text");
-            // 
+            //
             // _identityTextBox
-            // 
+            //
             _identityTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             _identityTextBox.Location = new System.Drawing.Point(28, 61);
             _identityTextBox.Name = "_IdentityTextBox";
@@ -212,9 +212,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _identityTextBox.Size = new System.Drawing.Size(578, 25);
             _identityTextBox.TabIndex = 3;
             ToolTip.SetToolTip(_identityTextBox, "Displays the meter identity information");
-            // 
+            //
             // _ttmConfigTabPage
-            // 
+            //
             _ttmConfigTabPage.Controls.Add(_mainLayout);
             _ttmConfigTabPage.Location = new System.Drawing.Point(4, 26);
             _ttmConfigTabPage.Name = "_TtmConfigTabPage";
@@ -222,9 +222,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _ttmConfigTabPage.TabIndex = 0;
             _ttmConfigTabPage.Text = "TTM CONFIG.";
             _ttmConfigTabPage.UseVisualStyleBackColor = true;
-            // 
+            //
             // _mainLayout
-            // 
+            //
             _mainLayout.ColumnCount = 3;
             _mainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0f));
             _mainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
@@ -242,9 +242,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _mainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0f));
             _mainLayout.Size = new System.Drawing.Size(655, 453);
             _mainLayout.TabIndex = 0;
-            // 
+            //
             // _configurationLayout
-            // 
+            //
             _configurationLayout.ColumnCount = 3;
             _configurationLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0f));
             _configurationLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
@@ -256,9 +256,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _configurationLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0f));
             _configurationLayout.Size = new System.Drawing.Size(681, 343);
             _configurationLayout.TabIndex = 2;
-            // 
+            //
             // _ttmConfigurationPanel
-            // 
+            //
             _ttmConfigurationPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             _ttmConfigurationPanel.BackColor = System.Drawing.Color.Transparent;
             _ttmConfigurationPanel.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
@@ -268,9 +268,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _ttmConfigurationPanel.Name = "_TTMConfigurationPanel";
             _ttmConfigurationPanel.Size = new System.Drawing.Size(545, 335);
             _ttmConfigurationPanel.TabIndex = 0;
-            // 
+            //
             // _ttmTabPage
-            // 
+            //
             _ttmTabPage.Controls.Add(_ttmLayout);
             _ttmTabPage.Location = new System.Drawing.Point(4, 26);
             _ttmTabPage.Name = "_TtmTabPage";
@@ -278,9 +278,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _ttmTabPage.TabIndex = 4;
             _ttmTabPage.Text = "TTM";
             _ttmTabPage.UseVisualStyleBackColor = true;
-            // 
+            //
             // _ttmLayout
-            // 
+            //
             _ttmLayout.ColumnCount = 3;
             _ttmLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0f));
             _ttmLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0f));
@@ -294,9 +294,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _ttmLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0f));
             _ttmLayout.Size = new System.Drawing.Size(589, 413);
             _ttmLayout.TabIndex = 0;
-            // 
+            //
             // _measurementPanel
-            // 
+            //
             _measurementPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             _measurementPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             _measurementPanel.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
@@ -304,9 +304,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _measurementPanel.Name = "_MeasurementPanel";
             _measurementPanel.Size = new System.Drawing.Size(543, 367);
             _measurementPanel.TabIndex = 0;
-            // 
+            //
             // _shuntTabPage
-            // 
+            //
             _shuntTabPage.Controls.Add(_shuntLayout);
             _shuntTabPage.Location = new System.Drawing.Point(4, 26);
             _shuntTabPage.Name = "_ShuntTabPage";
@@ -314,9 +314,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _shuntTabPage.TabIndex = 3;
             _shuntTabPage.Text = "SHUNT";
             _shuntTabPage.UseVisualStyleBackColor = true;
-            // 
+            //
             // _shuntLayout
-            // 
+            //
             _shuntLayout.ColumnCount = 3;
             _shuntLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0f));
             _shuntLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
@@ -334,9 +334,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _shuntLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0f));
             _shuntLayout.Size = new System.Drawing.Size(466, 492);
             _shuntLayout.TabIndex = 0;
-            // 
+            //
             // _shuntDisplayLayout
-            // 
+            //
             _shuntDisplayLayout.BackColor = System.Drawing.Color.Black;
             _shuntDisplayLayout.ColumnCount = 3;
             _shuntDisplayLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 65.0f));
@@ -354,9 +354,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _shuntDisplayLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 5.0f));
             _shuntDisplayLayout.Size = new System.Drawing.Size(337, 75);
             _shuntDisplayLayout.TabIndex = 0;
-            // 
+            //
             // _shuntResistanceTextBox
-            // 
+            //
             _shuntResistanceTextBox.BackColor = System.Drawing.Color.Black;
             _shuntResistanceTextBox.Dock = System.Windows.Forms.DockStyle.Top;
             _shuntResistanceTextBox.Font = new System.Drawing.Font("Segoe UI", 18.0f, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
@@ -369,9 +369,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _shuntResistanceTextBox.Text = "0.000";
             _shuntResistanceTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             ToolTip.SetToolTip(_shuntResistanceTextBox, "Measured Shunt MeasuredValue");
-            // 
+            //
             // _shuntResistanceTextBoxLabel
-            // 
+            //
             _shuntResistanceTextBoxLabel.AutoSize = true;
             _shuntResistanceTextBoxLabel.BackColor = System.Drawing.Color.Black;
             _shuntResistanceTextBoxLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -382,9 +382,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _shuntResistanceTextBoxLabel.TabIndex = 6;
             _shuntResistanceTextBoxLabel.Text = "SHUNT RESISTANCE [Ω]";
             _shuntResistanceTextBoxLabel.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            // 
+            //
             // _shuntGroupBoxLayout
-            // 
+            //
             _shuntGroupBoxLayout.ColumnCount = 3;
             _shuntGroupBoxLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0f));
             _shuntGroupBoxLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
@@ -398,9 +398,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _shuntGroupBoxLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 10.0f));
             _shuntGroupBoxLayout.Size = new System.Drawing.Size(337, 63);
             _shuntGroupBoxLayout.TabIndex = 2;
-            // 
+            //
             // _measureShuntResistanceButton
-            // 
+            //
             _measureShuntResistanceButton.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Bold);
             _measureShuntResistanceButton.Location = new System.Drawing.Point(53, 13);
             _measureShuntResistanceButton.Name = "_MeasureShuntResistanceButton";
@@ -408,9 +408,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _measureShuntResistanceButton.TabIndex = 3;
             _measureShuntResistanceButton.Text = "READ SHUNT RESISTANCE";
             _measureShuntResistanceButton.UseVisualStyleBackColor = true;
-            // 
+            //
             // _shuntConfigureGroupBoxLayout
-            // 
+            //
             _shuntConfigureGroupBoxLayout.ColumnCount = 3;
             _shuntConfigureGroupBoxLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0f));
             _shuntConfigureGroupBoxLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
@@ -424,9 +424,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _shuntConfigureGroupBoxLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0f));
             _shuntConfigureGroupBoxLayout.Size = new System.Drawing.Size(337, 319);
             _shuntConfigureGroupBoxLayout.TabIndex = 3;
-            // 
+            //
             // _shuntResistanceConfigurationGroupBox
-            // 
+            //
             _shuntResistanceConfigurationGroupBox.Controls.Add(_restoreShuntResistanceDefaultsButton);
             _shuntResistanceConfigurationGroupBox.Controls.Add(_applyNewShuntResistanceConfigurationButton);
             _shuntResistanceConfigurationGroupBox.Controls.Add(_applyShuntResistanceConfigurationButton);
@@ -447,9 +447,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _shuntResistanceConfigurationGroupBox.TabIndex = 2;
             _shuntResistanceConfigurationGroupBox.TabStop = false;
             _shuntResistanceConfigurationGroupBox.Text = "SHUNT RESISTANCE CONFIG.";
-            // 
+            //
             // _restoreShuntResistanceDefaultsButton
-            // 
+            //
             _restoreShuntResistanceDefaultsButton.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
             _restoreShuntResistanceDefaultsButton.Location = new System.Drawing.Point(14, 252);
             _restoreShuntResistanceDefaultsButton.Name = "_RestoreShuntResistanceDefaultsButton";
@@ -457,9 +457,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _restoreShuntResistanceDefaultsButton.TabIndex = 12;
             _restoreShuntResistanceDefaultsButton.Text = "RESTORE DEFAULTS";
             _restoreShuntResistanceDefaultsButton.UseVisualStyleBackColor = true;
-            // 
+            //
             // _applyNewShuntResistanceConfigurationButton
-            // 
+            //
             _applyNewShuntResistanceConfigurationButton.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Bold);
             _applyNewShuntResistanceConfigurationButton.Location = new System.Drawing.Point(133, 210);
             _applyNewShuntResistanceConfigurationButton.Name = "_applyNewShuntResistanceConfigurationButton";
@@ -467,9 +467,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _applyNewShuntResistanceConfigurationButton.TabIndex = 11;
             _applyNewShuntResistanceConfigurationButton.Text = "APPLY CHANGES";
             _applyNewShuntResistanceConfigurationButton.UseVisualStyleBackColor = true;
-            // 
+            //
             // _applyShuntResistanceConfigurationButton
-            // 
+            //
             _applyShuntResistanceConfigurationButton.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Bold);
             _applyShuntResistanceConfigurationButton.Location = new System.Drawing.Point(11, 209);
             _applyShuntResistanceConfigurationButton.Name = "_applyShuntResistanceConfigurationButton";
@@ -478,9 +478,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _applyShuntResistanceConfigurationButton.Text = "APPLY ALL";
             ToolTip.SetToolTip(_applyShuntResistanceConfigurationButton, "Clears last measurement and applies shunt resistance configuration");
             _applyShuntResistanceConfigurationButton.UseVisualStyleBackColor = true;
-            // 
+            //
             // _shuntResistanceCurrentRangeNumeric
-            // 
+            //
             _shuntResistanceCurrentRangeNumeric.DecimalPlaces = 3;
             _shuntResistanceCurrentRangeNumeric.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Bold);
             _shuntResistanceCurrentRangeNumeric.Increment = new decimal(new int[] { 1, 0, 0, 131072 });
@@ -492,9 +492,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _shuntResistanceCurrentRangeNumeric.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             ToolTip.SetToolTip(_shuntResistanceCurrentRangeNumeric, "Current range in Amperes");
             _shuntResistanceCurrentRangeNumeric.Value = new decimal(new int[] { 1, 0, 0, 131072 });
-            // 
+            //
             // _shuntResistanceCurrentRangeNumericLabel
-            // 
+            //
             _shuntResistanceCurrentRangeNumericLabel.AutoSize = true;
             _shuntResistanceCurrentRangeNumericLabel.Location = new System.Drawing.Point(25, 66);
             _shuntResistanceCurrentRangeNumericLabel.Name = "_ShuntResistanceCurrentRangeNumericLabel";
@@ -502,9 +502,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _shuntResistanceCurrentRangeNumericLabel.TabIndex = 2;
             _shuntResistanceCurrentRangeNumericLabel.Text = "CURRENT RANGE [A]:";
             _shuntResistanceCurrentRangeNumericLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
+            //
             // _shuntResistanceLowLimitNumeric
-            // 
+            //
             _shuntResistanceLowLimitNumeric.DecimalPlaces = 1;
             _shuntResistanceLowLimitNumeric.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Bold);
             _shuntResistanceLowLimitNumeric.Increment = new decimal(new int[] { 10, 0, 0, 0 });
@@ -518,9 +518,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _shuntResistanceLowLimitNumeric.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             ToolTip.SetToolTip(_shuntResistanceLowLimitNumeric, "Low limit of passed shunt resistance");
             _shuntResistanceLowLimitNumeric.Value = new decimal(new int[] { 1150, 0, 0, 0 });
-            // 
+            //
             // _shuntResistanceLowLimitNumericLabel
-            // 
+            //
             _shuntResistanceLowLimitNumericLabel.AutoSize = true;
             _shuntResistanceLowLimitNumericLabel.Location = new System.Drawing.Point(63, 176);
             _shuntResistanceLowLimitNumericLabel.Name = "_ShuntResistanceLowLimitNumericLabel";
@@ -528,9 +528,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _shuntResistanceLowLimitNumericLabel.TabIndex = 8;
             _shuntResistanceLowLimitNumericLabel.Text = "LO&W LIMIT [Ω]:";
             _shuntResistanceLowLimitNumericLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
+            //
             // _shuntResistanceHighLimitNumeric
-            // 
+            //
             _shuntResistanceHighLimitNumeric.DecimalPlaces = 1;
             _shuntResistanceHighLimitNumeric.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Bold);
             _shuntResistanceHighLimitNumeric.Increment = new decimal(new int[] { 10, 0, 0, 0 });
@@ -544,9 +544,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _shuntResistanceHighLimitNumeric.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             ToolTip.SetToolTip(_shuntResistanceHighLimitNumeric, "High limit of passed shunt resistance.");
             _shuntResistanceHighLimitNumeric.Value = new decimal(new int[] { 1250, 0, 0, 0 });
-            // 
+            //
             // _shuntResistanceHighLimitNumericLabel
-            // 
+            //
             _shuntResistanceHighLimitNumericLabel.AutoSize = true;
             _shuntResistanceHighLimitNumericLabel.Location = new System.Drawing.Point(61, 139);
             _shuntResistanceHighLimitNumericLabel.Name = "_ShuntResistanceHighLimitNumericLabel";
@@ -554,9 +554,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _shuntResistanceHighLimitNumericLabel.TabIndex = 6;
             _shuntResistanceHighLimitNumericLabel.Text = "&HIGH LIMIT [Ω]:";
             _shuntResistanceHighLimitNumericLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
+            //
             // _shuntResistanceVoltageLimitNumeric
-            // 
+            //
             _shuntResistanceVoltageLimitNumeric.DecimalPlaces = 2;
             _shuntResistanceVoltageLimitNumeric.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Bold);
             _shuntResistanceVoltageLimitNumeric.Increment = new decimal(new int[] { 1, 0, 0, 65536 });
@@ -568,9 +568,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _shuntResistanceVoltageLimitNumeric.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             ToolTip.SetToolTip(_shuntResistanceVoltageLimitNumeric, "Voltage Limit in Volts");
             _shuntResistanceVoltageLimitNumeric.Value = new decimal(new int[] { 10, 0, 0, 0 });
-            // 
+            //
             // _shuntResistanceVoltageLimitNumericLabel
-            // 
+            //
             _shuntResistanceVoltageLimitNumericLabel.AutoSize = true;
             _shuntResistanceVoltageLimitNumericLabel.Location = new System.Drawing.Point(38, 102);
             _shuntResistanceVoltageLimitNumericLabel.Name = "_ShuntResistanceVoltageLimitNumericLabel";
@@ -578,9 +578,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _shuntResistanceVoltageLimitNumericLabel.TabIndex = 4;
             _shuntResistanceVoltageLimitNumericLabel.Text = "&VOLTAGE LIMIT [V]:";
             _shuntResistanceVoltageLimitNumericLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
+            //
             // _shuntResistanceCurrentLevelNumeric
-            // 
+            //
             _shuntResistanceCurrentLevelNumeric.DecimalPlaces = 4;
             _shuntResistanceCurrentLevelNumeric.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Bold);
             _shuntResistanceCurrentLevelNumeric.Increment = new decimal(new int[] { 1, 0, 0, 196608 });
@@ -592,9 +592,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _shuntResistanceCurrentLevelNumeric.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             ToolTip.SetToolTip(_shuntResistanceCurrentLevelNumeric, "Current Level in Amperes");
             _shuntResistanceCurrentLevelNumeric.Value = new decimal(new int[] { 1, 0, 0, 196608 });
-            // 
+            //
             // _shuntResistanceCurrentLevelNumericLabel
-            // 
+            //
             _shuntResistanceCurrentLevelNumericLabel.AutoSize = true;
             _shuntResistanceCurrentLevelNumericLabel.Location = new System.Drawing.Point(33, 31);
             _shuntResistanceCurrentLevelNumericLabel.Name = "_ShuntResistanceCurrentLevelNumericLabel";
@@ -602,9 +602,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _shuntResistanceCurrentLevelNumericLabel.TabIndex = 0;
             _shuntResistanceCurrentLevelNumericLabel.Text = "C&URRENT LEVEL [A]:";
             _shuntResistanceCurrentLevelNumericLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
+            //
             // _partsTabPage
-            // 
+            //
             _partsTabPage.Controls.Add(_partsLayout);
             _partsTabPage.Location = new System.Drawing.Point(4, 26);
             _partsTabPage.Name = "_PartsTabPage";
@@ -612,9 +612,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _partsTabPage.TabIndex = 5;
             _partsTabPage.Text = "PARTS";
             _partsTabPage.UseVisualStyleBackColor = true;
-            // 
+            //
             // _partsLayout
-            // 
+            //
             _partsLayout.ColumnCount = 3;
             _partsLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0f));
             _partsLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0f));
@@ -628,9 +628,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _partsLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0f));
             _partsLayout.Size = new System.Drawing.Size(573, 489);
             _partsLayout.TabIndex = 0;
-            // 
+            //
             // _partsPanel
-            // 
+            //
             _partsPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             _partsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             _partsPanel.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
@@ -639,9 +639,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _partsPanel.Name = "_PartsPanel";
             _partsPanel.Size = new System.Drawing.Size(527, 441);
             _partsPanel.TabIndex = 0;
-            // 
+            //
             // _messagesTabPage
-            // 
+            //
             _messagesTabPage.Controls.Add(_traceMessagesBox);
             _messagesTabPage.Location = new System.Drawing.Point(4, 26);
             _messagesTabPage.Name = "_MessagesTabPage";
@@ -649,9 +649,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _messagesTabPage.TabIndex = 1;
             _messagesTabPage.Text = "Log";
             _messagesTabPage.UseVisualStyleBackColor = true;
-            // 
+            //
             // _traceMessagesBox
-            // 
+            //
             _traceMessagesBox.BackColor = System.Drawing.SystemColors.Info;
             _traceMessagesBox.CausesValidation = false;
             _traceMessagesBox.Font = new System.Drawing.Font("Consolas", 8.0f, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
@@ -662,9 +662,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _traceMessagesBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             _traceMessagesBox.Size = new System.Drawing.Size(601, 471);
             _traceMessagesBox.TabIndex = 0;
-            // 
+            //
             // _partHeader
-            // 
+            //
             _partHeader.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             _partHeader.BackColor = System.Drawing.SystemColors.Desktop;
             _partHeader.Dock = System.Windows.Forms.DockStyle.Top;
@@ -674,9 +674,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _partHeader.Name = "_PartHeader";
             _partHeader.Size = new System.Drawing.Size(804, 26);
             _partHeader.TabIndex = 11;
-            // 
+            //
             // _thermalTransientHeader
-            // 
+            //
             _thermalTransientHeader.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             _thermalTransientHeader.BackColor = System.Drawing.Color.Black;
             _thermalTransientHeader.Dock = System.Windows.Forms.DockStyle.Top;
@@ -685,9 +685,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _thermalTransientHeader.Name = "_ThermalTransientHeader";
             _thermalTransientHeader.Size = new System.Drawing.Size(804, 64);
             _thermalTransientHeader.TabIndex = 10;
-            // 
+            //
             // _statusLabel
-            // 
+            //
             _statusLabel.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Bold);
             _statusLabel.Name = "_StatusLabel";
             _statusLabel.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
@@ -695,9 +695,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _statusLabel.Spring = true;
             _statusLabel.Text = "Loading...";
             _statusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
+            //
             // _statusStrip
-            // 
+            //
             _statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { _statusLabel });
             _statusStrip.Location = new System.Drawing.Point(0, 790);
             _statusStrip.Name = "_StatusStrip";
@@ -705,9 +705,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _statusStrip.Size = new System.Drawing.Size(804, 22);
             _statusStrip.TabIndex = 7;
             _statusStrip.Text = "StatusStrip1";
-            // 
+            //
             // _measurementsHeader
-            // 
+            //
             _measurementsHeader.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             _measurementsHeader.BackColor = System.Drawing.Color.Black;
             _measurementsHeader.Dock = System.Windows.Forms.DockStyle.Top;
@@ -716,9 +716,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _measurementsHeader.Name = "_MeasurementsHeader";
             _measurementsHeader.Size = new System.Drawing.Size(804, 55);
             _measurementsHeader.TabIndex = 9;
-            // 
+            //
             // MeterView
-            // 
+            //
             AutoScaleDimensions = new System.Drawing.SizeF(7.0f, 17.0f);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             Controls.Add(_splitContainer);

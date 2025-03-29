@@ -28,9 +28,9 @@ namespace NI.SimpleAsynchronousReadWrite
             this._availableResourcesLabel = new System.Windows.Forms.Label();
             this._resourceStringLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
+            //
             // availableResourcesListBox
-            // 
+            //
             this._availableResourcesListBox.Anchor = (( System.Windows.Forms.AnchorStyles ) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                 | System.Windows.Forms.AnchorStyles.Left)
                 | System.Windows.Forms.AnchorStyles.Right)));
@@ -40,9 +40,9 @@ namespace NI.SimpleAsynchronousReadWrite
             this._availableResourcesListBox.TabIndex = 0;
             this._availableResourcesListBox.DoubleClick += new System.EventHandler( this.AvailableResourcesListBox_DoubleClick );
             this._availableResourcesListBox.SelectedIndexChanged += new System.EventHandler( this.AvailableResourcesListBox_SelectedIndexChanged );
-            // 
+            //
             // okButton
-            // 
+            //
             this._okButton.Anchor = (( System.Windows.Forms.AnchorStyles ) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this._okButton.DialogResult = System.Windows.Forms.DialogResult.OK;
             this._okButton.Location = new System.Drawing.Point( 5, 187 );
@@ -50,9 +50,9 @@ namespace NI.SimpleAsynchronousReadWrite
             this._okButton.Size = new System.Drawing.Size( 77, 25 );
             this._okButton.TabIndex = 2;
             this._okButton.Text = "OK";
-            // 
+            //
             // closeButton
-            // 
+            //
             this._closeButton.Anchor = (( System.Windows.Forms.AnchorStyles ) ((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this._closeButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this._closeButton.Location = new System.Drawing.Point( 82, 187 );
@@ -60,9 +60,9 @@ namespace NI.SimpleAsynchronousReadWrite
             this._closeButton.Size = new System.Drawing.Size( 77, 25 );
             this._closeButton.TabIndex = 3;
             this._closeButton.Text = "Cancel";
-            // 
+            //
             // visaResourceNameTextBox
-            // 
+            //
             this._visaResourceNameTextBox.Anchor = (( System.Windows.Forms.AnchorStyles ) (((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
                 | System.Windows.Forms.AnchorStyles.Right)));
             this._visaResourceNameTextBox.Location = new System.Drawing.Point( 5, 157 );
@@ -70,9 +70,9 @@ namespace NI.SimpleAsynchronousReadWrite
             this._visaResourceNameTextBox.Size = new System.Drawing.Size( 282, 20 );
             this._visaResourceNameTextBox.TabIndex = 4;
             this._visaResourceNameTextBox.Text = "GPIB0::2::INSTR";
-            // 
+            //
             // AvailableResourcesLabel
-            // 
+            //
             this._availableResourcesLabel.Anchor = (( System.Windows.Forms.AnchorStyles ) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                 | System.Windows.Forms.AnchorStyles.Right)));
             this._availableResourcesLabel.Location = new System.Drawing.Point( 5, 5 );
@@ -80,9 +80,9 @@ namespace NI.SimpleAsynchronousReadWrite
             this._availableResourcesLabel.Size = new System.Drawing.Size( 279, 12 );
             this._availableResourcesLabel.TabIndex = 5;
             this._availableResourcesLabel.Text = "Available Resources:";
-            // 
+            //
             // ResourceStringLabel
-            // 
+            //
             this._resourceStringLabel.Anchor = (( System.Windows.Forms.AnchorStyles ) (((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
                 | System.Windows.Forms.AnchorStyles.Right)));
             this._resourceStringLabel.Location = new System.Drawing.Point( 5, 141 );
@@ -90,9 +90,9 @@ namespace NI.SimpleAsynchronousReadWrite
             this._resourceStringLabel.Size = new System.Drawing.Size( 279, 13 );
             this._resourceStringLabel.TabIndex = 6;
             this._resourceStringLabel.Text = "Resource String:";
-            // 
+            //
             // SelectResource
-            // 
+            //
             this.AcceptButton = this._okButton;
             this.AutoScaleBaseSize = new System.Drawing.Size( 5, 13 );
             this.CancelButton = this._closeButton;

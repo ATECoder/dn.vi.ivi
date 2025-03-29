@@ -336,7 +336,7 @@ public partial class MeterView : cc.isr.WinControls.ModelViewBase
             _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"Configuring Shunt MeasuredValue;. " );
             if ( this.Meter.IsDeviceOpen )
             {
-                // not required. 
+                // not required.
                 // Me.Meter.ClearExecutionState()
                 _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"Sending Shunt resistance configuration settings to the meter;. " );
                 this.Meter.ConfigureShuntResistance( this.Part.ShuntResistance );
@@ -383,7 +383,7 @@ public partial class MeterView : cc.isr.WinControls.ModelViewBase
             _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"Configuring Shunt MeasuredValue;. " );
             if ( this.Meter.IsDeviceOpen )
             {
-                // not required. 
+                // not required.
                 // Me.Meter.ClearExecutionState()
                 _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"Sending Shunt resistance configuration settings to the meter;. " );
                 this.Meter.ConfigureShuntResistanceChanged( this.Part.ShuntResistance );

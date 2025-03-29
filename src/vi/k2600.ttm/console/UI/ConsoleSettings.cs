@@ -14,7 +14,7 @@ public class ConsoleSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableOb
     /// fetched from the settings file.
     /// </summary>
     /// <value> True if this settings section exists in the settings file, false if not. </value>
-	[Description( "True if this settings section exists and was read from the JSon settings file." )]
+    [Description( "True if this settings section exists and was read from the JSon settings file." )]
     public bool Exists
     {
         get => this._exists;
@@ -37,7 +37,7 @@ public class ConsoleSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableOb
 
     /// <summary>   Gets or sets the 2600 resource model. </summary>
     /// <value> The k 2600 resource model. </value>
-	public string K2600ResourceModel
+    public string K2600ResourceModel
     {
         get => this._k2600ResourceModel;
         set => this.SetProperty( ref this._k2600ResourceModel, value );
@@ -47,7 +47,7 @@ public class ConsoleSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableOb
 
     /// <summary>   Gets or sets the resource name selection timeout. </summary>
     /// <value> The resource name selection timeout. </value>
-	public TimeSpan ResourceNameSelectionTimeout
+    public TimeSpan ResourceNameSelectionTimeout
     {
         get => this._resourceNameSelectionTimeout;
         set => this.SetProperty( ref this._resourceNameSelectionTimeout, value );
@@ -57,7 +57,7 @@ public class ConsoleSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableOb
 
     /// <summary>   Gets or sets the trace level. </summary>
     /// <value> The trace level. </value>
-	public Microsoft.Extensions.Logging.LogLevel TraceLevel
+    public Microsoft.Extensions.Logging.LogLevel TraceLevel
     {
         get => this._traceLevel;
         set => this.SetProperty( ref this._traceLevel, value );
@@ -67,7 +67,7 @@ public class ConsoleSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableOb
 
     /// <summary>   Gets or sets the closed caption. </summary>
     /// <value> The closed caption. </value>
-	[Description( "The caption to display when the resource is closed" )]
+    [Description( "The caption to display when the resource is closed" )]
     public string ClosedCaption
     {
         get => this._closedCaption;
@@ -80,7 +80,7 @@ public class ConsoleSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableOb
 
     /// <summary>   Gets or sets the ping timeout. </summary>
     /// <value> The ping timeout. </value>
-	[Description( "The time to allow for ping results to come back [sms]" )]
+    [Description( "The time to allow for ping results to come back [sms]" )]
     public TimeSpan PingTimeout
     {
         get => this._pingTimeout;
@@ -91,7 +91,7 @@ public class ConsoleSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableOb
 
     /// <summary>   Gets or sets the PingHops. </summary>
     /// <value> The PingHops. </value>
-	[Description( "The number of hops to set when pinging an instrument [1]" )]
+    [Description( "The number of hops to set when pinging an instrument [1]" )]
     public int PingHops
     {
         get => this._pingHops;
@@ -116,7 +116,7 @@ public class ConsoleSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableOb
 
     /// <summary> Gets the resource pinged. </summary>
     /// <value> The resource pinged. </value>
-	public virtual bool ResourcePinged
+    public virtual bool ResourcePinged
     {
         get
         {

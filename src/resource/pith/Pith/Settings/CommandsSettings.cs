@@ -16,7 +16,7 @@ public class CommandsSettings() : CommunityToolkit.Mvvm.ComponentModel.Observabl
     /// fetched from the settings file.
     /// </summary>
     /// <value> True if this settings section exists in the settings file, false if not. </value>
-	[Description( "True if this settings section exists and was read from the JSon settings file." )]
+    [Description( "True if this settings section exists and was read from the JSon settings file." )]
     public bool Exists
     {
         get => this._exists;
@@ -31,7 +31,7 @@ public class CommandsSettings() : CommunityToolkit.Mvvm.ComponentModel.Observabl
 
     /// <summary> Gets or sets the keep alive query command. </summary>
     /// <value> The keep alive query command. </value>
-	public virtual string KeepAliveQueryCommand
+    public virtual string KeepAliveQueryCommand
     {
         get => this._keepAliveQueryCommand;
         set => _ = this.SetProperty( ref this._keepAliveQueryCommand, value );
@@ -41,7 +41,7 @@ public class CommandsSettings() : CommunityToolkit.Mvvm.ComponentModel.Observabl
 
     /// <summary> Gets or sets the keep-alive command. </summary>
     /// <value> The keep-alive command. </value>
-	public virtual string KeepAliveCommand
+    public virtual string KeepAliveCommand
     {
         get => this._keepAliveCommand;
         set => _ = this.SetProperty( ref this._keepAliveCommand, value );
@@ -55,7 +55,7 @@ public class CommandsSettings() : CommunityToolkit.Mvvm.ComponentModel.Observabl
 
     /// <summary>   Gets or sets the non-distractive status clear command. </summary>
     /// <value> The non-distractive status clear command. </value>
-	[Description( "The non-distractive status clear command [*CLS]" )]
+    [Description( "The non-distractive status clear command [*CLS]" )]
     public virtual string ClearExecutionStateCommand
     {
         get => this._clearExecutionStateCommand;
@@ -66,7 +66,7 @@ public class CommandsSettings() : CommunityToolkit.Mvvm.ComponentModel.Observabl
 
     /// <summary>   Gets or sets the identification query command. </summary>
     /// <value> The identification query command. </value>
-	[Description( "The identification query command [*IDN?]" )]
+    [Description( "The identification query command [*IDN?]" )]
     public virtual string IdentificationQueryCommand
     {
         get => this._identificationQueryCommand;
@@ -75,12 +75,12 @@ public class CommandsSettings() : CommunityToolkit.Mvvm.ComponentModel.Observabl
 
     private string _operationCompleteCommand = "*OPC";
 
-    /// <summary>   Gets or sets the operation completion command. Note that 
+    /// <summary>   Gets or sets the operation completion command. Note that
     ///             the command must follow a the <see cref="ClearExecutionStateCommand"/>.
     ///             However, if the status clear command is distractive, the enabled standard events must be
     ///             restored. This is taken care of but the <see cref="SessionBase.ClearExecutionState"/> method. </summary>
     /// <value> The 'OPC' test command. </value>
-	[Description( "The operation completion invocation command [*CLS; *OPC]" )]
+    [Description( "The operation completion invocation command [*CLS; *OPC]" )]
     public virtual string OperationCompleteCommand
     {
         get => this._operationCompleteCommand;
@@ -91,7 +91,7 @@ public class CommandsSettings() : CommunityToolkit.Mvvm.ComponentModel.Observabl
 
     /// <summary>   Gets or sets the 'operation complete' query command. </summary>
     /// <value> The 'operation complete' query command. </value>
-	[Description( "The operation complete query command [*OPC?]" )]
+    [Description( "The operation complete query command [*OPC?]" )]
     public virtual string OperationCompletedQueryCommand
     {
         get => this._operationCompletedQueryCommand;
@@ -102,7 +102,7 @@ public class CommandsSettings() : CommunityToolkit.Mvvm.ComponentModel.Observabl
 
     /// <summary>   Gets or sets a message describing the operation completed reply. </summary>
     /// <value> A message describing the operation completed reply. </value>
-	[Description( "The operation complete reply message [1]" )]
+    [Description( "The operation complete reply message [1]" )]
     public virtual string OperationCompletedReplyMessage
     {
         get => this._operationCompletedReplyMessage;
@@ -113,7 +113,7 @@ public class CommandsSettings() : CommunityToolkit.Mvvm.ComponentModel.Observabl
 
     /// <summary>   Gets or sets the 'reset known state' command. </summary>
     /// <value> The 'reset known state' command. </value>
-	[Description( "The command to reset the instrument to its 'known' state [*RST]" )]
+    [Description( "The command to reset the instrument to its 'known' state [*RST]" )]
     public string ResetKnownStateCommand
     {
         get => this._resetKnownStateCommand;
@@ -124,7 +124,7 @@ public class CommandsSettings() : CommunityToolkit.Mvvm.ComponentModel.Observabl
 
     /// <summary> Gets or sets the service request enable command format. </summary>
     /// <value> The service request enable command format. </value>
-	[Description( "The service request enable command format [*SRE {0}]" )]
+    [Description( "The service request enable command format [*SRE {0}]" )]
     public string ServiceRequestEnableCommandFormat
     {
         get => this._serviceRequestEnableCommandFormat;
@@ -135,7 +135,7 @@ public class CommandsSettings() : CommunityToolkit.Mvvm.ComponentModel.Observabl
 
     /// <summary> Gets or sets the service request enable query command. </summary>
     /// <value> The service request enable query command. </value>
-	[Description( "The service request enable query command [*SRE?]" )]
+    [Description( "The service request enable query command [*SRE?]" )]
     public string ServiceRequestEnableQueryCommand
     {
         get => this._serviceRequestEnableQueryCommand;
@@ -146,7 +146,7 @@ public class CommandsSettings() : CommunityToolkit.Mvvm.ComponentModel.Observabl
 
     /// <summary> Gets or sets the Standard Event enable query command. </summary>
     /// <value> The Standard Event enable query command. </value>
-	[Description( "The Standard Event enable command format [*ESE {0}]" )]
+    [Description( "The Standard Event enable command format [*ESE {0}]" )]
     public string StandardEventEnableCommandFormat
     {
         get => this._standardEventEnableCommandFormat;
@@ -157,7 +157,7 @@ public class CommandsSettings() : CommunityToolkit.Mvvm.ComponentModel.Observabl
 
     /// <summary> Gets or sets the Standard Event enable query command. </summary>
     /// <value> The Standard Event enable query command. </value>
-	[Description( "The Standard Event enable query command [*ESE?]" )]
+    [Description( "The Standard Event enable query command [*ESE?]" )]
     public string StandardEventEnableQueryCommand
     {
         get => this._standardEventEnableQueryCommand;
@@ -168,7 +168,7 @@ public class CommandsSettings() : CommunityToolkit.Mvvm.ComponentModel.Observabl
 
     /// <summary> Gets or sets the Standard Event status query command. </summary>
     /// <value> The Standard Event query command. </value>
-	[Description( "The Standard Event status query command [*ESR?]" )]
+    [Description( "The Standard Event status query command [*ESR?]" )]
     public string StandardEventStatusQueryCommand
     {
         get => this._standardEventStatusQueryCommand;
@@ -179,7 +179,7 @@ public class CommandsSettings() : CommunityToolkit.Mvvm.ComponentModel.Observabl
 
     /// <summary>   Gets or sets the 'Read Status Byte query' command. </summary>
     /// <value> The 'Read Status Byte query' command. </value>
-	[Description( "The read status byte query command [*STB?]" )]
+    [Description( "The read status byte query command [*STB?]" )]
     public virtual string StatusByteQueryCommand
     {
         get => this._statusByteQueryCommand;
@@ -190,7 +190,7 @@ public class CommandsSettings() : CommunityToolkit.Mvvm.ComponentModel.Observabl
 
     /// <summary>   Gets or sets the wait to continue command. </summary>
     /// <value> The wait to continue. </value>
-	[Description( "The wait to continue command [*WAI]" )]
+    [Description( "The wait to continue command [*WAI]" )]
     public string WaitToContinueCommand
     {
         get => this._waitToContinueCommand;

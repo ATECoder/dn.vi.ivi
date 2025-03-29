@@ -5,7 +5,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
     public partial class PartHeader
     {
         // NOTE: The following procedure is required by the Windows Form Designer
-        // It can be modified using the Windows Form Designer.  
+        // It can be modified using the Windows Form Designer.
         // Do not modify it using the code editor.
         [DebuggerStepThrough()]
         private void InitializeComponent()
@@ -17,9 +17,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _partSerialNumberTextBox = new System.Windows.Forms.TextBox();
             _tableLayoutPanel.SuspendLayout();
             SuspendLayout();
-            // 
+            //
             // _tableLayoutPanel
-            // 
+            //
             _tableLayoutPanel.BackColor = System.Drawing.Color.Transparent;
             _tableLayoutPanel.ColumnCount = 5;
             _tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
@@ -40,9 +40,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0f));
             _tableLayoutPanel.Size = new System.Drawing.Size(670, 21);
             _tableLayoutPanel.TabIndex = 0;
-            // 
+            //
             // _partNumberTextBoxLabel
-            // 
+            //
             _partNumberTextBoxLabel.AutoSize = true;
             _partNumberTextBoxLabel.ForeColor = System.Drawing.Color.Yellow;
             _partNumberTextBoxLabel.Location = new System.Drawing.Point(3, 2);
@@ -51,9 +51,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _partNumberTextBoxLabel.Size = new System.Drawing.Size(98, 17);
             _partNumberTextBoxLabel.TabIndex = 1;
             _partNumberTextBoxLabel.Text = "PART NUMBER:";
-            // 
+            //
             // _partNumberTextBox
-            // 
+            //
             _partNumberTextBox.BackColor = System.Drawing.SystemColors.Desktop;
             _partNumberTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             _partNumberTextBox.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
@@ -63,9 +63,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _partNumberTextBox.Size = new System.Drawing.Size(164, 18);
             _partNumberTextBox.TabIndex = 2;
             _partNumberTextBox.Text = "10";
-            // 
+            //
             // _partSerialNumberTextBoxLabel
-            // 
+            //
             _partSerialNumberTextBoxLabel.AutoSize = true;
             _partSerialNumberTextBoxLabel.ForeColor = System.Drawing.Color.Yellow;
             _partSerialNumberTextBoxLabel.Location = new System.Drawing.Point(541, 2);
@@ -74,9 +74,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _partSerialNumberTextBoxLabel.Size = new System.Drawing.Size(33, 17);
             _partSerialNumberTextBoxLabel.TabIndex = 3;
             _partSerialNumberTextBoxLabel.Text = "S/N:";
-            // 
+            //
             // _partSerialNumberTextBox
-            // 
+            //
             _partSerialNumberTextBox.BackColor = System.Drawing.SystemColors.Desktop;
             _partSerialNumberTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             _partSerialNumberTextBox.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
@@ -86,9 +86,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _partSerialNumberTextBox.Size = new System.Drawing.Size(87, 18);
             _partSerialNumberTextBox.TabIndex = 4;
             _partSerialNumberTextBox.Text = "10";
-            // 
+            //
             // PartHeader
-            // 
+            //
             AutoScaleDimensions = new System.Drawing.SizeF(7.0f, 17.0f);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             BackColor = System.Drawing.Color.Black;

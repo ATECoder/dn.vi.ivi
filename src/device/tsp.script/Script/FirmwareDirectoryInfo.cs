@@ -11,7 +11,7 @@ public class FirmwareDirectoryInfo : CommunityToolkit.Mvvm.ComponentModel.Observ
 
     /// <summary>   Constructor. </summary>
     /// <remarks>   2024-09-09. </remarks>
-    /// <param name="parentFolderPath"> The full pathname of the parent folder file. </param>
+    /// <param name="parentFolderPath"> The full path name of the parent folder file. </param>
     /// <param name="filesFolderName"> Name of the folder for files.. </param>
     public FirmwareDirectoryInfo( string parentFolderPath, string filesFolderName )
     {
@@ -53,8 +53,8 @@ public class FirmwareDirectoryInfo : CommunityToolkit.Mvvm.ComponentModel.Observ
     /// Gets or sets the path of parent folder of the folder holding the firmware files. Empty if using the application
     /// folder.
     /// </summary>
-    /// <value> The full pathname of the parent folder file. </value>
-	[Description( "The path of parent folder of the folder holding the firmware files. May be empty if using the application folder." )]
+    /// <value> The full path name of the parent folder file. </value>
+    [Description( "The path of parent folder of the folder holding the firmware files. May be empty if using the application folder." )]
     public string ParentFolderPath
     {
         get => this._parentFolderPath;
@@ -74,7 +74,7 @@ public class FirmwareDirectoryInfo : CommunityToolkit.Mvvm.ComponentModel.Observ
 
     /// <summary>   Gets or sets the name of folder hosting the firmware files. </summary>
     /// <value> The name of the folder hosting the firmware files. </value>
-	[Description( "The name of the folder hosting the firmware files." )]
+    [Description( "The name of the folder hosting the firmware files." )]
     public string FilesFolderName
     {
         get => this._filesFolderName;
@@ -88,8 +88,8 @@ public class FirmwareDirectoryInfo : CommunityToolkit.Mvvm.ComponentModel.Observ
 
     private string _filesFolderPath = string.Empty;
 
-    /// <summary>   Gets the full pathname of the folder hosting the firmware files. </summary>
-    /// <value> The full pathname of the folder hosting the firmware files. </value>
+    /// <summary>   Gets the full path name of the folder hosting the firmware files. </summary>
+    /// <value> The full path name of the folder hosting the firmware files. </value>
     public string FilesFolderPath
     {
         get => this._filesFolderPath;

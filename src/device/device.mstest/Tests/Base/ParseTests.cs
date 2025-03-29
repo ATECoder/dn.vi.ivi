@@ -63,7 +63,7 @@ public abstract class ParseTests
     /// <value> The trace listener. </value>
     public LoggerTraceListener<ParseTests>? TraceListener { get; set; }
 
-    /// <summary> Initializes the test class instance before each test runs. </summary>											   
+    /// <summary> Initializes the test class instance before each test runs. </summary>
     public virtual void InitializeBeforeEachTest()
     {
         Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {TimeZoneInfo.Local}" );
@@ -84,7 +84,7 @@ public abstract class ParseTests
         }
     }
 
-    /// <summary> Cleans up the test class instance after each test has run. </summary>	   
+    /// <summary> Cleans up the test class instance after each test has run. </summary>
     public virtual void CleanupAfterEachTest()
     {
         Assert.IsNotNull( this.TraceListener );

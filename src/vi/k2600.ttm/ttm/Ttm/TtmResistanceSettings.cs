@@ -24,7 +24,7 @@ public class TtmResistanceSettings : CommunityToolkit.Mvvm.ComponentModel.Observ
     /// fetched from the settings file.
     /// </summary>
     /// <value> True if this settings section exists in the settings file, false if not. </value>
-	[Description( "True if this settings section exists and was read from the JSon settings file." )]
+    [Description( "True if this settings section exists and was read from the JSon settings file." )]
     public bool Exists
     {
         get => this._exists;
@@ -39,7 +39,7 @@ public class TtmResistanceSettings : CommunityToolkit.Mvvm.ComponentModel.Observ
 
     /// <summary>   Gets or sets the current source smu. </summary>
     /// <value> The current source smu. </value>
-	[Description( "Specifies the Bridge-Wire Measurement Current Source Source Measure Unit (smua)." )]
+    [Description( "Specifies the Bridge-Wire Measurement Current Source Source Measure Unit (smua)." )]
     public string CurrentSourceSmu
     {
         get => this._currentSourceSmu;
@@ -54,7 +54,7 @@ public class TtmResistanceSettings : CommunityToolkit.Mvvm.ComponentModel.Observ
 
     /// <summary>   Gets or sets the bridge-wire resistance measurement aperture. </summary>
     /// <value> The bridge-wire resistance measurement aperture. </value>
-	[Description( "Specifies the Bridge-Wire MeasuredValue Measurement Aperture (1)." )]
+    [Description( "Specifies the Bridge-Wire MeasuredValue Measurement Aperture (1)." )]
     public double Aperture
     {
         get => this._aperture;
@@ -65,7 +65,7 @@ public class TtmResistanceSettings : CommunityToolkit.Mvvm.ComponentModel.Observ
 
     /// <summary>   Gets or sets the bridge-wire resistance measurement aperture default. </summary>
     /// <value> The bridge-wire resistance measurement aperture default. </value>
-	[Description( "Specifies the Default Bridge-Wire MeasuredValue Measurement Aperture (1)." )]
+    [Description( "Specifies the Default Bridge-Wire MeasuredValue Measurement Aperture (1)." )]
     public double ApertureDefault
     {
         get => this._apertureDefault;
@@ -76,7 +76,7 @@ public class TtmResistanceSettings : CommunityToolkit.Mvvm.ComponentModel.Observ
 
     /// <summary>   Gets or sets the bridge-wire resistance measurement aperture Maximum. </summary>
     /// <value> The bridge-wire resistance measurement aperture Maximum. </value>
-	[Description( "Specifies the Maximum Bridge-Wire MeasuredValue Measurement Aperture (1)." )]
+    [Description( "Specifies the Maximum Bridge-Wire MeasuredValue Measurement Aperture (1)." )]
     public double ApertureMaximum
     {
         get => this._apertureMaximum;
@@ -87,7 +87,7 @@ public class TtmResistanceSettings : CommunityToolkit.Mvvm.ComponentModel.Observ
 
     /// <summary>   Gets or sets the bridge-wire resistance measurement aperture minimum. </summary>
     /// <value> The bridge-wire resistance measurement aperture minimum. </value>
-	[Description( "Specifies the Minimum Bridge-Wire MeasuredValue Measurement Aperture (1)." )]
+    [Description( "Specifies the Minimum Bridge-Wire MeasuredValue Measurement Aperture (1)." )]
     public double ApertureMinimum
     {
         get => this._apertureMinimum;
@@ -98,7 +98,7 @@ public class TtmResistanceSettings : CommunityToolkit.Mvvm.ComponentModel.Observ
 
     /// <summary>   Gets or sets the bridge-wire resistance measurement current source current level. </summary>
     /// <value> The bridge-wire resistance measurement current source current level. </value>
-	[Description( "Specifies the Bridge-Wire MeasuredValue Measurement Current Source Current Level (0.01)." )]
+    [Description( "Specifies the Bridge-Wire MeasuredValue Measurement Current Source Current Level (0.01)." )]
     public double CurrentLevel
     {
         get => this._currentLevel;
@@ -109,7 +109,7 @@ public class TtmResistanceSettings : CommunityToolkit.Mvvm.ComponentModel.Observ
 
     /// <summary>   Gets or sets the bridge-wire resistance measurement current source default current level. </summary>
     /// <value> The bridge-wire resistance measurement current source default current level. </value>
-	[Description( "Specifies the Bridge-Wire MeasuredValue Measurement Current Source Default Current Level (0.01)." )]
+    [Description( "Specifies the Bridge-Wire MeasuredValue Measurement Current Source Default Current Level (0.01)." )]
     public double CurrentLevelDefault
     {
         get => this._currentLevelDefault;
@@ -120,7 +120,7 @@ public class TtmResistanceSettings : CommunityToolkit.Mvvm.ComponentModel.Observ
 
     /// <summary>   Gets or sets the bridge-wire resistance measurement voltage source current Limit. </summary>
     /// <value> The bridge-wire resistance measurement voltage source current Limit. </value>
-	[Description( "Specifies the Bridge-Wire MeasuredValue Measurement Voltage Source Current Limit (0.01)." )]
+    [Description( "Specifies the Bridge-Wire MeasuredValue Measurement Voltage Source Current Limit (0.01)." )]
     public double CurrentLimit
     {
         get => this._currentLimit;
@@ -131,7 +131,7 @@ public class TtmResistanceSettings : CommunityToolkit.Mvvm.ComponentModel.Observ
 
     /// <summary>   Gets or sets the bridge-wire resistance measurement voltage source default current Limit. </summary>
     /// <value> The bridge-wire resistance measurement voltage source default current Limit. </value>
-	[Description( "Specifies the Bridge-Wire MeasuredValue Measurement Voltage Source Default Current Limit (0.01)." )]
+    [Description( "Specifies the Bridge-Wire MeasuredValue Measurement Voltage Source Default Current Limit (0.01)." )]
     public double CurrentLimitDefault
     {
         get => this._currentLimitDefault;
@@ -142,7 +142,7 @@ public class TtmResistanceSettings : CommunityToolkit.Mvvm.ComponentModel.Observ
 
     /// <summary>   Gets or sets the bridge-wire resistance measurement current Maximum. </summary>
     /// <value> The bridge-wire resistance measurement current Maximum. </value>
-	[Description( "Specifies the Bridge-Wire MeasuredValue Measurement Maximum Current (0.05)." )]
+    [Description( "Specifies the Bridge-Wire MeasuredValue Measurement Maximum Current (0.05)." )]
     public double CurrentMaximum
     {
         get => this._currentMaximum;
@@ -153,7 +153,7 @@ public class TtmResistanceSettings : CommunityToolkit.Mvvm.ComponentModel.Observ
 
     /// <summary>   Gets or sets the bridge-wire resistance measurement current minimum. </summary>
     /// <value> The bridge-wire resistance measurement current minimum. </value>
-	[Description( "Specifies the Bridge-Wire MeasuredValue Measurement Minimum Current (0.0001)." )]
+    [Description( "Specifies the Bridge-Wire MeasuredValue Measurement Minimum Current (0.0001)." )]
     public double CurrentMinimum
     {
         get => this._currentMinimum;
@@ -164,7 +164,7 @@ public class TtmResistanceSettings : CommunityToolkit.Mvvm.ComponentModel.Observ
 
     /// <summary>   Gets or sets the bridge-wire resistance measurement fail status. </summary>
     /// <value> The bridge-wire resistance measurement fail status. </value>
-	[Description( "Specifies the Bridge-Wire MeasuredValue Measurement Fail StatusReading (2)." )]
+    [Description( "Specifies the Bridge-Wire MeasuredValue Measurement Fail StatusReading (2)." )]
     public int FailStatus
     {
         get => this._failStatus;
@@ -175,7 +175,7 @@ public class TtmResistanceSettings : CommunityToolkit.Mvvm.ComponentModel.Observ
 
     /// <summary>   Gets or sets the bridge-wire resistance measurement default fail status. </summary>
     /// <value> The bridge-wire resistance measurement default fail status. </value>
-	[Description( "Specifies the Bridge-Wire MeasuredValue Measurement Default Fail StatusReading (2)." )]
+    [Description( "Specifies the Bridge-Wire MeasuredValue Measurement Default Fail StatusReading (2)." )]
     public int FailStatusDefault
     {
         get => this._failStatusDefault;
@@ -187,7 +187,7 @@ public class TtmResistanceSettings : CommunityToolkit.Mvvm.ComponentModel.Observ
 
     /// <summary>   Gets or sets the bridge-wire resistance measurement High limit. </summary>
     /// <value> The bridge-wire resistance measurement High limit. </value>
-	[Description( "Specifies the Bridge-Wire MeasuredValue Measurement High Limit (2.156)." )]
+    [Description( "Specifies the Bridge-Wire MeasuredValue Measurement High Limit (2.156)." )]
     public double HighLimit
     {
         get => this._highLimit;
@@ -198,7 +198,7 @@ public class TtmResistanceSettings : CommunityToolkit.Mvvm.ComponentModel.Observ
 
     /// <summary>   Gets or sets the bridge-wire resistance measurement High limit default. </summary>
     /// <value> The bridge-wire resistance measurement High limit default. </value>
-	[Description( "Specifies the Bridge-Wire MeasuredValue Measurement Default High Limit (2.156)." )]
+    [Description( "Specifies the Bridge-Wire MeasuredValue Measurement Default High Limit (2.156)." )]
     public double HighLimitDefault
     {
         get => this._highLimitDefault;
@@ -209,7 +209,7 @@ public class TtmResistanceSettings : CommunityToolkit.Mvvm.ComponentModel.Observ
 
     /// <summary>   Gets or sets the bridge-wire resistance measurement low limit. </summary>
     /// <value> The bridge-wire resistance measurement low limit. </value>
-	[Description( "Specifies the Bridge-Wire MeasuredValue Measurement Low Limit (1.85)." )]
+    [Description( "Specifies the Bridge-Wire MeasuredValue Measurement Low Limit (1.85)." )]
     public double LowLimit
     {
         get => this._lowLimit;
@@ -220,7 +220,7 @@ public class TtmResistanceSettings : CommunityToolkit.Mvvm.ComponentModel.Observ
 
     /// <summary>   Gets or sets the bridge-wire resistance measurement low limit default. </summary>
     /// <value> The bridge-wire resistance measurement low limit default. </value>
-	[Description( "Specifies the Bridge-Wire MeasuredValue Measurement Default Low Limit (1.85)." )]
+    [Description( "Specifies the Bridge-Wire MeasuredValue Measurement Default Low Limit (1.85)." )]
     public double LowLimitDefault
     {
         get => this._lowLimitDefault;
@@ -231,7 +231,7 @@ public class TtmResistanceSettings : CommunityToolkit.Mvvm.ComponentModel.Observ
 
     /// <summary>   Gets or sets the bridge-wire resistance measurement minimum. </summary>
     /// <value> The bridge-wire resistance measurement minimum. </value>
-	[Description( "Specifies the Bridge-Wire MeasuredValue Measurement Minimum (0.1)." )]
+    [Description( "Specifies the Bridge-Wire MeasuredValue Measurement Minimum (0.1)." )]
     public double Minimum
     {
         get => this._minimum;
@@ -242,7 +242,7 @@ public class TtmResistanceSettings : CommunityToolkit.Mvvm.ComponentModel.Observ
 
     /// <summary>   Gets or sets the bridge-wire resistance measurement Maximum. </summary>
     /// <value> The bridge-wire resistance measurement Maximum. </value>
-	[Description( "Specifies the Bridge-Wire MeasuredValue Measurement Maximum (10)." )]
+    [Description( "Specifies the Bridge-Wire MeasuredValue Measurement Maximum (10)." )]
     public double Maximum
     {
         get => this._maximum;
@@ -253,7 +253,7 @@ public class TtmResistanceSettings : CommunityToolkit.Mvvm.ComponentModel.Observ
 
     /// <summary>   Specifies the Source Meter Output Option [Current; 0]. </summary>
     /// <value> The source output. </value>
-	[Description( "Specifies the Source Meter Output Option (Current; 0)" )]
+    [Description( "Specifies the Source Meter Output Option (Current; 0)" )]
     public SourceOutputOption SourceOutput
     {
         get => this._sourceOutput;
@@ -264,7 +264,7 @@ public class TtmResistanceSettings : CommunityToolkit.Mvvm.ComponentModel.Observ
 
     /// <summary>   Specifies the Source Meter Default Source Output Option [Current; 0]. </summary>
     /// <value> The source output. </value>
-	[Description( "Specifies the Source Meter Default Source Output Option (Current; 0)" )]
+    [Description( "Specifies the Source Meter Default Source Output Option (Current; 0)" )]
     public SourceOutputOption SourceOutputDefault
     {
         get => this._sourceOutput;
@@ -275,7 +275,7 @@ public class TtmResistanceSettings : CommunityToolkit.Mvvm.ComponentModel.Observ
 
     /// <summary>   Gets or sets the bridge-wire resistance measurement voltage source voltage Level. </summary>
     /// <value> The bridge-wire resistance measurement voltage source voltage Level. </value>
-	[Description( "Specifies the Bridge-Wire MeasuredValue Current Source Voltage Level (0.1)." )]
+    [Description( "Specifies the Bridge-Wire MeasuredValue Current Source Voltage Level (0.1)." )]
     public double VoltageLevel
     {
         get => this._voltageLevel;
@@ -286,7 +286,7 @@ public class TtmResistanceSettings : CommunityToolkit.Mvvm.ComponentModel.Observ
 
     /// <summary>   Gets or sets the bridge-wire resistance measurement voltage source default voltage Level. </summary>
     /// <value> The bridge-wire resistance measurement voltage source default voltage Level. </value>
-	[Description( "Specifies the Bridge-Wire MeasuredValue Current Source Default Voltage Level (0.1)." )]
+    [Description( "Specifies the Bridge-Wire MeasuredValue Current Source Default Voltage Level (0.1)." )]
     public double VoltageLevelDefault
     {
         get => this._voltageLevelDefault;
@@ -297,7 +297,7 @@ public class TtmResistanceSettings : CommunityToolkit.Mvvm.ComponentModel.Observ
 
     /// <summary>   Gets or sets the bridge-wire resistance measurement current source voltage limit. </summary>
     /// <value> The bridge-wire resistance measurement current source voltage limit. </value>
-	[Description( "Specifies the Bridge-Wire MeasuredValue Current Source Voltage Limit (0.1)." )]
+    [Description( "Specifies the Bridge-Wire MeasuredValue Current Source Voltage Limit (0.1)." )]
     public double VoltageLimit
     {
         get => this._voltageLimit;
@@ -308,7 +308,7 @@ public class TtmResistanceSettings : CommunityToolkit.Mvvm.ComponentModel.Observ
 
     /// <summary>   Gets or sets the bridge-wire resistance measurement current source default voltage limit. </summary>
     /// <value> The bridge-wire resistance measurement current source default voltage limit. </value>
-	[Description( "Specifies the Bridge-Wire MeasuredValue Current Source Default Voltage Limit (0.1)." )]
+    [Description( "Specifies the Bridge-Wire MeasuredValue Current Source Default Voltage Limit (0.1)." )]
     public double VoltageLimitDefault
     {
         get => this._voltageLimitDefault;
@@ -319,7 +319,7 @@ public class TtmResistanceSettings : CommunityToolkit.Mvvm.ComponentModel.Observ
 
     /// <summary>   Gets or sets the bridge-wire resistance measurement voltage maximum. </summary>
     /// <value> The bridge-wire resistance measurement voltage maximum. </value>
-	[Description( "Specifies the Bridge-Wire MeasuredValue Maximum Voltage Limit (0.1)." )]
+    [Description( "Specifies the Bridge-Wire MeasuredValue Maximum Voltage Limit (0.1)." )]
     public double VoltageMaximum
     {
         get => this._voltageMaximum;
@@ -330,7 +330,7 @@ public class TtmResistanceSettings : CommunityToolkit.Mvvm.ComponentModel.Observ
 
     /// <summary>   Gets or sets the bridge-wire resistance measurement voltage Minimum. </summary>
     /// <value> The bridge-wire resistance measurement voltage Minimum. </value>
-	[Description( "Specifies the Bridge-Wire MeasuredValue Minimum Voltage Limit (0.001)." )]
+    [Description( "Specifies the Bridge-Wire MeasuredValue Minimum Voltage Limit (0.001)." )]
     public double VoltageMinimum
     {
         get => this._voltageMinimum;

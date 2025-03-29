@@ -7,7 +7,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls;
 
 /// <summary>   A settings. </summary>
 /// <remarks>   David, 2021-02-01. </remarks>
-public class LotSettings() : INotifyPropertyChanged
+public class LotSettings() : System.ComponentModel.INotifyPropertyChanged
 {
     #region " notify property change implementation "
 
@@ -143,7 +143,7 @@ public class LotSettings() : INotifyPropertyChanged
 
     /// <summary>   Gets or sets the lot number. </summary>
     /// <value> The lot number. </value>
-	public string LotNumber
+    public string LotNumber
     {
         get;
         set => this.SetProperty( ref field, value );
@@ -175,18 +175,18 @@ public class LotSettings() : INotifyPropertyChanged
 
     /// <summary>   Gets the pathname of the measurements folder. </summary>
     /// <value> The pathname of the measurements folder. </value>
-	public string MeasurementsFolder => System.IO.Path.Combine( this.DataFolder, this.MeasurementsFolderName );
+    public string MeasurementsFolder => System.IO.Path.Combine( this.DataFolder, this.MeasurementsFolderName );
 
-    /// <summary>   Gets or sets the full pathname of the parts file. </summary>
-    /// <value> The full pathname of the parts file. </value>
+    /// <summary>   Gets or sets the full path name of the parts file. </summary>
+    /// <value> The full path name of the parts file. </value>
     public string PartsFileName
     {
         get;
         set => this.SetProperty( ref field, value );
     } = "Part1.csv";
 
-    /// <summary>   Gets the full pathname of the parts file. </summary>
-    /// <value> The full pathname of the parts file. </value>
+    /// <summary>   Gets the full path name of the parts file. </summary>
+    /// <value> The full path name of the parts file. </value>
     [JsonIgnore]
     public string PartsFilePath => System.IO.Path.Combine( this.MeasurementsFolder, this.PartsFileName );
 
@@ -214,16 +214,16 @@ public class LotSettings() : INotifyPropertyChanged
         set => this.SetProperty( ref field, value );
     } = string.Empty;
 
-    /// <summary>   Gets or sets the full pathname of the trace file. </summary>
-    /// <value> The full pathname of the trace file. </value>
+    /// <summary>   Gets or sets the full path name of the trace file. </summary>
+    /// <value> The full path name of the trace file. </value>
     public string TraceFileName
     {
         get;
         set => this.SetProperty( ref field, value );
     } = "Trace1.csv";
 
-    /// <summary>   Gets the full pathname of the trace file. </summary>
-    /// <value> The full pathname of the trace file. </value>
+    /// <summary>   Gets the full path name of the trace file. </summary>
+    /// <value> The full path name of the trace file. </value>
     [JsonIgnore]
     public string TraceFilePath => System.IO.Path.Combine( this.MeasurementsFolder, this.TraceFileName );
 

@@ -9,7 +9,7 @@ public class FirmwareFileInfo : CommunityToolkit.Mvvm.ComponentModel.ObservableO
     /// <remarks>   2024-09-19. </remarks>
     /// <exception cref="ArgumentException">    Thrown when one or more arguments have unsupported or
     ///                                         illegal values. </exception>
-    /// <param name="parentFolderPath"> Full pathname of the parent folder file. </param>
+    /// <param name="parentFolderPath"> full path name of the parent folder file. </param>
     /// <param name="filesFolderName">  Pathname of the files folder. </param>
     public FirmwareFileInfo( string parentFolderPath, string filesFolderName )
     {

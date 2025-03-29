@@ -37,7 +37,7 @@ public class MeasureSequencer : CommunityToolkit.Mvvm.ComponentModel.ObservableO
     public void Dispose()
     {
         this.Dispose( true );
-        // Take this object off the finalization(Queue) and prevent finalization code 
+        // Take this object off the finalization(Queue) and prevent finalization code
         // from executing a second time.
         GC.SuppressFinalize( this );
     }

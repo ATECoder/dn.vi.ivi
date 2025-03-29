@@ -83,12 +83,12 @@ internal static partial class Asserts
             : "voltage source current limit";
         double current;
         bool success;
-        // The legacy driver level setter sets a current value. 
+        // The legacy driver level setter sets a current value.
         // This is the current level of the current source or the current limit of a voltage source.
         if ( Ttm.MeterSubsystem.LegacyFirmware || SourceOutputOption.Current == sourceOutputOption )
         {
             // With the legacy firmware or with the current source, the level setter sets the current level (ir.level and fr.level) of the source.
-            // The legacy driver current level getter reads these levels (ir.level and fr.level) thus reading 
+            // The legacy driver current level getter reads these levels (ir.level and fr.level) thus reading
             // the current level that was set by the level setter.
             success = legacyDevice.ColdResistanceCurrentLevelGetter();
             Assert.IsTrue( success, $"The {modality} getter should succeed." );
@@ -97,7 +97,7 @@ internal static partial class Asserts
         else
         {
             // With the new firmware and voltage source, the level setter sets the current limit (ir.limit and fr.limit) of the source.
-            // The legacy driver voltage limit getter reads these limits (ir.limit and fr.limit) thus reading 
+            // The legacy driver voltage limit getter reads these limits (ir.limit and fr.limit) thus reading
             // current that was set by the level setter.
             success = legacyDevice.ColdResistanceVoltageLimitGetter();
             Assert.IsTrue( success, $"The {modality} getter should succeed." );
@@ -117,7 +117,7 @@ internal static partial class Asserts
         Assert.IsNotNull( legacyDevice, $"{nameof( legacyDevice )} should not be null." );
         Assert.IsTrue( legacyDevice.IsConnected, "The driver should be connected if the session opened." );
         double voltage;
-        // The legacy driver limit setter sets a voltage value. 
+        // The legacy driver limit setter sets a voltage value.
         // This is the voltage limit of the current source or the voltage level of a voltage source.
         string modality = (Ttm.MeterSubsystem.LegacyFirmware || SourceOutputOption.Current == sourceOutputOption)
             ? "current source voltage limit"

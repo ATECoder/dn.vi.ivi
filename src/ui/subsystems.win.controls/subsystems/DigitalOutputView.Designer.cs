@@ -11,7 +11,7 @@ namespace cc.isr.VI.SubsystemsWinControls
         private System.ComponentModel.IContainer components;
 
         // NOTE: The following procedure is required by the Windows Form Designer
-        // It can be modified using the Windows Form Designer.  
+        // It can be modified using the Windows Form Designer.
         // Do not modify it using the code editor.
         [DebuggerStepThrough()]
         private void InitializeComponent()
@@ -33,9 +33,9 @@ namespace cc.isr.VI.SubsystemsWinControls
             _layout.SuspendLayout();
             _subsystemToolStrip.SuspendLayout();
             SuspendLayout();
-            // 
+            //
             // _layout
-            // 
+            //
             _layout.ColumnCount = 2;
             _layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100.0f));
             _layout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 2.0f));
@@ -57,9 +57,9 @@ namespace cc.isr.VI.SubsystemsWinControls
             _layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 20.0f));
             _layout.Size = new System.Drawing.Size(423, 352);
             _layout.TabIndex = 0;
-            // 
+            //
             // _infoTextBox
-            // 
+            //
             _infoTextBox.Dock = DockStyle.Fill;
             _infoTextBox.Location = new System.Drawing.Point(3, 134);
             _infoTextBox.Margin = new Padding(3, 4, 3, 4);
@@ -70,9 +70,9 @@ namespace cc.isr.VI.SubsystemsWinControls
             _infoTextBox.Size = new System.Drawing.Size(415, 214);
             _infoTextBox.TabIndex = 14;
             _infoTextBox.Text = "<info>";
-            // 
+            //
             // _digitalOutputLine1View
-            // 
+            //
             _digitalOutputLine1View.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             _digitalOutputLine1View.Dock = DockStyle.Top;
             _digitalOutputLine1View.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
@@ -85,9 +85,9 @@ namespace cc.isr.VI.SubsystemsWinControls
             _digitalOutputLine1View.PulseWidth = TimeSpan.Parse("00:00:00");
             _digitalOutputLine1View.Size = new System.Drawing.Size(415, 30);
             _digitalOutputLine1View.TabIndex = 0;
-            // 
+            //
             // _digitalOutputLine2View
-            // 
+            //
             _digitalOutputLine2View.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             _digitalOutputLine2View.Dock = DockStyle.Top;
             _digitalOutputLine2View.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
@@ -100,9 +100,9 @@ namespace cc.isr.VI.SubsystemsWinControls
             _digitalOutputLine2View.PulseWidth = TimeSpan.Parse("00:00:00");
             _digitalOutputLine2View.Size = new System.Drawing.Size(415, 28);
             _digitalOutputLine2View.TabIndex = 1;
-            // 
+            //
             // _digitalOutputLine3View
-            // 
+            //
             _digitalOutputLine3View.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             _digitalOutputLine3View.Dock = DockStyle.Top;
             _digitalOutputLine3View.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
@@ -115,9 +115,9 @@ namespace cc.isr.VI.SubsystemsWinControls
             _digitalOutputLine3View.PulseWidth = TimeSpan.Parse("00:00:00");
             _digitalOutputLine3View.Size = new System.Drawing.Size(415, 29);
             _digitalOutputLine3View.TabIndex = 2;
-            // 
+            //
             // _subsystemToolStrip
-            // 
+            //
             _subsystemToolStrip.AutoSize = false;
             _subsystemToolStrip.BackColor = System.Drawing.Color.Transparent;
             _subsystemToolStrip.GripMargin = new Padding(0);
@@ -128,9 +128,9 @@ namespace cc.isr.VI.SubsystemsWinControls
             _subsystemToolStrip.Stretch = true;
             _subsystemToolStrip.TabIndex = 9;
             _subsystemToolStrip.Text = "Digital Out";
-            // 
+            //
             // _subsystemSplitButton
-            // 
+            //
             _subsystemSplitButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
             _subsystemSplitButton.DropDownItems.AddRange(new ToolStripItem[] { _applySettingsMenuItem, _readSettingsMenuItem });
             _subsystemSplitButton.Font = new System.Drawing.Font("Segoe UI", 9.0f, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, 0);
@@ -140,21 +140,21 @@ namespace cc.isr.VI.SubsystemsWinControls
             _subsystemSplitButton.Size = new System.Drawing.Size(82, 22);
             _subsystemSplitButton.Text = "Digital Out";
             _subsystemSplitButton.ToolTipText = "Subsystem actions split button";
-            // 
+            //
             // _applySettingsMenuItem
-            // 
+            //
             _applySettingsMenuItem.Name = "_applySettingsMenuItem";
             _applySettingsMenuItem.Size = new System.Drawing.Size(150, 22);
             _applySettingsMenuItem.Text = "Apply Settings";
-            // 
+            //
             // _readSettingsMenuItem
-            // 
+            //
             _readSettingsMenuItem.Name = "_ReadSettingsMenuItem";
             _readSettingsMenuItem.Size = new System.Drawing.Size(150, 22);
             _readSettingsMenuItem.Text = "Read Settings";
-            // 
+            //
             // _strobeButton
-            // 
+            //
             _strobeButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
             _strobeButton.Image = (System.Drawing.Image)resources.GetObject("_StrobeButton.Image");
             _strobeButton.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -162,9 +162,9 @@ namespace cc.isr.VI.SubsystemsWinControls
             _strobeButton.Size = new System.Drawing.Size(45, 22);
             _strobeButton.Text = "Strobe";
             _strobeButton.ToolTipText = "Outputs a binning strop signal";
-            // 
+            //
             // DigitalOutputView
-            // 
+            //
             AutoScaleDimensions = new System.Drawing.SizeF(7.0f, 17.0f);
             AutoScaleMode = AutoScaleMode.Font;
             BorderStyle = BorderStyle.FixedSingle;

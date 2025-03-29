@@ -104,8 +104,8 @@ public partial class Session : Pith.SessionBase
     /// <param name="resourceModel"> The resource model. </param>
     protected override void OnSessionOpen( string resourceName, string resourceModel )
     {
-        // 6824: disable events if enabled. Apparently, the events are enabled, 
-        // which causes issues trying to read STB to detect message available as VISA might be 
+        // 6824: disable events if enabled. Apparently, the events are enabled,
+        // which causes issues trying to read STB to detect message available as VISA might be
         // reading the STB byte already.
         this.VisaSession?.DisableEvent( EventType.ServiceRequest );
         // reads session defaults.

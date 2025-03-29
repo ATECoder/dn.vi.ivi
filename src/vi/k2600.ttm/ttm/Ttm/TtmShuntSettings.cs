@@ -23,7 +23,7 @@ public class TtmShuntSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
     /// fetched from the settings file.
     /// </summary>
     /// <value> True if this settings section exists in the settings file, false if not. </value>
-	[Description( "True if this settings section exists and was read from the JSon settings file." )]
+    [Description( "True if this settings section exists and was read from the JSon settings file." )]
     public bool Exists
     {
         get => this._exists;
@@ -38,7 +38,7 @@ public class TtmShuntSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     /// <summary>   Gets or sets the Shunt MeasuredValue Measurement aperture. </summary>
     /// <value> The Shunt MeasuredValue Measurement aperture. </value>
-	[Description( "Specifies the Shunt MeasuredValue Measurement Aperture (0.1)." )]
+    [Description( "Specifies the Shunt MeasuredValue Measurement Aperture (0.1)." )]
     public double Aperture
     {
         get => this._aperture;
