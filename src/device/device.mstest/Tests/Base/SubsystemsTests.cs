@@ -148,8 +148,8 @@ public abstract class SubsystemsTests
     /// <summary>   Opens session and check subsystems status. </summary>
     /// <remarks>   2024-08-01. </remarks>
     /// <param name="readErrorEnabled"> True to read errors; otherwise false. </param>
-    /// <param name="subsystemsInfo">   Information describing the subsystems. </param>
-    protected abstract void AssertOpenSessionCheckStatus( bool readErrorEnabled );
+    /// <param name="validateModel">    (Optional) [false] Information describing the subsystems. </param>
+    protected abstract void AssertOpenSessionCheckStatus( bool readErrorEnabled, bool validateModel = false );
 
     /// <summary>   (Unit Test Method) opens session check status should pass. </summary>
     /// <remarks>   David, 2021-07-04. </remarks>

@@ -80,10 +80,8 @@ public class SubsystemsTests : Device.Tests.Base.SubsystemsTests
     /// <summary>   Assert open session check status. </summary>
     /// <remarks>   David, 2020-10-12. </remarks>
     /// <param name="readErrorEnabled"> True to enable, false to disable the read error. </param>
-    /// <param name="resourceInfo">     Information describing the resource. </param>
-    /// <param name="statusSettings">   The status settings. </param>
-    /// <param name="subsystemsInfo">   Information describing the subsystems. </param>
-    protected override void AssertOpenSessionCheckStatus( bool readErrorEnabled )
+    /// <param name="validateModel">    (Optional) [false] Information describing the resource. </param>
+    protected override void AssertOpenSessionCheckStatus( bool readErrorEnabled, bool validateModel = false )
     {
         Assert.IsNotNull( this.Device );
         Assert.IsNotNull( this.Device.Session );
@@ -100,7 +98,8 @@ public class SubsystemsTests : Device.Tests.Base.SubsystemsTests
             cc.isr.VI.Device.Tests.Asserts.AssertDeviceShouldPresetKnownState( this.Device );
             cc.isr.VI.Device.Tests.Asserts.AssertDeviceShouldInitializeKnownState( this.Device );
             cc.isr.VI.Device.Tests.Asserts.AssertSessionOpenValuesShouldMatch( this.Device.Session, this.ResourceSettings );
-            cc.isr.VI.Device.Tests.Asserts.AssertDeviceModelShouldMatch( this.Device.StatusSubsystemBase, this.ResourceSettings );
+            if ( validateModel )
+                cc.isr.VI.Device.Tests.Asserts.AssertDeviceModelShouldMatch( this.Device.StatusSubsystemBase, this.ResourceSettings );
             cc.isr.VI.Device.Tests.Asserts.AssertDeviceErrorsShouldMatch( this.Device.StatusSubsystemBase, this.DeviceErrorsSettings );
             cc.isr.VI.Device.Tests.Asserts.AssertTerminationValuesShouldMatch( this.Device.Session, AllSettings.Instance.IOSettings );
             cc.isr.VI.Device.Tests.Asserts.AssertLineFrequencyShouldMatch( this.Device.StatusSubsystem, AllSettings.Instance.SystemSubsystemSettings );
