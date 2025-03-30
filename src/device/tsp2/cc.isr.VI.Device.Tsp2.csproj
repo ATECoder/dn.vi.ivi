@@ -7,10 +7,10 @@
     <Nullable>enable</Nullable>
 
     <!-- Assembly Info -->
-    <RootNamespace>cc.isr.IO</RootNamespace>
-    <AssemblyName>cc.isr.IO.Device.Tsp2</AssemblyName>
-    <ApplicationTitle>cc.isr.IO.Device.Tsp2</ApplicationTitle>
-    <ApplicationId>cc.isr.io.device.tsp2</ApplicationId>
+    <RootNamespace>cc.isr.VI</RootNamespace>
+    <AssemblyName>cc.isr.VI.Device.Tsp2</AssemblyName>
+    <ApplicationTitle>cc.isr.VI.Device.Tsp2</ApplicationTitle>
+    <ApplicationId>cc.isr.VI.device.tsp2</ApplicationId>
 
     <GenerateAssemblyVersionAttribute>true</GenerateAssemblyVersionAttribute>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>

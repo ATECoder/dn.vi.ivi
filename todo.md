@@ -1,5 +1,8 @@
 # VI top Level To-Do
 
+## Device TSP2
+* fixed the code (see TSP implementation).
+
 ## Buffered Reading
 * use [channels](https://learn.microsoft.com/en-us/dotnet/core/extensions/channels)
 

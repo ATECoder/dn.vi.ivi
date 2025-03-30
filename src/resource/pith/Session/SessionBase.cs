@@ -330,6 +330,29 @@ public abstract partial class SessionBase : CommunityToolkit.Mvvm.ComponentModel
         this.ClearsDeviceStructures = false;
     }
 
+    private void ApplyTsp2Syntax()
+    {
+        // the session instance exists at this point.
+        // TO_DO: Needs updating based on the Apply Tsp Syntax method
+        this.ClearExecutionStateCommand = Syntax.Tsp.Lua.ClearExecutionStateCommand;
+        this.OperationCompletedQueryCommand = Syntax.Tsp.Status.OperationEventConditionQueryCommand;
+        this.ResetKnownStateCommand = Syntax.Tsp.Lua.ResetKnownStateCommand;
+        this.ServiceRequestEnableCommandFormat = Syntax.Tsp.Status.ServiceRequestEnableCommandFormat;
+        this.ServiceRequestEnableQueryCommand = Syntax.Tsp.Status.ServiceRequestEnableQueryCommand;
+        this.StandardEventStatusQueryCommand = Syntax.Tsp.Status.StandardEventStatusQueryCommand;
+        this.StandardEventEnableQueryCommand = Syntax.Tsp.Status.StandardEventEnableQueryCommand;
+        this.StandardServiceEnableCommandFormat = Syntax.Tsp.Status.StandardServiceEnableCommandFormat;
+        this.WaitCommand = Syntax.Tsp.Lua.WaitCommand;
+        this.ErrorAvailableBitmask = Pith.ServiceRequests.ErrorAvailable;
+        this.MeasurementEventBitmask = Pith.ServiceRequests.MeasurementEvent;
+        this.MessageAvailableBitmask = Pith.ServiceRequests.MessageAvailable;
+        this.OperationEventSummaryBitmask = Pith.ServiceRequests.OperationEvent;
+        this.QuestionableEventBitmask = Pith.ServiceRequests.QuestionableEvent;
+        this.RequestingServiceBitmask = Pith.ServiceRequests.RequestingService;
+        this.StandardEventSummaryBitmask = Pith.ServiceRequests.StandardEventSummary;
+        this.SystemEventBitmask = Pith.ServiceRequests.SystemEvent;
+    }
+
     #endregion
 
     #region " delays with or without do events actions "
@@ -1556,7 +1579,9 @@ public abstract partial class SessionBase : CommunityToolkit.Mvvm.ComponentModel
 
         if ( this.SplitCommonCommands && dataToWrite.Contains( compound_Commands_Separator ) )
         {
+#pragma warning disable IDE0306 // Simplify collection initialization
             Queue<string> q = new( dataToWrite.Split( compound_Commands_Separator ) );
+#pragma warning restore IDE0306 // Simplify collection initialization
             while ( q.Any() )
             {
                 string command = q.Dequeue().Trim();

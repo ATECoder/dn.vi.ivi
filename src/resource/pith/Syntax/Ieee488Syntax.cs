@@ -149,6 +149,9 @@ public enum CommandLanguage
 
     /// <summary>   An enum constant representing the tsp option. </summary>
     Tsp = 1,
+
+    /// <summary>   An enum constant representing the tsp2 option. </summary>
+    Tsp2 = 1,
 }
 
 /// <summary> Values that represent IEEE 488.2 Command Code. </summary>
