@@ -48,7 +48,7 @@ public partial class VisaSessionTests : Device.Tests.Base.VisaSessionTests
         cc.isr.VI.Tsp.VisaSession visaSession = new();
         Assert.IsNotNull( visaSession.Session );
         Assert.AreEqual( Syntax.Tsp.Lua.ClearExecutionStateCommand, visaSession.Session.ClearExecutionStateCommand );
-        visaSession.Session.ReadSettings( typeof( VisaSessionTests ), ".Session" );
+        visaSession.Session.ReadSettings( this.GetType().Assembly, ".Session", true, true );
         Assert.IsTrue( visaSession.Session.TimingSettings.Exists, $"{nameof( VisaSession )}.{nameof( K2600Device.Session )}.{nameof( VisaSession.Session.TimingSettings )} does not exist." );
 
         this.VisaSessionBase = visaSession;

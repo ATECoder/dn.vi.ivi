@@ -74,7 +74,7 @@ public class FirmwareTests
         this.TestSiteSettings = Settings.AllSettings.Instance.TestSiteSettings;
 
         // read the TTM Driver settings and throw if not found.
-        this.TtmSettings.ReadSettings( this.GetType(), ".Driver" );
+        this.TtmSettings.ReadSettings( this.GetType().Assembly, ".Driver", true, true );
         cc.isr.VI.Tsp.K2600.Ttm.TtmMeterSettings meterSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmMeterSettings;
         Assert.IsTrue( meterSettings.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmMeterSettings )} should exist." );
         cc.isr.VI.Tsp.K2600.Ttm.TtmResistanceSettings resistanceSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmResistanceSettings;
@@ -87,7 +87,7 @@ public class FirmwareTests
         Assert.AreEqual( cc.isr.VI.Syntax.Tsp.Lua.ClearExecutionStateCommand, visaSession.Session.ClearExecutionStateCommand );
 
         // read settings and throw if not found.
-        visaSession.Session.ReadSettings( typeof( FirmwareTests ), ".Session" );
+        visaSession.Session.ReadSettings( this.GetType().Assembly, ".Session", true, true );
         this.ResourceSettings = visaSession.Session.ResourceSettings;
 
         this.VisaSessionBase = visaSession;

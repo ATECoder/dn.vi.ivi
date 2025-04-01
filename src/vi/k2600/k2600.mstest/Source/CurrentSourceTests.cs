@@ -1,5 +1,4 @@
 using System;
-using cc.isr.VI.Tsp.K2600.MSTest.Visa;
 
 namespace cc.isr.VI.Tsp.K2600.MSTest.Source;
 
@@ -54,7 +53,7 @@ public class CurrentSourceTests : Device.Tests.Base.TestBase
         this.Device = K2600Device.Create();
         Assert.IsNotNull( this.Device );
         Assert.IsNotNull( this.Device.Session );
-        this.Device.Session.ReadSettings( typeof( VisaSessionTests ), ".Session" );
+        this.Device.Session.ReadSettings( this.GetType().Assembly, ".Session", true, true );
         this.VisaSessionBase = this.Device;
         base.InitializeBeforeEachTest();
     }

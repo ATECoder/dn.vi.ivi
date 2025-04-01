@@ -1,5 +1,4 @@
 using System;
-using cc.isr.VI.Tsp.K2600.MSTest.Visa;
 
 namespace cc.isr.VI.Tsp.K2600.MSTest.Resource;
 
@@ -52,7 +51,7 @@ public class ResourceManagerTests : Device.Tests.Base.ResourceManagerTests
         this.Device = K2600Device.Create();
         Assert.IsNotNull( this.Device );
         Assert.IsNotNull( this.Device.Session );
-        this.Device.Session.ReadSettings( typeof( VisaSessionTests ), ".Session" );
+        this.Device.Session.ReadSettings( this.GetType().Assembly, ".Session", true, true );
         Assert.IsTrue( this.Device.Session.TimingSettings.Exists, $"{nameof( K2600Device )}.{nameof( K2600Device.Session )}.{nameof( K2600Device.Session.TimingSettings )} does not exist." );
         this.VisaSessionBase = this.Device;
         base.InitializeBeforeEachTest();

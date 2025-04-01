@@ -17,7 +17,7 @@ public partial class MainForm : Form
     /// </summary>
     private void InitializeComponent()
     {
-        System.ComponentModel.ComponentResourceManager resources = new( typeof( MainForm ) );
+        System.ComponentModel.ComponentResourceManager resources = new( this.GetType() );
         this._resourceNameLabel = new Label();
         this._offsetNumericUpDown = new NumericUpDown();
         this._numElementsNumericUpDown = new NumericUpDown();

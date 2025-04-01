@@ -8,8 +8,8 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Legacy.Tests;
 /// </summary>
 /// <remarks> David, 2024-11-01. </remarks>
 [TestClass]
-[TestCategory( "k2600" )]
-public class DeviceTests
+[TestCategory( "k2600cc" )]
+public class ContactTests
 {
     #region " construction and cleanup "
 
@@ -66,7 +66,7 @@ public class DeviceTests
         Console.WriteLine( $"Testing {typeof( LegacyDevice ).Assembly.FullName}" );
 
         // create an instance of the Serilog logger.
-        SessionLogger.Instance.CreateSerilogLogger( typeof( DeviceTests ) );
+        SessionLogger.Instance.CreateSerilogLogger( typeof( ContactTests ) );
 
         // read the TTM Driver settings
         // this.TtmSettings.ReadSettings( this.GetType().Assembly, ".Driver", true, true );
@@ -143,65 +143,10 @@ public class DeviceTests
 
     #endregion
 
-    /// <summary>   (Unit Test Method) Assert that the session should open. </summary>
-    /// <remarks>
-    /// The synchronization context is captured as part of the property change and other event
-    /// handlers and is no longer needed here.
-    /// </remarks>
-    [TestMethod( "01. Session Should Open" )]
-    public void SessionShouldOpen()
-    {
-        Assert.IsNotNull( this.LegacyDevice, $"{nameof( this.LegacyDevice )} should not be null." );
-
-        using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( this.LegacyDevice, this.ResourceSettings.ResourceName );
-
-        _ = this.LegacyDevice.Disconnect();
-    }
-
-    [TestMethod( "02. Meter should initialize" )]
-    public void MeterShouldInitialize()
-    {
-        Assert.IsNotNull( this.LegacyDevice, $"{nameof( this.LegacyDevice )} should not be null." );
-
-        using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( this.LegacyDevice, this.ResourceSettings.ResourceName );
-
-        Asserts.AssertMeterShouldInitializeKnowState( this.LegacyDevice );
-
-        _ = this.LegacyDevice.Disconnect();
-    }
-
-    [TestMethod( "03. Meter should preset" )]
-    public void MeterShouldPreset()
-    {
-        Assert.IsNotNull( this.LegacyDevice, $"{nameof( this.LegacyDevice )} should not be null." );
-
-        using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( this.LegacyDevice, this.ResourceSettings.ResourceName );
-        session.ThrowDeviceExceptionIfError();
-
-        Asserts.AssertMeterShouldPreset( this.LegacyDevice );
-
-        _ = this.LegacyDevice.Disconnect();
-    }
-
-    /// <summary>   (Unit Test Method) measurements should configure. </summary>
-    /// <remarks>   2024-11-08. </remarks>
-    [TestMethod( "04. Measurements Should Configure" )]
-    public void MeasurementsShouldConfigure()
-    {
-        Assert.IsNotNull( this.LegacyDevice, $"{nameof( this.LegacyDevice )} should not be null." );
-
-        using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( this.LegacyDevice, this.ResourceSettings.ResourceName );
-        session.ThrowDeviceExceptionIfError();
-
-        Asserts.AssertMeasurementsShouldConfigure( this.LegacyDevice );
-
-        _ = this.LegacyDevice.Disconnect();
-    }
-
-    /// <summary>   (Unit Test Method) measurement should trigger. </summary>
+    /// <summary>   (Unit Test Method) measurement should trigger but fail open contact. </summary>
     /// <remarks>   2024-11-15. </remarks>
-    [TestMethod( "05. Measurement should trigger" )]
-    public void MeasurementShouldTrigger()
+    [TestMethod( "01. Measurement Should Fail Open Contact" )]
+    public void MeasurementShouldFailOpenContact()
     {
         Assert.IsNotNull( this.LegacyDevice, $"{nameof( this.LegacyDevice )} should not be null." );
 
@@ -221,21 +166,4 @@ public class DeviceTests
         _ = this.LegacyDevice.Disconnect();
     }
 
-    /// <summary>   (Unit Test Method) trigger cycle should abort. </summary>
-    /// <remarks>   2024-11-08. </remarks>
-    [TestMethod( "06. Trigger cycle should abort" )]
-    public void TriggerCycleShouldAbort()
-    {
-        Assert.IsNotNull( this.LegacyDevice, $"{nameof( this.LegacyDevice )} should not be null." );
-
-        using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( this.LegacyDevice, this.ResourceSettings.ResourceName );
-
-        Stopwatch sw = Stopwatch.StartNew();
-        Asserts.AssertTriggerCycleShouldAbort( this.LegacyDevice );
-        sw.Stop();
-        TimeSpan timeSpan = sw.Elapsed;
-        Console.WriteLine( $"Abort Time: {timeSpan:s\\.fff}s" );
-
-        _ = this.LegacyDevice.Disconnect();
-    }
 }

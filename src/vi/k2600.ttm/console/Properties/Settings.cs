@@ -179,7 +179,6 @@ public class Settings : System.ComponentModel.INotifyPropertyChanged
         AssemblyFileInfo settingsFileInfo = Settings.SettingsFileInfo;
 
         AppSettingsScribe scribe = new( [ConsoleSettings, LotSettings], settingsFileInfo );
-        scribe.ReadSettings();
 
         return scribe;
     }

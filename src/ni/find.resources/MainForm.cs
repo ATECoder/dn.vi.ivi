@@ -18,7 +18,7 @@ public partial class MainForm : System.Windows.Forms.Form
         //
         this.InitializeComponent();
 
-        System.ComponentModel.ComponentResourceManager resources = new( typeof( MainForm ) );
+        System.ComponentModel.ComponentResourceManager resources = new( this.GetType() );
         this.Icon = ( System.Drawing.Icon ) resources.GetObject( "$this.Icon", System.Globalization.CultureInfo.CurrentCulture )!;
 
         this._gpibTreeNode = new TreeNode( "GPIB" );

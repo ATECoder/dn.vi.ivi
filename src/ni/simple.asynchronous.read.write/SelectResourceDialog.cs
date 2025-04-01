@@ -13,7 +13,7 @@ public partial class SelectResourceDialog : System.Windows.Forms.Form
         //
         this.InitializeComponent();
 
-        System.Resources.ResourceManager resources = new( typeof( SelectResourceDialog ) );
+        System.Resources.ResourceManager resources = new( this.GetType() );
         this.Icon = ( System.Drawing.Icon ) resources.GetObject( "$this.Icon", System.Globalization.CultureInfo.CurrentCulture )!;
 
     }

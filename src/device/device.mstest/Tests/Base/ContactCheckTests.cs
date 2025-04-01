@@ -6,9 +6,9 @@ using cc.isr.VI.Pith.Settings;
 
 namespace cc.isr.VI.Device.Tests.Base;
 
-/// <summary>  Subsystem tests base class. </summary>
+/// <summary>  Contact Check tests base class. </summary>
 /// <remarks>   David, 2021-03-25. </remarks>
-public abstract class SubsystemsTests
+public abstract class ContactCheckTests
 {
     #region " construction and cleanup "
 
@@ -57,7 +57,7 @@ public abstract class SubsystemsTests
 
     /// <summary>   Gets or sets the trace listener. </summary>
     /// <value> The trace listener. </value>
-    public LoggerTraceListener<SubsystemsTests>? TraceListener { get; set; }
+    public LoggerTraceListener<ContactCheckTests>? TraceListener { get; set; }
 
     /// <summary> Initializes the test class instance before each test runs. </summary>
     public virtual void InitializeBeforeEachTest()
@@ -82,7 +82,7 @@ public abstract class SubsystemsTests
         if ( Logger is not null )
         {
             this._loggerScope = Logger.BeginScope( this.TestContext?.TestName ?? string.Empty );
-            this.TraceListener = new LoggerTraceListener<SubsystemsTests>( Logger );
+            this.TraceListener = new LoggerTraceListener<ContactCheckTests>( Logger );
             _ = Trace.Listeners.Add( this.TraceListener );
         }
 
@@ -115,7 +115,7 @@ public abstract class SubsystemsTests
 
     /// <summary>   Gets a logger instance for this category. </summary>
     /// <value> The logger. </value>
-    public static ILogger<SubsystemsTests>? Logger { get; } = LoggerProvider.CreateLogger<SubsystemsTests>();
+    public static ILogger<ContactCheckTests>? Logger { get; } = LoggerProvider.CreateLogger<ContactCheckTests>();
 
     #endregion
 
@@ -143,28 +143,40 @@ public abstract class SubsystemsTests
 
     #endregion
 
-    #region " status susbsystem "
+    #region " contact check susbsystem "
 
-    /// <summary>   Opens session and check subsystems status. </summary>
-    /// <remarks>   2024-08-01. </remarks>
-    /// <param name="readErrorEnabled"> True to read errors; otherwise false. </param>
-    /// <param name="validateModel">    (Optional) [false] Information describing the subsystems. </param>
-    protected abstract void AssertOpenSessionCheckStatus( bool readErrorEnabled, bool validateModel = false );
+    /// <summary>   Assert check contacts. </summary>
+    /// <remarks>   2025-01-23. </remarks>
+    /// <param name="highOkay"> True to high okay. </param>
+    /// <param name="lowOkay">  True to low okay. </param>
+    protected abstract void AssertCheckContacts( bool highOkay, bool lowOkay );
 
-    /// <summary>   (Unit Test Method) opens session check status should pass. </summary>
-    /// <remarks>   David, 2021-07-04. </remarks>
-    [TestMethod( "01. Open Session Check Status Should Pass All Tests" )]
-    public void OpenSessionCheckStatusShouldPass()
+    /// <summary>   (Unit Test Method) contact check should pass. </summary>
+    /// <remarks>   2025-01-23. </remarks>
+    [TestMethod( "01. Contact check should pass" )]
+    public void ContactCheckShouldPass()
     {
-        this.AssertOpenSessionCheckStatus( false );
+        this.AssertCheckContacts( true, true );
     }
 
-    /// <summary> (Unit Test Method) tests open session read device errors. </summary>
-    [TestMethod( "02. Open Session Should Pass All Tests and Read Device Errors" )]
-    public void OpenSessionReadDeviceErrorsShouldPass()
+    /// <summary>   (Unit Test Method) contact check should detect open sense low. </summary>
+    /// <remarks>   2025-01-23. </remarks>
+    [TestMethod( "02. Contact check detect open low sense terminal" )]
+    public void ContactCheckShouldDetectOpenSenseLow()
     {
-        this.AssertOpenSessionCheckStatus( true );
+        this.AssertCheckContacts( true, false );
+    }
+
+    /// <summary>   (Unit Test Method) contact check should detect open source low. </summary>
+    /// <remarks>   2025-01-23. <para>
+    /// The 2600 measure the DUT resistance when either the low or high source lead is open.
+    /// Consequently, the contact check will pass if the DUT resistance is lower than the contact check threshold. </para></remarks>
+    [TestMethod( "03. Contact check detect open low source terminal" )]
+    public void ContactCheckShouldDetectOpenSourceLow()
+    {
+        this.AssertCheckContacts( true, true );
     }
 
     #endregion
+
 }

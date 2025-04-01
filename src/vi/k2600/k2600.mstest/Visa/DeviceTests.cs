@@ -53,7 +53,7 @@ public class DeviceTests : Device.Tests.Base.DeviceTests
         this.Device = K2600Device.Create();
         Assert.IsNotNull( this.Device );
         Assert.IsNotNull( this.Device.Session );
-        this.Device.Session.ReadSettings( typeof( VisaSessionTests ), ".Session" );
+        this.Device.Session.ReadSettings( this.GetType().Assembly, ".Session", true, true );
         this.VisaSessionBase = this.Device;
         base.InitializeBeforeEachTest();
     }

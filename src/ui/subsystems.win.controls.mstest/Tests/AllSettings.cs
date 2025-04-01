@@ -62,7 +62,7 @@ public class AllSettings
 
         // must copy application context settings here to clear any bad settings files.
 
-        AppSettingsScribe.InitializeSettingsFiles( ai );
+        AppSettingsScribe.InitializeSettingsFiles( ai, true, true );
 
         return ai;
     }

@@ -42,9 +42,9 @@ public partial class SessionBase
     ///                                     '.session' in
     ///                                     'cc.isr.VI.Tsp.K2600.Device.MSTest.Session.JSon' where
     ///                                     cc.isr.VI.Tsp.K2600.Device.MSTest is the assembly name. </param>
-    /// <param name="overrideAllUsersFile"> (Optional) [True] to override all users settings file. </param>
-    /// <param name="overrideThisUserFile"> (Optional) [True] to override this user settings file. </param>
-    public void CreateScribe( System.Reflection.Assembly settingsAssembly, string settingsFileSuffix = ".session", bool overrideAllUsersFile = true, bool overrideThisUserFile = true )
+    /// <param name="overrideAllUsersFile"> (Optional) [false] True to override all users settings file. </param>
+    /// <param name="overrideThisUserFile"> (Optional) [false] True to override this user settings file. </param>
+    public void CreateScribe( System.Reflection.Assembly settingsAssembly, string settingsFileSuffix = ".session", bool overrideAllUsersFile = false, bool overrideThisUserFile = false )
     {
         AssemblyFileInfo ai = new( settingsAssembly, null, settingsFileSuffix, ".json" );
 
@@ -68,9 +68,9 @@ public partial class SessionBase
     ///                                     '.session' in
     ///                                     'cc.isr.VI.Tsp.K2600.Device.MSTest.Session.JSon' where
     ///                                     cc.isr.VI.Tsp.K2600.Device.MSTest is the assembly name. </param>
-    /// <param name="overrideAllUsersFile"> (Optional) [True] to override all users settings file. </param>
-    /// <param name="overrideThisUserFile"> (Optional) [True] to override this user settings file. </param>
-    public void CreateScribe( System.Type callingEntity, string settingsFileSuffix = ".session", bool overrideAllUsersFile = true, bool overrideThisUserFile = true )
+    /// <param name="overrideAllUsersFile"> (Optional) [false] True to override all users settings file. </param>
+    /// <param name="overrideThisUserFile"> (Optional) [false] True to override this user settings file. </param>
+    public void CreateScribe( System.Type callingEntity, string settingsFileSuffix = ".session", bool overrideAllUsersFile = false, bool overrideThisUserFile = false )
     {
         this.CreateScribe( callingEntity.Assembly, settingsFileSuffix, overrideAllUsersFile, overrideThisUserFile );
     }
@@ -84,9 +84,9 @@ public partial class SessionBase
     ///                                     '.session' in
     ///                                     'cc.isr.VI.Tsp.K2600.Device.MSTest.Session.JSon' where
     ///                                     cc.isr.VI.Tsp.K2600.Device.MSTest is the assembly name. </param>
-    /// <param name="overrideAllUsersFile"> (Optional) [True] to override all users settings file. </param>
-    /// <param name="overrideThisUserFile"> (Optional) [True] to override this user settings file. </param>
-    public void ReadSettings( System.Reflection.Assembly settingsAssembly, string settingsFileSuffix = ".session", bool overrideAllUsersFile = true, bool overrideThisUserFile = true )
+    /// <param name="overrideAllUsersFile"> (Optional) [false] True to override all users settings file. </param>
+    /// <param name="overrideThisUserFile"> (Optional) [false] True to override this user settings file. </param>
+    public void ReadSettings( System.Reflection.Assembly settingsAssembly, string settingsFileSuffix = ".session", bool overrideAllUsersFile = false, bool overrideThisUserFile = false )
     {
         if ( this.Scribe is null )
             this.CreateScribe( settingsAssembly, settingsFileSuffix, overrideAllUsersFile, overrideThisUserFile );

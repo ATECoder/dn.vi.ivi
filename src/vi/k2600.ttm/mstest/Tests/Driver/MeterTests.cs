@@ -73,7 +73,7 @@ public class MeterTests
         this.TestSiteSettings = Settings.AllSettings.Instance.TestSiteSettings;
 
         // read the TTM Driver settings
-        this.TtmSettings.ReadSettings( this.GetType(), ".Driver" );
+        this.TtmSettings.ReadSettings( this.GetType().Assembly, ".Driver", true, true );
         Assert.IsTrue( this.TtmSettings.TtmMeterSettings.Exists, $"{nameof( this.TtmSettings.TtmMeterSettings )} should exist" );
 
         Asserts.LegacyDriver = this.TtmSettings.TtmMeterSettings.LegacyDriver;
@@ -86,7 +86,7 @@ public class MeterTests
         VisaSession visaSession = new();
         Assert.IsNotNull( visaSession.Session );
         Assert.AreEqual( VI.Syntax.Tsp.Lua.ClearExecutionStateCommand, visaSession.Session.ClearExecutionStateCommand );
-        visaSession.Session.ReadSettings( typeof( MeterTests ), ".Session" );
+        visaSession.Session.ReadSettings( this.GetType().Assembly, ".Session", true, true );
         this.ResourceSettings = visaSession.Session.ResourceSettings;
         Assert.IsTrue( visaSession.Session.TimingSettings.Exists,
             $"{nameof( VisaSession )}.{nameof( MeterTests.TspDevice.Session )}.{nameof( VisaSession.Session.TimingSettings )} does not exist." );

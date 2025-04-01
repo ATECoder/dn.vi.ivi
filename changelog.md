@@ -2,13 +2,20 @@
 All notable changes to these libraries will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [8.1.9222] - 2025-04-01
+- Default to not overriding existing files when initializing the settings.
+  - Tests: Override settings files when initializing the settings.
+    - Remove duplicate reading for settings.
+- Replace type of with this.GetType()
+- Update revisions to 9222.
+
 ## [8.1.9220] - 2025-03-30
 - Replace tabs with spaces.
 - Remove trailing spaces 
 - Reference main project revision in test and demo projects.
 - Replace community SDK observable object with INotify Property Change in test site settings classes.
 - Update change log.
-- Update revisions to 9230.
+- Update revisions to 9220.
 
 ## [8.1.9215] - 2025-03-25
 - Add device win controls unit tests.
@@ -222,6 +229,6 @@ which has issued a defect report.
 
 &copy; 2012 Integrated Scientific Resources, Inc. All rights reserved.
 
-[8.1.9220]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9222]: https://www.github.com/atecoder/dn.vi.ivi
 [vs.VI]: https://www.github.com/atecoder/dn.vi.ivi
 [vs.Visa]: https://bitbucket.org/davidhary/vs.io.visa

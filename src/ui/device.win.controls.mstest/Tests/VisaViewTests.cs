@@ -54,7 +54,7 @@ public class VisaViewTests : cc.isr.VI.DeviceWinControls.Tests.Base.IVisaViewTes
         VisaSession visaSession = new();
         Assert.IsNotNull( visaSession.Session );
         Assert.AreEqual( VI.Syntax.Tsp.Lua.ClearExecutionStateCommand, visaSession.Session.ClearExecutionStateCommand );
-        visaSession.Session.ReadSettings( typeof( VisaViewTests ), ".Session" );
+        visaSession.Session.ReadSettings( this.GetType().Assembly, ".Session", true, true );
         Assert.IsTrue( visaSession.Session.TimingSettings.Exists,
             $"{nameof( VisaSession )}.{nameof( VisaSession.Session )}.{nameof( VisaSession.Session.TimingSettings )} does not exist." );
 

@@ -20,9 +20,9 @@ public partial class LegacyDevice : CommunityToolkit.Mvvm.ComponentModel.Observa
     /// <param name="settingsFileSuffix">           (Optional) [".Driver"] The settings file
     ///                                             suffix, e.g., which replaces suffix in this file name
     ///                                             cc.isr.VI.Tsp.K2600.Ttm.MSTest.suffix.json. </param>
-    /// <param name="overrideAllUsersFile"> (Optional) [True] to override all users settings file. </param>
-    /// <param name="overrideThisUserFile"> (Optional) [True] to override this user settings file. </param>
-    public LegacyDevice( Type settingAssemblyMemberType, string settingsFileSuffix = ".Driver", bool overrideAllUsersFile = true, bool overrideThisUserFile = true ) : base()
+    /// <param name="overrideAllUsersFile"> (Optional) [false] True to override all users settings file. </param>
+    /// <param name="overrideThisUserFile"> (Optional) [false] True to override this user settings file. </param>
+    public LegacyDevice( Type settingAssemblyMemberType, string settingsFileSuffix = ".Driver", bool overrideAllUsersFile = false, bool overrideThisUserFile = false ) : base()
     {
         this.Meter = new();
         if ( this.Meter is null ) throw new InvalidOperationException( $"{nameof( this.Meter )} is null." );

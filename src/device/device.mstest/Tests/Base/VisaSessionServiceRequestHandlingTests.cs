@@ -147,7 +147,7 @@ public abstract class VisaSessionServiceRequestTests
     {
         using VisaSession session = VisaSession.Create();
         Assert.IsNotNull( session.Session );
-        session.Session.ReadSettings( this.GetType(), ".Session" );
+        session.Session.ReadSettings( this.GetType().Assembly, ".Session", true, true );
         Assert.IsTrue( session.Session.TimingSettings.Exists );
 
         try
@@ -172,7 +172,7 @@ public abstract class VisaSessionServiceRequestTests
     {
         using VisaSession session = VisaSession.Create();
         Assert.IsNotNull( session.Session );
-        session.Session.ReadSettings( this.GetType(), ".Session" );
+        session.Session.ReadSettings( this.GetType().Assembly, ".Session", true, true );
         Assert.IsTrue( session.Session.TimingSettings.Exists );
 
         try
