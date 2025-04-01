@@ -202,8 +202,13 @@ public partial class StatusView : cc.isr.WinControls.ModelViewBase
         if ( add )
         {
             this._sessionNotificationLevelComboBox.ComboBox.DataSource = viewModel.MessageNotificationModeKeyValuePairs;
+#if NET9_0_OR_GREATER
+            this._sessionNotificationLevelComboBox.ComboBox.ValueMember = nameof( KeyValuePair<,>.Key );
+            this._sessionNotificationLevelComboBox.ComboBox.DisplayMember = nameof( KeyValuePair<,>.Value );
+#else
             this._sessionNotificationLevelComboBox.ComboBox.ValueMember = nameof( KeyValuePair<Enum, string>.Key );
             this._sessionNotificationLevelComboBox.ComboBox.DisplayMember = nameof( KeyValuePair<Enum, string>.Value );
+#endif
             this._sessionNotificationLevelComboBox.ComboBox.BindingContext = this.BindingContext;
             // this is necessary because the combo box binding does not set the data source value on it item change event
             this._sessionNotificationLevelComboBox.ComboBox.SelectedValueChanged += this.HandleNotificationLevelComboBoxValueChanged;
@@ -259,7 +264,7 @@ public partial class StatusView : cc.isr.WinControls.ModelViewBase
         }
     }
 
-    #endregion
+#endregion
 
     #region " session base: status and standard registers "
 
@@ -1509,7 +1514,7 @@ public partial class StatusView : cc.isr.WinControls.ModelViewBase
 
     /// <summary> Base settings menu item click. </summary>
     /// <remarks>   David, 2021-12-08. <para>
-    /// The settings <see cref="Views.DisplayViewSettings.Initialize(Type, string)"/></para> must be called before attempting to edit the settings. </remarks>
+    /// The settings <see cref="Views.DisplayViewSettings.Initialize(Type, string, bool, bool )"/></para> must be called before attempting to edit the settings. </remarks>
     /// <param name="sender"> <see cref="object"/> instance of this
     /// <see cref="Control"/> </param>
     /// <param name="e">      Event information. </param>

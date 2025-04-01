@@ -39,17 +39,15 @@ public class Settings
     ///                                     '.driver' in
     ///                                     'cc.isr.VI.Tsp.K2600.Device.MSTest.Session.JSon' where
     ///                                     cc.isr.VI.Tsp.K2600.Device.MSTest is the assembly name. </param>
-    public void CreateScribe( System.Reflection.Assembly settingsAssembly, string settingsFileSuffix = ".driver" )
+    /// <param name="overrideAllUsersFile"> (Optional) [True] to override all users settings file. </param>
+    /// <param name="overrideThisUserFile"> (Optional) [True] to override this user settings file. </param>
+    public void CreateScribe( System.Reflection.Assembly settingsAssembly, string settingsFileSuffix = ".driver", bool overrideAllUsersFile = true, bool overrideThisUserFile = true )
     {
         AssemblyFileInfo ai = new( settingsAssembly, null, settingsFileSuffix, ".json" );
 
-        // must copy application context settings here to clear any bad settings files.
+        // copy application context settings if these do not exist; use restore if the settings are bad.
 
-        if ( !System.IO.File.Exists( ai.AllUsersAssemblyFilePath! ) )
-            AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.AllUsersAssemblyFilePath! );
-
-        if ( !System.IO.File.Exists( ai.ThisUserAssemblyFilePath! ) )
-            AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.ThisUserAssemblyFilePath! );
+        AppSettingsScribe.InitializeSettingsFiles( ai, overrideAllUsersFile, overrideThisUserFile );
 
         this.Scribe = new( [this.TraceLogSettings, this.TtmEstimatorSettings, this.TtmMeterSettings, this.TtmResistanceSettings,
             this.TtmShuntSettings, this.TtmTraceSettings],
@@ -67,9 +65,11 @@ public class Settings
     ///                                     '.driver' in
     ///                                     'cc.isr.VI.Tsp.K2600.Device.MSTest.Session.JSon' where
     ///                                     cc.isr.VI.Tsp.K2600.Device.MSTest is the assembly name. </param>
-    public void CreateScribe( System.Type callingEntity, string settingsFileSuffix = ".driver" )
+    /// <param name="overrideAllUsersFile"> (Optional) [True] to override all users settings file. </param>
+    /// <param name="overrideThisUserFile"> (Optional) [True] to override this user settings file. </param>
+    public void CreateScribe( System.Type callingEntity, string settingsFileSuffix = ".driver", bool overrideAllUsersFile = true, bool overrideThisUserFile = true )
     {
-        this.CreateScribe( callingEntity.Assembly, settingsFileSuffix );
+        this.CreateScribe( callingEntity.Assembly, settingsFileSuffix, overrideAllUsersFile, overrideThisUserFile );
     }
 
     /// <summary>   Reads the settings. </summary>
@@ -81,10 +81,12 @@ public class Settings
     ///                                     '.driver' in
     ///                                     'cc.isr.VI.Tsp.K2600.Device.MSTest.Session.JSon' where
     ///                                     cc.isr.VI.Tsp.K2600.Device.MSTest is the assembly name. </param>
-    public void ReadSettings( System.Reflection.Assembly settingsAssembly, string settingsFileSuffix = ".driver" )
+    /// <param name="overrideAllUsersFile"> (Optional) [True] to override all users settings file. </param>
+    /// <param name="overrideThisUserFile"> (Optional) [True] to override this user settings file. </param>
+    public void ReadSettings( System.Reflection.Assembly settingsAssembly, string settingsFileSuffix = ".driver", bool overrideAllUsersFile = true, bool overrideThisUserFile = true )
     {
         if ( this.Scribe is null )
-            this.CreateScribe( settingsAssembly, settingsFileSuffix );
+            this.CreateScribe( settingsAssembly, settingsFileSuffix, overrideAllUsersFile, overrideThisUserFile );
 
         this.Scribe!.ReadSettings();
 
@@ -101,9 +103,11 @@ public class Settings
     ///                                     '.driver' in
     ///                                     'cc.isr.VI.Tsp.K2600.Device.MSTest.Session.JSon' where
     ///                                     cc.isr.VI.Tsp.K2600.Device.MSTest is the assembly name. </param>
-    public void ReadSettings( System.Type callingEntity, string settingsFileSuffix = ".driver" )
+    /// <param name="overrideAllUsersFile"> (Optional) [True] to override all users settings file. </param>
+    /// <param name="overrideThisUserFile"> (Optional) [True] to override this user settings file. </param>
+    public void ReadSettings( System.Type callingEntity, string settingsFileSuffix = ".driver", bool overrideAllUsersFile = true, bool overrideThisUserFile = true )
     {
-        this.ReadSettings( callingEntity.Assembly, settingsFileSuffix );
+        this.ReadSettings( callingEntity.Assembly, settingsFileSuffix, overrideAllUsersFile, overrideThisUserFile );
     }
 
     /// <summary>   Gets the full path name of the settings file. </summary>

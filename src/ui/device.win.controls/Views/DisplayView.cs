@@ -100,17 +100,15 @@ public partial class DisplayView : cc.isr.WinControls.ModelViewBase
     ///                                     '.session' in
     ///                                     'cc.isr.VI.Tsp.K2600.Device.MSTest.Session.JSon' where
     ///                                     cc.isr.VI.Tsp.K2600.Device.MSTest is the assembly name. </param>
-    public static void CreateScribe( System.Reflection.Assembly settingsAssembly, string settingsFileSuffix = ".session" )
+    /// <param name="overrideAllUsersFile"> (Optional) [True] to override all users settings file. </param>
+    /// <param name="overrideThisUserFile"> (Optional) [True] to override this user settings file. </param>
+    public static void CreateScribe( System.Reflection.Assembly settingsAssembly, string settingsFileSuffix = ".DisplayView", bool overrideAllUsersFile = true, bool overrideThisUserFile = true )
     {
         AssemblyFileInfo ai = new( settingsAssembly, null, settingsFileSuffix, ".json" );
 
-        // must copy application context settings here to clear any bad settings files.
+        // copy application context settings if these do not exist; use restore if the settings are bad.
 
-        if ( !System.IO.File.Exists( ai.AllUsersAssemblyFilePath! ) )
-            AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.AllUsersAssemblyFilePath! );
-
-        if ( !System.IO.File.Exists( ai.ThisUserAssemblyFilePath! ) )
-            AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.ThisUserAssemblyFilePath! );
+        AppSettingsScribe.InitializeSettingsFiles( ai, overrideAllUsersFile, overrideThisUserFile );
 
         DisplayView.Scribe = new( [DisplayView.DisplayViewSettings],
             ai.AppContextAssemblyFilePath!, ai.AllUsersAssemblyFilePath! )
@@ -127,9 +125,11 @@ public partial class DisplayView : cc.isr.WinControls.ModelViewBase
     ///                                     '.session' in
     ///                                     'cc.isr.VI.Tsp.K2600.Device.MSTest.Session.JSon' where
     ///                                     cc.isr.VI.Tsp.K2600.Device.MSTest is the assembly name. </param>
-    public static void CreateScribe( System.Type callingEntity, string settingsFileSuffix = ".DisplayView" )
+    /// <param name="overrideAllUsersFile"> (Optional) [True] to override all users settings file. </param>
+    /// <param name="overrideThisUserFile"> (Optional) [True] to override this user settings file. </param>
+    public static void CreateScribe( System.Type callingEntity, string settingsFileSuffix = ".DisplayView", bool overrideAllUsersFile = true, bool overrideThisUserFile = true )
     {
-        DisplayView.CreateScribe( callingEntity.Assembly, settingsFileSuffix );
+        DisplayView.CreateScribe( callingEntity.Assembly, settingsFileSuffix, overrideAllUsersFile, overrideThisUserFile );
     }
 
     /// <summary>   Reads the settings. </summary>
@@ -141,10 +141,12 @@ public partial class DisplayView : cc.isr.WinControls.ModelViewBase
     ///                                     '.session' in
     ///                                     'cc.isr.VI.Tsp.K2600.Device.MSTest.Session.JSon' where
     ///                                     cc.isr.VI.Tsp.K2600.Device.MSTest is the assembly name. </param>
-    public static void ReadSettings( System.Reflection.Assembly settingsAssembly, string settingsFileSuffix = ".DisplayView" )
+    /// <param name="overrideAllUsersFile"> (Optional) [True] to override all users settings file. </param>
+    /// <param name="overrideThisUserFile"> (Optional) [True] to override this user settings file. </param>
+    public static void ReadSettings( System.Reflection.Assembly settingsAssembly, string settingsFileSuffix = ".DisplayView", bool overrideAllUsersFile = true, bool overrideThisUserFile = true )
     {
         if ( DisplayView.Scribe is null )
-            DisplayView.CreateScribe( settingsAssembly, settingsFileSuffix );
+            DisplayView.CreateScribe( settingsAssembly, settingsFileSuffix, overrideAllUsersFile, overrideThisUserFile );
 
         DisplayView.Scribe!.ReadSettings();
     }
@@ -159,9 +161,11 @@ public partial class DisplayView : cc.isr.WinControls.ModelViewBase
     ///                                     '.session' in
     ///                                     'cc.isr.VI.Tsp.K2600.Device.MSTest.Session.JSon' where
     ///                                     cc.isr.VI.Tsp.K2600.Device.MSTest is the assembly name. </param>
-    public static void ReadSettings( System.Type callingEntity, string settingsFileSuffix = ".session" )
+    /// <param name="overrideAllUsersFile"> (Optional) [True] to override all users settings file. </param>
+    /// <param name="overrideThisUserFile"> (Optional) [True] to override this user settings file. </param>
+    public static void ReadSettings( System.Type callingEntity, string settingsFileSuffix = ".DisplayView", bool overrideAllUsersFile = true, bool overrideThisUserFile = true )
     {
-        DisplayView.ReadSettings( callingEntity.Assembly, settingsFileSuffix );
+        DisplayView.ReadSettings( callingEntity.Assembly, settingsFileSuffix, overrideAllUsersFile, overrideThisUserFile );
     }
 
     #endregion

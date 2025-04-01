@@ -55,16 +55,15 @@ public class DigitalOutputViewSettings : CommunityToolkit.Mvvm.ComponentModel.Ob
     ///                                     '.session' in
     ///                                     'cc.isr.VI.Tsp.K2600.Device.MSTest.Session.JSon' where
     ///                                     cc.isr.VI.Tsp.K2600.Device.MSTest is the assembly name. </param>
-    public void Initialize( Type callingEntity, string settingsFileSuffix )
+    /// <param name="overrideAllUsersFile"> (Optional) [True] to override all users settings file. </param>
+    /// <param name="overrideThisUserFile"> (Optional) [True] to override this user settings file. </param>
+    public void Initialize( Type callingEntity, string settingsFileSuffix, bool overrideAllUsersFile = true, bool overrideThisUserFile = true )
     {
         AssemblyFileInfo ai = new( callingEntity.Assembly, null, settingsFileSuffix, ".json" );
 
-        // must copy application context settings here to clear any bad settings files.
-        if ( !System.IO.File.Exists( ai.AllUsersAssemblyFilePath! ) )
-            AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.AllUsersAssemblyFilePath! );
+        // copy application context settings if these do not exist; use restore if the settings are bad.
 
-        if ( !System.IO.File.Exists( ai.ThisUserAssemblyFilePath! ) )
-            AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.ThisUserAssemblyFilePath! );
+        AppSettingsScribe.InitializeSettingsFiles( ai, overrideAllUsersFile, overrideThisUserFile );
 
         this.Scribe = new( [_instance.Value], ai.AppContextAssemblyFilePath!, ai.AllUsersAssemblyFilePath! )
         {
@@ -154,7 +153,7 @@ public class DigitalOutputViewSettings : CommunityToolkit.Mvvm.ComponentModel.Ob
 
     /// <summary>   Opens the settings editor. </summary>
     /// <remarks>   David, 2021-12-08. <para>
-    /// The settings <see cref="DigitalOutputViewSettings.Initialize(Type, string)"/></para> must be called before attempting to edit the settings. </remarks>
+    /// The settings <see cref="DigitalOutputViewSettings.Initialize(Type, string, bool, bool )"/></para> must be called before attempting to edit the settings. </remarks>
     /// <returns>   A System.Windows.Forms.DialogResult. </returns>
     public DialogResult OpenSettingsEditor()
     {

@@ -151,13 +151,9 @@ public class Settings : System.ComponentModel.INotifyPropertyChanged
 
         AssemblyFileInfo ai = new( declaringType.Assembly, null, ".Settings", ".json" );
 
-        // must copy application context settings here to clear any bad settings files.
+        // copy application context settings if these do not exist; use restore if the settings are bad.
 
-        if ( !System.IO.File.Exists( ai.AllUsersAssemblyFilePath! ) )
-            AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.AllUsersAssemblyFilePath! );
-
-        if ( !System.IO.File.Exists( ai.ThisUserAssemblyFilePath! ) )
-            AppSettingsScribe.CopySettings( ai.AppContextAssemblyFilePath!, ai.ThisUserAssemblyFilePath! );
+        AppSettingsScribe.InitializeSettingsFiles( ai, false, false );
 
         return ai;
     }

@@ -20,13 +20,15 @@ public partial class LegacyDevice : CommunityToolkit.Mvvm.ComponentModel.Observa
     /// <param name="settingsFileSuffix">           (Optional) [".Driver"] The settings file
     ///                                             suffix, e.g., which replaces suffix in this file name
     ///                                             cc.isr.VI.Tsp.K2600.Ttm.MSTest.suffix.json. </param>
-    public LegacyDevice( Type settingAssemblyMemberType, string settingsFileSuffix = ".Driver" ) : base()
+    /// <param name="overrideAllUsersFile"> (Optional) [True] to override all users settings file. </param>
+    /// <param name="overrideThisUserFile"> (Optional) [True] to override this user settings file. </param>
+    public LegacyDevice( Type settingAssemblyMemberType, string settingsFileSuffix = ".Driver", bool overrideAllUsersFile = true, bool overrideThisUserFile = true ) : base()
     {
         this.Meter = new();
         if ( this.Meter is null ) throw new InvalidOperationException( $"{nameof( this.Meter )} is null." );
 
         // read settings
-        cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.ReadSettings( settingAssemblyMemberType, settingsFileSuffix );
+        cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.ReadSettings( settingAssemblyMemberType, settingsFileSuffix, overrideAllUsersFile, overrideThisUserFile );
         if ( !cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmResistanceSettings.Exists )
             throw new InvalidOperationException( $"Failed reading the thermal transient settings {nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings )}" );
 
