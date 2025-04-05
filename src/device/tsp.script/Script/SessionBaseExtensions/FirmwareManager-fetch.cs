@@ -8,7 +8,7 @@ public static partial class FirmwareManager
 {
     #region " fetch names "
 
-    /// <summary>   A Pith.SessionBase? extension method that enumerate the loaded table. </summary>
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that enumerate the loaded table. </summary>
     /// <remarks>   2024-10-14. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>

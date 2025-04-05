@@ -154,12 +154,12 @@ internal static class FirmwareManager
                         if ( isFirstLine )
                         {
                             // issue a start of script command.  The command
-                            // 'loadscript' identifies the beginning of the named script.
-                            commandLine = "loadscript " + scriptName + " ";
+                            // The load script command identifies the beginning of the script.
+                            commandLine = $"{Syntax.Tsp.Script.LoadScriptCommand} {scriptName} ";
                             _ = session.WriteLine( commandLine );
                             isFirstLine = false;
                             // this.StatusSubsystem.ThrowDeviceExceptionIfError( true, session.StatusReadDelay,
-                            // "sending a 'loadscript' for script '{2}';. from file '{1}'", scriptName, filePath );
+                            // "sending a load script command for script '{2}';. from file '{1}'", scriptName, filePath );
                         }
 
                         _ = session.WriteLine( chunkLine );
@@ -173,8 +173,8 @@ internal static class FirmwareManager
             }
 
             // Tell TSP complete script has been downloaded.
-            commandLine = $"endscript {cc.isr.VI.Syntax.Tsp.Lua.OperationCompletedQueryCommand} ";
-            session.SetLastAction( $"sending an 'endscript' for script '{scriptName}'; from file '{filePath}'" );
+            commandLine = $"{Syntax.Tsp.Script.EndScriptCommand} {cc.isr.VI.Syntax.Tsp.Lua.OperationCompletedQueryCommand} ";
+            session.SetLastAction( $"sending an '{Syntax.Tsp.Script.EndScriptCommand}' for script '{scriptName}'; from file '{filePath}'" );
             _ = session.WriteLine( commandLine );
             // wait till we get a reply from the instrument or completionTimeout.
             Stopwatch sw = Stopwatch.StartNew();

@@ -138,8 +138,8 @@ public static partial class FirmwareManager
                         if ( isFirstLine )
                         {
                             // issue a start of script command.  The command
-                            // 'loadscript' identifies the beginning of the named script.
-                            commandLine = "loadscript " + script.FirmwareScript.Name + " ";
+                            // the load script command identifies the beginning of the script.
+                            commandLine = $"{Syntax.Tsp.Script.LoadScriptCommand} {script.FirmwareScript.Name} ";
                             activity = $"sending a {commandLine}";
                             actionDetails = $"sending a {commandLine} from file '{script.FirmwareScript.ResourceFilePath}'";
                             session.SetLastAction( actionDetails );

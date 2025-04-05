@@ -50,8 +50,7 @@ public static partial class FirmwareManager
         if ( saveAsBinary )
         {
             displaySubsystem.DisplayLine( 2, $"{node.Number}:{scriptName} 2 binary" );
-            if ( !session.ConvertToBinary( scriptName, node, displaySubsystem.StatusSubsystem.VersionInfoBase ) )
-                throw new InvalidOperationException( $"{session.ResourceNameNodeCaption} failed converting script '{scriptName}' to binary format;. " );
+            session.ConvertToBinary( scriptName, node, displaySubsystem.StatusSubsystem.VersionInfoBase );
         }
 
         // save the script.
@@ -82,24 +81,41 @@ public static partial class FirmwareManager
 
         Pith.SessionBase session = displaySubsystem.Session;
 
-        string binaryScriptName = "CreateBinaryScript";
+        string functionName = SessionBaseExtensions.FirmwareManager.BinaryScriptsFunctionName;
         // check if we need to load the binary scripts
-        session.SetLastAction( $"checking if {binaryScriptName} is nil" );
+        session.SetLastAction( $"checking if {functionName} is nil" );
 
         if ( script.FirmwareScript.SaveAsBinary )
         {
             if ( script.Node.InstrumentModelFamily is InstrumentModelFamily.K2600 or InstrumentModelFamily.K2600A or InstrumentModelFamily.K3700 )
             {
-                // this is a better way to do the binary scripts
+                // these instruments convert script to binary by setting the script to nil.
             }
-            else if ( session.IsNil( script.Node.Number, binaryScriptName ) )
+            else if ( session.IsNil( script.Node.Number, functionName ) )
             {
-                FileInfo fileInfo = new( script.FirmwareScript.FilePath );
-                string filePath = Path.Combine( fileInfo.Directory.FullName, "BinaryScripts.tsp" );
-
-                if ( !session.LoadBinaryScriptFunction( binaryScriptName, filePath ) )
+                if ( SessionBaseExtensions.FirmwareManager.LoadBinaryScriptsFunctionFromFile )
                 {
-                    throw new InvalidOperationException( "" );
+                    // load the binary script function from the file.
+                    session.SetLastAction( $"loading {functionName} from file" );
+                    FileInfo fileInfo = new( script.FirmwareScript.FilePath );
+                    string filePath = Path.Combine( fileInfo.Directory.FullName, SessionBaseExtensions.FirmwareManager.BinaryScriptsFunctionFileName );
+                    session.LoadScriptFile( string.Empty, filePath );
+
+                    // validate the existence of the function.
+                    if ( session.IsNil( script.Node.Number, functionName ) )
+                        throw new InvalidOperationException( $"{session.ResourceNameNodeCaption} failed loading binary script conversion function. The function {functionName} was not found; . " );
+                }
+                else
+                {
+                    // load the binary script function from the firmware.
+                    session.SetLastAction( $"loading {functionName} from embedded resource" );
+
+                    session.LoadEmbeddedResource( SessionBaseExtensions.FirmwareManager.BinaryScriptsFunctionName,
+                        SessionBaseExtensions.FirmwareManager.BinaryScriptsFunctionFileName, SessionBaseExtensions.FirmwareManager.EmbeddedResourceFolderName );
+
+                    // validate the existence of the function.
+                    if ( session.IsNil( script.Node.Number, functionName ) )
+                        throw new InvalidOperationException( $"{session.ResourceNameNodeCaption} failed loading binary script conversion function. The function {functionName} was not found; . " );
                 }
             }
         }

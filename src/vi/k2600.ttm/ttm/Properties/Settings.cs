@@ -87,6 +87,8 @@ public class Settings
     {
         if ( this.Scribe is null )
             this.CreateScribe( settingsAssembly, settingsFileSuffix, overrideAllUsersFile, overrideThisUserFile );
+        else
+            this.Scribe.InitializeSettingsFiles( overrideAllUsersFile, overrideThisUserFile );
 
         this.Scribe!.ReadSettings();
 

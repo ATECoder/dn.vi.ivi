@@ -47,6 +47,13 @@ public abstract class FirmwareScriptBase
 
     #region " static "
 
+    /// <summary>   (Immutable) the script file extension. </summary>
+    public const string ScriptFileExtension = ".tsp";
+
+    /// <summary>   (Immutable) the script binary file extension. </summary>
+    /// <remarks> TO_DO: Append a 'b'. </remarks>
+    public const string ScriptBinaryFileExtension = ".tsp";
+
     /// <summary>   Returns the compressed code prefix. </summary>
     /// <value> The compressed prefix. </value>
     public static string CompressedPrefix => "<COMPRESSED>";
@@ -214,22 +221,98 @@ public abstract class FirmwareScriptBase
             && scriptNames.IndexOf( scriptName + ",", 0, StringComparison.OrdinalIgnoreCase ) >= 0;
     }
 
-    /// <summary>   Builds the script source from naked binary source. </summary>
+    /// <summary>   Decorate a binary script with the Load String syntax. </summary>
     /// <remarks>   2024-12-05. </remarks>
     /// <param name="source">   Contains the script code line by line. </param>
     /// <returns>   A string. </returns>
-    public static string BuildScriptIfNakedBinarySource( string source )
+    public static string BuildLoadStringSyntax( string source )
     {
-        if ( source[..50].Trim().StartsWith( "{", true, System.Globalization.CultureInfo.CurrentCulture ) )
+        if ( FirmwareScriptBase.IsBinarySource( source ) )
         {
-            StringBuilder builder = new();
-            _ = builder.AppendLine( "loadstring(table.concat(" );
-            _ = builder.AppendLine( source );
-            _ = builder.AppendLine( "))()" );
-            return builder.ToString();
+            if ( source[..50].Trim().StartsWith( "{", true, System.Globalization.CultureInfo.CurrentCulture ) )
+            {
+                StringBuilder builder = new();
+                _ = builder.AppendLine( $"{cc.isr.VI.Syntax.Tsp.Lua.LoadStringCommand}(table.concat(" );
+                _ = builder.Append( source );
+                _ = builder.AppendLine( "))()" );
+                return builder.ToString();
+            }
+            else
+                return source;
         }
         else
             return source;
+    }
+
+    /// <summary>   Builds load script syntax. </summary>
+    /// <remarks>   2025-04-02. </remarks>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <param name="source">               Contains the script code line by line. </param>
+    /// <param name="scriptName">           Specifies the script name or empty if anonymous script. </param>
+    /// <param name="runScriptAfterLoad">   True to run script after load. </param>
+    /// <returns>   A string. </returns>
+    public static string BuildLoadScriptSyntax( string source, string scriptName, bool runScriptAfterLoad )
+    {
+        string sourceStart = source[..50].Trim();
+        if ( FirmwareScriptBase.IsBinarySource( source ) )
+        {
+            if ( sourceStart.StartsWith( "{", true, System.Globalization.CultureInfo.CurrentCulture ) )
+            {
+                StringBuilder builder = new( source.Length + 512 );
+                _ = builder.AppendLine( $"{cc.isr.VI.Syntax.Tsp.Lua.LoadStringCommand}(table.concat(" );
+                _ = builder.Append( source );
+                _ = builder.AppendLine( "))()" );
+                return FirmwareScriptBase.BuildLoadScriptSyntax( builder.ToString(), scriptName, runScriptAfterLoad );
+            }
+            else if ( sourceStart.StartsWith( cc.isr.VI.Syntax.Tsp.Lua.LoadStringCommand, StringComparison.Ordinal ) )
+            {
+                StringBuilder builder = new( source.Length + 512 );
+                if ( runScriptAfterLoad )
+                    _ = builder.AppendLine( $"{cc.isr.VI.Syntax.Tsp.Script.LoadAndRunScriptCommand} {scriptName}" );
+                else
+                    _ = builder.AppendLine( $"{cc.isr.VI.Syntax.Tsp.Script.LoadScriptCommand} {scriptName}" );
+                _ = builder.Append( source );
+                _ = builder.AppendLine( cc.isr.VI.Syntax.Tsp.Script.EndScriptCommand );
+                return builder.ToString();
+            }
+            else if ( runScriptAfterLoad && !sourceStart.StartsWith( cc.isr.VI.Syntax.Tsp.Script.LoadAndRunScriptCommand, StringComparison.Ordinal ) )
+                throw new InvalidOperationException( $"'{sourceStart}' must start with {cc.isr.VI.Syntax.Tsp.Script.LoadAndRunScriptCommand}" );
+            else if ( !runScriptAfterLoad && !sourceStart.StartsWith( cc.isr.VI.Syntax.Tsp.Script.LoadScriptCommand, StringComparison.Ordinal ) )
+                throw new InvalidOperationException( $"'{sourceStart}' must start with {cc.isr.VI.Syntax.Tsp.Script.LoadScriptCommand}" );
+            else if ( !source[50..].Trim().Contains( cc.isr.VI.Syntax.Tsp.Script.EndScriptCommand, StringComparison.Ordinal ) )
+                throw new InvalidOperationException( $"'{source[50..].Trim()}' must contain {cc.isr.VI.Syntax.Tsp.Script.EndScriptCommand}" );
+            else
+                return source;
+        }
+        else
+        {
+            if ( runScriptAfterLoad && sourceStart.StartsWith( cc.isr.VI.Syntax.Tsp.Script.LoadAndRunScriptCommand, StringComparison.Ordinal ) )
+            {
+                if ( !source[50..].Trim().Contains( cc.isr.VI.Syntax.Tsp.Script.EndScriptCommand, StringComparison.Ordinal ) )
+                    throw new InvalidOperationException( $"'{source[50..].Trim()}' must contain {cc.isr.VI.Syntax.Tsp.Script.EndScriptCommand}" );
+                else
+                    return source;
+            }
+            else if ( !runScriptAfterLoad && sourceStart.StartsWith( cc.isr.VI.Syntax.Tsp.Script.LoadScriptCommand, StringComparison.Ordinal ) )
+            {
+                if ( !source[50..].Trim().Contains( cc.isr.VI.Syntax.Tsp.Script.EndScriptCommand, StringComparison.Ordinal ) )
+                    throw new InvalidOperationException( $"'{source[50..].Trim()}' must contain {cc.isr.VI.Syntax.Tsp.Script.EndScriptCommand}" );
+                else
+                    return source;
+            }
+            else
+            {
+                StringBuilder builder = new( source.Length + 512 );
+                if ( runScriptAfterLoad )
+                    _ = builder.AppendLine( $"{cc.isr.VI.Syntax.Tsp.Script.LoadAndRunScriptCommand} {scriptName}" );
+                else
+                    _ = builder.AppendLine( $"{cc.isr.VI.Syntax.Tsp.Script.LoadScriptCommand} {scriptName}" );
+                _ = builder.Append( source );
+                _ = builder.AppendLine( cc.isr.VI.Syntax.Tsp.Script.EndScriptCommand );
+                return builder.ToString();
+            }
+        }
     }
 
     /// <summary>   Gets or sets the script write lines delay. </summary>
@@ -460,10 +543,7 @@ public abstract class FirmwareScriptBase
     /// <returns>   True if binary source, false if not. </returns>
     public static bool IsBinarySource( string source )
     {
-        string snippet = source[..50].Trim();
-        return snippet.StartsWith( "{", true, System.Globalization.CultureInfo.CurrentCulture )
-            || snippet.StartsWith( "loadstring", true, System.Globalization.CultureInfo.CurrentCulture )
-            || snippet.StartsWith( "loadscript", true, System.Globalization.CultureInfo.CurrentCulture );
+        return source.Contains( @"\27LuaP\0\4\4\4\", StringComparison.Ordinal );
     }
 
     /// <summary>   Parse source. </summary>
@@ -490,10 +570,7 @@ public abstract class FirmwareScriptBase
 
             if ( !string.IsNullOrWhiteSpace( this.Source ) )
             {
-                string snippet = source[..50].Trim();
-                isBinaryScript = snippet.StartsWith( "{", true, System.Globalization.CultureInfo.CurrentCulture )
-                    || snippet.StartsWith( "loadstring", true, System.Globalization.CultureInfo.CurrentCulture )
-                    || snippet.StartsWith( "loadscript", true, System.Globalization.CultureInfo.CurrentCulture );
+                isBinaryScript = FirmwareScriptBase.IsBinarySource( source );
             }
 
             if ( !source.EndsWith( " ", true, System.Globalization.CultureInfo.CurrentCulture ) )
@@ -575,11 +652,11 @@ public abstract class FirmwareScriptBase
     /// <returns>   A string. </returns>
     public string BuildScriptLoaderScript( string loadingScriptName, int nodeNumber )
     {
-        string prefix = "loadstring(table.concat(";
+        string prefix = $"{cc.isr.VI.Syntax.Tsp.Lua.LoadStringCommand}(table.concat(";
         string suffix = "))()";
         bool binaryDecorationRequire = this.IsBinaryScript && !this.Source.Contains( prefix );
         System.Text.StringBuilder loadCommands = new( this.Source.Length + 512 );
-        _ = loadCommands.Append( $"loadandrunscript {loadingScriptName}" );
+        _ = loadCommands.Append( $"{cc.isr.VI.Syntax.Tsp.Script.LoadAndRunScriptCommand} {loadingScriptName}" );
         _ = loadCommands.AppendLine();
         _ = loadCommands.AppendLine( "do" );
         _ = loadCommands.Append( $"node[{nodeNumber}].dataqueue.add([[" );
@@ -603,7 +680,7 @@ public abstract class FirmwareScriptBase
         _ = loadCommands.Append( $"waitcomplete({nodeNumber})" );
         _ = loadCommands.AppendLine( " waitcomplete()" );
         _ = loadCommands.AppendLine( "end" );
-        _ = loadCommands.AppendLine( "endscript" );
+        _ = loadCommands.AppendLine( cc.isr.VI.Syntax.Tsp.Script.EndScriptCommand );
         return loadCommands.ToString().TrimEndNewLine();
     }
 

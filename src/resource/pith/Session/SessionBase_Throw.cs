@@ -196,5 +196,4 @@ public partial class SessionBase
             throw new DeviceException( this.ResourceNameCaption ?? string.Empty,
                 $"{(useLastActionDetails ? this.LastActionDetails : this.LastAction)} {failureMessage} fetching device errors {location}." );
     }
-
 }

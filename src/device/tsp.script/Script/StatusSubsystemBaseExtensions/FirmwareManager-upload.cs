@@ -56,7 +56,7 @@ public static partial class FirmwareManager
                 // replaced by the code below
                 // session.LoadString( scriptLoaderScript );
 
-                scriptLoaderScript = FirmwareScriptBase.BuildScriptIfNakedBinarySource( scriptLoaderScript );
+                scriptLoaderScript = FirmwareScriptBase.BuildLoadStringSyntax( scriptLoaderScript );
                 session.WriteLines( scriptLoaderScript, Environment.NewLine, FirmwareScriptBase.WriteLinesDelay );
                 _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay + session.StatusReadDelay );
                 _ = session.WriteLine( cc.isr.VI.Syntax.Tsp.Lua.OperationCompleteCommand );

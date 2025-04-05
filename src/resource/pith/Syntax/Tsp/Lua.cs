@@ -54,6 +54,9 @@ public static class Lua
     /// </summary>
     public const string ScriptCatalogGetterCommand = "local names='' for name in script.user.catalog() do names = names .. name .. ',' end";
 
+    /// <summary>   (Immutable) the load string LUA command. </summary>
+    public const string LoadStringCommand = "loadstring";
+
     #endregion
 
     #region " system commands "

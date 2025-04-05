@@ -28,7 +28,7 @@ public static partial class FirmwareManager
         string line;
         session.SetLastAction( $"load script '{scriptName}' from {filePath}" );
         session.LastNodeNumber = default;
-        _ = session.WriteLine( "loadscript {0}", scriptName );
+        _ = session.WriteLine( $"{Syntax.Tsp.Script.LoadScriptCommand} {scriptName}" );
         while ( !tspFile.EndOfStream )
         {
             line = tspFile.ReadLine().Trim();
@@ -36,7 +36,7 @@ public static partial class FirmwareManager
                 _ = session.WriteLine( line );
             _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay );
         }
-        _ = session.WriteLine( "endscript" );
+        _ = session.WriteLine( Syntax.Tsp.Script.EndScriptCommand );
     }
 
 }

@@ -47,5 +47,4 @@ public static class Display
 
     /// <summary> The maximum character number. </summary>
     public const int MaximumCharacterNumber = short.MaxValue - 1;
-
 }

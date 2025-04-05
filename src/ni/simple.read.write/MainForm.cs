@@ -316,7 +316,7 @@ public partial class MainForm : Form
     /// <param name="value"> The value to write. </param>
     private void Write( string value )
     {
-        this._readTextBox.AppendText( "Write: " );
+        this._readTextBox.AppendText( "»" );
         this._session?.RawIO.Write( ReplaceCommonEscapeSequences( value ) );
         this._readTextBox.AppendText( $"{value}{Environment.NewLine}" );
         this._readTextBox.SelectionStart = this._readTextBox.Text.Length;
@@ -326,7 +326,7 @@ public partial class MainForm : Form
     /// <remarks> David, 2021-03-30. </remarks>
     private void Read()
     {
-        this._readTextBox.AppendText( "Read: " );
+        this._readTextBox.AppendText( "«" );
         this._readTextBox.AppendText( $"{InsertCommonEscapeSequences( this._session?.RawIO.ReadString() ?? string.Empty )}{Environment.NewLine}" );
         this._readTextBox.SelectionStart = this._readTextBox.Text.Length;
     }

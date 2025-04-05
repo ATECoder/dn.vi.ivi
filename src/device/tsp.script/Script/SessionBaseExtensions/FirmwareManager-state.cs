@@ -12,7 +12,7 @@ public static partial class FirmwareManager
         return !session.IsNil( $"_G.string.find( _G.string.sub( {scriptName}.source , 1 , 50 ), 'loadstring(table.concat(' , 1 , true )" );
     }
 
-    /// <summary>   A Pith.SessionBase? extension method that reads scripts state. </summary>
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that reads scripts state. </summary>
     /// <remarks>   2024-09-09. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>
@@ -51,7 +51,7 @@ public static partial class FirmwareManager
         script.VersionStatus = script.ValidateFirmware();
     }
 
-    /// <summary>   A Pith.SessionBase? extension method that reads scripts state. </summary>
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that reads scripts state. </summary>
     /// <remarks>   2024-09-09. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>

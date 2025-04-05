@@ -6,24 +6,44 @@ namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
 public static partial class FirmwareManager
 {
-    /// <summary>   A Pith.SessionBase? extension method that loads script file. </summary>
+
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that loads script file. </summary>
     /// <remarks>   2024-12-12. </remarks>
     /// <param name="session">      The session. </param>
-    /// <param name="scriptName">   Contains the script name. </param>
+    /// <param name="scriptName">   Contains the script name; could be empty if loading an anonymous script. </param>
     /// <param name="filePath">     full path name of the file. </param>
-    public static bool LoadScriptFile( this Pith.SessionBase? session, string scriptName, string filePath )
+    public static void LoadScriptFile( this Pith.SessionBase? session, string scriptName, string filePath )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
-        if ( scriptName is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
         if ( filePath is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( filePath ) );
+
+        string scriptNameOrAnonymous = string.IsNullOrWhiteSpace( scriptName ) ? "anonymous" : scriptName;
 
         // read the script source from file.
         string? scriptSource = FirmwareScriptBase.ReadScript( filePath );
-        if ( string.IsNullOrWhiteSpace( scriptSource ) ) throw new ArgumentNullException( $"Failed reading script source from {filePath}" );
+        if ( string.IsNullOrWhiteSpace( scriptSource ) )
+            throw new ArgumentNullException( $"Failed reading {scriptNameOrAnonymous} script source from {filePath}" );
 
         // This reads the entire source from the file and then loads the file line by line as source code or Binary
         (bool timedOut, _, _) = session.LoadScriptSource( scriptName, scriptSource! );
-        return !timedOut;
+        if ( timedOut )
+            throw new InvalidOperationException( $"Timeout loading {scriptNameOrAnonymous} script from file {filePath}." );
+    }
+
+    /// <summary>   Loads the script embedded in the string. </summary>
+    /// <remarks>   2024-09-05. </remarks>
+    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
+    ///                                             null. </exception>
+    /// <param name="session">      The session. </param>
+    /// <param name="scriptName">   Contains the script name. Could be empty if loading an anonymous script. </param>
+    /// <param name="source">       Contains the script code line by line. </param>
+    public static void LoadScript( this Pith.SessionBase? session, string scriptName, string source )
+    {
+        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
+        if ( string.IsNullOrWhiteSpace( source ) ) throw new ArgumentNullException( nameof( source ) );
+        source = FirmwareScriptBase.BuildLoadStringSyntax( source );
+        string[] scriptLines = source.Split( Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries );
+        session.LoadScript( scriptName, scriptLines );
     }
 
     /// <summary>   Loads the script embedded in the string array and issues a wait complete. </summary>
@@ -31,7 +51,7 @@ public static partial class FirmwareManager
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>
     /// <param name="session">      The session. </param>
-    /// <param name="scriptName">   Contains the script name. </param>
+    /// <param name="scriptName">   Contains the script name. Could be empty if loading an anonymous script. </param>
     /// <param name="scriptLines">  Contains the script code line by line. </param>
     public static void LoadScript( this Pith.SessionBase? session, string scriptName, string[] scriptLines )
     {
@@ -42,25 +62,27 @@ public static partial class FirmwareManager
         string firstLine = scriptLines[0];
         // check if we already have the load/end constructs.
         session.LastNodeNumber = default;
-        if ( firstLine.Contains( scriptName ) || firstLine.Contains( "loadscript" ) )
+        // was if ( firstLine.Contains( scriptName ) || firstLine.Contains( Syntax.Tsp.Script.LoadScriptCommand ) )
+        if ( (string.IsNullOrWhiteSpace( scriptName ) && firstLine.Contains( Syntax.Tsp.Script.LoadAndRunScriptCommand )) ||
+              firstLine.Contains( Syntax.Tsp.Script.LoadAndRunScriptCommand ) )
         {
-            session.SetLastAction( $"loading script '{scriptName}'" );
+            session.SetLastAction( $"loading {(string.IsNullOrWhiteSpace( scriptName ) ? """anonymous""" : scriptName)} script" );
             session.LastNodeNumber = default;
             session.WriteLines( scriptLines, FirmwareScriptBase.WriteLinesDelay );
         }
         else
         {
-            session.SetLastAction( $"initiating load script for script '{scriptName}'" );
-            _ = session.WriteLine( "loadscript " + scriptName );
+            session.SetLastAction( $"initiating load for {(string.IsNullOrWhiteSpace( scriptName ) ? """anonymous""" : scriptName)} script" );
+            if ( string.IsNullOrEmpty( scriptName ) )
+                _ = session.WriteLine( $"{Syntax.Tsp.Script.LoadAndRunScriptCommand}" );
+            else
+                _ = session.WriteLine( $"{Syntax.Tsp.Script.LoadScriptCommand} {scriptName}" );
 
-            session.SetLastAction( $"loading script lines for script '{scriptName}'" );
+            session.SetLastAction( $"loading lines for {(string.IsNullOrWhiteSpace( scriptName ) ? """anonymous""" : scriptName)} script" );
             session.WriteLines( scriptLines, FirmwareScriptBase.WriteLinesDelay );
-            // session.LoadString( scriptLines );
-            // string lastLine = scriptLines[^1];
-            // Console.Write( lastLine );
 
-            session.SetLastAction( $"ending script for script '{scriptName}'" );
-            _ = session.WriteLine( "endscript" );
+            session.SetLastAction( $"ending  for {(string.IsNullOrWhiteSpace( scriptName ) ? """anonymous""" : scriptName)} script" );
+            _ = session.WriteLine( Syntax.Tsp.Script.EndScriptCommand );
             _ = session.WriteLine( cc.isr.VI.Syntax.Tsp.Lua.WaitCommand );
         }
 
@@ -74,21 +96,49 @@ public static partial class FirmwareManager
         session.ThrowDeviceExceptionIfError();
     }
 
-    /// <summary>   Loads the script embedded in the string. </summary>
-    /// <remarks>   2024-09-05. </remarks>
+    /// <summary>   Loads an anonymous script embedded in the string. </summary>
+    /// <remarks>   2025-04-02. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>
     /// <param name="session">      The session. </param>
-    /// <param name="scriptName">   Contains the script name. </param>
-    /// <param name="source">       Contains the script code line by line. </param>
-    public static void LoadScript( this Pith.SessionBase? session, string scriptName, string source )
+    /// <param name="scriptLines">  Contains the script code line by line. </param>
+    public static void LoadScript( this Pith.SessionBase? session, string[] scriptLines )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
-        if ( scriptName is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( session ) );
-        if ( string.IsNullOrWhiteSpace( source ) ) throw new ArgumentNullException( nameof( source ) );
-        source = FirmwareScriptBase.BuildScriptIfNakedBinarySource( source );
-        string[] scriptLines = source.Split( Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries );
-        session.LoadScript( scriptName, scriptLines );
+        if ( scriptLines is null ) throw new ArgumentNullException( nameof( scriptLines ) );
+
+        string firstLine = scriptLines[0];
+        // check if we already have the load/end constructs.
+        session.LastNodeNumber = default;
+        if ( firstLine.Contains( Syntax.Tsp.Script.LoadAndRunScriptCommand ) )
+        {
+            session.SetLastAction( $"loading anonymous script" );
+            session.LastNodeNumber = default;
+            session.WriteLines( scriptLines, FirmwareScriptBase.WriteLinesDelay );
+        }
+        else if ( firstLine.Contains( Syntax.Tsp.Script.LoadScriptCommand ) )
+            throw new InvalidOperationException( $"The '{firstLine}' first line must be {Syntax.Tsp.Script.LoadAndRunScriptCommand}." );
+        else
+        {
+            session.SetLastAction( "initiating load script for anonymous script" );
+            _ = session.WriteLine( Syntax.Tsp.Script.LoadAndRunScriptCommand );
+
+            session.SetLastAction( "loading script lines for anonymous script" );
+            session.WriteLines( scriptLines, FirmwareScriptBase.WriteLinesDelay );
+
+            session.SetLastAction( "ending script for anonymous script" );
+            _ = session.WriteLine( Syntax.Tsp.Script.EndScriptCommand );
+            _ = session.WriteLine( cc.isr.VI.Syntax.Tsp.Lua.WaitCommand );
+        }
+
+        _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay + session.StatusReadDelay );
+        session.ThrowDeviceExceptionIfError();
+
+        // query and throw if operation complete query failed
+        session.QueryAndThrowIfOperationIncomplete();
+        _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay + session.StatusReadDelay );
+
+        session.ThrowDeviceExceptionIfError();
     }
 
     /// <summary>   Loads an anonymous script embedded in the string. </summary>
@@ -101,8 +151,10 @@ public static partial class FirmwareManager
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( string.IsNullOrWhiteSpace( source ) ) throw new ArgumentNullException( nameof( source ) );
-        source = FirmwareScriptBase.BuildScriptIfNakedBinarySource( source );
+
+        source = FirmwareScriptBase.BuildLoadStringSyntax( source );
         session.WriteLines( source, Environment.NewLine, FirmwareScriptBase.WriteLinesDelay );
+
         // session.LoadString( source );
         _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay + session.StatusReadDelay );
         _ = session.WriteLine( cc.isr.VI.Syntax.Tsp.Lua.WaitCommand );
@@ -214,8 +266,8 @@ public static partial class FirmwareManager
                     chunkLine += " ";
                     if ( isFirstLine )
                     {
-                        // issue a start of script command. The command 'loadscript' identifies the beginning of the named script.
-                        commandLine = "loadscript " + scriptName + " ";
+                        // issue a start of script command. The load script command identifies the beginning of the script.
+                        commandLine = $"{Syntax.Tsp.Script.LoadScriptCommand} {scriptName} ";
                         activity = $"sending {commandLine} for script '{scriptName}' from file '{resourceFilePath}'";
                         session.SetLastAction( activity );
                         session.SetLastActionDetails( activity );
@@ -243,7 +295,7 @@ public static partial class FirmwareManager
 
 
         // Tell TSP complete script has been downloaded.
-        commandLine = $"endscript {cc.isr.VI.Syntax.Tsp.Lua.WaitCommand} ";
+        commandLine = $"{Syntax.Tsp.Script.EndScriptCommand} {cc.isr.VI.Syntax.Tsp.Lua.WaitCommand} ";
         activity = $"sending {commandLine} for script '{scriptName}' from file '{resourceFilePath}'";
         session.SetLastAction( activity );
         session.SetLastActionDetails( activity );
@@ -349,8 +401,8 @@ public static partial class FirmwareManager
                     chunkLine += " ";
                     if ( isFirstLine )
                     {
-                        // issue a start of script command. The command 'loadscript' identifies the beginning of the named script.
-                        commandLine = "loadscript " + scriptName + " ";
+                        // issue a start of script command. The load script command identifies the beginning of the named script.
+                        commandLine = $"{Syntax.Tsp.Script.LoadScriptCommand} {scriptName} ";
                         activity = $"sending {commandLine} for script '{scriptName}' from file '{scriptFilePath}'";
                         session.SetLastAction( activity );
                         session.SetLastActionDetails( activity );
@@ -377,7 +429,7 @@ public static partial class FirmwareManager
         }
 
         // complete the script.
-        commandLine = $"endscript {cc.isr.VI.Syntax.Tsp.Lua.WaitCommand} ";
+        commandLine = $"{Syntax.Tsp.Script.EndScriptCommand} {cc.isr.VI.Syntax.Tsp.Lua.WaitCommand} ";
         activity = $"sending {commandLine} for script '{scriptName}'";
         session.SetLastAction( activity );
         session.SetLastActionDetails( activity );
@@ -410,7 +462,7 @@ public static partial class FirmwareManager
     /// <see cref="ParseAndLoadScriptSource"/>
     /// </remarks>
     /// <param name="session">      The session. </param>
-    /// <param name="scriptName">   Name of the script. </param>
+    /// <param name="scriptName">   The script name; could be empty if loading an anonymous script. </param>
     /// <param name="scriptSource"> The script source. </param>
     /// <returns>   The script source. </returns>
     public static (bool TimedOut, ServiceRequests Status, TimeSpan Elapsed) LoadScriptSource( this Pith.SessionBase session, string scriptName,
@@ -432,16 +484,16 @@ public static partial class FirmwareManager
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>
     /// <param name="session">          The session. </param>
-    /// <param name="scriptName">       Name of the script. </param>
+    /// <param name="scriptName">       The script name; could be empty if loading an anonymous script. </param>
     /// <param name="scriptSource">     The script source. </param>
     /// <param name="retainOutline">    (Optional) (false) Specifies if the code outline is retained or
     ///                                 trimmed. </param>
     /// <returns>   The script source. </returns>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0306:Simplify collection initialization", Justification = "<Pending>" )]
     public static (bool TimedOut, ServiceRequests Status, TimeSpan Elapsed) ParseAndLoadScriptSource( this Pith.SessionBase session, string scriptName,
         string scriptSource, bool retainOutline = false )
     {
         if ( session is null ) throw new cc.isr.VI.Pith.NativeException( $"{nameof( session )} is null." );
-        if ( scriptName is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
         if ( scriptSource is null || string.IsNullOrWhiteSpace( scriptSource ) ) throw new ArgumentNullException( nameof( scriptSource ) );
 
         session.LastNodeNumber = default;
@@ -460,6 +512,8 @@ public static partial class FirmwareManager
         LuaChunkLineContentType lineType;
         string activity;
         string actionDetails;
+
+        string scriptNameOrAnonymous = string.IsNullOrWhiteSpace( scriptName ) ? "anonymous" : scriptName;
 
         Stopwatch sw = Stopwatch.StartNew();
 
@@ -504,9 +558,12 @@ public static partial class FirmwareManager
                 chunkLine += " ";
                 if ( isFirstLine )
                 {
-                    // issue a start of script command. The command 'loadscript' identifies the beginning of the named script.
-                    commandLine = "loadscript " + scriptName + " ";
-                    activity = $"sending {commandLine} for script '{scriptName}'";
+                    // issue a start of script command. The load script command identifies the beginning of the named script.
+                    if ( string.IsNullOrWhiteSpace( scriptName ) )
+                        commandLine = $"{Syntax.Tsp.Script.LoadAndRunScriptCommand} ";
+                    else
+                        commandLine = $"{Syntax.Tsp.Script.LoadScriptCommand} {scriptName} ";
+                    activity = $"sending {commandLine} for '{scriptNameOrAnonymous}' script";
                     session.SetLastAction( activity );
                     session.SetLastActionDetails( activity );
                     _ = session.WriteLine( commandLine );
@@ -515,7 +572,7 @@ public static partial class FirmwareManager
                 }
                 // TSP received the first script line successfully; waiting for next line.
 
-                activity = $"sending syntax line #{lineNumber} for script '{scriptName}'";
+                activity = $"sending syntax line #{lineNumber} for '{scriptNameOrAnonymous}' script";
                 actionDetails = $"{activity}:\n\t{chunkLine}";
                 session.SetLastAction( activity );
                 session.SetLastActionDetails( actionDetails );
@@ -527,8 +584,8 @@ public static partial class FirmwareManager
             }
         }
         // complete the script.
-        commandLine = $"endscript {cc.isr.VI.Syntax.Tsp.Lua.WaitCommand} ";
-        activity = $"sending {commandLine} for script '{scriptName}'";
+        commandLine = $"{Syntax.Tsp.Script.EndScriptCommand} {cc.isr.VI.Syntax.Tsp.Lua.WaitCommand} ";
+        activity = $"sending {commandLine} for '{scriptNameOrAnonymous}' script";
         session.SetLastAction( activity );
         session.SetLastActionDetails( activity );
 

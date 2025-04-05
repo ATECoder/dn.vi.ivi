@@ -71,8 +71,8 @@ public static partial class FirmwareManager
     /// <returns>   <c>true</c> if okay; otherwise, <c>false</c>. </returns>
     public static bool LoadRunAnonymousScript( this Pith.SessionBase? session, string commands )
     {
-        string prefix = "loadandrunscript";
-        string suffix = "endscript waitcomplete()";
+        string prefix = cc.isr.VI.Syntax.Tsp.Script.LoadAndRunScriptCommand;
+        string suffix = $"{cc.isr.VI.Syntax.Tsp.Script.EndScriptCommand} {cc.isr.VI.Syntax.Tsp.Lua.WaitCommand}";
         string loadCommand = string.Format( System.Globalization.CultureInfo.CurrentCulture, "{1}{0}{2}{0}{3}", Environment.NewLine, prefix, commands, suffix );
         // replaced by the code blows.
         // LoadString( session, loadCommand );

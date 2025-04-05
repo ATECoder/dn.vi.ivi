@@ -1638,7 +1638,7 @@ public abstract partial class SessionBase : CommunityToolkit.Mvvm.ComponentModel
     public void WriteLines( string dataToWrite, string separator = "\n", TimeSpan? lineDelay = null )
     {
         if ( string.IsNullOrWhiteSpace( dataToWrite ) ) return;
-        if ( string.IsNullOrWhiteSpace( separator ) ) throw new ArgumentNullException( separator );
+        if ( string.IsNullOrEmpty( separator ) ) throw new ArgumentNullException( separator );
         string[] lines = dataToWrite.Split( separator.ToCharArray(), StringSplitOptions.RemoveEmptyEntries );
         this.WriteLines( lines, lineDelay );
     }

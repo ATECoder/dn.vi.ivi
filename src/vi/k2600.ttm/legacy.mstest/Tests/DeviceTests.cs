@@ -75,6 +75,9 @@ public class DeviceTests
 
         // read the settings and throw if not found
         this.TestSiteSettings = AllSettings.Instance.TestSiteSettings;
+        Assert.IsNotNull( AllSettings.Instance.Scribe, $"{nameof( AllSettings )}.{nameof( AllSettings.Instance )}.{nameof( AllSettings.Instance.Scribe )} must not be null." );
+        AllSettings.Instance.Scribe.InitializeSettingsFiles();
+        AllSettings.Instance.Scribe.ReadSettings();
 
         // instantiate the legacy device, meter, TSP device and associated visa sessions
         this.LegacyDevice = new( this.GetType(), ".Driver", true, true );

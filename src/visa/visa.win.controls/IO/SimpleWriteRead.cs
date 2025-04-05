@@ -471,7 +471,7 @@ public partial class SimpleWriteRead : UserControl
     /// <param name="value"> The value to write. </param>
     private void Write( string value )
     {
-        this.ReadTextBox.AppendText( ">" );
+        this.ReadTextBox.AppendText( "»" );
         this._session?.RawIO.Write( ReplaceCommonEscapeSequences( value ) );
         this.ReadTextBox.AppendText( $"{value}\r\n" );
         this.ReadTextBox.SelectionStart = this.ReadTextBox.Text.Length;
@@ -481,7 +481,7 @@ public partial class SimpleWriteRead : UserControl
     /// <remarks> David, 2021-03-30. </remarks>
     private void Read()
     {
-        this.ReadTextBox.AppendText( "<" );
+        this.ReadTextBox.AppendText( "«" );
         this.ReadTextBox.AppendText( $"{InsertCommonEscapeSequences( this._session?.RawIO.ReadString() ?? string.Empty )}\r\n" );
         this.ReadTextBox.SelectionStart = this.ReadTextBox.Text.Length;
     }
