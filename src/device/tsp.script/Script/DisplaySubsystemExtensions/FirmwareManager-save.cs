@@ -111,7 +111,7 @@ public static partial class FirmwareManager
                     session.SetLastAction( $"loading {functionName} from embedded resource" );
 
                     session.LoadEmbeddedResource( SessionBaseExtensions.FirmwareManager.BinaryScriptsFunctionName,
-                        SessionBaseExtensions.FirmwareManager.BinaryScriptsFunctionFileName, SessionBaseExtensions.FirmwareManager.EmbeddedResourceFolderName );
+                        SessionBaseExtensions.FirmwareManager.BinaryScriptsFunctionFileName, ResourceManager.EmbeddedResourceFolderName );
 
                     // validate the existence of the function.
                     if ( session.IsNil( script.Node.Number, functionName ) )
