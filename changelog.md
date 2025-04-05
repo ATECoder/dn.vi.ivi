@@ -2,6 +2,16 @@
 All notable changes to these libraries will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [8.1.9226] - 2025-04-05
+- Update settings when reading a specified if script exists.
+- Resource TSP Syntax: Add Load and End Script commands and load string command.
+- Script: 
+  - Add binary scripts as an embedded resource.
+  - Add methods for reading the binary script embedded resource and convert script to binary for  firmware 3.x.
+  - Add method to build the load script command.
+  - Use '\27LuaP\0\4\4\4\' to determine if a script source is in binary format.
+  - Use string.IsNullOrEmpty() to check if a delimiter is empty. 
+
 ## [8.1.9222] - 2025-04-01
 - Default to not overriding existing files when initializing the settings.
   - Tests: Override settings files when initializing the settings.
@@ -229,6 +239,6 @@ which has issued a defect report.
 
 &copy; 2012 Integrated Scientific Resources, Inc. All rights reserved.
 
-[8.1.9222]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9226]: https://www.github.com/atecoder/dn.vi.ivi
 [vs.VI]: https://www.github.com/atecoder/dn.vi.ivi
 [vs.Visa]: https://bitbucket.org/davidhary/vs.io.visa
