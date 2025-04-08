@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Tsp.Script.ResourceManager
   - Tighten code reading a resource file and an embedded resource file.
   - Add methods to copy or create text file for testing the copy or creation of linked resources.
+  - Use FirmwareScriptBase.ScriptFileExtension and FirmwareScriptBase.ScriptBinaryFileExtension.
 
 ## [8.1.9228] - 2025-04-07
 - Add script file name builder.

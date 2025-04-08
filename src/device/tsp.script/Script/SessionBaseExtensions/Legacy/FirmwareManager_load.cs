@@ -102,8 +102,8 @@ internal static class FirmwareManager
                     // now report the error to the calling module
                     throw new IOException( "Failed opening TSP Script File '" + filePath + "'." );
 
-                string trimmedFileSuffix = ".trimmed.tsp";
-                string trimmedFilePath = filePath.Replace( ".tsp", trimmedFileSuffix );
+                string trimmedFileSuffix = $".trimmed{FirmwareScriptBase.ScriptFileExtension}";
+                string trimmedFilePath = filePath.Replace( FirmwareScriptBase.ScriptFileExtension, trimmedFileSuffix );
                 if ( string.Equals( trimmedFilePath, filePath ) )
                     trimmedFilePath = filePath + trimmedFileSuffix;
 

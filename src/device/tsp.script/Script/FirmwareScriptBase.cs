@@ -615,6 +615,9 @@ public abstract class FirmwareScriptBase
     public bool IsBootScript { get; set; }
 
     /// <summary>   Gets or sets the sentinel indicating if this is a Primary script. </summary>
+    /// <remarks> The primary script is used to provide the following items: <para>
+    /// A version getter that can be used to get the overall version of the framework, </para><para>
+    /// A script name that is used to determine if any part of the framework was loaded. </para></remarks>
     /// <value> <c>true</c> if this is a Primary script; otherwise, <c>false</c>. </value>
     public bool IsPrimaryScript { get; set; }
 
