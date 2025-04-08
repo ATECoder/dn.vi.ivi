@@ -176,7 +176,7 @@ public abstract class ScriptEntityBase( FirmwareScriptBase firmwareScript, NodeE
     /// <returns>   The <see cref="FirmwareVersionStatus">version status</see>. </returns>
     public FirmwareVersionStatus ValidateFirmware()
     {
-        if ( string.IsNullOrWhiteSpace( this.FirmwareScript.ReleasedFirmwareVersion ) )
+        if ( string.IsNullOrWhiteSpace( this.FirmwareScript.FirmwareVersion ) )
             return FirmwareVersionStatus.ReleaseVersionNotSet;
 
         else if ( string.IsNullOrWhiteSpace( this.EmbeddedFirmwareVersion ) )
@@ -187,7 +187,7 @@ public abstract class ScriptEntityBase( FirmwareScriptBase firmwareScript, NodeE
 
         else
         {
-            switch ( new Version( this.EmbeddedFirmwareVersion ).CompareTo( new Version( this.FirmwareScript.ReleasedFirmwareVersion ) ) )
+            switch ( new Version( this.EmbeddedFirmwareVersion ).CompareTo( new Version( this.FirmwareScript.FirmwareVersion ) ) )
             {
                 case var @case when @case > 0:
                     {
@@ -270,7 +270,7 @@ public abstract class ScriptEntityBase( FirmwareScriptBase firmwareScript, NodeE
     /// <returns>   True if save required, false if not. </returns>
     public bool IsSaveRequired()
     {
-        return !this.Saved || (this.FirmwareScript.SaveAsBinary && this.LoadedAsBinary);
+        return !this.Saved || (this.FirmwareScript.SaveToNonVolatileMemory && this.LoadedAsBinary);
     }
 
     #endregion

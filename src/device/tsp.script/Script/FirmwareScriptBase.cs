@@ -21,26 +21,27 @@ public abstract class FirmwareScriptBase
     {
         this.Name = string.Empty;
         this.ModelMask = string.Empty;
-        this.ModelMask = string.Empty;
-        this.ResourceFileName = string.Empty;
+        this.ModelVersion = string.Empty;
         this._namespaceList = string.Empty;
         this.Namespaces = [];
         this.TopNamespace = string.Empty;
-        this.FileName = string.Empty;
+        this.FileTitle = string.Empty;
         this.FolderPath = string.Empty;
-        this.ApplyNamespaceList( "" );
-        this.ReleasedFirmwareVersion = string.Empty;
+        this.ApplyNamespaceList( this._namespaceList );
+        this.FirmwareVersion = string.Empty;
         this._source = string.Empty;
     }
 
     /// <summary>   Constructs this class. </summary>
     /// <remarks>   2024-09-05. </remarks>
     /// <param name="name">         Specifies the script name. </param>
-    /// <param name="modelMask">    Specifies the model families for this script. </param>
-    protected FirmwareScriptBase( string name, string modelMask ) : this()
+    /// <param name="modelMask">    Specifies the model families for this script. e.g., 2600A. </param>
+    /// <param name="modelVersion"> The model version. </param>
+    protected FirmwareScriptBase( string name, string modelMask, Version modelVersion ) : this()
     {
         this.Name = name;
         this.ModelMask = modelMask;
+        this.ModelVersion = modelVersion.ToString();
     }
 
     #endregion
@@ -59,53 +60,6 @@ public abstract class FirmwareScriptBase
     /// <summary>   (Immutable) the script binary compressed file extension. </summary>
     public const string ScriptBinaryCompressedFileExtension = ".tspbc";
 
-    /// <summary>   Builds script file title. </summary>
-    /// <remarks>   2025-04-05. </remarks>
-    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
-    ///                                             null. </exception>
-    /// <param name="baseTitle">            The base title. </param>
-    /// <param name="fileFormat">           (Optional) [<see cref="ScriptFileFormats.None"/>] The file format. </param>
-    /// <param name="isDeploy">             (Optional) [false] True if the file is to be deployed; otherwise,
-    ///                                     false. </param>
-    /// <param name="releaseVersion">       (Optional) [empty] The release version. </param>
-    /// <param name="baseModel">            (Optional) [empty] The base model. </param>
-    /// <param name="modelMajorVersion">    (Optional) [empty] The model major version. </param>
-    /// <returns>   A string. </returns>
-    public static string BuildScriptFileTitle( string baseTitle, ScriptFileFormats fileFormat = ScriptFileFormats.None,
-        bool isDeploy = false, string releaseVersion = "",
-        string baseModel = "", string modelMajorVersion = "" )
-    {
-        if ( string.IsNullOrWhiteSpace( baseTitle ) )
-            throw new ArgumentNullException( nameof( baseTitle ) );
-
-        string title = baseTitle;
-
-        if ( ScriptFileFormats.Binary == (fileFormat & ScriptFileFormats.Binary) )
-        {
-            // binary files are always deployed or loaded from a deployed file.
-            if ( string.IsNullOrWhiteSpace( baseModel ) )
-                throw new ArgumentNullException( nameof( baseModel ) );
-            if ( string.IsNullOrWhiteSpace( modelMajorVersion ) )
-                throw new ArgumentNullException( nameof( modelMajorVersion ) );
-            title = $"{title}.{baseModel}.{modelMajorVersion}";
-        }
-        else
-        {
-            if ( isDeploy )
-            {
-                title = $"{baseTitle}";
-            }
-            else
-            {
-                // source files, which are not deployed, must include the release revision
-                if ( string.IsNullOrWhiteSpace( releaseVersion ) )
-                    throw new ArgumentNullException( nameof( releaseVersion ) );
-                title = $"{title}.{releaseVersion}{FirmwareScriptBase.ScriptFileExtension}";
-            }
-        }
-        return title;
-    }
-
     /// <summary>   Select script file extension. </summary>
     /// <remarks>   2025-04-05. </remarks>
     /// <param name="fileFormat">           The file format. </param>
@@ -122,21 +76,59 @@ public abstract class FirmwareScriptBase
 
     }
 
+    /// <summary>   Builds script file title. </summary>
+    /// <remarks>   2025-04-05. </remarks>
+    /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
+    ///                                                 are null. </exception>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <exception cref="FileNotFoundException">        Thrown when the requested file is not
+    ///                                                 present. </exception>
+    /// <param name="baseTitle">            The base title. </param>
+    /// <param name="fileFormat">           (Optional) [<see cref="ScriptFileFormats.None"/>] The
+    ///                                     file format. </param>
+    /// <param name="scriptVersion">        (Optional) [empty] The release version. Specify the
+    ///                                     version only with build files. </param>
+    /// <param name="baseModel">            (Optional) [empty] The base model. </param>
+    /// <param name="modelMajorVersion">    (Optional) [empty] The model major version. </param>
+    /// <returns>   A string. </returns>
+    public static string BuildScriptFileTitle( string baseTitle, ScriptFileFormats fileFormat = ScriptFileFormats.None,
+        string scriptVersion = "", string baseModel = "", string modelMajorVersion = "" )
+    {
+        if ( string.IsNullOrWhiteSpace( baseTitle ) )
+            throw new ArgumentNullException( nameof( baseTitle ) );
+
+        string title = baseTitle;
+
+        if ( string.IsNullOrWhiteSpace( scriptVersion ) )
+            title = $"{title}.{scriptVersion}";
+
+
+        if ( ScriptFileFormats.Binary == (fileFormat & ScriptFileFormats.Binary) )
+        {
+            // binary files are always deployed or loaded from a deployed file.
+            if ( string.IsNullOrWhiteSpace( baseModel ) )
+                throw new ArgumentNullException( nameof( baseModel ) );
+            if ( string.IsNullOrWhiteSpace( modelMajorVersion ) )
+                throw new ArgumentNullException( nameof( modelMajorVersion ) );
+            title = $"{title}.{baseModel}.{modelMajorVersion}";
+        }
+        return title;
+    }
+
     /// <summary>   Builds script file name. </summary>
     /// <remarks>   2025-04-05. </remarks>
     /// <param name="baseTitle">            The base title. </param>
     /// <param name="fileFormat">           (Optional) [<see cref="ScriptFileFormats.None"/>] The file format. </param>
-    /// <param name="isDeploy">             (Optional) [false] True if the file is to be deployed; otherwise,
-    ///                                     false. </param>
-    /// <param name="releaseVersion">       (Optional) [empty] The release version. </param>
+    /// <param name="scriptVersion">        (Optional) [empty] The release version. Specify the
+    ///                                     version only with build files. </param>
     /// <param name="baseModel">            (Optional) [empty] The base model. </param>
     /// <param name="modelMajorVersion">    (Optional) [empty] The model major version. </param>
     /// <returns>   A string. </returns>
     public static string BuildScriptFileName( string baseTitle, ScriptFileFormats fileFormat = ScriptFileFormats.None,
-        bool isDeploy = false, string releaseVersion = "",
-        string baseModel = "", string modelMajorVersion = "" )
+        string scriptVersion = "", string baseModel = "", string modelMajorVersion = "" )
     {
-        string title = FirmwareScriptBase.BuildScriptFileTitle( baseTitle, fileFormat, isDeploy, releaseVersion, baseModel, modelMajorVersion );
+        string title = FirmwareScriptBase.BuildScriptFileTitle( baseTitle, fileFormat, scriptVersion, baseModel, modelMajorVersion );
         string ext = FirmwareScriptBase.SelectScriptFileExtension( fileFormat );
         return $"{title}{ext}";
     }
@@ -416,41 +408,58 @@ public abstract class FirmwareScriptBase
 
     #endregion
 
-    #region " firmware "
+    #region " firmware file "
 
-    /// <summary>   Gets or sets the released firmware version. </summary>
-    /// <value> The released firmware version. </value>
-    public string ReleasedFirmwareVersion { get; set; }
+    /// <summary>   Gets or sets the firmware version of the script. </summary>
+    /// <value> The firmware version of the script. </value>
+    public string FirmwareVersion { get; set; }
 
     /// <summary>   Gets or sets the full path name of the folder. </summary>
     /// <value> The full path name of the folder. </value>
     public string FolderPath { get; set; }
 
-    /// <summary>   Gets or sets the filename of the script. </summary>
-    /// <value> The name of the script file. </value>
-    public string FileName { get; set; }
+    /// <summary>   Gets or sets the script file title. </summary>
+    /// <remarks> Typically this is the script name. </remarks>
+    /// <value> The title of the script file. </value>
+    public string FileTitle { get; set; }
 
-    /// <summary>   Gets the full path name of the file. </summary>
-    /// <value> The full path name of the file. </value>
-    public string FilePath => Path.Combine( this.FolderPath, this.FileName );
+    /// <summary>   Gets or sets the filename of the build file. </summary>
+    /// <remarks> Currently the build file includes the file title and script version. </remarks>
+    /// <value> The filename of the build file. </value>
+    public string BuildFileName => $"{this.FileTitle}.{this.FirmwareVersion}{FirmwareScriptBase.ScriptFileExtension}";
+
+    /// <summary>   Gets the filename of the trimmed file. </summary>
+    /// <value> The filename of the trimmed file. </value>
+    public string TrimmedFileName => $"{this.FileTitle}.{this.FirmwareVersion}{FirmwareScriptBase.ScriptFileExtension}";
+
+    /// <summary>   Gets the filename of the deploy file. </summary>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <value> The filename of the deploy file. </value>
+    public string DeployFileName
+    {
+        get
+        {
+            string title = this.FileTitle;
+            if ( ScriptFileFormats.Binary == (this.DeployFileFormat & ScriptFileFormats.Binary) )
+            {
+                // binary files are always deployed or loaded from a deployed file.
+                if ( string.IsNullOrWhiteSpace( this.ModelMask ) )
+                    throw new InvalidOperationException( $"The {nameof( this.ModelMask )} is not specified." );
+                if ( string.IsNullOrWhiteSpace( this.ModelVersion ) )
+                    throw new InvalidOperationException( $"The {nameof( this.ModelVersion )} is not specified." );
+                title = $"{title}.{this.ModelMask}.{new Version( this.ModelVersion ).Major}";
+            }
+            string ext = FirmwareScriptBase.SelectScriptFileExtension( this.DeployFileFormat );
+            return $"{title}{ext}";
+        }
+    }
 
     /// <summary>
-    /// Gets or sets the filename of the resource file, which includes the script source in the <see cref="ResourceFileFormat"/>.
-    /// The resource filename is build based on the <see cref="FileName"/> by adding the <see cref="NodeEntityBase.ModelFamilyResourceFileSuffix"/>
-    /// to the <see cref="FileName"/>.
+    /// Gets or sets the <see cref="ScriptFileFormats"/> of the deploy file. Defaults to uncompressed format.
     /// </summary>
-    /// <value> The filename of the resource file. </value>
-    public string ResourceFileName { get; set; }
-
-    /// <summary>   Gets the full path name of the resource file. </summary>
-    /// <value> The full path name of the resource file. </value>
-    public string ResourceFilePath => Path.Combine( this.FolderPath, this.ResourceFileName );
-
-    /// <summary>
-    /// Gets or sets the format of the resource file. Defaults to uncompressed format.
-    /// </summary>
-    /// <value> The format of the resource file. </value>
-    public ScriptFileFormats ResourceFileFormat { get; set; }
+    /// <value> The <see cref="ScriptFileFormats"/> of the resource file. </value>
+    public ScriptFileFormats DeployFileFormat { get; set; }
 
     /// <summary>   Builds the <see cref="ScriptFileFormats"/> of a deployed script. </summary>
     /// <remarks>   2024-08-20. </remarks>
@@ -473,10 +482,17 @@ public abstract class FirmwareScriptBase
     /// <value> The saved to file. </value>
     public bool SavedToFile { get; set; }
 
-    /// <summary>   Gets a value indicating whether the user script source should be converted
-    ///             to a binary script when saved in the non-volatile catalog of user scripts. </summary>
+    /// <summary>
+    /// Gets or sets a value indicating whether the user script source should be saved to non-
+    /// volatile catalog of user scripts. The Deploy format tells us if the script should be
+    /// converted to binary before saving.
+    /// </summary>
     /// <value> True if this user script is to be saved as a binary user script, false if not. </value>
-    public bool SaveAsBinary { get; set; }
+    public bool SaveToNonVolatileMemory { get; set; }
+
+    /// <summary>   Gets a value indicating whether the convert to binary. </summary>
+    /// <value> True if convert to binary, false if not. </value>
+    public bool ConvertToBinary => ScriptFileFormats.Binary == (this.DeployFileFormat & ScriptFileFormats.Binary);
 
     #endregion
 
@@ -487,11 +503,23 @@ public abstract class FirmwareScriptBase
     /// <returns>
     /// <c>true</c> if the script requires update from file; otherwise, <c>false</c>.
     /// </returns>
-    public bool RequiresReadParseWrite => this.ReleasedFirmwareVersion.Trim().StartsWith( "+", true, System.Globalization.CultureInfo.CurrentCulture );
+    public bool RequiresReadParseWrite => this.FirmwareVersion.Trim().StartsWith( "+", true, System.Globalization.CultureInfo.CurrentCulture );
 
     #endregion
 
     #region " model management "
+
+    /// <summary>   Specifies the instrument firmware version for this script. </summary>
+    /// <remarks>
+    /// this is required if deploying a binary script, which might be specific to an instrument model
+    /// firmware version.
+    /// </remarks>
+    /// <value> The model version. </value>
+    public string ModelVersion { get; set; }
+
+    /// <summary>   Gets the model major version. </summary>
+    /// <value> The model major version. </value>
+    public string ModelMajorVersion => $"{new Version( this.ModelVersion ).Major}";
 
     /// <summary>   Specifies the family of instrument models for this script. </summary>
     /// <value> The model mask. </value>
@@ -653,7 +681,7 @@ public abstract class FirmwareScriptBase
         this.IsBinaryScript = isBinaryScript;
 
         // tag file as saved if source format and file format match.
-        this.SavedToFile = sourceFormat == this.ResourceFileFormat;
+        this.SavedToFile = sourceFormat == this.DeployFileFormat;
         return sourceFormat;
     }
 
@@ -767,7 +795,7 @@ public abstract class FirmwareScriptBase
     public void ReadSource( string scriptsFolderPath )
     {
         if ( string.IsNullOrWhiteSpace( scriptsFolderPath ) ) throw new ArgumentNullException( nameof( scriptsFolderPath ) );
-        string filePath = System.IO.Path.Combine( scriptsFolderPath, this.ResourceFileName );
+        string filePath = System.IO.Path.Combine( scriptsFolderPath, this.BuildFileName );
         if ( System.IO.File.Exists( filePath ) )
             this.Source = System.IO.File.ReadAllText( filePath );
         else
@@ -808,31 +836,31 @@ public abstract class FirmwareScriptBase
     /// <exception cref="FileNotFoundException">        Thrown when the requested file is not
     ///                                                 present. </exception>
     /// <exception cref="InvalidOperationException">    Thrown when operation failed to execute. </exception>
-    /// <param name="filePath">         Specifies the folder where scripts are stored. </param>
-    /// <param name="extension">        (Optional) The extension. </param>
+    /// <param name="folderPath">       Specifies the folder where scripts are stored. </param>
+    /// <param name="buildFileName">    The filename of the build file. </param>
+    /// <param name="trimmedFileName">  The filename of the trimmed file. </param>
     /// <param name="retainOutline">    (Optional) Specifies if the code outline is retained or
     ///                                 trimmed. </param>
-    public static void ReadParseWriteScript( string? filePath, string extension = ".debug", bool retainOutline = false )
+    public static void ReadParseWriteScript( string? folderPath, string buildFileName, string trimmedFileName, bool retainOutline = false )
     {
-        if ( string.IsNullOrWhiteSpace( filePath ) ) throw new ArgumentNullException( nameof( filePath ) );
+        if ( string.IsNullOrWhiteSpace( folderPath ) ) throw new ArgumentNullException( nameof( folderPath ) );
 
         // check if file exists.
-        if ( FirmwareScriptBase.FileSize( filePath! ) <= 2L )
-            throw new System.IO.FileNotFoundException( "Script file not found", filePath );
+        if ( FirmwareScriptBase.FileSize( folderPath! ) <= 2L )
+            throw new System.IO.FileNotFoundException( "Script file not found", folderPath );
         else
         {
-            string? scriptSource = ReadScript( filePath );
+            string? scriptSource = ReadScript( Path.Combine( folderPath, buildFileName ) );
             if ( string.IsNullOrWhiteSpace( scriptSource ) )
-                throw new InvalidOperationException( $"Failed reading script;. file '{filePath}' includes no source." );
+                throw new InvalidOperationException( $"Failed reading script;. file '{folderPath}' includes no source." );
             else
             {
                 scriptSource = Lua.TrimLuaSourceCode( scriptSource!, retainOutline );
                 if ( string.IsNullOrWhiteSpace( scriptSource ) )
-                    throw new InvalidOperationException( $"Failed reading script;. parsed script from '{filePath}' is empty." );
+                    throw new InvalidOperationException( $"Failed reading script;. parsed script from '{folderPath}' is empty." );
                 else
                 {
-                    filePath += extension;
-                    WriteScript( scriptSource, filePath );
+                    WriteScript( scriptSource, Path.Combine( folderPath, trimmedFileName ) );
                 }
             }
         }
@@ -845,20 +873,25 @@ public abstract class FirmwareScriptBase
     /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
     ///                                                 invalid. </exception>
     /// <param name="scripts">          Specifies the collection of scripts. </param>
-    /// <param name="extension">        (Optional) The extension. </param>
     /// <param name="retainOutline">    (Optional) Specifies if the code outline is retained or
     ///                                 trimmed. </param>
-    public static void ReadParseWriteScripts( FirmwareScriptBaseCollection<FirmwareScriptBase> scripts, string extension = ".debug", bool retainOutline = false )
+    public static void ReadParseWriteScripts( FirmwareScriptBaseCollection<FirmwareScriptBase> scripts, bool retainOutline = false )
     {
         if ( scripts is null ) throw new ArgumentNullException( nameof( scripts ) );
         foreach ( FirmwareScriptBase script in scripts )
         {
-            if ( script.RequiresReadParseWrite )
+            if ( string.IsNullOrWhiteSpace( script.Name ) )
+                throw new InvalidOperationException( $"{nameof( FirmwareScriptBase )}.{nameof( FirmwareScriptBase.Name )} not specified for script." );
+            else if ( script.RequiresReadParseWrite )
             {
-                if ( string.IsNullOrWhiteSpace( script.FilePath ) )
-                    throw new InvalidOperationException( $"File not specified for script '{script.Name}'." );
+                if ( string.IsNullOrWhiteSpace( script.FolderPath ) )
+                    throw new InvalidOperationException( $"{nameof( FirmwareScriptBase )}.{nameof( FirmwareScriptBase.FolderPath )} not specified for script." );
+                else if ( string.IsNullOrWhiteSpace( script.BuildFileName ) )
+                    throw new InvalidOperationException( $"{nameof( FirmwareScriptBase )}.{nameof( FirmwareScriptBase.BuildFileName )} not specified for script." );
+                else if ( string.IsNullOrWhiteSpace( script.TrimmedFileName ) )
+                    throw new InvalidOperationException( $"{nameof( FirmwareScriptBase )}.{nameof( FirmwareScriptBase.TrimmedFileName )} not specified for script." );
                 else
-                    FirmwareScriptBase.ReadParseWriteScript( script.FilePath, extension, retainOutline );
+                    FirmwareScriptBase.ReadParseWriteScript( script.FolderPath, script.BuildFileName, script.TrimmedFileName, retainOutline );
             }
         }
     }

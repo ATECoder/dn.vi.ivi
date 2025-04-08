@@ -42,14 +42,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="..\..\..\..\..\..\tsp\tsp.1\core\keithley\binaryScripts.tspb" Link="resources\binaryScripts.tspb" />
-    <EmbeddedResource Include="..\..\..\..\..\..\tsp\tsp.1\ttm\deploy\access.tspb" Link="resources\access.tspb" />
-    <None Include="..\..\..\..\..\..\tsp\tsp.1\ttm\deploy\access.tsp" Link="resources\access.tsp" />
     <None Include="readme.md" Pack="true" PackagePath="" />
   </ItemGroup>
 
   <PropertyGroup>
-    <DefineConstants>$(DefineConstants);MYPROJREF;</DefineConstants>
+    <DefineConstants>$(DefineConstants);MYPROJREF;I_SR</DefineConstants>
   </PropertyGroup>
 
   <Choose>
@@ -65,6 +62,24 @@
     </Otherwise>
   </Choose>
 
+  <Choose>
+    <When Condition="$(DefineConstants.Contains('ISR'))">
+      <ItemGroup>
+        <EmbeddedResource Include="..\..\..\..\..\..\tsp\tsp.1\ttm\deploy\isr_access.2600A.2.tspb" Link="resources\isr_access.2600A.2.tspb">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </EmbeddedResource>
+        <EmbeddedResource Include="..\..\..\..\..\..\tsp\tsp.1\ttm\deploy\isr_access.2600B.3.tspb" Link="resources\isr_access.2600B.3.tspb">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </EmbeddedResource>
+        <EmbeddedResource Include="..\..\..\..\..\..\tsp\tsp.1\ttm\deploy\isr_access.tsp" Link="resources\isr_access.tsp">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </EmbeddedResource>
+        <EmbeddedResource Include="..\..\..\..\..\..\tsp\tsp.1\ttm\deploy\isr_binaryScripts.2600B.3.tspb" Link="resources\isr_binaryScripts.2600B.3.tspb">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </EmbeddedResource>
+      </ItemGroup>
+    </When>
+  </Choose>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DefineDebug>true</DefineDebug>

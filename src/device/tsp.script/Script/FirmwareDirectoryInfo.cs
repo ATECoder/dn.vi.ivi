@@ -36,6 +36,16 @@ public class FirmwareDirectoryInfo : CommunityToolkit.Mvvm.ComponentModel.Observ
         this.FilesFolderName = directoryInfo.FilesFolderName;
     }
 
+    /// <summary>   Constructor. </summary>
+    /// <remarks>   2025-04-07. </remarks>
+    /// <param name="folderPath">   Full pathname of the folder file. </param>
+    public FirmwareDirectoryInfo( string folderPath )
+    {
+        DirectoryInfo directoryInfo = new( folderPath );
+        this.ParentFolderPath = directoryInfo.Parent.FullName;
+        this.FilesFolderName = directoryInfo.Name;
+    }
+
     /// <summary>   Makes a deep copy of this object. </summary>
     /// <remarks>   2024-09-09. </remarks>
     /// <returns>   A copy of this object. </returns>

@@ -24,20 +24,30 @@ public static partial class FirmwareManager
         if ( script is null ) throw new ArgumentNullException( nameof( script ) );
         if ( script.Node is null ) throw new ArgumentNullException( nameof( script.Node ) );
 
-        string filePath = $"{script.FirmwareScript.FileName}.{script.Node.ModelNumber}.node{script.Node.Number}";
-        filePath = System.IO.Path.Combine( folderPath, filePath );
         try
         {
-            using StreamWriter? scriptFile = new( filePath );
-
-            if ( scriptFile is null )
-                // now report the error to the calling module
-                throw new System.IO.IOException( "Failed opening TSP Script File for output'" + filePath + "'." );
-
             string scriptSource = session.FetchScriptSource( script );
 
             if ( string.IsNullOrWhiteSpace( scriptSource ) )
                 throw new cc.isr.VI.Pith.NativeException( $"Failed fetching script source for {script.FirmwareScript.Name}" );
+
+            bool isBinary = session.IsBinaryScript( scriptSource );
+            ScriptFileFormats fileFormat = FirmwareScriptBase.BuildScriptFileFormat( isBinary, compress );
+            string fileTitle = FirmwareScriptBase.BuildScriptFileTitle( script.FirmwareScript.Name, fileFormat,
+                 script.FirmwareScript.FirmwareVersion, script.FirmwareScript.ModelMask, script.FirmwareScript.ModelMajorVersion );
+            if ( !script.Node.IsController )
+                fileTitle = $"{fileTitle}.node{script.Node.Number}";
+
+            string fileExtension = FirmwareScriptBase.SelectScriptFileExtension( fileFormat );
+            string fileName = $"{fileTitle}{fileExtension}";
+            string filePath = Path.Combine( folderPath, $"{fileName}{fileExtension}" );
+
+            using StreamWriter? scriptFile = new( filePath );
+
+            if ( scriptFile is null )
+                // now report the error to the calling module
+                throw new System.IO.IOException( $"Failed opening file '{filePath}' for output';." );
+
 
             if ( compress )
                 scriptFile.WriteLine( "{0}{1}{2}", FirmwareScriptBase.CompressedPrefix,

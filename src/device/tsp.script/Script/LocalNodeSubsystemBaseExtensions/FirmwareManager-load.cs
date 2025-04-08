@@ -30,17 +30,19 @@ public static partial class FirmwareManager
     ///                                           prompts while the script is loaded. </param>
     /// <param name="retainOutline">        Specifies if the code outline is retained or trimmed. </param>
     [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0010:Add missing cases", Justification = "<Pending>" )]
-    public static void LoadScriptFile( this Tsp.LocalNodeSubsystemBase interactiveSubsystem, ScriptEntityBase script, bool showErrors, bool showPrompts, bool retainOutline )
+    public static void LoadScriptFile( this Tsp.LocalNodeSubsystemBase interactiveSubsystem, ScriptEntityBase script,
+        bool showErrors, bool showPrompts, bool retainOutline )
     {
         if ( interactiveSubsystem is null ) throw new cc.isr.VI.Pith.NativeException( $"{nameof( interactiveSubsystem )} is null." );
         if ( interactiveSubsystem.Session is null ) throw new cc.isr.VI.Pith.NativeException( $"{nameof( interactiveSubsystem.Session )} is null." );
         if ( interactiveSubsystem.StatusSubsystem is null ) throw new cc.isr.VI.Pith.NativeException( $"{nameof( interactiveSubsystem.StatusSubsystem )} is null." );
         if ( script is null ) throw new ArgumentNullException( nameof( script ) );
-        if ( script.FirmwareScript is null ) throw new ArgumentNullException( nameof( script.FirmwareScript ) );
-        if ( script.FirmwareScript.Name is null || string.IsNullOrWhiteSpace( script.FirmwareScript.Name ) ) throw new NativeException( $"{nameof( script.FirmwareScript.Name )} is null." );
-        if ( script.FirmwareScript.FileName is null || string.IsNullOrWhiteSpace( script.FirmwareScript.FileName ) ) throw new NativeException( $"{nameof( script.FirmwareScript.FileName )} is null." );
-        if ( script.FirmwareScript.ResourceFileName is null || string.IsNullOrWhiteSpace( script.FirmwareScript.ResourceFileName ) ) throw new NativeException( $"{nameof( script.FirmwareScript.ResourceFileName )} is null." );
-        if ( script.FirmwareScript.FolderPath is null || string.IsNullOrWhiteSpace( script.FirmwareScript.FolderPath ) ) throw new NativeException( $"{nameof( script.FirmwareScript.FolderPath )} is null." );
+
+        FirmwareScriptBase firmwareScript = script.FirmwareScript;
+        if ( firmwareScript is null ) throw new ArgumentNullException( nameof( firmwareScript ) );
+        if ( firmwareScript.Name is null || string.IsNullOrWhiteSpace( firmwareScript.Name ) ) throw new NativeException( $"{nameof( firmwareScript.Name )} is null." );
+        if ( firmwareScript.FileTitle is null || string.IsNullOrWhiteSpace( firmwareScript.FileTitle ) ) throw new NativeException( $"{nameof( firmwareScript.FileTitle )} is null." );
+        if ( firmwareScript.FolderPath is null || string.IsNullOrWhiteSpace( firmwareScript.FolderPath ) ) throw new NativeException( $"{nameof( firmwareScript.FolderPath )} is null." );
 
         Pith.SessionBase session = interactiveSubsystem.Session;
         session.LastNodeNumber = script.Node.Number;
@@ -81,17 +83,19 @@ public static partial class FirmwareManager
             LuaChunkLineContentType lineType;
             string activity;
             string actionDetails;
-            using ( StreamReader? tspFile = FirmwareFileInfo.OpenScriptFile( script.FirmwareScript.ResourceFilePath ) )
+
+            string buildFilePath = Path.Combine( firmwareScript.FolderPath, firmwareScript.BuildFileName );
+
+            using ( StreamReader? tspFile = FirmwareFileInfo.OpenScriptFile( buildFilePath ) )
             {
                 if ( tspFile is null )
-                    throw new System.IO.FileNotFoundException( "Failed opening TSP Script file", script.FirmwareScript.ResourceFilePath );
+                    throw new System.IO.FileNotFoundException( "Failed opening TSP Script file", buildFilePath );
 
-                string trimmedFileSuffix = ".trimmed.tsp";
-                string trimmedFilePath = script.FirmwareScript.ResourceFilePath.Replace( ".tsp", trimmedFileSuffix );
-                if ( string.Equals( trimmedFilePath, script.FirmwareScript.ResourceFilePath ) )
-                    trimmedFilePath = script.FirmwareScript.ResourceFilePath + trimmedFileSuffix;
+                string trimmedFilePath = Path.Combine( firmwareScript.FolderPath, firmwareScript.TrimmedFileName );
+                if ( string.Equals( trimmedFilePath, buildFilePath, StringComparison.OrdinalIgnoreCase ) )
+                    trimmedFilePath = $"{trimmedFilePath}_";
                 using StreamWriter trimmedFile = new( trimmedFilePath );
-                session.SetLastAction( $"sending a 'loadscript' for script '{script.FirmwareScript.Name}' from file '{script.FirmwareScript.ResourceFilePath}'" );
+                session.SetLastAction( $"sending a '{Syntax.Tsp.Script.LoadScriptCommand}' for script '{firmwareScript.Name}' from file '{buildFilePath}'" );
                 session.LastNodeNumber = default;
                 while ( !tspFile.EndOfStream )
                 {
@@ -139,9 +143,9 @@ public static partial class FirmwareManager
                         {
                             // issue a start of script command.  The command
                             // the load script command identifies the beginning of the script.
-                            commandLine = $"{Syntax.Tsp.Script.LoadScriptCommand} {script.FirmwareScript.Name} ";
+                            commandLine = $"{Syntax.Tsp.Script.LoadScriptCommand} {firmwareScript.Name} ";
                             activity = $"sending a {commandLine}";
-                            actionDetails = $"sending a {commandLine} from file '{script.FirmwareScript.ResourceFilePath}'";
+                            actionDetails = $"sending a {commandLine} from file '{buildFilePath}'";
                             session.SetLastAction( actionDetails );
                             _ = session.WriteLine( commandLine );
                             if ( ( int? ) interactiveSubsystem.ExecutionState != ( int? ) TspExecutionState.IdleError )
@@ -182,7 +186,7 @@ public static partial class FirmwareManager
                         }
 
                         activity = $"sending a syntax line";
-                        actionDetails = $"sending a syntax line: \n{chunkLine}\nfor script {script.FirmwareScript.Name} from file '{script.FirmwareScript.ResourceFilePath}'";
+                        actionDetails = $"sending a syntax line: \n{chunkLine}\nfor script {firmwareScript.Name} from file '{buildFilePath}'";
                         session.SetLastAction( activity );
                         session.SetLastActionDetails( actionDetails );
                         _ = session.WriteLine( chunkLine );
@@ -226,10 +230,10 @@ public static partial class FirmwareManager
             }
 
             // Tell TSP complete script has been downloaded.
-            commandLine = $"endscript {cc.isr.VI.Syntax.Tsp.Lua.OperationCompletedQueryCommand} ";
+            commandLine = $"{Syntax.Tsp.Script.EndScriptCommand} {cc.isr.VI.Syntax.Tsp.Lua.OperationCompletedQueryCommand} ";
 
             activity = $"sending a {commandLine}";
-            actionDetails = $"sending a {commandLine} from file '{script.FirmwareScript.ResourceFilePath}'";
+            actionDetails = $"sending a {commandLine} from file '{buildFilePath}'";
             session.SetLastAction( activity );
             session.SetLastActionDetails( actionDetails );
 

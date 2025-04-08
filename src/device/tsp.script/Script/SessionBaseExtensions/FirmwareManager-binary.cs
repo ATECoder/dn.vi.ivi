@@ -8,60 +8,6 @@ public static partial class FirmwareManager
     /// <summary>   (Immutable) name of the create binary script function. </summary>
     public const string BinaryScriptsFunctionName = "CreateBinaryScript";
 
-    /// <summary>   (Immutable) filename of the binary script function file. </summary>
-    public const string BinaryScriptsFunctionFileName = "binaryScripts.tspb";
-
-    /// <summary>
-    /// Gets or sets a value indicating whether the binary scripts function from file should be
-    /// loaded.
-    /// </summary>
-    /// <value> True if load binary scripts function from file, false if not. </value>
-    public static bool LoadBinaryScriptsFunctionFromFile { get; set; } = false;
-
-    /// <summary>   (Immutable) filename of the access script function file. </summary>
-    public const string AccessScriptFunctionFileName = "access.tspb";
-
-    /// <summary>   (Immutable) name of the access script function. </summary>
-    public const string AccessScriptFunctionName = "isr.access.get1";
-
-    /// <summary>
-    /// Gets or sets a value indicating whether the access script function from file should be
-    /// loaded.
-    /// </summary>
-    /// <value> True if load access script function from file, false if not. </value>
-    public static bool LoadAccessScriptFunctionFromFile { get; set; } = false;
-
-    /// <summary>
-    /// A <see cref="Pith.SessionBase"/> extension method that loads the binary scripts function from
-    /// an embedded resource.
-    /// </summary>
-    /// <remarks>   2024-10-01. </remarks>
-    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
-    ///                                             null. </exception>
-    /// <param name="session">  The session. </param>
-    public static void LoadBinaryScriptFunction( this Pith.SessionBase? session )
-    {
-        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
-
-        FirmwareManager.LoadEmbeddedResource( session, FirmwareManager.BinaryScriptsFunctionName,
-            FirmwareManager.BinaryScriptsFunctionFileName, ResourceManager.EmbeddedResourceFolderName );
-    }
-
-    /// <summary>
-    /// A Pith.SessionBase? extension method that loads access script function from an embedded resource.
-    /// </summary>
-    /// <remarks>   2025-04-03. </remarks>
-    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
-    ///                                             null. </exception>
-    /// <param name="session">  The session. </param>
-    public static void LoadAccessScriptFunction( this Pith.SessionBase? session )
-    {
-        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
-
-        FirmwareManager.LoadEmbeddedResource( session, FirmwareManager.AccessScriptFunctionName,
-            FirmwareManager.AccessScriptFunctionFileName, ResourceManager.EmbeddedResourceFolderName );
-    }
-
     /// <summary>
     /// A <see cref="Pith.SessionBase"/> extension method that converts a session to a binary.
     /// </summary>
@@ -111,33 +57,9 @@ public static partial class FirmwareManager
         {
             string functionName = FirmwareManager.BinaryScriptsFunctionName;
 
-            // firmware 3 and up require the binary conversion function to convert scripts to binary.
-            if ( Script.SessionBaseExtensions.FirmwareManager.LoadBinaryScriptsFunctionFromFile )
-            {
-                // load the binary script function from the file.
-                string filePath = Path.Combine( Script.ResourceManager.ScriptsFolderPath,
-                    Script.SessionBaseExtensions.FirmwareManager.BinaryScriptsFunctionFileName );
-                session.SetLastAction( $"loading {functionName} from {filePath}" );
-                session.LoadScript( filePath );
-
-                // validate the existence of the function.
-                if ( session.IsNil( functionName ) )
-                    throw new InvalidOperationException( $"{session.ResourceNameNodeCaption} failed loading binary script conversion function from {filePath}. The function {functionName} was not found;." );
-            }
-            else
-            {
-                // load the binary script function from the firmware.
-                session.SetLastAction( $"loading {functionName} from firmware" );
-
-                session.LoadEmbeddedResource( Script.SessionBaseExtensions.FirmwareManager.BinaryScriptsFunctionName,
-                    Script.SessionBaseExtensions.FirmwareManager.BinaryScriptsFunctionFileName, Script.ResourceManager.EmbeddedResourceFolderName );
-
-                // validate the existence of the function.
-                if ( session.IsNil( functionName ) )
-                    throw new InvalidOperationException( $"{session.ResourceNameNodeCaption} failed loading binary script conversion function. The function {functionName} was not found;." );
-            }
-
-            // load binary conversion function.
+            // validate the existence of the function.
+            if ( session.IsNil( functionName ) )
+                throw new InvalidOperationException( $"{session.ResourceNameNodeCaption} {functionName} must be loaded in order to convert this script to binary format. The function {functionName} was not found;." );
 
             session.SetLastAction( $"converting {scriptName} source to binary" );
             _ = session.WriteLine( $"{functionName}('{scriptName}', {scriptName}) {cc.isr.VI.Syntax.Tsp.Lua.OperationCompletedQueryCommand} " );

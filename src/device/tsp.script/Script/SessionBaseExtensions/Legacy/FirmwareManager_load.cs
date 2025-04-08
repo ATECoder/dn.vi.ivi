@@ -235,10 +235,10 @@ internal static class FirmwareManager
             return;
         }
 
-        string filePath = Path.Combine( folderPath, script.FirmwareScript.FileName );
+        string filePath = Path.Combine( folderPath, script.FirmwareScript.BuildFileName );
         // check if file exists.
         if ( FirmwareScriptBase.FileSize( filePath ) <= 2L )
-            throw new FileNotFoundException( "Script file not found or is empty;. ", script.FirmwareScript.FileName );
+            throw new FileNotFoundException( "Script file not found or is empty;. ", script.FirmwareScript.BuildFileName );
 
         displaySubsystem.DisplayLine( 2, $"Loading {script.Name} from file" );
         try

@@ -261,7 +261,7 @@ public class ScriptEntityBaseCollection<TItem>( NodeEntityBase node ) : System.C
             else if ( script.IsModelMatch( this.ModelNumber ) )
             {
                 _ = builder.AppendLine( $"Info for script '{script.Name}':" );
-                _ = builder.AppendLine( $"\tReleased version: {script.FirmwareScript.ReleasedFirmwareVersion}." );
+                _ = builder.AppendLine( $"\tReleased version: {script.FirmwareScript.FirmwareVersion}." );
                 if ( script.Loaded )
                 {
                     if ( script.LoadedAsBinary )
@@ -311,13 +311,13 @@ public class ScriptEntityBaseCollection<TItem>( NodeEntityBase node ) : System.C
 
                     case FirmwareVersionStatus.Newer:
                         {
-                            _ = builder.AppendLine( $"\tOutdated Program: The embedded firmware {script.EmbeddedFirmwareVersion} is newer than the released firmware {script.FirmwareScript.ReleasedFirmwareVersion}. A newer version of this program is available." );
+                            _ = builder.AppendLine( $"\tOutdated Program: The embedded firmware {script.EmbeddedFirmwareVersion} is newer than the released firmware {script.FirmwareScript.FirmwareVersion}. A newer version of this program is available." );
                             break;
                         }
 
                     case FirmwareVersionStatus.Older:
                         {
-                            _ = builder.AppendLine( $"\tOutdated Firmware: The embedded firmware {script.EmbeddedFirmwareVersion} is older than the released firmware {script.FirmwareScript.ReleasedFirmwareVersion}." );
+                            _ = builder.AppendLine( $"\tOutdated Firmware: The embedded firmware {script.EmbeddedFirmwareVersion} is older than the released firmware {script.FirmwareScript.FirmwareVersion}." );
                             break;
                         }
 
@@ -763,27 +763,30 @@ public class ScriptEntityBaseCollection<TItem>( NodeEntityBase node ) : System.C
     }
 
     /// <summary>
-    /// checks if save is required for the specified script. Presumes list of saved scripts was
-    /// retrieved.
+    /// Checks if the script needs to be saved to non-volatile memory. Presumes list of saved scripts
+    /// was retrieved.
     /// </summary>
     /// <remarks>   2024-09-05. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>
-    /// <param name="session">          The session. </param>
-    /// <param name="scriptName">       Specifies the script to save. </param>
-    /// <param name="isSaveAsBinary">   Specifies the condition requesting saving the source as
-    ///                                 binary. </param>
-    /// <param name="isBootScript">     Specifies the condition indicating if this is a boot script. </param>
+    /// <param name="session">                  The session. </param>
+    /// <param name="scriptName">               Specifies the script to save. </param>
+    /// <param name="saveToNonVolatileMemory">  True to save to non volatile memory. </param>
+    /// <param name="convertToBinary">          Specifies the condition requesting saving the source
+    ///                                         as binary. </param>
+    /// <param name="isBootScript">             Specifies the condition indicating if this is a boot
+    ///                                         script. </param>
     /// <returns>   <c>true</c> if save required; otherwise, <c>false</c>. </returns>
-    public bool IsSaveRequired( Pith.SessionBase session, string scriptName, bool isSaveAsBinary, bool isBootScript )
+    public bool IsSaveRequired( Pith.SessionBase session, string scriptName, bool saveToNonVolatileMemory, bool convertToBinary, bool isBootScript )
     {
         return string.IsNullOrWhiteSpace( scriptName )
             ? throw new ArgumentNullException( nameof( scriptName ) )
             : this.Node is null
                 ? throw new ArgumentNullException( nameof( this.Node ) )
-                : (isSaveAsBinary && !session.IsBinaryScript( scriptName, this.Node ).GetValueOrDefault( false ))
+                : saveToNonVolatileMemory &&
+                    ((convertToBinary && !session.IsBinaryScript( scriptName, this.Node ).GetValueOrDefault( false ))
                     || !this.SavedScriptExists( session, scriptName, false )
-                    || (isBootScript && this.Node.BootScriptSaveRequired);
+                    || (isBootScript && this.Node.BootScriptSaveRequired));
     }
 
     /// <summary>
@@ -797,7 +800,7 @@ public class ScriptEntityBaseCollection<TItem>( NodeEntityBase node ) : System.C
     /// <returns>   <c>true</c> if save required; otherwise, <c>false</c>. </returns>
     public bool IsSaveRequired( Pith.SessionBase session, ScriptEntityBase script )
     {
-        return this.IsSaveRequired( session, script.Name, script.FirmwareScript.SaveAsBinary, script.FirmwareScript.IsBootScript );
+        return this.IsSaveRequired( session, script.Name, script.FirmwareScript.SaveToNonVolatileMemory, script.FirmwareScript.ConvertToBinary, script.FirmwareScript.IsBootScript );
     }
 
     #endregion

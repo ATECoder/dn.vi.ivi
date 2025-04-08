@@ -2,6 +2,19 @@
 All notable changes to these libraries will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [8.1.9228] - 2025-04-07
+- Add script file name builder.
+- Add resource manager class for loading the embedded resource.
+- Split session firmware manager to embedded and anonymous files.
+- vi.tsp.script:
+  - Add binary scripts for testing.
+  - Update embedded resources.
+- Firmware Script Base
+  - Add Build, trimmed and deployed script file name.
+  - Build these from the title and the file format.
+- Firmware Manager
+  - Add code for loading embedded or file resources.
+
 ## [8.1.9226] - 2025-04-05
 - Update settings when reading a specified if script exists.
 - Resource TSP Syntax: Add Load and End Script commands and load string command.
@@ -239,6 +252,6 @@ which has issued a defect report.
 
 &copy; 2012 Integrated Scientific Resources, Inc. All rights reserved.
 
-[8.1.9226]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9228]: https://www.github.com/atecoder/dn.vi.ivi
 [vs.VI]: https://www.github.com/atecoder/dn.vi.ivi
 [vs.Visa]: https://bitbucket.org/davidhary/vs.io.visa

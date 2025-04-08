@@ -218,7 +218,7 @@ public abstract class ScriptManagerBase( Tsp.StatusSubsystemBase statusSubsystem
     public ScriptEntityBase AddLegacyScript( string scriptName )
     {
         if ( this.LegacyScripts is null ) throw new NativeException( $"{nameof( this.LegacyScripts )} must not be null." );
-        ScriptEntity script = new( new FirmwareScript( scriptName, "" ), this.LegacyScripts.Node );
+        ScriptEntity script = new( new FirmwareScript( scriptName, string.Empty, new Version() ), this.LegacyScripts.Node );
         this.LegacyScripts.Add( script );
         return script;
     }
@@ -232,13 +232,26 @@ public abstract class ScriptManagerBase( Tsp.StatusSubsystemBase statusSubsystem
     public ScriptFirmwareCollection FirmwareScripts { get; protected set; } = [];
 
     /// <summary>   Adds a firmware script to 'modelMask'. </summary>
+    /// <remarks>   2025-04-07. </remarks>
+    /// <param name="scriptName">   Specifies the name of the script. </param>
+    /// <param name="versionInfo">  Information describing the version. </param>
+    /// <returns>   A ScriptFirmwareBase. </returns>
+    public FirmwareScriptBase AddFirmwareScript( string scriptName, VersionInfoBase versionInfo )
+    {
+        FirmwareScript script = new( scriptName, versionInfo.ModelFamily, versionInfo.FirmwareVersion );
+        this.FirmwareScripts.Add( script );
+        return script;
+    }
+
+    /// <summary>   Adds a firmware script to 'modelMask'. </summary>
     /// <remarks>   2024-09-06. </remarks>
     /// <param name="scriptName">   Specifies the name of the script. </param>
     /// <param name="modelMask">    Specifies the family of instrument models for this script. </param>
+    /// <param name="modelVersion"> The model version. </param>
     /// <returns>   A ScriptFirmwareBase. </returns>
-    public FirmwareScriptBase AddFirmwareScript( string scriptName, string modelMask )
+    public FirmwareScriptBase AddFirmwareScript( string scriptName, string modelMask, Version modelVersion )
     {
-        FirmwareScript script = new( scriptName, modelMask );
+        FirmwareScript script = new( scriptName, modelMask, modelVersion );
         this.FirmwareScripts.Add( script );
         return script;
     }
@@ -278,7 +291,7 @@ public abstract class ScriptManagerBase( Tsp.StatusSubsystemBase statusSubsystem
         if ( this.ScriptEntities is null ) throw new NativeException( $"{nameof( this.ScriptEntities )} must not be null." );
         return this.LinkSubsystem?.ControllerNode is not null
             ? this.FirmwareReleasedVersionGetter( this.LinkSubsystem.ControllerNode )
-            : this.ScriptEntities[0].FirmwareScript.ReleasedFirmwareVersion;
+            : this.ScriptEntities[0].FirmwareScript.FirmwareVersion;
     }
 
     /// <summary>   Returns the released main firmware version. </summary>
@@ -292,10 +305,10 @@ public abstract class ScriptManagerBase( Tsp.StatusSubsystemBase statusSubsystem
     {
         if ( this.ScriptEntities is null ) throw new NativeException( $"{nameof( this.ScriptEntities )} must not be null." );
         return this.LinkSubsystem?.ControllerNode is null
-            ? this.ScriptEntities[0].FirmwareScript.ReleasedFirmwareVersion
+            ? this.ScriptEntities[0].FirmwareScript.FirmwareVersion
             : node is null
                 ? throw new ArgumentNullException( nameof( node ) )
-                : this.ScriptEntities.SelectSerialNumberScript( node! )?.FirmwareScript.ReleasedFirmwareVersion
+                : this.ScriptEntities.SelectSerialNumberScript( node! )?.FirmwareScript.FirmwareVersion
                     ?? throw new NativeException( "Failed selecting serial number script." );
     }
 

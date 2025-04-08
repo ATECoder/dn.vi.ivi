@@ -19,10 +19,12 @@ public class FirmwareScript : FirmwareScriptBase
     {
     }
 
-    /// <summary> Constructor. </summary>
-    /// <param name="name">      Specifies the script name. </param>
-    /// <param name="modelMask"> Specifies the model families for this script. </param>
-    public FirmwareScript( string name, string modelMask ) : base( name, modelMask )
+    /// <summary>   Constructor. </summary>
+    /// <remarks>   2025-04-07. </remarks>
+    /// <param name="name">         Specifies the script name. </param>
+    /// <param name="modelMask">    Specifies the model families for this script. </param>
+    /// <param name="modelVersion"> The model version. </param>
+    public FirmwareScript( string name, string modelMask, Version modelVersion ) : base( name, modelMask, modelVersion )
     {
     }
 
@@ -31,18 +33,18 @@ public class FirmwareScript : FirmwareScriptBase
     /// </summary>
     /// <remarks>   2024-09-10. </remarks>
     /// <param name="script">   The script. </param>
-    public FirmwareScript( FirmwareScriptBase script ) : this( script.Name, script.ModelMask )
+    public FirmwareScript( FirmwareScriptBase script ) : this( script.Name, script.ModelMask, new Version( script.ModelVersion ) )
     {
+        this.DeployFileFormat = script.DeployFileFormat;
+        this.FirmwareVersion = script.FirmwareVersion;
+        this.FileTitle = script.FileTitle;
         this.FolderPath = script.FolderPath;
-        this.FileName = script.FileName;
         this.IsBootScript = script.IsBootScript;
         this.IsPrimaryScript = script.IsPrimaryScript;
         this.IsSupportScript = script.IsSupportScript;
         this.NamespaceList = script.NamespaceList;
-        this.ReleasedFirmwareVersion = script.ReleasedFirmwareVersion;
-        this.ResourceFileName = script.ResourceFileName;
-        this.ResourceFileFormat = script.ResourceFileFormat;
         this.SavedToFile = script.SavedToFile;
+        this.SaveToNonVolatileMemory = script.SaveToNonVolatileMemory;
         this.Source = script.Source;
     }
 
