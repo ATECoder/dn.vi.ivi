@@ -46,7 +46,7 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <DefineConstants>$(DefineConstants);MYPROJREF;I_SR</DefineConstants>
+    <DefineConstants>$(DefineConstants);MYPROJREF;ISR</DefineConstants>
   </PropertyGroup>
 
   <Choose>
@@ -93,6 +93,10 @@
 
   <ItemGroup>
     <Compile Include="..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\..\..\..\..\..\..\trash\OverwriteTestDestination.txt" Link="resources\OverwriteTestDestination.txt" />
   </ItemGroup>
 
   <ItemGroup>

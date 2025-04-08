@@ -108,7 +108,7 @@ public static partial class FirmwareManager
                     }
                     else
                     {
-                        FileInfo? fileInfo = ResourceManager.GetEmbeddedResourceFile( ResourceManager.BinaryScriptEntity!.FirmwareScript.DeployFileName );
+                        FileInfo? fileInfo = ResourceManager.GetResourceFileInfo( ResourceManager.BinaryScriptEntity!.FirmwareScript.DeployFileName );
                         if ( fileInfo is not null )
                         {
                             session.SetLastAction( $"loading {functionName} from file" );
