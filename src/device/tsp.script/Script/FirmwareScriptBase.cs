@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using System.Text;
 using cc.isr.Std.TrimExtensions;
 using cc.isr.VI.Syntax.Tsp;
@@ -815,7 +816,16 @@ public abstract class FirmwareScriptBase
     {
         if ( string.IsNullOrWhiteSpace( filePath ) ) throw new ArgumentNullException( nameof( filePath ) );
         using StreamReader? tspFile = FirmwareFileInfo.OpenScriptFile( filePath! );
-        return tspFile?.ReadToEnd();
+        string? source = tspFile?.ReadToEnd();
+
+        if ( source is null || string.IsNullOrWhiteSpace( source ) )
+            throw new InvalidOperationException( $"Failed reading script;. file '{filePath}' includes no source." );
+        else if ( source.Length < 2 )
+            throw new InvalidOperationException( $"Failed reading script;. file '{filePath}' includes no source." );
+        else if ( IsCompressedSource( source ) )
+            source = Decompress( source, FirmwareScriptBase.CompressedPrefix, FirmwareScriptBase.CompressedSuffix );
+
+        return source;
     }
 
     /// <summary>   Writes the script to file. </summary>

@@ -470,9 +470,12 @@ public static partial class FirmwareManager
     {
         if ( FirmwareScriptBase.IsBinarySource( scriptSource ) )
         {
+            throw new InvalidOperationException( $"The script source '{scriptSource}' is binary. Binary scripts cannot be loaded to the 2600B instruments." );
+#if false
             Stopwatch sw = Stopwatch.StartNew();
             session.LoadScript( scriptName, scriptSource );
             return (false, session.ReadStatusByte(), sw.Elapsed);
+#endif
         }
         else
             return session.ParseAndLoadScriptSource( scriptName, scriptSource );

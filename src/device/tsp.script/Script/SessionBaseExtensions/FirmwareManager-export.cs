@@ -75,10 +75,10 @@ public static partial class FirmwareManager
     /// <param name="session">      The session. </param>
     /// <param name="scriptName">   Name of the script. </param>
     /// <param name="filePath">     full path name of the file. </param>
-    /// <param name="compress">     (Optional) Specifies the compression condition. True to compress
-    ///                             the source before saving. </param>
+    /// <param name="compress">     Specifies the compression condition. True to compress the source
+    ///                             before saving to file. </param>
     /// <returns>   <c>true</c> if okay; otherwise, <c>false</c>. </returns>
-    public static bool FetchScriptSaveToFile( this Pith.SessionBase? session, string scriptName, string filePath, bool compress = false )
+    public static bool FetchScriptSaveToFile( this Pith.SessionBase? session, string scriptName, string filePath, bool compress )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( filePath is null ) throw new ArgumentNullException( nameof( filePath ) );
