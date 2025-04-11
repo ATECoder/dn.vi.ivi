@@ -28,7 +28,17 @@ public static partial class Methods
 
         session.SetLastAction( $"saving the {scriptName} script;. " );
         _ = session.WriteLine( $"{scriptName}.source=nil" );
-        _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay );
+        _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay + session.StatusReadDelay );
+
+        // throw if device error occurred
+        session.ThrowDeviceExceptionIfError();
+
+        // query and throw if operation complete query failed
+        session.QueryAndThrowIfOperationIncomplete();
+        _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay + session.StatusReadDelay );
+
+        // throw if device error occurred
+        session.ThrowDeviceExceptionIfError();
     }
 
 

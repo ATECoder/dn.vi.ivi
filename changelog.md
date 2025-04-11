@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ## [8.1.9231] - 2025-04-10
 cc.isr.VI.Device.Tsp project :
 - Add session extension methods for scripts.
+- Throw exceptions if device error was detected by the Session Base instance. 
 K2600 Tests:
  - Test Tsp session extension script methods.
  

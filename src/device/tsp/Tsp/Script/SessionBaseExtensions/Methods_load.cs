@@ -44,7 +44,7 @@ public static partial class Methods
             session.SetLastAction( $"import script '{scriptName}' from {reader}" );
             _ = session.WriteLine( $"{Syntax.Tsp.Script.LoadScriptCommand} {scriptName}" );
         }
-        _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay );
+        _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay + session.StatusReadDelay );
 
         string? line = "";
         while ( line is not null )
@@ -57,11 +57,24 @@ public static partial class Methods
                 && !line.Contains( Syntax.Tsp.Script.EndScriptCommand ) )
                 _ = session.WriteLine( line );
         }
+        _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay + session.StatusReadDelay );
+
         session.SetLastAction( $"ending script '{scriptName}' from {reader}" );
         _ = session.WriteLine( Syntax.Tsp.Script.EndScriptCommand );
-        _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay );
+        _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay + session.StatusReadDelay );
+
         _ = session.WriteLine( Syntax.Tsp.Lua.WaitCommand );
-        _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay );
+        _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay + session.StatusReadDelay );
+
+        // throw if device error occurred
+        session.ThrowDeviceExceptionIfError();
+
+        // query and throw if operation complete query failed
+        session.QueryAndThrowIfOperationIncomplete();
+        _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay + session.StatusReadDelay );
+
+        // throw if device error occurred
+        session.ThrowDeviceExceptionIfError();
 
         session.SetLastAction( $"checking if the {scriptName} script exists after load;. " );
         scriptExists = !session.IsNil( scriptName );

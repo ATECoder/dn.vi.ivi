@@ -25,7 +25,17 @@ public static partial class Methods
         {
             Methods.TraceLastAction( $"deleting the {scriptName} script;. " );
             _ = session.WriteLine( $"script.delete({scriptName})" );
-            _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay );
+            _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay + session.StatusReadDelay );
+
+            // throw if device error occurred
+            session.ThrowDeviceExceptionIfError();
+
+            // query and throw if operation complete query failed
+            session.QueryAndThrowIfOperationIncomplete();
+            _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay + session.StatusReadDelay );
+
+            // throw if device error occurred
+            session.ThrowDeviceExceptionIfError();
 
             session.SetLastAction( "checking if the script was deleted;. " );
             if ( session.IsNil( scriptName ) )

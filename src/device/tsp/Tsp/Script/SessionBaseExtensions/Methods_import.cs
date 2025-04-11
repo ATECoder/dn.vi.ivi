@@ -52,7 +52,7 @@ public static partial class Methods
             session.SetLastAction( $"import script '{scriptName}' from {filePath}" );
             _ = session.WriteLine( $"{Syntax.Tsp.Script.LoadScriptCommand} {scriptName}" );
         }
-        _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay );
+        _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay + session.StatusReadDelay );
 
         // use the text reader to load the script.
         session.LoadScript( reader, scriptName, deleteExisting, ignoreExisting );

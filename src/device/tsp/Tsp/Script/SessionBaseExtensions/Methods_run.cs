@@ -35,7 +35,17 @@ public static partial class Methods
             session.SetLastAction( $"running the anonymous script;. " );
             _ = session.WriteLine( $"scrip.run()" );
         }
-        _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay );
+        _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay + session.StatusReadDelay );
+
+        // throw if device error occurred
+        session.ThrowDeviceExceptionIfError();
+
+        // query and throw if operation complete query failed
+        session.QueryAndThrowIfOperationIncomplete();
+        _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay + session.StatusReadDelay );
+
+        // throw if device error occurred
+        session.ThrowDeviceExceptionIfError();
 
         if ( !string.IsNullOrWhiteSpace( scriptElementName ) )
         {
