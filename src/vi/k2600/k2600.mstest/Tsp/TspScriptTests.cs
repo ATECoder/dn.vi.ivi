@@ -1,8 +1,7 @@
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Text;
-using cc.isr.VI.Pith;
+using cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
 namespace cc.isr.VI.Tsp.K2600.MSTest.Tsp;
 
@@ -77,269 +76,6 @@ public class TspScriptTests : Device.Tests.Base.ScriptTests
 
     #region " load and run "
 
-    /// <summary>   Assert script should delete. </summary>
-    /// <remarks>   2025-04-10. </remarks>
-    /// <param name="device">       The reference to the K2600 Device. </param>
-    /// <param name="scriptName">   Name of the script. </param>
-    private static void AssertScriptShouldDelete( VisaSessionBase device, string scriptName )
-    {
-        Assert.IsNotNull( device );
-        Assert.IsNotNull( device.Session );
-        Pith.SessionBase session = device.Session;
-        Assert.IsTrue( session.IsSessionOpen, "Session must be open" );
-        System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
-        string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
-        Console.WriteLine( $"@{methodFullName}" );
-        try
-        {
-            Trace.WriteLine( "checking if the script exists;. ", methodFullName );
-            if ( !session.IsNil( scriptName ) )
-            {
-                Trace.WriteLine( "deleting the saved script;. ", methodFullName );
-                _ = session.WriteLine( $"script.delete({scriptName})" );
-                _ = SessionBase.AsyncDelay( TimeSpan.FromMilliseconds( 100 ) );
-                cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
-                cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( device );
-            }
-        }
-        catch ( Exception )
-        {
-        }
-        finally
-        {
-        }
-
-    }
-
-    /// <summary>   Assert script should load and run. </summary>
-    /// <remarks>   2025-04-10. </remarks>
-    /// <param name="device">               The reference to the K2600 Device. </param>
-    /// <param name="scriptName">           Name of the script. </param>
-    /// <param name="scriptSource">         The script source. </param>
-    /// <param name="scriptElementName">    (Optional) [empty] Name of the script element. </param>
-    private static void AssertScriptShouldLoadAndRun( VisaSessionBase device, string scriptName, string scriptSource,
-        string scriptElementName = "" )
-    {
-        Assert.IsNotNull( device );
-        Assert.IsNotNull( device.Session );
-        Pith.SessionBase session = device.Session;
-        Assert.IsTrue( session.IsSessionOpen, "Session must be open" );
-        System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
-        string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
-        Console.WriteLine( $"@{methodFullName}" );
-        try
-        {
-            Trace.WriteLine( "Writing script load commands;. ", methodFullName );
-            _ = session.WriteLine( scriptSource );
-            _ = SessionBase.AsyncDelay( TimeSpan.FromMilliseconds( 100 ) );
-            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
-            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( device );
-
-            Trace.WriteLine( "checking if the script exists;. ", methodFullName );
-            Assert.IsFalse( session.IsNil( scriptName ), $"The script {scriptName} should exist after loading." );
-            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
-            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( device );
-
-            Trace.WriteLine( "running the script;. ", methodFullName );
-            _ = session.WriteLine( $"{scriptName}.run()" );
-            _ = SessionBase.AsyncDelay( TimeSpan.FromMilliseconds( 100 ) );
-            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
-            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( device );
-
-            if ( !string.IsNullOrWhiteSpace( scriptElementName ) )
-            {
-                Trace.WriteLine( $"looking for {scriptElementName};. ", methodFullName );
-                _ = session.WriteLine( $"_G.print( {scriptElementName} )" );
-                string reply = session.ReadFreeLineTrimEnd();
-                Assert.IsFalse( string.IsNullOrWhiteSpace( reply ), $"The script {scriptName} should have printed the {scriptElementName} object identity." );
-                Assert.AreNotEqual( "nil", reply, $"The script {scriptName} should have printed the {scriptElementName} object identity not {reply}." );
-
-                cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
-                cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( device );
-            }
-
-        }
-        catch
-        {
-            throw;
-        }
-        finally
-        {
-        }
-    }
-
-    /// <summary>   Assert script should save to nvm. </summary>
-    /// <remarks>   2025-04-10. </remarks>
-    /// <param name="device">               The reference to the K2600 Device. </param>
-    /// <param name="scriptName">           Name of the script. </param>
-    /// <param name="scriptElementName">    (Optional) [empty] Name of the script element. </param>
-    ///
-    /// ### <param name="scriptSource"> The script source. </param>
-    private static void AssertScriptShouldSaveToNVM( VisaSessionBase device, string scriptName, string scriptElementName = "" )
-    {
-        Assert.IsNotNull( device );
-        Assert.IsNotNull( device.Session );
-        Pith.SessionBase session = device.Session;
-        Assert.IsTrue( session.IsSessionOpen, "Session must be open" );
-        System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
-        string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
-        Console.WriteLine( $"@{methodFullName}" );
-        try
-        {
-            Trace.WriteLine( "checking if the script exists;. ", methodFullName );
-            Assert.IsFalse( session.IsNil( scriptName ), $"The script {scriptName} should exist after loading." );
-            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
-            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( device );
-
-            if ( !string.IsNullOrWhiteSpace( scriptElementName ) )
-            {
-                Trace.WriteLine( $"looking for {scriptElementName};. ", methodFullName );
-                _ = session.WriteLine( $"_G.print( {scriptElementName} )" );
-                string reply = session.ReadFreeLineTrimEnd();
-                Assert.IsFalse( string.IsNullOrWhiteSpace( reply ), $"The script {scriptName} should have printed the {scriptElementName} object identity." );
-                Assert.AreNotEqual( "nil", reply, $"The script {scriptName} should have printed the {scriptElementName} object identity not {reply}." );
-
-                cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
-                cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( device );
-            }
-
-            Trace.WriteLine( "saving the script to NVM;. ", methodFullName );
-            _ = session.WriteLine( $"{scriptName}.save()" );
-            _ = SessionBase.AsyncDelay( TimeSpan.FromMilliseconds( 500 ) );
-            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
-            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( device );
-
-            Trace.WriteLine( "running the saved script after saving to NVM;. ", methodFullName );
-            _ = session.WriteLine( $"{scriptName}.run()" );
-            _ = SessionBase.AsyncDelay( TimeSpan.FromMilliseconds( 100 ) );
-            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
-            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( device );
-
-            if ( !string.IsNullOrWhiteSpace( scriptElementName ) )
-            {
-                Trace.WriteLine( $"looking for {scriptElementName} after running the NVM script;. ", methodFullName );
-                _ = session.WriteLine( $"_G.print( {scriptElementName} )" );
-                string reply = session.ReadFreeLineTrimEnd();
-                Assert.IsFalse( string.IsNullOrWhiteSpace( reply ), $"The script {scriptName} should have printed the {scriptElementName} object identity." );
-                Assert.AreNotEqual( "nil", reply, $"The script {scriptName} should have printed the {scriptElementName} object identity not {reply}." );
-
-                cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
-                cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( device );
-            }
-
-        }
-        catch
-        {
-            throw;
-        }
-        finally
-        {
-        }
-    }
-
-    /// <summary>   Assert script should convert to binary. </summary>
-    /// <remarks>   2025-04-10. </remarks>
-    /// <param name="device">               The reference to the K2600 Device. </param>
-    /// <param name="scriptName">           Name of the script. </param>
-    /// <param name="scriptElementName">    (Optional) [empty] Name of the script element. </param>
-    ///
-    /// ### <param name="scriptSource"> The script source. </param>
-    private static void AssertScriptShouldConvertToBinary( VisaSessionBase device, string scriptName, string scriptElementName = "" )
-    {
-        Assert.IsNotNull( device );
-        Assert.IsNotNull( device.Session );
-        Pith.SessionBase session = device.Session;
-        Assert.IsTrue( session.IsSessionOpen, "Session must be open" );
-        System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
-        string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
-        Console.WriteLine( $"@{methodFullName}" );
-        try
-        {
-            Trace.WriteLine( "checking if the script exists;. ", methodFullName );
-            Assert.IsFalse( session.IsNil( scriptName ), $"The script {scriptName} should exist after loading." );
-            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
-            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( device );
-
-            if ( !string.IsNullOrWhiteSpace( scriptElementName ) )
-            {
-                Trace.WriteLine( $"looking for {scriptElementName};. ", methodFullName );
-                _ = session.WriteLine( $"_G.print( {scriptElementName} )" );
-                string reply = session.ReadFreeLineTrimEnd();
-                Assert.IsFalse( string.IsNullOrWhiteSpace( reply ), $"The script {scriptName} should have printed the {scriptElementName} object identity." );
-                Assert.AreNotEqual( "nil", reply, $"The script {scriptName} should have printed the {scriptElementName} object identity not {reply}." );
-
-                cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
-                cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( device );
-            }
-
-            Trace.WriteLine( "converting the script to binary;. ", methodFullName );
-            _ = session.WriteLine( $"{scriptName}.source=nil" );
-            _ = SessionBase.AsyncDelay( TimeSpan.FromMilliseconds( 100 ) );
-            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
-            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( device );
-
-            Trace.WriteLine( "running the saved script after conversion to binary;. ", methodFullName );
-            _ = session.WriteLine( $"{scriptName}.run()" );
-            _ = SessionBase.AsyncDelay( TimeSpan.FromMilliseconds( 100 ) );
-            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
-            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( device );
-
-            if ( !string.IsNullOrWhiteSpace( scriptElementName ) )
-            {
-                Trace.WriteLine( $"looking for {scriptElementName} after running the binary script;. ", methodFullName );
-                _ = session.WriteLine( $"_G.print( {scriptElementName} )" );
-                string reply = session.ReadFreeLineTrimEnd();
-                Assert.IsFalse( string.IsNullOrWhiteSpace( reply ), $"The script {scriptName} should have printed the {scriptElementName} object identity." );
-                Assert.AreNotEqual( "nil", reply, $"The script {scriptName} should have printed the {scriptElementName} object identity not {reply}." );
-
-                cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
-                cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( device );
-            }
-        }
-        catch
-        {
-            throw;
-        }
-        finally
-        {
-        }
-    }
-
-    /// <summary>   Assert script should export. </summary>
-    /// <remarks>   2025-04-10. </remarks>
-    /// <param name="device">               The reference to the K2600 Device. </param>
-    /// <param name="scriptName">           Name of the script. </param>
-    /// <param name="exportFileName">       (Optional) [empty] Filename of the export file. </param>
-    private static void AssertScriptShouldExport( VisaSessionBase device, string scriptName, string exportFileName )
-    {
-        Assert.IsNotNull( device );
-        Assert.IsNotNull( device.Session );
-        Pith.SessionBase session = device.Session;
-        Assert.IsTrue( session.IsSessionOpen, "Session must be open" );
-        System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
-        string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
-        Console.WriteLine( $"@{methodFullName}" );
-        try
-        {
-            Trace.WriteLine( "checking if the script exists;. ", methodFullName );
-            Assert.IsFalse( session.IsNil( scriptName ), $"The script {scriptName} should exist after loading." );
-            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
-            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( device );
-
-            string scriptSource = session.Query( $"G_print( {scriptName}.source ) " );
-            _ = SessionBase.AsyncDelay( TimeSpan.FromMilliseconds( 100 ) );
-            Assert.IsFalse( string.IsNullOrWhiteSpace( scriptSource ), $"The script {scriptName} source fetched from should not be empty." );
-            System.IO.File.WriteAllText( exportFileName, scriptSource );
-        }
-        catch
-        {
-            throw;
-        }
-        finally
-        {
-        }
-    }
-
     /// <summary> (Unit Test Method) tests visa resource. </summary>
     /// <remarks> Finds the resource using the session factory resources manager. </remarks>
     [TestMethod( "01. Script Should Load and Run" )]
@@ -369,13 +105,43 @@ public class TspScriptTests : Device.Tests.Base.ScriptTests
             _ = scriptSource.AppendLine( cc.isr.VI.Syntax.Tsp.Script.EndScriptCommand );
 
             cc.isr.VI.Device.Tests.Asserts.AssertDeviceShouldOpenWithoutDeviceErrors( this.Device, this.ResourceSettings );
-            TspScriptTests.AssertScriptShouldLoadAndRun( this.Device, scriptName, scriptSource.ToString(), timerElapsedFunctionName );
-            TspScriptTests.AssertScriptShouldSaveToNVM( this.Device, scriptName, timerElapsedFunctionName );
-            TspScriptTests.AssertScriptShouldConvertToBinary( this.Device, scriptName, timerElapsedFunctionName );
-            TspScriptTests.AssertScriptShouldSaveToNVM( this.Device, scriptName, timerElapsedFunctionName );
+
+            this.Device.Session.LoadScript( scriptName, scriptSource.ToString() );
+            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
+            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
+
+            this.Device.Session.RunScript( scriptName, timerElapsedFunctionName );
+            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
+            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
+
+            this.Device.Session.SaveScript( scriptName );
+            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
+            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
+
+            this.Device.Session.RunScript( scriptName, timerElapsedFunctionName );
+            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
+            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
+
+            this.Device.Session.ConvertToBinary( scriptName );
+            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
+            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
+
+            this.Device.Session.SaveScript( scriptName );
+            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
+            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
+
+            this.Device.Session.RunScript( scriptName, timerElapsedFunctionName );
+            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
+            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
+
             string filePath = Path.Combine( folderPath, $"{scriptName}.exported.tspb" );
-            TspScriptTests.AssertScriptShouldExport( this.Device, scriptName, filePath );
-            TspScriptTests.AssertScriptShouldDelete( this.Device, scriptName );
+            this.Device.Session.ExportScript( scriptName, filePath, true );
+            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
+            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
+
+            this.Device.Session.DeleteScript( scriptName );
+            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
+            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
         }
         catch
         {
@@ -383,7 +149,10 @@ public class TspScriptTests : Device.Tests.Base.ScriptTests
         }
         finally
         {
-            TspScriptTests.AssertScriptShouldDelete( this.Device, scriptName );
+            this.Device.Session.DeleteScript( scriptName );
+            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
+            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
+
             cc.isr.VI.Device.Tests.Asserts.AssertDeviceShouldCloseWithoutErrors( this.Device );
         }
     }
@@ -409,12 +178,40 @@ public class TspScriptTests : Device.Tests.Base.ScriptTests
             string scriptSource = System.IO.File.ReadAllText( System.IO.Path.Combine( folderPath, fileTitle ) );
 
             cc.isr.VI.Device.Tests.Asserts.AssertDeviceShouldOpenWithoutDeviceErrors( this.Device, this.ResourceSettings );
-            TspScriptTests.AssertScriptShouldLoadAndRun( this.Device, scriptName, scriptSource, timerElapsedFunctionName );
-            TspScriptTests.AssertScriptShouldSaveToNVM( this.Device, scriptName, timerElapsedFunctionName );
+
+            this.Device.Session.LoadScript( scriptName, scriptSource.ToString() );
+            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
+            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
+
+            this.Device.Session.RunScript( scriptName, timerElapsedFunctionName );
+            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
+            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
+
+            this.Device.Session.SaveScript( scriptName );
+            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
+            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
+
             string filePath = Path.Combine( folderPath, $"{scriptName}.exported.tsp" );
-            TspScriptTests.AssertScriptShouldExport( this.Device, scriptName, filePath );
-            TspScriptTests.AssertScriptShouldConvertToBinary( this.Device, scriptName, timerElapsedFunctionName );
-            TspScriptTests.AssertScriptShouldSaveToNVM( this.Device, scriptName, timerElapsedFunctionName );
+
+            this.Device.Session.ExportScript( scriptName, filePath, true );
+            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
+            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
+
+            this.Device.Session.ConvertToBinary( scriptName );
+            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
+            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
+
+            this.Device.Session.RunScript( scriptName, timerElapsedFunctionName );
+            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
+            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
+
+            this.Device.Session.SaveScript( scriptName );
+            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
+            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
+
+            this.Device.Session.RunScript( scriptName, timerElapsedFunctionName );
+            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
+            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
 
             if ( string.Equals( "2600A", this.Device.StatusSubsystemBase.VersionInfoBase.ModelFamily, StringComparison.OrdinalIgnoreCase ) )
                 fileTitle += "A";
@@ -424,8 +221,14 @@ public class TspScriptTests : Device.Tests.Base.ScriptTests
                 Assert.Fail( $"The model family {this.Device.StatusSubsystemBase.VersionInfoBase.ModelFamily} is not supported." );
 
             filePath = Path.Combine( folderPath, $"{fileTitle}.exported.tspb" );
-            TspScriptTests.AssertScriptShouldExport( this.Device, scriptName, filePath );
-            TspScriptTests.AssertScriptShouldDelete( this.Device, scriptName );
+
+            this.Device.Session.ExportScript( scriptName, filePath, true );
+            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
+            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
+
+            this.Device.Session.DeleteScript( scriptName );
+            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
+            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
         }
         catch
         {
@@ -433,7 +236,10 @@ public class TspScriptTests : Device.Tests.Base.ScriptTests
         }
         finally
         {
-            TspScriptTests.AssertScriptShouldDelete( this.Device, scriptName );
+            this.Device.Session.DeleteScript( scriptName );
+            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
+            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
+
             cc.isr.VI.Device.Tests.Asserts.AssertDeviceShouldCloseWithoutErrors( this.Device );
         }
     }
@@ -468,11 +274,31 @@ public class TspScriptTests : Device.Tests.Base.ScriptTests
 
             string scriptSource = System.IO.File.ReadAllText( System.IO.Path.Combine( folderPath, fileTitle + ".tspb" ) );
 
-            TspScriptTests.AssertScriptShouldLoadAndRun( this.Device, scriptName, scriptSource, timerElapsedFunctionName );
-            TspScriptTests.AssertScriptShouldSaveToNVM( this.Device, scriptName, timerElapsedFunctionName );
+            this.Device.Session.LoadScript( scriptName, scriptSource.ToString() );
+            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
+            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
+
+            this.Device.Session.RunScript( scriptName, timerElapsedFunctionName );
+            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
+            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
+
+            this.Device.Session.SaveScript( scriptName );
+            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
+            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
+
+            this.Device.Session.RunScript( scriptName, timerElapsedFunctionName );
+            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
+            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
+
             string filePath = Path.Combine( folderPath, $"{fileTitle}.tspb.exported.tspb" );
-            TspScriptTests.AssertScriptShouldExport( this.Device, scriptName, filePath );
-            TspScriptTests.AssertScriptShouldDelete( this.Device, scriptName );
+
+            this.Device.Session.ExportScript( scriptName, filePath, true );
+            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
+            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
+
+            this.Device.Session.DeleteScript( scriptName );
+            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
+            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
         }
         catch
         {
@@ -480,7 +306,10 @@ public class TspScriptTests : Device.Tests.Base.ScriptTests
         }
         finally
         {
-            TspScriptTests.AssertScriptShouldDelete( this.Device, scriptName );
+            this.Device.Session.DeleteScript( scriptName );
+            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
+            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
+
             cc.isr.VI.Device.Tests.Asserts.AssertDeviceShouldCloseWithoutErrors( this.Device );
         }
     }

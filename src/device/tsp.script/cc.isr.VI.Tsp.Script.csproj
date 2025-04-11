@@ -63,22 +63,7 @@
   </Choose>
 
   <Choose>
-    <When Condition="$(DefineConstants.Contains('ISR'))">
-      <ItemGroup>
-        <EmbeddedResource Include="..\..\..\..\..\..\tsp\tsp.1\ttm\deploy\isr_access.2600A.2.tspb" Link="resources\isr_access.2600A.2.tspb">
-          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </EmbeddedResource>
-        <EmbeddedResource Include="..\..\..\..\..\..\tsp\tsp.1\ttm\deploy\isr_access.2600B.3.tspb" Link="resources\isr_access.2600B.3.tspb">
-          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </EmbeddedResource>
-        <EmbeddedResource Include="..\..\..\..\..\..\tsp\tsp.1\ttm\deploy\isr_access.tsp" Link="resources\isr_access.tsp">
-          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </EmbeddedResource>
-        <EmbeddedResource Include="..\..\..\..\..\..\tsp\tsp.1\ttm\deploy\isr_binaryScripts.2600B.3.tspb" Link="resources\isr_binaryScripts.2600B.3.tspb">
-          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </EmbeddedResource>
-      </ItemGroup>
-    </When>
+    <When Condition="$(DefineConstants.Contains('ISR'))" />
   </Choose>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -93,10 +78,6 @@
 
   <ItemGroup>
     <Compile Include="..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="..\..\..\..\..\..\..\trash\OverwriteTestDestination.txt" Link="resources\OverwriteTestDestination.txt" />
   </ItemGroup>
 
   <ItemGroup>
@@ -115,10 +96,6 @@
     
   <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
-  </ItemGroup>
-    
-  <ItemGroup>
-    <Folder Include="resources\" />
   </ItemGroup>
 
 

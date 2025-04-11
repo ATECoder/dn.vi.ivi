@@ -3,7 +3,11 @@ All notable changes to these libraries will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [8.1.9231] - 2025-04-10
-
+cc.isr.VI.Device.Tsp project :
+- Add session extension methods for scripts.
+K2600 Tests:
+ - Test Tsp session extension script methods.
+ 
 ## [8.1.9229] - 2025-04-08
 - Tsp.Script.ResourceManager
   - Tighten code reading a resource file and an embedded resource file.
