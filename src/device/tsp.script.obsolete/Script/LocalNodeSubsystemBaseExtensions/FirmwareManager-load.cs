@@ -104,7 +104,7 @@ public static partial class FirmwareManager
                     chunkLine = retainOutline ? chunkLine.TrimEnd() : chunkLine.Trim();
                     lineNumber += 1;
                     wasInCommentBlock = isInCommentBlock;
-                    lineType = Lua.ParseLuaChuckLine( chunkLine, isInCommentBlock );
+                    lineType = Lua.ParseLuaChunkLine( chunkLine, isInCommentBlock );
                     if ( lineType == LuaChunkLineContentType.None )
                     {
                     }

@@ -49,7 +49,7 @@ public static partial class Methods
         string? line = "";
         while ( line is not null )
         {
-            line = reader.ReadLine()?.Trim();
+            line = reader.ReadLine();
             if ( line is not null
                 && !string.IsNullOrWhiteSpace( line )
                 && !line.Contains( Syntax.Tsp.Script.LoadScriptCommand )

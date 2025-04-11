@@ -2,6 +2,12 @@
 All notable changes to these libraries will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [8.1.9232] - 2025-04-11
+- Pith Lua Syntax:
+  - Rename ParseLuaChunkLine to ParseLuaChunkLine;
+- Pith TSP Syntax
+  - Add code parsing.
+
 ## [8.1.9231] - 2025-04-10
 cc.isr.VI.Device.Tsp project :
 - Add session extension methods for scripts.
@@ -269,6 +275,6 @@ which has issued a defect report.
 
 &copy; 2012 Integrated Scientific Resources, Inc. All rights reserved.
 
-[8.1.9231]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9232]: https://www.github.com/atecoder/dn.vi.ivi
 [vs.VI]: https://www.github.com/atecoder/dn.vi.ivi
 [vs.Visa]: https://bitbucket.org/davidhary/vs.io.visa

@@ -124,7 +124,7 @@ internal static class FirmwareManager
 
                     lineNumber += 1;
                     wasInCommentBlock = isInCommentBlock;
-                    lineType = Lua.ParseLuaChuckLine( chunkLine, isInCommentBlock );
+                    lineType = Lua.ParseLuaChunkLine( chunkLine, isInCommentBlock );
                     if ( lineType == LuaChunkLineContentType.None )
                     {
                         // if no data, nothing to do.

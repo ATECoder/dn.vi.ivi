@@ -57,6 +57,9 @@ public static class Lua
     /// <summary>   (Immutable) the load string LUA command. </summary>
     public const string LoadStringCommand = "loadstring";
 
+    /// <summary>   (Immutable) the load string command end. </summary>
+    public const string LoadStringCommandEnd = "))()";
+
     #endregion
 
     #region " system commands "
@@ -227,18 +230,34 @@ public static class Lua
         System.Text.StringBuilder newSource = new();
         bool isInCommentBlock = false;
         bool wasInCommentBlock;
+        bool wasInLoadStringBlock;
+        bool isInLoadStringBlock = false;
         LuaChunkLineContentType lineType;
         foreach ( string line in sourceLines )
         {
             string chunkLine = ReplaceTabs( line );
             chunkLine = retainOutline ? chunkLine.TrimEnd() : chunkLine.Trim();
             wasInCommentBlock = isInCommentBlock;
+            wasInLoadStringBlock = isInLoadStringBlock;
 
             // this just gets the line type.
-            lineType = ParseLuaChuckLine( chunkLine, isInCommentBlock );
+            lineType = ParseLuaChunkLine( chunkLine, isInCommentBlock );
 
             if ( lineType == LuaChunkLineContentType.None )
             {
+            }
+            else if ( lineType == LuaChunkLineContentType.LoadStringBlockStart )
+            {
+                isInLoadStringBlock = true;
+                _ = newSource.AppendLine( chunkLine );
+            }
+            else if ( wasInLoadStringBlock )
+            {
+                if ( lineType == LuaChunkLineContentType.LoadStringBlockEnd )
+                {
+                    isInLoadStringBlock = true;
+                    _ = newSource.AppendLine( chunkLine );
+                }
             }
 
             // if no data, nothing to do.
@@ -291,7 +310,7 @@ public static class Lua
     /// <param name="chunkLine">        Specifies the chunk line. </param>
     /// <param name="isInCommentBlock"> <c>true</c> if this object is in comment block. </param>
     /// <returns>   The parsed <see cref="LuaChunkLineContentType">content type.</see> </returns>
-    public static LuaChunkLineContentType ParseLuaChuckLine( string chunkLine, bool isInCommentBlock )
+    public static LuaChunkLineContentType ParseLuaChunkLine( string chunkLine, bool isInCommentBlock )
     {
         chunkLine ??= string.Empty;
 
@@ -300,6 +319,17 @@ public static class Lua
         if ( string.IsNullOrWhiteSpace( chunkLine ) )
         {
             return LuaChunkLineContentType.None;
+        }
+
+        // check if load string block
+        else if ( chunkLine.Contains( Syntax.Tsp.Lua.LoadStringCommand, StringComparison.OrdinalIgnoreCase ) )
+        {
+            return LuaChunkLineContentType.LoadStringBlockStart;
+        }
+
+        else if ( chunkLine.Contains( Syntax.Tsp.Lua.LoadStringCommandEnd, StringComparison.OrdinalIgnoreCase ) )
+        {
+            return LuaChunkLineContentType.LoadStringBlockEnd;
         }
 
         // check if start of comment block
@@ -340,7 +370,6 @@ public static class Lua
     #endregion
 }
 
-
 /// <summary>   Enumerates the content type of a TSP chunk line. </summary>
 /// <remarks>   2024-09-05. </remarks>
 public enum LuaChunkLineContentType
@@ -361,6 +390,14 @@ public enum LuaChunkLineContentType
     [System.ComponentModel.Description( "Comment" )]
     Comment,
 
+    /// <summary>   An enum constant representing the <see cref="Lua.LoadStringCommand"/> option. </summary>
+    [System.ComponentModel.Description( "Load String Command Line" )]
+    LoadStringBlockStart,
+
+    /// <summary>   An enum constant representing the <see cref="Lua.LoadStringCommandEnd"/> option. </summary>
+    [System.ComponentModel.Description( "Load String End Command Line" )]
+    LoadStringBlockEnd,
+
     /// <summary> An enum constant representing the syntax option. </summary>
     [System.ComponentModel.Description( "Ieee488Syntax" )]
     Syntax,
@@ -375,7 +412,7 @@ public enum LuaChunkLineContentType
 
     /// <summary> An enum constant representing the chunk-name-require option. </summary>
     [System.ComponentModel.Description( "Chunk Name Requirement" )]
-    ChunNameRequire,
+    ChunkNameRequire,
 
     /// <summary> An enum constant representing the chunk-name-loaded option. </summary>
     [System.ComponentModel.Description( "Chunk Name Loaded" )]
