@@ -66,42 +66,6 @@ public static partial class Methods
             throw new InvalidOperationException( $"The script {scriptName} was not removed from the user scripts." );
     }
 
-    /// <summary>   A <see cref="SessionBase"/> extension method makes a script nil. </summary>
-    /// <remarks>   2024-09-05. </remarks>
-    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
-    ///                                             null. </exception>
-    /// <param name="session">              The session. </param>
-    /// <param name="nodeNumber">           Specifies the remote node number. </param>
-    /// <param name="scriptName">           Specifies the script name. </param>
-    public static void NillScript( this Pith.SessionBase? session, int nodeNumber, string scriptName )
-    {
-        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
-        if ( scriptName is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
-
-        session.LastNodeNumber = nodeNumber;
-        session.SetLastAction( $"enabling service request on operation completion" );
-
-        // TODO: Should we wait complete on the node as well as the controller.
-        // possibly, waiting on the controller waits for all nodes.
-        session.EnableServiceRequestOnOperationCompletion();
-
-        session.SetLastAction( $"checking if the script exists on node {nodeNumber}" );
-        if ( !session.IsNil( nodeNumber, scriptName ) )
-        {
-            session.TraceLastAction( $"nulling script '{scriptName}' on node {nodeNumber}" );
-            _ = session.ExecuteCommandQueryComplete( nodeNumber, "{0} = nil", scriptName );
-
-            // read query reply and throw if reply is not 1.
-            session.ReadAndThrowIfOperationIncomplete();
-
-            // throw if device errors
-            session.ThrowDeviceExceptionIfError();
-        }
-
-        if ( !session.IsNil( nodeNumber, scriptName ) )
-            throw new InvalidOperationException( $"The script {scriptName} was not nullified on node {nodeNumber}." );
-    }
-
     /// <summary>   A <see cref="SessionBase"/> extension method that deletes the script. </summary>
     /// <remarks>   2025-04-10. </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments

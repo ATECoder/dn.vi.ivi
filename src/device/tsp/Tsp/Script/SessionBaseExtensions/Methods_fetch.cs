@@ -46,5 +46,4 @@ public static partial class Methods
             throw new InvalidOperationException( $"The script {scriptName} source is empty." );
         return scriptSource;
     }
-
 }

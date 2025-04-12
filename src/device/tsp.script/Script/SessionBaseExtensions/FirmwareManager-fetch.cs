@@ -169,18 +169,13 @@ public static partial class FirmwareManager
     ///                                             null. </exception>
     /// <param name="session">  The session. </param>
     /// <returns>   The saved scripts. </returns>
-    public static (string SavedScripts, List<string> SavedAuthorScripts) FetchSavedScriptsNames( this Pith.SessionBase? session )
+    public static (string SavedScripts, List<string> SavedAuthorScripts) FetchSavedScriptsNames( Pith.SessionBase? session )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
-        session.LastNodeNumber = default;
-        string scriptNames;
+
+        string scriptNames = session.FetchSavedScriptsNames();
+
         List<string> authorScripts = [];
-        session.SetLastAction( "fetching saved scripts" );
-        _ = session.WriteLine( "do {0} print( names ) end ", Syntax.Tsp.Lua.ScriptCatalogGetterCommand );
-        _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay );
-
-        scriptNames = session.ReadLineTrimEnd();
-
         if ( !string.IsNullOrWhiteSpace( scriptNames ) )
         {
             string[] scripts = scriptNames.Split( ',' );
@@ -192,24 +187,6 @@ public static partial class FirmwareManager
         }
 
         return (scriptNames, authorScripts);
-    }
-
-    /// <summary>
-    /// Fetches the names of the saved scripts.
-    /// </summary>
-    /// <remarks>   2024-09-05. </remarks>
-    /// <param name="session">      The session. </param>
-    /// <param name="nodeNumber">   Specifies the subsystem node. </param>
-    /// <returns>   The saved scripts. </returns>
-    public static string FetchSavedScriptsNames( this Pith.SessionBase? session, int nodeNumber )
-    {
-        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
-        session.SetLastAction( "fetching catalog" );
-        session.LastNodeNumber = nodeNumber;
-        _ = session.WriteLine( Syntax.Tsp.Node.ValueGetterWaitCommandFormat2, nodeNumber, Syntax.Tsp.Lua.ScriptCatalogGetterCommand, "names" );
-        _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay );
-        session.LastNodeNumber = default;
-        return session.ReadLineTrimEnd();
     }
 
     /// <summary>   Fetches the names of the saved scripts. </summary>
@@ -228,9 +205,9 @@ public static partial class FirmwareManager
         session.SetLastAction( "fetching saved scripts" );
         session.LastNodeNumber = node.Number;
         if ( node is null || node.IsController )
-            _ = session.WriteLine( "do {0} print( names ) end ", Syntax.Tsp.Lua.ScriptCatalogGetterCommand );
+            _ = session.WriteLine( "do {0} print( names ) end ", Syntax.Tsp.Script.ScriptCatalogGetterCommand );
         else
-            _ = session.WriteLine( Syntax.Tsp.Node.ValueGetterWaitCommandFormat2, node.Number, Syntax.Tsp.Lua.ScriptCatalogGetterCommand, "names" );
+            _ = session.WriteLine( Syntax.Tsp.Node.ValueGetterWaitCommandFormat2, node.Number, Syntax.Tsp.Script.ScriptCatalogGetterCommand, "names" );
 
         _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay );
         scriptNames = session.ReadLineTrimEnd();

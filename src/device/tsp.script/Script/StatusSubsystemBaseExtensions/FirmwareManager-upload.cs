@@ -86,8 +86,7 @@ public static partial class FirmwareManager
                 try
                 {
                     // remove the temporary script if there.
-                    if ( !session.NillScript( tempName ) )
-                        throw new InvalidOperationException( $"{session.ResourceNameNodeCaption} script {tempName} still exists after delete." );
+                    session.NillScript( tempName );
 
                     _ = session.TraceInformation();
                     _ = session.TraceDeviceExceptionIfError();

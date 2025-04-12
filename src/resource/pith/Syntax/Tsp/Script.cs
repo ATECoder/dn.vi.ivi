@@ -20,4 +20,17 @@ public static class Script
 
     /// <summary>   (Immutable) the end of binary script. </summary>
     public const string EndOfBinaryScript = "\\128\\27\"";
+
+    /// <summary>
+    /// Gets a command to retrieve a catalog from the local node.
+    /// This command must be enclosed in a 'do end' construct.
+    /// a print(names) or dataqueue.add(names) needs to be added to get the data through.
+    /// </summary>
+    public const string ScriptCatalogGetterCommand = "local names='' for name in script.user.catalog() do names = names .. name .. ',' end";
+
+    /// <summary>   (Immutable) the saved script find command format. </summary>
+    public const string SavedScriptFindCommandFormat = "local exists = false for name in script.user.catalog() do exists = (name=='{0}') end";
+
+    /// <summary>   (Immutable) the find save script command format. </summary>
+    public const string FindSaveScriptCommandFormat = "local exists = false for name in script.user.catalog() do exists = (name=='{0}') end print(exists)";
 }

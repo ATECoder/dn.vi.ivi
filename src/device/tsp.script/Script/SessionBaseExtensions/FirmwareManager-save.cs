@@ -24,7 +24,7 @@ public static partial class FirmwareManager
         session.SaveScript( scriptName, autoRun );
 
         // fetch names
-        (string scriptNames, List<string> authorScripts) = session.FetchSavedScriptsNames();
+        (string scriptNames, List<string> authorScripts) = FirmwareManager.FetchSavedScriptsNames( session );
 
         return (FirmwareScriptBase.ScriptNameExists( scriptNames, scriptName ), scriptNames, authorScripts);
     }

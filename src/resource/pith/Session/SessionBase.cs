@@ -678,6 +678,21 @@ public abstract partial class SessionBase : CommunityToolkit.Mvvm.ComponentModel
         set => _ = base.SetProperty( ref this._lastAction, value );
     }
 
+    /// <summary>   Trace last action. </summary>
+    /// <remarks>   2025-04-11. </remarks>
+    /// <param name="message">          The message. </param>
+    /// <param name="memberName">       (Optional) Name of the member. </param>
+    /// <param name="sourcePath">       (Optional) Full pathname of the source file. </param>
+    /// <param name="sourceLineNumber"> (Optional) Source line number. </param>
+    public void TraceLastAction( string message,
+        [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
+        [System.Runtime.CompilerServices.CallerFilePath] string sourcePath = "",
+        [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0 )
+    {
+        System.Diagnostics.Trace.WriteLine( message, $"[{sourcePath}].{memberName}.Line#{sourceLineNumber}" );
+        this.SetLastAction( message );
+    }
+
     /// <summary>   Sets the last Action detailed message. </summary>
     /// <remarks>   2024-09-04. </remarks>
     /// <param name="message">          The detailed message. </param>
@@ -700,6 +715,21 @@ public abstract partial class SessionBase : CommunityToolkit.Mvvm.ComponentModel
     {
         get => this._lastActionDetails;
         set => _ = base.SetProperty( ref this._lastActionDetails, value );
+    }
+
+    /// <summary>   Trace last action details. </summary>
+    /// <remarks>   2025-04-11. </remarks>
+    /// <param name="message">          The message. </param>
+    /// <param name="memberName">       (Optional) Name of the member. </param>
+    /// <param name="sourcePath">       (Optional) Full pathname of the source file. </param>
+    /// <param name="sourceLineNumber"> (Optional) Source line number. </param>
+    public void TraceLastActionDetails( string message,
+        [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
+        [System.Runtime.CompilerServices.CallerFilePath] string sourcePath = "",
+        [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0 )
+    {
+        System.Diagnostics.Trace.WriteLine( message, $"[{sourcePath}].{memberName}.Line#{sourceLineNumber}" );
+        this.SetLastActionDetails( message );
     }
 
     /// <summary>   Gets the node number caption. </summary>

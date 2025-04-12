@@ -86,7 +86,8 @@ public static partial class FirmwareManager
         session.ThrowDeviceExceptionIfError();
 
         session.SetLastAction( $"nulling script '{scriptName}" );
-        bool deleted = FirmwareManager.NillScript( session, scriptName );
+        session.NillScript( scriptName );
+        bool deleted = true;
 
         session.ThrowDeviceExceptionIfError();
 
@@ -118,7 +119,6 @@ public static partial class FirmwareManager
 
         return deleted;
     }
-
 
     /// <summary>
     /// Deletes the <paramref scriptName="scriptName">specified</paramref> saved script. Also nulls
@@ -155,11 +155,11 @@ public static partial class FirmwareManager
         session.ThrowDeviceExceptionIfError();
 
         session.SetLastAction( $"nulling script '{scriptName}" );
-        bool deleted = session.NillScript( nodeNumber, scriptName );
+        session.NillScript( nodeNumber, scriptName );
 
         session.ThrowDeviceExceptionIfError();
 
-        return deleted;
+        return true;
     }
 
     /// <summary>   Deletes the script. </summary>
@@ -184,6 +184,7 @@ public static partial class FirmwareManager
     ///                                             null. </exception>
     /// <param name="session">              The session. </param>
     /// <param name="scriptsCollection">    Collection of scripts. </param>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0306:Simplify collection initialization", Justification = "<Pending>" )]
     public static void DeleteUserScripts( this Pith.SessionBase session, ICollection<ScriptEntityCollection> scriptsCollection )
     {
         if ( scriptsCollection is null ) throw new ArgumentNullException( nameof( scriptsCollection ) );
@@ -202,7 +203,7 @@ public static partial class FirmwareManager
                     if ( savedScripts.Contains( script.Name, StringComparison.OrdinalIgnoreCase ) )
                         _ = session.DeleteSavedScript( script.Name );
                     else
-                        _ = session.NillScript( script.Name );
+                        session.NillScript( script.Name );
                 }
             }
         }

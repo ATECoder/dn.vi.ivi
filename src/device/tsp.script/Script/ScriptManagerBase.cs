@@ -87,7 +87,7 @@ public abstract class ScriptManagerBase( Tsp.StatusSubsystemBase statusSubsystem
     {
         string savedScriptNames;
         if ( this.ScriptEntities is null )
-            (savedScriptNames, _) = this.Session.FetchSavedScriptsNames();
+            savedScriptNames = this.Session.FetchSavedScriptsNames();
         else
         {
             this.ScriptEntities!.FetchSavedScriptsNames( this.Session );

@@ -1,6 +1,7 @@
 using System.Text;
 using cc.isr.Std.TrimExtensions;
 using cc.isr.VI.Syntax.Tsp;
+using cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
 namespace cc.isr.VI.Tsp.Script;
 
@@ -192,6 +193,18 @@ public abstract class FirmwareScriptBase
         if ( scriptNames is null ) throw new ArgumentNullException( nameof( scriptNames ) );
         return !string.IsNullOrWhiteSpace( scriptNames ) && !string.IsNullOrWhiteSpace( scriptName )
             && scriptNames.IndexOf( scriptName + ",", 0, StringComparison.OrdinalIgnoreCase ) >= 0;
+    }
+
+    /// <summary>   Queries if a given script name exists. </summary>
+    /// <remarks>   2025-04-12. </remarks>
+    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
+    ///                                             null. </exception>
+    /// <param name="session">      The session. </param>
+    /// <param name="nodeNumber">   The node number. </param>
+    /// <returns>   True if the script was saved, false if it fails. </returns>
+    public bool IsSaved( Pith.SessionBase session, int nodeNumber )
+    {
+        return session != null && session.IsSavedScript( this.Name, nodeNumber );
     }
 
     #endregion

@@ -585,7 +585,10 @@ public class ScriptEntityBaseCollection<TItem>( NodeEntityBase node ) : System.C
             if ( FirmwareScriptBase.ScriptNameExists( this.SavedScriptNames, scriptName ) )
                 isNull = session.DeleteSavedScript( scriptName );
             else
-                isNull = FirmwareManager.NillScript( session, scriptName );
+            {
+                session.NillScript( scriptName );
+                isNull = true;
+            }
         }
         return isNull;
     }

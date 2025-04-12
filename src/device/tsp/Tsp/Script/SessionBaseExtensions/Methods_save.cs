@@ -5,6 +5,37 @@ namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 public static partial class Methods
 {
     /// <summary>
+    /// Fetches the names of the saved scripts. </summary>
+    /// <remarks>   2024-09-05. </remarks>
+    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
+    ///                                             null. </exception>
+    /// <param name="session">  The session. </param>
+    /// <returns>   The saved scripts. </returns>
+    public static string FetchSavedScriptsNames( this Pith.SessionBase? session )
+    {
+        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
+        session.LastNodeNumber = default;
+        string scriptNames;
+        session.TraceLastAction( "fetching saved scripts" );
+        _ = session.WriteLine( "do {0} print( names ) end ", Syntax.Tsp.Script.ScriptCatalogGetterCommand );
+        _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay );
+
+        scriptNames = session.ReadLineTrimEnd();
+
+        // throw if device error occurred
+        session.ThrowDeviceExceptionIfError();
+
+        // query and throw if operation complete query failed
+        session.QueryAndThrowIfOperationIncomplete();
+        _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay + session.StatusReadDelay );
+
+        // throw if device error occurred
+        session.ThrowDeviceExceptionIfError();
+
+        return scriptNames;
+    }
+
+    /// <summary>
     /// A <see cref="SessionBase"/> extension method that check if a script is included in the catalog of saved scripts.
     /// </summary>
     /// <remarks>   2025-04-11. </remarks>
@@ -17,7 +48,8 @@ public static partial class Methods
     {
         if ( string.IsNullOrWhiteSpace( scriptName ) )
             throw new ArgumentNullException( nameof( scriptName ) );
-        string findCommand = $"local exists = false for name in script.user.catalog() do exists = (name=='{scriptName}') end print(exists)";
+        // string findCommand = $"local exists = false for name in script.user.catalog() do exists = (name=='{scriptName}') end print(exists)";
+        string findCommand = string.Format( Syntax.Tsp.Script.FindSaveScriptCommandFormat, scriptName );
         string reply = session.QueryTrimEnd( findCommand );
         return SessionBase.EqualsTrue( reply );
     }
