@@ -7,6 +7,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
   - Rename ParseLuaChunkLine to ParseLuaChunkLine;
 - Pith TSP Syntax
   - Add code parsing.
+- Tsp Script Session Base Extensions
+  - Add IsSaveScript, Nil Script , Remove from User Scripts, and Remove from Save Scripts.
+- 2600 MS Tests: Script tests:
+  - select before loading.
+  - remove saved before saving.
+  - test saving and running a converted binary script.
 
 ## [8.1.9231] - 2025-04-10
 cc.isr.VI.Device.Tsp project :

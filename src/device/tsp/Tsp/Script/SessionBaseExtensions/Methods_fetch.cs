@@ -30,16 +30,6 @@ public static partial class Methods
         _ = session.WriteLine( $"_G.print({scriptName}.source)" );
         _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay + session.StatusReadDelay );
 
-        // throw if device error occurred
-        session.ThrowDeviceExceptionIfError();
-
-        // query and throw if operation complete query failed
-        session.QueryAndThrowIfOperationIncomplete();
-        _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay + session.StatusReadDelay );
-
-        // throw if device error occurred
-        session.ThrowDeviceExceptionIfError();
-
         string scriptSource = session.ReadFreeLineTrimEnd();
 
         // throw if device error occurred

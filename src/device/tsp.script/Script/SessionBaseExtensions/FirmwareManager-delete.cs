@@ -46,7 +46,7 @@ public static partial class FirmwareManager
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( scriptName is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
 
-        bool deleted = session.DeleteSavedScript( scriptName );
+        bool deleted = FirmwareManager.DeleteSavedScript( session, scriptName );
 
         if ( !session.CollectGarbageQueryComplete() )
             _ = session.TraceWarning( message: $"garbage collection incomplete (reply not '1') after deleting saved script {scriptName}" );
@@ -86,7 +86,7 @@ public static partial class FirmwareManager
         session.ThrowDeviceExceptionIfError();
 
         session.SetLastAction( $"nulling script '{scriptName}" );
-        bool deleted = session.NillScript( scriptName );
+        bool deleted = FirmwareManager.NillScript( session, scriptName );
 
         session.ThrowDeviceExceptionIfError();
 
