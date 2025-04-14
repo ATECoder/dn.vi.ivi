@@ -50,8 +50,7 @@ public static partial class FirmwareManager
 
 
             if ( compress )
-                scriptFile.WriteLine( "{0}{1}{2}", FirmwareScriptBase.CompressedPrefix,
-                    FirmwareScriptBase.Compress( scriptSource ), FirmwareScriptBase.CompressedSuffix );
+                scriptFile.WriteLine( Tsp.Script.ScriptCompressor.Compress( scriptSource ) );
             else
                 scriptFile.WriteLine( scriptSource );
 
@@ -97,8 +96,7 @@ public static partial class FirmwareManager
                 throw new cc.isr.VI.Pith.NativeException( $"Failed fetching script source for {scriptName}" );
 
             if ( compress )
-                scriptFile.WriteLine( "{0}{1}{2}", FirmwareScriptBase.CompressedPrefix,
-                    FirmwareScriptBase.Compress( scriptSource ), FirmwareScriptBase.CompressedSuffix );
+                scriptFile.WriteLine( Tsp.Script.ScriptCompressor.Compress( scriptSource ) );
             else
                 scriptFile.WriteLine( scriptSource );
 

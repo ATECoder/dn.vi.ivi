@@ -4,6 +4,15 @@ namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
 public static partial class Methods
 {
+    /// <summary>   Query if 'source' is binary source. </summary>
+    /// <remarks>   2024-10-11. </remarks>
+    /// <param name="source">   specifies the source code for the script. </param>
+    /// <returns>   True if binary source, false if not. </returns>
+    public static bool IsBinarySource( this string source )
+    {
+        return source.Contains( @"\27LuaP\0\4\4\4\", StringComparison.Ordinal );
+    }
+
     /// <summary>   Checks if the script is Binary. </summary>
     /// <remarks>   2024-09-24. </remarks>
     /// <param name="session">      The session. </param>

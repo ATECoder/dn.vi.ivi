@@ -468,14 +468,11 @@ public static partial class FirmwareManager
     public static (bool TimedOut, ServiceRequests Status, TimeSpan Elapsed) LoadScriptSource( this Pith.SessionBase session, string scriptName,
         string scriptSource )
     {
-        if ( FirmwareScriptBase.IsBinarySource( scriptSource ) )
+        if ( scriptSource.IsBinarySource() )
         {
-            throw new InvalidOperationException( $"The script source '{scriptSource}' is binary. Binary scripts cannot be loaded to the 2600B instruments." );
-#if false
             Stopwatch sw = Stopwatch.StartNew();
             session.LoadScript( scriptName, scriptSource );
             return (false, session.ReadStatusByte(), sw.Elapsed);
-#endif
         }
         else
             return session.ParseAndLoadScriptSource( scriptName, scriptSource );

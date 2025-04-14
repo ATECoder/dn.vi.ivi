@@ -4,6 +4,15 @@ namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
 public static partial class Methods
 {
+    /// <summary>   Query if 'source' is a compressed source. </summary>
+    /// <remarks>   2024-10-11. </remarks>
+    /// <param name="source">   specifies the source code for the script. </param>
+    /// <returns>   True if compressed source, false if not. </returns>
+    public static bool IsCompressedSource( this string source )
+    {
+        return source.StartsWith( Tsp.Script.ScriptCompressor.CompressedPrefix, false, System.Globalization.CultureInfo.CurrentCulture );
+    }
+
     /// <summary>   A <see cref="Pith.SessionBase"/> extension method that query if the specified script is loaded. </summary>
     /// <remarks>   2025-04-14. </remarks>
     /// <param name="session">      The session. </param>

@@ -205,6 +205,116 @@ public abstract class FirmwareScriptBase
 
     #endregion
 
+    #region " compression "
+
+    /// <summary>   Returns the compressed code prefix. </summary>
+    /// <value> The compressed prefix. </value>
+    public static string CompressedPrefix => "<COMPRESSED>";
+
+    /// <summary>   Returns the compressed code suffix. </summary>
+    /// <value> The compressed suffix. </value>
+    public static string CompressedSuffix => "</COMPRESSED>";
+
+    /// <summary>   Returns a compressed value. </summary>
+    /// <remarks>   2024-09-05. </remarks>
+    /// <param name="value">    The string being chopped. </param>
+    /// <returns>   Compressed value. </returns>
+    public static string Compress( string value )
+    {
+        if ( string.IsNullOrWhiteSpace( value ) )
+        {
+            return string.Empty;
+        }
+
+        string result = string.Empty;
+
+        // Compress the byte array
+        using ( MemoryStream memoryStream = new() )
+        {
+            using System.IO.Compression.GZipStream compressedStream = new( memoryStream, System.IO.Compression.CompressionMode.Compress );
+
+            // Convert the uncompressed string into a byte array
+            byte[] values = System.Text.Encoding.UTF8.GetBytes( value );
+            compressedStream.Write( values, 0, values.Length );
+
+            // Don't FLUSH here - it possibly leads to data loss!
+            compressedStream.Close();
+            byte[] compressedValues = memoryStream.ToArray();
+
+            // Convert the compressed byte array back to a string
+            result = Convert.ToBase64String( compressedValues );
+            memoryStream.Close();
+        }
+
+        return result;
+    }
+
+    /// <summary>   Returns the decompressed string of the value. </summary>
+    /// <remarks>
+    /// David, 2009-04-09, 1.1.3516. Bug fix in getting the size. Changed  memoryStream.Length - 5 to
+    /// memoryStream.Length - 4. <para>
+    /// David, 2024-09-26: the unit test failed decompressing the entire
+    /// file. It might be that the file was read or written partially. </para>
+    /// </remarks>
+    /// <param name="value">    The string being chopped. </param>
+    /// <param name="prefix">   The prefix. </param>
+    /// <param name="suffix">   The suffix. </param>
+    /// <returns>   Decompressed value. </returns>
+    public static string Decompress( string value, string prefix, string suffix )
+    {
+        string source = string.Empty;
+        if ( value.StartsWith( prefix, false, System.Globalization.CultureInfo.CurrentCulture ) )
+        {
+            int fromIndex = value.IndexOf( prefix, StringComparison.OrdinalIgnoreCase ) + prefix.Length;
+            int toIndex = value.IndexOf( suffix, StringComparison.OrdinalIgnoreCase ) - 1;
+            source = value.Substring( fromIndex, toIndex - fromIndex + 1 );
+            source = FirmwareScriptBase.Decompress( source );
+        }
+        return source;
+    }
+
+    /// <summary>   Returns the decompressed string of the value. </summary>
+    /// <remarks>
+    /// David, 2009-04-09, 1.1.3516. Bug fix in getting the size. Changed  memoryStream.Length - 5 to
+    /// memoryStream.Length - 4. <para>
+    /// David, 2024-09-26: the unit test failed decompressing the entire
+    /// file. It might be that the file was read or written partially. </para>
+    /// </remarks>
+    /// <param name="value">    The string being chopped. </param>
+    /// <returns>   Decompressed value. </returns>
+    public static string Decompress( string value )
+    {
+        if ( string.IsNullOrWhiteSpace( value ) )
+            return string.Empty;
+
+        string result = string.Empty;
+
+        // Convert the compressed string into a byte array
+        byte[] compressedValues = Convert.FromBase64String( value );
+
+        // Decompress the byte array
+        using ( MemoryStream memoryStream = new( compressedValues ) )
+        {
+            using System.IO.Compression.GZipStream compressedStream = new( memoryStream, System.IO.Compression.CompressionMode.Decompress );
+
+            // it looks like we are getting a bogus size.
+            byte[] sizeBytes = new byte[4];
+            memoryStream.Position = memoryStream.Length - 4L;
+            _ = memoryStream.Read( sizeBytes, 0, 4 );
+            int outputSize = BitConverter.ToInt32( sizeBytes, 0 );
+            memoryStream.Position = 0L;
+            byte[] values = new byte[outputSize];
+            _ = compressedStream.Read( values, 0, outputSize );
+
+            // Convert the decompressed byte array back to a string
+            result = System.Text.Encoding.UTF8.GetString( values );
+        }
+
+        return result;
+    }
+
+    #endregion
+
     #region " TSP Script Loading Syntax "
 
     /// <summary>   Decorate a binary script with the Load String syntax. </summary>
@@ -213,7 +323,7 @@ public abstract class FirmwareScriptBase
     /// <returns>   A string. </returns>
     public static string BuildLoadStringSyntax( string source )
     {
-        if ( source.IsBinarySource() )
+        if ( FirmwareScriptBase.IsBinarySource( source ) )
         {
             if ( source[..50].Trim().StartsWith( "{", true, System.Globalization.CultureInfo.CurrentCulture ) )
             {
@@ -241,7 +351,7 @@ public abstract class FirmwareScriptBase
     public static string BuildLoadScriptSyntax( string source, string scriptName, bool runScriptAfterLoad )
     {
         string sourceStart = source[..50].Trim();
-        if ( source.IsBinarySource() )
+        if ( FirmwareScriptBase.IsBinarySource( source ) )
         {
             if ( sourceStart.StartsWith( "{", true, System.Globalization.CultureInfo.CurrentCulture ) )
             {
@@ -528,6 +638,24 @@ public abstract class FirmwareScriptBase
     /// <value> The name. </value>
     public string Name { get; private set; }
 
+    /// <summary>   Query if 'source' is a compressed source. </summary>
+    /// <remarks>   2024-10-11. </remarks>
+    /// <param name="source">   specifies the source code for the script. </param>
+    /// <returns>   True if compressed source, false if not. </returns>
+    public static bool IsCompressedSource( string source )
+    {
+        return source.StartsWith( CompressedPrefix, false, System.Globalization.CultureInfo.CurrentCulture );
+    }
+
+    /// <summary>   Query if 'source' is binary source. </summary>
+    /// <remarks>   2024-10-11. </remarks>
+    /// <param name="source">   specifies the source code for the script. </param>
+    /// <returns>   True if binary source, false if not. </returns>
+    public static bool IsBinarySource( string source )
+    {
+        return source.Contains( @"\27LuaP\0\4\4\4\", StringComparison.Ordinal );
+    }
+
     /// <summary>   Parse source. </summary>
     /// <remarks>   2024-09-23. </remarks>
     /// <param name="value">    The string being chopped. </param>
@@ -539,9 +667,12 @@ public abstract class FirmwareScriptBase
         string source = string.Empty;
         if ( !this.RequiresReadParseWrite )
         {
-            if ( value.StartsWith( Tsp.Script.ScriptCompressor.CompressedPrefix, false, System.Globalization.CultureInfo.CurrentCulture ) )
+            if ( value.StartsWith( CompressedPrefix, false, System.Globalization.CultureInfo.CurrentCulture ) )
             {
-                source = Tsp.Script.ScriptCompressor.Decompress( source );
+                int fromIndex = value.IndexOf( CompressedPrefix, StringComparison.OrdinalIgnoreCase ) + CompressedPrefix.Length;
+                int toIndex = value.IndexOf( CompressedSuffix, StringComparison.OrdinalIgnoreCase ) - 1;
+                source = value.Substring( fromIndex, toIndex - fromIndex + 1 );
+                source = FirmwareScriptBase.Decompress( source );
                 sourceFormat |= ScriptFileFormats.Compressed;
             }
             else
@@ -549,7 +680,7 @@ public abstract class FirmwareScriptBase
 
             if ( !string.IsNullOrWhiteSpace( this.Source ) )
             {
-                isBinaryScript = source.IsBinarySource();
+                isBinaryScript = FirmwareScriptBase.IsBinarySource( source );
             }
 
             if ( !source.EndsWith( " ", true, System.Globalization.CultureInfo.CurrentCulture ) )
@@ -667,8 +798,8 @@ public abstract class FirmwareScriptBase
             throw new InvalidOperationException( $"Failed reading script;. file '{filePath}' includes no source." );
         else if ( source.Length < 2 )
             throw new InvalidOperationException( $"Failed reading script;. file '{filePath}' includes no source." );
-        else if ( source.IsCompressedSource() )
-            source = Tsp.Script.ScriptCompressor.Decompress( source );
+        else if ( IsCompressedSource( source ) )
+            source = Decompress( source, FirmwareScriptBase.CompressedPrefix, FirmwareScriptBase.CompressedSuffix );
 
         return source;
     }

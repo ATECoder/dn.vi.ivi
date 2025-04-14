@@ -2,6 +2,20 @@
 All notable changes to these libraries will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [8.1.9235] - 2025-04-14
+- Device Tsp:
+  - Add end of line conversion to methods exporting script to files.
+  - Add is loaded, is activate and is binary methods.
+- Device Tsp Script:
+  - Remove binary scripts script.
+  - Move compression to the framework library and the generic device TSP string extensions.
+  - Add script compressor.
+- K2600 Tests
+  - update file names.
+  - Update export methods to accommodate the EOL conversions.
+- Lua Syntax:
+  - Update the wait complete description.
+
 ## [8.1.9233] - 2025-04-12
 - Resource Pith TSP Script Syntax: 
   - Move find and catalog formats from Lua.
@@ -295,6 +309,6 @@ which has issued a defect report.
 
 &copy; 2012 Integrated Scientific Resources, Inc. All rights reserved.
 
-[8.1.9233]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9235]: https://www.github.com/atecoder/dn.vi.ivi
 [vs.VI]: https://www.github.com/atecoder/dn.vi.ivi
 [vs.Visa]: https://bitbucket.org/davidhary/vs.io.visa
