@@ -133,7 +133,21 @@ public static class Lua
     /// <summary>   (Immutable) the reset known state wait command. </summary>
     public const string ResetKnownStateWaitCommand = "_G.reset() _G.waitcomplete()";
 
-    /// <summary> The wait command. </summary>
+    /// <summary> This function waits for all previously started overlapped commands to complete.
+    /// The method specifies which TSP-Link group on which to wait. </summary>
+    /// <remarks>
+    /// There are two types of instrument commands: <para>
+    /// • Overlapped commands: Commands that allow the execution of subsequent commands while
+    /// instrument operations of the overlapped command are still in progress.</para> <para>
+    /// • Sequential commands: Commands whose operations must finish before the next command
+    /// is executed.</para> <para>
+    /// The waitcomplete() command suspends the execution of commands until the instrument
+    /// operations of all previous overlapped commands are finished.This command is not needed for
+    /// sequential commands.</para> <para>
+    /// A group number may only be specified when this node is the master node.</para> <para>
+    /// If no group is specified, the local group is used.</para> <para>
+    /// If zero (0) is specified for the group, this function waits for all nodes in the system.</para>
+    /// </remarks>
     public const string WaitGroupCommandFormat = "_G.waitcomplete({0})";
 
     /// <summary>

@@ -40,11 +40,7 @@
   </PropertyGroup>
 
   <Choose>
-    <When Condition="$(DefineConstants.Contains(';PROJREF;')) OR $(DefineConstants.Contains(';MYPROJREF;'))">
-      <ItemGroup>
-        <ProjectReference Include="..\tsp\cc.isr.VI.Device.Tsp.csproj" />
-      </ItemGroup>
-    </When>
+    <When Condition="$(DefineConstants.Contains(';PROJREF;')) OR $(DefineConstants.Contains(';MYPROJREF;'))" />
     <Otherwise>
       <ItemGroup>
         <PackageReference Include="cc.isr.VI.Device.Tsp" Version="8.0.8121" />
@@ -64,6 +60,10 @@
 
   <ItemGroup>
     <Compile Include="..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\tsp.script\cc.isr.VI.Tsp.Script.csproj" />
   </ItemGroup>
    
   <ItemGroup>

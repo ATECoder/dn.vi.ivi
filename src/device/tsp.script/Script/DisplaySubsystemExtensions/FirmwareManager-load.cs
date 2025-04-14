@@ -51,7 +51,7 @@ public static partial class FirmwareManager
         if ( script is null ) throw new ArgumentNullException( nameof( script ) );
         if ( script.Node is null ) throw new ArgumentNullException( nameof( script.Node ) );
         if ( script.FirmwareScript is null ) throw new ArgumentNullException( nameof( script.FirmwareScript ) );
-        if ( string.IsNullOrWhiteSpace( script.FirmwareScript.TopNamespace ) ) throw new ArgumentNullException( nameof( script.FirmwareScript.TopNamespace ) );
+        if ( string.IsNullOrWhiteSpace( script.FirmwareVersionGetter ) ) throw new ArgumentNullException( nameof( script.FirmwareVersionGetter ) );
         if ( displaySubsystem is null ) throw new ArgumentNullException( nameof( displaySubsystem ) );
         if ( displaySubsystem.StatusSubsystem is null ) throw new ArgumentNullException( nameof( displaySubsystem.StatusSubsystem ) );
         if ( displaySubsystem.Session is null ) throw new ArgumentNullException( nameof( displaySubsystem.Session ) );

@@ -68,62 +68,6 @@ public static class ResourceManager
 
     #endregion
 
-    #region " binary script "
-
-    /// <summary>   (Immutable) the binary script title. </summary>
-    public const string BinaryScriptTitle = "isr_binaryScripts";
-
-    /// <summary>   Define binary script. </summary>
-    /// <remarks>   2025-04-07. </remarks>
-    /// <param name="firmwareVersion">  The firmware version, e.g., 2.4.9226. </param>
-    /// <param name="modelMask">        The model mask. </param>
-    /// <param name="modelVersion">     The model version. </param>
-    /// <returns>   A ScriptEntity. </returns>
-    public static FirmwareScriptBase DefineBinaryScript( string firmwareVersion, string modelMask, Version modelVersion )
-    {
-        FirmwareScript firmwareScript = new( ResourceManager.BinaryScriptTitle, modelMask, modelVersion )
-        {
-            FileTitle = ResourceManager.BinaryScriptTitle,
-            DeployFileFormat = FirmwareScriptBase.BuildScriptFileFormat( true, false ),
-            SaveToNonVolatileMemory = true,
-            NamespaceList = "_G",
-            FirmwareVersion = firmwareVersion,
-            IsPrimaryScript = true,
-        };
-        return firmwareScript;
-    }
-
-    /// <summary>   Define binary script. </summary>
-    /// <remarks>   2025-04-07. </remarks>
-    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
-    ///                                             null. </exception>
-    /// <param name="firmwareVersion">          The firmware version, e.g., 2.4.9226. </param>
-    /// <param name="instrumentVersionInfo">    Information describing the instrument version. </param>
-    /// <param name="node">                     The node. </param>
-    /// <returns>   A ScriptEntity. </returns>
-    public static ScriptEntity DefineBinaryScript( string firmwareVersion, VersionInfoBase instrumentVersionInfo, NodeEntityBase node )
-    {
-        if ( instrumentVersionInfo is null ) throw new ArgumentNullException( nameof( instrumentVersionInfo ) );
-        if ( instrumentVersionInfo.FirmwareVersion is null )
-            throw new ArgumentNullException( $"{nameof( instrumentVersionInfo )}.{nameof( instrumentVersionInfo.FirmwareVersion )}" );
-
-        FirmwareScriptBase firmwareScript = ResourceManager.DefineBinaryScript( firmwareVersion, instrumentVersionInfo.ModelFamily,
-            instrumentVersionInfo.FirmwareVersion );
-
-        ScriptEntity script = new( firmwareScript, node )
-        {
-            FirmwareVersionGetter = $"_G.print({firmwareVersion})"
-        };
-
-        return script;
-    }
-
-    /// <summary>   Gets or sets the script entity. </summary>
-    /// <value> The script entity. </value>
-    public static ScriptEntity? BinaryScriptEntity { get; set; } = null;
-
-    #endregion
-
     #region " embedded resource assembly info "
 
     /// <summary>   (Immutable) pathname of the embedded resource folder. </summary>

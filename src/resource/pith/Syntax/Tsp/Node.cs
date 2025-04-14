@@ -72,7 +72,7 @@ public static class Node
     /// <returns>   The find script getter command. </returns>
     public static string FindSavedScriptCommand( string scriptName, int nodeNumber )
     {
-        string getterCommand = string.Format( Syntax.Tsp.Script.SavedScriptFindCommandFormat, scriptName );
+        string getterCommand = string.Format( Syntax.Tsp.Script.FindSavedScriptCommandFormat, scriptName );
         return string.Format( Syntax.Tsp.Node.ValueGetterWaitCommandFormat2, nodeNumber, getterCommand, "exits" );
     }
 

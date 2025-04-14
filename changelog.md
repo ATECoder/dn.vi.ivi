@@ -8,9 +8,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Resource Pith TSP Node Syntax: 
   - Add catalog command format.
   - add find saved script command.
-- Tsp Session Base Extensions
+- Device Tsp Session Base Extensions
   - Use TSP Syntax script constants.
   - Add find and list saved script for nodes.
+  - Add end of line conversion to methods exporting script to files.
+- K2600 Tests
+  - update file names.
+  - Update export methods to accommodate the EOL conversions.
 
 ## [8.1.9232] - 2025-04-11
 - Pith Lua Syntax:

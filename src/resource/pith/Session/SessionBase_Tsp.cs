@@ -1047,6 +1047,19 @@ public partial class SessionBase
                                        () => !this.IsNil( nodeNumber, name ), SessionBase.DoEventsAction ).Completed;
     }
 
+    /// <summary>
+    /// Checks the series of values and return <c>true</c> if any one of them is nil.
+    /// </summary>
+    /// <remarks>   2025-04-14. </remarks>
+    /// <param name="isControllerNode"> true if this object is controller node. </param>
+    /// <param name="nodeNumber">       Specifies the remote node number to validate. </param>
+    /// <param name="value">            Specifies the global which to look for. </param>
+    /// <returns>   <c>True </c> if any value is nil; otherwise, <c>false</c> </returns>
+    public bool IsNil( bool isControllerNode, int nodeNumber, string value )
+    {
+        return isControllerNode ? this.IsNil( value ) : this.IsNil( nodeNumber, value );
+    }
+
     #endregion
 
     #endregion

@@ -2,16 +2,6 @@ namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
 public static partial class FirmwareManager
 {
-    /// <summary>   Checks if the script is Binary. </summary>
-    /// <remarks>   2024-09-24. </remarks>
-    /// <param name="session">      The session. </param>
-    /// <param name="scriptName">   Specifies the script name. </param>
-    /// <returns>   <c>true</c> if the script is a binary script; otherwise, <c>false</c>. </returns>
-    public static bool IsBinaryScript( this Pith.SessionBase session, string scriptName )
-    {
-        return !session.IsNil( $"_G.string.find( _G.string.sub( {scriptName}.source , 1 , 50 ), 'loadstring(table.concat(' , 1 , true )" );
-    }
-
     /// <summary>   A <see cref="Pith.SessionBase"/> extension method that reads scripts state. </summary>
     /// <remarks>   2024-09-09. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
@@ -33,7 +23,7 @@ public static partial class FirmwareManager
 
         if ( script.Loaded )
         {
-            script.Activated = !session.IsNil( script.Node.IsController, script.Node.Number, script.FirmwareScript.Namespaces );
+            script.Activated = !session.IsNil( script.Node.IsController, script.Node.Number, script.FirmwareVersionGetter.TrimEnd( ['(', ')'] ) );
 
             string? savedScripts = session.FetchSavedScriptsNames( script.Node ).SavedScripts;
             script.Saved = !string.IsNullOrWhiteSpace( savedScripts )
@@ -76,7 +66,7 @@ public static partial class FirmwareManager
         if ( script.Loaded )
         {
             // note that the scripts are loaded as binary first on the local node and then copied to the remote node.
-            script.Activated = !session.IsNil( script.Node.IsController, script.Node.Number, script.FirmwareScript.Namespaces );
+            script.Activated = !session.IsNil( script.Node.IsController, script.Node.Number, script.FirmwareVersionGetter.TrimEnd( ['(', ')'] ) );
 
             script.Saved = !string.IsNullOrWhiteSpace( savedScripts )
                 && (savedScripts!.IndexOf( script.Name + ",", 0, StringComparison.OrdinalIgnoreCase ) >= 0);

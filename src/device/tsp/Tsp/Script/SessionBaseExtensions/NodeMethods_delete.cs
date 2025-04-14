@@ -4,7 +4,7 @@ namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
 public static partial class NodeMethods
 {
-    /// <summary>   A <see cref="SessionBase"/> extension method makes a script nil. </summary>
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method makes a script nil. </summary>
     /// <remarks>   2024-09-05. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>

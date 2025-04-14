@@ -36,7 +36,7 @@ public static partial class Methods
     }
 
     /// <summary>
-    /// A <see cref="SessionBase"/> extension method that check if a script is included in the catalog of saved scripts.
+    /// A <see cref="Pith.SessionBase"/> extension method that check if a script is included in the catalog of saved scripts.
     /// </summary>
     /// <remarks>   2025-04-11. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
@@ -49,12 +49,12 @@ public static partial class Methods
         if ( string.IsNullOrWhiteSpace( scriptName ) )
             throw new ArgumentNullException( nameof( scriptName ) );
         // string findCommand = $"local exists = false for name in script.user.catalog() do exists = (name=='{scriptName}') end print(exists)";
-        string findCommand = string.Format( Syntax.Tsp.Script.FindSaveScriptCommandFormat, scriptName );
+        string findCommand = string.Format( Syntax.Tsp.Script.FindSaveScriptQueryFormat, scriptName );
         string reply = session.QueryTrimEnd( findCommand );
         return SessionBase.EqualsTrue( reply );
     }
 
-    /// <summary>   A <see cref="SessionBase"/> extension method that removed a script from Non-Volatile-Memory (NVM). </summary>
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that removed a script from Non-Volatile-Memory (NVM). </summary>
     /// <remarks>   2025-04-10. </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
     ///                                                 are null. </exception>
@@ -107,7 +107,7 @@ public static partial class Methods
         }
     }
 
-    /// <summary>   A <see cref="SessionBase"/> extension method that saves a script to non-volatile-memory (NVM). </summary>
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that saves a script to non-volatile-memory (NVM). </summary>
     /// <remarks>   2025-04-10. </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
     ///                                                 are null. </exception>

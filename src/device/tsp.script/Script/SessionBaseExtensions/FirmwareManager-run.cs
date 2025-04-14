@@ -138,12 +138,13 @@ public static partial class FirmwareManager
 
                         if ( script.Loaded )
                         {
-                            script.Activated = !session.IsNil( script.Node.IsController, script.Node.Number, script.FirmwareScript.Namespaces );
+                            script.Activated = !session.IsNil( script.Node.IsController, script.Node.Number, script.FirmwareVersionGetter.TrimEnd( ['(', ')'] ) );
 
                             if ( script.Activated )
                                 _ = builder.AppendLine( $"{session.ResourceNameNodeCaption} script '{script.Name}' activated on node {script.Node.Number}." );
                             else
-                                _ = builder.AppendLine( $"{session.ResourceNameNodeCaption} script '{script.Name}.{script.FirmwareScript.NamespaceList}' are nil; script failed to activated on node {script.Node.Number}." );
+                                _ = builder.AppendLine(
+                                    $"{session.ResourceNameNodeCaption} script '{script.Name}.{script.FirmwareVersionGetter.TrimEnd( ['(', ')'] )}' is nil; script failed to activated on node {script.Node.Number}." );
                         }
                         else
                         {

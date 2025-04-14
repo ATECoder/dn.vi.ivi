@@ -136,10 +136,10 @@ public static partial class FirmwareManager
     /// <returns>   True if script namespaces, false if not. </returns>
     public static bool HasScriptNamespaces( this Pith.SessionBase session, ScriptEntityBase script )
     {
-        return script.FirmwareScript.Namespaces is not null && (script.FirmwareScript.Namespaces.Length > 0)
+        return script.FirmwareVersionGetter is not null && (script.FirmwareVersionGetter.Length > 0)
             && (script.Node.IsController
-                ? session.IsNil( script.FirmwareScript.Namespaces )
-                : session.IsNil( script.Node.Number, script.FirmwareScript.Namespaces ));
+                ? session.IsNil( script.FirmwareVersionGetter.TrimEnd( ['(', ')'] ) )
+                : session.IsNil( script.Node.Number, script.FirmwareVersionGetter.TrimEnd( ['(', ')'] ) ));
     }
 
     #endregion

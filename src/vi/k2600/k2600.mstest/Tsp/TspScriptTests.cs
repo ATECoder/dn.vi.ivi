@@ -111,6 +111,11 @@ public class TspScriptTests : Device.Tests.Base.ScriptTests
 
             cc.isr.VI.Device.Tests.Asserts.AssertDeviceShouldOpenWithoutDeviceErrors( this.Device, this.ResourceSettings );
 
+            // write the source to file.
+            string fileTitle = $"{scriptName}_code";
+            string filePath = Path.Combine( folderPath, $"{fileTitle}.tsp" );
+            scriptSource.ToString().ExportScript( filePath, overWrite: true );
+
             this.Device.Session.DeleteScript( scriptName );
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
@@ -147,7 +152,7 @@ public class TspScriptTests : Device.Tests.Base.ScriptTests
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
 
-            string filePath = Path.Combine( folderPath, $"{scriptName}_exported.tspb" );
+            filePath = Path.Combine( folderPath, $"{fileTitle}_exported.tspb" );
             this.Device.Session.ExportScript( scriptName, filePath, true );
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
@@ -162,11 +167,13 @@ public class TspScriptTests : Device.Tests.Base.ScriptTests
         }
         finally
         {
-            this.Device.Session.DeleteScript( scriptName );
-            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
-            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
-
-            cc.isr.VI.Device.Tests.Asserts.AssertDeviceShouldCloseWithoutErrors( this.Device );
+            if ( this.Device.Session is not null && this.Device.Session.IsSessionOpen )
+            {
+                this.Device.Session.DeleteScript( scriptName );
+                cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
+                cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
+                cc.isr.VI.Device.Tests.Asserts.AssertDeviceShouldCloseWithoutErrors( this.Device );
+            }
         }
     }
 
@@ -186,11 +193,16 @@ public class TspScriptTests : Device.Tests.Base.ScriptTests
         try
         {
             string folderPath = "C:\\my\\lib\\tsp\\tsp.1\\core\\tests";
-            string fileTitle = "timeDisplayClearScript";
+            string fileTitle = "timeDisplayClear";
             string timerElapsedFunctionName = "timerElapsed";
-            string scriptSource = System.IO.File.ReadAllText( System.IO.Path.Combine( folderPath, fileTitle ) );
+            string scriptSource = System.IO.File.ReadAllText( System.IO.Path.Combine( folderPath, fileTitle + ".tsp" ) );
 
             cc.isr.VI.Device.Tests.Asserts.AssertDeviceShouldOpenWithoutDeviceErrors( this.Device, this.ResourceSettings );
+
+            // write the source to file.
+            fileTitle = $"{fileTitle}_file";
+            string filePath = Path.Combine( folderPath, $"{fileTitle}.tsp" );
+            scriptSource.ToString().ExportScript( filePath, overWrite: true );
 
             this.Device.Session.DeleteScript( scriptName );
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
@@ -208,7 +220,11 @@ public class TspScriptTests : Device.Tests.Base.ScriptTests
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
 
-            string filePath = Path.Combine( folderPath, $"{scriptName}_exported.tsp" );
+            this.Device.Session.RunScript( scriptName, timerElapsedFunctionName );
+            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
+            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
+
+            filePath = Path.Combine( folderPath, $"{fileTitle}_exported.tsp" );
 
             this.Device.Session.ExportScript( scriptName, filePath, true );
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
@@ -235,9 +251,9 @@ public class TspScriptTests : Device.Tests.Base.ScriptTests
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
 
             if ( string.Equals( "2600A", this.Device.StatusSubsystemBase.VersionInfoBase.ModelFamily, StringComparison.OrdinalIgnoreCase ) )
-                fileTitle += "A";
+                fileTitle += "_2600A";
             else if ( string.Equals( "2600B", this.Device.StatusSubsystemBase.VersionInfoBase.ModelFamily, StringComparison.OrdinalIgnoreCase ) )
-                fileTitle += "B";
+                fileTitle += "_2600B";
             else
                 Assert.Fail( $"The model family {this.Device.StatusSubsystemBase.VersionInfoBase.ModelFamily} is not supported." );
 
@@ -257,11 +273,13 @@ public class TspScriptTests : Device.Tests.Base.ScriptTests
         }
         finally
         {
-            this.Device.Session.DeleteScript( scriptName );
-            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
-            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
-
-            cc.isr.VI.Device.Tests.Asserts.AssertDeviceShouldCloseWithoutErrors( this.Device );
+            if ( this.Device.Session is not null && this.Device.Session.IsSessionOpen )
+            {
+                this.Device.Session.DeleteScript( scriptName );
+                cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
+                cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
+                cc.isr.VI.Device.Tests.Asserts.AssertDeviceShouldCloseWithoutErrors( this.Device );
+            }
         }
     }
 
@@ -281,19 +299,25 @@ public class TspScriptTests : Device.Tests.Base.ScriptTests
         try
         {
             string folderPath = "C:\\my\\lib\\tsp\\tsp.1\\core\\tests";
-            string fileTitle = "timeDisplayClearScript";
+            string fileTitle = "timeDisplayClear";
             string timerElapsedFunctionName = "timerElapsed";
 
             cc.isr.VI.Device.Tests.Asserts.AssertDeviceShouldOpenWithoutDeviceErrors( this.Device, this.ResourceSettings );
 
             if ( string.Equals( "2600A", this.Device.StatusSubsystemBase.VersionInfoBase.ModelFamily, StringComparison.OrdinalIgnoreCase ) )
-                fileTitle += "A";
+                fileTitle += "_2600A";
             else if ( string.Equals( "2600B", this.Device.StatusSubsystemBase.VersionInfoBase.ModelFamily, StringComparison.OrdinalIgnoreCase ) )
-                fileTitle += "B";
+                fileTitle += "_2600B";
             else
                 Assert.Fail( $"The model family {this.Device.StatusSubsystemBase.VersionInfoBase.ModelFamily} is not supported." );
 
             string scriptSource = System.IO.File.ReadAllText( System.IO.Path.Combine( folderPath, fileTitle + ".tspb" ) );
+
+            // tag the file as imported as binary
+            // write the source to file.
+            fileTitle += "_binary";
+            string filePath = Path.Combine( folderPath, $"{fileTitle}.tspb" );
+            scriptSource.ToString().ExportScript( filePath, overWrite: true );
 
             this.Device.Session.DeleteScript( scriptName );
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
@@ -315,7 +339,7 @@ public class TspScriptTests : Device.Tests.Base.ScriptTests
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
 
-            string filePath = Path.Combine( folderPath, $"{fileTitle}_exported_from_binary.tspb" );
+            filePath = Path.Combine( folderPath, $"{fileTitle}_exported.tspb" );
 
             this.Device.Session.ExportScript( scriptName, filePath, true );
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
@@ -331,11 +355,13 @@ public class TspScriptTests : Device.Tests.Base.ScriptTests
         }
         finally
         {
-            this.Device.Session.DeleteScript( scriptName );
-            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
-            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
-
-            cc.isr.VI.Device.Tests.Asserts.AssertDeviceShouldCloseWithoutErrors( this.Device );
+            if ( this.Device.Session is not null && this.Device.Session.IsSessionOpen )
+            {
+                this.Device.Session.DeleteScript( scriptName );
+                cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
+                cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
+                cc.isr.VI.Device.Tests.Asserts.AssertDeviceShouldCloseWithoutErrors( this.Device );
+            }
         }
     }
 

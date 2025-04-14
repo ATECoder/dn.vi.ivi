@@ -20,7 +20,7 @@ public static partial class FirmwareManager
     ///                                     subsystem</see>. </param>
     /// <param name="script">               . </param>
     /// <returns>   <c>true</c> if okay; otherwise, <c>false</c>. </returns>
-    public static bool UploadScript( this StatusSubsystemBase? statusSubsystem, ScriptEntityBase? script )
+    public static bool UploadScript( this StatusSubsystemBase? statusSubsystem, cc.isr.VI.Tsp.Script.ScriptEntityBase? script )
     {
         if ( statusSubsystem is null ) throw new ArgumentNullException( nameof( statusSubsystem ) );
         if ( statusSubsystem.Session is null ) throw new ArgumentNullException( nameof( statusSubsystem.Session ) );

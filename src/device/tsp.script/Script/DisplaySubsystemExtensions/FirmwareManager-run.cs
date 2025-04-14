@@ -67,20 +67,13 @@ public static partial class FirmwareManager
         {
 
             session.SetLastAction( $"checking activation of {script.Name}" );
-            if ( script.FirmwareScript.Namespaces is not null && script.FirmwareScript.Namespaces.Length > 0
-                && session.IsNil( script.Node.IsController, script.Node.Number, script.FirmwareScript.Namespaces ) )
+            if ( script.FirmwareVersionGetter is not null && script.FirmwareVersionGetter.Length > 0
+                && session.IsNil( script.Node.IsController, script.Node.Number, script.FirmwareVersionGetter.TrimEnd( ['(', ')'] ) ) )
             {
                 script.Saved = false;
                 script.Activated = false;
-
-                // if not a visa error, report the specific namespaces.
-                foreach ( string value in script.FirmwareScript.Namespaces )
-                {
-                    session.SetLastAction( $"looking for namespace {value}" );
-                    if ( session.IsNil( script.Node.IsController, script.Node.Number, value ) )
-                        _ = builder.AppendLine( $"{session.ResourceNameNodeCaption} namespace {value} is nil;. " );
-                }
-                displaySubsystem.DisplayLine( 2, $"{script.Name}{session.LastNodeNumberCaption} missing namespaces" );
+                _ = builder.AppendLine( $"{session.ResourceNameNodeCaption} namespace {script.FirmwareVersionGetter.TrimEnd( ['(', ')'] )} is nil;. " );
+                displaySubsystem.DisplayLine( 2, $"{script.Name}{session.LastNodeNumberCaption} missing version getter" );
             }
             else
             {

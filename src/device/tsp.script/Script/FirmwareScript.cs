@@ -42,7 +42,6 @@ public class FirmwareScript : FirmwareScriptBase
         this.IsBootScript = script.IsBootScript;
         this.IsPrimaryScript = script.IsPrimaryScript;
         this.IsSupportScript = script.IsSupportScript;
-        this.NamespaceList = script.NamespaceList;
         this.SavedToFile = script.SavedToFile;
         this.SaveToNonVolatileMemory = script.SaveToNonVolatileMemory;
         this.Source = script.Source;

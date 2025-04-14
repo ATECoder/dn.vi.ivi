@@ -50,7 +50,11 @@ public static partial class FirmwareManager
         if ( saveAsBinary )
         {
             displaySubsystem.DisplayLine( 2, $"{node.Number}:{scriptName} 2 binary" );
-            session.ConvertToBinary( scriptName, node, displaySubsystem.StatusSubsystem.VersionInfoBase );
+            if ( node.IsController )
+                session.ConvertToBinary( scriptName );
+            else
+                // displaySubsystem.ConvertBinaryScript( binaryScriptName, node, timeoutInfo );
+                throw new InvalidOperationException( "loading binary scripts to a remote node is not supported at this time." );
         }
 
         // save the script.
@@ -78,51 +82,6 @@ public static partial class FirmwareManager
         if ( displaySubsystem is null ) throw new ArgumentNullException( nameof( displaySubsystem ) );
         if ( displaySubsystem.Session is null ) throw new ArgumentNullException( nameof( displaySubsystem.Session ) );
         if ( displaySubsystem.StatusSubsystem is null ) throw new ArgumentNullException( nameof( displaySubsystem.StatusSubsystem ) );
-
-        Pith.SessionBase session = displaySubsystem.Session;
-
-        if ( script.FirmwareScript.ConvertToBinary )
-        {
-            if ( script.Node.InstrumentModelFamily is InstrumentModelFamily.K2600 or InstrumentModelFamily.K2600A or InstrumentModelFamily.K3700 )
-            {
-                // these instruments convert script to binary by setting the script to nil.
-            }
-            else
-            {
-                string functionName = SessionBaseExtensions.FirmwareManager.BinaryScriptsFunctionName;
-                ResourceManager.BinaryScriptEntity ??= ResourceManager.DefineBinaryScript(
-                    displaySubsystem.StatusSubsystem.VersionInfoBase.FirmwareVersion.ToString(),
-                    displaySubsystem.StatusSubsystem.VersionInfoBase,
-                    script.Node );
-
-                // check if we need to load the binary scripts
-                session.SetLastAction( $"checking if {functionName} is nil" );
-
-                if ( session.IsNil( script.Node.Number, functionName ) )
-                {
-                    Stream? stream = ResourceManager.GetResourceStream( ResourceManager.BinaryScriptEntity!.FirmwareScript.DeployFileName );
-                    if ( stream is not null )
-                    {
-                        session.SetLastAction( $"loading {functionName} from embedded resource" );
-                        session.LoadEmbeddedResource( ResourceManager.BinaryScriptEntity!.FirmwareScript.DeployFileName );
-                    }
-                    else
-                    {
-                        FileInfo? fileInfo = ResourceManager.GetResourceFileInfo( ResourceManager.BinaryScriptEntity!.FirmwareScript.DeployFileName );
-                        if ( fileInfo is not null )
-                        {
-                            session.SetLastAction( $"loading {functionName} from file" );
-                            session.LoadScriptFile( ResourceManager.BinaryScriptEntity.Name, fileInfo.FullName );
-                        }
-                        else
-                        {
-                            throw new InvalidOperationException(
-                                $"{session.ResourceNameNodeCaption} failed loading binary script conversion function. The function resource {ResourceManager.BinaryScriptEntity!.FirmwareScript.DeployFileName} was not found;. " );
-                        }
-                    }
-                }
-            }
-        }
 
         displaySubsystem.SaveUserScript( script.Name, script.Node, script.FirmwareScript.ConvertToBinary, script.FirmwareScript.IsBootScript );
 

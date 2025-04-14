@@ -23,12 +23,8 @@ public abstract class FirmwareScriptBase
         this.Name = string.Empty;
         this.ModelMask = string.Empty;
         this.ModelVersion = string.Empty;
-        this._namespaceList = string.Empty;
-        this.Namespaces = [];
-        this.TopNamespace = string.Empty;
         this.FileTitle = string.Empty;
         this.FolderPath = string.Empty;
-        this.ApplyNamespaceList( this._namespaceList );
         this.FirmwareVersion = string.Empty;
         this._source = string.Empty;
     }
@@ -722,38 +718,6 @@ public abstract class FirmwareScriptBase
                 _ = this.ParseSource( value );
         }
     }
-
-    /// <summary>   Applies the namespace list described by value. </summary>
-    /// <remarks>   2024-09-06. </remarks>
-    /// <param name="value">    The string being chopped. </param>
-    private void ApplyNamespaceList( string value )
-    {
-        if ( string.IsNullOrWhiteSpace( value ) )
-            value = string.Empty;
-        this._namespaceList = value;
-        this.Namespaces = string.IsNullOrWhiteSpace( value ) ? [] : this.NamespaceList.Split( ',' );
-        this.TopNamespace = this.Namespaces is null || this.Namespaces.Length == 0 ? string.Empty : this.Namespaces[0];
-    }
-
-    /// <summary> List of namespaces. </summary>
-    private string _namespaceList;
-
-    /// <summary>   Gets or sets a list of namespaces. </summary>
-    /// <value> A List of namespaces. </value>
-    public string NamespaceList
-    {
-        get => this._namespaceList;
-        set => this.ApplyNamespaceList( value );
-    }
-
-    /// <summary>   Gets the namespaces. </summary>
-    /// <remarks>   2024-09-05. </remarks>
-    /// <returns>   A list of. </returns>
-    public string[] Namespaces { get; private set; }
-
-    /// <summary>   Gets or sets the top namespace. </summary>
-    /// <value> The top namespace. </value>
-    public string TopNamespace { get; private set; }
 
     #endregion
 

@@ -4,7 +4,7 @@ namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
 public static partial class NodeMethods
 {
-    /// <summary>   A <see cref="SessionBase"/> extension method that fetches saved scripts names. </summary>
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that fetches saved scripts names. </summary>
     /// <remarks>   2024-09-05. </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
     ///                                                 are null. </exception>
@@ -50,7 +50,7 @@ public static partial class NodeMethods
     }
 
     /// <summary>
-    /// A <see cref="SessionBase"/> extension method that query if 'session' is saved script.
+    /// A <see cref="Pith.SessionBase"/> extension method that query if 'session' is saved script.
     /// </summary>
     /// <remarks>   2025-04-12. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are

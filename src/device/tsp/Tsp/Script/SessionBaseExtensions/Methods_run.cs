@@ -4,7 +4,21 @@ namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
 public static partial class Methods
 {
-    /// <summary>   A <see cref="SessionBase"/> extension method that executes the 'script' operation. </summary>
+    /// <summary>
+    /// A <see cref="Pith.SessionBase"/> extension method that query if the specified script is
+    /// activated.
+    /// </summary>
+    /// <remarks>   2025-04-14. </remarks>
+    /// <param name="session">              The session. </param>
+    /// <param name="scriptName">           Specifies the script name. Empty for an anonymous script. </param>
+    /// <param name="expectedScriptEntity"> The expected script entity. </param>
+    /// <returns>   True if loaded, false if not. </returns>
+    public static bool IsActivated( this Pith.SessionBase session, string scriptName, string expectedScriptEntity )
+    {
+        return !(session.IsNil( scriptName ) || session.IsNil( expectedScriptEntity ));
+    }
+
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that executes the 'script' operation. </summary>
     /// <remarks>   2025-04-10. </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
     ///                                                 are null. </exception>

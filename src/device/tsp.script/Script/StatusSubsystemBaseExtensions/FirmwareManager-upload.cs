@@ -27,7 +27,7 @@ public static partial class FirmwareManager
         if ( script is null ) throw new ArgumentNullException( nameof( script ) );
         if ( script.Node is null ) throw new ArgumentNullException( nameof( script.Node ) );
         if ( script.FirmwareScript is null ) throw new ArgumentNullException( nameof( script.FirmwareScript ) );
-        if ( string.IsNullOrWhiteSpace( script.FirmwareScript.TopNamespace ) ) throw new ArgumentNullException( nameof( script.FirmwareScript.TopNamespace ) );
+        if ( string.IsNullOrWhiteSpace( script.FirmwareVersionGetter ) ) throw new ArgumentNullException( nameof( script.FirmwareVersionGetter ) );
 
         Pith.SessionBase session = statusSubsystem.Session;
 
@@ -180,7 +180,7 @@ public static partial class FirmwareManager
     {
         if ( script is null ) throw new ArgumentNullException( nameof( script ) );
         if ( script.FirmwareScript is null ) throw new ArgumentNullException( nameof( script.FirmwareScript ) );
-        if ( string.IsNullOrWhiteSpace( script.FirmwareScript.TopNamespace ) ) throw new ArgumentNullException( nameof( script.FirmwareScript.TopNamespace ) );
+        if ( string.IsNullOrWhiteSpace( script.FirmwareVersionGetter ) ) throw new ArgumentNullException( nameof( script.FirmwareVersionGetter ) );
         if ( statusSubsystem is null ) throw new ArgumentNullException( nameof( statusSubsystem ) );
         if ( script.Node is null ) throw new ArgumentNullException( nameof( script.Node ) );
         if ( statusSubsystem.Session is null ) throw new ArgumentNullException( nameof( statusSubsystem.Session ) );
@@ -194,7 +194,7 @@ public static partial class FirmwareManager
 
         session.SetLastAction( $"checking if script '{script.Name}' was activated" );
         System.Text.StringBuilder commands = new( 1024 );
-        if ( session.IsNil( script.FirmwareScript.TopNamespace ) )
+        if ( session.IsNil( script.FirmwareVersionGetter.TrimEnd( ['(', ')'] ) ) )
         {
             // loads and runs the specified script.
             _ = commands.Append( $"node[{script.Node.Number}].dataqueue.add({script.Name}.source) waitcomplete()" );

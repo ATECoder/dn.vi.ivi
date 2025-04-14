@@ -4,7 +4,17 @@ namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
 public static partial class Methods
 {
-    /// <summary>   A <see cref="SessionBase"/> extension method that loads a script. </summary>
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that query if the specified script is loaded. </summary>
+    /// <remarks>   2025-04-14. </remarks>
+    /// <param name="session">      The session. </param>
+    /// <param name="scriptName">   Specifies the script name. Empty for an anonymous script. </param>
+    /// <returns>   True if loaded, false if not. </returns>
+    public static bool IsLoaded( this Pith.SessionBase session, string scriptName )
+    {
+        return !session.IsNil( scriptName );
+    }
+
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that loads a script. </summary>
     /// <remarks>   2025-04-10. </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
     ///                                                 are null. </exception>
@@ -83,7 +93,7 @@ public static partial class Methods
 
     }
 
-    /// <summary>   A <see cref="SessionBase"/> extension method that loads a script. </summary>
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that loads a script. </summary>
     /// <remarks>   2025-04-10. </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
     ///                                                 are null. </exception>

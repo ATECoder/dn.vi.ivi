@@ -6,7 +6,7 @@ namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 /// <remarks>   2025-04-10. </remarks>
 public static partial class Methods
 {
-    /// <summary>   A <see cref="SessionBase"/> extension method that import script. </summary>
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that import script. </summary>
     /// <remarks>   2024-09-05. &lt;remarks&gt; </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
     ///                                                 are null. </exception>

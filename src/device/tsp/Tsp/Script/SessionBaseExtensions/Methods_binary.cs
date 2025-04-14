@@ -4,8 +4,18 @@ namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
 public static partial class Methods
 {
+    /// <summary>   Checks if the script is Binary. </summary>
+    /// <remarks>   2024-09-24. </remarks>
+    /// <param name="session">      The session. </param>
+    /// <param name="scriptName">   Specifies the script name. </param>
+    /// <returns>   <c>true</c> if the script is a binary script; otherwise, <c>false</c>. </returns>
+    public static bool IsBinaryScript( this Pith.SessionBase session, string scriptName )
+    {
+        return !session.IsNil( $"_G.string.find( _G.string.sub( {scriptName}.source , 1 , 50 ), 'loadstring(table.concat(' , 1 , true )" );
+    }
+
     /// <summary>
-    /// A <see cref="SessionBase"/> extension method to convert to binary.
+    /// A <see cref="Pith.SessionBase"/> extension method to convert to binary.
     /// </summary>
     /// <remarks>   2025-04-10. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are

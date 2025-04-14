@@ -36,7 +36,7 @@ public static partial class Methods
             throw new InvalidOperationException( $"The script {scriptName} was not nullified." );
     }
 
-    /// <summary>   A <see cref="SessionBase"/> extension method that removes the script from the list of user scripts. </summary>
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that removes the script from the list of user scripts. </summary>
     /// <remarks>   2025-04-11. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>
@@ -66,7 +66,7 @@ public static partial class Methods
             throw new InvalidOperationException( $"The script {scriptName} was not removed from the user scripts." );
     }
 
-    /// <summary>   A <see cref="SessionBase"/> extension method that deletes the script. </summary>
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that deletes the script. </summary>
     /// <remarks>   2025-04-10. </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
     ///                                                 are null. </exception>

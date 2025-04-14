@@ -4,7 +4,7 @@ namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
 public static partial class Methods
 {
-    /// <summary>   A <see cref="SessionBase"/> extension method that export a script to file. </summary>
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that export a script to file. </summary>
     /// <remarks>   2025-04-10. </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
     ///                                                 are null. </exception>

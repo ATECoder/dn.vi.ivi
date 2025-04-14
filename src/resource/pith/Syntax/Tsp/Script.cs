@@ -29,8 +29,11 @@ public static class Script
     public const string ScriptCatalogGetterCommand = "local names='' for name in script.user.catalog() do names = names .. name .. ',' end";
 
     /// <summary>   (Immutable) the saved script find command format. </summary>
-    public const string SavedScriptFindCommandFormat = "local exists = false for name in script.user.catalog() do exists = (name=='{0}') end";
+    public const string FindSavedScriptCommandFormat = "local exists = false for name in script.user.catalog() do exists = (name=='{0}') end";
+
+    /// <summary>   (Immutable) the delete saved script command format. </summary>
+    public const string DeleteSavedScriptCommandFormat = "local exists = false for name in script.user.catalog() do exists = (name=='{0}') end if exist then _G.script.delete( name ) end";
 
     /// <summary>   (Immutable) the find save script command format. </summary>
-    public const string FindSaveScriptCommandFormat = "local exists = false for name in script.user.catalog() do exists = (name=='{0}') end print(exists)";
+    public const string FindSaveScriptQueryFormat = "local exists = false for name in script.user.catalog() do exists = (name=='{0}') end print(exists)";
 }
