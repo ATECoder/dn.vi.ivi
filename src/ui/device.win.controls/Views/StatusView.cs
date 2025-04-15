@@ -264,7 +264,7 @@ public partial class StatusView : cc.isr.WinControls.ModelViewBase
         }
     }
 
-#endregion
+    #endregion
 
     #region " session base: status and standard registers "
 
