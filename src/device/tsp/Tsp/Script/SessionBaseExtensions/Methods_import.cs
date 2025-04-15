@@ -7,7 +7,25 @@ namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 public static partial class Methods
 {
     /// <summary>   A <see cref="Pith.SessionBase"/> extension method that import script. </summary>
-    /// <remarks>   2024-09-05. &lt;remarks&gt; </remarks>
+    /// <remarks>   2024-09-05. </remarks>
+    /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
+    ///                                                 are null. </exception>
+    /// <exception cref="FileNotFoundException">        Thrown when the requested file is not
+    ///                                                 present. </exception>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <param name="fromFilePath">     The file path. </param>
+    /// <param name="toFilePath">       True to delete an existing script if it exists. </param>
+    /// <param name="retainOutline">    True to retain outline. </param>
+    public static void TrimScript( string fromFilePath, string toFilePath, bool retainOutline )
+    {
+        if ( fromFilePath is null || string.IsNullOrWhiteSpace( fromFilePath ) ) throw new ArgumentNullException( nameof( fromFilePath ) );
+        if ( toFilePath is null || string.IsNullOrWhiteSpace( toFilePath ) ) throw new ArgumentNullException( nameof( toFilePath ) );
+        cc.isr.VI.Syntax.Tsp.TspScriptParser.TrimTspSourceCode( fromFilePath, toFilePath, retainOutline );
+    }
+
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that import script. </summary>
+    /// <remarks>   2024-09-05. </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
     ///                                                 are null. </exception>
     /// <exception cref="FileNotFoundException">        Thrown when the requested file is not

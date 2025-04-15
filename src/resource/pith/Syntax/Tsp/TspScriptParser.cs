@@ -7,6 +7,48 @@ public static class TspScriptParser
     #region " trim source code "
 
     /// <summary>   Remove comments and spaces from the TSP source code. </summary>
+    /// <remarks>   2025-04-14. </remarks>
+    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
+    ///                                             null. </exception>
+    /// <exception cref="FileNotFoundException">    Thrown when the requested file is not present. </exception>
+    /// <param name="fromFilePath">     Full pathname of the source from file. </param>
+    /// <param name="toFilePath">       Full pathname of the destination file. </param>
+    /// <param name="retainOutline">    Specifies if the code outline is retained or trimmed. </param>
+    /// <returns>   Parsed script. </returns>
+    public static void TrimTspSourceCode( string fromFilePath, string toFilePath, bool retainOutline )
+    {
+        if ( fromFilePath is null ) throw new ArgumentNullException( nameof( fromFilePath ) );
+        if ( toFilePath is null ) throw new ArgumentNullException( nameof( toFilePath ) );
+
+        using StreamReader? reader = new System.IO.StreamReader( fromFilePath )
+            ?? throw new System.IO.FileNotFoundException( $"Failed creating a reader from the source file path" );
+
+        using StreamWriter? writer = new System.IO.StreamWriter( toFilePath )
+            ?? throw new System.IO.FileNotFoundException( $"Failed creating a reader for the destination file path" );
+
+        TspParserState parseState = new( retainOutline );
+
+        string? line = "";
+        while ( line is not null )
+        {
+            line = reader.ReadLine();
+            if ( line is not null
+                && !string.IsNullOrWhiteSpace( line )
+                && !line.Contains( Syntax.Tsp.Script.LoadScriptCommand )
+                && !line.Contains( Syntax.Tsp.Script.LoadAndRunScriptCommand )
+                && !line.Contains( Syntax.Tsp.Script.EndScriptCommand ) )
+            {
+                // if the line is not empty, not a comment, and not a command, write it to the new source.
+                parseState.TrimTspSourceCode( line );
+                if ( !string.IsNullOrWhiteSpace( parseState.SyntaxLine ) )
+                    writer.WriteLine( parseState.SyntaxLine );
+            }
+        }
+        // add an empty line
+        writer.WriteLine();
+    }
+
+    /// <summary>   Remove comments and spaces from the TSP source code. </summary>
     /// <remarks>   2024-09-05. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>

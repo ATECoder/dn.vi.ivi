@@ -1,3 +1,4 @@
+using System.Text;
 using cc.isr.VI.Pith;
 
 namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
@@ -42,6 +43,49 @@ public static partial class Methods
 
         // write the source to file.
         scriptSource.ExportScript( filePath, overWrite: overWrite );
+    }
+
+    /// <summary>   A <see cref="TextReader"/> extension method that converts EOL. </summary>
+    /// <remarks>   2025-04-14. </remarks>
+    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
+    ///                                             null. </exception>
+    /// <exception cref="FileNotFoundException">    Thrown when the requested file is not present. </exception>
+    /// <param name="reader">       The reader. </param>
+    /// <param name="fromEol">      (Optional) end-of-line to change. </param>
+    /// <param name="toEol">        (Optional) end-of-line to change to. </param>
+    /// <param name="overWrite">    (Optional) [false] True to over write. </param>
+    /// <returns>   The EOL converted. </returns>
+    public static string ConvertEol( this TextReader reader, string fromEol = "\n", string toEol = "\r\n", bool overWrite = false )
+    {
+        if ( reader == null )
+            throw new ArgumentNullException( nameof( reader ) );
+
+        StringBuilder sb = new();
+        using TextWriter? writer = new System.IO.StringWriter( sb )
+            ?? throw new System.IO.FileNotFoundException( $"Failed creating a writer for the string builder" );
+
+        string? line = "";
+        bool? isExpectedLineFormat = null;
+        char[] oldEol = string.IsNullOrEmpty( fromEol ) ? [] : fromEol.ToCharArray();
+        while ( line is not null )
+        {
+            line = reader.ReadLine();
+
+            if ( line is not null )
+            {
+                // check if the line ends with a windows EOL format.
+                isExpectedLineFormat ??= string.IsNullOrEmpty( fromEol ) || string.IsNullOrEmpty( toEol ) || line.EndsWith( toEol );
+
+                if ( true != isExpectedLineFormat )
+                {
+                    line = line.TrimEnd( oldEol );
+                    line += toEol;
+                }
+                // writer.WriteLine( line );
+                writer.Write( line );
+            }
+        }
+        return sb.ToString();
     }
 
     /// <summary>   A <see cref="TextReader"/> extension method that exports script to file preserving the Windows end-of-line format. </summary>
@@ -131,11 +175,47 @@ public static partial class Methods
             reader.ExportScript( filePath, fromEol, toEol, overWrite );
         }
 
-        // check tat the file size matches the source size.
+        // check that the file size matches the source size.
         FileInfo fileInfo = new( filePath );
         if ( fileInfo.Length < scriptSource.Length )
             throw new InvalidOperationException(
                 $"The exported script source file '{filePath}' length {fileInfo.Length} is smaller that the script source length {scriptSource.Length}." );
     }
 
+    /// <summary>   A string extension method that compress script. </summary>
+    /// <remarks>   2025-04-14. </remarks>
+    /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
+    ///                                                 are null. </exception>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <exception cref="FileNotFoundException">        Thrown when the requested file is not
+    ///                                                 present. </exception>
+    /// <param name="scriptSource"> The script source. </param>
+    /// <param name="filePath">     Full pathname of the file. </param>
+    /// <param name="fromEol">      (Optional) end-of-line to change. </param>
+    /// <param name="toEol">        (Optional) end-of-line to change to. </param>
+    /// <param name="overWrite">    (Optional) [false] True to over write. </param>
+    public static void CompressScript( this string scriptSource, string filePath, string fromEol = "\n", string toEol = "\r\n", bool overWrite = false )
+    {
+        if ( string.IsNullOrWhiteSpace( scriptSource ) )
+            throw new ArgumentNullException( nameof( scriptSource ) );
+        if ( string.IsNullOrWhiteSpace( filePath ) )
+            throw new ArgumentNullException( nameof( filePath ) );
+
+        if ( !overWrite && System.IO.File.Exists( filePath ) )
+            throw new InvalidOperationException( $"The script source cannot be exported because the file '{filePath}' exists." );
+
+        if ( !(string.IsNullOrEmpty( fromEol ) || string.IsNullOrEmpty( toEol )) )
+        {
+            // if required, convert the line endings to windows format.
+            using TextReader? reader = new System.IO.StringReader( scriptSource )
+                ?? throw new System.IO.FileNotFoundException( $"Failed creating a reader from the script source" );
+
+            // convert line ending to windows format.
+            scriptSource = reader.ConvertEol( fromEol, toEol, overWrite );
+        }
+
+        // compress and export the source to the file as is.
+        System.IO.File.WriteAllText( filePath, ScriptCompressor.Compress( scriptSource ) );
+    }
 }

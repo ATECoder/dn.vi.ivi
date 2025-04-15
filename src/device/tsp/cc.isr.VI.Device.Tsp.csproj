@@ -65,10 +65,6 @@
   </Choose>
 
   <ItemGroup>
-    <EmbeddedResource Include="resources\BinaryScripts.tsp" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="version.build.props">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -84,6 +80,10 @@
     
   <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+    
+  <ItemGroup>
+    <Folder Include="Resources\" />
   </ItemGroup>
 
 

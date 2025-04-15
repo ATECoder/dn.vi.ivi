@@ -10,9 +10,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
   - Remove binary scripts script.
   - Move compression to the framework library and the generic device TSP string extensions.
   - Add script compressor.
+    - Add query if a script is compressed.
+  - Add script trim methods.
+  - Add compression methods.
 - K2600 Tests
   - update file names.
   - Update export methods to accommodate the EOL conversions.
+  - Add Tsp Session Script Tests.
 - Lua Syntax:
   - Update the wait complete description.
 

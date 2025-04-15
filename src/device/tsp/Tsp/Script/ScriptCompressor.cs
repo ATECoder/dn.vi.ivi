@@ -92,4 +92,13 @@ public static class ScriptCompressor
     {
         return Decompress( contents, ScriptCompressor.CompressedPrefix, ScriptCompressor.CompressedSuffix );
     }
+
+    /// <summary>   Query if 'contents' is compressed. </summary>
+    /// <remarks>   2025-04-14. </remarks>
+    /// <param name="contents"> The string being compressed. </param>
+    /// <returns>   True if compressed, false if not. </returns>
+    public static bool IsCompressed( string contents )
+    {
+        return contents.StartsWith( ScriptCompressor.CompressedPrefix, false, System.Globalization.CultureInfo.CurrentCulture );
+    }
 }
