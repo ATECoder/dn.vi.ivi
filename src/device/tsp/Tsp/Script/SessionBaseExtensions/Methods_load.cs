@@ -10,7 +10,7 @@ public static partial class Methods
     /// <returns>   True if compressed source, false if not. </returns>
     public static bool IsCompressedSource( this string source )
     {
-        return source.StartsWith( Tsp.Script.ScriptCompressor.CompressedPrefix, false, System.Globalization.CultureInfo.CurrentCulture );
+        return ScriptCompressor.IsCompressed( source );
     }
 
     /// <summary>   A <see cref="Pith.SessionBase"/> extension method that query if the specified script is loaded. </summary>
@@ -29,13 +29,17 @@ public static partial class Methods
     ///                                                 are null. </exception>
     /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
     ///                                                 invalid. </exception>
-    /// <param name="session">          The session. </param>
-    /// <param name="reader">           The reader. </param>
-    /// <param name="scriptName">       Specifies the script name. Empty for an anonymous script. </param>
-    /// <param name="deleteExisting">   (Optional) [false] True to delete an existing script if it
-    ///                                 exists. </param>
-    /// <param name="ignoreExisting">   (Optional) [false] True to ignore existing script. </param>
-    public static void LoadScript( this SessionBase session, TextReader reader, string scriptName, bool deleteExisting = false, bool ignoreExisting = false )
+    /// <param name="session">                  The session. </param>
+    /// <param name="reader">                   The reader. </param>
+    /// <param name="scriptName">               Specifies the script name. Empty for an anonymous
+    ///                                         script. </param>
+    /// <param name="runScriptAfterLoading">    (Optional) [false] True to run the script after
+    ///                                         loading using the <see cref="Syntax.Tsp.Script.LoadAndRunScriptCommand"/>.</param>
+    /// <param name="deleteExisting">           (Optional) [false] True to delete an existing script
+    ///                                         if it exists. </param>
+    /// <param name="ignoreExisting">           (Optional) [false] True to ignore existing script. </param>
+    public static void LoadScript( this SessionBase session, TextReader reader, string scriptName,
+        bool runScriptAfterLoading = false, bool deleteExisting = false, bool ignoreExisting = false )
     {
         if ( session == null )
             throw new ArgumentNullException( nameof( session ) );
@@ -53,15 +57,23 @@ public static partial class Methods
         else if ( scriptExists && !ignoreExisting )
             throw new InvalidOperationException( $"The script {scriptName} cannot be imported over an existing script." );
 
+        string loadCommand = runScriptAfterLoading
+            ? Syntax.Tsp.Script.LoadAndRunScriptCommand
+            : Syntax.Tsp.Script.LoadScriptCommand;
+
+        string message = runScriptAfterLoading
+            ? $"loading and running"
+            : $"loading";
+
         if ( string.IsNullOrWhiteSpace( scriptName ) )
         {
-            session.SetLastAction( $"load an anonymous script from {reader}" );
-            _ = session.WriteLine( $"{Syntax.Tsp.Script.LoadScriptCommand}" );
+            session.SetLastAction( $"{message} an anonymous script from {reader}" );
+            _ = session.WriteLine( loadCommand );
         }
         else
         {
-            session.SetLastAction( $"import script '{scriptName}' from {reader}" );
-            _ = session.WriteLine( $"{Syntax.Tsp.Script.LoadScriptCommand} {scriptName}" );
+            session.SetLastAction( $"{message} script '{scriptName}' from {reader}" );
+            _ = session.WriteLine( $"{loadCommand} {scriptName}" );
         }
         _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay + session.StatusReadDelay );
 
@@ -110,12 +122,15 @@ public static partial class Methods
     ///                                                 invalid. </exception>
     /// <exception cref="FileNotFoundException">        Thrown when the requested file is not
     ///                                                 present. </exception>
-    /// <param name="session">          The reference to the K2600 Device. </param>
-    /// <param name="scriptName">       Specifies the script name. Empty for an anonymous script. </param>
-    /// <param name="scriptSource">     The script source. </param>
-    /// <param name="deleteExisting">   (Optional) True to delete the existing. </param>
-    /// <param name="ignoreExisting">   (Optional) True to ignore existing. </param>
-    public static void LoadScript( this SessionBase session, string scriptName, string scriptSource, bool deleteExisting = false, bool ignoreExisting = false )
+    /// <param name="session">                  The reference to the K2600 Device. </param>
+    /// <param name="scriptName">               Specifies the script name. Empty for an anonymous
+    ///                                         script. </param>
+    /// <param name="scriptSource">             The script source. </param>
+    /// <param name="runScriptAfterLoading">    (Optional) [false] True to run the script after
+    ///                                         loading using the <see cref="Syntax.Tsp.Script.LoadAndRunScriptCommand"/>.</param>
+    /// <param name="deleteExisting">           (Optional) True to delete the existing. </param>
+    /// <param name="ignoreExisting">           (Optional) True to ignore existing. </param>
+    public static void LoadScript( this SessionBase session, string scriptName, string scriptSource, bool runScriptAfterLoading = false, bool deleteExisting = false, bool ignoreExisting = false )
     {
         if ( session == null )
             throw new ArgumentNullException( nameof( session ) );
@@ -124,9 +139,14 @@ public static partial class Methods
         if ( string.IsNullOrWhiteSpace( scriptSource ) )
             throw new ArgumentNullException( nameof( scriptSource ) );
 
+        // decompress the script if compressed.
+        if ( ScriptCompressor.IsCompressed( scriptSource ) )
+            scriptSource = ScriptCompressor.Decompress( scriptSource )
+                ?? throw new InvalidOperationException( $"Failed decompressing the script {scriptName}." );
+
         using TextReader? reader = new System.IO.StringReader( scriptSource )
             ?? throw new System.IO.FileNotFoundException( $"Failed creating a reader from the {scriptName} script source" );
 
-        session.LoadScript( reader, scriptName, deleteExisting, ignoreExisting );
+        session.LoadScript( reader, scriptName, runScriptAfterLoading, deleteExisting, ignoreExisting );
     }
 }
