@@ -8,11 +8,11 @@ public static class ScriptCompressor
 {
     /// <summary>   Returns the compressed code prefix. </summary>
     /// <value> The compressed prefix. </value>
-    public static string CompressedPrefix => "<COMPRESSED>";
+    public static string CompressedPrefix => "<COMPRESSED>\r\n";
 
     /// <summary>   Returns the compressed code suffix. </summary>
     /// <value> The compressed suffix. </value>
-    public static string CompressedSuffix => "</COMPRESSED>";
+    public static string CompressedSuffix => "\r\n</COMPRESSED>";
 
     /// <summary>   Decorates the compressed value decorated with the prefix and suffix. </summary>
     /// <remarks>   2025-04-14. </remarks>
@@ -62,7 +62,7 @@ public static class ScriptCompressor
     /// <returns>   The compressed contents. </returns>
     public static string Compress( string contents )
     {
-        return Compress( contents, ScriptCompressor.CompressedPrefix, ScriptCompressor.CompressedSuffix );
+        return ScriptCompressor.Compress( contents, ScriptCompressor.CompressedPrefix, ScriptCompressor.CompressedSuffix );
     }
 
     /// <summary>   Returns the decompressed string of the value. </summary>
@@ -90,7 +90,7 @@ public static class ScriptCompressor
     /// <returns>   Decompressed value. </returns>
     public static string Decompress( string contents )
     {
-        return Decompress( contents, ScriptCompressor.CompressedPrefix, ScriptCompressor.CompressedSuffix );
+        return ScriptCompressor.Decompress( contents, ScriptCompressor.CompressedPrefix, ScriptCompressor.CompressedSuffix );
     }
 
     /// <summary>   Query if 'contents' is compressed. </summary>
@@ -100,5 +100,31 @@ public static class ScriptCompressor
     public static bool IsCompressed( string contents )
     {
         return contents.StartsWith( ScriptCompressor.CompressedPrefix, false, System.Globalization.CultureInfo.CurrentCulture );
+    }
+
+    /// <summary>   Query if 'filePath' is compressed file. </summary>
+    /// <remarks>   2025-04-15. </remarks>
+    /// <exception cref="FileNotFoundException">    Thrown when the requested file is not present. </exception>
+    /// <param name="filePath"> Full pathname of the file. </param>
+    /// <returns>   True if compressed file, false if not. </returns>
+    public static bool IsCompressedFile( string filePath )
+    {
+        using StreamReader? reader = (string.IsNullOrWhiteSpace( filePath ) || !System.IO.File.Exists( filePath )
+            ? null
+            : new System.IO.StreamReader( filePath )) ?? throw new System.IO.FileNotFoundException( "Failed opening script file", filePath );
+        return ScriptCompressor.IsCompressed( reader );
+    }
+
+    /// <summary>   Query if 'contents' is compressed. </summary>
+    /// <remarks>   2025-04-15. </remarks>
+    /// <param name="reader">   The reader. </param>
+    /// <returns>   True if compressed, false if not. </returns>
+    public static bool IsCompressed( TextReader reader )
+    {
+        int count = ScriptCompressor.CompressedPrefix.Length;
+        char[] buffer = new char[count];
+        _ = reader.ReadBlock( buffer, 0, count );
+        string value = new( buffer );
+        return ScriptCompressor.IsCompressed( value );
     }
 }

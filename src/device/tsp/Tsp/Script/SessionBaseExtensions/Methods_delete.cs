@@ -2,7 +2,7 @@ using cc.isr.VI.Pith;
 
 namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
-public static partial class Methods
+public static partial class SessionBaseExtensionMethods
 {
     /// <summary>   Makes a script nil. </summary>
     /// <remarks>   2024-09-05. </remarks>

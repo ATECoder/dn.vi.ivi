@@ -5,10 +5,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 [8.1.9236]: https://www.github.com/atecoder/dn.vi.ivi
 
 ## [8.1.9236] - 2025-04-15
-- Tsp Script Namespace
+- Device Tsp session extensions
   - Add load and run option to the load command.
+  - Add new line to compressed prefix and suffix.
+  - Add test of file compression.
 - Tsp Script Project
   - Move firmware manager embedded resources methods to the embedded resource class.
+- K2600 MS Test;
+  - add compression.
 
 ## [8.1.9235] - 2025-04-14
 - Device Tsp:

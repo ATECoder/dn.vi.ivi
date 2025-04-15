@@ -2,7 +2,7 @@ using cc.isr.VI.Pith;
 
 namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
-public static partial class Methods
+public static partial class SessionBaseExtensionMethods
 {
     /// <summary>   Query if 'source' is binary source. </summary>
     /// <remarks>   2024-10-11. </remarks>

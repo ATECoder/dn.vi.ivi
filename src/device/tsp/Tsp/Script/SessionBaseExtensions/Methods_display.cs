@@ -1,6 +1,6 @@
 namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
-public static partial class Methods
+public static partial class SessionBaseExtensionMethods
 {
     /// <summary>
     /// A <see cref="Pith.SessionBase"/> extension method that clears the display described by session.

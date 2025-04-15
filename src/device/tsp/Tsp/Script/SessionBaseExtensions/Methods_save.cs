@@ -2,7 +2,7 @@ using cc.isr.VI.Pith;
 
 namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
-public static partial class Methods
+public static partial class SessionBaseExtensionMethods
 {
     /// <summary>
     /// Fetches the names of the saved scripts. </summary>
@@ -91,7 +91,7 @@ public static partial class Methods
 
             session.SetLastAction( $"checking if the saved '{scriptName}' script was deleted;. " );
             if ( !session.IsSavedScript( scriptName ) )
-                Methods.TraceLastAction( "script was deleted;. " );
+                SessionBaseExtensionMethods.TraceLastAction( "script was deleted;. " );
             else
                 throw new InvalidOperationException( $"Deletion of the {scriptName} saved script failed. The script still exists among the saved scripts;. " );
 
