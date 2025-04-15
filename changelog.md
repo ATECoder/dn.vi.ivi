@@ -29,6 +29,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
   - update file names.
   - Update export methods to accommodate the EOL conversions.
   - Add Tsp Session Script Tests.
+  - load as binary: remove duplicate loads. 
+  - All tests passed.
 - Lua Syntax:
   - Update the wait complete description.
 

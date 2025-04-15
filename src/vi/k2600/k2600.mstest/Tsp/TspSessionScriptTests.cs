@@ -373,10 +373,6 @@ public class TspSessionScriptTests : Device.Tests.Base.ScriptTests
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
 
-            this.Device.Session.LoadScript( scriptName, scriptSource.ToString() );
-            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
-            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
-
             this.Device.Session.RunScript( scriptName, timerElapsedFunctionName );
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
@@ -406,10 +402,6 @@ public class TspSessionScriptTests : Device.Tests.Base.ScriptTests
 
             SessionBaseExtensionMethods.TraceLastAction( $"Importing script from compressed binary '{filePath}' file" );
             this.Device.Session.ImportScript( scriptName, toFilePath );
-            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
-            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
-
-            this.Device.Session.LoadScript( scriptName, scriptSource.ToString() );
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
 
