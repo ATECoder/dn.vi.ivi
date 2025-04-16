@@ -72,14 +72,15 @@ public static class ScriptCompressor
     /// <returns>   Decompressed value. </returns>
     public static string Decompress( string contents, string prefix, string suffix )
     {
-        string source = string.Empty;
-        if ( contents.StartsWith( prefix, false, System.Globalization.CultureInfo.CurrentCulture ) )
-        {
-            int fromIndex = contents.IndexOf( prefix, StringComparison.OrdinalIgnoreCase ) + prefix.Length;
-            int toIndex = contents.IndexOf( suffix, StringComparison.OrdinalIgnoreCase ) - 1;
-            source = contents.Substring( fromIndex, toIndex - fromIndex + 1 );
-            source = cc.isr.Std.IO.Compression.StringCompressor.DecompressFromBase64( source );
-        }
+        // this handles the case where the reader read the initial block.
+        int fromIndex = contents.StartsWith( prefix, false, System.Globalization.CultureInfo.CurrentCulture )
+            ? contents.IndexOf( prefix, StringComparison.OrdinalIgnoreCase ) + prefix.Length
+            : 0;
+        int count = contents.EndsWith( suffix, false, System.Globalization.CultureInfo.CurrentCulture )
+            ? contents.IndexOf( suffix, StringComparison.OrdinalIgnoreCase ) - fromIndex
+            : contents.Length - fromIndex;
+        string source = contents.Substring( fromIndex, count );
+        source = cc.isr.Std.IO.Compression.StringCompressor.DecompressFromBase64( source );
         return source;
     }
 
@@ -125,6 +126,15 @@ public static class ScriptCompressor
         char[] buffer = new char[count];
         _ = reader.ReadBlock( buffer, 0, count );
         string value = new( buffer );
+
+        // rewind the stream.
+        if ( reader is StreamReader streamReader )
+        {
+            long position = streamReader.BaseStream.Position = 0;
+            streamReader.DiscardBufferedData();
+            if ( position > 0 )
+                throw new InvalidOperationException( $"Failed rewinding the stream reader to position 0. Current position is {position}." );
+        }
         return ScriptCompressor.IsCompressed( value );
     }
 }

@@ -24,7 +24,9 @@ public static partial class SessionBaseExtensionMethods
     }
 
     /// <summary>   A <see cref="Pith.SessionBase"/> extension method that loads a script. </summary>
-    /// <remarks>   2025-04-10. </remarks>
+    /// <remarks>   2025-04-10. <para>
+    /// This script must not be compressed if providing a <see cref="StringReader"/>. </para>
+    /// </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
     ///                                                 are null. </exception>
     /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
@@ -57,9 +59,25 @@ public static partial class SessionBaseExtensionMethods
         else if ( scriptExists && !ignoreExisting )
             throw new InvalidOperationException( $"The script {scriptName} cannot be imported over an existing script." );
 
+        if ( reader is StreamReader streamReader )
+        {
+            // check if the script is compressed.
+            if ( ScriptCompressor.IsCompressed( streamReader ) )
+            {
+                // decompress the script.
+                reader = new StringReader( ScriptCompressor.Decompress( streamReader.ReadToEnd() ) );
+            }
+            else
+            {
+                // rewind the stream.
+                streamReader.BaseStream.Position = 0;
+                streamReader.DiscardBufferedData();
+            }
+        }
+
         string loadCommand = runScriptAfterLoading
-            ? Syntax.Tsp.Script.LoadAndRunScriptCommand
-            : Syntax.Tsp.Script.LoadScriptCommand;
+                    ? Syntax.Tsp.Script.LoadAndRunScriptCommand
+                    : Syntax.Tsp.Script.LoadScriptCommand;
 
         string message = runScriptAfterLoading
             ? $"loading and running"

@@ -235,5 +235,4 @@ public abstract partial class DeviceUnderTestElementBase : CommunityToolkit.Mvvm
     }
 
     #endregion
-
 }
