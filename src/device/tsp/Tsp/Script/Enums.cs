@@ -1,3 +1,5 @@
+namespace cc.isr.VI.Tsp.Script;
+
 /// <summary>   Enumerates the script file formats. </summary>
 /// <remarks>   David, 2020-10-12. </remarks>
 [Flags()]

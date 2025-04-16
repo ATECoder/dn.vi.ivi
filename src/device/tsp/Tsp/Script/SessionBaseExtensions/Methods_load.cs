@@ -25,7 +25,8 @@ public static partial class SessionBaseExtensionMethods
 
     /// <summary>   A <see cref="Pith.SessionBase"/> extension method that loads a script. </summary>
     /// <remarks>   2025-04-10. <para>
-    /// This script must not be compressed if providing a <see cref="StringReader"/>. </para>
+    /// If you are attempting to import a compressed scripts with a <see cref="StringReader"/> you
+    /// must decompress the script first because the <see cref="StringReader"/> cannot be rewound.  </para>
     /// </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
     ///                                                 are null. </exception>
