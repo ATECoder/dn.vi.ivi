@@ -2,7 +2,21 @@
 All notable changes to these libraries will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-[8.1.9236]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9238]: https://www.github.com/atecoder/dn.vi.ivi
+
+## [8.1.9238] - 2025-04-17
+- Device Tsp Script
+  - Script Info Base: fix building the deploy file title.
+  - Add a method to fetch and compress script to file.
+  
+## [8.1.9237] - 2025-04-16
+- Device Tsp Namespace
+  - Add namespace to the Enums file.
+  - Session Base Extensions
+    - Add reader import method to be used for importing an embedded resource.
+	- Document the requirement that a reader import must be decompressed first is importing a string reader.
+- K2600 Tests
+  - All TSP test passed.
 
 ## [8.1.9236] - 2025-04-15
 - Device Tsp 

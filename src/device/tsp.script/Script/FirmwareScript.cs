@@ -39,7 +39,7 @@ public class FirmwareScript : FirmwareScriptBase
         this.FirmwareVersion = script.FirmwareVersion;
         this.FileTitle = script.FileTitle;
         this.FolderPath = script.FolderPath;
-        this.IsBootScript = script.IsBootScript;
+        this.IsAutoexecScript = script.IsAutoexecScript;
         this.IsPrimaryScript = script.IsPrimaryScript;
         this.IsSupportScript = script.IsSupportScript;
         this.SavedToFile = script.SavedToFile;

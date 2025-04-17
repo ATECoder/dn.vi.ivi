@@ -116,7 +116,7 @@ public static partial class FirmwareManager
         System.Text.StringBuilder builder = new();
         script.LastScriptManagerActions = string.Empty;
 
-        if ( !(script.FirmwareScript.IsBootScript || string.IsNullOrWhiteSpace( script.Name )) )
+        if ( !(script.FirmwareScript.IsAutoexecScript || string.IsNullOrWhiteSpace( script.Name )) )
         {
             if ( script.Loaded )
             {

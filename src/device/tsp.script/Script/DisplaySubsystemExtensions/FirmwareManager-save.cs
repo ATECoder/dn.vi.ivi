@@ -83,7 +83,7 @@ public static partial class FirmwareManager
         if ( displaySubsystem.Session is null ) throw new ArgumentNullException( nameof( displaySubsystem.Session ) );
         if ( displaySubsystem.StatusSubsystem is null ) throw new ArgumentNullException( nameof( displaySubsystem.StatusSubsystem ) );
 
-        displaySubsystem.SaveUserScript( script.Name, script.Node, script.FirmwareScript.ConvertToBinary, script.FirmwareScript.IsBootScript );
+        displaySubsystem.SaveUserScript( script.Name, script.Node, script.FirmwareScript.ConvertToBinary, script.FirmwareScript.IsAutoexecScript );
 
     }
 
@@ -119,7 +119,7 @@ public static partial class FirmwareManager
         foreach ( ScriptEntityBase script in scripts )
         {
 
-            if ( script.FirmwareScript.IsBootScript )
+            if ( script.FirmwareScript.IsAutoexecScript )
                 bootScript = script;
 
             if ( script.Loaded && !script.Saved )

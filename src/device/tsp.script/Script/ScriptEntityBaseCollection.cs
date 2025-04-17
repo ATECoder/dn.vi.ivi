@@ -64,7 +64,7 @@ public class ScriptEntityBaseCollection<TItem>( NodeEntityBase node ) : System.C
         {
             foreach ( TItem script in this.Items )
             {
-                if ( script.IsModelMatch( node.ModelNumber ) && script.FirmwareScript.IsBootScript )
+                if ( script.IsModelMatch( node.ModelNumber ) && script.FirmwareScript.IsAutoexecScript )
                     return script;
             }
         }
@@ -88,7 +88,7 @@ public class ScriptEntityBaseCollection<TItem>( NodeEntityBase node ) : System.C
 
         foreach ( TItem script in this.Items )
         {
-            if ( script.IsModelMatch( node.ModelNumber ) && script.FirmwareScript.IsBootScript )
+            if ( script.IsModelMatch( node.ModelNumber ) && script.FirmwareScript.IsAutoexecScript )
                 return script;
         }
 
@@ -362,7 +362,7 @@ public class ScriptEntityBaseCollection<TItem>( NodeEntityBase node ) : System.C
         this.IdentifiedScript = null;
         foreach ( TItem script in this.Items )
         {
-            if ( script.IsModelMatch( this.ModelNumber ) && !script.FirmwareScript.IsBootScript )
+            if ( script.IsModelMatch( this.ModelNumber ) && !script.FirmwareScript.IsAutoexecScript )
             {
                 if ( script.VersionStatus != FirmwareVersionStatus.Current )
                 {
@@ -385,7 +385,7 @@ public class ScriptEntityBaseCollection<TItem>( NodeEntityBase node ) : System.C
         this.IdentifiedScript = null;
         foreach ( TItem script in this.Items )
         {
-            if ( script.IsModelMatch( this.ModelNumber ) && !script.FirmwareScript.IsBootScript )
+            if ( script.IsModelMatch( this.ModelNumber ) && !script.FirmwareScript.IsAutoexecScript )
             {
                 if ( !script.Saved )
                 {
@@ -408,7 +408,7 @@ public class ScriptEntityBaseCollection<TItem>( NodeEntityBase node ) : System.C
         this.IdentifiedScript = null;
         foreach ( TItem script in this.Items )
         {
-            if ( script.IsModelMatch( this.ModelNumber ) && !script.FirmwareScript.IsBootScript )
+            if ( script.IsModelMatch( this.ModelNumber ) && !script.FirmwareScript.IsAutoexecScript )
             {
                 if ( !script.Loaded )
                 {
@@ -431,7 +431,7 @@ public class ScriptEntityBaseCollection<TItem>( NodeEntityBase node ) : System.C
         this.IdentifiedScript = null;
         foreach ( TItem script in this.Items )
         {
-            if ( script.IsModelMatch( this.ModelNumber ) && !script.FirmwareScript.IsBootScript )
+            if ( script.IsModelMatch( this.ModelNumber ) && !script.FirmwareScript.IsAutoexecScript )
             {
                 if ( script.Loaded )
                 {
@@ -454,7 +454,7 @@ public class ScriptEntityBaseCollection<TItem>( NodeEntityBase node ) : System.C
         this.IdentifiedScript = null;
         foreach ( TItem script in this.Items )
         {
-            if ( script.IsModelMatch( this.ModelNumber ) && !script.FirmwareScript.IsBootScript )
+            if ( script.IsModelMatch( this.ModelNumber ) && !script.FirmwareScript.IsAutoexecScript )
             {
                 if ( script.VersionStatus is FirmwareVersionStatus.Missing or FirmwareVersionStatus.Unknown )
                 {
@@ -479,7 +479,7 @@ public class ScriptEntityBaseCollection<TItem>( NodeEntityBase node ) : System.C
         this.IdentifiedScript = null;
         foreach ( TItem script in this.Items )
         {
-            if ( script.IsModelMatch( this.ModelNumber ) && !script.FirmwareScript.IsBootScript && FirmwareVersionStatus.Newer == script.VersionStatus )
+            if ( script.IsModelMatch( this.ModelNumber ) && !script.FirmwareScript.IsAutoexecScript && FirmwareVersionStatus.Newer == script.VersionStatus )
             {
                 this.IdentifiedScript = script;
                 outdated = true;
@@ -521,7 +521,7 @@ public class ScriptEntityBaseCollection<TItem>( NodeEntityBase node ) : System.C
         bool required = false;
         foreach ( TItem script in this.Items )
         {
-            if ( !script.FirmwareScript.IsBootScript && (script.RequiresDeletion || allowDeletingNewerScripts) )
+            if ( !script.FirmwareScript.IsAutoexecScript && (script.RequiresDeletion || allowDeletingNewerScripts) )
 
                 if ( script.FirmwareScript.RequiresReadParseWrite )
                 {
@@ -803,7 +803,7 @@ public class ScriptEntityBaseCollection<TItem>( NodeEntityBase node ) : System.C
     /// <returns>   <c>true</c> if save required; otherwise, <c>false</c>. </returns>
     public bool IsSaveRequired( Pith.SessionBase session, ScriptEntityBase script )
     {
-        return this.IsSaveRequired( session, script.Name, script.FirmwareScript.SaveToNonVolatileMemory, script.FirmwareScript.ConvertToBinary, script.FirmwareScript.IsBootScript );
+        return this.IsSaveRequired( session, script.Name, script.FirmwareScript.SaveToNonVolatileMemory, script.FirmwareScript.ConvertToBinary, script.FirmwareScript.IsAutoexecScript );
     }
 
     #endregion

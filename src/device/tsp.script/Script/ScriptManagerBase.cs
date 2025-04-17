@@ -558,11 +558,8 @@ public abstract class ScriptManagerBase( Tsp.StatusSubsystemBase statusSubsystem
 
     /// <summary>   Define scripts. </summary>
     /// <remarks>   2024-08-16. </remarks>
-    /// <param name="saveAsBinary">     True to save the user script as a binary script to the user
-    ///                                 script catalog. </param>
-    /// <param name="deployFileFormat"> (Optional) [Compressed] The deploy file format. </param>
     /// <param name="readSource">       (Optional) (true) True to read source. </param>
-    public virtual void DefineScripts( bool saveAsBinary, ScriptFileFormats deployFileFormat = ScriptFileFormats.Compressed, bool readSource = true ) { }
+    public virtual void DefineScripts( bool readSource = true ) { }
 
     /// <summary>   Deletes the user scripts. </summary>
     /// <remarks>   David, 2021-12-03. </remarks>

@@ -73,7 +73,7 @@ public static class Node
     public static string FindSavedScriptCommand( string scriptName, int nodeNumber )
     {
         string getterCommand = string.Format( Syntax.Tsp.Script.FindSavedScriptCommandFormat, scriptName );
-        return string.Format( Syntax.Tsp.Node.ValueGetterWaitCommandFormat2, nodeNumber, getterCommand, "exits" );
+        return string.Format( Syntax.Tsp.Node.ValueGetterWaitCommandFormat2, nodeNumber, getterCommand, "exists" );
     }
 
     #endregion

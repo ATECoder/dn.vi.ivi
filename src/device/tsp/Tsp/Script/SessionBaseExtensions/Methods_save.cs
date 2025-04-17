@@ -49,7 +49,7 @@ public static partial class SessionBaseExtensionMethods
         if ( string.IsNullOrWhiteSpace( scriptName ) )
             throw new ArgumentNullException( nameof( scriptName ) );
         // string findCommand = $"local exists = false for name in script.user.catalog() do exists = (name=='{scriptName}') end print(exists)";
-        string findCommand = string.Format( Syntax.Tsp.Script.FindSaveScriptQueryFormat, scriptName );
+        string findCommand = string.Format( Syntax.Tsp.Script.FindSavedScriptQueryFormat, scriptName );
         string reply = session.QueryTrimEnd( findCommand );
         return SessionBase.EqualsTrue( reply );
     }

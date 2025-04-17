@@ -79,7 +79,7 @@ public static class ScriptCompressor
         int count = contents.EndsWith( suffix, false, System.Globalization.CultureInfo.CurrentCulture )
             ? contents.IndexOf( suffix, StringComparison.OrdinalIgnoreCase ) - fromIndex
             : contents.Length - fromIndex;
-        string source = contents.Substring( fromIndex, count );
+        string source = contents.Substring( fromIndex, count + 1 );
         source = cc.isr.Std.IO.Compression.StringCompressor.DecompressFromBase64( source );
         return source;
     }

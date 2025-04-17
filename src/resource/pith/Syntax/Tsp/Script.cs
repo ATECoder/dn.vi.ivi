@@ -29,11 +29,21 @@ public static class Script
     public const string ScriptCatalogGetterCommand = "local names='' for name in script.user.catalog() do names = names .. name .. ',' end";
 
     /// <summary>   (Immutable) the saved script find command format. </summary>
-    public const string FindSavedScriptCommandFormat = "local exists = false for name in script.user.catalog() do exists = (name=='{0}') end";
+    public const string FindSavedScriptCommandFormat = "local exists = false for name in script.user.catalog() do exists = (name=='{0}') if exists then break end end";
 
     /// <summary>   (Immutable) the delete saved script command format. </summary>
-    public const string DeleteSavedScriptCommandFormat = "local exists = false for name in script.user.catalog() do exists = (name=='{0}') end if exist then _G.script.delete( name ) end";
+    public const string DeleteSavedScriptCommandFormat = "local exists = false for name in script.user.catalog() do exists = (name=='{0}') if exists then break end end if exists then _G.script.delete( name ) end";
 
-    /// <summary>   (Immutable) the find save script command format. </summary>
-    public const string FindSaveScriptQueryFormat = "local exists = false for name in script.user.catalog() do exists = (name=='{0}') end print(exists)";
+    /// <summary>   (Immutable) the find saved script command format. </summary>
+    public const string FindSavedScriptQueryFormat = "local exists = false for name in script.user.catalog() do exists = (name=='{0}') if exists then break end end print(exists)";
+
+    /// <summary>   (Immutable) the delete a load menu item command format. </summary>
+    public const string FindLoadMenuItemQueryFormat = "local exists = false for name in display.loadmenu.catalog() do exists = (name=='{0}') if exists then break end end _G.print(exists)";
+
+    /// <summary>   (Immutable) the delete a load menu item command format. </summary>
+    public const string DeleteLoadMenuItemCommandFormat = "local exists = false for name in display.loadmenu.catalog() do exists = (name=='{0}') if exists then break end end if exist then _G.display.loadmenu.delete( name ) end";
+
+    /// <summary>   (Immutable) the delete an existing load menu item command format. </summary>
+    public const string DeleteExistingLoadMenuItemCommandFormat = "_G.display.loadmenu.delete( '{0}' ) end";
+
 }

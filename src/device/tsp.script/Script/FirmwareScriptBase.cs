@@ -509,9 +509,9 @@ public abstract class FirmwareScriptBase
     /// <value> <c>true</c> if this is a binary script; otherwise, <c>false</c>. </value>
     public bool IsBinaryScript { get; private set; }
 
-    /// <summary>   Gets or sets the sentinel indicating if this is a Boot script. </summary>
-    /// <value> <c>true</c> if this is a Boot script; otherwise, <c>false</c>. </value>
-    public bool IsBootScript { get; set; }
+    /// <summary>   Gets or sets the sentinel indicating if this script needs to be auto executed. </summary>
+    /// <value> <c>true</c> if this script automatically executes; otherwise, <c>false</c>. </value>
+    public bool IsAutoexecScript { get; set; }
 
     /// <summary>   Gets or sets the sentinel indicating if this is a Primary script. </summary>
     /// <remarks> The primary script is used to provide the following items: <para>

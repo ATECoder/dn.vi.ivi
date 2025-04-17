@@ -76,12 +76,9 @@ public static partial class SessionBaseExtensionMethods
     /// <param name="scriptName">       Name of the script. </param>
     public static void DeleteScript( this SessionBase session, string scriptName )
     {
-        if ( session == null )
-            throw new ArgumentNullException( nameof( session ) );
-        if ( !session.IsSessionOpen )
-            throw new InvalidOperationException( $"{nameof( session )} is not open." );
-        if ( string.IsNullOrWhiteSpace( scriptName ) )
-            throw new ArgumentNullException( nameof( scriptName ) );
+        if ( session == null ) throw new ArgumentNullException( nameof( session ) );
+        if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
+        if ( string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
 
         // removes the saved script from the catalog of saved scripts. 
         session.RemoveSavedScript( scriptName );
@@ -91,5 +88,34 @@ public static partial class SessionBaseExtensionMethods
 
         // nill the script if is is not nil.
         session.NillScript( scriptName );
+    }
+
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that deletes the load menu item. </summary>
+    /// <remarks>   2025-04-16. </remarks>
+    /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
+    ///                                                 are null. </exception>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <param name="session">  The session. </param>
+    /// <param name="itemName"> Name of the item. </param>
+    public static void DeleteLoadMenuItem( this SessionBase session, string itemName )
+    {
+        if ( session == null ) throw new ArgumentNullException( nameof( session ) );
+        if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
+        if ( string.IsNullOrWhiteSpace( itemName ) ) throw new ArgumentNullException( nameof( itemName ) );
+        if ( session.IsTrue( string.Format( Syntax.Tsp.Script.FindLoadMenuItemQueryFormat, itemName ) ) )
+        {
+            session.TraceLastAction( $"deleting the '{itemName}' load menu item;. " );
+            _ = session.WriteLine( string.Format( Syntax.Tsp.Script.DeleteLoadMenuItemCommandFormat, itemName ) );
+
+            // read query reply and throw if reply is not 1.
+            session.ReadAndThrowIfOperationIncomplete();
+
+            // throw if device errors
+            session.ThrowDeviceExceptionIfError();
+
+            if ( session.IsTrue( string.Format( Syntax.Tsp.Script.FindLoadMenuItemQueryFormat, itemName ) ) )
+                throw new InvalidOperationException( $"The load menu item {itemName} was not deleted." );
+        }
     }
 }

@@ -119,7 +119,7 @@ public abstract class ScriptInfoBase : IScriptInfo
     {
         this.BuiltFileName = $"{this.Title}.{new Version( this.Version ).Build}{ScriptInfoBase.ScriptFileExtension}";
         this.TrimmedFileName = $"{this.Title}{ScriptInfoBase.ScriptFileExtension}";
-        this.VersionGetter = $"_G.{this.Title}.getVersion()";
+        this.VersionGetter = $"_G.{this.Title}_getVersion()";
     }
 
     /// <summary>
@@ -159,7 +159,7 @@ public abstract class ScriptInfoBase : IScriptInfo
 
     /// <summary>   Gets or sets the deploy file format. </summary>
     /// <value> The deploy file format. </value>
-    public virtual ScriptFileFormats DeployFileFormat { get; set; }
+    public virtual ScriptFileFormats DeployFileFormat { get; set; } = ScriptFileFormats.None;
 
     /// <summary>   Builds the deploy file title. </summary>
     /// <remarks>   2025-04-15. </remarks>
@@ -168,7 +168,9 @@ public abstract class ScriptInfoBase : IScriptInfo
     /// <returns>   The deploy file title. </returns>
     public virtual string BuildDeployFileTitle( string modelFamily, string modelMajorVersion )
     {
-        this.DeployFileTitle = $"{this.Title}{modelFamily}.{modelMajorVersion}";
+        this.DeployFileTitle = ScriptFileFormats.Binary == (this.DeployFileFormat & ScriptFileFormats.Binary)
+            ? $"{this.Title}.{modelFamily}.{modelMajorVersion}"
+            : this.Title;
         return this.DeployFileTitle;
     }
 
@@ -178,28 +180,24 @@ public abstract class ScriptInfoBase : IScriptInfo
     /// <returns>   The deploy file title. </returns>
     public virtual string BuildDeployFileTitle( VersionInfoBase versionInfo )
     {
-        return this.BuildDeployFileTitle( versionInfo.ModelFamilyMask,
-            versionInfo.FirmwareVersion.Major.ToString( System.Globalization.CultureInfo.CurrentCulture ) );
+        return this.BuildDeployFileTitle( versionInfo.ModelFamily, versionInfo.FirmwareVersion.Major.ToString( System.Globalization.CultureInfo.CurrentCulture ) );
     }
 
     /// <summary>   Builds deploy file name. </summary>
     /// <remarks>   2025-04-15. </remarks>
     /// <param name="versionInfo">  Information describing the version. </param>
-    /// <param name="fileFormat">   The file format. </param>
     /// <returns>   A string. </returns>
-    public virtual string BuildDeployFileName( VersionInfoBase versionInfo, ScriptFileFormats fileFormat )
+    public virtual string BuildDeployFileName( VersionInfoBase versionInfo )
     {
-        this.DeployFileFormat = fileFormat;
-        _ = this.BuildDeployFileTitle( versionInfo.ModelFamilyMask,
-            versionInfo.FirmwareVersion.Major.ToString( System.Globalization.CultureInfo.CurrentCulture ) );
-        this.DeployFileName = $"{this.DeployFileFormat}{ScriptInfoBase.SelectScriptFileExtension( this.DeployFileFormat )}";
+        _ = this.BuildDeployFileTitle( versionInfo );
+        this.DeployFileName = $"{this.DeployFileTitle}{ScriptInfoBase.SelectScriptFileExtension( this.DeployFileFormat )}";
         return this.DeployFileName;
     }
 
     /// <summary>   Gets or sets the Version Getter function of the script. </summary>
     /// <value> The version getter function of the script. </value>
-    [Description( "The version getter method of the script [_G.isr_ttm_autoexec.getVersion()]" )]
-    public virtual string VersionGetter { get; set; } = "_G.isr_ttm_autoexec.getVersion()";
+    [Description( "The version getter method of the script [_G.isr_ttm_autoexec_getVersion()]" )]
+    public virtual string VersionGetter { get; set; } = "_G.isr_ttm_autoexec_getVersion()";
 
     /// <summary>   The version getter element the script [_G.isr_ttm_autoexec.getVersion]. </summary>
     /// <value> The version getter element. </value>

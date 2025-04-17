@@ -43,7 +43,7 @@ public class FirmwareScriptBaseCollection<TItem> : System.Collections.ObjectMode
         {
             foreach ( TItem script in this.Items )
             {
-                if ( script.IsModelMatch( node.ModelNumber ) && script.IsBootScript )
+                if ( script.IsModelMatch( node.ModelNumber ) && script.IsAutoexecScript )
                     return script;
             }
         }
@@ -142,7 +142,7 @@ public class FirmwareScriptBaseCollection<TItem> : System.Collections.ObjectMode
         {
             if ( !string.IsNullOrWhiteSpace( scriptEntity.Name ) )
             {
-                if ( !scriptEntity.IsBootScript )
+                if ( !scriptEntity.IsAutoexecScript )
                 {
                     if ( !uniqueScripts.Contains( scriptEntity.Name ) )
                     {
