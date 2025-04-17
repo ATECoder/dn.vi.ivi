@@ -2,6 +2,35 @@ namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
 public static partial class SessionBaseExtensionMethods
 {
+    /// <summary>   A ScriptInfoBase extension method that trim compress. </summary>
+    /// <remarks>   2025-04-16. </remarks>
+    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
+    ///                                             null. </exception>
+    /// <exception cref="FileNotFoundException">    Thrown when the requested file is not present. </exception>
+    /// <param name="scriptInfo">   Information describing the script. </param>
+    /// <param name="folderPath">   Full pathname of the folder file. </param>
+    public static void TrimCompress( this ScriptInfoBase scriptInfo, string folderPath )
+    {
+        if ( scriptInfo is null ) throw new ArgumentNullException( nameof( scriptInfo ) );
+
+        string fromFilePath = Path.Combine( folderPath, scriptInfo.BuiltFileName );
+        string trimmedFilePath = Path.Combine( folderPath, scriptInfo.TrimmedFileName );
+        string deployFilePath = Path.Combine( folderPath, scriptInfo.DeployFileName );
+        if ( System.IO.File.Exists( fromFilePath ) )
+        {
+            SessionBaseExtensionMethods.TraceLastAction( $"Trimming script file '{fromFilePath}' to '{trimmedFilePath}'" );
+            fromFilePath.TrimScript( trimmedFilePath, true );
+
+            if ( scriptInfo.DeployFileFormat.HasFlag( ScriptFileFormats.Compressed )
+                && !scriptInfo.DeployFileFormat.HasFlag( ScriptFileFormats.Binary ) )
+            {
+                SessionBaseExtensionMethods.TraceLastAction( $"Compressing trimmed script file to '{deployFilePath}'" );
+                trimmedFilePath.CompressScriptFile( deployFilePath, overWrite: true );
+            }
+        }
+        else
+            throw new FileNotFoundException( fromFilePath );
+    }
 
     /// <summary>
     /// A <see cref="Pith.SessionBase"/> extension method that trims, loads, optionally converts to

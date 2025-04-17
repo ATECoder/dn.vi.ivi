@@ -1,7 +1,10 @@
 using System;
 using System.Diagnostics;
+using System.IO;
+using System.Text;
 using cc.isr.Std.Tests;
 using cc.isr.Std.Tests.Extensions;
+using cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 using Microsoft.Extensions.Logging;
 
 namespace cc.isr.VI.Tsp.K2600.MSTest.Tsp;
@@ -114,4 +117,47 @@ public class TspScriptTests
         string decompressed = cc.isr.VI.Tsp.Script.ScriptCompressor.Decompress( compressed );
         Assert.AreEqual( contents, decompressed );
     }
+
+    /// <summary>   (Unit Test Method) script should trim and compress. </summary>
+    /// <remarks>   2025-04-16. </remarks>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Globalization", "CA1305:Specify IFormatProvider", Justification = "<Pending>" )]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "<Pending>" )]
+    [TestMethod( "02. Script Should trim and compress" )]
+    public void ScriptShouldTrimAndCompress()
+    {
+        System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
+        string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
+        Console.WriteLine( $"@{methodFullName}" );
+        string scriptName = "timeDisplayClear";
+        string folderPath = "C:\\my\\lib\\tsp\\tsp.1\\core\\tests";
+        string timerElapsedFunctionName = "timerElapsed";
+        string timeDisplayFunctionName = "timeDisplay";
+        StringBuilder scriptSource = new();
+        _ = scriptSource.AppendLine( $"{cc.isr.VI.Syntax.Tsp.Script.LoadScriptCommand} {scriptName}" );
+        _ = scriptSource.AppendLine( "do" );
+        _ = scriptSource.AppendLine( $"  {timerElapsedFunctionName}=function() return timer.measure.t() end" );
+        _ = scriptSource.AppendLine( $"  {timeDisplayFunctionName}=function()" );
+        _ = scriptSource.AppendLine( "    timer.reset()" );
+        _ = scriptSource.AppendLine( "    display.clear()" );
+        _ = scriptSource.AppendLine( $"    local elapsed = {timerElapsedFunctionName}()" );
+        _ = scriptSource.AppendLine( "    print( \"display clear elapsed \" .. 1000 * elapsed .. \"ms\" )" );
+        _ = scriptSource.AppendLine( "    timer.reset()" );
+        _ = scriptSource.AppendLine( "  end" );
+        _ = scriptSource.AppendLine( "end" );
+        _ = scriptSource.AppendLine( cc.isr.VI.Syntax.Tsp.Script.EndScriptCommand );
+
+        // write the source to file.
+        string fileTitle = $"{scriptName}_code";
+        string filePath = Path.Combine( folderPath, $"{fileTitle}.tsp" );
+        scriptSource.ToString().ExportScript( filePath, overWrite: true );
+
+        string toFilePath = Path.Combine( folderPath, $"{fileTitle}_trimmed.tsp" );
+        SessionBaseExtensionMethods.TraceLastAction( $"Trimming script file to '{toFilePath}'" );
+        filePath.TrimScript( toFilePath, true );
+
+        toFilePath = Path.Combine( folderPath, $"{toFilePath}c" );
+        SessionBaseExtensionMethods.TraceLastAction( $"Compressing trimmed script file to '{toFilePath}'" );
+        filePath.CompressScriptFile( toFilePath, overWrite: true );
+    }
+
 }

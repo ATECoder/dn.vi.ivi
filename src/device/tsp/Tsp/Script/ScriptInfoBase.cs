@@ -184,14 +184,24 @@ public abstract class ScriptInfoBase : IScriptInfo
     }
 
     /// <summary>   Builds deploy file name. </summary>
+    /// <remarks>   2025-04-16. </remarks>
+    /// <param name="modelFamily">          Information describing the version. </param>
+    /// <param name="modelMajorVersion">    [empty] The model major version. </param>
+    /// <returns>   A string. </returns>
+    public virtual string BuildDeployFileName( string modelFamily, string modelMajorVersion )
+    {
+        _ = this.BuildDeployFileTitle( modelFamily, modelMajorVersion );
+        this.DeployFileName = $"{this.DeployFileTitle}{ScriptInfoBase.SelectScriptFileExtension( this.DeployFileFormat )}";
+        return this.DeployFileName;
+    }
+
+    /// <summary>   Builds deploy file name. </summary>
     /// <remarks>   2025-04-15. </remarks>
     /// <param name="versionInfo">  Information describing the version. </param>
     /// <returns>   A string. </returns>
     public virtual string BuildDeployFileName( VersionInfoBase versionInfo )
     {
-        _ = this.BuildDeployFileTitle( versionInfo );
-        this.DeployFileName = $"{this.DeployFileTitle}{ScriptInfoBase.SelectScriptFileExtension( this.DeployFileFormat )}";
-        return this.DeployFileName;
+        return this.BuildDeployFileName( versionInfo.ModelFamily, versionInfo.FirmwareVersion.Major.ToString( System.Globalization.CultureInfo.CurrentCulture ) );
     }
 
     /// <summary>   Gets or sets the Version Getter function of the script. </summary>

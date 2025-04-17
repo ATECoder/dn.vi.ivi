@@ -8,7 +8,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Device Tsp Script
   - Script Info Base: fix building the deploy file title.
   - Add a method to fetch and compress script to file.
-  
+  - Update build tests to export only the deploy file
+  - Script Info Base
+    - Add method to build the deploy file name using model and version arguments so tests can be conducted without having the version info base instance.
+  - Tsp Script Parser: Append a single space to each trimmed code line. This fixed the failure of the certify binary script to load.
+- K2600 Tests: Add a trim and compress test.  
 ## [8.1.9237] - 2025-04-16
 - Device Tsp Namespace
   - Add namespace to the Enums file.

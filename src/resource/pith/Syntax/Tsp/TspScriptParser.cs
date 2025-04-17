@@ -86,58 +86,55 @@ public static class TspScriptParser
     }
 
     /// <summary>
-    /// Parses a Tsp chuck line returning the <see cref="TspChunkLineContentType"/>.
+    /// Parses a Tsp line that was trimmed with tabs removed returning the <see cref="TspChunkLineContentType"/>.
     /// </summary>
     /// <remarks>   2024-09-05. </remarks>
-    /// <param name="chunkLine">        Specifies the chunk line. </param>
+    /// <param name="trimmedLine">      Specifies the trimmed TSP line with tab removed. </param>
     /// <param name="isInCommentBlock"> <c>true</c> if this object is in comment block. </param>
     /// <returns>   The parsed <see cref="TspChunkLineContentType">content type.</see> </returns>
-    public static TspChunkLineContentType ParseTspChunkLine( string chunkLine, bool isInCommentBlock )
+    public static TspChunkLineContentType ParseTrimmedTspLine( string trimmedLine, bool isInCommentBlock )
     {
-        chunkLine ??= string.Empty;
+        trimmedLine ??= string.Empty;
 
-        // if outline is retained, we must remove the leading tabs and spaces in order to detect the line type.,
-        chunkLine = TspScriptParser.ReplaceTabs( chunkLine ).Trim();
-
-        if ( string.IsNullOrWhiteSpace( chunkLine ) )
+        if ( string.IsNullOrWhiteSpace( trimmedLine ) )
         {
             return TspChunkLineContentType.None;
         }
 
         // check if load string block
-        else if ( chunkLine.Contains( Syntax.Tsp.Lua.LoadStringCommand, StringComparison.OrdinalIgnoreCase ) )
+        else if ( trimmedLine.Contains( Syntax.Tsp.Lua.LoadStringCommand, StringComparison.OrdinalIgnoreCase ) )
         {
             return TspChunkLineContentType.LoadStringBlockStart;
         }
 
-        else if ( chunkLine.Contains( Syntax.Tsp.Lua.LoadStringCommandEnd, StringComparison.OrdinalIgnoreCase ) )
+        else if ( trimmedLine.Contains( Syntax.Tsp.Lua.LoadStringCommandEnd, StringComparison.OrdinalIgnoreCase ) )
         {
             return TspChunkLineContentType.LoadStringBlockEnd;
         }
 
         // check if binary script block
-        else if ( chunkLine.Contains( Syntax.Tsp.Script.StartOfBinaryScript, StringComparison.OrdinalIgnoreCase ) )
+        else if ( trimmedLine.Contains( Syntax.Tsp.Script.StartOfBinaryScript, StringComparison.OrdinalIgnoreCase ) )
         {
             return TspChunkLineContentType.BinaryScriptBlockStart;
         }
 
-        else if ( chunkLine.Contains( Syntax.Tsp.Script.EndOfBinaryScript, StringComparison.OrdinalIgnoreCase ) )
+        else if ( trimmedLine.Contains( Syntax.Tsp.Script.EndOfBinaryScript, StringComparison.OrdinalIgnoreCase ) )
         {
             return TspChunkLineContentType.BinaryScriptBlockEnding;
         }
 
         // check if start of comment block
-        else if ( chunkLine.StartsWith( Syntax.Tsp.Lua.StartCommentChunk, StringComparison.OrdinalIgnoreCase ) )
+        else if ( trimmedLine.StartsWith( Syntax.Tsp.Lua.StartCommentChunk, StringComparison.OrdinalIgnoreCase ) )
         {
             return TspChunkLineContentType.StartCommentBlock;
         }
-        else if ( chunkLine.Contains( Syntax.Tsp.Lua.StartCommentChunk ) )
+        else if ( trimmedLine.Contains( Syntax.Tsp.Lua.StartCommentChunk ) )
         {
             return TspChunkLineContentType.SyntaxStartCommentBlock;
         }
 
         // check if in a comment block
-        else if ( isInCommentBlock && chunkLine.Contains( Syntax.Tsp.Lua.EndCommentChunk ) )
+        else if ( isInCommentBlock && trimmedLine.Contains( Syntax.Tsp.Lua.EndCommentChunk ) )
         {
             // check if end of comment block
             return TspChunkLineContentType.EndCommentBlock;
@@ -146,7 +143,7 @@ public static class TspScriptParser
         // skip comment lines.
         else
         {
-            return chunkLine.StartsWith( Syntax.Tsp.Lua.CommentChunk, StringComparison.OrdinalIgnoreCase )
+            return trimmedLine.StartsWith( Syntax.Tsp.Lua.CommentChunk, StringComparison.OrdinalIgnoreCase )
                 ? TspChunkLineContentType.Comment
                 : TspChunkLineContentType.Syntax;
         }
@@ -318,13 +315,13 @@ public class TspParserState( bool retainOutline )
 
         TspChunkLineContentType lineType;
         this.InputLine = chunkLine;
-        chunkLine = TspScriptParser.ReplaceTabs( chunkLine );
-        this.TrimmedLine = chunkLine.Trim();
-        chunkLine = this.RetainOutline ? chunkLine.TrimEnd() : chunkLine.Trim();
+        string candidateSyntaxLine = TspScriptParser.ReplaceTabs( chunkLine );
+        this.TrimmedLine = candidateSyntaxLine.Trim();
+        candidateSyntaxLine = this.RetainOutline ? candidateSyntaxLine.TrimEnd() : candidateSyntaxLine.Trim();
         this.SyntaxLine = string.Empty;
 
         // this just gets the line type.
-        lineType = TspScriptParser.ParseTspChunkLine( chunkLine, this.IsInCommentBlock );
+        lineType = TspScriptParser.ParseTrimmedTspLine( this.TrimmedLine, this.IsInCommentBlock );
 
         this.PreviousLineType = this.LineType;
         this.LineType = lineType;
@@ -341,11 +338,11 @@ public class TspParserState( bool retainOutline )
         else if ( lineType == TspChunkLineContentType.LoadStringBlockStart )
         {
             this.IsInLoadStringBlock = true;
-            this.SyntaxLine = chunkLine;
+            this.SyntaxLine = candidateSyntaxLine;
         }
         else if ( this.WasInLoadStringBlock )
         {
-            this.SyntaxLine = chunkLine;
+            this.SyntaxLine = candidateSyntaxLine;
 
             if ( lineType == TspChunkLineContentType.LoadStringBlockEnd )
             {
@@ -364,7 +361,7 @@ public class TspParserState( bool retainOutline )
             }
             else if ( this.WasInBinaryScriptEndingBlock )
             {
-                if ( chunkLine.Contains( "}" ) )
+                if ( candidateSyntaxLine.Contains( "}" ) )
                 {
                     this.IsInBinaryScriptEndingBlock = false;
                     this.IsInBinaryScriptBlock = false;
@@ -398,17 +395,21 @@ public class TspParserState( bool retainOutline )
         else if ( lineType is TspChunkLineContentType.Syntax or TspChunkLineContentType.SyntaxStartCommentBlock )
         {
             if ( lineType == TspChunkLineContentType.SyntaxStartCommentBlock )
-                chunkLine = chunkLine[..chunkLine.IndexOf( Syntax.Tsp.Lua.StartCommentChunk, StringComparison.OrdinalIgnoreCase )];
+                candidateSyntaxLine = candidateSyntaxLine[..candidateSyntaxLine.IndexOf( Syntax.Tsp.Lua.StartCommentChunk, StringComparison.OrdinalIgnoreCase )];
 
-            if ( !string.IsNullOrWhiteSpace( chunkLine ) )
-                this.SyntaxLine = chunkLine;
+            if ( !string.IsNullOrWhiteSpace( candidateSyntaxLine ) )
+                this.SyntaxLine = candidateSyntaxLine;
 
             if ( lineType == TspChunkLineContentType.SyntaxStartCommentBlock )
                 this.IsInCommentBlock = true;
         }
 
         if ( !string.IsNullOrWhiteSpace( this.SyntaxLine ) )
+        {
+            // The trimmed line up to and including version 9181 ended with a space except for the last line.
+            this.SyntaxLine += " ";
             this.LineNumber += 1;
+        }
     }
 }
 
