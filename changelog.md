@@ -7,6 +7,7 @@ Notable changes to the `cc.isr.vi` solution are documented in this file using th
 ## [8.1.9239] - 2025-04-18
 - Device Tsp Script namespace:
   - Add a Load and Save to NVM using a reader source.
+  - Trim and Compress: Compresses to the trimmed file path appended with a 'c'.
 
 ## [8.1.9238] - 2025-04-17
 - Device Tsp Script

@@ -15,18 +15,14 @@ public static partial class SessionBaseExtensionMethods
 
         string fromFilePath = Path.Combine( folderPath, scriptInfo.BuiltFileName );
         string trimmedFilePath = Path.Combine( folderPath, scriptInfo.TrimmedFileName );
-        string deployFilePath = Path.Combine( folderPath, scriptInfo.DeployFileName );
+        string compressedFilePath = trimmedFilePath + "c";
         if ( System.IO.File.Exists( fromFilePath ) )
         {
             SessionBaseExtensionMethods.TraceLastAction( $"Trimming script file '{fromFilePath}' to '{trimmedFilePath}'" );
             fromFilePath.TrimScript( trimmedFilePath, true );
 
-            if ( scriptInfo.DeployFileFormat.HasFlag( ScriptFileFormats.Compressed )
-                && !scriptInfo.DeployFileFormat.HasFlag( ScriptFileFormats.Binary ) )
-            {
-                SessionBaseExtensionMethods.TraceLastAction( $"Compressing trimmed script file to '{deployFilePath}'" );
-                trimmedFilePath.CompressScriptFile( deployFilePath, overWrite: true );
-            }
+            SessionBaseExtensionMethods.TraceLastAction( $"Compressing trimmed script file to '{compressedFilePath}'" );
+            trimmedFilePath.CompressScriptFile( compressedFilePath, overWrite: true );
         }
         else
             throw new FileNotFoundException( fromFilePath );
