@@ -1,8 +1,12 @@
 # Changelog
-All notable changes to these libraries will be documented in this file.
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
+Notable changes to the `cc.isr.vi` solution are documented in this file using the 
+[Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9238]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9239]: https://www.github.com/atecoder/dn.vi.ivi
+
+## [8.1.9239] - 2025-04-18
+- Device Tsp Script namespace:
+  - Add a Load and Save to NVM using a reader source.
 
 ## [8.1.9238] - 2025-04-17
 - Device Tsp Script
@@ -352,3 +356,4 @@ which has issued a defect report.
 
 [vs.VI]: https://www.github.com/atecoder/dn.vi.ivi
 [vs.Visa]: https://bitbucket.org/davidhary/vs.io.visa
+[Keep a Changelog]: https://keepachangelog.com/en/1.0.0/
