@@ -26,10 +26,10 @@ public static class Lua
     #region " chunk constants "
 
     /// <summary> Gets the chunk defining a start of comment block. </summary>
-    public const string StartCommentChunk = "--[[";
+    public const string StartCommentBlockChunk = "--[[";
 
     /// <summary> Gets the chunk defining an end of comment block. </summary>
-    public const string EndCommentChunk = "]]--";
+    public const string EndCommentBlockChunk = "]]--";
 
     /// <summary> Gets the chunk defining a comment. </summary>
     public const string CommentChunk = "--";
@@ -292,7 +292,7 @@ public static class Lua
             {
                 if ( lineType == LuaChunkLineContentType.SyntaxStartCommentBlock )
                 {
-                    chunkLine = chunkLine[..chunkLine.IndexOf( Syntax.Tsp.Lua.StartCommentChunk, StringComparison.OrdinalIgnoreCase )];
+                    chunkLine = chunkLine[..chunkLine.IndexOf( Syntax.Tsp.Lua.StartCommentBlockChunk, StringComparison.OrdinalIgnoreCase )];
                 }
 
                 if ( !string.IsNullOrWhiteSpace( chunkLine ) )
@@ -340,17 +340,17 @@ public static class Lua
         }
 
         // check if start of comment block
-        else if ( chunkLine.StartsWith( Syntax.Tsp.Lua.StartCommentChunk, StringComparison.OrdinalIgnoreCase ) )
+        else if ( chunkLine.StartsWith( Syntax.Tsp.Lua.StartCommentBlockChunk, StringComparison.OrdinalIgnoreCase ) )
         {
             return LuaChunkLineContentType.StartCommentBlock;
         }
-        else if ( chunkLine.Contains( Syntax.Tsp.Lua.StartCommentChunk ) )
+        else if ( chunkLine.Contains( Syntax.Tsp.Lua.StartCommentBlockChunk ) )
         {
             return LuaChunkLineContentType.SyntaxStartCommentBlock;
         }
 
         // check if in a comment block
-        else if ( isInCommentBlock && chunkLine.Contains( Syntax.Tsp.Lua.EndCommentChunk ) )
+        else if ( isInCommentBlock && chunkLine.Contains( Syntax.Tsp.Lua.EndCommentBlockChunk ) )
         {
             // check if end of comment block
             return LuaChunkLineContentType.EndCommentBlock;

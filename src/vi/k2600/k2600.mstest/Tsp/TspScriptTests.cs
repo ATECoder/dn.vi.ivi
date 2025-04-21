@@ -112,7 +112,8 @@ public class TspScriptTests
     [TestMethod( "01. Script Compressor Should Compress" )]
     public void ScriptCompressorShouldCompress()
     {
-        string contents = "StringStringStringStringStringStringStringStringStringStringStringStringStringString";
+        string contents = "StringStringStringStringStringStringStringStringStringStringStringStringStringString -- end comment";
+        contents = contents[..contents.IndexOf( Syntax.Tsp.Lua.CommentChunk, StringComparison.OrdinalIgnoreCase )].TrimEnd();
         string compressed = cc.isr.VI.Tsp.Script.ScriptCompressor.Compress( contents );
         string decompressed = cc.isr.VI.Tsp.Script.ScriptCompressor.Decompress( compressed );
         Assert.AreEqual( contents, decompressed );

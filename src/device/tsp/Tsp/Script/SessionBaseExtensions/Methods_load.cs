@@ -81,8 +81,20 @@ public static partial class SessionBaseExtensionMethods
         }
         _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay + session.StatusReadDelay );
         session.SetLastAction( $"loading lines for {(string.IsNullOrWhiteSpace( scriptName ) ? """anonymous""" : scriptName)} script" );
-        session.WriteLines( scriptLines, lineDelay );
 
+        foreach ( string line in scriptLines )
+        {
+            if ( line is not null
+                && !string.IsNullOrWhiteSpace( line )
+                && !line.Contains( Syntax.Tsp.Script.LoadScriptCommand )
+                && !line.Contains( Syntax.Tsp.Script.LoadAndRunScriptCommand )
+                && !line.Contains( Syntax.Tsp.Script.EndScriptCommand ) )
+            {
+                _ = session.WriteNonCompoundLine( line.Trim() );
+                if ( lineDelay > TimeSpan.Zero )
+                    _ = SessionBase.AsyncDelay( lineDelay );
+            }
+        }
         _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay + session.StatusReadDelay );
 
         session.SetLastAction( $"ending {(string.IsNullOrWhiteSpace( scriptName ) ? """anonymous""" : scriptName)} script" );

@@ -124,17 +124,17 @@ public static class TspScriptParser
         }
 
         // check if start of comment block
-        else if ( trimmedLine.StartsWith( Syntax.Tsp.Lua.StartCommentChunk, StringComparison.OrdinalIgnoreCase ) )
+        else if ( trimmedLine.StartsWith( Syntax.Tsp.Lua.StartCommentBlockChunk, StringComparison.OrdinalIgnoreCase ) )
         {
             return TspChunkLineContentType.StartCommentBlock;
         }
-        else if ( trimmedLine.Contains( Syntax.Tsp.Lua.StartCommentChunk ) )
+        else if ( trimmedLine.Contains( Syntax.Tsp.Lua.StartCommentBlockChunk ) )
         {
             return TspChunkLineContentType.SyntaxStartCommentBlock;
         }
 
         // check if in a comment block
-        else if ( isInCommentBlock && trimmedLine.Contains( Syntax.Tsp.Lua.EndCommentChunk ) )
+        else if ( isInCommentBlock && trimmedLine.Contains( Syntax.Tsp.Lua.EndCommentBlockChunk ) )
         {
             // check if end of comment block
             return TspChunkLineContentType.EndCommentBlock;
@@ -395,10 +395,15 @@ public class TspParserState( bool retainOutline )
         else if ( lineType is TspChunkLineContentType.Syntax or TspChunkLineContentType.SyntaxStartCommentBlock )
         {
             if ( lineType == TspChunkLineContentType.SyntaxStartCommentBlock )
-                candidateSyntaxLine = candidateSyntaxLine[..candidateSyntaxLine.IndexOf( Syntax.Tsp.Lua.StartCommentChunk, StringComparison.OrdinalIgnoreCase )];
+                candidateSyntaxLine = candidateSyntaxLine[..candidateSyntaxLine.IndexOf( Syntax.Tsp.Lua.StartCommentBlockChunk, StringComparison.OrdinalIgnoreCase )];
+            else if ( !string.IsNullOrWhiteSpace( candidateSyntaxLine ) && candidateSyntaxLine.Contains( Syntax.Tsp.Lua.CommentChunk ) )
+                // remove a trailing comment.
+                candidateSyntaxLine = candidateSyntaxLine[..candidateSyntaxLine.IndexOf( Syntax.Tsp.Lua.CommentChunk, StringComparison.OrdinalIgnoreCase )].TrimEnd();
 
             if ( !string.IsNullOrWhiteSpace( candidateSyntaxLine ) )
+            {
                 this.SyntaxLine = candidateSyntaxLine;
+            }
 
             if ( lineType == TspChunkLineContentType.SyntaxStartCommentBlock )
                 this.IsInCommentBlock = true;
@@ -407,7 +412,7 @@ public class TspParserState( bool retainOutline )
         if ( !string.IsNullOrWhiteSpace( this.SyntaxLine ) )
         {
             // The trimmed line up to and including version 9181 ended with a space except for the last line.
-            this.SyntaxLine += " ";
+            // this.SyntaxLine += " ";
             this.LineNumber += 1;
         }
     }

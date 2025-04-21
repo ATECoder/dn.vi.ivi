@@ -134,7 +134,7 @@ public static partial class FirmwareManager
                     {
                         if ( lineType == LuaChunkLineContentType.SyntaxStartCommentBlock )
                         {
-                            chunkLine = chunkLine[..chunkLine.IndexOf( Syntax.Tsp.Lua.StartCommentChunk, StringComparison.OrdinalIgnoreCase )];
+                            chunkLine = chunkLine[..chunkLine.IndexOf( Syntax.Tsp.Lua.StartCommentBlockChunk, StringComparison.OrdinalIgnoreCase )];
                         }
 
                         // end each line with a space

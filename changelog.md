@@ -9,6 +9,15 @@ Notable changes to the `cc.isr.vi` solution are documented in this file using th
   - Add Tsp Session Debug Script Tests.
 - Device Tsp Script Namespace
   - Obsolete all reader methods because the stream reader fails interpreting escape sequences causing it fail to read the Keithley byte code to the end of file.
+- SessionBase:
+  - Add method to write non-compound line to handle lines with escape sequences that might be interpreted as end of line. 
+- SessionBase:
+  - restore the trim to not add extra space.
+  - Tsp Script Parse:
+    - trim trailing comments.
+- Device TSP Script Namespace
+  - Add writing lines code to the loader to ignore the script building commands.
+- K2600 Script Tests: all ran.
 
 ## [8.1.9239] - 2025-04-18
 - Device Tsp Script namespace:

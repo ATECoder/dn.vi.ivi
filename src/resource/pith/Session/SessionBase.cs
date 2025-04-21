@@ -984,6 +984,19 @@ public abstract partial class SessionBase : CommunityToolkit.Mvvm.ComponentModel
     }
 
     /// <summary>
+    /// Writes a non-compound line. Must be used when writing instrument bit code with escape
+    /// sequences.
+    /// </summary>
+    /// <remarks>   2025-04-21. </remarks>
+    /// <exception cref="Pith.NativeException">  Thrown when a Native error condition occurs. </exception>
+    /// <param name="dataToWrite">  The data to write. </param>
+    /// <returns>   A string. </returns>
+    public string WriteNonCompoundLine( string dataToWrite )
+    {
+        return this.SyncWriteLine( dataToWrite );
+    }
+
+    /// <summary>
     /// Synchronously writes ASCII-encoded string data to the device or interface.
     /// Converts the specified string to an ASCII string and appends it to the formatted
     /// I/O write buffer. Appends a newline (0xA) to the formatted I/O write buffer,
