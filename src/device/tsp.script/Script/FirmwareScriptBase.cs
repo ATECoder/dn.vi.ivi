@@ -667,7 +667,7 @@ public abstract class FirmwareScriptBase
             throw new InvalidOperationException( $"Failed reading script;. file '{filePath}' includes no source." );
         else if ( source.Length < 2 )
             throw new InvalidOperationException( $"Failed reading script;. file '{filePath}' includes no source." );
-        else if ( source.IsCompressedSource() )
+        else if ( ScriptCompressor.IsCompressed( source ) )
             source = Tsp.Script.ScriptCompressor.Decompress( source );
 
         return source;

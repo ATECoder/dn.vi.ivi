@@ -40,7 +40,7 @@ public static partial class FirmwareManager
         session.ThrowDeviceExceptionIfError();
     }
 
-    /// <summary>   A Pith.SessionBase? extension method that loads named script. </summary>
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that loads named script. </summary>
     /// <remarks>   2025-04-03. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>

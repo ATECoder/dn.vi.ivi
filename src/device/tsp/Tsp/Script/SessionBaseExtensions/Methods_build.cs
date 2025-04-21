@@ -71,7 +71,7 @@ public static partial class SessionBaseExtensionMethods
         session.DeleteScript( scriptInfo.Title );
 
         SessionBaseExtensionMethods.TraceLastAction( $"Importing script from trimmed '{trimmedFilePath}' file" );
-        session.ImportScript( scriptInfo.Title, trimmedFilePath );
+        session.ImportScript( scriptInfo.Title, trimmedFilePath, TimeSpan.Zero );
 
         // run the script to ensure the code works.
         session.RunScript( scriptInfo.Title, scriptInfo.VersionGetterElement );
@@ -100,20 +100,22 @@ public static partial class SessionBaseExtensionMethods
     }
 
     /// <summary>
-    /// A <see cref="Pith.SessionBase"/> extension method that loads the script from the deploy file and saves it to
-    /// non-volatile memory.
+    /// A <see cref="Pith.SessionBase"/> extension method that loads the script from the deploy file
+    /// and saves it to non-volatile memory.
     /// </summary>
     /// <remarks>   2025-04-15. </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
     ///                                                 are null. </exception>
     /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
     ///                                                 invalid. </exception>
-    /// <exception cref="FileNotFoundException">        Thrown when the requested file is not
+    /// <param name="session">      The session. </param>
+    /// <param name="scriptInfo">   Information describing the script. </param>
+    /// <param name="folderPath">   Full pathname of the folder file. </param>
+    /// <param name="lineDelay">    The line delay. </param>
+    ///
+    /// ### <exception cref="FileNotFoundException">    Thrown when the requested file is not
     ///                                                 present. </exception>
-    /// <param name="session">          The session. </param>
-    /// <param name="scriptInfo">       Information describing the script. </param>
-    /// <param name="folderPath">       Full pathname of the folder file. </param>
-    public static void LoadSaveToNvm( this Pith.SessionBase session, ScriptInfoBase scriptInfo, string folderPath )
+    public static void ImportSaveToNvm( this Pith.SessionBase session, ScriptInfoBase scriptInfo, string folderPath, TimeSpan lineDelay )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( scriptInfo is null ) throw new ArgumentNullException( nameof( scriptInfo ) );
@@ -127,7 +129,40 @@ public static partial class SessionBaseExtensionMethods
         session.DeleteScript( scriptInfo.Title );
 
         SessionBaseExtensionMethods.TraceLastAction( $"Importing script from {scriptInfo.DeployFileFormat} '{deployFilePath}' file" );
-        session.ImportScript( scriptInfo.Title, deployFilePath );
+        session.ImportScript( scriptInfo.Title, deployFilePath, lineDelay );
+
+        session.RunScript( scriptInfo.Title, scriptInfo.VersionGetterElement );
+
+        session.SaveScript( scriptInfo.Title );
+
+        session.RunScript( scriptInfo.Title, scriptInfo.VersionGetterElement );
+    }
+
+    /// <summary>
+    /// A <see cref="Pith.SessionBase"/> extension method that loads the script from the deploy file
+    /// and saves it to non-volatile memory.
+    /// </summary>
+    /// <remarks>   2025-04-20. </remarks>
+    /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
+    ///                                                 are null. </exception>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <param name="session">      The session. </param>
+    /// <param name="scriptInfo">   Information describing the script. </param>
+    /// <param name="source">       Source for the. </param>
+    /// <param name="lineDelay">    The line delay. </param>
+    public static void LoadSaveToNvm( this Pith.SessionBase session, ScriptInfoBase scriptInfo, string source, TimeSpan lineDelay )
+    {
+        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
+        if ( scriptInfo is null ) throw new ArgumentNullException( nameof( scriptInfo ) );
+
+        if ( !session.IsDeviceOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
+
+        // delete the script if it exists.
+        session.DeleteScript( scriptInfo.Title );
+
+        SessionBaseExtensionMethods.TraceLastAction( $"Loading {scriptInfo.DeployFileFormat} script" );
+        session.LoadScript( scriptInfo.Title, source, lineDelay );
 
         session.RunScript( scriptInfo.Title, scriptInfo.VersionGetterElement );
 
@@ -148,6 +183,7 @@ public static partial class SessionBaseExtensionMethods
     /// <param name="session">      The session. </param>
     /// <param name="scriptInfo">   Information describing the script. </param>
     /// <param name="reader">       The reader. </param>
+    [Obsolete( "Stream Reader failed reading the Keithley binary file and might fail interpreting backslashes in other cases." )]
     public static void LoadSaveToNvm( this Pith.SessionBase session, ScriptInfoBase scriptInfo, TextReader reader )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );

@@ -125,7 +125,7 @@ public class TspSessionScriptTests : Device.Tests.Base.ScriptTests
             filePath.TrimScript( toFilePath, true );
 
             SessionBaseExtensionMethods.TraceLastAction( $"Importing script from trimmed '{toFilePath}' file" );
-            this.Device.Session.ImportScript( scriptName, toFilePath );
+            this.Device.Session.ImportScript( scriptName, toFilePath, TimeSpan.Zero );
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
 
@@ -150,7 +150,7 @@ public class TspSessionScriptTests : Device.Tests.Base.ScriptTests
             filePath.CompressScriptFile( toFilePath, overWrite: true );
 
             SessionBaseExtensionMethods.TraceLastAction( $"Importing script from compressed trimmed '{toFilePath}' file" );
-            this.Device.Session.ImportScript( scriptName, toFilePath );
+            this.Device.Session.ImportScript( scriptName, toFilePath, TimeSpan.Zero );
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
 
@@ -249,7 +249,7 @@ public class TspSessionScriptTests : Device.Tests.Base.ScriptTests
             filePath.TrimScript( toFilePath, true );
 
             SessionBaseExtensionMethods.TraceLastAction( $"Importing script from trimmed '{toFilePath}' file" );
-            this.Device.Session.ImportScript( scriptName, toFilePath );
+            this.Device.Session.ImportScript( scriptName, toFilePath, TimeSpan.Zero );
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
 
@@ -369,7 +369,7 @@ public class TspSessionScriptTests : Device.Tests.Base.ScriptTests
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
 
             SessionBaseExtensionMethods.TraceLastAction( $"Importing script from binary '{filePath}' file" );
-            this.Device.Session.ImportScript( scriptName, filePath );
+            this.Device.Session.ImportScript( scriptName, filePath, TimeSpan.Zero );
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
 
@@ -401,7 +401,7 @@ public class TspSessionScriptTests : Device.Tests.Base.ScriptTests
             filePath.CompressScriptFile( toFilePath, overWrite: true );
 
             SessionBaseExtensionMethods.TraceLastAction( $"Importing script from compressed binary '{filePath}' file" );
-            this.Device.Session.ImportScript( scriptName, toFilePath );
+            this.Device.Session.ImportScript( scriptName, toFilePath, TimeSpan.Zero );
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
 
