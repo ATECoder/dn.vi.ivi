@@ -1,3 +1,4 @@
+using System;
 using cc.isr.VI.Pith;
 
 namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
@@ -175,7 +176,8 @@ public static partial class FirmwareManager
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( scriptName is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
-        return session.DeleteSavedScript( scriptName );
+        session.DeleteScript( scriptName );
+        return !session.IsNil( scriptName );
     }
 
     /// <summary>   Deletes the user scripts. </summary>
@@ -201,7 +203,7 @@ public static partial class FirmwareManager
                 if ( !session.IsNil( script.Name ) )
                 {
                     if ( savedScripts.Contains( script.Name, StringComparison.OrdinalIgnoreCase ) )
-                        _ = session.DeleteSavedScript( script.Name );
+                        session.DeleteScript( script.Name );
                     else
                         session.NillScript( script.Name );
                 }

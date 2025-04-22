@@ -231,14 +231,14 @@ public abstract class ScriptManagerBase( Tsp.StatusSubsystemBase statusSubsystem
     /// <value> The firmware scripts. </value>
     public ScriptFirmwareCollection FirmwareScripts { get; protected set; } = [];
 
-    /// <summary>   Adds a firmware script to 'modelMask'. </summary>
+    /// <summary>   Adds a firmware script to the collection of scripts. </summary>
     /// <remarks>   2025-04-07. </remarks>
     /// <param name="scriptName">   Specifies the name of the script. </param>
     /// <param name="versionInfo">  Information describing the version. </param>
     /// <returns>   A ScriptFirmwareBase. </returns>
     public FirmwareScriptBase AddFirmwareScript( string scriptName, VersionInfoBase versionInfo )
     {
-        FirmwareScript script = new( scriptName, versionInfo.ModelFamily, versionInfo.FirmwareVersion );
+        FirmwareScript script = new( scriptName, versionInfo.ModelFamilyMask, versionInfo.FirmwareVersion );
         this.FirmwareScripts.Add( script );
         return script;
     }
@@ -246,7 +246,7 @@ public abstract class ScriptManagerBase( Tsp.StatusSubsystemBase statusSubsystem
     /// <summary>   Adds a firmware script to 'modelMask'. </summary>
     /// <remarks>   2024-09-06. </remarks>
     /// <param name="scriptName">   Specifies the name of the script. </param>
-    /// <param name="modelMask">    Specifies the family of instrument models for this script. </param>
+    /// <param name="modelMask">    Specifies the model mask of instrument family for this script, e.g., 26%%A. </param>
     /// <param name="modelVersion"> The model version. </param>
     /// <returns>   A ScriptFirmwareBase. </returns>
     public FirmwareScriptBase AddFirmwareScript( string scriptName, string modelMask, Version modelVersion )

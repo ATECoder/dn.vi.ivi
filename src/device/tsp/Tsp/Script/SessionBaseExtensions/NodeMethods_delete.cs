@@ -1,3 +1,5 @@
+using cc.isr.VI.Pith;
+
 namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
 public static partial class NodeMethods
@@ -37,4 +39,56 @@ public static partial class NodeMethods
         if ( !session.IsNil( nodeNumber, scriptName ) )
             throw new InvalidOperationException( $"The script {scriptName} was not nullified on node {nodeNumber}." );
     }
+
+    /// <summary>   A Pith.SessionBase? extension method that removes the user script. </summary>
+    /// <remarks>   2025-04-21. </remarks>
+    /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
+    ///                                                 are null. </exception>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <param name="session">      The session. </param>
+    /// <param name="nodeNumber">   Specifies the remote node number. </param>
+    /// <param name="scriptName">   Specifies the script name. </param>
+    public static void RemoveUserScript( this Pith.SessionBase? session, int nodeNumber, string? scriptName )
+    {
+        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
+        if ( scriptName is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
+
+        session.LastNodeNumber = default;
+        session.SetLastAction( $"checking if the {scriptName} script is listed as user script on node {nodeNumber};. " );
+        if ( !session.IsNil( nodeNumber, $"script.user.scripts.{scriptName}" ) )
+        {
+            session.TraceLastAction( $"removing '{scriptName} script from the user scripts on node {nodeNumber};. " );
+            _ = session.ExecuteCommandQueryComplete( nodeNumber, "script.user.scripts.{0}.name = ''", scriptName );
+
+            // read query reply and throw if reply is not 1.
+            session.ReadAndThrowIfOperationIncomplete();
+
+            // throw if device errors
+            session.ThrowDeviceExceptionIfError();
+        }
+
+        if ( !session.IsNil( nodeNumber, $"script.user.scripts.{scriptName}" ) )
+            throw new InvalidOperationException( $"The script {scriptName} was not removed from the user scripts on node {nodeNumber};. " );
+    }
+
+    /// <summary>   A Pith.SessionBase? extension method that deletes the script. </summary>
+    /// <remarks>   2025-04-21. </remarks>
+    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
+    ///                                             null. </exception>
+    /// <param name="session">      The session. </param>
+    /// <param name="nodeNumber">   Specifies the remote node number. </param>
+    /// <param name="scriptName">   Specifies the script name. </param>
+    public static void DeleteScript( this Pith.SessionBase? session, int nodeNumber, string? scriptName )
+    {
+        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
+        if ( scriptName is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
+
+        session.RemoveSavedScript( nodeNumber, scriptName );
+
+        session.RemoveUserScript( nodeNumber, scriptName );
+
+        session.NillScript( nodeNumber, scriptName );
+    }
+
 }

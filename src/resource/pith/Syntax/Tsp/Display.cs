@@ -7,37 +7,37 @@ namespace cc.isr.VI.Syntax.Tsp;
 public static class Display
 {
     /// <summary> The name of the display subsystem. </summary>
-    public const string SubsystemName = "display";
+    public const string SubsystemName = "_G.display";
 
     /// <summary> The clear display command. </summary>
-    public const string ClearCommand = "display.clear()";
+    public const string ClearCommand = "_G.display.clear()";
 
     /// <summary> The display screen command format. </summary>
-    public const string DisplayScreenCommandFormat = "display.changescreen(_G.display.SCREEN_{0})";
+    public const string DisplayScreenCommandFormat = "_G.display.changescreen(_G.display.SCREEN_{0})";
 
     /// <summary> The set cursor command format. </summary>
-    public const string SetCursorCommandFormat = "display.setcursor({0}, {1})";
+    public const string SetCursorCommandFormat = "_G.display.setcursor({0}, {1})";
 
     /// <summary> The set cursor line command format. </summary>
-    public const string SetCursorLineCommandFormat = "display.setcursor({0}, 1)";
+    public const string SetCursorLineCommandFormat = "_G.display.setcursor({0}, 1)";
 
     /// <summary> The set Character format. </summary>
-    public const string SetCharacterCommandFormat = "display.settext(string.char({0}))";
+    public const string SetCharacterCommandFormat = "_G.display.settext(string.char({0}))";
 
     /// <summary> The set text format. </summary>
-    public const string SetTextCommandFormat = "display.settext('{0}')";
+    public const string SetTextCommandFormat = "_G.display.settext('{0}')";
 
     /// <summary> The set text format. </summary>
-    public const string SetTextLineCommandFormat = "display.settext(display.TEXT{0},'{1}')";
+    public const string SetTextLineCommandFormat = "_G.display.settext(_G.display.TEXT{0},'{1}')";
 
     /// <summary> The restore main screen and send a wait complete reply. </summary>
-    public const string RestoreMainCompleteQueryCommand = "display.screen = display.MAIN or 0 _G.waitcomplete() print('1') ";
+    public const string RestoreMainCompleteQueryCommand = "_G.display.screen = _G.display.MAIN or 0 _G.waitcomplete() _G.print('1') ";
 
     /// <summary> The restore main screen and set the operation complete status bit command. </summary>
-    public const string RestoreMainOperationCompleteCommand = "display.screen = display.MAIN or 0 _G.opc()";
+    public const string RestoreMainOperationCompleteCommand = "_G.display.screen = _G.display.MAIN or 0 _G.opc()";
 
     /// <summary> The restore main screen and wait command. </summary>
-    public const string RestoreMainWaitCommand = "display.screen = display.MAIN or 0 _G.waitcomplete()";
+    public const string RestoreMainWaitCommand = "_G.display.screen = _G.display.MAIN or 0 _G.waitcomplete()";
 
     /// <summary> The length of the first line. </summary>
     public const int FirstLineLength = 20;

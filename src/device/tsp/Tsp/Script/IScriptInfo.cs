@@ -24,7 +24,7 @@ public interface IScriptInfo
     /// <value> The name and the file Version of the script. </value>
     public string Version { get; set; }
 
-    /// <summary>   The built file name [isr_certify.9226.tsp]. </summary>
+    /// <summary>   The built file name [isr_certify.9243.tsp]. </summary>
     /// <value> The filename of the build file. </value>
     public string BuiltFileName { get; set; }
 

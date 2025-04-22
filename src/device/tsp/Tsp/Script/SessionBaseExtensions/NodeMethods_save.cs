@@ -77,4 +77,42 @@ public static partial class NodeMethods
             return SessionBase.EqualsTrue( reply );
         }
     }
+
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that removes the saved script. </summary>
+    /// <remarks>   2025-04-21. </remarks>
+    /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
+    ///                                                 are null. </exception>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <param name="session">      The session. </param>
+    /// <param name="nodeNumber">   Specifies the subsystem node. </param>
+    /// <param name="scriptName">   Name of the script. </param>
+    /// <returns>   True if it succeeds, false if it fails. </returns>
+    public static void RemoveSavedScript( this Pith.SessionBase? session, int nodeNumber, string? scriptName )
+    {
+        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
+        if ( scriptName is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
+
+        session.LastNodeNumber = nodeNumber;
+
+        // TODO: Do we need to enable completion detection on the node?
+        session.SetLastAction( $"enabling service request on operation completion" );
+        session.EnableServiceRequestOnOperationCompletion();
+
+        session.SetLastAction( $"deleting script '{scriptName}'" );
+        _ = session.ExecuteCommandQueryComplete( nodeNumber, $"script.delete('{scriptName}')" );
+
+        _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay + session.StatusReadDelay );
+
+        string reply = session.ReadLineTrimEnd();
+        if ( reply != cc.isr.VI.Syntax.ScpiSyntax.OperationCompletedValue )
+            throw new InvalidOperationException( $"{session.ResourceNameNodeCaption} operation complete query reply '{reply}' should be '1';. " );
+
+        session.ThrowDeviceExceptionIfError();
+
+        session.SetLastAction( $"nulling script '{scriptName}" );
+        session.NillScript( nodeNumber, scriptName );
+
+        session.ThrowDeviceExceptionIfError();
+    }
 }

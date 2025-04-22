@@ -131,18 +131,18 @@ public abstract class ScriptInfoBase : IScriptInfo
 
     /// <summary>   Gets or sets the title of the script. </summary>
     /// <value> The name and the file title of the script. </value>
-    [Description( "The name and the file title of the script [isr_autoexec]" )]
+    [Description( "The name and the file title of the script [isr_ttm_autoexec]" )]
     public virtual string Title { get; set; } = "isr_ttm_autoexec";
 
     /// <summary>   Gets or sets the Version of the script. </summary>
     /// <value> The name and the file Version of the script. </value>
-    [Description( "The name and the file Version of the script [2.4.9226]" )]
-    public virtual string Version { get; set; } = "2.4.9226";
+    [Description( "The name and the file Version of the script [2.4.9243]" )]
+    public virtual string Version { get; set; } = "2.4.9243";
 
-    /// <summary>   The built file name [isr_ttm_autoexec.9226.tsp]. </summary>
+    /// <summary>   The built file name [isr_ttm_autoexec.9243.tsp]. </summary>
     /// <value> The filename of the build file. </value>
-    [Description( "The build file name [isr_ttm_autoexec.9226.tsp]" )]
-    public virtual string BuiltFileName { get; set; } = "isr_ttm_autoexec.9226.tsp";
+    [Description( "The build file name [isr_ttm_autoexec.9243.tsp]" )]
+    public virtual string BuiltFileName { get; set; } = "isr_ttm_autoexec.9243.tsp";
 
     /// <summary>   The trimmed file name [isr_ttm_autoexec.tsp]. </summary>
     /// <value> The filename of the trimmed file. </value>
@@ -223,10 +223,10 @@ public abstract class ScriptInfoBase : IScriptInfo
 
     /// <summary>
     /// The name of this scrip as would be required independent scripts
-    /// [build.isr_autoexec_version.tsp].
+    /// [build.isr_ttm_autoexec_version.tsp].
     /// </summary>
     /// <value> The name of the required chunk. </value>
-    [Description( "The name of this scrip as would be required independent scripts [build.isr_autoexec_version.tsp]" )]
+    [Description( "The name of this scrip as would be required independent scripts [build.isr_ttm_autoexec_version.tsp]" )]
     public virtual string RequiredChunkName { get; set; } = "core.tsp.string.base64.lua";
 
     #endregion

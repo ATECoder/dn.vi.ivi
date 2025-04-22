@@ -2,9 +2,18 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9242]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9243]: https://www.github.com/atecoder/dn.vi.ivi
 
-## [8.1.9242] - 2025-04-20
+## [8.1.9243] - 2025-04-22
+- Device Tsp Script namespace
+  - Move Session Base Extensions ImportSaveToNvm to a deploy file. 
+  - Fix code deleting load menu item.
+- Session Base:
+  - Document the need to override the write line command for writing byte code.
+- Pith Syntax Tsp Display: Prepend display with _G.
+- Update versions to 8.1.9243.
+
+## [8.1.9242] - 2025-04-21
 - K2600 Tests
   - Add Tsp Session Debug Script Tests.
 - Device Tsp Script Namespace

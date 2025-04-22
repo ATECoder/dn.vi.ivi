@@ -90,7 +90,12 @@ public static partial class SessionBaseExtensionMethods
                 && !line.Contains( Syntax.Tsp.Script.LoadAndRunScriptCommand )
                 && !line.Contains( Syntax.Tsp.Script.EndScriptCommand ) )
             {
-                _ = session.WriteNonCompoundLine( line.Trim() );
+                // The Keithley TSP byte code might include a compound command separator,
+                // which might explain why TSP does not support SCPI compound commands 
+                // consisting of semi-colon-separated commands. The write line method is capable 
+                // of splitting compound commands and therefore it cannot be used to send the 
+                // byte code to the instrument.
+                _ = session.WriteByteCodeLine( line.Trim() );
                 if ( lineDelay > TimeSpan.Zero )
                     _ = SessionBase.AsyncDelay( lineDelay );
             }

@@ -47,10 +47,12 @@ public static partial class FirmwareManager
 
         displaySubsystem.DisplayLine( 2, $"Deleting {script.Node.Number}:{script.Name}" );
 
-        bool deleted = script.Node.IsController
-             ? session.DeleteSavedScript( script.Name )
-             : session.DeleteSavedScript( script.Node.Number, script.Name );
+        if ( script.Node.IsController )
+            session.DeleteSavedScript( script.Name );
+        else
+            session.DeleteSavedScript( script.Node.Number, script.Name );
 
+        bool deleted = true;
 #if false
         bool deleted = script.Node.IsController
                 ? FirmwareScript.ScriptNameExists( scriptNames, script.Name )

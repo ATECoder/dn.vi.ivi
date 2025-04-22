@@ -420,7 +420,7 @@ public abstract class FirmwareScriptBase
     /// <value> The model major version. </value>
     public string ModelMajorVersion => $"{new Version( this.ModelVersion ).Major}";
 
-    /// <summary>   Specifies the family of instrument models for this script. </summary>
+    /// <summary>   Specifies the model mask for the family of instrument models for this script. </summary>
     /// <value> The model mask. </value>
     public string ModelMask { get; private set; }
 

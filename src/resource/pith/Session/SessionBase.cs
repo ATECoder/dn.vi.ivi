@@ -984,14 +984,20 @@ public abstract partial class SessionBase : CommunityToolkit.Mvvm.ComponentModel
     }
 
     /// <summary>
-    /// Writes a non-compound line. Must be used when writing instrument bit code with escape
-    /// sequences.
+    /// Writes a byte code line ignoring possible semi-colons, which, when used with TSP, are used to
+    /// split the line into multiple lines.
     /// </summary>
-    /// <remarks>   2025-04-21. </remarks>
-    /// <exception cref="Pith.NativeException">  Thrown when a Native error condition occurs. </exception>
+    /// <remarks>
+    /// 2025-04-21. <para>
+    /// The Keithley TSP byte code might include a compound command separator, which might explain
+    /// why TSP does not support SCPI compound commands consisting of semi-colon-separated commands.
+    /// The write line method is capable of splitting compound commands and therefore it cannot be
+    /// used to send the byte code to the instrument.
+    /// </para>
+    /// </remarks>
     /// <param name="dataToWrite">  The data to write. </param>
     /// <returns>   A string. </returns>
-    public string WriteNonCompoundLine( string dataToWrite )
+    public string WriteByteCodeLine( string dataToWrite )
     {
         return this.SyncWriteLine( dataToWrite );
     }
@@ -1612,7 +1618,7 @@ public abstract partial class SessionBase : CommunityToolkit.Mvvm.ComponentModel
     /// </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>
-    /// <param name="dataToWrite">  The data to write. </param>
+    /// <param name="dataToWrite">              The data to write. </param>
     /// <returns>   A <see cref="string" />. </returns>
     public string WriteLine( string dataToWrite )
     {

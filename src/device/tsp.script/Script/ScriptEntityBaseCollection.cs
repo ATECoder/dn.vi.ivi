@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using cc.isr.Std.TrimExtensions;
 using cc.isr.VI.Pith;
+using cc.isr.VI.Syntax.Tsp;
 using cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
 namespace cc.isr.VI.Tsp.Script;
@@ -583,7 +584,10 @@ public class ScriptEntityBaseCollection<TItem>( NodeEntityBase node ) : System.C
             // check if saved script exists
             this.FetchSavedScriptsNames( session );
             if ( FirmwareScriptBase.ScriptNameExists( this.SavedScriptNames, scriptName ) )
-                isNull = session.DeleteSavedScript( scriptName );
+            {
+                session.DeleteScript( scriptName );
+                isNull = session.IsNil( scriptName );
+            }
             else
             {
                 session.NillScript( scriptName );
