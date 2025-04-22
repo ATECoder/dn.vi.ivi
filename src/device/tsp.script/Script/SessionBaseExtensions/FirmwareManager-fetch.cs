@@ -6,25 +6,6 @@ namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
 public static partial class FirmwareManager
 {
-    #region " fetch names "
-
-    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that enumerate the loaded table. </summary>
-    /// <remarks>   2024-10-14. </remarks>
-    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
-    ///                                             null. </exception>
-    /// <param name="session">  The session. </param>
-    /// <returns>   The require table items. </returns>
-    public static string EnumerateTheLoadedTable( this Pith.SessionBase? session )
-    {
-        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
-        string fetchQuery = "names = \"\" for name, value in _G.pairs( _G._LOADED ) do if name ~= nil then names = names .. name .. ',' end end print ( names ) ";
-        _ = session.WriteLine( fetchQuery );
-        _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay );
-        return session.ReadLineTrimEnd();
-    }
-
-    #endregion
-
     #region " fetch saved scripts names "
 
     /// <summary>

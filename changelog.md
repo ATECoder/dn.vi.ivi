@@ -8,6 +8,8 @@ Notable changes to the `cc.isr.vi` solution are documented in this file using th
 - Device Tsp Script namespace
   - Move Session Base Extensions ImportSaveToNvm to a deploy file. 
   - Fix code deleting load menu item.
+  - Add queries from the LOADED table.
+  - Add methods to build all script info scripts.
 - Session Base:
   - Document the need to override the write line command for writing byte code.
 - Pith Syntax Tsp Display: Prepend display with _G.

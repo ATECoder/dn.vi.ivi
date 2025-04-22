@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 
 namespace cc.isr.VI.Tsp.Script;
@@ -230,4 +231,72 @@ public abstract class ScriptInfoBase : IScriptInfo
     public virtual string RequiredChunkName { get; set; } = "core.tsp.string.base64.lua";
 
     #endregion
+}
+
+/// <summary>   Collection of script information bases. </summary>
+/// <remarks>   2025-04-22. </remarks>
+/// <typeparam name="TItem">    Type of the item. </typeparam>
+public class ScriptInfoBaseCollection<TItem> : System.Collections.ObjectModel.KeyedCollection<string, TItem> where TItem : ScriptInfoBase
+{
+    #region " construction and cleanup "
+
+    /// <summary>   Constructor. </summary>
+    /// <remarks>   2024-09-10. </remarks>
+    /// <param name="scripts">  The scripts. </param>
+    public ScriptInfoBaseCollection( ScriptInfoBaseCollection<ScriptInfoBase> scripts )
+    {
+        foreach ( ScriptInfoBase script in scripts )
+        {
+            _ = this.AddScriptItem( script );
+        }
+    }
+
+    /// <summary>   Default constructor. </summary>
+    /// <remarks>   2025-04-22. </remarks>
+    public ScriptInfoBaseCollection()
+    {
+    }
+
+    /// <summary>
+    /// When implemented in a derived class, extracts the key from the specified element.
+    /// </summary>
+    /// <remarks>   2025-04-22. </remarks>
+    /// <param name="item"> The element from which to extract the key. </param>
+    /// <returns>   The key for the specified element. </returns>
+    protected override string GetKeyForItem( TItem item )
+    {
+        return item.Title;
+    }
+
+    #endregion
+
+    #region " Add script "
+
+    /// <summary>
+    /// Adds an object to the end of the <see cref="T:System.Collections.ObjectModel.Collection`1"></see>.
+    /// </summary>
+    /// <remarks>   2024-09-10. </remarks>
+    /// <param name="script">   The object to be added to the end of the <see cref="T:System.Collections.ObjectModel.Collection`1">
+    ///                         </see>. The value can be null for reference types. </param>
+    /// <returns>   A var. </returns>
+    public Collection<TItem> AddScriptItem( ScriptInfoBase script )
+    {
+        return this.AddScriptItem( ( TItem ) script );
+    }
+
+    /// <summary>
+    /// Adds an object to the end of the <see cref="T:System.Collections.ObjectModel.Collection`1"></see>.
+    /// </summary>
+    /// <remarks>   2024-09-09. </remarks>
+    /// <param name="script">   The object to be added to the end of the <see cref="T:System.Collections.ObjectModel.Collection`1">
+    ///                         </see>. The value can be null for reference types. </param>
+    public Collection<TItem> AddScriptItem( TItem script )
+    {
+        if ( script is null ) throw new ArgumentNullException( nameof( script ) );
+        this.Items.Add( script );
+        return this;
+    }
+
+    #endregion
+
 }

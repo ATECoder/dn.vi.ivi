@@ -263,6 +263,10 @@ public abstract class ScriptManagerBase( Tsp.StatusSubsystemBase statusSubsystem
     /// <value> List of script entities. </value>
     public ScriptEntityCollection? ScriptEntities { get; protected set; }
 
+    /// <summary>   Gets or sets a collection of script information. </summary>
+    /// <value> A collection of script information. </value>
+    public cc.isr.VI.Tsp.Script.ScriptInfoBaseCollection<ScriptInfoBase>? ScriptInfoCollection { get; protected set; }
+
     /// <summary>   Adds a new script to the list of core scripts. </summary>
     /// <remarks>   2024-09-05. </remarks>
     /// <param name="firmwareScript">   Specifies the firmware script. </param>
@@ -591,6 +595,16 @@ public abstract class ScriptManagerBase( Tsp.StatusSubsystemBase statusSubsystem
     /// <param name="accessSubsystem">  The access subsystem. </param>
     /// <returns>   <c>true</c> if okay; otherwise, <c>false</c>. </returns>
     public virtual (bool Success, string Details) SaveUserScripts( DisplaySubsystemBase displaySubsystem, AccessSubsystemBase accessSubsystem )
+    { return (false, string.Empty); }
+
+    /// <summary>   Deploy user scripts. </summary>
+    /// <remarks>   2025-04-22. </remarks>
+    /// <param name="displaySubsystem"> A reference to a
+    ///                                 <see cref="VI.Tsp.DisplaySubsystemBase">display
+    ///                                 subsystem</see>. </param>
+    /// <param name="accessSubsystem">  The access subsystem. </param>
+    /// <returns>   A Tuple. </returns>
+    public virtual (bool Success, string Details) DeployUserScripts( DisplaySubsystemBase displaySubsystem, AccessSubsystemBase accessSubsystem )
     { return (false, string.Empty); }
 
     #endregion

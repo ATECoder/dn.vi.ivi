@@ -98,4 +98,46 @@ public static partial class SessionBaseExtensionMethods
             }
         }
     }
+
+    /// <summary>
+    /// A <see cref="Pith.SessionBase"/> extension method that trims, loads, optionally converts to
+    /// binary, and compresses all scripts the deploy files.
+    /// </summary>
+    /// <remarks>   2025-04-22. </remarks>
+    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
+    ///                                             null. </exception>
+    /// <param name="session">      The session. </param>
+    /// <param name="scripts">      The scripts. </param>
+    /// <param name="folderPath">   Full pathname of the folder file. </param>
+    public static void BuildUserScripts( this Pith.SessionBase session, ScriptInfoBaseCollection<ScriptInfoBase> scripts, string folderPath )
+    {
+        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
+        if ( scripts is null ) throw new ArgumentNullException( nameof( scripts ) );
+
+        session.LastNodeNumber = default;
+
+        try
+        {
+            session.DisplayLine( 1, $"Building TTM" );
+            session.DisplayLine( 2, "Building scripts..." );
+
+            foreach ( ScriptInfoBase scriptInfo in scripts )
+            {
+                if ( scriptInfo is null ) continue;
+                if ( scriptInfo.VersionGetter is null ) continue;
+
+                session.DisplayLine( 2, $"Building {scriptInfo.Title}..." );
+                session.TrimCompressLoadConvertExport( scriptInfo, folderPath );
+            }
+        }
+        catch ( Exception )
+        {
+            throw;
+        }
+        finally
+        {
+            session.RestoreDisplayCompleteQuery();
+        }
+    }
+
 }
