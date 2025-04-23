@@ -9,6 +9,7 @@ Notable changes to the `cc.isr.vi` solution are documented in this file using th
 - Device Tsp Script Namespace
   - Add auto run settings methods.
   - Set script to auto run based on the script info settings.
+  - Build deploy filename when building scripts using the script info.
   - Update version to 9244. 
 
 ## [8.1.9243] - 2025-04-22

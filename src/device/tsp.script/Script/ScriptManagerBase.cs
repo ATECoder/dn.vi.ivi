@@ -49,6 +49,10 @@ public abstract class ScriptManagerBase( Tsp.StatusSubsystemBase statusSubsystem
     /// <value> The display subsystem. </value>
     public DisplaySubsystemBase? DisplaySubsystem { get; set; }
 
+    /// <summary>   Gets or sets the access subsystem. </summary>
+    /// <value> The access subsystem. </value>
+    public AccessSubsystemBase? AccessSubsystem { get; set; }
+
     /// <summary>   Gets or sets the link subsystem. </summary>
     /// <value> The link subsystem. </value>
     public LinkSubsystemBase? LinkSubsystem { get; set; }
