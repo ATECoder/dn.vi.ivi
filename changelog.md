@@ -6,7 +6,9 @@ Notable changes to the `cc.isr.vi` solution are documented in this file using th
 
 ## [8.1.9244] - 2025-04-23
 - Link Subsystem: Replace the local node serial number query with  cc.isr.VI.Syntax.Tsp.LocalNode.SerialNumberFormattedQueryCommand.
-- Device TSP.
+- Device Tsp Script Namespace
+  - Add auto run settings methods.
+  - Set script to auto run based on the script info settings.
   - Update version to 9244. 
 
 ## [8.1.9243] - 2025-04-22

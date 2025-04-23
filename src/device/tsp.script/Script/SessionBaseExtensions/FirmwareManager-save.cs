@@ -50,6 +50,7 @@ public static partial class FirmwareManager
             _ = session.WriteLine( $"script.user.scripts.{scriptName}.autorun = \"yes\" {cc.isr.VI.Syntax.Tsp.Lua.WaitCommand} " );
             _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay );
         }
+
         session.SetLastAction( $"saving script '{scriptName}'" );
         // _ = session.WriteLine( $"{scriptName}.save()" );
         _ = session.WriteLine( $"script.user.scripts.{scriptName}.save() {cc.isr.VI.Syntax.Tsp.Lua.WaitCommand} " );

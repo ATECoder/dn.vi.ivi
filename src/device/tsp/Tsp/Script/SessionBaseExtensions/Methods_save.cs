@@ -148,6 +148,4 @@ public static partial class SessionBaseExtensionMethods
         // throw if device error occurred
         session.ThrowDeviceExceptionIfError();
     }
-
-
 }

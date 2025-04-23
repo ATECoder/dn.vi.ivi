@@ -5,6 +5,53 @@ namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 public static partial class SessionBaseExtensionMethods
 {
     /// <summary>
+    /// A <see cref="Pith.SessionBase"/> extension method that queries if the script is set to run when
+    /// the instrument starts.
+    /// </summary>
+    /// <param name="session">      The session. </param>
+    /// <param name="scriptName">   Name of the script. </param>
+    /// <returns>   True if the script is set to auto run, false if not. </returns>
+    public static bool IsAutoRun( this SessionBase session, string scriptName )
+    {
+        string tspCommand = $"print( {scriptName}.autorun )";
+        string yesNo = session.QueryTrimEnd( tspCommand );
+        bool isAutoRun = string.Equals( yesNo, "yes", StringComparison.OrdinalIgnoreCase );
+        return isAutoRun;
+    }
+
+    /// <summary>
+    /// A <see cref="Pith.SessionBase"/> extension method that disable the script from running when
+    /// the instrument starts.
+    /// </summary>
+    /// <remarks>   2025-04-22. <para>
+    /// The script must be saved to make this so. </para> </remarks>
+    /// <param name="session">      The session. </param>
+    /// <param name="scriptName">   Name of the script. </param>
+    public static void TurnOffAutoRan( this SessionBase session, string scriptName )
+    {
+        if ( session.IsAutoRun( scriptName ) )
+            _ = session.WriteLine( $"script.user.scripts.{scriptName}.autorun = \"no\" {cc.isr.VI.Syntax.Tsp.Lua.WaitCommand} " );
+        //  _ = session.WriteLine( $"{scriptName}.autorun = \"no\" {cc.isr.VI.Syntax.Tsp.Lua.WaitCommand}";
+    }
+
+    /// <summary>
+    /// A <see cref="Pith.SessionBase"/> extension method that sets the script to run when
+    /// the instrument starts.
+    /// </summary>
+    /// <remarks>
+    /// 2025-04-22. <para>
+    /// The script must be saved to make this so. </para>
+    /// </remarks>
+    /// <param name="session">      The session. </param>
+    /// <param name="scriptName">   Name of the script. </param>
+    public static void TurnOnAutoRan( this SessionBase session, string scriptName )
+    {
+        if ( !session.IsAutoRun( scriptName ) )
+            _ = session.WriteLine( $"script.user.scripts.{scriptName}.autorun = \"yes\" {cc.isr.VI.Syntax.Tsp.Lua.WaitCommand} " );
+        //  _ = session.WriteLine( $"{scriptName}.autorun = \"yes\" {cc.isr.VI.Syntax.Tsp.Lua.WaitCommand}";
+    }
+
+    /// <summary>
     /// A <see cref="Pith.SessionBase"/> extension method that loads the script from the deploy file
     /// and saves it to non-volatile memory.
     /// </summary>
