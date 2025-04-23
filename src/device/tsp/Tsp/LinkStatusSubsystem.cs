@@ -233,7 +233,9 @@ public class LinkStatusSubsystem( Pith.SessionBase session ) : Tsp.StatusSubsyst
 
     /// <summary> Gets or sets the serial number query command. </summary>
     /// <value> The serial number query command. </value>
-    protected override string SerialNumberQueryCommand { get; set; } = "_G.print(string.format('%d',_G.localnode.serialno))";
+    protected override string SerialNumberQueryCommand { get; set; } = cc.isr.VI.Syntax.Tsp.LocalNode.SerialNumberFormattedQueryCommand;
+
+    // was: "_G.print(string.format('%d',_G.localnode.serialno))";
 
     /// <summary> Queries the Identity. </summary>
     /// <remarks> Sends the <see cref="IdentificationQueryCommand">identity query</see>. </remarks>
