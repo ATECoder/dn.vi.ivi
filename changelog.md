@@ -2,7 +2,12 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9243]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9244]: https://www.github.com/atecoder/dn.vi.ivi
+
+## [8.1.9244] - 2025-04-23
+- Link Subsystem: Replace the local node serial number query with  cc.isr.VI.Syntax.Tsp.LocalNode.SerialNumberFormattedQueryCommand.
+- Device TSP.
+  - Update version to 9244. 
 
 ## [8.1.9243] - 2025-04-22
 - Device Tsp Script namespace
