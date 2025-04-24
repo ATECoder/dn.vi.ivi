@@ -2,7 +2,14 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9244]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9245]: https://www.github.com/atecoder/dn.vi.ivi
+
+## [8.1.9245] - 2025-04-24
+- Pith.SessionBase
+  - Output garbage collection message tot he debug screen only.
+- Device Tsp Script Namespace Session Base Extensions:
+  - Save Script: Add option to skip if already saved.
+  - Display Line: add a generic method that sets the cursor and pads the text.
 
 ## [8.1.9244] - 2025-04-23
 - Link Subsystem: Replace the local node serial number query with  cc.isr.VI.Syntax.Tsp.LocalNode.SerialNumberFormattedQueryCommand.

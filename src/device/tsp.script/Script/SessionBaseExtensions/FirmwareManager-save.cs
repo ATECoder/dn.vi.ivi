@@ -31,12 +31,15 @@ public static partial class FirmwareManager
 
     /// <summary>   A Pith.SessionBase extension method that saves a script. </summary>
     /// <remarks>   2024-09-20. </remarks>
-    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
-    ///                                             null. </exception>
+    /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
+    ///                                                 are null. </exception>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
     /// <param name="session">      The session. </param>
     /// <param name="scriptName">   Gets or sets the script name. </param>
     /// <param name="autoRun">      True to set the script to automatically run. </param>
-    public static void SaveScript( this Pith.SessionBase session, string scriptName, bool autoRun )
+    /// <param name="skipSaved">    (Optional) [false] True if to skip if the script was already saved. </param>
+    public static void SaveScript( this Pith.SessionBase session, string scriptName, bool autoRun, bool skipSaved = false )
     {
         if ( scriptName is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
@@ -50,6 +53,9 @@ public static partial class FirmwareManager
             _ = session.WriteLine( $"script.user.scripts.{scriptName}.autorun = \"yes\" {cc.isr.VI.Syntax.Tsp.Lua.WaitCommand} " );
             _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay );
         }
+
+        if ( session.IsSavedScript( scriptName ) && !skipSaved )
+            throw new InvalidOperationException( $"The script {scriptName} is already saved." );
 
         session.SetLastAction( $"saving script '{scriptName}'" );
         // _ = session.WriteLine( $"{scriptName}.save()" );

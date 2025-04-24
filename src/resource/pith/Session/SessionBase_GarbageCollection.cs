@@ -20,7 +20,7 @@ public abstract partial class SessionBase
 
         this.SetLastAction( $"reading garbage collection completion reply" );
         string reply = this.ReadLineTrimEnd();
-        Console.WriteLine( $"Received {reply} from complete query after garbage collection" );
+        Debug.WriteLine( $"Received {reply} from complete query after garbage collection" );
         return cc.isr.VI.Syntax.ScpiSyntax.OperationCompletedValue == reply;
     }
 
@@ -75,7 +75,7 @@ public abstract partial class SessionBase
 
         this.SetLastAction( $"reading garbage collection completion reply" );
         string reply = this.ReadLineTrimEnd();
-        Console.WriteLine( $"Received {reply} from complete query after garbage collection" );
+        Debug.WriteLine( $"Received {reply} from complete query after garbage collection" );
         return cc.isr.VI.Syntax.ScpiSyntax.OperationCompletedValue == reply;
     }
 

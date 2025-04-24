@@ -21,38 +21,21 @@ public static partial class SessionBaseExtensionMethods
     /// <param name="columnNumber"> The column number. </param>
     public static void SetDisplayCursor( this Pith.SessionBase session, int lineNumber, int columnNumber )
     {
-        _ = session.WriteLine( $"_G.display.setcursor( {lineNumber}, {columnNumber} )" );
+        _ = session.WriteLine( Syntax.Tsp.Display.SetCursorCommandFormat, lineNumber, columnNumber );
     }
 
-    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that displays text. </summary>
-    /// <remarks>   2025-04-14. </remarks>
-    public static void Display( this Pith.SessionBase session, int lineNumber, int columnNumber, string contents )
-    {
-        _ = session.WriteLine( $"_G.display.setcursor( {lineNumber}, {columnNumber} )" );
-        _ = session.WriteLine( $"_G.display.settext( {contents} )" );
-    }
-
-    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that displays text. </summary>
+    /// <summary>
+    /// A <see cref="Pith.SessionBase"/> extension method that displays text on the instrument panel.
+    /// </summary>
     /// <remarks>   2025-04-14. </remarks>
     /// <param name="session">      The session. </param>
-    /// <param name="firstLine">    The first line. </param>
-    /// <param name="secondLine">   The second line. </param>
-    public static void Display( this Pith.SessionBase session, string firstLine, string secondLine )
-    {
-        session.ClearDisplay();
-        session.Display( 1, 1, firstLine );
-        session.Display( 2, 1, secondLine );
-    }
-
-    /// <summary>   Displays a message on the display. </summary>
-    /// <remarks>   2025-04-22. </remarks>
-    /// <param name="session">      The session. </param>
-    /// <param name="lineNumber">   The line number. </param>
-    /// <param name="value">        The value. </param>
-    public static void DisplayLine( this Pith.SessionBase session, int lineNumber, string value )
+    /// <param name="contents">     The contents. </param>
+    /// <param name="lineNumber">   (Optional) The line number. </param>
+    /// <param name="columnNumber"> (Optional) The column number. </param>
+    public static void DisplayLine( this Pith.SessionBase session, string contents, int lineNumber = 1, int columnNumber = 1 )
     {
         // ignore empty strings.
-        if ( string.IsNullOrWhiteSpace( value ) )
+        if ( string.IsNullOrWhiteSpace( contents ) )
             return;
 
         int length = Syntax.Tsp.Display.FirstLineLength;
@@ -64,10 +47,24 @@ public static partial class SessionBaseExtensionMethods
         if ( lineNumber == 2 )
             length = Syntax.Tsp.Display.SecondLineLength;
 
-        _ = session.WriteLine( Syntax.Tsp.Display.SetCursorLineCommandFormat, lineNumber );
-        if ( value.Length < length )
-            value = value.PadRight( length );
-        _ = session.WriteLine( Syntax.Tsp.Display.SetTextCommandFormat, value );
+        _ = session.WriteLine( Syntax.Tsp.Display.SetCursorCommandFormat, lineNumber, columnNumber );
+
+        int availableLength = length - columnNumber + 1;
+        if ( contents.Length < availableLength )
+            contents = contents.PadRight( availableLength );
+        _ = session.WriteLine( Syntax.Tsp.Display.SetTextCommandFormat, contents );
+    }
+
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that displays text. </summary>
+    /// <remarks>   2025-04-14. </remarks>
+    /// <param name="session">      The session. </param>
+    /// <param name="firstLine">    The first line. </param>
+    /// <param name="secondLine">   The second line. </param>
+    public static void Display( this Pith.SessionBase session, string firstLine, string secondLine )
+    {
+        session.ClearDisplay();
+        session.DisplayLine( firstLine, 1, 1 );
+        session.DisplayLine( secondLine, 2, 1 );
     }
 
     /// <summary> Gets or sets the restore display command query complete. </summary>

@@ -119,8 +119,7 @@ public static partial class SessionBaseExtensionMethods
 
         try
         {
-            session.DisplayLine( 1, $"Building TTM" );
-            session.DisplayLine( 2, "Building scripts..." );
+            session.Display( $"Building TTM", "Building scripts..." );
 
             foreach ( ScriptInfoBase scriptInfo in scripts )
             {
@@ -130,7 +129,7 @@ public static partial class SessionBaseExtensionMethods
                 // build the deploy file name based on the FrameworkInfo default file format for this script.
                 _ = scriptInfo.BuildDeployFileName( versionInfo );
 
-                session.DisplayLine( 2, $"Building {scriptInfo.Title}..." );
+                session.DisplayLine( $"Building {scriptInfo.Title}...", 2, 1 );
                 session.TrimCompressLoadConvertExport( scriptInfo, folderPath );
             }
         }
