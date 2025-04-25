@@ -6,7 +6,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Syntax;
 public static partial class ThermalTransient
 {
     /// <summary> The version query command. </summary>
-    public const string VersionQueryCommand = "_G.print(_G.isr.meters.thermalTransient.version())";
+    public const string VersionQueryCommand = "_G.print(_G.isr_ttm_getVersion())";
 
     /// <summary> Name of the global. </summary>
     public const string GlobalName = "_G";

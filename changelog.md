@@ -2,7 +2,14 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9245]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9246]: https://www.github.com/atecoder/dn.vi.ivi
+
+## [8.1.9246] - 2025-04-25
+- K2600.TTM
+  - Use the new TTM version query commands.
+- K2600.TTM.Tests
+  - legacy tests passed.
+  - firmware tests passed.
 
 ## [8.1.9245] - 2025-04-24
 - Pith.SessionBase

@@ -6,9 +6,9 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Syntax;
 public static class SupportSyntax
 {
     /// <summary> The version query command. </summary>
-    public const string VersionQueryCommand = "_G.print(_G.isr.version())";
+    public const string VersionQueryCommand = "_G.print(_G.isr_support_getVersion())";
 
     /// <summary> The thermal transient script version query command. </summary>
-    public const string ThermalTransientScriptVersionQueryCommand = "_G.print(_G.isr.meters.thermalTransient.version())";
+    public const string ThermalTransientScriptVersionQueryCommand = "_G.print(_G.isr_ttm_getVersion())";
 
 }
