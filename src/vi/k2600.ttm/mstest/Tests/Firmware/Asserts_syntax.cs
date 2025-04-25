@@ -88,8 +88,9 @@ internal static partial class Asserts
     /// <remarks>   2024-11-02. </remarks>
     /// <param name="session">          The session. </param>
     /// <param name="checkSmuSetter">   (Optional) True to check smu setter. </param>
+    /// <param name="validateModel">    (Optional) [false] True to validate the instrument model. </param>
     /// <param name="logEnabled">       (Optional) True to enable, false to disable the log. </param>
-    public static void AssertMeterValueShouldReset( Pith.SessionBase? session, bool checkSmuSetter = false, bool logEnabled = false )
+    public static void AssertMeterValueShouldReset( Pith.SessionBase? session, bool checkSmuSetter = false, bool validateModel = false, bool logEnabled = false )
     {
         Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
         Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
@@ -206,8 +207,11 @@ internal static partial class Asserts
             Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedInt, logEnabled );
 
             string model = session.ResourceSettings.ResourceModel;
-            query = "_G.print(localnode.model)";
-            Asserts.AssertQueryReplyShouldBeValid( session, query, model, logEnabled );
+            if ( validateModel )
+            {
+                query = "_G.print(localnode.model)";
+                Asserts.AssertQueryReplyShouldBeValid( session, query, model, logEnabled );
+            }
 
             string smuName; // "smua";
             query = "_G.print(_G.ttm.meterDefaults.smuName)";

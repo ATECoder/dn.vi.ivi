@@ -10,6 +10,7 @@ Notable changes to the `cc.isr.vi` solution are documented in this file using th
 - K2600.TTM.Tests
   - legacy tests passed.
   - firmware tests passed.
+  - Add optional argument for validating model.
 - project files:
   - set None in include statement for documentation.
   - set Content in include statement for settings and resources.
