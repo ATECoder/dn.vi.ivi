@@ -64,7 +64,7 @@ public static partial class SessionBaseExtensionMethods
     /// <param name="scriptInfo">   Information describing the script. </param>
     /// <param name="folderPath">   Full pathname of the folder file. </param>
     /// <param name="lineDelay">    The line delay. </param>
-    public static void ImportSaveToNvm( this Pith.SessionBase session, ScriptInfoBase scriptInfo, string folderPath, TimeSpan lineDelay )
+    public static void ImportSaveToNvm( this Pith.SessionBase session, ScriptInfo scriptInfo, string folderPath, TimeSpan lineDelay )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( scriptInfo is null ) throw new ArgumentNullException( nameof( scriptInfo ) );
@@ -139,4 +139,126 @@ public static partial class SessionBaseExtensionMethods
                 throw new InvalidOperationException( $"The load menu item {itemName} was not deleted." );
         }
     }
+
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that queries firmware version. </summary>
+    /// <remarks>   2025-04-25. </remarks>
+    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
+    ///                                             null. </exception>
+    /// <param name="session">  The session. </param>
+    /// <param name="script">   The script. </param>
+    /// <returns>   The firmware version. </returns>
+    public static string QueryFirmwareVersion( this Pith.SessionBase session, ScriptInfo script )
+    {
+        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
+        return session.IsNil( script.VersionGetterElement )
+            ? Syntax.Tsp.Lua.NilValue
+            : session.QueryTrimEnd( Syntax.Tsp.Lua.PrintCommand( script.VersionGetter ) );
+    }
+
+    /// <summary>   A <see cref="ScriptInfo"/> extension method that validates the firmware. </summary>
+    /// <remarks>   2025-04-25. </remarks>
+    /// <param name="script">           The script. </param>
+    /// <param name="releaseVersion">   The release version. </param>
+    /// <returns>   The FirmwareVersionStatus. </returns>
+    public static FirmwareVersionStatus ValidateFirmware( this ScriptInfo script, string releaseVersion )
+    {
+        if ( string.IsNullOrWhiteSpace( releaseVersion ) )
+            return FirmwareVersionStatus.ReleaseVersionNotSet;
+
+        else if ( string.IsNullOrWhiteSpace( script.Version ) )
+            return FirmwareVersionStatus.Unknown;
+
+        else if ( (script.Version ?? "") == Syntax.Tsp.Lua.NilValue )
+            return FirmwareVersionStatus.Missing;
+
+        else
+        {
+            switch ( new Version( script.Version ).CompareTo( new Version( releaseVersion ) ) )
+            {
+                case var @case when @case > 0:
+                    {
+                        return FirmwareVersionStatus.Newer;
+                    }
+
+                case 0:
+                    {
+                        return FirmwareVersionStatus.Current;
+                    }
+
+                default:
+                    {
+                        return FirmwareVersionStatus.Older;
+                    }
+            }
+        }
+    }
+
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that reads script state. </summary>
+    /// <remarks>   2025-04-25. </remarks>
+    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
+    ///                                             null. </exception>
+    /// <param name="session">      The session. </param>
+    /// <param name="script">       The script. </param>
+    /// <returns>   The script state. </returns>
+    public static ScriptInfo ReadScriptState( this Pith.SessionBase session, ScriptInfo script )
+    {
+        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
+
+        ScriptInfo embeddedScript = new( script )
+        {
+            // clear the script state
+            ScriptStatus = ScriptStatuses.Unknown,
+            Version = string.Empty
+        };
+
+        if ( !session.IsNil( embeddedScript.Title ) )
+        {
+            embeddedScript.ScriptStatus = ScriptStatuses.Loaded;
+            if ( session.IsNil( embeddedScript.VersionGetterElement ) )
+            {
+                embeddedScript.ScriptStatus = ScriptStatuses.Loaded;
+            }
+            else
+            {
+                embeddedScript.ScriptStatus |= ScriptStatuses.Activated;
+                embeddedScript.Version = session.QueryFirmwareVersion( script );
+                if ( session.IsBinaryScript( script.Title ) )
+                    embeddedScript.ScriptStatus |= ScriptStatuses.BinaryByteCode;
+            }
+
+            if ( session.IsSavedScript( script.Title ) )
+            {
+                embeddedScript.ScriptStatus |= ScriptStatuses.Saved;
+            }
+        }
+        embeddedScript.VersionStatus = SessionBaseExtensionMethods.ValidateFirmware( embeddedScript, script.Version );
+        return embeddedScript;
+    }
+
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that reads script state. </summary>
+    /// <remarks>   2025-04-26. </remarks>
+    /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
+    ///                                                 are null. </exception>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <param name="session">  The session. </param>
+    /// <param name="scripts">  The scripts. </param>
+    /// <returns>   The script state. </returns>
+    public static ScriptInfoCollection ReadScriptState( this SessionBase session, ScriptInfoCollection scripts )
+    {
+        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
+        if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
+        if ( scripts is null ) throw new ArgumentNullException( nameof( scripts ) );
+
+        ScriptInfoCollection embeddedScriptInfoCollection = [];
+
+        foreach ( ScriptInfo script in scripts )
+        {
+            embeddedScriptInfoCollection.Add( session.ReadScriptState( script ) );
+        }
+        return embeddedScriptInfoCollection;
+    }
+
+
+
 }

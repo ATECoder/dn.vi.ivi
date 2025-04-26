@@ -54,6 +54,27 @@ public static partial class SessionBaseExtensionMethods
         return SessionBase.EqualsTrue( reply );
     }
 
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that all saved. </summary>
+    /// <remarks>   2025-04-25. </remarks>
+    /// <param name="session">  The session to act on. </param>
+    /// <param name="scripts">  The scripts. </param>
+    /// <returns>   True if it succeeds, false if it fails. </returns>
+    public static bool AllSaved( this Pith.SessionBase session, ScriptInfoBaseCollection<ScriptInfo> scripts )
+    {
+        string scriptNames = session.FetchSavedScriptsNames();
+        bool affirmative = true;
+        foreach ( ScriptInfo script in scripts )
+        {
+            affirmative = scriptNames.Contains( $"{script.Title}," );
+            if ( !affirmative )
+            {
+                session.TraceLastAction( $"script {script.Title} was not saved;. " );
+                break;
+            }
+        }
+        return affirmative;
+    }
+
     /// <summary>   A <see cref="Pith.SessionBase"/> extension method that removed a script from Non-Volatile-Memory (NVM). </summary>
     /// <remarks>   2025-04-10. </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments

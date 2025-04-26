@@ -9,7 +9,7 @@ public static partial class SessionBaseExtensionMethods
     /// <exception cref="FileNotFoundException">    Thrown when the requested file is not present. </exception>
     /// <param name="scriptInfo">   Information describing the script. </param>
     /// <param name="folderPath">   Full pathname of the folder file. </param>
-    public static void TrimCompress( this ScriptInfoBase scriptInfo, string folderPath )
+    public static void TrimCompress( this ScriptInfo scriptInfo, string folderPath )
     {
         if ( scriptInfo is null ) throw new ArgumentNullException( nameof( scriptInfo ) );
 
@@ -42,7 +42,7 @@ public static partial class SessionBaseExtensionMethods
     /// <param name="session">      The session. </param>
     /// <param name="scriptInfo">   Information describing the script. </param>
     /// <param name="folderPath">   Full pathname of the folder file. </param>
-    public static void TrimCompressLoadConvertExport( this Pith.SessionBase session, ScriptInfoBase scriptInfo, string folderPath )
+    public static void TrimCompressLoadConvertExport( this Pith.SessionBase session, ScriptInfo scriptInfo, string folderPath )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( scriptInfo is null ) throw new ArgumentNullException( nameof( scriptInfo ) );
@@ -110,7 +110,7 @@ public static partial class SessionBaseExtensionMethods
     /// <param name="versionInfo">  The versionInfo to act on. </param>
     /// <param name="scripts">      The scripts. </param>
     /// <param name="folderPath">   Full pathname of the folder file. </param>
-    public static void BuildUserScripts( this Pith.SessionBase session, VersionInfoBase versionInfo, ScriptInfoBaseCollection<ScriptInfoBase> scripts, string folderPath )
+    public static void BuildUserScripts( this Pith.SessionBase session, VersionInfoBase versionInfo, ScriptInfoBaseCollection<ScriptInfo> scripts, string folderPath )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( scripts is null ) throw new ArgumentNullException( nameof( scripts ) );
@@ -121,7 +121,7 @@ public static partial class SessionBaseExtensionMethods
         {
             session.Display( $"Building TTM", "Building scripts..." );
 
-            foreach ( ScriptInfoBase scriptInfo in scripts )
+            foreach ( ScriptInfo scriptInfo in scripts )
             {
                 if ( scriptInfo is null ) continue;
                 if ( scriptInfo.VersionGetter is null ) continue;

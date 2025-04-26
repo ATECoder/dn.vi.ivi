@@ -6,6 +6,14 @@ namespace cc.isr.VI.Syntax.Tsp;
 /// David, 2005-01-15, 1.0.1841.x. </para></remarks>
 public static class Node
 {
+    #region " node info "
+
+    /// <summary>   (Immutable) the controller node number. </summary>
+    public const string ControllerNodeNumber = "_G.tsplink.node";
+
+    #endregion
+
+
     #region " node identity "
 
     /// <summary>
@@ -270,5 +278,4 @@ public static class Node
     public const string StandardServiceEnableOperationCompleteCommandFormat = "_G.Node[{0}].status.reset() _G.Node[{0}].status.standard.enable = {1} _G.Node[{0}].status.request_enable = {2} _G.Node[{0}].opc()";
 
     #endregion
-
 }

@@ -4,6 +4,52 @@ namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
 public static partial class SessionBaseExtensionMethods
 {
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that any loaded. </summary>
+    /// <remarks>
+    /// 2025-04-25. <para>
+    /// NOTE: This method assumes that the scripts are already filtered for the specific instrument
+    /// thus not requiring to match the script to the instrument based on the model mask as was
+    /// previously done.
+    /// </para>
+    /// </remarks>
+    /// <param name="session">  The session. </param>
+    /// <param name="scripts">  The scripts. </param>
+    /// <returns>   True if any script is loaded. </returns>
+    public static bool AnyLoaded( this Pith.SessionBase session, ScriptInfoBaseCollection<ScriptInfo> scripts )
+    {
+        bool affirmative = false;
+        foreach ( ScriptInfo script in scripts )
+        {
+            affirmative = !session.IsNil( script.Title );
+            if ( affirmative )
+            {
+                session.TraceLastAction( $"found loaded script {script.Title};. " );
+                break;
+            }
+        }
+        return affirmative;
+    }
+
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that all loaded. </summary>
+    /// <remarks>   2025-04-25. </remarks>
+    /// <param name="session">  The session. </param>
+    /// <param name="scripts">  The scripts. </param>
+    /// <returns>   True if all scripts loaded; otherwise, false. </returns>
+    public static bool AllLoaded( this Pith.SessionBase session, ScriptInfoBaseCollection<ScriptInfo> scripts )
+    {
+        bool affirmative = true;
+        foreach ( ScriptInfo script in scripts )
+        {
+            affirmative = !session.IsNil( script.Title );
+            if ( !affirmative )
+            {
+                session.TraceLastAction( $"script {script.Title} is not loaded;. " );
+                break;
+            }
+        }
+        return affirmative;
+    }
+
     /// <summary>   A <see cref="Pith.SessionBase"/> extension method that loads a script. </summary>
     /// <remarks>   2025-04-20. <para>
     /// Notes:</para><para>

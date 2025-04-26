@@ -208,6 +208,31 @@ public abstract class ScriptManagerBase( Tsp.StatusSubsystemBase statusSubsystem
 
     #endregion
 
+    #region " script info collections "
+
+    /// <summary>   Gets or sets a collection of legacy script information. </summary>
+    /// <value> A collection of legacy script information. </value>
+    public cc.isr.VI.Tsp.Script.ScriptInfoCollection? LegacyScriptInfoCollection { get; protected set; }
+
+    /// <summary>   Gets or sets a collection of legacy node scripts. </summary>
+    /// <value> A collection of legacy node scripts. </value>
+    public cc.isr.VI.Tsp.Script.NodesScriptsCollection? LegacyNodeScriptsCollection { get; protected set; }
+
+    /// <summary>   Gets or sets a collection of script information. </summary>
+    /// <value> A collection of script information. </value>
+    public cc.isr.VI.Tsp.Script.ScriptInfoCollection? ScriptInfoCollection { get; protected set; }
+
+    /// <summary>   Gets or sets a collection of node scripts. </summary>
+    /// <value> A collection of node scripts. </value>
+    public cc.isr.VI.Tsp.Script.NodesScriptsCollection? NodeScriptsCollection { get; protected set; }
+
+    /// <summary>   Deletes the user scripts. </summary>
+    /// <remarks>   2025-04-25. </remarks>
+    /// <param name="session">  The session. </param>
+    public virtual void DeleteUserScripts( Pith.SessionBase session ) { }
+
+    #endregion
+
     #region " script collections "
 
     /// <summary>   Gets the list of legacy scripts. </summary>
@@ -266,10 +291,6 @@ public abstract class ScriptManagerBase( Tsp.StatusSubsystemBase statusSubsystem
     /// </summary>
     /// <value> List of script entities. </value>
     public ScriptEntityCollection? ScriptEntities { get; protected set; }
-
-    /// <summary>   Gets or sets a collection of script information. </summary>
-    /// <value> A collection of script information. </value>
-    public cc.isr.VI.Tsp.Script.ScriptInfoBaseCollection<ScriptInfoBase>? ScriptInfoCollection { get; protected set; }
 
     /// <summary>   Adds a new script to the list of core scripts. </summary>
     /// <remarks>   2024-09-05. </remarks>

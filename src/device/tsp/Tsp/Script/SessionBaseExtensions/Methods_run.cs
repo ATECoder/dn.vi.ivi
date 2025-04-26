@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using cc.isr.VI.Pith;
 
 namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
@@ -5,70 +6,14 @@ namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 public static partial class SessionBaseExtensionMethods
 {
     /// <summary>
-    /// A <see cref="Pith.SessionBase"/> extension method that query if the specified script is
-    /// activated.
+    /// A <see cref="Pith.SessionBase"/> extension method that enumerate the loaded table.
     /// </summary>
-    /// <remarks>   2025-04-14. </remarks>
-    /// <param name="session">              The session. </param>
-    /// <param name="scriptName">           Specifies the script name. Empty for an anonymous script. </param>
-    /// <param name="expectedScriptEntity"> The expected script entity. </param>
-    /// <returns>   True if loaded, false if not. </returns>
-    public static bool IsActivated( this Pith.SessionBase session, string scriptName, string expectedScriptEntity )
-    {
-        return !(session.IsNil( scriptName ) || session.IsNil( expectedScriptEntity ));
-    }
-
-    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that executes the 'script' operation. </summary>
-    /// <remarks>   2025-04-10. </remarks>
-    /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
-    ///                                                 are null. </exception>
-    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
-    ///                                                 invalid. </exception>
-    /// <param name="session">              The reference to the K2600 Device. </param>
-    /// <param name="scriptName">           (Optional) [empty] Name of the script. Empty if running
-    ///                                     an anonymous script. </param>
-    /// <param name="scriptElementName">    (Optional) [empty] Name of the script element. </param>
-    public static void RunScript( this SessionBase session, string scriptName = "", string scriptElementName = "" )
-    {
-        if ( session == null ) throw new ArgumentNullException( nameof( session ) );
-        if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
-
-        if ( !string.IsNullOrWhiteSpace( scriptName ) )
-        {
-            session.SetLastAction( $"checking if the {scriptName} script exists;. " );
-            if ( session.IsNil( scriptName ) )
-                throw new InvalidOperationException( $"The script {scriptName} cannot be run because it was not found." );
-
-            session.SetLastAction( $"running the {scriptName} script;. " );
-            _ = session.WriteLine( $"{scriptName}.run()" );
-        }
-        else
-        {
-            session.SetLastAction( $"running the anonymous script;. " );
-            _ = session.WriteLine( $"scrip.run()" );
-        }
-        _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay + session.StatusReadDelay );
-
-        // throw if device error occurred
-        session.ThrowDeviceExceptionIfError();
-
-        // query and throw if operation complete query failed
-        session.QueryAndThrowIfOperationIncomplete();
-        _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay + session.StatusReadDelay );
-
-        // throw if device error occurred
-        session.ThrowDeviceExceptionIfError();
-
-        if ( !string.IsNullOrWhiteSpace( scriptElementName ) )
-        {
-            session.SetLastAction( $"looking for {scriptElementName};. " );
-            if ( session.IsNil( scriptElementName ) )
-                throw new InvalidOperationException( $"The script element {scriptElementName} was not found after running the {scriptName} script." );
-        }
-    }
-
-    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that enumerate the loaded table. </summary>
-    /// <remarks>   2024-10-14. </remarks>
+    /// <remarks>
+    /// 2024-10-14. <para>
+    /// Each time an script is run, its <c>ChunkName</c> is added to the <c>_G._LOADED</c> table.
+    /// Thus, script can determine their dependencies by checking if an item exists in the <c>
+    /// _G._LOADED</c> table. gets </para>
+    /// </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>
     /// <param name="session">  The session. </param>
@@ -86,7 +31,10 @@ public static partial class SessionBaseExtensionMethods
     /// A <see cref="Pith.SessionBase"/> extension method that queries if the LOADED table includes
     /// the specified item.
     /// </summary>
-    /// <remarks>   2025-04-22. </remarks>
+    /// <remarks>   2025-04-22. <para>
+    /// Each time an script is run, its <c>ChunkName</c> is added to the <c>_G._LOADED</c> table.
+    /// Thus, script can determine their dependencies by checking if an item exists in the <c>
+    /// _G._LOADED</c> table. gets </para> </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
     ///                                                 are null. </exception>
     /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
@@ -156,4 +104,119 @@ public static partial class SessionBaseExtensionMethods
             }
         }
     }
+
+    /// <summary>
+    /// A <see cref="Pith.SessionBase"/> extension method that query if the specified script is
+    /// activated.
+    /// </summary>
+    /// <remarks>   2025-04-14. </remarks>
+    /// <param name="session">              The session. </param>
+    /// <param name="scriptName">           Specifies the script name. Empty for an anonymous script. </param>
+    /// <param name="expectedScriptEntity"> The expected script entity. </param>
+    /// <returns>   True if loaded, false if not. </returns>
+    public static bool IsActivated( this Pith.SessionBase session, string scriptName, string expectedScriptEntity )
+    {
+        return !(session.IsNil( scriptName ) || session.IsNil( expectedScriptEntity ));
+    }
+
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that executes the 'script' operation. </summary>
+    /// <remarks>   2025-04-10. </remarks>
+    /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
+    ///                                                 are null. </exception>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <param name="session">              The reference to the K2600 Device. </param>
+    /// <param name="scriptName">           (Optional) [empty] Name of the script. Empty if running
+    ///                                     an anonymous script. </param>
+    /// <param name="scriptElementName">    (Optional) [empty] Name of the script element. </param>
+    public static void RunScript( this SessionBase session, string scriptName = "", string scriptElementName = "" )
+    {
+        if ( session == null ) throw new ArgumentNullException( nameof( session ) );
+        if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
+
+        if ( !string.IsNullOrWhiteSpace( scriptName ) )
+        {
+            session.SetLastAction( $"checking if the {scriptName} script exists;. " );
+            if ( session.IsNil( scriptName ) )
+                throw new InvalidOperationException( $"The script {scriptName} cannot be run because it was not found." );
+
+            session.SetLastAction( $"running the {scriptName} script;. " );
+            _ = session.WriteLine( $"{scriptName}.run()" );
+        }
+        else
+        {
+            session.SetLastAction( $"running the anonymous script;. " );
+            _ = session.WriteLine( $"scrip.run()" );
+        }
+        _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay + session.StatusReadDelay );
+
+        // throw if device error occurred
+        session.ThrowDeviceExceptionIfError();
+
+        // query and throw if operation complete query failed
+        session.QueryAndThrowIfOperationIncomplete();
+        _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay + session.StatusReadDelay );
+
+        // throw if device error occurred
+        session.ThrowDeviceExceptionIfError();
+
+        if ( !string.IsNullOrWhiteSpace( scriptElementName ) )
+        {
+            session.SetLastAction( $"looking for {scriptElementName};. " );
+            if ( session.IsNil( scriptElementName ) )
+                throw new InvalidOperationException( $"The script element {scriptElementName} was not found after running the {scriptName} script." );
+        }
+    }
+
+    /// <summary>
+    /// A <see cref="Pith.SessionBase"/> extension method that runs the 'script'.
+    /// </summary>
+    /// <remarks>   2025-04-26. </remarks>
+    /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
+    ///                                                 are null. </exception>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <param name="session">  The reference to the K2600 Device. </param>
+    /// <param name="script">   The script. </param>
+    public static void RunScript( this SessionBase session, ScriptInfo script )
+    {
+        if ( session == null ) throw new ArgumentNullException( nameof( session ) );
+        if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
+        if ( script is null ) throw new ArgumentNullException( nameof( script ) );
+        if ( session.IsNil( script.Title ) )
+            throw new InvalidOperationException( $"The script {script.Title} cannot be run because it was not found." );
+
+        session.RunScript( script.Title, script.VersionGetterElement );
+
+        // read the actual version
+        script.ActualVersion = session.QueryPrintTrimEnd( script.VersionGetter ) ?? string.Empty;
+    }
+
+    /// <summary>   A SessionBase extension method that executes the 'scripts' operation. </summary>
+    /// <remarks>   2025-04-26. </remarks>
+    /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
+    ///                                                 are null. </exception>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <param name="session">  The reference to the K2600 Device. </param>
+    /// <param name="scripts">  The scripts. </param>
+    public static void RunScripts( this SessionBase session, ScriptInfoCollection scripts )
+    {
+        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
+        if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
+        if ( scripts is null ) throw new ArgumentNullException( nameof( scripts ) );
+
+        session.TraceLastAction( "enabling service request on operation completion" );
+        session.EnableServiceRequestOnOperationCompletion();
+
+        session.LastNodeNumber = default;
+        foreach ( ScriptInfo script in scripts )
+        {
+            if ( !session.IsNil( script.Title ) )
+            {
+                session.RunScript( script.Title );
+            }
+        }
+    }
+
 }

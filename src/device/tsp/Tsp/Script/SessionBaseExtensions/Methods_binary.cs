@@ -1,4 +1,5 @@
 using cc.isr.VI.Pith;
+using cc.isr.VI.Syntax.Tsp;
 
 namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
@@ -15,12 +16,36 @@ public static partial class SessionBaseExtensionMethods
 
     /// <summary>   Checks if the script is Binary. </summary>
     /// <remarks>   2024-09-24. </remarks>
-    /// <param name="session">      The session. </param>
-    /// <param name="scriptName">   Specifies the script name. </param>
+    /// <param name="session">              The session. </param>
+    /// <param name="scriptName">           Specifies the script name. </param>
+    /// <param name="usingSupportScript">   (Optional) [false] True to using support script. </param>
     /// <returns>   <c>true</c> if the script is a binary script; otherwise, <c>false</c>. </returns>
-    public static bool IsBinaryScript( this Pith.SessionBase session, string scriptName )
+    public static bool IsBinaryScript( this Pith.SessionBase session, string scriptName, bool usingSupportScript = false )
     {
-        return !session.IsNil( $"_G.string.find( _G.string.sub( {scriptName}.source , 1 , 50 ), 'loadstring(table.concat(' , 1 , true )" );
+        return usingSupportScript
+            ? session.IsStatementTrue( "_G.isr.script.isBinary({0})", scriptName )
+            : !session.IsNil( $"_G.string.find( _G.string.sub( {scriptName}.source , 1 , 50 ), 'loadstring(table.concat(' , 1 , true )" );
+    }
+
+    /// <summary>   Checks if the script is Binary. </summary>
+    /// <remarks>   2024-09-09. </remarks>
+    /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
+    ///                                                 are null. </exception>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <param name="session">              The session. </param>
+    /// <param name="nodeNumber">           The node number. </param>
+    /// <param name="script">               The script. </param>
+    /// <param name="usingSupportScript">   (Optional) [false] True to using support script. </param>
+    /// <returns>   <c>true</c> if the script is a binary script; otherwise, <c>false</c>. </returns>
+    public static bool? IsBinaryScript( this Pith.SessionBase session, int nodeNumber, ScriptInfo script, bool usingSupportScript = false )
+    {
+        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
+        if ( !session.IsDeviceOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
+
+        return session.IsControllerNode( nodeNumber )
+                ? session.IsBinaryScript( script.Title, usingSupportScript )
+                : session.IsStatementTrue( "_G.isr.script.isBinary({0},{1})", script.Title, nodeNumber );
     }
 
     /// <summary>

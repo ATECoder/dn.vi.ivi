@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using cc.isr.VI.Pith;
 
 namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
@@ -89,4 +90,44 @@ public static partial class SessionBaseExtensionMethods
         // nill the script if is is not nil.
         session.NillScript( scriptName );
     }
+
+    /// <summary>
+    /// A <see cref="Pith.SessionBase"/> extension method that deletes the scripts.
+    /// </summary>
+    /// <remarks>   2025-04-25. </remarks>
+    /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
+    ///                                                 are null. </exception>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <param name="session">          The session. </param>
+    /// <param name="frameworkName">    Name of the framework. </param>
+    /// <param name="scripts">          The scripts. </param>
+    public static void DeleteScripts( this SessionBase session, string frameworkName, ScriptInfoCollection scripts )
+    {
+        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
+        if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
+        if ( scripts is null ) throw new ArgumentNullException( nameof( scripts ) );
+
+        session.TraceLastAction( "enabling service request on operation completion" );
+        session.EnableServiceRequestOnOperationCompletion();
+
+        int removedCount = 0;
+        session.LastNodeNumber = default;
+        foreach ( ScriptInfo script in scripts )
+        {
+            if ( !session.IsNil( script.Title ) )
+            {
+                session.DisplayLine( $"Deleting {frameworkName}", 1 );
+                session.DisplayLine( $"Removing {script.Title}", 2 );
+                removedCount += 1;
+                session.DeleteScript( script.Title );
+            }
+        }
+
+        if ( removedCount == 0 )
+            Trace.WriteLine( $"No scripts to remove for {frameworkName}." );
+        else
+            Trace.WriteLine( $"{removedCount} scripts were removed for {frameworkName}." );
+    }
+
 }

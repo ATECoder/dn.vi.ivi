@@ -2,8 +2,21 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9246]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9247]: https://www.github.com/atecoder/dn.vi.ivi
 
+## [8.1.9247] - 2025-04-26
+- Device Tsp Script Namespace
+  - Remove the ISCriptInfo interface.
+  - Rename script info base to script info.
+  - Add a copy constructor.
+  - Add ScriptStatuses Enum: None (not known), Loaded, Activated, Saved, Older, Current, Newer
+  - Add methods for deleting a collection of script info items and a collection of such items.
+  - Add methods for running a collection of script info items and a collection of such items.
+  - Add methods for reading the status of a collection of script info items and a collection of such items.
+  - Add serial number and model number to the script info collection.
+- K2600 TTM Tests
+  - Use DeviceTs.Script namespace auto-run methods.
+ 
 ## [8.1.9246] - 2025-04-25
 - K2600.TTM
   - Use the new TTM version query commands.

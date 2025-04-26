@@ -1,18 +1,37 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using cc.isr.Std.TrimExtensions;
 
 namespace cc.isr.VI.Tsp.Script;
-/// <summary>   A script information base. </summary>
+/// <summary>   A script information. </summary>
 /// <remarks>   2025-04-15. </remarks>
-public abstract class ScriptInfoBase : IScriptInfo
+public class ScriptInfo
 {
     #region " construction "
 
-    /// <summary>
-    /// Constructor that prevents a default instance of this class from being created.
-    /// </summary>
-    /// <remarks>   2023-04-24. </remarks>
-    protected ScriptInfoBase() { }
+    /// <summary>   Default constructor. </summary>
+    /// <remarks>   2025-04-25. </remarks>
+    public ScriptInfo() { }
+
+    /// <summary>   Copy constructor. </summary>
+    /// <remarks>   2025-04-25. </remarks>
+    /// <param name="script">   The script. </param>
+    public ScriptInfo( ScriptInfo script )
+    {
+        this.IsAutoexec = script.IsAutoexec;
+        this.Title = script.Title;
+        this.Version = script.Version;
+        this.BuiltFileName = script.BuiltFileName;
+        this.TrimmedFileName = script.TrimmedFileName;
+        this.DeployFileTitle = script.DeployFileTitle;
+        this.DeployFileName = script.DeployFileName;
+        this.DeployFileFormat = script.DeployFileFormat;
+        this.RequireChunkName = script.RequireChunkName;
+        this.RequiredChunkName = script.RequiredChunkName;
+        this.ScriptStatus = script.ScriptStatus;
+        this.VersionGetter = script.VersionGetter;
+        this.VersionStatus = script.VersionStatus;
+    }
 
     #endregion
 
@@ -38,11 +57,11 @@ public abstract class ScriptInfoBase : IScriptInfo
     {
         return (ScriptFileFormats.Binary == (fileFormat & ScriptFileFormats.Binary))
             ? (ScriptFileFormats.Compressed == (fileFormat & ScriptFileFormats.Compressed))
-              ? ScriptInfoBase.ScriptBinaryCompressedFileExtension
-              : ScriptInfoBase.ScriptBinaryFileExtension
+              ? ScriptInfo.ScriptBinaryCompressedFileExtension
+              : ScriptInfo.ScriptBinaryFileExtension
             : (ScriptFileFormats.Compressed == (fileFormat & ScriptFileFormats.Compressed))
-              ? ScriptInfoBase.ScriptCompressedFileExtension
-              : ScriptInfoBase.ScriptFileExtension;
+              ? ScriptInfo.ScriptCompressedFileExtension
+              : ScriptInfo.ScriptFileExtension;
 
     }
 
@@ -98,14 +117,14 @@ public abstract class ScriptInfoBase : IScriptInfo
     public static string BuildScriptFileName( string baseTitle, ScriptFileFormats fileFormat = ScriptFileFormats.None,
         string scriptVersion = "", string baseModel = "", string modelMajorVersion = "" )
     {
-        string title = ScriptInfoBase.BuildScriptFileTitle( baseTitle, fileFormat, scriptVersion, baseModel, modelMajorVersion );
-        string ext = ScriptInfoBase.SelectScriptFileExtension( fileFormat );
+        string title = ScriptInfo.BuildScriptFileTitle( baseTitle, fileFormat, scriptVersion, baseModel, modelMajorVersion );
+        string ext = ScriptInfo.SelectScriptFileExtension( fileFormat );
         return $"{title}{ext}";
     }
 
     #endregion
 
-    #region " Interface Implementation "
+    #region " Implementation "
 
     /// <summary>   Initializes this object. </summary>
     /// <remarks>   2025-04-15. </remarks>
@@ -118,8 +137,8 @@ public abstract class ScriptInfoBase : IScriptInfo
     /// <remarks>   2025-04-15. </remarks>
     public virtual void RebuildDynamicProperties()
     {
-        this.BuiltFileName = $"{this.Title}.{new Version( this.Version ).Build}{ScriptInfoBase.ScriptFileExtension}";
-        this.TrimmedFileName = $"{this.Title}{ScriptInfoBase.ScriptFileExtension}";
+        this.BuiltFileName = $"{this.Title}.{new Version( this.Version ).Build}{ScriptInfo.ScriptFileExtension}";
+        this.TrimmedFileName = $"{this.Title}{ScriptInfo.ScriptFileExtension}";
         this.VersionGetter = $"_G.{this.Title}_getVersion()";
     }
 
@@ -135,10 +154,15 @@ public abstract class ScriptInfoBase : IScriptInfo
     [Description( "The name and the file title of the script [isr_ttm_autoexec]" )]
     public virtual string Title { get; set; } = "isr_ttm_autoexec";
 
-    /// <summary>   Gets or sets the Version of the script. </summary>
-    /// <value> The name and the file Version of the script. </value>
-    [Description( "The name and the file Version of the script [2.4.9243]" )]
+    /// <summary>   Gets or sets the released version of the script. </summary>
+    /// <value> The released version of the script. </value>
+    [Description( "The released version the script [2.4.9243]" )]
     public virtual string Version { get; set; } = "2.4.9243";
+
+    /// <summary>   Gets or sets the version embedded script as read from the instrument. </summary>
+    /// <value> The version embedded script as read from the instrument. </value>
+    [Description( "The version of the embedded script as read from the instrument" )]
+    public virtual string ActualVersion { get; set; } = string.Empty;
 
     /// <summary>   The built file name [isr_ttm_autoexec.9243.tsp]. </summary>
     /// <value> The filename of the build file. </value>
@@ -192,7 +216,7 @@ public abstract class ScriptInfoBase : IScriptInfo
     public virtual string BuildDeployFileName( string modelFamily, string modelMajorVersion )
     {
         _ = this.BuildDeployFileTitle( modelFamily, modelMajorVersion );
-        this.DeployFileName = $"{this.DeployFileTitle}{ScriptInfoBase.SelectScriptFileExtension( this.DeployFileFormat )}";
+        this.DeployFileName = $"{this.DeployFileTitle}{ScriptInfo.SelectScriptFileExtension( this.DeployFileFormat )}";
         return this.DeployFileName;
     }
 
@@ -230,22 +254,132 @@ public abstract class ScriptInfoBase : IScriptInfo
     [Description( "The name of this scrip as would be required independent scripts [build.isr_ttm_autoexec_version.tsp]" )]
     public virtual string RequiredChunkName { get; set; } = "core.tsp.string.base64.lua";
 
+    /// <summary>   Gets or sets the script status. </summary>
+    /// <value> The script status. </value>
+    public virtual ScriptStatuses ScriptStatus { get; set; } = ScriptStatuses.Unknown;
+
+    /// <summary>   Gets or sets the version status. </summary>
+    /// <value> The version status. </value>
+    public virtual FirmwareVersionStatus VersionStatus { get; set; } = FirmwareVersionStatus.Unknown;
+
     #endregion
+
+    #region " status report "
+
+    /// <summary>   Builds script state report. </summary>
+    /// <remarks>   2025-04-26. </remarks>
+    /// <returns>   A string. </returns>
+    public string BuildScriptStateReport()
+    {
+        System.Text.StringBuilder builder = new();
+
+        if ( string.IsNullOrWhiteSpace( this.Title ) )
+            return "Script name is empty ";
+
+        _ = builder.AppendLine( $"Info for script '{this.Title}':" );
+        _ = builder.AppendLine( $"\tReleased version: {this.Version}." );
+        if ( ScriptStatuses.Loaded == (this.ScriptStatus & ScriptStatuses.Loaded) )
+        {
+            if ( ScriptStatuses.BinaryByteCode == (this.ScriptStatus & ScriptStatuses.BinaryByteCode) )
+                _ = builder.AppendLine( $"\tLoaded binary byte code." );
+            else
+                _ = builder.AppendLine( $"\tLoaded." );
+
+            if ( ScriptStatuses.Activated == (this.ScriptStatus & ScriptStatuses.Activated) )
+            {
+                _ = builder.AppendLine( $"\tActivated." );
+                if ( !string.IsNullOrWhiteSpace( this.VersionGetterElement ) )
+                {
+                    _ = builder.AppendLine( $"\tHas firmware version getter." );
+
+                    if ( string.IsNullOrWhiteSpace( this.ActualVersion ) )
+                        _ = builder.AppendLine( $"\tNo firmware version." );
+                    else
+                        _ = builder.AppendLine( $"\tEmbedded version: {this.ActualVersion}" );
+                }
+                else
+                    _ = builder.AppendLine( $"\tNo firmware version getter." );
+            }
+            else
+                _ = builder.AppendLine( $"\tNot activated." );
+
+            if ( ScriptStatuses.Saved == (this.ScriptStatus & ScriptStatuses.Saved) )
+                _ = builder.AppendLine( $"\tSaved." );
+            else
+                _ = builder.AppendLine( $"\tNot saved." );
+        }
+        else
+            _ = builder.AppendLine( $"\tNot loaded." );
+
+        switch ( this.VersionStatus )
+        {
+            case FirmwareVersionStatus.Current:
+                {
+                    _ = builder.AppendLine( $"\tThe embedded firmware is current." );
+                    break;
+                }
+
+            case FirmwareVersionStatus.Missing:
+                {
+                    _ = builder.AppendLine( $"\tThe version function not defined." );
+                    break;
+                }
+
+            case FirmwareVersionStatus.Newer:
+                {
+                    _ = builder.AppendLine( $"\tOutdated Program: The embedded firmware {this.ActualVersion} is newer than the released firmware {this.Version}. A newer version of this program is available." );
+                    break;
+                }
+
+            case FirmwareVersionStatus.Older:
+                {
+                    _ = builder.AppendLine( $"\tOutdated Firmware: The embedded firmware {this.ActualVersion} is older than the released firmware {this.Version}." );
+                    break;
+                }
+
+            case FirmwareVersionStatus.ReleaseVersionNotSet:
+                {
+                    _ = builder.AppendLine( $"\tThe released firmware version is not specified." );
+                    break;
+                }
+
+            case FirmwareVersionStatus.Unknown:
+                {
+                    _ = builder.AppendLine( $"\tThe embedded firmware version is not known." );
+                    break;
+                }
+
+            case FirmwareVersionStatus.None:
+                _ = builder.AppendLine( $"\tThe version status was not set." );
+                break;
+
+            default:
+                {
+                    _ = builder.AppendLine( $"The case {this.VersionStatus} was unhandled when reporting the firmware version status." );
+                    break;
+                }
+        }
+
+        return builder.ToString().TrimEndNewLine();
+    }
+
+    #endregion
+
 }
 
 /// <summary>   Collection of script information bases. </summary>
 /// <remarks>   2025-04-22. </remarks>
 /// <typeparam name="TItem">    Type of the item. </typeparam>
-public class ScriptInfoBaseCollection<TItem> : System.Collections.ObjectModel.KeyedCollection<string, TItem> where TItem : ScriptInfoBase
+public class ScriptInfoBaseCollection<TItem> : System.Collections.ObjectModel.KeyedCollection<string, TItem> where TItem : ScriptInfo
 {
     #region " construction and cleanup "
 
     /// <summary>   Constructor. </summary>
     /// <remarks>   2024-09-10. </remarks>
     /// <param name="scripts">  The scripts. </param>
-    public ScriptInfoBaseCollection( ScriptInfoBaseCollection<ScriptInfoBase> scripts )
+    public ScriptInfoBaseCollection( ScriptInfoBaseCollection<ScriptInfo> scripts )
     {
-        foreach ( ScriptInfoBase script in scripts )
+        foreach ( ScriptInfo script in scripts )
         {
             _ = this.AddScriptItem( script );
         }
@@ -279,7 +413,7 @@ public class ScriptInfoBaseCollection<TItem> : System.Collections.ObjectModel.Ke
     /// <param name="script">   The object to be added to the end of the <see cref="T:System.Collections.ObjectModel.Collection`1">
     ///                         </see>. The value can be null for reference types. </param>
     /// <returns>   A var. </returns>
-    public Collection<TItem> AddScriptItem( ScriptInfoBase script )
+    public Collection<TItem> AddScriptItem( ScriptInfo script )
     {
         return this.AddScriptItem( ( TItem ) script );
     }
@@ -298,5 +432,102 @@ public class ScriptInfoBaseCollection<TItem> : System.Collections.ObjectModel.Ke
     }
 
     #endregion
+}
 
+/// <summary>   Collection of script information. </summary>
+/// <remarks>   2025-04-25. </remarks>
+public class ScriptInfoCollection : ScriptInfoBaseCollection<ScriptInfo>
+{
+    #region " construction and cleanup "
+
+    /// <summary>   Default constructor. </summary>
+    /// <remarks>   2025-04-25. </remarks>
+    public ScriptInfoCollection()
+    {
+    }
+
+    /// <summary>   Clone constructor. </summary>
+    /// <remarks>   2024-09-10. </remarks>
+    /// <param name="scripts">  The scripts. </param>
+    public ScriptInfoCollection( ScriptInfoCollection scripts )
+    {
+        this.NodeNumber = scripts.NodeNumber;
+        this.ModelNumber = scripts.ModelNumber;
+        this.SerialNumber = scripts.SerialNumber;
+        foreach ( ScriptInfo script in scripts )
+            _ = this.AddScriptItem( new ScriptInfo( script ) );
+    }
+
+    /// <summary>   Gets key for item. </summary>
+    /// <remarks>   2024-09-05. </remarks>
+    /// <param name="item"> The item. </param>
+    /// <returns>   The key for item. </returns>
+    protected override string GetKeyForItem( ScriptInfo item )
+    {
+        return base.GetKeyForItem( item );
+    }
+
+    #endregion
+
+    #region " TSP link Node Inforamtion"
+
+    /// <summary>   Gets or sets the node number. </summary>
+    /// <remarks> The default node number represents the controller node. </remarks>
+    /// <value> The node number. </value>
+    public int NodeNumber { get; set; } = 0;
+
+    /// <summary>   Gets or sets the model number. </summary>
+    /// <value> The model number. </value>
+    public string ModelNumber { get; set; } = string.Empty;
+
+    /// <summary>   Gets or sets the serial number. </summary>
+    /// <value> The serial number. </value>
+    public string SerialNumber { get; set; } = string.Empty;
+
+    #endregion
+
+    #region " script status report "
+
+    /// <summary>   Builds script state report. </summary>
+    /// <remarks>   2024-09-05. </remarks>
+    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
+    ///                                             null. </exception>
+    /// <returns>   A string. </returns>
+    public string BuildScriptStateReport()
+    {
+        System.Text.StringBuilder builder = new();
+        _ = builder.AppendLine( $"Info for '{this.ModelNumber}' SN {this.SerialNumber} node {this.NodeNumber}:" );
+        foreach ( ScriptInfo script in this.Items )
+        {
+            if ( !string.IsNullOrWhiteSpace( script.Title ) )
+                _ = builder.AppendLine( script.BuildScriptStateReport() );
+        }
+        return builder.ToString().TrimEndNewLine();
+    }
+
+    #endregion
+}
+
+/// <summary>   Collection of node scripts. </summary>
+/// <remarks>   2025-04-25. </remarks>
+public class NodesScriptsCollection : Dictionary<int, ScriptInfoCollection>
+{
+    #region " script status report "
+
+    /// <summary>   Builds script state report. </summary>
+    /// <remarks>   2024-09-05. </remarks>
+    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
+    ///                                             null. </exception>
+    /// <returns>   A string. </returns>
+    public string BuildScriptStateReport()
+    {
+        System.Text.StringBuilder builder = new();
+        foreach ( ScriptInfoCollection scriptInfoCollection in this.Values )
+        {
+            _ = builder.AppendLine( scriptInfoCollection.BuildScriptStateReport() );
+        }
+        return builder.ToString().TrimEndNewLine();
+    }
+
+    #endregion
 }

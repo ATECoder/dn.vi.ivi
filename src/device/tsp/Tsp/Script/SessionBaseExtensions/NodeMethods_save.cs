@@ -49,6 +49,59 @@ public static partial class NodeMethods
         }
     }
 
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that all saved. </summary>
+    /// <remarks>   2025-04-25. </remarks>
+    /// <param name="session">      The session. </param>
+    /// <param name="nodeNumber">   Specifies the subsystem node. </param>
+    /// <param name="scripts">      The scripts. </param>
+    /// <returns>   True if it succeeds, false if it fails. </returns>
+    public static bool AllSaved( this Pith.SessionBase session, int nodeNumber, ScriptInfoBaseCollection<ScriptInfo> scripts )
+    {
+        string scriptNames = session.FetchSavedScriptsNames( nodeNumber );
+        bool affirmative = true;
+        foreach ( ScriptInfo script in scripts )
+        {
+            affirmative = scriptNames.Contains( $"{script.Title}," );
+            if ( !affirmative )
+            {
+                session.TraceLastAction( $"script {script.Title} was not saved;. " );
+                break;
+            }
+        }
+        return affirmative;
+    }
+
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that all saved. </summary>
+    /// <remarks>   2025-04-25. </remarks>
+    /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
+    ///                                                 are null. </exception>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <param name="session">  The session. </param>
+    /// <param name="scripts">  The scripts. </param>
+    /// <returns>   True if it succeeds, false if it fails. </returns>
+    public static bool AllSaved( this Pith.SessionBase session, NodesScriptsCollection scripts )
+    {
+        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
+        if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
+        if ( scripts is null ) throw new ArgumentNullException( nameof( scripts ) );
+
+        bool affirmative = true;
+        foreach ( ScriptInfoBaseCollection<ScriptInfo> scriptInfoBaseCollection in scripts.Values )
+        {
+            if ( scriptInfoBaseCollection is not null )
+            {
+                affirmative = (scriptInfoBaseCollection.NodeNumber == 0) || (scriptInfoBaseCollection.NodeNumber == session.QueryControllerNodeNumber())
+                    ? session.AllSaved( scriptInfoBaseCollection )
+                    : session.AllSaved( scriptInfoBaseCollection.NodeNumber, scriptInfoBaseCollection );
+                if ( !affirmative ) break;
+
+            }
+        }
+        return affirmative;
+    }
+
+
     /// <summary>
     /// A <see cref="Pith.SessionBase"/> extension method that query if 'session' is saved script.
     /// </summary>

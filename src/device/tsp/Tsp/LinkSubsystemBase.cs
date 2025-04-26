@@ -400,7 +400,7 @@ public abstract class LinkSubsystemBase( LinkStatusSubsystem statusSubsystem ) :
     /// <returns> An Integer or Null of failed. </returns>
     public int? QueryControllerNodeNumber()
     {
-        this.ControllerNodeNumber = this.Session.QueryPrint( 0, 1, "_G.tsplink.node" );
+        this.ControllerNodeNumber = this.Session.QueryPrint( 0, 1, cc.isr.VI.Syntax.Tsp.Node.ControllerNodeNumber );
         return this.ControllerNodeNumber;
     }
 
