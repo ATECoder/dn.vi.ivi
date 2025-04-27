@@ -13,7 +13,7 @@ public static partial class SessionBaseMethods
     /// <param name="session">  The session. </param>
     /// <param name="node">     . </param>
     /// <returns>   Count. </returns>
-    public static int QueryDataQueueCount( this Pith.SessionBase? session, NodeEntityBase? node )
+    public static int QueryDataQueueCount( this Pith.SessionBase session, NodeEntityBase? node )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( node is null ) throw new ArgumentNullException( nameof( node ) );
@@ -27,7 +27,7 @@ public static partial class SessionBaseMethods
     /// <param name="session">              The session. </param>
     /// <param name="node">                 Specifies the node. </param>
     /// <param name="reportQueueNotEmpty">  (Optional) true to report queue not empty. </param>
-    public static void ClearDataQueueWaitComplete( this Pith.SessionBase? session, NodeEntityBase? node, bool reportQueueNotEmpty = false )
+    public static void ClearDataQueueWaitComplete( this Pith.SessionBase session, NodeEntityBase? node, bool reportQueueNotEmpty = false )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( node is null ) throw new ArgumentNullException( nameof( node ) );
@@ -53,7 +53,7 @@ public static partial class SessionBaseMethods
     /// <param name="query">    The query. </param>
     /// <param name="caption">  (Optional) ("") The caption describing the query. Replaced by the <paramref name="query"/> if empty. </param>
     /// <returns>   A string. </returns>
-    public static string QueryStringThrowIfError( this Pith.SessionBase? session, string query, string caption = "" )
+    public static string QueryStringThrowIfError( this Pith.SessionBase session, string query, string caption = "" )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( !session.IsDeviceOpen ) throw new InvalidOperationException( $"The VISA session to '{session.CandidateResourceName}' should be open." );
@@ -89,7 +89,7 @@ public static partial class SessionBaseMethods
     /// <param name="query">    The query. </param>
     /// <param name="caption">  (Optional) The caption describing the query. Replaced by the <paramref name="query"/> if empty. </param>
     /// <returns>   A string. </returns>
-    public static string QueryStringOrNilThrowIfError( this Pith.SessionBase? session, string query, string caption = "" )
+    public static string QueryStringOrNilThrowIfError( this Pith.SessionBase session, string query, string caption = "" )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( !session.IsDeviceOpen ) throw new InvalidOperationException( $"The VISA session to '{session.CandidateResourceName}' should be open." );
@@ -120,7 +120,7 @@ public static partial class SessionBaseMethods
     /// <param name="caption">  (Optional) ("") The caption describing the query. Replaced by the <paramref name="query"/>
     ///                         if empty. </param>
     /// <returns>   The returned boolean value. </returns>
-    public static bool QueryBoolThrowIfError( this Pith.SessionBase? session, string query, string caption = "" )
+    public static bool QueryBoolThrowIfError( this Pith.SessionBase session, string query, string caption = "" )
     {
         string reading = QueryStringThrowIfError( session, query, caption ).Trim();
         if ( bool.TryParse( reading, out bool value ) )
@@ -139,7 +139,7 @@ public static partial class SessionBaseMethods
     /// <param name="caption">  (Optional) ("") The caption describing the query. Replaced by the <paramref name="query"/>
     ///                         if empty. </param>
     /// <returns>   A bool? </returns>
-    public static bool? QueryNullableBoolThrowIfError( this Pith.SessionBase? session, string query, string caption = "" )
+    public static bool? QueryNullableBoolThrowIfError( this Pith.SessionBase session, string query, string caption = "" )
     {
         string reading = QueryStringOrNilThrowIfError( session, query, caption ).Trim();
         if ( reading.TryParseNullableBool( out bool? result ) )
@@ -158,7 +158,7 @@ public static partial class SessionBaseMethods
     /// <param name="caption">  (Optional) ("") The caption describing the query. Replaced by the <paramref name="query"/>
     ///                         if empty. </param>
     /// <returns>   An int. </returns>
-    public static int QueryIntegerThrowIfError( this Pith.SessionBase? session, string query, string caption = "" )
+    public static int QueryIntegerThrowIfError( this Pith.SessionBase session, string query, string caption = "" )
     {
         string reading = QueryStringThrowIfError( session, query, caption ).Trim();
         if ( int.TryParse( reading, System.Globalization.NumberStyles.AllowExponent | System.Globalization.NumberStyles.AllowDecimalPoint,
@@ -178,7 +178,7 @@ public static partial class SessionBaseMethods
     /// <param name="caption">  (Optional) ("") The caption describing the query. Replaced by the <paramref name="query"/>
     ///                         if empty. </param>
     /// <returns>   An int? </returns>
-    public static int? QueryNullableIntegerThrowIfError( this Pith.SessionBase? session, string query, string caption = "" )
+    public static int? QueryNullableIntegerThrowIfError( this Pith.SessionBase session, string query, string caption = "" )
     {
         string reading = QueryStringOrNilThrowIfError( session, query, caption ).Trim();
         if ( reading.TryParseNullableInteger( out int? result ) )
@@ -197,7 +197,7 @@ public static partial class SessionBaseMethods
     /// <param name="caption">  (Optional) ("") The caption describing the query. Replaced by the <paramref name="query"/>
     ///                         if empty. </param>
     /// <returns>   A double. </returns>
-    public static double QueryDoubleThrowIfError( this Pith.SessionBase? session, string query, string caption = "" )
+    public static double QueryDoubleThrowIfError( this Pith.SessionBase session, string query, string caption = "" )
     {
         string reading = QueryStringThrowIfError( session, query, caption ).Trim();
         if ( double.TryParse( reading, out double value ) )
@@ -216,7 +216,7 @@ public static partial class SessionBaseMethods
     /// <param name="caption">  (Optional) ("") The caption describing the query. Replaced by the <paramref name="query"/>
     ///                         if empty. </param>
     /// <returns>   A double? </returns>
-    public static double? QueryNullableDoubleThrowIfError( this Pith.SessionBase? session, string query, string caption = "" )
+    public static double? QueryNullableDoubleThrowIfError( this Pith.SessionBase session, string query, string caption = "" )
     {
         string reading = QueryStringOrNilThrowIfError( session, query, caption ).Trim();
         if ( reading.TryParseNullableDouble( out double? result ) )

@@ -17,7 +17,7 @@ public static partial class SessionBaseExtensionMethods
     ///                                             null. </exception>
     /// <param name="session">  The session. </param>
     /// <returns>   The require table items. </returns>
-    public static string EnumerateTheLoadedTable( this Pith.SessionBase? session )
+    public static string EnumerateTheLoadedTable( this Pith.SessionBase session )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         string fetchQuery = "names = \"\" for name, value in _G.pairs( _G._LOADED ) do if name ~= nil then names = names .. name .. ',' end end print ( names ) ";

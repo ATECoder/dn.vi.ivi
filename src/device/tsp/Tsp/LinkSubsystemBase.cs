@@ -141,7 +141,7 @@ public abstract class LinkSubsystemBase( LinkStatusSubsystem statusSubsystem ) :
     ///                                             null. </exception>
     /// <param name="session">      The session. </param>
     /// <param name="nodeNumber">   The node number. </param>
-    public static void ClearDataQueue( Pith.SessionBase? session, int nodeNumber )
+    public static void ClearDataQueue( Pith.SessionBase session, int nodeNumber )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( NodeEntityBase.NodeExists( session, nodeNumber ) )

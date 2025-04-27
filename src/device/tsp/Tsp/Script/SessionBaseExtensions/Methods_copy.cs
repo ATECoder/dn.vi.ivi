@@ -14,7 +14,7 @@ public static partial class SessionBaseExtensionMethods
     /// <param name="session">          The session. </param>
     /// <param name="sourceName">       The name of the source script. </param>
     /// <param name="destinationName">  The name of the destination script. </param>
-    public static void CopyScript( this Pith.SessionBase? session, string sourceName, string destinationName )
+    public static void CopyScript( this Pith.SessionBase session, string sourceName, string destinationName )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         _ = session.WriteLine( "{1}=script.new( {0}.source , '{1}' ) waitcomplete()", sourceName, destinationName );
@@ -28,7 +28,7 @@ public static partial class SessionBaseExtensionMethods
     /// <param name="nodeNumber">       . </param>
     /// <param name="sourceName">       The script name on the controller node. </param>
     /// <param name="destinationName">  The script name on the remote node. </param>
-    public static void CopyScript( this Pith.SessionBase? session, int nodeNumber, string sourceName, string destinationName )
+    public static void CopyScript( this Pith.SessionBase session, int nodeNumber, string sourceName, string destinationName )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( !session.IsDeviceOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );

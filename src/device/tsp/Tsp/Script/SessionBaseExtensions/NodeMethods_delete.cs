@@ -12,7 +12,7 @@ public static partial class NodeMethods
     /// <param name="session">              The session. </param>
     /// <param name="nodeNumber">           Specifies the remote node number. </param>
     /// <param name="scriptName">           Specifies the script name. </param>
-    public static void NillScript( this Pith.SessionBase? session, int nodeNumber, string scriptName )
+    public static void NillScript( this Pith.SessionBase session, int nodeNumber, string scriptName )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( scriptName is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
@@ -50,7 +50,7 @@ public static partial class NodeMethods
     /// <param name="session">      The session. </param>
     /// <param name="nodeNumber">   Specifies the remote node number. </param>
     /// <param name="scriptName">   Specifies the script name. </param>
-    public static void RemoveUserScript( this Pith.SessionBase? session, int nodeNumber, string? scriptName )
+    public static void RemoveUserScript( this Pith.SessionBase session, int nodeNumber, string? scriptName )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( scriptName is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
@@ -80,7 +80,7 @@ public static partial class NodeMethods
     /// <param name="session">      The session. </param>
     /// <param name="nodeNumber">   Specifies the remote node number. </param>
     /// <param name="scriptName">   Specifies the script name. </param>
-    public static void DeleteScript( this Pith.SessionBase? session, int nodeNumber, string? scriptName )
+    public static void DeleteScript( this Pith.SessionBase session, int nodeNumber, string? scriptName )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( scriptName is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );

@@ -13,7 +13,7 @@ public static partial class NodeMethods
     /// <param name="session">      The session. </param>
     /// <param name="nodeNumber">   Specifies the subsystem node. </param>
     /// <returns>   The saved scripts. </returns>
-    public static string FetchSavedScriptsNames( this Pith.SessionBase? session, int nodeNumber )
+    public static string FetchSavedScriptsNames( this Pith.SessionBase session, int nodeNumber )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
 
@@ -141,7 +141,7 @@ public static partial class NodeMethods
     /// <param name="nodeNumber">   Specifies the subsystem node. </param>
     /// <param name="scriptName">   Name of the script. </param>
     /// <returns>   True if it succeeds, false if it fails. </returns>
-    public static void RemoveSavedScript( this Pith.SessionBase? session, int nodeNumber, string? scriptName )
+    public static void RemoveSavedScript( this Pith.SessionBase session, int nodeNumber, string? scriptName )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( scriptName is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );

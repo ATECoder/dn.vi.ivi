@@ -11,7 +11,7 @@ public static partial class SessionBaseExtensionMethods
     ///                                             null. </exception>
     /// <param name="session">  The session. </param>
     /// <returns>   The saved scripts. </returns>
-    public static string FetchSavedScriptsNames( this Pith.SessionBase? session )
+    public static string FetchSavedScriptsNames( this Pith.SessionBase session )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         session.LastNodeNumber = default;

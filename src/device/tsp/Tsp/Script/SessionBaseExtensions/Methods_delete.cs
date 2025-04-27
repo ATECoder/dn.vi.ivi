@@ -12,7 +12,7 @@ public static partial class SessionBaseExtensionMethods
     /// <param name="session">              The session. </param>
     /// <param name="scriptName">           Specifies the script name. </param>
     /// <returns>   <c>true</c> if the script is nil; otherwise <c>false</c>. </returns>
-    public static void NillScript( this Pith.SessionBase? session, string scriptName )
+    public static void NillScript( this Pith.SessionBase session, string scriptName )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( scriptName is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
@@ -44,7 +44,7 @@ public static partial class SessionBaseExtensionMethods
     /// <param name="session">      The session. </param>
     /// <param name="scriptName">   Specifies the script name. </param>
     /// <returns>   True if it succeeds, false if it fails. </returns>
-    public static void RemoveUserScript( this Pith.SessionBase? session, string? scriptName )
+    public static void RemoveUserScript( this Pith.SessionBase session, string? scriptName )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( scriptName is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );

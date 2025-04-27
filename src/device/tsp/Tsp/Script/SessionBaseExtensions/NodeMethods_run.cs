@@ -37,7 +37,7 @@ public static partial class NodeMethods
     /// <param name="nodeNumber">           Specifies the remote node number. </param>
     /// <param name="scriptName">           Specifies the script name. </param>
     /// <param name="scriptElementName">    (Optional) Name of the script element. </param>
-    public static void RunScript( this Pith.SessionBase? session, int nodeNumber, string? scriptName, string scriptElementName = "" )
+    public static void RunScript( this Pith.SessionBase session, int nodeNumber, string? scriptName, string scriptElementName = "" )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( scriptName is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );

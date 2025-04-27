@@ -18,7 +18,7 @@ public static partial class SessionBaseExtensionMethods
     /// <param name="runScriptAfterLoading">    (Optional) [false] True to run script after loading. </param>
     /// <param name="deleteExisting">           (Optional) [false] True to delete the existing. </param>
     /// <param name="ignoreExisting">           (Optional) [false] True to ignore existing. </param>
-    public static void ImportScript( this Pith.SessionBase? session, string scriptName, string filePath, TimeSpan lineDelay,
+    public static void ImportScript( this Pith.SessionBase session, string scriptName, string filePath, TimeSpan lineDelay,
         bool runScriptAfterLoading = false, bool deleteExisting = false, bool ignoreExisting = false )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
