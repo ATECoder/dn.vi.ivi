@@ -155,6 +155,26 @@ public static partial class SessionBaseExtensionMethods
             : session.QueryTrimEnd( Syntax.Tsp.Lua.PrintCommand( script.VersionGetter ) );
     }
 
+    /// <summary>
+    /// A <see cref="Pith.SessionBase"/> extension method that queries firmware version.
+    /// </summary>
+    /// <remarks>   2025-04-26. </remarks>
+    /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
+    ///                                                 are null. </exception>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <param name="session">  The session. </param>
+    /// <param name="scripts">  The scripts. </param>
+    public static void QueryFirmwareVersion( this SessionBase session, ScriptInfoCollection scripts )
+    {
+        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
+        if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
+        if ( scripts is null ) throw new ArgumentNullException( nameof( scripts ) );
+
+        foreach ( ScriptInfo script in scripts )
+            script.ActualVersion = session.QueryFirmwareVersion( script );
+    }
+
     /// <summary>   A <see cref="ScriptInfo"/> extension method that validates the firmware. </summary>
     /// <remarks>   2025-04-25. </remarks>
     /// <param name="script">           The script. </param>
@@ -258,7 +278,4 @@ public static partial class SessionBaseExtensionMethods
         }
         return embeddedScriptInfoCollection;
     }
-
-
-
 }

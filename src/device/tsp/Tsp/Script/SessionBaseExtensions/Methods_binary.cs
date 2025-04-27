@@ -1,5 +1,4 @@
 using cc.isr.VI.Pith;
-using cc.isr.VI.Syntax.Tsp;
 
 namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
@@ -38,7 +37,7 @@ public static partial class SessionBaseExtensionMethods
     /// <param name="script">               The script. </param>
     /// <param name="usingSupportScript">   (Optional) [false] True to using support script. </param>
     /// <returns>   <c>true</c> if the script is a binary script; otherwise, <c>false</c>. </returns>
-    public static bool? IsBinaryScript( this Pith.SessionBase session, int nodeNumber, ScriptInfo script, bool usingSupportScript = false )
+    public static bool IsBinaryScript( this Pith.SessionBase session, int nodeNumber, ScriptInfo script, bool usingSupportScript = false )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( !session.IsDeviceOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );

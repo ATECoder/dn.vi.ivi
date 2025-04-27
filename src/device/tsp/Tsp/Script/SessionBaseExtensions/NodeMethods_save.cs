@@ -87,13 +87,13 @@ public static partial class NodeMethods
         if ( scripts is null ) throw new ArgumentNullException( nameof( scripts ) );
 
         bool affirmative = true;
-        foreach ( ScriptInfoBaseCollection<ScriptInfo> scriptInfoBaseCollection in scripts.Values )
+        foreach ( ScriptInfoCollection scriptInfoCollection in scripts.Values )
         {
-            if ( scriptInfoBaseCollection is not null )
+            if ( scriptInfoCollection is not null )
             {
-                affirmative = (scriptInfoBaseCollection.NodeNumber == 0) || (scriptInfoBaseCollection.NodeNumber == session.QueryControllerNodeNumber())
-                    ? session.AllSaved( scriptInfoBaseCollection )
-                    : session.AllSaved( scriptInfoBaseCollection.NodeNumber, scriptInfoBaseCollection );
+                affirmative = (scriptInfoCollection.NodeNumber == 0) || (scriptInfoCollection.NodeNumber == session.QueryControllerNodeNumber())
+                    ? session.AllSaved( scriptInfoCollection )
+                    : session.AllSaved( scriptInfoCollection.NodeNumber, scriptInfoCollection );
                 if ( !affirmative ) break;
 
             }

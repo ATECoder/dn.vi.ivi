@@ -1,6 +1,3 @@
-using System.Runtime.CompilerServices;
-using cc.isr.VI.Pith;
-
 namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
 public static partial class NodeMethods
