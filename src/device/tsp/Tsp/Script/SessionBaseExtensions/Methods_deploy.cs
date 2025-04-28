@@ -13,6 +13,9 @@ public static partial class SessionBaseExtensionMethods
     /// <returns>   True if the script is set to auto run, false if not. </returns>
     public static bool IsAutoRun( this SessionBase session, string scriptName )
     {
+        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
+        if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
+
         string tspCommand = $"print( {scriptName}.autorun )";
         string yesNo = session.QueryTrimEnd( tspCommand );
         bool isAutoRun = string.Equals( yesNo, "yes", StringComparison.OrdinalIgnoreCase );
@@ -27,8 +30,11 @@ public static partial class SessionBaseExtensionMethods
     /// The script must be saved to make this so. </para> </remarks>
     /// <param name="session">      The session. </param>
     /// <param name="scriptName">   Name of the script. </param>
-    public static void TurnOffAutoRan( this SessionBase session, string scriptName )
+    public static void TurnOffAutoRun( this SessionBase session, string scriptName )
     {
+        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
+        if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
+
         if ( session.IsAutoRun( scriptName ) )
             _ = session.WriteLine( $"script.user.scripts.{scriptName}.autorun = \"no\" {cc.isr.VI.Syntax.Tsp.Lua.WaitCommand} " );
         //  _ = session.WriteLine( $"{scriptName}.autorun = \"no\" {cc.isr.VI.Syntax.Tsp.Lua.WaitCommand}";
@@ -44,8 +50,11 @@ public static partial class SessionBaseExtensionMethods
     /// </remarks>
     /// <param name="session">      The session. </param>
     /// <param name="scriptName">   Name of the script. </param>
-    public static void TurnOnAutoRan( this SessionBase session, string scriptName )
+    public static void TurnOnAutoRun( this SessionBase session, string scriptName )
     {
+        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
+        if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
+
         if ( !session.IsAutoRun( scriptName ) )
             _ = session.WriteLine( $"script.user.scripts.{scriptName}.autorun = \"yes\" {cc.isr.VI.Syntax.Tsp.Lua.WaitCommand} " );
         //  _ = session.WriteLine( $"{scriptName}.autorun = \"yes\" {cc.isr.VI.Syntax.Tsp.Lua.WaitCommand}";

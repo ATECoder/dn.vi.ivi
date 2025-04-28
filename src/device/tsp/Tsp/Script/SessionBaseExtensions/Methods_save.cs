@@ -139,8 +139,8 @@ public static partial class SessionBaseExtensionMethods
     ///                                                 invalid. </exception>
     /// <param name="session">      The session to act on. </param>
     /// <param name="scriptName">   Name of the script. </param>
-    /// <param name="skipSaved">    (Optional) [false] True to skip if the script is already saved. </param>
-    public static void SaveScript( this SessionBase session, string scriptName, bool skipSaved = false )
+    /// <param name="throwIfAlreadySaved">    (Optional) [false] True to skip if the script is already saved. </param>
+    public static void SaveScript( this SessionBase session, string scriptName, bool throwIfAlreadySaved = false )
     {
         if ( session == null )
             throw new ArgumentNullException( nameof( session ) );
@@ -158,13 +158,13 @@ public static partial class SessionBaseExtensionMethods
         session.LastNodeNumber = default;
         if ( session.IsSavedScript( scriptName ) )
         {
-            if ( skipSaved )
+            if ( throwIfAlreadySaved )
+                throw new InvalidOperationException( $"The script {scriptName} is already saved." );
+            else
             {
                 session.TraceLastAction( $"Skipping {scriptName} script, which is already saved;. " );
                 return;
             }
-            else
-                throw new InvalidOperationException( $"The script {scriptName} is already saved." );
         }
 
         session.TraceLastAction( $"saving the {scriptName} script;. " );

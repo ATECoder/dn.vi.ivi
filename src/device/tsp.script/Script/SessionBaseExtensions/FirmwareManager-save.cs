@@ -20,8 +20,10 @@ public static partial class FirmwareManager
         if ( scriptName is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
 
-        // save
-        session.SaveScript( scriptName, autoRun );
+        if ( autoRun )
+            session.TurnOnAutoRun( scriptName );
+
+        session.SaveScript( scriptName );
 
         // fetch names
         (string scriptNames, List<string> authorScripts) = FirmwareManager.FetchSavedScriptsNames( session );
@@ -84,7 +86,12 @@ public static partial class FirmwareManager
         if ( node is null ) throw new ArgumentNullException( nameof( node ) );
 
         if ( node.IsController )
-            session.SaveScript( scriptName, autoRun );
+        {
+            if ( autoRun )
+                session.TurnOnAutoRun( scriptName );
+
+            session.SaveScript( scriptName );
+        }
         else
         {
             session.SetLastAction( $"setting script '{scriptName}' on node {node.Number} to auto run" );

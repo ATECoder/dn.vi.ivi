@@ -1,4 +1,5 @@
 using cc.isr.VI.Pith;
+using cc.isr.VI.Syntax.Tsp;
 
 namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
@@ -144,6 +145,7 @@ public static partial class NodeMethods
     public static void RemoveSavedScript( this Pith.SessionBase session, int nodeNumber, string? scriptName )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
+        if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
         if ( scriptName is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
 
         session.LastNodeNumber = nodeNumber;
@@ -167,5 +169,23 @@ public static partial class NodeMethods
         session.NillScript( nodeNumber, scriptName );
 
         session.ThrowDeviceExceptionIfError();
+    }
+
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that saves a script. </summary>
+    /// <remarks>   2025-04-27. </remarks>
+    /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
+    ///                                                 are null. </exception>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <param name="session">      The session. </param>
+    /// <param name="nodeNumber">   Specifies the subsystem node. </param>
+    /// <param name="scriptName">   Name of the script. </param>
+    public static void SaveScript( this Pith.SessionBase session, int nodeNumber, string scriptName )
+    {
+        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
+        if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
+        if ( scriptName is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
+        session.SetLastAction( $"saving script '{scriptName}' on node {nodeNumber}" );
+        _ = session.ExecuteCommandWaitComplete( nodeNumber, $"script.user.scripts.{scriptName}.save() {cc.isr.VI.Syntax.Tsp.Lua.WaitCommand} " );
     }
 }

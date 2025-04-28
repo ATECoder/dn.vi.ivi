@@ -1,9 +1,71 @@
+using cc.isr.Std.TrimExtensions;
 using cc.isr.VI.Pith;
 
 namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
 public static partial class NodeMethods
 {
+    /// <summary>
+    /// A <see cref="Pith.SessionBase"/> extension method that queries if the script is set to run
+    /// when the instrument starts.
+    /// </summary>
+    /// <remarks>   2025-04-27. </remarks>
+    /// <param name="session">      The session. </param>
+    /// <param name="nodeNumber">   The node number. </param>
+    /// <param name="scriptName">   Name of the script. </param>
+    /// <returns>   True if the script is set to auto run, false if not. </returns>
+    public static bool IsAutoRun( this SessionBase session, int nodeNumber, string scriptName )
+    {
+        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
+        if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
+
+        string reply = session.ExecuteCommandQueryComplete( nodeNumber, $"_G.print( script.user.scripts.{scriptName}.autorun" );
+        return string.Equals( reply.Trim().TrimEndNewLine(), "yes", StringComparison.OrdinalIgnoreCase );
+    }
+
+    /// <summary>   A SessionBase extension method that turn off automatic run. </summary>
+    /// <remarks>   2025-04-27. </remarks>
+    /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
+    ///                                                 are null. </exception>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <param name="session">      The session. </param>
+    /// <param name="nodeNumber">   The node number. </param>
+    /// <param name="scriptName">   Name of the script. </param>
+    public static void TurnOffAutoRun( this SessionBase session, int nodeNumber, string scriptName )
+    {
+        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
+        if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
+
+        if ( session.IsAutoRun( nodeNumber, scriptName ) )
+        {
+            session.SetLastAction( $"setting script '{scriptName}' on node {nodeNumber} to auto run" );
+            _ = session.ExecuteCommandWaitComplete( nodeNumber, $"script.user.scripts.{scriptName}.autorun = \"no\" " );
+        }
+    }
+
+    /// <summary>
+    /// A <see cref="Pith.SessionBase"/> extension method that sets the script to run when the
+    /// instrument starts.
+    /// </summary>
+    /// <remarks>
+    /// 2025-04-22. <para>
+    /// The script must be saved to make this so. </para>
+    /// </remarks>
+    /// <param name="session">      The session. </param>
+    /// <param name="nodeNumber">   The node number. </param>
+    /// <param name="scriptName">   Name of the script. </param>
+    public static void TurnOnAutoRun( this SessionBase session, int nodeNumber, string scriptName )
+    {
+        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
+        if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
+
+        if ( !session.IsAutoRun( nodeNumber, scriptName ) )
+        {
+            session.SetLastAction( $"setting script '{scriptName}' on node {nodeNumber} to auto run" );
+            _ = session.ExecuteCommandWaitComplete( nodeNumber, $"script.user.scripts.{scriptName}.autorun = \"yes\" " );
+        }
+    }
 
     /// <summary>   A <see cref="Pith.SessionBase"/> extension method that queries firmware version. </summary>
     /// <remarks>   2025-04-25. </remarks>
@@ -16,6 +78,8 @@ public static partial class NodeMethods
     public static string QueryFirmwareVersion( this Pith.SessionBase session, int nodeNumber, ScriptInfo script )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
+        if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
+
         return session.IsNil( nodeNumber, script.VersionGetterElement )
             ? Syntax.Tsp.Lua.NilValue
             : session.QueryPrintTrimEnd( nodeNumber, script.VersionGetter ) ?? Syntax.Tsp.Lua.NilValue;
