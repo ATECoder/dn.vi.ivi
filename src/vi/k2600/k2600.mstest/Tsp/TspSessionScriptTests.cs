@@ -80,7 +80,7 @@ public class TspSessionScriptTests : Device.Tests.Base.ScriptTests
     /// <remarks> Finds the resource using the session factory resources manager. </remarks>
     [System.Diagnostics.CodeAnalysis.SuppressMessage( "Globalization", "CA1305:Specify IFormatProvider", Justification = "<Pending>" )]
     [System.Diagnostics.CodeAnalysis.SuppressMessage( "CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "<Pending>" )]
-    [TestMethod( "01. Script Should Load and Run" )]
+    [TestMethod( "01. Script should load and run" )]
     public void ScriptShouldLoadAndRun()
     {
         Assert.IsNotNull( this.Device );
@@ -215,7 +215,7 @@ public class TspSessionScriptTests : Device.Tests.Base.ScriptTests
 
     /// <summary>   (Unit Test Method) script should load and run from file. </summary>
     /// <remarks>   2025-04-10. </remarks>
-    [TestMethod( "02. Script Should Load and run from file" )]
+    [TestMethod( "02. Script should load and run from file" )]
     public void ScriptShouldLoadAndRunFromFile()
     {
         Assert.IsNotNull( this.Device );
@@ -330,7 +330,7 @@ public class TspSessionScriptTests : Device.Tests.Base.ScriptTests
 
     /// <summary>   (Unit Test Method) binary script should load and run from file. </summary>
     /// <remarks>   2025-04-10. </remarks>
-    [TestMethod( "03. Binary Script Should Load and run from file" )]
+    [TestMethod( "03. Binary script should load and run from file" )]
     public void BinaryScriptShouldLoadAndRunFromFile()
     {
         Assert.IsNotNull( this.Device );

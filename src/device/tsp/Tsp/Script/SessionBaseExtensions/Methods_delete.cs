@@ -125,9 +125,9 @@ public static partial class SessionBaseExtensionMethods
         }
 
         if ( removedCount == 0 )
-            Trace.WriteLine( $"No scripts to remove for {frameworkName}." );
+            TraceLastAction( $"No scripts to remove for {frameworkName}." );
         else
-            Trace.WriteLine( $"{removedCount} scripts were removed for {frameworkName}." );
+            TraceLastAction( $"{removedCount} scripts were removed for {frameworkName}." );
     }
 
 }

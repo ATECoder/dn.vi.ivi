@@ -187,5 +187,16 @@ public static partial class NodeMethods
         if ( scriptName is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
         session.SetLastAction( $"saving script '{scriptName}' on node {nodeNumber}" );
         _ = session.ExecuteCommandWaitComplete( nodeNumber, $"script.user.scripts.{scriptName}.save() {cc.isr.VI.Syntax.Tsp.Lua.WaitCommand} " );
+
+        session.ThrowDeviceExceptionIfError();
+
+        session.SetLastAction( $"nulling script '{scriptName}" );
+        session.NillScript( nodeNumber, scriptName );
+
+        session.ThrowDeviceExceptionIfError();
+
+        if ( !session.IsSavedScript( scriptName, nodeNumber ) )
+            throw new InvalidOperationException( $"The script {scriptName} failed to be saved on node {nodeNumber}." );
+
     }
 }

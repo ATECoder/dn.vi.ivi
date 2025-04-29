@@ -90,7 +90,7 @@ public class CurrentSourceTests : Device.Tests.Base.TestBase
 
     /// <summary> (Unit Test Method) source current measure voltage should pass. </summary>
     /// <remarks> David, 2020-10-12. </remarks>
-    [TestMethod( "01. Source Current Measure Voltage Should Read Voltage" )]
+    [TestMethod( "01. Source current measure voltage should read voltage" )]
     public void SourceCurrentMeasureVoltageShouldReadVoltage()
     {
         try

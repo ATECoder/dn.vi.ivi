@@ -24,14 +24,14 @@ public abstract class DeviceStatusOnlyTests
         try
         {
             if ( Logger is null )
-                Trace.WriteLine( "Initializing", methodFullName );
+                OutputMessageMethodLine( "Initializing" );
             else
                 Logger?.LogVerboseMultiLineMessage( "Initializing" );
         }
         catch ( Exception ex )
         {
             if ( Logger is null )
-                Trace.WriteLine( $"Failed initializing the test class: {ex}", methodFullName );
+                OutputMessageMethodLine( $"Failed initializing the test class: {ex}" );
             else
                 Logger.LogExceptionMultiLineMessage( "Failed initializing the test class:", ex );
 
@@ -116,6 +116,32 @@ public abstract class DeviceStatusOnlyTests
     /// <value> The logger. </value>
     public static ILogger<DeviceStatusOnlyTests>? Logger { get; } = LoggerProvider.CreateLogger<DeviceStatusOnlyTests>();
 
+    /// <summary>   Output message with a full member line. </summary>
+    /// <remarks>   2025-04-28. </remarks>
+    /// <param name="message">          The message. </param>
+    /// <param name="memberName">       (Optional) Name of the member. </param>
+    /// <param name="sourcePath">       (Optional) Full pathname of the source file. </param>
+    /// <param name="sourceLineNumber"> (Optional) Source line number. </param>
+    public static void OutputMessageMemberLine( string message,
+        [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
+        [System.Runtime.CompilerServices.CallerFilePath] string sourcePath = "",
+        [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0 )
+    {
+        Console.WriteLine( $"{message} @[{sourcePath}].{memberName}.Line#{sourceLineNumber}" );
+    }
+
+    /// <summary>   Output message method line. </summary>
+    /// <remarks>   2025-04-28. </remarks>
+    /// <param name="message">          The message. </param>
+    /// <param name="memberName">       (Optional) Name of the member. </param>
+    /// <param name="sourceLineNumber"> (Optional) Source line number. </param>
+    public static void OutputMessageMethodLine( string message,
+        [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
+        [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0 )
+    {
+        Console.WriteLine( $"{message} @[{memberName}.Line#{sourceLineNumber}" );
+    }
+
     #endregion
 
     #region " settings "
@@ -138,7 +164,7 @@ public abstract class DeviceStatusOnlyTests
 
     /// <summary>   (Unit Test Method) device should open without device errors. </summary>
     /// <remarks>   David, 2021-07-04. </remarks>
-    [TestMethod( "01. Device Should Open Without Device Errors" )]
+    [TestMethod( "01. Device should open without device errors" )]
     public void DeviceShouldOpenWithoutDeviceErrors()
     {
         Assert.IsNotNull( this.VisaSessionBase );
@@ -163,7 +189,7 @@ public abstract class DeviceStatusOnlyTests
 
     /// <summary>   (Unit Test Method) message available should wait for. </summary>
     /// <remarks>   David, 2021-07-04. </remarks>
-    [TestMethod( "02. Message Available Should Wait For" )]
+    [TestMethod( "02. Message available should wait for" )]
     public void MessageAvailableShouldWaitFor()
     {
         Assert.IsNotNull( this.VisaSessionBase );
@@ -190,7 +216,7 @@ public abstract class DeviceStatusOnlyTests
 
     /// <summary>   (Unit Test Method) operation completion should wait for. </summary>
     /// <remarks>   David, 2021-07-04. </remarks>
-    [TestMethod( "03. Operation Completion Should Wait For" )]
+    [TestMethod( "03. Operation completion should wait for" )]
     public void OperationCompletionShouldWaitFor()
     {
         Assert.IsNotNull( this.VisaSessionBase );
@@ -220,7 +246,7 @@ public abstract class DeviceStatusOnlyTests
     #region " poll tests "
 
     /// <summary> (Unit Test Method) tests device polling. </summary>
-    [TestMethod( "04. Device Should Be Polled" )]
+    [TestMethod( "04. Device should be polled" )]
     public void DeviceShouldBePolled()
     {
         Assert.IsNotNull( this.VisaSessionBase );
@@ -247,7 +273,7 @@ public abstract class DeviceStatusOnlyTests
 
     /// <summary>   (Unit Test Method) requesting service should be enabled by session. </summary>
     /// <remarks>   David, 2021-11-29. </remarks>
-    [TestMethod( "05. Requesting Service Should Be Exists By Session" )]
+    [TestMethod( "05. Requesting service should be enabled by session" )]
     public void RequestingServiceShouldBeEnabledBySession()
     {
         Assert.IsNotNull( this.VisaSessionBase );

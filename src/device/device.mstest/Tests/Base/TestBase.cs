@@ -117,6 +117,32 @@ public abstract class TestBase
     /// <value> The logger. </value>
     public static ILogger<TestBase>? Logger { get; } = LoggerProvider.CreateLogger<TestBase>();
 
+    /// <summary>   Output full member. </summary>
+    /// <remarks>   2025-04-28. </remarks>
+    /// <param name="message">          The message. </param>
+    /// <param name="memberName">       (Optional) Name of the member. </param>
+    /// <param name="sourcePath">       (Optional) Full pathname of the source file. </param>
+    /// <param name="sourceLineNumber"> (Optional) Source line number. </param>
+    public static void OutputFullMember( string message,
+        [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
+        [System.Runtime.CompilerServices.CallerFilePath] string sourcePath = "",
+        [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0 )
+    {
+        Console.WriteLine( $"[{sourcePath}].{memberName}.Line#{sourceLineNumber}:\r\n\t{message}" );
+    }
+
+    /// <summary>   Output member. </summary>
+    /// <remarks>   2025-04-28. </remarks>
+    /// <param name="message">          The message. </param>
+    /// <param name="memberName">       (Optional) Name of the member. </param>
+    /// <param name="sourceLineNumber"> (Optional) Source line number. </param>
+    public static void OutputMember( string message,
+        [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
+        [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0 )
+    {
+        Console.WriteLine( $"{memberName}.Line#{sourceLineNumber}::\r\n\t{message}" );
+    }
+
     #endregion
 
     #region " settings "
@@ -158,7 +184,7 @@ public abstract class TestBase
         }
         TimeSpan elapsed = sw.Elapsed;
         Assert.IsTrue( pinged, $"{resourceSettings.ResourceName} ping failed after {elapsed:s\\.fff}s after {trials} trials." );
-        Console.Out.WriteLine( $"\n{resourceSettings.ResourceName} pinged in {elapsed:s\\.fff}s after {trials} trials.\n" );
+        TestBase.OutputMember( $"\n{resourceSettings.ResourceName} pinged in {elapsed:s\\.fff}s after {trials} trials.\n" );
     }
 
     /// <summary>   (Unit Test Method) settings is local pacific standard time. </summary>

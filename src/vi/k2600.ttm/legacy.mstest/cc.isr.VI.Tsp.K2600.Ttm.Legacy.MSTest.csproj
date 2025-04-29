@@ -68,21 +68,21 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="CandidateResources.json">
+    <Content Include="CandidateResources.json">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </None>
-    <None Update="cc.isr.VI.Tsp.K2600.Ttm.Legacy.MSTest.Driver.json">
+    </Content>
+    <Content Include="cc.isr.VI.Tsp.K2600.Ttm.Legacy.MSTest.Driver.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="cc.isr.VI.Tsp.K2600.Ttm.Legacy.MSTest.Serilog.json">
+    </Content>
+    <Content Include="cc.isr.VI.Tsp.K2600.Ttm.Legacy.MSTest.Serilog.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="cc.isr.VI.Tsp.K2600.Ttm.Legacy.MSTest.Session.json">
+    </Content>
+    <Content Include="cc.isr.VI.Tsp.K2600.Ttm.Legacy.MSTest.Session.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="cc.isr.VI.Tsp.K2600.Ttm.Legacy.MSTest.Settings.json">
+    </Content>
+    <Content Include="cc.isr.VI.Tsp.K2600.Ttm.Legacy.MSTest.Settings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
 
   <Import Project="..\legacy\version.build.props" />

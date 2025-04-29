@@ -74,7 +74,7 @@
     <!-- Suppress warning about newton soft 9.0.1 which is part of the .net fx testing extensions code coverage. -->
     <NuGetAuditSuppress Include="https://github.com/advisories/GHSA-5crp-9r3c-p9vr" />
     <ProjectReference Include="..\..\..\..\..\core\std\src\mstest\mstest\cc.isr.Std.MSTest.csproj" />
-    <None Update="cc.isr.VI.WinControls.MSTest.Settings.json">
+    <Content Include="cc.isr.VI.WinControls.MSTest.Settings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <!-- Already included with the default profile of the MSTest.SDK

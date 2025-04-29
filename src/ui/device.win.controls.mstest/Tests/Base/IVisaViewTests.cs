@@ -24,17 +24,13 @@ public abstract class IVisaViewTests
         string methodFullName = $"{testContext.FullyQualifiedTestClassName}.{System.Reflection.MethodBase.GetCurrentMethod()?.Name}";
         try
         {
-            if ( Logger is null )
-                Trace.WriteLine( "Initializing", methodFullName );
-            else
-                Logger?.LogVerboseMultiLineMessage( "Initializing" );
+            Console.WriteLine( $"Initializing @[{methodFullName}" );
+            Logger?.LogVerboseMultiLineMessage( "Initializing" );
         }
         catch ( Exception ex )
         {
-            if ( Logger is null )
-                Trace.WriteLine( $"Failed initializing the test class: {ex}", methodFullName );
-            else
-                Logger.LogExceptionMultiLineMessage( "Failed initializing the test class:", ex );
+            Console.WriteLine( $"Failed initializing the test class: {ex}" );
+            Logger?.LogExceptionMultiLineMessage( "Failed initializing the test class:", ex );
 
             // cleanup to meet strong guarantees
 
@@ -142,7 +138,7 @@ public abstract class IVisaViewTests
 
     /// <summary>   (Unit Test Method) tests that a trace message should be queued. </summary>
     /// <remarks>   Checks if the a trace message is added to the trace listener. </remarks>
-    [TestMethod( "01. Trace Message Should Be Queued" )]
+    [TestMethod( "01. Trace message should be queued" )]
     public void TraceMessageShouldBeQueued()
     {
         Asserts.AssertTraceMessageShouldBeQueued();

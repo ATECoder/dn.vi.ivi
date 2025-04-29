@@ -24,14 +24,14 @@ public abstract class DeviceTests
         try
         {
             if ( Logger is null )
-                Trace.WriteLine( "Initializing", methodFullName );
+                Console.WriteLine( $"Initializing @{methodFullName}" );
             else
                 Logger?.LogVerboseMultiLineMessage( "Initializing" );
         }
         catch ( Exception ex )
         {
             if ( Logger is null )
-                Trace.WriteLine( $"Failed initializing the test class: {ex}", methodFullName );
+                Console.WriteLine( $"Failed initializing the test class: {ex}" );
             else
                 Logger.LogExceptionMultiLineMessage( "Failed initializing the test class:", ex );
 
@@ -116,6 +116,32 @@ public abstract class DeviceTests
     /// <value> The logger. </value>
     public static ILogger<DeviceTests>? Logger { get; } = LoggerProvider.CreateLogger<DeviceTests>();
 
+    /// <summary>   Output message with a full member line. </summary>
+    /// <remarks>   2025-04-28. </remarks>
+    /// <param name="message">          The message. </param>
+    /// <param name="memberName">       (Optional) Name of the member. </param>
+    /// <param name="sourcePath">       (Optional) Full pathname of the source file. </param>
+    /// <param name="sourceLineNumber"> (Optional) Source line number. </param>
+    public static void OutputMessageMemberLine( string message,
+        [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
+        [System.Runtime.CompilerServices.CallerFilePath] string sourcePath = "",
+        [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0 )
+    {
+        Console.WriteLine( $"{message} @[{sourcePath}].{memberName}.Line#{sourceLineNumber}" );
+    }
+
+    /// <summary>   Output message method line. </summary>
+    /// <remarks>   2025-04-28. </remarks>
+    /// <param name="message">          The message. </param>
+    /// <param name="memberName">       (Optional) Name of the member. </param>
+    /// <param name="sourceLineNumber"> (Optional) Source line number. </param>
+    public static void OutputMessageMethodLine( string message,
+        [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
+        [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0 )
+    {
+        Console.WriteLine( $"{message} @[{memberName}.Line#{sourceLineNumber}" );
+    }
+
     #endregion
 
     #region " settings "
@@ -142,7 +168,7 @@ public abstract class DeviceTests
 
     /// <summary>   (Unit Test Method) trace message should be queued. </summary>
     /// <remarks>   Checks if the device adds a trace message to a trace listener. </remarks>
-    [TestMethod( "01. Trace Message Should Be Queued" )]
+    [TestMethod( "01. Trace message should be queued" )]
     public void TraceMessageShouldBeQueued()
     {
         Assert.IsNotNull( this.VisaSessionBase );
@@ -155,7 +181,7 @@ public abstract class DeviceTests
 
     /// <summary> (Unit Test Method) queries if a given visa session base should open. </summary>
     /// <remarks> David, 2020-10-12. </remarks>
-    [TestMethod( "02. Visa Session Base Should Open" )]
+    [TestMethod( "02. Visa Session Base should open" )]
     public void VisaSessionBaseShouldOpen()
     {
         Assert.IsNotNull( this.VisaSessionBase );
@@ -179,7 +205,7 @@ public abstract class DeviceTests
 
     /// <summary>   (Unit Test Method) device should open without device errors. </summary>
     /// <remarks>   Tests opening and closing a VISA session. </remarks>
-    [TestMethod( "03. Device Should Open Without Device Errors" )]
+    [TestMethod( "03. Device should open without device errors" )]
     public void DeviceShouldOpenWithoutDeviceErrors()
     {
         Assert.IsNotNull( this.VisaSessionBase );
@@ -200,7 +226,7 @@ public abstract class DeviceTests
         }
     }
 
-    [TestMethod( "04. Session Should Collect Garbage" )]
+    [TestMethod( "04. Session should collect garbage" )]
     public void SessionShouldCollectGarbage()
     {
         Assert.IsNotNull( this.VisaSessionBase );
@@ -225,7 +251,7 @@ public abstract class DeviceTests
     #region " Session Base "
 
     /// <summary> (Unit Test Method) tests session should read device errors. </summary>
-    [TestMethod( "05. Session Should Read Device Error" )]
+    [TestMethod( "05. Session should read device error" )]
     public void SessionShouldReadDeviceErrors()
     {
         Assert.IsNotNull( this.VisaSessionBase );
@@ -258,7 +284,7 @@ public abstract class DeviceTests
     }
 
     /// <summary> (Unit Test Method) tests session should clear device errors. </summary>
-    [TestMethod( "06. Session Should Clear Device Error" )]
+    [TestMethod( "06. Session should clear device error" )]
     public void SessionShouldClearDeviceErrors()
     {
         Assert.IsNotNull( this.VisaSessionBase );

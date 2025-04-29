@@ -32,11 +32,11 @@ public class ContactTests
         string methodFullName = $"{testContext.FullyQualifiedTestClassName}.{System.Reflection.MethodBase.GetCurrentMethod()?.Name}";
         try
         {
-            Trace.WriteLine( "Initializing", methodFullName );
+            OutputMessageMethodLine( "Initializing" );
         }
         catch ( Exception ex )
         {
-            Trace.WriteLine( $"Failed initializing the test class: {ex}", methodFullName );
+            OutputMessageMethodLine( $"Failed initializing the test class: {ex}" );
 
             // cleanup to meet strong guarantees
 
@@ -112,6 +112,32 @@ public class ContactTests
         SessionLogger.CloseAndFlush();
     }
 
+    /// <summary>   Output message with a full member line. </summary>
+    /// <remarks>   2025-04-28. </remarks>
+    /// <param name="message">          The message. </param>
+    /// <param name="memberName">       (Optional) Name of the member. </param>
+    /// <param name="sourcePath">       (Optional) Full pathname of the source file. </param>
+    /// <param name="sourceLineNumber"> (Optional) Source line number. </param>
+    public static void OutputMessageMemberLine( string message,
+        [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
+        [System.Runtime.CompilerServices.CallerFilePath] string sourcePath = "",
+        [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0 )
+    {
+        Console.WriteLine( $"{message} @[{sourcePath}].{memberName}.Line#{sourceLineNumber}" );
+    }
+
+    /// <summary>   Output message method line. </summary>
+    /// <remarks>   2025-04-28. </remarks>
+    /// <param name="message">          The message. </param>
+    /// <param name="memberName">       (Optional) Name of the member. </param>
+    /// <param name="sourceLineNumber"> (Optional) Source line number. </param>
+    public static void OutputMessageMethodLine( string message,
+        [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
+        [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0 )
+    {
+        Console.WriteLine( $"{message} @[{memberName}.Line#{sourceLineNumber}" );
+    }
+
     #endregion
 
     #region " settings "
@@ -148,7 +174,7 @@ public class ContactTests
 
     /// <summary>   (Unit Test Method) measurement should trigger but fail open contact. </summary>
     /// <remarks>   2024-11-15. </remarks>
-    [TestMethod( "01. Measurement Should Fail Open Contact" )]
+    [TestMethod( "01. Measurement should fail open contact" )]
     public void MeasurementShouldFailOpenContact()
     {
         Assert.IsNotNull( this.LegacyDevice, $"{nameof( this.LegacyDevice )} should not be null." );

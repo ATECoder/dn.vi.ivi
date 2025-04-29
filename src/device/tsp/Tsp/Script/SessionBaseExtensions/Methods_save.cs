@@ -139,8 +139,7 @@ public static partial class SessionBaseExtensionMethods
     ///                                                 invalid. </exception>
     /// <param name="session">      The session to act on. </param>
     /// <param name="scriptName">   Name of the script. </param>
-    /// <param name="throwIfAlreadySaved">    (Optional) [false] True to skip if the script is already saved. </param>
-    public static void SaveScript( this SessionBase session, string scriptName, bool throwIfAlreadySaved = false )
+    public static void SaveScript( this SessionBase session, string scriptName )
     {
         if ( session == null )
             throw new ArgumentNullException( nameof( session ) );
@@ -156,16 +155,6 @@ public static partial class SessionBaseExtensionMethods
 
         session.SetLastAction( $"checking if the {scriptName} saved script exists;. " );
         session.LastNodeNumber = default;
-        if ( session.IsSavedScript( scriptName ) )
-        {
-            if ( throwIfAlreadySaved )
-                throw new InvalidOperationException( $"The script {scriptName} is already saved." );
-            else
-            {
-                session.TraceLastAction( $"Skipping {scriptName} script, which is already saved;. " );
-                return;
-            }
-        }
 
         session.TraceLastAction( $"saving the {scriptName} script;. " );
         _ = session.WriteLine( $"{scriptName}.save()" );
@@ -180,5 +169,8 @@ public static partial class SessionBaseExtensionMethods
 
         // throw if device error occurred
         session.ThrowDeviceExceptionIfError();
+
+        if ( !session.IsSavedScript( scriptName ) )
+            throw new InvalidOperationException( $"The script {scriptName} failed to be saved." );
     }
 }

@@ -53,7 +53,7 @@ public class VisaTreeViewTests : cc.isr.VI.DeviceWinControls.Tests.Base.IVisaVie
 
         VisaSession visaSession = new();
         Assert.IsNotNull( visaSession.Session );
-        Assert.AreEqual( VI.Syntax.Tsp.Lua.ClearExecutionStateCommand, visaSession.Session.ClearExecutionStateCommand );
+        Assert.AreEqual( VI.Syntax.Ieee488Syntax.ClearExecutionStateCommand, visaSession.Session.ClearExecutionStateCommand );
         visaSession.Session.ReadSettings( this.GetType().Assembly, ".Session", true, true );
         Assert.IsTrue( visaSession.Session.TimingSettings.Exists,
             $"{nameof( VisaSession )}.{nameof( VisaSession.Session )}.{nameof( VisaSession.Session.TimingSettings )} does not exist." );
@@ -80,7 +80,7 @@ public class VisaTreeViewTests : cc.isr.VI.DeviceWinControls.Tests.Base.IVisaVie
 
     /// <summary> (Unit Test Method) asserts that a resource name should be selected. </summary>
     /// <remarks> David, 2020-10-12. </remarks>
-    [TestMethod( "02. Visa Tree View Resource Name Should Be Selected." )]
+    [TestMethod( "02. Visa tree view resource name should be selected" )]
     public void ResourceNameShouldBeSelected()
     {
         using VisaTreeView? view = new( this.VisaSessionBase );
@@ -113,7 +113,7 @@ public class VisaTreeViewTests : cc.isr.VI.DeviceWinControls.Tests.Base.IVisaVie
 
     /// <summary>   (Unit Test Method) asserts that a visa session should open and close twice. </summary>
     /// <remarks> David, 2020-10-12. </remarks>
-    [TestMethod( "04. Visa Tree View Session Should Open Twice." )]
+    [TestMethod( "04. Visa tree view session should open twice" )]
     public void VisaTreeViewSessionShouldOpenTwice()
     {
         Assert.IsNotNull( this.VisaSessionBase, $"{nameof( this.VisaSessionBase )} should not be null." );
@@ -146,7 +146,7 @@ public class VisaTreeViewTests : cc.isr.VI.DeviceWinControls.Tests.Base.IVisaVie
 
     /// <summary>   (Unit Test Method) asserts that a visa session should bind a visa session. </summary>
     /// <remarks> David, 2020-10-12. </remarks>
-    [TestMethod( "05. Visa Tree View Should Bind a Visa Session." )]
+    [TestMethod( "05. Visa tree view should bind a Visa session" )]
     public void VisaTreeViewShouldBindVisaSession()
     {
         int trialNumber = 0;
@@ -157,7 +157,7 @@ public class VisaTreeViewTests : cc.isr.VI.DeviceWinControls.Tests.Base.IVisaVie
 
     /// <summary>   (Unit Test Method) asserts that a visa session should open and close twice. </summary>
     /// <remarks> David, 2020-10-12. </remarks>
-    [TestMethod( "06. Visa Tree View Should Bind an Open Visa Session." )]
+    [TestMethod( "06. Visa tree view should bind an open Visa session" )]
     public void VisaTreeViewShouldBindOpenVisaSession()
     {
         int trialNumber = 0;

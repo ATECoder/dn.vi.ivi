@@ -136,7 +136,7 @@ public class TspSessionDebugScriptTests : Device.Tests.Base.ScriptTests
 
     /// <summary>   (Unit Test Method) script should import and run. </summary>
     /// <remarks>   2025-04-20. </remarks>
-    [TestMethod( "01. Script Should Import and run" )]
+    [TestMethod( "01. Script should import and run" )]
     public void ScriptShouldImportAndRun()
     {
         Assert.IsNotNull( this.Device );
@@ -174,7 +174,7 @@ public class TspSessionDebugScriptTests : Device.Tests.Base.ScriptTests
 
     /// <summary>   (Unit Test Method) binary script should import and run. </summary>
     /// <remarks>   2025-04-20. </remarks>
-    [TestMethod( "02. Binary Script Should Import and run" )]
+    [TestMethod( "02. Binary script should import and run" )]
     public void BinaryScriptShouldImportAndRun()
     {
         Assert.IsNotNull( this.Device );

@@ -33,11 +33,11 @@ public class FirmwareTests
         string methodFullName = $"{testContext.FullyQualifiedTestClassName}.{System.Reflection.MethodBase.GetCurrentMethod()?.Name}";
         try
         {
-            Trace.WriteLine( "Initializing", methodFullName );
+            Console.WriteLine( $"Initializing @[{methodFullName}" );
         }
         catch ( Exception ex )
         {
-            Trace.WriteLine( $"Failed initializing the test class: {ex}", methodFullName );
+            Console.WriteLine( $"Failed initializing the test class: {ex}" );
 
             // cleanup to meet strong guarantees
 
@@ -128,7 +128,7 @@ public class FirmwareTests
     /// The synchronization context is captured as part of the property change and other event
     /// handlers and is no longer needed here.
     /// </remarks>
-    [TestMethod( "01. Session Should Open" )]
+    [TestMethod( "01. Session should open" )]
     public void SessionShouldOpen()
     {
         using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( this.ResourceSettings.ResourceName );
@@ -137,7 +137,7 @@ public class FirmwareTests
 
     /// <summary>   (Unit Test Method) Assert that a current should be measured. </summary>
     /// <remarks>   David, 2020-10-12. </remarks>
-    [TestMethod( "02. Current Should Measure" )]
+    [TestMethod( "02. Current should measure" )]
     public void CurrentShouldMeasure()
     {
         string resourceName = this.ResourceSettings.ResourceName;
@@ -149,7 +149,7 @@ public class FirmwareTests
 
     /// <summary> (Unit Test Method) Assert that current should be measured multiple times. </summary>
     /// <remarks> David, 2020-10-12. </remarks>
-    [TestMethod( "03. Current Should Be Measured Multiple Times" )]
+    [TestMethod( "03. Current should be measured multiple times" )]
     public void CurrentShouldBeMeasuredMultipleTimes()
     {
         string resourceName = this.ResourceSettings.ResourceName;
@@ -165,7 +165,7 @@ public class FirmwareTests
 
     /// <summary>   (Unit Test Method) tsp syntax should not fail. </summary>
     /// <remarks>   2025-02-06. </remarks>
-    [TestMethod( "04. TSP Syntax Should Not Fail" )]
+    [TestMethod( "04. TSP syntax should not fail" )]
     public void TspSyntaxShouldNotFail()
     {
         string resourceName = this.ResourceSettings.ResourceName;
@@ -177,7 +177,7 @@ public class FirmwareTests
 
     /// <summary>   (Unit Test Method) meter value should reset. </summary>
     /// <remarks>   2025-02-06. </remarks>
-    [TestMethod( "05. Meter Value Should Reset" )]
+    [TestMethod( "05. Meter value should reset" )]
     public void MeterValueShouldReset()
     {
         string resourceName = this.ResourceSettings.ResourceName;
@@ -189,7 +189,7 @@ public class FirmwareTests
 
     /// <summary>   (Unit Test Method) cold resistance defaults should equal settings. </summary>
     /// <remarks>   2025-02-06. </remarks>
-    [TestMethod( "06. Cold Resistance Defaults Should Equal Settings" )]
+    [TestMethod( "06. Cold resistance defaults should equal settings" )]
     public void ColdResistanceDefaultsShouldEqualSettings()
     {
         string resourceName = this.ResourceSettings.ResourceName;
@@ -201,7 +201,7 @@ public class FirmwareTests
 
     /// <summary>   (Unit Test Method) initial resistance should reset. </summary>
     /// <remarks>   2025-02-06. </remarks>
-    [TestMethod( "07. InitialResistanceShouldReset" )]
+    [TestMethod( "07. Initial resistance should reset" )]
     public void InitialResistanceShouldReset()
     {
         string resourceName = this.ResourceSettings.ResourceName;
@@ -211,7 +211,7 @@ public class FirmwareTests
         Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertColdResistanceShouldReset )}" );
     }
 
-    [TestMethod( "08. Final Resistance Should Reset" )]
+    [TestMethod( "08. Final resistance should reset" )]
     public void FinalResistanceShouldReset()
     {
         string resourceName = this.ResourceSettings.ResourceName;
@@ -221,7 +221,7 @@ public class FirmwareTests
         Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertColdResistanceShouldReset )}" );
     }
 
-    [TestMethod( "09. Estimator Should Reset" )]
+    [TestMethod( "09. Estimator should reset" )]
     public void EstimatorShouldReset()
     {
         string resourceName = this.ResourceSettings.ResourceName;
@@ -233,7 +233,7 @@ public class FirmwareTests
 
     /// <summary>   (Unit Test Method) thermal transient defaults should equal settings. </summary>
     /// <remarks>   2025-02-18. </remarks>
-    [TestMethod( "10. Thermal Transient Defaults Should Equal Settings" )]
+    [TestMethod( "10. Thermal transient defaults should equal settings" )]
     public void ThermalTransientDefaultsShouldEqualSettings()
     {
         string resourceName = this.ResourceSettings.ResourceName;
@@ -245,7 +245,7 @@ public class FirmwareTests
 
     /// <summary>   (Unit Test Method) thermal transient should reset. </summary>
     /// <remarks>   2025-02-18. </remarks>
-    [TestMethod( "11. ThermalTransientShouldReset" )]
+    [TestMethod( "11. Thermal transient should reset" )]
     public void ThermalTransientShouldReset()
     {
         string resourceName = this.ResourceSettings.ResourceName;

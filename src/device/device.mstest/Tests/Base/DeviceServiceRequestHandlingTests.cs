@@ -24,14 +24,14 @@ public abstract class DeviceServiceRequestTests
         try
         {
             if ( Logger is null )
-                Trace.WriteLine( "Initializing", methodFullName );
+                OutputMessageMethodLine( "Initializing" );
             else
                 Logger?.LogVerboseMultiLineMessage( "Initializing" );
         }
         catch ( Exception ex )
         {
             if ( Logger is null )
-                Trace.WriteLine( $"Failed initializing the test class: {ex}", methodFullName );
+                OutputMessageMethodLine( $"Failed initializing the test class: {ex}" );
             else
                 Logger.LogExceptionMultiLineMessage( "Failed initializing the test class:", ex );
 
@@ -116,6 +116,32 @@ public abstract class DeviceServiceRequestTests
     /// <value> The logger. </value>
     public static ILogger<DeviceServiceRequestTests>? Logger { get; } = LoggerProvider.CreateLogger<DeviceServiceRequestTests>();
 
+    /// <summary>   Output message with a full member line. </summary>
+    /// <remarks>   2025-04-28. </remarks>
+    /// <param name="message">          The message. </param>
+    /// <param name="memberName">       (Optional) Name of the member. </param>
+    /// <param name="sourcePath">       (Optional) Full pathname of the source file. </param>
+    /// <param name="sourceLineNumber"> (Optional) Source line number. </param>
+    public static void OutputMessageMemberLine( string message,
+        [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
+        [System.Runtime.CompilerServices.CallerFilePath] string sourcePath = "",
+        [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0 )
+    {
+        Console.WriteLine( $"{message} @[{sourcePath}].{memberName}.Line#{sourceLineNumber}" );
+    }
+
+    /// <summary>   Output message method line. </summary>
+    /// <remarks>   2025-04-28. </remarks>
+    /// <param name="message">          The message. </param>
+    /// <param name="memberName">       (Optional) Name of the member. </param>
+    /// <param name="sourceLineNumber"> (Optional) Source line number. </param>
+    public static void OutputMessageMethodLine( string message,
+        [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
+        [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0 )
+    {
+        Console.WriteLine( $"{message} @[{memberName}.Line#{sourceLineNumber}" );
+    }
+
     #endregion
 
     #region " settings "
@@ -138,7 +164,7 @@ public abstract class DeviceServiceRequestTests
 
     /// <summary>   (Unit Test Method) device should open without device errors. </summary>
     /// <remarks>   David, 2021-07-04. </remarks>
-    [TestMethod( "01. Device Should Open Without Device Errors" )]
+    [TestMethod( "01. Device should open without device errors" )]
     public void DeviceShouldOpenWithoutDeviceErrors()
     {
         Assert.IsNotNull( this.VisaSessionBase );
@@ -166,7 +192,7 @@ public abstract class DeviceServiceRequestTests
     /// <remarks>
     /// This test will fail the first time it is run if Windows requests access through the Firewall.
     /// </remarks>
-    [TestMethod( "02. Service Request Handling Should Toggle" )]
+    [TestMethod( "02. Service request handling should toggle" )]
     public void ServiceRequestHandlingShouldToggle()
     {
         Assert.IsNotNull( this.VisaSessionBase );
@@ -189,7 +215,7 @@ public abstract class DeviceServiceRequestTests
 
     /// <summary>   (Unit Test Method) service request should be handled by session. </summary>
     /// <remarks>   David, 2021-07-04. </remarks>
-    [TestMethod( "03. Service Request Should Be Handled By Session" )]
+    [TestMethod( "03. Service request should be handled by session" )]
     public void ServiceRequestShouldBeHandledBySession()
     {
         Assert.IsNotNull( this.VisaSessionBase );
@@ -214,7 +240,7 @@ public abstract class DeviceServiceRequestTests
     /// <remarks>
     /// This test will fail the first time it is run if Windows requests access through the Firewall.
     /// </remarks>
-    [TestMethod( "04. Service Request Should Be Handled By Device" )]
+    [TestMethod( "04. Service request should be handled by device" )]
     public void ServiceRequestShouldBeHandledByDevice()
     {
         Assert.IsNotNull( this.VisaSessionBase );

@@ -32,11 +32,11 @@ public class DeviceTests
         string methodFullName = $"{testContext.FullyQualifiedTestClassName}.{System.Reflection.MethodBase.GetCurrentMethod()?.Name}";
         try
         {
-            Trace.WriteLine( "Initializing", methodFullName );
+            Console.WriteLine( $"Initializing @[{methodFullName}" );
         }
         catch ( Exception ex )
         {
-            Trace.WriteLine( $"Failed initializing the test class: {ex}", methodFullName );
+            Console.WriteLine( $"Failed initializing the test class: {ex}" );
 
             // cleanup to meet strong guarantees
 
@@ -151,7 +151,7 @@ public class DeviceTests
     /// The synchronization context is captured as part of the property change and other event
     /// handlers and is no longer needed here.
     /// </remarks>
-    [TestMethod( "01. Session Should Open" )]
+    [TestMethod( "01. Session should open" )]
     public void SessionShouldOpen()
     {
         Assert.IsNotNull( this.LegacyDevice, $"{nameof( this.LegacyDevice )} should not be null." );

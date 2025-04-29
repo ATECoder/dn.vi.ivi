@@ -84,7 +84,10 @@ public class AllSettings
     /// <returns>   The new instance. </returns>
     private AppSettingsScribe CreateScribe( AssemblyFileInfo settingsFileInfo )
     {
-        AppSettingsScribe scribe = new( [this.TestSiteSettings, this.ResourceSettings, this.DisplayViewSettings], settingsFileInfo );
+        AppSettingsScribe scribe = new( [this.TestSiteSettings, this.ResourceSettings, this.DisplayViewSettings], settingsFileInfo )
+        {
+            SerializerOptions = AppSettingsScribe.CsvRgbColorSerializerOptions
+        };
 
         scribe.ReadSettings();
 

@@ -109,7 +109,7 @@ public class TspScriptTests
 
     /// <summary>   (Unit Test Method) string compressor should compress. </summary>
     /// <remarks>   2025-04-08. </remarks>
-    [TestMethod( "01. Script Compressor Should Compress" )]
+    [TestMethod( "01. Script compressor should compress" )]
     public void ScriptCompressorShouldCompress()
     {
         string contents = "StringStringStringStringStringStringStringStringStringStringStringStringStringString -- end comment";
@@ -123,7 +123,7 @@ public class TspScriptTests
     /// <remarks>   2025-04-16. </remarks>
     [System.Diagnostics.CodeAnalysis.SuppressMessage( "Globalization", "CA1305:Specify IFormatProvider", Justification = "<Pending>" )]
     [System.Diagnostics.CodeAnalysis.SuppressMessage( "CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "<Pending>" )]
-    [TestMethod( "02. Script Should trim and compress" )]
+    [TestMethod( "02. Script should trim and compress" )]
     public void ScriptShouldTrimAndCompress()
     {
         System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();

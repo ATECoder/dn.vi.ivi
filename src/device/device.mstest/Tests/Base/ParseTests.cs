@@ -156,7 +156,7 @@ public abstract class ParseTests
 
     /// <summary> (Unit Test Method) Assert that nullable value should correctly equate. </summary>
     /// <remarks> David, 2020-10-28. </remarks>
-    [TestMethod( "01. Nullable Values Should Equate" )]
+    [TestMethod( "01. Nullable values should equate" )]
     public void NullableValuesShouldEquate()
     {
         Assert.AreEqual( new bool?(), new bool?(), "? New Boolean? = New Boolean?" );
@@ -176,14 +176,14 @@ public abstract class ParseTests
     }
 
     /// <summary> (Unit Test Method) assert that enum values should parse. </summary>
-    [TestMethod( "02. Enum Value Should Parse" )]
+    [TestMethod( "02. Enum value should parse" )]
     public void EnumValueShouldParse()
     {
         ParseEnumValueTestHelper<TraceEventType>( "2", TraceEventType.Error );
     }
 
     /// <summary> (Unit Test Method) assert that boolean values should parse. </summary>
-    [TestMethod( "03. Boolean Values Should Parse" )]
+    [TestMethod( "03. Boolean values should parse" )]
     public void BooleanValuesShouldParse()
     {
         string reading = "0";
@@ -200,7 +200,7 @@ public abstract class ParseTests
 
     /// <summary> (Unit Test Method) assert that enum names function should return the expected values. </summary>
     /// <remarks> David, 2020-10-28. </remarks>
-    [TestMethod( "04. Enum Names Should Return Expected Value" )]
+    [TestMethod( "04. Enum names should return expected value" )]
     public void EnumNamesShouldReturnExpectedValue()
     {
         TraceEventType traceEvent = TraceEventType.Verbose;
@@ -268,7 +268,7 @@ public abstract class ParseTests
     }
 
     /// <summary> (Unit Test Method) Assert that enum read write values should be selected. </summary>
-    [TestMethod( "05. Enum Read Write Values Should Be Selected" )]
+    [TestMethod( "05. Enum read write values should be selected" )]
     public void EnumReadWriteValuesShouldBeSelected()
     {
         Pith.EnumReadWriteCollection enumReadWrites = [];
@@ -293,7 +293,7 @@ public abstract class ParseTests
     #region " buffer readings tests "
 
     /// <summary> (Unit Test Method) Assert that a buffer reading should parse to unit amount. </summary>
-    [TestMethod( "06. Buffer Reading Should Parse to Unit Amount" )]
+    [TestMethod( "06. Buffer reading should parse to unit amount" )]
     public void BufferReadingShouldToUnitAmount()
     {
         double expectedValue = 1.234d;
@@ -349,7 +349,7 @@ public abstract class ParseTests
     }
 
     /// <summary> (Unit Test Method) Assert that the bitmap dictionary should build. </summary>
-    [TestMethod( "07. Bitmap Dictionary Should Build" )]
+    [TestMethod( "07. Bitmap dictionary should build" )]
     public void BitmapDictionaryShouldBuild()
     {
         MeasurementEventsBitmaskDictionary measurementBitmasks = [];

@@ -68,7 +68,7 @@ public sealed partial class Asserts
         Assert.IsTrue( success, $"Failed to open session: {details}" );
 
         Assert.IsTrue( success, $"Failed to open session: {details}" );
-        Console.Out.WriteLine( $"{resourceSettings.ResourceName} is open" );
+        TestBase.OutputMember( $"{resourceSettings.ResourceName} is open" );
 
         // the device must be initialized so as to define the controller node.
         // this also clears any existing errors from previous tests.
@@ -82,7 +82,6 @@ public sealed partial class Asserts
             _ = device.Session.TryQueryAndReportDeviceErrors( device.Session.ReadStatusByte() );
 
         Asserts.AssertMessageQueue();
-        Console.Out.WriteLine( $"{resourceSettings.ResourceName} is open" );
     }
 
     /// <summary>   Assert session should open. </summary>
@@ -107,7 +106,7 @@ public sealed partial class Asserts
         (bool success, string details) = device.TryOpenSession( resourceSettings.ResourceName, resourceSettings.ResourceModel );
 
         Assert.IsTrue( success, $"Failed to open session: {details}" );
-        Console.Out.WriteLine( $"{resourceSettings.ResourceName} is open" );
+        TestBase.OutputMember( $"{resourceSettings.ResourceName} is open" );
 
         // the device must be initialized so as to define the controller node.
         // this also clears any existing errors from previous tests.

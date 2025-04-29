@@ -80,7 +80,7 @@ public class VisaViewTests : cc.isr.VI.DeviceWinControls.Tests.Base.IVisaViewTes
 
     /// <summary> (Unit Test Method) asserts that a resource name should be selected. </summary>
     /// <remarks> David, 2020-10-12. </remarks>
-    [TestMethod( "02. Visa View Resource Name Should Be Selected." )]
+    [TestMethod( "02. Visa view resource name should be selected" )]
     public void ResourceNameShouldBeSelected()
     {
         using VisaView? view = new( this.VisaSessionBase );
@@ -89,7 +89,7 @@ public class VisaViewTests : cc.isr.VI.DeviceWinControls.Tests.Base.IVisaViewTes
 
     /// <summary>   (Unit Test Method) asserts that a visa session should open. </summary>
     /// <remarks>   David, 2020-10-12. </remarks>
-    [TestMethod( "03. Visa View Session Should Open." )]
+    [TestMethod( "03. Visa view session should open" )]
     public void VisaViewSessionShouldOpen()
     {
         Assert.IsNotNull( this.VisaSessionBase, $"{nameof( this.VisaSessionBase )} should not be null." );
@@ -113,7 +113,7 @@ public class VisaViewTests : cc.isr.VI.DeviceWinControls.Tests.Base.IVisaViewTes
 
     /// <summary>   (Unit Test Method) asserts that a visa session should open and close twice. </summary>
     /// <remarks> David, 2020-10-12. </remarks>
-    [TestMethod( "04. Visa View Session Should Open Twice." )]
+    [TestMethod( "04. Visa view session should open twice" )]
     public void VisaViewSessionShouldOpenTwice()
     {
         Assert.IsNotNull( this.VisaSessionBase, $"{nameof( this.VisaSessionBase )} should not be null." );
@@ -146,7 +146,7 @@ public class VisaViewTests : cc.isr.VI.DeviceWinControls.Tests.Base.IVisaViewTes
 
     /// <summary>   (Unit Test Method) asserts that a visa session should bind a visa session. </summary>
     /// <remarks> David, 2020-10-12. </remarks>
-    [TestMethod( "05. Visa View Should Bind a Visa Session." )]
+    [TestMethod( "05. Visa view should bind a Visa session" )]
     public void VisaViewShouldBindVisaSession()
     {
         int trialNumber = 0;
@@ -157,7 +157,7 @@ public class VisaViewTests : cc.isr.VI.DeviceWinControls.Tests.Base.IVisaViewTes
 
     /// <summary>   (Unit Test Method) asserts that a visa session should open and close twice. </summary>
     /// <remarks> David, 2020-10-12. </remarks>
-    [TestMethod( "06. Visa View Should Bind an Open Visa Session." )]
+    [TestMethod( "06. Visa view should bind an open Visa session" )]
     public void VisaViewShouldBindOpenVisaSession()
     {
         int trialNumber = 0;

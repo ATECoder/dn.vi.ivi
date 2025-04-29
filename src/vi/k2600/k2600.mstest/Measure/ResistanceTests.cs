@@ -90,7 +90,7 @@ public class ResistanceTests : Device.Tests.Base.TestBase
 
     /// <summary> (Unit Test Method) source current measure resistance should pass. </summary>
     /// <remarks> David, 2020-10-12. </remarks>
-    [TestMethod( "01. Source Current Measure Resistance Should Read Resistance" )]
+    [TestMethod( "01. Source current measure resistance should read resistance" )]
     public void SourceCurrentMeasureResistanceShouldReadResistance()
     {
         try
