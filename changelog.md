@@ -2,7 +2,19 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9249]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9250]: https://www.github.com/atecoder/dn.vi.ivi
+
+## [8.1.9250] - 2025-04-29
+- Fix test method headline to remove capitalization and punctuation.
+- Include Json files as 'Content Include' in the project files.
+- VI Device Tsp Namespace
+  - Session Base Extensions Save: 
+    - Remove throw if already saved argument.
+	- Check if saved after saving.
+- UI Device WIn Controls MSTest
+  - Set serialization options of the Scriber to include CSV color serialization.
+- MS Test
+  - replace trace write line with console write line.
 
 ## [8.1.9249] - 2025-04-28
 - Device Tsp Script:
