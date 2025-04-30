@@ -1,5 +1,4 @@
 using System;
-using cc.isr.VI.Device.Tests.Base;
 
 namespace cc.isr.VI.Tsp.K2600.MSTest.Measure;
 

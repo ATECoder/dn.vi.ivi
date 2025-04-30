@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using cc.isr.VI.Pith;
 
 namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;

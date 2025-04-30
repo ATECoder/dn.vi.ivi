@@ -1,5 +1,4 @@
 using cc.isr.VI.Pith;
-using cc.isr.VI.Syntax.Tsp;
 
 namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 

@@ -9,6 +9,8 @@ Notable changes to the `cc.isr.vi` solution are documented in this file using th
   - Set log level to warning.
 - Gac Loader: 
   - Remove console output.
+- Device Tsp Script Namespace
+  - Add destination folder argument to the trim and compress method to facilitate testing.
 - Tests:
   - replace with $"{methodFullName} initializing" );
   - Remove Console.WriteLine( $"@{methodFullName}" );
@@ -16,6 +18,7 @@ Notable changes to the `cc.isr.vi` solution are documented in this file using th
   - Add assertion over orphan messages with member method reference.
   - Add throw if device error with member method reference.
   - Display Gac loader implementation on initializing tests.
+  - Display the GAC Loader only if loaded.
 
 ## [8.1.9250] - 2025-04-29
 - Fix test method headline to remove capitalization and punctuation.

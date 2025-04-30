@@ -7,14 +7,18 @@ public static partial class SessionBaseExtensionMethods
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>
     /// <exception cref="FileNotFoundException">    Thrown when the requested file is not present. </exception>
-    /// <param name="scriptInfo">   Information describing the script. </param>
-    /// <param name="folderPath">   Full pathname of the folder file. </param>
-    public static void TrimCompress( this ScriptInfo scriptInfo, string folderPath )
+    /// <param name="scriptInfo">           Information describing the script. </param>
+    /// <param name="sourceFolder">         Full pathname of the folder file. </param>
+    /// <param name="destinationFolder">    (Optional) [empty] Path of the destination folder. If
+    ///                                     empty, the destination folder is set to the source folder. </param>
+    public static void TrimCompress( this ScriptInfo scriptInfo, string sourceFolder, string destinationFolder = "" )
     {
         if ( scriptInfo is null ) throw new ArgumentNullException( nameof( scriptInfo ) );
 
-        string fromFilePath = Path.Combine( folderPath, scriptInfo.BuiltFileName );
-        string trimmedFilePath = Path.Combine( folderPath, scriptInfo.TrimmedFileName );
+        string fromFilePath = Path.Combine( sourceFolder, scriptInfo.BuiltFileName );
+        if ( string.IsNullOrWhiteSpace( destinationFolder ) )
+            destinationFolder = sourceFolder;
+        string trimmedFilePath = Path.Combine( destinationFolder, scriptInfo.TrimmedFileName );
         string compressedFilePath = trimmedFilePath + "c";
         if ( System.IO.File.Exists( fromFilePath ) )
         {
@@ -39,28 +43,32 @@ public static partial class SessionBaseExtensionMethods
     ///                                                 invalid. </exception>
     /// <exception cref="FileNotFoundException">        Thrown when the requested file is not
     ///                                                 present. </exception>
-    /// <param name="session">      The session. </param>
-    /// <param name="scriptInfo">   Information describing the script. </param>
-    /// <param name="folderPath">   Full pathname of the folder file. </param>
-    public static void TrimCompressLoadConvertExport( this Pith.SessionBase session, ScriptInfo scriptInfo, string folderPath )
+    /// <param name="session">              The session. </param>
+    /// <param name="scriptInfo">           Information describing the script. </param>
+    /// <param name="sourceFolder">         Path of the source file folder. </param>
+    /// <param name="destinationFolder">    (Optional) [empty] Path of the destination folder. If
+    ///                                     empty, the destination folder is set to the source folder. </param>
+    public static void TrimCompressLoadConvertExport( this Pith.SessionBase session, ScriptInfo scriptInfo, string sourceFolder, string destinationFolder = "" )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( scriptInfo is null ) throw new ArgumentNullException( nameof( scriptInfo ) );
 
         if ( !session.IsDeviceOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
 
-        string fromFilePath = Path.Combine( folderPath, scriptInfo.BuiltFileName );
-        string trimmedFilePath = Path.Combine( folderPath, scriptInfo.TrimmedFileName );
-        string deployFilePath = Path.Combine( folderPath, scriptInfo.DeployFileName );
+        string fromFilePath = Path.Combine( sourceFolder, scriptInfo.BuiltFileName );
+        if ( string.IsNullOrWhiteSpace( destinationFolder ) )
+            destinationFolder = sourceFolder;
+        string trimmedFilePath = Path.Combine( destinationFolder, scriptInfo.TrimmedFileName );
+        string deployFilePath = Path.Combine( destinationFolder, scriptInfo.DeployFileName );
         if ( System.IO.File.Exists( fromFilePath ) )
         {
-            SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tTrimming script file '{fromFilePath}' to '{trimmedFilePath}'" );
+            SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tTrimming script file '{fromFilePath}'\r\n\t\tto '{trimmedFilePath}'" );
             fromFilePath.TrimScript( trimmedFilePath, true );
 
             if ( scriptInfo.DeployFileFormat.HasFlag( ScriptFileFormats.Compressed )
                 && !scriptInfo.DeployFileFormat.HasFlag( ScriptFileFormats.Binary ) )
             {
-                SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tCompressing trimmed script file to '{deployFilePath}'" );
+                SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tCompressing '{trimmedFilePath}'\r\n\t\tto '{deployFilePath}'" );
                 trimmedFilePath.CompressScriptFile( deployFilePath, overWrite: true );
             }
         }
