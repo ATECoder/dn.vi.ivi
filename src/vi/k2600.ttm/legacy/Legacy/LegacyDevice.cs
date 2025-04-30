@@ -409,7 +409,7 @@ public partial class LegacyDevice : CommunityToolkit.Mvvm.ComponentModel.Observa
         this.LastOrphanMessages = this.FlushRead();
         if ( !string.IsNullOrWhiteSpace( this.LastOrphanMessages ) )
             this.OnMessageAvailable( TraceEventType.Warning, "Found orphan messages",
-                "Instrument '{0}' reading measurements found orphan messages:/n{0}", this.ResourceName, this.LastOrphanMessages );
+                "Instrument '{0}' reading measurements found orphan messages:\r\n\t{0}", this.ResourceName, this.LastOrphanMessages );
         this.OnMessageAvailable( TraceEventType.Verbose, "Reading Measurements", "Instrument '{0}' reading measurements", this.ResourceName );
         _ = this.ReadInitialResistance( this.InitialResistance );
         _ = this.ReadFinalResistance( this.FinalResistance );

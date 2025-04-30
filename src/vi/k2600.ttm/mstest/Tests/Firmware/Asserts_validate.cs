@@ -17,7 +17,8 @@ internal static partial class Asserts
         _ = session.WriteLine( command );
         _ = Pith.SessionBase.AsyncDelay( session.ReadAfterWriteDelay, session.StatusReadDelay );
 
-        Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"command '{command}'" );
+        VI.Device.Tests.Asserts.AssertOrphanMessages( session );
+        VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
 
         string expectedValue = "1";
         string query = cc.isr.VI.Syntax.Tsp.Lua.OperationCompletedQueryCommand;
@@ -26,7 +27,8 @@ internal static partial class Asserts
         string reply = session.ReadLineTrimEnd();
         Assert.AreEqual( expectedValue, reply, $"'{query}' should return the expected reply." );
 
-        Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"query '{query}'" );
+        VI.Device.Tests.Asserts.AssertOrphanMessages( session );
+        VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
 
         if ( logEnabled ) Asserts.LogIT( $"{command} executed" );
     }
@@ -50,7 +52,9 @@ internal static partial class Asserts
         string reply = session.ReadLineTrimEnd();
         Assert.IsFalse( string.IsNullOrWhiteSpace( reply ), $"{nameof( reply )} must not be null or empty or white space." );
 
-        Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"query '{query}'" );
+        VI.Device.Tests.Asserts.AssertOrphanMessages( session );
+        VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
+
         if ( logEnabled ) Asserts.LogIT( $"{query} returned {reply}" );
 
         return reply;
@@ -75,7 +79,9 @@ internal static partial class Asserts
         string reply = session.ReadLineTrimEnd();
         Assert.AreEqual( expectedValue, reply, $"'{query}' should return the expected reply." );
 
-        Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"query '{query}'" );
+        VI.Device.Tests.Asserts.AssertOrphanMessages( session );
+        VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
+
         if ( logEnabled ) Asserts.LogIT( $"{query} returned {reply}" );
     }
 

@@ -64,19 +64,6 @@ internal static partial class Asserts
         Console.Out.WriteLine( value );
     }
 
-    /// <summary>   Assert orphan messages or device errors. </summary>
-    /// <remarks>   2024-11-11. </remarks>
-    /// <param name="session">      The session. </param>
-    /// <param name="memberName">   (Optional) Name of the member. </param>
-    public static void AssertOrphanMessagesOrDeviceErrors( Pith.SessionBase? session, [System.Runtime.CompilerServices.CallerMemberName] string memberName = "" )
-    {
-        Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
-        Assert.IsTrue( session.IsDeviceOpen, $"VISA session to '{nameof( session.ResourceNameCaption )}' must be open." );
-        string orphanMessages = session.ReadLines( session.StatusReadDelay, TimeSpan.FromMilliseconds( 100 ), false );
-        Assert.IsTrue( string.IsNullOrWhiteSpace( orphanMessages ), $"The following messages were left on the output buffer after {memberName}:/n{orphanMessages}" );
-        session.ThrowDeviceExceptionIfError( failureMessage: $"{nameof( Pith.SessionBase.ReadLines )} after {memberName} failed" );
-    }
-
     /// <summary>
     /// Primes the instrument to wait for a trigger. This clears the digital outputs and loops until
     /// trigger or <see cref="SessionBase.AssertTrigger"/> command or external *TRG command.

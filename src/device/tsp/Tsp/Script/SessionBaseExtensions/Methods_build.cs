@@ -18,10 +18,10 @@ public static partial class SessionBaseExtensionMethods
         string compressedFilePath = trimmedFilePath + "c";
         if ( System.IO.File.Exists( fromFilePath ) )
         {
-            SessionBaseExtensionMethods.TraceLastAction( $"Trimming script file '{fromFilePath}' to '{trimmedFilePath}'" );
+            SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tTrimming script file '{fromFilePath}' to '{trimmedFilePath}'" );
             fromFilePath.TrimScript( trimmedFilePath, true );
 
-            SessionBaseExtensionMethods.TraceLastAction( $"Compressing trimmed script file to '{compressedFilePath}'" );
+            SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tCompressing trimmed script file to '{compressedFilePath}'" );
             trimmedFilePath.CompressScriptFile( compressedFilePath, overWrite: true );
         }
         else
@@ -54,13 +54,13 @@ public static partial class SessionBaseExtensionMethods
         string deployFilePath = Path.Combine( folderPath, scriptInfo.DeployFileName );
         if ( System.IO.File.Exists( fromFilePath ) )
         {
-            SessionBaseExtensionMethods.TraceLastAction( $"Trimming script file '{fromFilePath}' to '{trimmedFilePath}'" );
+            SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tTrimming script file '{fromFilePath}' to '{trimmedFilePath}'" );
             fromFilePath.TrimScript( trimmedFilePath, true );
 
             if ( scriptInfo.DeployFileFormat.HasFlag( ScriptFileFormats.Compressed )
                 && !scriptInfo.DeployFileFormat.HasFlag( ScriptFileFormats.Binary ) )
             {
-                SessionBaseExtensionMethods.TraceLastAction( $"Compressing trimmed script file to '{deployFilePath}'" );
+                SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tCompressing trimmed script file to '{deployFilePath}'" );
                 trimmedFilePath.CompressScriptFile( deployFilePath, overWrite: true );
             }
         }
@@ -70,7 +70,7 @@ public static partial class SessionBaseExtensionMethods
         // delete the script if it exists.
         session.DeleteScript( scriptInfo.Title );
 
-        SessionBaseExtensionMethods.TraceLastAction( $"Importing script from trimmed '{trimmedFilePath}' file" );
+        SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tImporting script from trimmed '{trimmedFilePath}' file" );
         session.ImportScript( scriptInfo.Title, trimmedFilePath, TimeSpan.Zero );
 
         // run the script to ensure the code works.
@@ -87,13 +87,13 @@ public static partial class SessionBaseExtensionMethods
             if ( scriptInfo.DeployFileFormat.HasFlag( ScriptFileFormats.Compressed ) )
             {
                 // export and compress the script.
-                SessionBaseExtensionMethods.TraceLastAction( $"Fetching and compressing binary script to '{deployFilePath}'" );
+                SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tFetching and compressing binary script to '{deployFilePath}'" );
                 session.CompressScript( scriptInfo.Title, deployFilePath, true );
             }
             else
             {
                 // if naked binary, export tot he deploy file name.
-                SessionBaseExtensionMethods.TraceLastAction( $"Fetching binary script to '{deployFilePath}'" );
+                SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tFetching binary script to '{deployFilePath}'" );
                 session.ExportScript( scriptInfo.Title, deployFilePath, true );
             }
         }

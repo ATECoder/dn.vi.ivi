@@ -23,7 +23,7 @@ public static partial class SessionBaseExtensionMethods
         session.LastNodeNumber = default;
         if ( !session.IsNil( scriptName ) )
         {
-            session.TraceLastAction( $"nulling the '{scriptName}' script;. " );
+            session.TraceLastAction( $"\r\n\tnulling the '{scriptName}' script;. " );
             _ = session.WriteLine( $"{scriptName} = nil {cc.isr.VI.Syntax.Tsp.Lua.OperationCompletedQueryCommand} " );
 
             // read query reply and throw if reply is not 1.
@@ -53,7 +53,7 @@ public static partial class SessionBaseExtensionMethods
         session.SetLastAction( $"checking if the {scriptName} script is listed as user script;. " );
         if ( !session.IsNil( $"script.user.scripts.{scriptName}" ) )
         {
-            session.TraceLastAction( $"removing '{scriptName} script from the user scripts." );
+            session.TraceLastAction( $"\r\n\tremoving '{scriptName} script from the user scripts." );
             _ = session.WriteLine( $"script.user.scripts.{scriptName}.name = '' {cc.isr.VI.Syntax.Tsp.Lua.OperationCompletedQueryCommand} " );
 
             // read query reply and throw if reply is not 1.
@@ -125,9 +125,9 @@ public static partial class SessionBaseExtensionMethods
         }
 
         if ( removedCount == 0 )
-            TraceLastAction( $"No scripts to remove for {frameworkName}." );
+            TraceLastAction( $"\r\n\tNo scripts to remove for {frameworkName}." );
         else
-            TraceLastAction( $"{removedCount} scripts were removed for {frameworkName}." );
+            TraceLastAction( $"\r\n\t{removedCount} scripts were removed for {frameworkName}." );
     }
 
 }

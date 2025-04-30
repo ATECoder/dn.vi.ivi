@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using cc.isr.VI.Device.Tests.Base;
 
 namespace cc.isr.VI.Tsp.K2600.Ttm.Legacy.Tests;
 
@@ -29,14 +30,14 @@ public class ContactTests
     [ClassInitialize()]
     public static void InitializeTestClass( TestContext testContext )
     {
-        string methodFullName = $"{testContext.FullyQualifiedTestClassName}.{System.Reflection.MethodBase.GetCurrentMethod()?.Name}";
+        // string methodFullName = $"{testContext.FullyQualifiedTestClassName}.{System.Reflection.MethodBase.GetCurrentMethod()?.Name}";
         try
         {
-            OutputMessageMethodLine( "Initializing" );
+            TestBase.ConsoleOutputMemberMessage( "Initializing" );
         }
         catch ( Exception ex )
         {
-            OutputMessageMethodLine( $"Failed initializing the test class: {ex}" );
+            TestBase.ConsoleOutputMemberMessage( $"Failed initializing the test class: {ex}" );
 
             // cleanup to meet strong guarantees
 
@@ -63,7 +64,9 @@ public class ContactTests
     public void InitializeBeforeEachTest()
     {
         Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
-        Console.WriteLine( $"Testing {typeof( LegacyDevice ).Assembly.FullName}" );
+        Console.WriteLine( $"\t{typeof( cc.isr.Visa.Gac.Vendor ).Assembly.FullName}" );
+        Console.WriteLine( $"\t{cc.isr.Visa.Gac.GacLoader.LoadedImplementation?.Location}." );
+        Console.WriteLine( $"\tTesting {typeof( LegacyDevice ).Assembly.FullName}" );
 
         // create an instance of the Serilog logger.
         SessionLogger.Instance.CreateSerilogLogger( typeof( ContactTests ) );
@@ -110,32 +113,6 @@ public class ContactTests
     public void CleanupAfterEachTest()
     {
         SessionLogger.CloseAndFlush();
-    }
-
-    /// <summary>   Output message with a full member line. </summary>
-    /// <remarks>   2025-04-28. </remarks>
-    /// <param name="message">          The message. </param>
-    /// <param name="memberName">       (Optional) Name of the member. </param>
-    /// <param name="sourcePath">       (Optional) Full pathname of the source file. </param>
-    /// <param name="sourceLineNumber"> (Optional) Source line number. </param>
-    public static void OutputMessageMemberLine( string message,
-        [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
-        [System.Runtime.CompilerServices.CallerFilePath] string sourcePath = "",
-        [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0 )
-    {
-        Console.WriteLine( $"{message} @[{sourcePath}].{memberName}.Line#{sourceLineNumber}" );
-    }
-
-    /// <summary>   Output message method line. </summary>
-    /// <remarks>   2025-04-28. </remarks>
-    /// <param name="message">          The message. </param>
-    /// <param name="memberName">       (Optional) Name of the member. </param>
-    /// <param name="sourceLineNumber"> (Optional) Source line number. </param>
-    public static void OutputMessageMethodLine( string message,
-        [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
-        [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0 )
-    {
-        Console.WriteLine( $"{message} @[{memberName}.Line#{sourceLineNumber}" );
     }
 
     #endregion

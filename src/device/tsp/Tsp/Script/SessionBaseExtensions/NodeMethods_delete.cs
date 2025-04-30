@@ -27,7 +27,7 @@ public static partial class NodeMethods
             // possibly, waiting on the controller waits for all nodes.
             session.EnableServiceRequestOnOperationCompletion();
 
-            session.TraceLastAction( $"nulling script '{scriptName}' on node {nodeNumber}" );
+            session.TraceLastAction( $"\r\n\tnulling script '{scriptName}' on node {nodeNumber}" );
             _ = session.ExecuteCommandQueryComplete( nodeNumber, "{0} = nil", scriptName );
 
             // read query reply and throw if reply is not 1.
@@ -59,7 +59,7 @@ public static partial class NodeMethods
         session.SetLastAction( $"checking if the {scriptName} script is listed as user script on node {nodeNumber};. " );
         if ( !session.IsNil( nodeNumber, $"script.user.scripts.{scriptName}" ) )
         {
-            session.TraceLastAction( $"removing '{scriptName} script from the user scripts on node {nodeNumber};. " );
+            session.TraceLastAction( $"\r\n\tremoving '{scriptName} script from the user scripts on node {nodeNumber};. " );
             _ = session.ExecuteCommandQueryComplete( nodeNumber, "script.user.scripts.{0}.name = ''", scriptName );
 
             // read query reply and throw if reply is not 1.

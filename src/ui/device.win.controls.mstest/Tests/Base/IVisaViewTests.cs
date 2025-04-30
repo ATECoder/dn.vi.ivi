@@ -24,12 +24,10 @@ public abstract class IVisaViewTests
         string methodFullName = $"{testContext.FullyQualifiedTestClassName}.{System.Reflection.MethodBase.GetCurrentMethod()?.Name}";
         try
         {
-            Console.WriteLine( $"Initializing @[{methodFullName}" );
-            Logger?.LogVerboseMultiLineMessage( "Initializing" );
         }
         catch ( Exception ex )
         {
-            Console.WriteLine( $"Failed initializing the test class: {ex}" );
+            Console.WriteLine( $"{methodFullName} failed initializing:\r\n\t{ex}" );
             Logger?.LogExceptionMultiLineMessage( "Failed initializing the test class:", ex );
 
             // cleanup to meet strong guarantees
@@ -61,7 +59,7 @@ public abstract class IVisaViewTests
     public virtual void InitializeBeforeEachTest()
     {
         Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {TimeZoneInfo.Local}" );
-        Console.WriteLine( $"Testing {typeof( VisaSession ).Assembly.FullName}" );
+        Console.WriteLine( $"\tTesting {typeof( VisaSession ).Assembly.FullName}" );
 
         // assert reading of test settings from the configuration file.
         Assert.IsNotNull( this.TestSiteSettings, $"{nameof( this.TestSiteSettings )} should not be null." );

@@ -40,9 +40,8 @@ public class DeviceStatusOnlyTests : Device.Tests.Base.DeviceStatusOnlyTests
     [TestInitialize()]
     public override void InitializeBeforeEachTest()
     {
-        // reported in the base class.
-        // Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
-        Console.WriteLine( $"Testing {typeof( cc.isr.VI.VisaSessionBase ).Assembly.FullName}" );
+        Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
+        Console.WriteLine( $"\tTesting {typeof( cc.isr.VI.VisaSessionBase ).Assembly.FullName}" );
 
         // create an instance of the Serilog logger.
         SessionLogger.Instance.CreateSerilogLogger( typeof( DeviceStatusOnlyTests ) );

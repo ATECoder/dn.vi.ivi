@@ -8,6 +8,58 @@ namespace cc.isr.VI.Device.Tests;
 
 public sealed partial class Asserts
 {
+    #region " orphan messages "
+
+    /// <summary>   Assert orphan messages. </summary>
+    /// <remarks>   2025-04-29. </remarks>
+    /// <param name="session">          The session. </param>
+    /// <param name="withPath">         (Optional) True to with path. </param>
+    /// <param name="withFileName">     (Optional) True to with file name. </param>
+    /// <param name="memberName">       (Optional) Name of the member. </param>
+    /// <param name="sourcePath">       (Optional) Full pathname of the source file. </param>
+    /// <param name="sourceLineNumber"> (Optional) Source line number. </param>
+    public static void AssertOrphanMessages( Pith.SessionBase? session, bool withPath = false, bool withFileName = true,
+        [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
+        [System.Runtime.CompilerServices.CallerFilePath] string sourcePath = "",
+        [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0 )
+    {
+        string member = withPath
+            ? $"[{sourcePath}].{memberName}.Line#{sourceLineNumber}"
+            : withFileName
+              ? $"{System.IO.Path.GetFileNameWithoutExtension( sourcePath )}.{memberName}.Line#{sourceLineNumber}"
+              : $"{memberName}.Line#{sourceLineNumber}";
+
+        Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
+        Assert.IsTrue( session.IsDeviceOpen, $"VISA session to '{nameof( session.ResourceNameCaption )}' must be open." );
+        string orphanMessages = session.ReadLines( session.StatusReadDelay, TimeSpan.FromMilliseconds( 100 ), false );
+        Assert.IsTrue( string.IsNullOrWhiteSpace( orphanMessages ), $"{member}:\r\n\tThe following messages were left on the output buffer:\r\n\t{orphanMessages}" );
+    }
+
+    /// <summary>   Throw if device errors. </summary>
+    /// <remarks>   2025-04-29. </remarks>
+    /// <param name="session">          The session. </param>
+    /// <param name="message">          The message. </param>
+    /// <param name="withPath">         (Optional) True to with path. </param>
+    /// <param name="withFileName">     (Optional) True to with file name. </param>
+    /// <param name="memberName">       (Optional) Name of the member. </param>
+    /// <param name="sourcePath">       (Optional) Full pathname of the source file. </param>
+    /// <param name="sourceLineNumber"> (Optional) Source line number. </param>
+    public static void ThrowIfDeviceErrors( Pith.SessionBase? session, string message, bool withPath = false, bool withFileName = true,
+        [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
+        [System.Runtime.CompilerServices.CallerFilePath] string sourcePath = "",
+        [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0 )
+    {
+        string member = withPath
+            ? $"[{sourcePath}].{memberName}.Line#{sourceLineNumber}"
+            : withFileName
+              ? $"{System.IO.Path.GetFileNameWithoutExtension( sourcePath )}.{memberName}.Line#{sourceLineNumber}"
+              : $"{memberName}.Line#{sourceLineNumber}";
+        Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
+        session.ThrowDeviceExceptionIfError( failureMessage: $"{member}:\r\n\t{message}" );
+    }
+
+    #endregion
+
     #region " device errors "
 
     /// <summary>   Assert device errors should match. </summary>
@@ -16,10 +68,6 @@ public sealed partial class Asserts
     /// <param name="deviceErrorSettings">  Information describing the device errors for testing. </param>
     public static void AssertDeviceErrorsShouldMatch( StatusSubsystemBase subsystem, DeviceErrorsSettings? deviceErrorSettings )
     {
-        System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
-        string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
-        Console.WriteLine( $"@{methodFullName}" );
-
         Assert.IsNotNull( subsystem, $"{nameof( subsystem )} should not be null." );
         Assert.IsNotNull( deviceErrorSettings, $"{nameof( deviceErrorSettings )} should not be null." );
         string propertyName = nameof( cc.isr.VI.Pith.ServiceRequests.ErrorAvailable ).SplitWords();
@@ -49,10 +97,6 @@ public sealed partial class Asserts
     /// <param name="deviceErrorSettings"> Information describing the device errors for testing. </param>
     public static void AssertSessionDeviceErrorsShouldClear( VisaSessionBase? device, DeviceErrorsSettings? deviceErrorSettings )
     {
-        System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
-        string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
-        Console.WriteLine( $"@{methodFullName}" );
-
         Assert.IsNotNull( device );
         Assert.IsNotNull( deviceErrorSettings, $"{nameof( deviceErrorSettings )} should not be null." );
         if ( device.Session is null ) throw new ArgumentException( $"{nameof( device )}.{nameof( device.Session )} is null." );
@@ -67,14 +111,12 @@ public sealed partial class Asserts
     /// <param name="deviceErrorSettings"> Information describing the device errors for testing. </param>
     public static void AssertDeviceErrorsShouldRead( VisaSessionBase? device, DeviceErrorsSettings? deviceErrorSettings )
     {
-        System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
-        string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
-        Console.WriteLine( $"@{methodFullName}" );
-
         Assert.IsNotNull( device );
         Assert.IsNotNull( deviceErrorSettings, $"{nameof( deviceErrorSettings )} should not be null." );
         if ( device.Session is null ) throw new ArgumentException( $"{nameof( device )}.{nameof( device.Session )} is null." );
         if ( device.StatusSubsystemBase is null ) throw new ArgumentException( $"{nameof( device )}.{nameof( device.StatusSubsystemBase )} is null." );
+
+        Console.WriteLine( "NOTE: The following error log is expected as an outcome of the invoked device error." );
 
         // send an erroneous command
         string erroneousCommand = deviceErrorSettings.ErroneousCommand;
@@ -120,10 +162,6 @@ public sealed partial class Asserts
     /// <param name="deviceErrorsSettings">   Information describing the device errors. </param>
     public static void AssertSessionShouldReadDeviceErrors( SessionBase? session, DeviceErrorsSettings? deviceErrorsSettings )
     {
-        System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
-        string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
-        Console.WriteLine( $"@{methodFullName}" );
-
         Assert.IsNotNull( session, $"{nameof( session )} should not be null." );
         Assert.IsNotNull( deviceErrorsSettings );
 
@@ -167,10 +205,6 @@ public sealed partial class Asserts
     /// <param name="deviceErrorsSettings">   Information describing the device errors. </param>
     public static void AssertSessionShouldClearDeviceErrors( SessionBase? session, DeviceErrorsSettings? deviceErrorsSettings )
     {
-        System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
-        string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
-        Console.WriteLine( $"@{methodFullName}" );
-
         Assert.IsNotNull( session, $"{nameof( session )} should not be null." );
         Assert.IsNotNull( deviceErrorsSettings );
 

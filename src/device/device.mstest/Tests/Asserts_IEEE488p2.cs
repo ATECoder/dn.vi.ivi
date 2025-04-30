@@ -82,7 +82,7 @@ public sealed partial class Asserts
         Assert.IsFalse( timedOut, $"Awaiting 0x{( int ) expectedBitmask:X2} should not time out" );
         Assert.AreNotEqual( 0, statusByte & status,
             $"Status byte 0x{statusByte:X2} 0x{status:X2} bitmask should be set" );
-        Console.Out.WriteLine( $"{session.OpenResourceModel} status byte 0x{statusByte:X2} 0x{status:X2} bitmask was set" );
+        Base.TestBase.ConsoleOutputMemberMessage( $"{session.OpenResourceModel} status byte 0x{statusByte:X2} 0x{status:X2} bitmask was set" );
     }
 
     /// <summary>   Assert that the session should wait for the bitmask to set. </summary>
@@ -97,7 +97,7 @@ public sealed partial class Asserts
         (bool timedOut, cc.isr.VI.Pith.ServiceRequests statusByte, TimeSpan _) = session.AwaitStatusBitmask( expectedBitmask, timeout );
         Assert.IsFalse( timedOut, $"Getting 0x{( int ) statusByte:X2} awaiting 0x{( int ) expectedBitmask:X2} should not time out" );
         Assert.AreNotEqual( 0, ( int ) statusByte & ( int ) status, $"Status byte 0x{( int ) statusByte:X2} 0x{( int ) status:X2} bitmask should be set" );
-        Console.Out.WriteLine( $"{session.OpenResourceModel} status byte 0x{( int ) statusByte:X2} 0x{( int ) status:X2} bitmask was set" );
+        Base.TestBase.ConsoleOutputMemberMessage( $"{session.OpenResourceModel} status byte 0x{( int ) statusByte:X2} 0x{( int ) status:X2} bitmask was set" );
     }
 
     /// <summary>   Assert that the session should wait for both bitmasks to be set. </summary>
@@ -118,7 +118,7 @@ public sealed partial class Asserts
             $"Status byte 0x{( int ) statusByte:X2} 0x{( int ) status:X2} bitmask should be set" );
         Assert.AreNotEqual( 0, ( int ) statusByte & ( int ) secondaryBitmask,
             $"Status byte 0x{( int ) statusByte:X2} 0x{( int ) secondaryBitmask:X2} bitmask should also be set" );
-        Console.Out.WriteLine( $"{session.OpenResourceModel} status byte 0x{( int ) statusByte:X2} 0x{( int ) status:X2} bitmask was set" );
+        Base.TestBase.ConsoleOutputMemberMessage( $"{session.OpenResourceModel} status byte 0x{( int ) statusByte:X2} 0x{( int ) status:X2} bitmask was set" );
     }
 
     /// <summary>   Assert that the session should wait for both bitmasks to be set. </summary>
@@ -138,7 +138,7 @@ public sealed partial class Asserts
             $"Status byte 0x{statusByte:X2} 0x{status:X2} bitmask should be set" );
         Assert.AreNotEqual( 0, statusByte & secondaryBitmask,
             $"Status byte 0x{statusByte:X2} 0x{secondaryBitmask:X2} bitmask should also be set" );
-        Console.Out.WriteLine( $"{session.OpenResourceModel} status byte 0x{statusByte:X2} 0x{status:X2} bitmask was set" );
+        Base.TestBase.ConsoleOutputMemberMessage( $"{session.OpenResourceModel} status byte 0x{statusByte:X2} 0x{status:X2} bitmask was set" );
     }
 
     /// <summary> Assert that the Visa Session should await for status bitmasks set and clear. </summary>
@@ -158,7 +158,7 @@ public sealed partial class Asserts
             $"Status byte 0x{( int ) status:X2} 0x{( int ) expectedStatus:X2} bitmask should be set" );
         Assert.AreEqual( 0, ( int ) status & ( int ) clearBitmask,
             $"Status byte 0x{( int ) status:X2} 0x{( int ) clearBitmask:X2} bitmask should also be clear" );
-        Console.Out.WriteLine( $"{session.OpenResourceModel} status byte 0x{( int ) status:X2} 0x{( int ) expectedStatus:X2} bitmask was set" );
+        Base.TestBase.ConsoleOutputMemberMessage( $"{session.OpenResourceModel} status byte 0x{( int ) status:X2} 0x{( int ) expectedStatus:X2} bitmask was set" );
     }
 
     /// <summary> Assert that the session should wait for a status bitmask. </summary>
@@ -170,12 +170,12 @@ public sealed partial class Asserts
         Assert.IsTrue( session.IsDeviceOpen, $"Attempted a call with closed session" );
         if ( session.ServiceRequestEventEnabled )
         {
-            Console.Out.WriteLine( $"{session.OpenResourceModel} Disabling service request" );
+            Base.TestBase.ConsoleOutputMemberMessage( $"{session.OpenResourceModel} Disabling service request" );
             session.DisableServiceRequestEventHandler();
         }
         else
         {
-            Console.Out.WriteLine( $"{session.OpenResourceModel} service request handler was disabled" );
+            Base.TestBase.ConsoleOutputMemberMessage( $"{session.OpenResourceModel} service request handler was disabled" );
         }
 
         Assert.IsFalse( session.ServiceRequestEventEnabled, $"Service request event should be disabled" );
@@ -206,7 +206,7 @@ public sealed partial class Asserts
 
         Assert.IsTrue( session.IsDeviceOpen, "Attempted a call with closed session" );
         string propertyName = nameof( session.ClearExecutionState ).SplitWords();
-        Console.Out.WriteLine( $"Testing session {propertyName}" );
+        Base.TestBase.ConsoleOutputMemberMessage( $"Testing session {propertyName}" );
         session.ClearExecutionState();
         Assert.IsTrue( session.IsDeviceOpen, $"Device should remain open after {propertyName}" );
     }
@@ -221,7 +221,7 @@ public sealed partial class Asserts
         Assert.IsTrue( session.IsDeviceOpen, $"Attempted a call with closed session" );
         string propertyName = nameof( cc.isr.VI.Pith.SessionBase.StandardEventEnableBitmask ).SplitWords();
         int actualStandardEventEnableBitmask = ( int ) session.QueryStandardEventEnableBitmask()!;
-        Console.Out.WriteLine( $"Initial {propertyName} is 0x{actualStandardEventEnableBitmask:X2}" );
+        Base.TestBase.ConsoleOutputMemberMessage( $"Initial {propertyName} is 0x{actualStandardEventEnableBitmask:X2}" );
 
         // program the standard event request register.
 
@@ -246,7 +246,7 @@ public sealed partial class Asserts
             expectedStandardEventEnableBitmask = 0;
         propertyName = nameof( cc.isr.VI.Pith.SessionBase.StandardEventEnableOperationCompleteBitmask ).SplitWords();
         Assert.AreEqual( expectedStandardEventEnableBitmask, actualStandardEventEnableBitmask, $"{propertyName} should match after clearing execution state." );
-        Console.Out.WriteLine( $"Exists {propertyName} is 0x{actualStandardEventEnableBitmask:X2}" );
+        Base.TestBase.ConsoleOutputMemberMessage( $"Exists {propertyName} is 0x{actualStandardEventEnableBitmask:X2}" );
     }
 
     /// <summary>   Assert wait complete should enable. </summary>
@@ -260,7 +260,7 @@ public sealed partial class Asserts
         Assert.IsTrue( session.IsDeviceOpen, $"Attempted a call with closed session" );
         string propertyName = nameof( cc.isr.VI.Pith.SessionBase.StandardEventEnableBitmask ).SplitWords();
         cc.isr.VI.Pith.StandardEvents actualStandardEventEnableBitmask = ( cc.isr.VI.Pith.StandardEvents ) ( int ) session.QueryStandardEventEnableBitmask()!;
-        Console.Out.WriteLine( $"Initial {propertyName} is 0x{( int ) actualStandardEventEnableBitmask:X2}" );
+        Base.TestBase.ConsoleOutputMemberMessage( $"Initial {propertyName} is 0x{( int ) actualStandardEventEnableBitmask:X2}" );
 
         // program the standard event request register.
 
@@ -271,7 +271,7 @@ public sealed partial class Asserts
         actualStandardEventEnableBitmask = ( cc.isr.VI.Pith.StandardEvents ) ( int ) session.QueryStandardEventEnableBitmask()!;
         propertyName = nameof( cc.isr.VI.Pith.SessionBase.StandardEventEnableOperationCompleteBitmask ).SplitWords();
         Assert.AreEqual( expectedStandardEventEnableBitmask, actualStandardEventEnableBitmask, $"{propertyName} should match after enabling" );
-        Console.Out.WriteLine( $"Exists {propertyName} is 0x{( int ) actualStandardEventEnableBitmask:X2}" );
+        Base.TestBase.ConsoleOutputMemberMessage( $"Exists {propertyName} is 0x{( int ) actualStandardEventEnableBitmask:X2}" );
     }
 
     /// <summary> Assert should enable wait complete service request. </summary>
@@ -283,10 +283,10 @@ public sealed partial class Asserts
         Assert.IsTrue( session.IsDeviceOpen, $"Attempted a call with closed session" );
         string propertyName = nameof( cc.isr.VI.Pith.SessionBase.ServiceRequestEnableBitmask ).SplitWords();
         cc.isr.VI.Pith.ServiceRequests actualServiceRequestEnableBitmask = ( cc.isr.VI.Pith.ServiceRequests ) session.QueryServiceRequestEnableBitmask();
-        Console.Out.WriteLine( $"Initial {propertyName} is 0x{( int ) actualServiceRequestEnableBitmask:X2}" );
+        Base.TestBase.ConsoleOutputMemberMessage( $"Initial {propertyName} is 0x{( int ) actualServiceRequestEnableBitmask:X2}" );
         propertyName = nameof( cc.isr.VI.Pith.SessionBase.StandardEventEnableBitmask ).SplitWords();
         cc.isr.VI.Pith.StandardEvents actualStandardEventEnableBitmask = ( cc.isr.VI.Pith.StandardEvents ) ( int ) session.QueryStandardEventEnableBitmask()!;
-        Console.Out.WriteLine( $"Initial {propertyName} is 0x{( int ) actualStandardEventEnableBitmask:X2}" );
+        Base.TestBase.ConsoleOutputMemberMessage( $"Initial {propertyName} is 0x{( int ) actualStandardEventEnableBitmask:X2}" );
 
         // program the service request register.
         cc.isr.VI.Pith.ServiceRequests expectedServiceRequestEnableBitmask = session.ServiceRequestEnableOperationCompleteBitmask;
@@ -302,11 +302,11 @@ public sealed partial class Asserts
         actualStandardEventEnableBitmask = ( cc.isr.VI.Pith.StandardEvents ) ( int ) session.QueryStandardEventEnableBitmask()!;
         propertyName = nameof( cc.isr.VI.Pith.SessionBase.StandardEventEnableOperationCompleteBitmask ).SplitWords();
         Assert.AreEqual( expectedStandardEventEnableBitmask, actualStandardEventEnableBitmask, $"{propertyName} should match after clearing execution state." );
-        Console.Out.WriteLine( $"Exists {propertyName} is 0x{( int ) actualStandardEventEnableBitmask:X2}" );
+        Base.TestBase.ConsoleOutputMemberMessage( $"Exists {propertyName} is 0x{( int ) actualStandardEventEnableBitmask:X2}" );
         propertyName = nameof( cc.isr.VI.Pith.SessionBase.ServiceRequestEnableBitmask ).SplitWords();
         actualServiceRequestEnableBitmask = ( cc.isr.VI.Pith.ServiceRequests ) session.QueryServiceRequestEnableBitmask();
         Assert.AreEqual( expectedServiceRequestEnableBitmask, actualServiceRequestEnableBitmask, $"{propertyName} should match after clearing execution state." );
-        Console.Out.WriteLine( $"Exists {propertyName} is 0x{( int ) actualServiceRequestEnableBitmask:X2}" );
+        Base.TestBase.ConsoleOutputMemberMessage( $"Exists {propertyName} is 0x{( int ) actualServiceRequestEnableBitmask:X2}" );
     }
 
     /// <summary>   Assert if the clear execution state command clears the event enable registers. </summary>
@@ -321,10 +321,10 @@ public sealed partial class Asserts
         Assert.IsTrue( session.IsDeviceOpen, $"Attempted a call with closed session" );
         string propertyName = nameof( cc.isr.VI.Pith.SessionBase.ServiceRequestEnableBitmask ).SplitWords();
         int actualServiceRequestEnableBitmask = session.QueryServiceRequestEnableBitmask();
-        Console.Out.WriteLine( $"Initial {propertyName} is 0x{actualServiceRequestEnableBitmask:X2}: {actualServiceRequestEnableBitmask}" );
+        Base.TestBase.ConsoleOutputMemberMessage( $"Initial {propertyName} is 0x{actualServiceRequestEnableBitmask:X2}: {actualServiceRequestEnableBitmask}" );
         propertyName = nameof( cc.isr.VI.Pith.SessionBase.StandardEventEnableBitmask ).SplitWords();
         int actualStandardEventEnableBitmask = ( int ) session.QueryStandardEventEnableBitmask()!;
-        Console.Out.WriteLine( $"Initial {propertyName} is 0x{actualStandardEventEnableBitmask:X2}: {actualStandardEventEnableBitmask}" );
+        Base.TestBase.ConsoleOutputMemberMessage( $"Initial {propertyName} is 0x{actualStandardEventEnableBitmask:X2}: {actualStandardEventEnableBitmask}" );
 
         // program the service request register.
         int expectedServiceRequestEnableBitmask = serviceRequestEnableBitmask;
@@ -363,10 +363,10 @@ public sealed partial class Asserts
         Assert.IsTrue( session.IsDeviceOpen, $"Attempted a call with closed session" );
         string propertyName = nameof( cc.isr.VI.Pith.SessionBase.ServiceRequestEnableBitmask ).SplitWords();
         int actualServiceRequestEnableBitmask = session.QueryServiceRequestEnableBitmask();
-        Console.Out.WriteLine( $"Initial {propertyName} is 0x{actualServiceRequestEnableBitmask:X2}: {actualServiceRequestEnableBitmask}" );
+        Base.TestBase.ConsoleOutputMemberMessage( $"Initial {propertyName} is 0x{actualServiceRequestEnableBitmask:X2}: {actualServiceRequestEnableBitmask}" );
         propertyName = nameof( cc.isr.VI.Pith.SessionBase.StandardEventEnableBitmask ).SplitWords();
         int actualStandardEventEnableBitmask = ( int ) session.QueryStandardEventEnableBitmask()!;
-        Console.Out.WriteLine( $"Initial {propertyName} is 0x{actualStandardEventEnableBitmask:X2}: {actualStandardEventEnableBitmask}" );
+        Base.TestBase.ConsoleOutputMemberMessage( $"Initial {propertyName} is 0x{actualStandardEventEnableBitmask:X2}: {actualStandardEventEnableBitmask}" );
 
         // program the service request register.
         int expectedServiceRequestEnableBitmask = session.RegistersBitmasksSettings.ServiceRequestEnableEventsBitmask;
@@ -389,10 +389,10 @@ public sealed partial class Asserts
         Assert.IsTrue( session.IsDeviceOpen, $"Attempted a call with closed session" );
         string propertyName = nameof( cc.isr.VI.Pith.SessionBase.ServiceRequestEnableOperationCompleteBitmask ).SplitWords();
         int actualServiceRequestEnableBitmask = session.QueryServiceRequestEnableBitmask();
-        Console.Out.WriteLine( $"Initial {propertyName} is 0x{actualServiceRequestEnableBitmask:X2}" );
+        Base.TestBase.ConsoleOutputMemberMessage( $"Initial {propertyName} is 0x{actualServiceRequestEnableBitmask:X2}" );
         propertyName = nameof( cc.isr.VI.Pith.SessionBase.StandardEventEnableBitmask ).SplitWords();
         int actualStandardEventEnableBitmask = ( int ) session.QueryStandardEventEnableBitmask()!;
-        Console.Out.WriteLine( $"Initial {propertyName} is 0x{actualStandardEventEnableBitmask:X2}" );
+        Base.TestBase.ConsoleOutputMemberMessage( $"Initial {propertyName} is 0x{actualStandardEventEnableBitmask:X2}" );
 
         // program the service request register.
         int expectedServiceRequestEnableBitmask = 0;
@@ -537,13 +537,13 @@ public sealed partial class Asserts
         {
             if ( session.ServiceRequestEventEnabled )
             {
-                Console.Out.WriteLine( "Disabling service request handling" );
+                Base.TestBase.ConsoleOutputMemberMessage( "Disabling service request handling" );
                 session.DisableServiceRequestEventHandler();
                 Assert.IsFalse( session.ServiceRequestEventEnabled, $"Service request event not disabled" );
             }
             else
             {
-                Console.Out.WriteLine( "Enabling service request handling" );
+                Base.TestBase.ConsoleOutputMemberMessage( "Enabling service request handling" );
                 session.EnableServiceRequestEventHandler();
                 Assert.IsTrue( session.ServiceRequestEventEnabled, $"Service request event not enabled" );
             }

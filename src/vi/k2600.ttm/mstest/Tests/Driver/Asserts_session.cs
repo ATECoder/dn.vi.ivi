@@ -33,7 +33,8 @@ internal static partial class Asserts
         Assert.AreEqual( resourceName, session.OpenResourceName, "The open session resource name should equal to the opening resource name." );
         Assert.IsTrue( session.IsDeviceOpen, $"{resourceName} should open" );
 
-        Asserts.AssertOrphanMessagesOrDeviceErrors( session );
+        VI.Device.Tests.Asserts.AssertOrphanMessages( session );
+        VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
 
         // reset and clear known state.
 

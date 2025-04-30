@@ -44,6 +44,7 @@ internal static class Program
 
         // Preload installed VISA implementation assemblies
         cc.isr.Visa.Gac.GacLoader.LoadInstalledVisaAssemblies();
+        Console.WriteLine( $"Loaded VISA implementation: {cc.isr.Visa.Gac.GacLoader.LoadedImplementation?.Location}." );
 
         Program.TraceLogger.CreateSerilogLogger( typeof( UI.VisaIoForm ) );
         Program.TraceLogger.MinimumLogLevel = Properties.Settings.Instance.ApplicationLogLevel;

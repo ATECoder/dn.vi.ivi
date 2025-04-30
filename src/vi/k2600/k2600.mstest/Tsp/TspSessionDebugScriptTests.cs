@@ -42,9 +42,8 @@ public class TspSessionDebugScriptTests : Device.Tests.Base.ScriptTests
     [TestInitialize()]
     public override void InitializeBeforeEachTest()
     {
-        // reported in the base class
-        // Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
-        Console.WriteLine( $"Testing {typeof( cc.isr.VI.Tsp.Script.ScriptCompressor ).Assembly.FullName}" );
+        Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
+        Console.WriteLine( $"\tTesting {typeof( cc.isr.VI.Tsp.Script.ScriptCompressor ).Assembly.FullName}" );
 
         // create an instance of the Serilog logger.
         SessionLogger.Instance.CreateSerilogLogger( typeof( TspSessionDebugScriptTests ) );
@@ -108,7 +107,7 @@ public class TspSessionDebugScriptTests : Device.Tests.Base.ScriptTests
 
         try
         {
-            SessionBaseExtensionMethods.TraceLastAction( $"Importing script from '{filePath}' file" );
+            SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tImporting script from '{filePath}' file" );
             session.DeleteScript( scriptName );
             session.ImportScript( scriptName, filePath, TimeSpan.Zero );
             // session.ImportScript( scriptName, filePath );
@@ -143,9 +142,6 @@ public class TspSessionDebugScriptTests : Device.Tests.Base.ScriptTests
         Assert.IsNotNull( this.Device.Session );
         Assert.IsNotNull( this.Device.StatusSubsystemBase );
 
-        System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
-        string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
-        Console.WriteLine( $"@{methodFullName}-xx" );
         try
         {
             cc.isr.VI.Device.Tests.Asserts.AssertDeviceShouldOpenWithoutDeviceErrors( this.Device, this.ResourceSettings );
@@ -181,9 +177,6 @@ public class TspSessionDebugScriptTests : Device.Tests.Base.ScriptTests
         Assert.IsNotNull( this.Device.Session );
         Assert.IsNotNull( this.Device.StatusSubsystemBase );
 
-        System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
-        string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
-        Console.WriteLine( $"@{methodFullName}" );
         try
         {
             string scriptName = "isr_certify";

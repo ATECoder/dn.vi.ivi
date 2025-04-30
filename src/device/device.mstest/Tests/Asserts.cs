@@ -1,3 +1,5 @@
+using System;
+
 namespace cc.isr.VI.Device.Tests;
 /// <summary>
 /// Test manager for <see cref="VisaSessionBase"/> and <see cref="SubsystemBase"/> Tests.

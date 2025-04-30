@@ -68,7 +68,7 @@ public static partial class SessionBaseExtensionMethods
             affirmative = scriptNames.Contains( $"{script.Title}," );
             if ( !affirmative )
             {
-                session.TraceLastAction( $"script {script.Title} was not saved;. " );
+                session.TraceLastAction( $"\r\n\tscript {script.Title} was not saved;. " );
                 break;
             }
         }
@@ -96,7 +96,7 @@ public static partial class SessionBaseExtensionMethods
         session.SetLastAction( $"checking if a '{scriptName}' saved script exists;. " );
         if ( session.IsSavedScript( scriptName ) )
         {
-            session.TraceLastAction( $"removing the '{scriptName}' script from the saved script catalog;. " );
+            session.TraceLastAction( $"\r\n\tremoving the '{scriptName}' script from the saved script catalog;. " );
             _ = session.WriteLine( $"script.delete('{scriptName}')" );
             _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay + session.StatusReadDelay );
 
@@ -156,7 +156,7 @@ public static partial class SessionBaseExtensionMethods
         session.SetLastAction( $"checking if the {scriptName} saved script exists;. " );
         session.LastNodeNumber = default;
 
-        session.TraceLastAction( $"saving the {scriptName} script;. " );
+        session.TraceLastAction( $"\r\n\tsaving the {scriptName} script;. " );
         _ = session.WriteLine( $"{scriptName}.save()" );
         _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay + session.StatusReadDelay );
 

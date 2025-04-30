@@ -40,9 +40,8 @@ public class ResourceManagerTests : Device.Tests.Base.ResourceManagerTests
     [TestInitialize()]
     public override void InitializeBeforeEachTest()
     {
-        // reported in the base class
-        // Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
-        Console.WriteLine( $"Testing {typeof( cc.isr.VI.Pith.ResourceNamesManager ).Assembly.FullName}" );
+        Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
+        Console.WriteLine( $"\tTesting {typeof( cc.isr.VI.Pith.ResourceNamesManager ).Assembly.FullName}" );
 
         SessionLogger.Instance.CreateSerilogLogger( typeof( ResourceManagerTests ) );
 

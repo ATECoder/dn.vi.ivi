@@ -26,7 +26,8 @@ internal static partial class Asserts
         // set the TSP session defaults
         session.ApplyDefaultSyntax( VI.Syntax.CommandLanguage.Tsp );
 
-        Asserts.AssertOrphanMessagesOrDeviceErrors( session );
+        VI.Device.Tests.Asserts.AssertOrphanMessages( session );
+        VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
 
         // reset and clear known state.
 

@@ -37,6 +37,7 @@ internal static class Program
 
         // Preload installed VISA implementation assemblies
         cc.isr.Visa.Gac.GacLoader.LoadInstalledVisaAssemblies();
+        Console.WriteLine( $"Loaded VISA implementation: {cc.isr.Visa.Gac.GacLoader.LoadedImplementation?.Location}." );
 
 #if NET5_0_OR_GREATER
         Application.SetHighDpiMode( HighDpiMode.SystemAware );

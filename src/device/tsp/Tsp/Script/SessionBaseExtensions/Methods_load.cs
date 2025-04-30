@@ -23,7 +23,7 @@ public static partial class SessionBaseExtensionMethods
             affirmative = !session.IsNil( script.Title );
             if ( affirmative )
             {
-                session.TraceLastAction( $"found loaded script {script.Title};. " );
+                session.TraceLastAction( $"\r\n\tfound loaded script {script.Title};. " );
                 break;
             }
         }
@@ -43,7 +43,7 @@ public static partial class SessionBaseExtensionMethods
             affirmative = !session.IsNil( script.Title );
             if ( !affirmative )
             {
-                session.TraceLastAction( $"script {script.Title} is not loaded;. " );
+                session.TraceLastAction( $"\r\n\tscript {script.Title} is not loaded;. " );
                 break;
             }
         }

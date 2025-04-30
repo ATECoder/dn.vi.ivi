@@ -41,9 +41,8 @@ public class ContactCheckTests : Device.Tests.Base.ContactCheckTests
     [TestInitialize()]
     public override void InitializeBeforeEachTest()
     {
-        // reported in the base class
-        // Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
-        Console.WriteLine( $"Testing {typeof( MeasureResistanceSubsystem ).Assembly.FullName}" );
+        Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
+        Console.WriteLine( $"\tTesting {typeof( MeasureResistanceSubsystem ).Assembly.FullName}" );
 
         // create an instance of the Serilog logger.
         SessionLogger.Instance.CreateSerilogLogger( typeof( ContactCheckTests ) );
@@ -82,9 +81,6 @@ public class ContactCheckTests : Device.Tests.Base.ContactCheckTests
     /// <param name="lowOkay">  True to low okay. </param>
     private static void AssertContactSubsystemShouldCheckContacts( K2600Device? device, bool highOkay, bool lowOkay )
     {
-        System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
-        string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
-        Console.WriteLine( $"@{methodFullName}" );
         Assert.IsNotNull( device, $"{nameof( device )} should not be null." );
         Assert.IsNotNull( device.Session, $"{nameof( device )}.{nameof( device.Session )} should not be null." );
         Assert.IsTrue( device.IsDeviceOpen, $"{device.ResourceNameCaption} session should be open." );
@@ -128,10 +124,6 @@ public class ContactCheckTests : Device.Tests.Base.ContactCheckTests
         Assert.IsNotNull( this.Device.StatusSubsystem );
         try
         {
-            System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
-            string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
-            Console.WriteLine( $"@{methodFullName}" );
-
             VI.Device.Tests.Asserts.AssertSessionInitialValuesShouldMatch( this.Device.Session, this.ResourceSettings );
             VI.Device.Tests.Asserts.AssertDeviceShouldOpenWithoutDeviceErrors( this.Device, this.ResourceSettings );
             AssertContactSubsystemShouldCheckContacts( this.Device, highOkay, lowOkay );

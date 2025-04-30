@@ -25,11 +25,10 @@ public abstract partial class InstrumentTests
         try
         {
             Gac.GacLoader.LoadInstalledVisaAssemblies();
-            Console.WriteLine( $"Initializing @[{methodFullName}" );
         }
         catch ( Exception ex )
         {
-            Console.WriteLine( $"Failed initializing the test class: {ex}" );
+            Console.WriteLine( $"{methodFullName} failed initializing:\r\n\t{ex}" );
 
             // cleanup to meet strong guarantees
 
@@ -52,8 +51,8 @@ public abstract partial class InstrumentTests
     [TestInitialize()]
     public virtual void InitializeBeforeEachTest()
     {
-        Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {TimeZoneInfo.Local}" );
-        Console.WriteLine( $"Testing {typeof( Gac.Vendor ).Assembly.FullName}" );
+        Console.WriteLine( $"\t{typeof( Gac.Vendor ).Assembly.FullName}" );
+        Console.WriteLine( $"\t{cc.isr.Visa.Gac.GacLoader.LoadedImplementation?.Location}." );
     }
 
     /// <summary> Cleans up the test class instance after each test has run. </summary>
@@ -111,6 +110,8 @@ public abstract partial class InstrumentTests
     /// <summary>   (Unit Test Method) assert that resource should exist. </summary>
     /// <remarks>   David, 2021-11-13. </remarks>
     [TestMethod( "01. Resource should exist" )]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0028:Simplify collection initialization", Justification = "<Pending>" )]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0306:Simplify collection initialization", Justification = "<Pending>" )]
     public void ResourceShouldExist()
     {
         if ( this.ResourceName == null ) return;
@@ -313,12 +314,12 @@ public abstract partial class InstrumentTests
         int expectedWriteMessageLength = textToWrite.Length;
 
         // use sync query to get the read message.
-        Console.Out.WriteLine( $"getting synchronous reply to {this.MessageToWrite}" );
+        Asserts.ConsoleOutputMemberMessage( $"getting synchronous reply to {Asserts.InsertCommonEscapeSequences( textToWrite )}" );
         messageBasedSession.RawIO.Write( textToWrite );
         string receivedMessage = messageBasedSession.RawIO.ReadString();
-        Assert.IsFalse( string.IsNullOrWhiteSpace( receivedMessage ), $"Synchronous query of {this.MessageToWrite}" );
+        Assert.IsFalse( string.IsNullOrWhiteSpace( receivedMessage ), $"Synchronous query of {Asserts.InsertCommonEscapeSequences( textToWrite )}" );
         this._expectedReceivedMessageLength = receivedMessage.Length;
-        Console.Out.WriteLine( $"writing {this.MessageToWrite}" );
+        Asserts.ConsoleOutputMemberMessage( $"writing {Asserts.InsertCommonEscapeSequences( textToWrite )}" );
 
         this._visaAsyncResult = messageBasedSession.RawIO.BeginWrite( textToWrite, new Ivi.Visa.VisaAsyncCallback( this.OnWriteComplete ),
                textToWrite.Length );
@@ -385,7 +386,9 @@ public abstract partial class InstrumentTests
 
         if ( this._operationCompletionException is not null ) throw this._operationCompletionException;
 
-        Console.Out.WriteLine( $"{this._receivedMessage} was read" );
+        Assert.IsNotNull( this._receivedMessage, "Received message should not be null." );
+        string receivedText = Asserts.InsertCommonEscapeSequences( this._receivedMessage );
+        Console.Out.WriteLine( $"{receivedText} was read" );
 
         Assert.IsTrue( completed,
                  $"Async read operation should return expected read count {this._expectedReceivedMessageLength} before timing out after {elapsed}ms" );

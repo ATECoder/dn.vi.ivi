@@ -24,10 +24,8 @@ public abstract class ContactCheckTests
         string methodFullName = $"{testContext.FullyQualifiedTestClassName}.{System.Reflection.MethodBase.GetCurrentMethod()?.Name}";
         try
         {
-            if ( Logger is null )
-                Trace.WriteLine( "Initializing", methodFullName );
-            else
-                Logger?.LogVerboseMultiLineMessage( "Initializing" );
+            // initialize the logger.
+            _ = Logger?.BeginScope( methodFullName );
         }
         catch ( Exception ex )
         {
@@ -62,8 +60,9 @@ public abstract class ContactCheckTests
     /// <summary> Initializes the test class instance before each test runs. </summary>
     public virtual void InitializeBeforeEachTest()
     {
-        Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {TimeZoneInfo.Local}" );
-        Console.WriteLine( $"Testing {typeof( SubsystemBase ).Assembly.FullName}" );
+        Console.WriteLine( $"\t{cc.isr.Visa.Gac.GacLoader.LoadedImplementation?.Location}." );
+        Console.WriteLine( $"\t{typeof( Ivi.Visa.IMessageBasedSession ).Assembly.FullName}" );
+        Console.WriteLine( $"\t{typeof( cc.isr.Visa.Gac.Vendor ).Assembly.FullName}" );
 
         // assert reading of test settings from the configuration file.
         Assert.IsNotNull( this.TestSiteSettings, $"{nameof( this.TestSiteSettings )} should not be null." );

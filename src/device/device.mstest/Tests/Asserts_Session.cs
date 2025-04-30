@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using cc.isr.Std.SplitExtensions;
 
@@ -14,9 +13,6 @@ public sealed partial class Asserts
     /// <param name="resourceSettings"> Information describing the resource. </param>
     public static void AssertSessionInitialValuesShouldMatch( cc.isr.VI.Pith.SessionBase? session, Pith.Settings.ResourceSettings? resourceSettings )
     {
-        System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
-        string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
-        Console.WriteLine( $"@{methodFullName}" );
 
         Assert.IsNotNull( session, $"{nameof( session )} should not be null." );
         Assert.IsTrue( session.TimingSettings.Exists );
@@ -34,10 +30,6 @@ public sealed partial class Asserts
     /// <param name="resourceInfo"> Information describing the resource. </param>
     public static void AssertSessionOpenValuesShouldMatch( cc.isr.VI.Pith.SessionBase? session, Pith.Settings.ResourceSettings? resourceSettings )
     {
-        System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
-        string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
-        Console.WriteLine( $"@{methodFullName}" );
-
         Assert.IsNotNull( session, $"{nameof( session )} should not be null." );
         Assert.IsTrue( session.TimingSettings.Exists );
         Assert.IsNotNull( resourceSettings, $"{nameof( Pith.Settings.ResourceSettings )} should not be null." );
@@ -73,9 +65,6 @@ public sealed partial class Asserts
         Assert.IsNotNull( session, $"{nameof( session )} should not be null." );
         Assert.IsNotNull( ioSettings, $"{nameof( ioSettings )} should not be null." );
 
-        System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
-        string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
-        Console.WriteLine( $"@{methodFullName}" );
 
         Assert.IsNotNull( session, $"{nameof( session )} should not be null." );
         Assert.IsNotNull( ioSettings, $"{nameof( ioSettings )} should not be null." );
@@ -113,7 +102,7 @@ public sealed partial class Asserts
     /// <param name="session">                  The session. </param>
     /// <param name="deviceErrorTraceEnabled">  True to enable, false to disable the device error
     ///                                         trace. </param>
-    public static void AssertSessionShouldCollectGarbage( cc.isr.VI.Pith.SessionBase? session, bool deviceErrorTraceEnabled )
+    public static void AssertSessionShouldCollectGarbage( cc.isr.VI.Pith.SessionBase? session )
     {
         Assert.IsNotNull( session, "session should not be null" );
         Assert.IsTrue( session.IsDeviceOpen, "session should be open" );
@@ -122,17 +111,9 @@ public sealed partial class Asserts
         Assert.IsTrue( session.TimingSettings.CollectGarbageTimeout > System.TimeSpan.Zero,
             $"{nameof( session.TimingSettings.CollectGarbageTimeout )} should be larger than zero." );
 
-        if ( deviceErrorTraceEnabled )
-            Trace.WriteLine( "session.CollectGarbageQueryComplete;. ",
-            $"{nameof( Asserts )}.{nameof( Asserts.AssertSessionShouldCollectGarbage )}." );
-
         Assert.IsTrue( session.CollectGarbageQueryComplete(), "collecting garbage incomplete (reply not '1')." );
 
-        if ( deviceErrorTraceEnabled )
-            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
-        if ( deviceErrorTraceEnabled )
-            cc.isr.VI.Device.Tests.Asserts.AssertSessionLastError( session, session.ReadStatusByte() );
-        else if ( session.IsErrorBitSet( session.ReadStatusByte() ) )
+        if ( session.IsErrorBitSet( session.ReadStatusByte() ) )
             Assert.Fail( "failed after collecting garbage" );
     }
 

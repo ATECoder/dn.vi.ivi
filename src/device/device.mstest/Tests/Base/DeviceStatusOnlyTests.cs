@@ -23,15 +23,13 @@ public abstract class DeviceStatusOnlyTests
         string methodFullName = $"{testContext.FullyQualifiedTestClassName}.{System.Reflection.MethodBase.GetCurrentMethod()?.Name}";
         try
         {
-            if ( Logger is null )
-                OutputMessageMethodLine( "Initializing" );
-            else
-                Logger?.LogVerboseMultiLineMessage( "Initializing" );
+            // initialize the logger.
+            _ = Logger?.BeginScope( methodFullName );
         }
         catch ( Exception ex )
         {
             if ( Logger is null )
-                OutputMessageMethodLine( $"Failed initializing the test class: {ex}" );
+                TestBase.ConsoleOutputMemberMessage( $"Failed initializing the test class: {ex}" );
             else
                 Logger.LogExceptionMultiLineMessage( "Failed initializing the test class:", ex );
 
@@ -61,8 +59,11 @@ public abstract class DeviceStatusOnlyTests
     /// <summary> Initializes the test class instance before each test runs. </summary>
     public virtual void InitializeBeforeEachTest()
     {
-        Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {TimeZoneInfo.Local}" );
-        Console.WriteLine( $"Testing {typeof( VisaSessionBase ).Assembly.FullName}" );
+        Console.WriteLine( $"\t{cc.isr.Visa.Gac.GacLoader.LoadedImplementation?.Location}." );
+        Console.WriteLine( $"\t{typeof( Ivi.Visa.IMessageBasedSession ).Assembly.FullName}" );
+        Console.WriteLine( $"\t{typeof( cc.isr.Visa.Gac.Vendor ).Assembly.FullName}" );
+        // Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {TimeZoneInfo.Local}" );
+        // Console.WriteLine( $"\tTesting {typeof( VisaSessionBase ).Assembly.FullName}" );
 
         // assert reading of test settings from the configuration file.
         Assert.IsNotNull( this.TestSiteSettings, $"{nameof( this.TestSiteSettings )} should not be null." );
@@ -115,32 +116,6 @@ public abstract class DeviceStatusOnlyTests
     /// <summary>   Gets a logger instance for this category. </summary>
     /// <value> The logger. </value>
     public static ILogger<DeviceStatusOnlyTests>? Logger { get; } = LoggerProvider.CreateLogger<DeviceStatusOnlyTests>();
-
-    /// <summary>   Output message with a full member line. </summary>
-    /// <remarks>   2025-04-28. </remarks>
-    /// <param name="message">          The message. </param>
-    /// <param name="memberName">       (Optional) Name of the member. </param>
-    /// <param name="sourcePath">       (Optional) Full pathname of the source file. </param>
-    /// <param name="sourceLineNumber"> (Optional) Source line number. </param>
-    public static void OutputMessageMemberLine( string message,
-        [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
-        [System.Runtime.CompilerServices.CallerFilePath] string sourcePath = "",
-        [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0 )
-    {
-        Console.WriteLine( $"{message} @[{sourcePath}].{memberName}.Line#{sourceLineNumber}" );
-    }
-
-    /// <summary>   Output message method line. </summary>
-    /// <remarks>   2025-04-28. </remarks>
-    /// <param name="message">          The message. </param>
-    /// <param name="memberName">       (Optional) Name of the member. </param>
-    /// <param name="sourceLineNumber"> (Optional) Source line number. </param>
-    public static void OutputMessageMethodLine( string message,
-        [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
-        [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0 )
-    {
-        Console.WriteLine( $"{message} @[{memberName}.Line#{sourceLineNumber}" );
-    }
 
     #endregion
 

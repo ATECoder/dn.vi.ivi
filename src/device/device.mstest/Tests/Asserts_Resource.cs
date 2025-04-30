@@ -18,6 +18,8 @@ public sealed partial class Asserts
 
         if ( !AssertIfTraceErrorMessages ) return;
 
+        Console.WriteLine( "NOTE: The following warning messages are by design and intended for testing message tracing." );
+
         string payload = "Device message";
         _ = cc.isr.VI.SessionLogger.Instance.LogWarning( payload );
 
@@ -51,10 +53,6 @@ public sealed partial class Asserts
     /// <param name="device">           The device. </param>
     public static void AssertDeviceShouldOpenWithoutDeviceErrors( VisaSessionBase? device, Pith.Settings.ResourceSettings? resourceSettings )
     {
-        System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
-        string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
-        Console.WriteLine( $"@{methodFullName}" );
-
         Assert.IsNotNull( device );
         Assert.IsNotNull( device.Session );
         Assert.IsNotNull( device.StatusSubsystemBase, $"{nameof( device )}.{nameof( device.StatusSubsystemBase )} should be defined. Device not initialized." );
@@ -68,7 +66,7 @@ public sealed partial class Asserts
         Assert.IsTrue( success, $"Failed to open session: {details}" );
 
         Assert.IsTrue( success, $"Failed to open session: {details}" );
-        TestBase.OutputMember( $"{resourceSettings.ResourceName} is open" );
+        TestBase.ConsoleOutputMemberMessage( $"{resourceSettings.ResourceName} is open" );
 
         // the device must be initialized so as to define the controller node.
         // this also clears any existing errors from previous tests.
@@ -91,10 +89,6 @@ public sealed partial class Asserts
     /// <param name="device">           The device. </param>
     public static void AssertDeviceShouldOpen( VisaSessionBase? device, Pith.Settings.ResourceSettings? resourceSettings )
     {
-        System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
-        string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
-        Console.WriteLine( $"@{methodFullName}" );
-
         Assert.IsNotNull( device );
         Assert.IsNotNull( device.Session );
         Assert.IsNotNull( device.StatusSubsystemBase, $"{nameof( device )}.{nameof( device.StatusSubsystemBase )} should be defined. Device not initialized." );
@@ -106,7 +100,7 @@ public sealed partial class Asserts
         (bool success, string details) = device.TryOpenSession( resourceSettings.ResourceName, resourceSettings.ResourceModel );
 
         Assert.IsTrue( success, $"Failed to open session: {details}" );
-        TestBase.OutputMember( $"{resourceSettings.ResourceName} is open" );
+        TestBase.ConsoleOutputMemberMessage( $"{resourceSettings.ResourceName} is open" );
 
         // the device must be initialized so as to define the controller node.
         // this also clears any existing errors from previous tests.
@@ -119,9 +113,6 @@ public sealed partial class Asserts
     /// <param name="device">   The device. </param>
     public static void AssertDeviceShouldInitializeKnownState( VisaSessionBase? device )
     {
-        System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
-        string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
-        Console.WriteLine( $"@{methodFullName}" );
         Assert.IsNotNull( device, $"{nameof( device )} should not be null." );
         Assert.IsNotNull( device.Session, $"{nameof( device )}.{nameof( device.Session )} should not be null." );
         Assert.IsTrue( device.IsDeviceOpen, $"{device.ResourceNameCaption} session should be open." );
@@ -134,9 +125,6 @@ public sealed partial class Asserts
     /// <param name="device">   The device. </param>
     public static void AssertDeviceShouldPresetKnownState( VisaSessionBase? device )
     {
-        System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
-        string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
-        Console.WriteLine( $"@{methodFullName}" );
         Assert.IsNotNull( device, $"{nameof( device )} should not be null." );
         Assert.IsNotNull( device.Session, $"{nameof( device )}.{nameof( device.Session )} should not be null." );
         Assert.IsTrue( device.IsDeviceOpen, $"{device.ResourceNameCaption} session should be open." );
@@ -149,10 +137,6 @@ public sealed partial class Asserts
     /// <param name="device">   The device. </param>
     public static void AssertDeviceShouldCloseWithoutErrors( VisaSessionBase? device )
     {
-        System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
-        string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
-        Console.WriteLine( $"@{methodFullName}" );
-
         Assert.IsNotNull( device );
         Assert.IsNotNull( device.Session );
         Assert.IsNotNull( device.StatusSubsystemBase, $"{nameof( device )}.{nameof( device.StatusSubsystemBase )}" );
@@ -183,10 +167,6 @@ public sealed partial class Asserts
     /// <param name="device">   The device. </param>
     public static void AssertDeviceShouldCloseAssertingMessageQueue( VisaSessionBase? device )
     {
-        System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
-        string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
-        Console.WriteLine( $"@{methodFullName}" );
-
         Assert.IsNotNull( device );
 
         try
@@ -211,9 +191,6 @@ public sealed partial class Asserts
     /// <param name="device">   The device. </param>
     public static void AssertDeviceShouldClose( VisaSessionBase? device )
     {
-        System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
-        string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
-        Console.WriteLine( $"@{methodFullName}" );
         Assert.IsNotNull( device );
         Assert.IsNotNull( device.StatusSubsystemBase );
 

@@ -38,9 +38,8 @@ public class K2002Ics9065Tests : InstrumentTests
     [TestInitialize()]
     public override void InitializeBeforeEachTest()
     {
-        // reported in the base class
-        // Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
-        Console.WriteLine( $"Testing {typeof( Ivi.Visa.IMessageBasedSession ).Assembly.FullName}" );
+        Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
+        Console.WriteLine( $"\tTesting {typeof( Ivi.Visa.IMessageBasedSession ).Assembly.FullName}" );
 
         this.ResourceName = "TCPIP0::192.168.0.254::gpib0,22::INSTR";
         this.EnabledServiceRequestCommand = "*SRE 16\n";

@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 
 namespace cc.isr.VI.Tsp.K2600.Ttm.Tests.Firmware;
 
@@ -33,11 +32,11 @@ public class FirmwareTests
         string methodFullName = $"{testContext.FullyQualifiedTestClassName}.{System.Reflection.MethodBase.GetCurrentMethod()?.Name}";
         try
         {
-            Console.WriteLine( $"Initializing @[{methodFullName}" );
+            // Console.WriteLine( $"{methodFullName} initializing" );
         }
         catch ( Exception ex )
         {
-            Console.WriteLine( $"Failed initializing the test class: {ex}" );
+            Console.WriteLine( $"{methodFullName} failed initializing:\r\n\t{ex}" );
 
             // cleanup to meet strong guarantees
 
@@ -65,7 +64,9 @@ public class FirmwareTests
     {
         // reported in the base class
         Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
-        Console.WriteLine( $"Testing {typeof( cc.isr.VI.Tsp.K2600.Ttm.Meter ).Assembly.FullName}" );
+        Console.WriteLine( $"\t{typeof( cc.isr.Visa.Gac.Vendor ).Assembly.FullName}" );
+        Console.WriteLine( $"\t{cc.isr.Visa.Gac.GacLoader.LoadedImplementation?.Location}." );
+        Console.WriteLine( $"\tTesting {typeof( cc.isr.VI.Tsp.K2600.Ttm.Meter ).Assembly.FullName}" );
 
         // create an instance of the Serilog logger.
         SessionLogger.Instance.CreateSerilogLogger( typeof( FirmwareTests ) );
@@ -144,7 +145,9 @@ public class FirmwareTests
         using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( resourceName );
         string value = Asserts.AssertCurrentShouldBeMeasured( session );
         Console.Out.WriteLine( $"Measured Current {value:G5}" );
-        Asserts.AssertOrphanMessagesOrDeviceErrors( session );
+
+        VI.Device.Tests.Asserts.AssertOrphanMessages( session );
+        VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
     }
 
     /// <summary> (Unit Test Method) Assert that current should be measured multiple times. </summary>
@@ -159,7 +162,8 @@ public class FirmwareTests
             string value = Asserts.AssertCurrentShouldBeMeasured( session );
             Console.Out.WriteLine( $"Measured Current #{i}: {value:G5}" );
 
-            Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertCurrentShouldBeMeasured )}" );
+            VI.Device.Tests.Asserts.AssertOrphanMessages( session );
+            VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
         }
     }
 
@@ -172,7 +176,9 @@ public class FirmwareTests
         using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( resourceName );
 
         Asserts.AssertTspSyntaxShouldNotFail( session, false, true );
-        Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertTspSyntaxShouldNotFail )}" );
+
+        VI.Device.Tests.Asserts.AssertOrphanMessages( session );
+        VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
     }
 
     /// <summary>   (Unit Test Method) meter value should reset. </summary>
@@ -184,7 +190,9 @@ public class FirmwareTests
         using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( resourceName );
 
         Asserts.AssertMeterValueShouldReset( session );
-        Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertMeterValueShouldReset )}" );
+
+        VI.Device.Tests.Asserts.AssertOrphanMessages( session );
+        VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
     }
 
     /// <summary>   (Unit Test Method) cold resistance defaults should equal settings. </summary>
@@ -196,7 +204,9 @@ public class FirmwareTests
         using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( resourceName );
 
         Asserts.AssertColdResistanceDefaultsShouldEqualSettings( session );
-        Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertColdResistanceDefaultsShouldEqualSettings )}" );
+
+        VI.Device.Tests.Asserts.AssertOrphanMessages( session );
+        VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
     }
 
     /// <summary>   (Unit Test Method) initial resistance should reset. </summary>
@@ -208,7 +218,9 @@ public class FirmwareTests
         using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( resourceName );
 
         Asserts.AssertColdResistanceShouldReset( session, Asserts.IR );
-        Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertColdResistanceShouldReset )}" );
+
+        VI.Device.Tests.Asserts.AssertOrphanMessages( session );
+        VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
     }
 
     [TestMethod( "08. Final resistance should reset" )]
@@ -218,7 +230,9 @@ public class FirmwareTests
         using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( resourceName );
 
         Asserts.AssertColdResistanceShouldReset( session, Asserts.FR );
-        Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertColdResistanceShouldReset )}" );
+
+        VI.Device.Tests.Asserts.AssertOrphanMessages( session );
+        VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
     }
 
     [TestMethod( "09. Estimator should reset" )]
@@ -228,7 +242,9 @@ public class FirmwareTests
         using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( resourceName );
 
         Asserts.AssertEstimatorShouldReset( session, true );
-        Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertEstimatorShouldReset )}" );
+
+        VI.Device.Tests.Asserts.AssertOrphanMessages( session );
+        VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
     }
 
     /// <summary>   (Unit Test Method) thermal transient defaults should equal settings. </summary>
@@ -240,7 +256,9 @@ public class FirmwareTests
         using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( resourceName );
 
         Asserts.AssertThermalTransientDefaultsShouldEqualSettings( session );
-        Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertThermalTransientShouldReset )}" );
+
+        VI.Device.Tests.Asserts.AssertOrphanMessages( session );
+        VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
     }
 
     /// <summary>   (Unit Test Method) thermal transient should reset. </summary>
@@ -252,7 +270,9 @@ public class FirmwareTests
         using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( resourceName );
 
         Asserts.AssertThermalTransientShouldReset( session );
-        Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertThermalTransientShouldReset )}" );
+
+        VI.Device.Tests.Asserts.AssertOrphanMessages( session );
+        VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
     }
 
     /// <summary>   (Unit Test Method) framework should clear known state. </summary>
@@ -264,16 +284,24 @@ public class FirmwareTests
         using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( resourceName );
 
         Asserts.AssertTtmElementReadings( session, Asserts.IR );
-        Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertTtmElementReadings )} TTM Elements {Asserts.IR}" );
+
+        VI.Device.Tests.Asserts.AssertOrphanMessages( session );
+        VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
 
         Asserts.AssertTtmElementReadings( session, Asserts.TR );
-        Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertTtmElementReadings )} TTM Elements {Asserts.TR}" );
+
+        VI.Device.Tests.Asserts.AssertOrphanMessages( session );
+        VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
 
         Asserts.AssertTtmElementReadings( session, Asserts.FR );
-        Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertTtmElementReadings )} TTM Elements {Asserts.FR}" );
+
+        VI.Device.Tests.Asserts.AssertOrphanMessages( session );
+        VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
 
         Asserts.AssertEstimatesShouldRead( session );
-        Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertEstimatesShouldRead )}" );
+
+        VI.Device.Tests.Asserts.AssertOrphanMessages( session );
+        VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
     }
 
 
@@ -287,24 +315,36 @@ public class FirmwareTests
 
         TimeSpan timeout = TimeSpan.FromSeconds( 1 );
         Asserts.AssertTriggerCycleShouldStart( session, timeout, true );
-        Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertTriggerCycleShouldStart )}" );
+
+        VI.Device.Tests.Asserts.AssertOrphanMessages( session );
+        VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
 
         Asserts.AssertTtmElementReadings( session, Asserts.IR );
-        Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertTtmElementReadings )} TTM Elements {Asserts.IR}" );
+
+        VI.Device.Tests.Asserts.AssertOrphanMessages( session );
+        VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
 
         Asserts.AssertTtmElementReadings( session, Asserts.TR );
-        Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertTtmElementReadings )} TTM Elements {Asserts.TR}" );
+
+        VI.Device.Tests.Asserts.AssertOrphanMessages( session );
+        VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
 
         Asserts.AssertTtmElementReadings( session, Asserts.FR );
-        Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertTtmElementReadings )} TTM Elements {Asserts.FR}" );
+
+        VI.Device.Tests.Asserts.AssertOrphanMessages( session );
+        VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
 
         Asserts.AssertEstimatesShouldRead( session );
-        Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertEstimatesShouldRead )}" );
+
+        VI.Device.Tests.Asserts.AssertOrphanMessages( session );
+        VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
 
         if ( !MeterSubsystem.LegacyFirmware )
         {
             Asserts.AssertEstimatesShouldEstimate( session );
-            Asserts.AssertOrphanMessagesOrDeviceErrors( session, $"method {nameof( Asserts.AssertEstimatesShouldRead )}" );
+
+            VI.Device.Tests.Asserts.AssertOrphanMessages( session );
+            VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
         }
     }
 }

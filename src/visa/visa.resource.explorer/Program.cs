@@ -34,6 +34,7 @@ catch ( System.IO.IOException ex )
 
 // preload the VISA assemblies.
 cc.isr.Visa.Gac.GacLoader.LoadInstalledVisaAssemblies();
+Console.WriteLine( $"Loaded VISA implementation: {cc.isr.Visa.Gac.GacLoader.LoadedImplementation?.Location}." );
 
 // open the explorer form.
 Application.Run( new ExplorerForm() );

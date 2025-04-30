@@ -2,7 +2,20 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9250]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9251]: https://www.github.com/atecoder/dn.vi.ivi
+
+## [8.1.9251] - 2025-04-30
+- Serilog Settings
+  - Set log level to warning.
+- Gac Loader: 
+  - Remove console output.
+- Tests:
+  - replace with $"{methodFullName} initializing" );
+  - Remove Console.WriteLine( $"@{methodFullName}" );
+  - Replace OutputMember method with Console Output Member Message.
+  - Add assertion over orphan messages with member method reference.
+  - Add throw if device error with member method reference.
+  - Display Gac loader implementation on initializing tests.
 
 ## [8.1.9250] - 2025-04-29
 - Fix test method headline to remove capitalization and punctuation.
@@ -444,6 +457,6 @@ which has issued a defect report.
 
 &copy; 2012 Integrated Scientific Resources, Inc. All rights reserved.
 
+[Keep a Changelog]: https://keepachangelog.com/en/1.0.0/
 [vs.VI]: https://www.github.com/atecoder/dn.vi.ivi
 [vs.Visa]: https://bitbucket.org/davidhary/vs.io.visa
-[Keep a Changelog]: https://keepachangelog.com/en/1.0.0/

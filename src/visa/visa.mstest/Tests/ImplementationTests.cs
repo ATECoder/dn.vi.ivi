@@ -23,11 +23,11 @@ public class ImplementationTests
         string methodFullName = $"{testContext.FullyQualifiedTestClassName}.{System.Reflection.MethodBase.GetCurrentMethod()?.Name}";
         try
         {
-            Console.WriteLine( $"Initializing @[{methodFullName}" );
+            // Console.Out.WriteLine( $"{methodFullName} initializing" );
         }
         catch ( Exception ex )
         {
-            Console.WriteLine( $"Failed initializing the test class: {ex}" );
+            Console.Out.WriteLine( $"{methodFullName} failed initializing the test class:\r\n\t{ex}" );
 
             // cleanup to meet strong guarantees
 
@@ -62,7 +62,9 @@ public class ImplementationTests
     public virtual void InitializeBeforeEachTest()
     {
         Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {TimeZoneInfo.Local}" );
-        Console.WriteLine( $"Testing {typeof( Gac.Vendor ).Assembly.FullName}" );
+        Console.WriteLine( $"\t{typeof( Ivi.Visa.IMessageBasedSession ).Assembly.FullName}" );
+        Console.WriteLine( $"\tTesting {typeof( Gac.Vendor ).Assembly.FullName}" );
+        // Console.WriteLine( $"\t{cc.isr.Visa.Gac.GacLoader.LoadedImplementation?.Location}." );
     }
 
     /// <summary> Cleans up the test class instance after each test has run. </summary>
@@ -149,13 +151,13 @@ public class ImplementationTests
 
         foreach ( Ivi.Visa.ConflictManager.VisaImplementation implementation in installedVisas )
         {
-            string spaces = "  ";
-            Console.WriteLine( $"{visaImplementationName}.{nameof( Ivi.Visa.ConflictManager.VisaImplementation.Location )}: {implementation.Location}" );
-            Console.WriteLine( $"{spaces}{visaImplementationName}.{nameof( Ivi.Visa.ConflictManager.VisaImplementation.ApiType )}: {implementation.ApiType}" );
-            Console.WriteLine( $"{spaces}{visaImplementationName}.{nameof( Ivi.Visa.ConflictManager.VisaImplementation.Comments )}: {implementation.Comments}" );
-            Console.WriteLine( $"{spaces}{visaImplementationName}.{nameof( Ivi.Visa.ConflictManager.VisaImplementation.Enabled )}: {implementation.Enabled}" );
-            Console.WriteLine( $"{spaces}{visaImplementationName}.{nameof( Ivi.Visa.ConflictManager.VisaImplementation.FriendlyName )}: {implementation.FriendlyName}" );
-            Console.WriteLine( $"{spaces}{visaImplementationName}.{nameof( Ivi.Visa.ConflictManager.VisaImplementation.ResourceManufacturerId )}: {implementation.ResourceManufacturerId}" );
+            Console.WriteLine( $"{visaImplementationName}" );
+            Console.WriteLine( $"\t{nameof( Ivi.Visa.ConflictManager.VisaImplementation.Location )}: {implementation.Location}" );
+            Console.WriteLine( $"\t{nameof( Ivi.Visa.ConflictManager.VisaImplementation.ApiType )}: {implementation.ApiType}" );
+            Console.WriteLine( $"\t{nameof( Ivi.Visa.ConflictManager.VisaImplementation.Comments )}: {implementation.Comments}" );
+            Console.WriteLine( $"\t{nameof( Ivi.Visa.ConflictManager.VisaImplementation.Enabled )}: {implementation.Enabled}" );
+            Console.WriteLine( $"\t{nameof( Ivi.Visa.ConflictManager.VisaImplementation.FriendlyName )}: {implementation.FriendlyName}" );
+            Console.WriteLine( $"\t{nameof( Ivi.Visa.ConflictManager.VisaImplementation.ResourceManufacturerId )}: {implementation.ResourceManufacturerId}" );
         }
     }
 }

@@ -24,10 +24,10 @@
   },
   "Serilog": {
     "LevelSwitches": {
-      "$consoleSwitch": "Verbose",
-      "$debugSwitch": "Verbose",
-      "$traceSwitch": "Verbose",
-      "$fileSwitch": "Verbose"
+      "$consoleSwitch": "Warning",
+      "$debugSwitch": "Warning",
+      "$traceSwitch": "Warning",
+      "$fileSwitch": "Warning"
     },
     "MinimumLevel": {
       "Default": "Debug",

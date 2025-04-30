@@ -24,10 +24,8 @@ public abstract class TestBase
         string methodFullName = $"{testContext.FullyQualifiedTestClassName}.{System.Reflection.MethodBase.GetCurrentMethod()?.Name}";
         try
         {
-            if ( Logger is null )
-                Console.Out.WriteLine( $"Initializing {methodFullName}" );
-            else
-                Logger?.LogVerboseMultiLineMessage( "Initializing" );
+            // initialize the logger.
+            _ = Logger?.BeginScope( methodFullName );
         }
         catch ( Exception ex )
         {
@@ -62,8 +60,9 @@ public abstract class TestBase
     /// <summary> Initializes the test class instance before each test runs. </summary>
     public virtual void InitializeBeforeEachTest()
     {
-        Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {TimeZoneInfo.Local}" );
-        Console.WriteLine( $"Testing {typeof( VisaSessionBase ).Assembly.FullName}" );
+        Console.WriteLine( $"\t{cc.isr.Visa.Gac.GacLoader.LoadedImplementation?.Location}." );
+        Console.WriteLine( $"\t{typeof( Ivi.Visa.IMessageBasedSession ).Assembly.FullName}" );
+        Console.WriteLine( $"\t{typeof( cc.isr.Visa.Gac.Vendor ).Assembly.FullName}" );
 
         // assert reading of test settings from the configuration file.
         Assert.IsNotNull( this.TestSiteSettings, $"{nameof( this.TestSiteSettings )} should not be null." );
@@ -117,30 +116,26 @@ public abstract class TestBase
     /// <value> The logger. </value>
     public static ILogger<TestBase>? Logger { get; } = LoggerProvider.CreateLogger<TestBase>();
 
-    /// <summary>   Output full member. </summary>
+    /// <summary>   Console output member message. </summary>
     /// <remarks>   2025-04-28. </remarks>
     /// <param name="message">          The message. </param>
+    /// <param name="withPath">         (Optional) True to with path. </param>
+    /// <param name="withFileName">     (Optional) True to with file name. </param>
     /// <param name="memberName">       (Optional) Name of the member. </param>
     /// <param name="sourcePath">       (Optional) Full pathname of the source file. </param>
     /// <param name="sourceLineNumber"> (Optional) Source line number. </param>
-    public static void OutputFullMember( string message,
+    public static void ConsoleOutputMemberMessage( string message, bool withPath = false, bool withFileName = true,
         [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
         [System.Runtime.CompilerServices.CallerFilePath] string sourcePath = "",
         [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0 )
     {
-        Console.WriteLine( $"[{sourcePath}].{memberName}.Line#{sourceLineNumber}:\r\n\t{message}" );
-    }
+        string member = withPath
+            ? $"[{sourcePath}].{memberName}.Line#{sourceLineNumber}"
+            : withFileName
+              ? $"{System.IO.Path.GetFileNameWithoutExtension( sourcePath )}.{memberName}.Line#{sourceLineNumber}"
+              : $"{memberName}.Line#{sourceLineNumber}";
 
-    /// <summary>   Output member. </summary>
-    /// <remarks>   2025-04-28. </remarks>
-    /// <param name="message">          The message. </param>
-    /// <param name="memberName">       (Optional) Name of the member. </param>
-    /// <param name="sourceLineNumber"> (Optional) Source line number. </param>
-    public static void OutputMember( string message,
-        [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
-        [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0 )
-    {
-        Console.WriteLine( $"{memberName}.Line#{sourceLineNumber}::\r\n\t{message}" );
+        Console.Out.WriteLine( $"{member}:\r\n\t{message}" );
     }
 
     #endregion
@@ -184,7 +179,7 @@ public abstract class TestBase
         }
         TimeSpan elapsed = sw.Elapsed;
         Assert.IsTrue( pinged, $"{resourceSettings.ResourceName} ping failed after {elapsed:s\\.fff}s after {trials} trials." );
-        TestBase.OutputMember( $"\n{resourceSettings.ResourceName} pinged in {elapsed:s\\.fff}s after {trials} trials.\n" );
+        TestBase.ConsoleOutputMemberMessage( $"{resourceSettings.ResourceName} pinged in {elapsed:s\\.fff}s after {trials} trials." );
     }
 
     /// <summary>   (Unit Test Method) settings is local pacific standard time. </summary>
@@ -192,8 +187,6 @@ public abstract class TestBase
     [TestMethod( "00. Local time zone should equals the expected time zone" )]
     public void SettingsIsLocalPacificStandardTime()
     {
-        // Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
-        // Console.WriteLine( $"Text context {this.TestContext?.GetHashCode():exists;exists;null}" );
         Assert.IsNotNull( this.TestSiteSettings, $"{nameof( this.TestSiteSettings )} should not be null." );
         TimeZoneInfo tz = TimeZoneInfo.Local;
         string expected = this.TestSiteSettings.TimeZone();

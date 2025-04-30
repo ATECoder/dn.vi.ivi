@@ -13,9 +13,6 @@ public sealed partial class Asserts
     /// <param name="systemSubsystemsInfo"> Information describing the system subsystems. </param>
     public static void AssertLineFrequencyShouldMatch( StatusSubsystemBase subsystem, VI.Settings.SystemSubsystemSettings? systemSubsystemsInfo )
     {
-        System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
-        string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
-        Console.WriteLine( $"@{methodFullName}" );
 
         Assert.IsNotNull( subsystem, $"{nameof( subsystem )} should not be null." );
         Assert.IsNotNull( systemSubsystemsInfo, $"{nameof( systemSubsystemsInfo )} should not be null." );
@@ -32,9 +29,6 @@ public sealed partial class Asserts
     public static void AssertIntegrationPeriodShouldMatch( StatusSubsystemBase subsystem, VI.Settings.SenseSubsystemSettings? senseSubsystemInfo,
         VI.Settings.SystemSubsystemSettings? systemSubsystemInfo )
     {
-        System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
-        string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
-        Console.WriteLine( $"@{methodFullName}" );
 
         Assert.IsNotNull( subsystem, $"{nameof( subsystem )} should not be null." );
         Assert.IsNotNull( senseSubsystemInfo, $"{nameof( senseSubsystemInfo )} should not be null." );
@@ -54,9 +48,6 @@ public sealed partial class Asserts
     /// <param name="resourceInfo"> Information describing the resource. </param>
     public static void AssertDeviceModelShouldMatch( StatusSubsystemBase subsystem, Pith.Settings.ResourceSettings? resourceSettings )
     {
-        System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
-        string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
-        Console.WriteLine( $"@{methodFullName}" );
 
         Assert.IsNotNull( subsystem, $"{nameof( subsystem )} should not be null." );
         Assert.IsNotNull( resourceSettings, $"{nameof( Pith.Settings.ResourceSettings )} should not be null." );
@@ -71,9 +62,6 @@ public sealed partial class Asserts
     /// <param name="subsystem"> The subsystem. </param>
     public static void AssertOrphanMessagesShouldBeEmpty( StatusSubsystemBase subsystem )
     {
-        System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
-        string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
-        Console.WriteLine( $"@{methodFullName}" );
 
         Assert.IsNotNull( subsystem, $"{nameof( subsystem )} should not be null." );
         string orphanMessages = subsystem.Session.DiscardedData;
@@ -90,7 +78,7 @@ public sealed partial class Asserts
         System.Diagnostics.Stopwatch sw = System.Diagnostics.Stopwatch.StartNew();
         subsystem.Session.KeepAlive();
         sw.Stop();
-        Console.Out.WriteLine( $"Keep alive took {sw.ElapsedMilliseconds:F0}ms" );
+        Base.TestBase.ConsoleOutputMemberMessage( $"Keep alive took {sw.ElapsedMilliseconds:F0}ms" );
         _ = subsystem.ReadIdentity();
     }
 

@@ -32,11 +32,11 @@ public class DeviceTests
         string methodFullName = $"{testContext.FullyQualifiedTestClassName}.{System.Reflection.MethodBase.GetCurrentMethod()?.Name}";
         try
         {
-            Console.WriteLine( $"Initializing @[{methodFullName}" );
+            // Console.WriteLine( $"{methodFullName} initializing" );
         }
         catch ( Exception ex )
         {
-            Console.WriteLine( $"Failed initializing the test class: {ex}" );
+            Console.WriteLine( $"{methodFullName} failed initializing:\r\n\t{ex}" );
 
             // cleanup to meet strong guarantees
 
@@ -63,7 +63,9 @@ public class DeviceTests
     public void InitializeBeforeEachTest()
     {
         Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
-        Console.WriteLine( $"Testing {typeof( LegacyDevice ).Assembly.FullName}" );
+        Console.WriteLine( $"\t{typeof( cc.isr.Visa.Gac.Vendor ).Assembly.FullName}" );
+        Console.WriteLine( $"\t{cc.isr.Visa.Gac.GacLoader.LoadedImplementation?.Location}." );
+        Console.WriteLine( $"\tTesting {typeof( LegacyDevice ).Assembly.FullName}" );
 
         // create an instance of the Serilog logger.
         SessionLogger.Instance.CreateSerilogLogger( typeof( DeviceTests ) );

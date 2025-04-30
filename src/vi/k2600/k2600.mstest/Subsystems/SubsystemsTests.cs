@@ -41,9 +41,8 @@ public class SubsystemsTests : Device.Tests.Base.SubsystemsTests
     [TestInitialize()]
     public override void InitializeBeforeEachTest()
     {
-        // reported in the base class
-        // Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
-        Console.WriteLine( $"Testing {typeof( cc.isr.VI.Tsp.K2600.MeasureResistanceSubsystem ).Assembly.FullName}" );
+        Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
+        Console.WriteLine( $"\tTesting {typeof( cc.isr.VI.Tsp.K2600.MeasureResistanceSubsystem ).Assembly.FullName}" );
 
         // create an instance of the Serilog logger.
         SessionLogger.Instance.CreateSerilogLogger( typeof( SubsystemsTests ) );
@@ -87,10 +86,6 @@ public class SubsystemsTests : Device.Tests.Base.SubsystemsTests
         Assert.IsNotNull( this.Device.StatusSubsystem );
         try
         {
-            System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
-            string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
-            Console.WriteLine( $"@{methodFullName}" );
-
             cc.isr.VI.Device.Tests.Asserts.AssertSessionInitialValuesShouldMatch( this.Device.Session, this.ResourceSettings );
             cc.isr.VI.Device.Tests.Asserts.AssertDeviceShouldOpenWithoutDeviceErrors( this.Device, this.ResourceSettings );
             cc.isr.VI.Device.Tests.Asserts.AssertDeviceShouldPresetKnownState( this.Device );

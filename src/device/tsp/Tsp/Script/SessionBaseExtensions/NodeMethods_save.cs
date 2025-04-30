@@ -65,7 +65,7 @@ public static partial class NodeMethods
             affirmative = scriptNames.Contains( $"{script.Title}," );
             if ( !affirmative )
             {
-                session.TraceLastAction( $"script {script.Title} was not saved;. " );
+                session.TraceLastAction( $"\r\n\tscript {script.Title} was not saved;. " );
                 break;
             }
         }

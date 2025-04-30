@@ -86,7 +86,7 @@ public static partial class SessionBaseExtensionMethods
         // delete the script if it exists.
         session.DeleteScript( scriptInfo.Title );
 
-        SessionBaseExtensionMethods.TraceLastAction( $"Importing script from {scriptInfo.DeployFileFormat} '{deployFilePath}' file" );
+        SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tImporting script from {scriptInfo.DeployFileFormat} '{deployFilePath}' file" );
         session.ImportScript( scriptInfo.Title, deployFilePath, lineDelay );
 
         session.RunScript( scriptInfo.Title, scriptInfo.VersionGetterElement );
@@ -133,7 +133,7 @@ public static partial class SessionBaseExtensionMethods
 
         if ( session.LoadMenuItemExists( itemName ) )
         {
-            session.TraceLastAction( $"deleting the '{itemName}' load menu item;. " );
+            session.TraceLastAction( $"\r\n\tdeleting the '{itemName}' load menu item;. " );
             string command = string.Format( Syntax.Tsp.Script.DeleteExistingLoadMenuItemCommandFormat, itemName );
             command += " " + Syntax.Tsp.Lua.OperationCompletedQueryCommand;
             _ = session.WriteLine( command );

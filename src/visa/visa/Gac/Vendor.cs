@@ -145,7 +145,7 @@ public static partial class Vendor
         return Vendor.IsAssemblyExists( IVI_VISA_FILENAME, IVI_VISA_FULL_NAME );
     }
 
-    /// <summary>   Has keysight visa implementation. </summary>
+    /// <summary>   Has Keysight visa implementation. </summary>
     /// <remarks>   2024-07-13. </remarks>
     /// <returns>   A Tuple. </returns>
     public static (bool Success, string Details) HasKeysightVisaImplementation()

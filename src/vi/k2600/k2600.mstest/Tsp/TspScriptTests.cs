@@ -28,10 +28,8 @@ public class TspScriptTests
         string methodFullName = $"{testContext.FullyQualifiedTestClassName}.{System.Reflection.MethodBase.GetCurrentMethod()?.Name}";
         try
         {
-            if ( Logger is null )
-                Trace.WriteLine( "Initializing", methodFullName );
-            else
-                Logger?.LogVerboseMultiLineMessage( "Initializing" );
+            // initialize the logger.
+            _ = Logger?.BeginScope( methodFullName );
         }
         catch ( Exception ex )
         {
@@ -69,7 +67,7 @@ public class TspScriptTests
     public void InitializeBeforeEachTest()
     {
         Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {TimeZoneInfo.Local}" );
-        Console.WriteLine( $"Testing {typeof( cc.isr.VI.Tsp.Script.ScriptCompressor ).Assembly.FullName}" );
+        Console.WriteLine( $"\tTesting {typeof( cc.isr.VI.Tsp.Script.ScriptCompressor ).Assembly.FullName}" );
 
         // create an instance of the Serilog logger.
         SessionLogger.Instance.CreateSerilogLogger( typeof( TspScriptTests ) );
@@ -126,9 +124,6 @@ public class TspScriptTests
     [TestMethod( "02. Script should trim and compress" )]
     public void ScriptShouldTrimAndCompress()
     {
-        System.Reflection.MethodBase? methodInfo = System.Reflection.MethodBase.GetCurrentMethod();
-        string methodFullName = $"{methodInfo?.DeclaringType?.Name}.{methodInfo?.Name}";
-        Console.WriteLine( $"@{methodFullName}" );
         string scriptName = "timeDisplayClear";
         string folderPath = "C:\\my\\lib\\tsp\\tsp.1\\core\\tests";
         string timerElapsedFunctionName = "timerElapsed";
@@ -153,11 +148,11 @@ public class TspScriptTests
         scriptSource.ToString().ExportScript( filePath, overWrite: true );
 
         string toFilePath = Path.Combine( folderPath, $"{fileTitle}_trimmed.tsp" );
-        SessionBaseExtensionMethods.TraceLastAction( $"Trimming script file to '{toFilePath}'" );
+        SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tTrimming script file to '{toFilePath}'" );
         filePath.TrimScript( toFilePath, true );
 
         toFilePath = Path.Combine( folderPath, $"{toFilePath}c" );
-        SessionBaseExtensionMethods.TraceLastAction( $"Compressing trimmed script file to '{toFilePath}'" );
+        SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tCompressing trimmed script file to '{toFilePath}'" );
         filePath.CompressScriptFile( toFilePath, overWrite: true );
     }
 

@@ -62,7 +62,7 @@ public class SelectorOpenerTests
     public void InitializeBeforeEachTest()
     {
         Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
-        Console.WriteLine( $"Testing {typeof( BindingEventHandlers ).Assembly.FullName}" );
+        Console.WriteLine( $"\tTesting {typeof( BindingEventHandlers ).Assembly.FullName}" );
         TraceListener?.ClearQueue();
     }
 

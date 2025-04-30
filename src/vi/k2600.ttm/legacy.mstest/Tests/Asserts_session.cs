@@ -1,23 +1,7 @@
-using System;
-
 namespace cc.isr.VI.Tsp.K2600.Ttm.Legacy.Tests;
 
 internal static partial class Asserts
 {
-    /// <summary>   Assert orphan messages or device errors. </summary>
-    /// <remarks>   2024-11-11. </remarks>
-    /// <param name="session">      The session. </param>
-    /// <param name="memberName">   (Optional) Name of the member. </param>
-    public static void AssertOrphanMessagesOrDeviceErrors( Pith.SessionBase? session, [System.Runtime.CompilerServices.CallerMemberName] string memberName = "" )
-    {
-        Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
-        Assert.IsTrue( session.IsDeviceOpen, $"VISA session to '{nameof( session.ResourceNameCaption )}' must be open." );
-        string orphanMessages = session.ReadLines( session.StatusReadDelay, TimeSpan.FromMilliseconds( 100 ), false );
-
-        Assert.IsTrue( string.IsNullOrWhiteSpace( orphanMessages ), $"The following messages were left on the output buffer after {memberName}:/n{orphanMessages}" );
-        session.ThrowDeviceExceptionIfError( failureMessage: $"{nameof( Pith.SessionBase.ReadLines )} after {memberName} failed" );
-    }
-
     /// <summary>   Asserts that the session should open. </summary>
     /// <remarks>   2024-11-08. </remarks>
     /// <param name="legacyDevice"> The legacy device. </param>
@@ -42,7 +26,8 @@ internal static partial class Asserts
         Assert.AreEqual( resourceName, session.OpenResourceName, "The open session resource name should equal to the opening resource name." );
         Assert.IsTrue( session.IsDeviceOpen, $"{resourceName} should open" );
 
-        Asserts.AssertOrphanMessagesOrDeviceErrors( session );
+        VI.Device.Tests.Asserts.AssertOrphanMessages( session );
+        VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
 
         // reset and clear known state.
         _ = legacyDevice.ResetAndClear();
