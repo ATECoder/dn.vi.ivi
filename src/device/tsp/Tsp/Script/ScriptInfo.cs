@@ -364,7 +364,6 @@ public class ScriptInfo
     }
 
     #endregion
-
 }
 
 /// <summary>   Collection of script information bases. </summary>
@@ -414,6 +413,7 @@ public class ScriptInfoBaseCollection<TItem> : System.Collections.ObjectModel.Ke
         return item.Title;
     }
 
+    #endregion
 
     #region " Add script "
 
@@ -733,7 +733,6 @@ public class NodesScriptsCollection : Dictionary<int, ScriptInfoCollection>
     /// <summary>   Gets a value indicating whether one or more scripts must be saved. </summary>
     /// <value> True if we must save, false if not. </value>
     public bool MustSave => this.AnyLoaded() && !this.AllSaved();
-
 
     #endregion
 }
