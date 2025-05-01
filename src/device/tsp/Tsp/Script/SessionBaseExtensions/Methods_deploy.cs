@@ -250,7 +250,7 @@ public static partial class SessionBaseExtensionMethods
             else
             {
                 embeddedScript.ScriptStatus |= ScriptStatuses.Activated;
-                embeddedScript.Version = session.QueryFirmwareVersion( script );
+                embeddedScript.ActualVersion = session.QueryFirmwareVersion( script );
                 if ( session.IsBinaryScript( script.Title ) )
                     embeddedScript.ScriptStatus |= ScriptStatuses.BinaryByteCode;
             }

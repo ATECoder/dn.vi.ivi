@@ -391,6 +391,18 @@ public class ScriptInfoBaseCollection<TItem> : System.Collections.ObjectModel.Ke
     {
     }
 
+    /// <summary>   Clone constructor. </summary>
+    /// <remarks>   2024-09-10. </remarks>
+    /// <param name="scripts">  The scripts. </param>
+    public ScriptInfoBaseCollection( ScriptInfoBaseCollection<TItem> scripts )
+    {
+        this.NodeNumber = scripts.NodeNumber;
+        this.ModelNumber = scripts.ModelNumber;
+        this.SerialNumber = scripts.SerialNumber;
+        foreach ( ScriptInfo script in scripts )
+            _ = this.AddScriptItem( new ScriptInfo( script ) );
+    }
+
     /// <summary>
     /// When implemented in a derived class, extracts the key from the specified element.
     /// </summary>
@@ -402,7 +414,6 @@ public class ScriptInfoBaseCollection<TItem> : System.Collections.ObjectModel.Ke
         return item.Title;
     }
 
-    #endregion
 
     #region " Add script "
 
@@ -429,42 +440,6 @@ public class ScriptInfoBaseCollection<TItem> : System.Collections.ObjectModel.Ke
         if ( script is null ) throw new ArgumentNullException( nameof( script ) );
         this.Items.Add( script );
         return this;
-    }
-
-    #endregion
-}
-
-/// <summary>   Collection of script information. </summary>
-/// <remarks>   2025-04-25. </remarks>
-public class ScriptInfoCollection : ScriptInfoBaseCollection<ScriptInfo>
-{
-    #region " construction and cleanup "
-
-    /// <summary>   Default constructor. </summary>
-    /// <remarks>   2025-04-25. </remarks>
-    public ScriptInfoCollection()
-    {
-    }
-
-    /// <summary>   Clone constructor. </summary>
-    /// <remarks>   2024-09-10. </remarks>
-    /// <param name="scripts">  The scripts. </param>
-    public ScriptInfoCollection( ScriptInfoCollection scripts )
-    {
-        this.NodeNumber = scripts.NodeNumber;
-        this.ModelNumber = scripts.ModelNumber;
-        this.SerialNumber = scripts.SerialNumber;
-        foreach ( ScriptInfo script in scripts )
-            _ = this.AddScriptItem( new ScriptInfo( script ) );
-    }
-
-    /// <summary>   Gets key for item. </summary>
-    /// <remarks>   2024-09-05. </remarks>
-    /// <param name="item"> The item. </param>
-    /// <returns>   The key for item. </returns>
-    protected override string GetKeyForItem( ScriptInfo item )
-    {
-        return base.GetKeyForItem( item );
     }
 
     #endregion
@@ -505,7 +480,160 @@ public class ScriptInfoCollection : ScriptInfoBaseCollection<ScriptInfo>
         return builder.ToString().TrimEndNewLine();
     }
 
+    /// <summary>   Gets saved scripts names. </summary>
+    /// <remarks>   2025-04-30. </remarks>
+    /// <returns>   The saved scripts names. </returns>
+    public string GetSavedScriptsNames()
+    {
+        System.Text.StringBuilder builder = new();
+        foreach ( ScriptInfo script in this.Items )
+        {
+            if ( ScriptStatuses.Saved == (script.ScriptStatus & ScriptStatuses.Saved) )
+            {
+                if ( builder.Length > 0 )
+                    _ = builder.Append( ", " );
+                _ = builder.Append( script.Title );
+            }
+        }
+        return builder.ToString();
+    }
+
+    /// <summary>   Select autoexec script. </summary>
+    /// <remarks>   2025-04-30. </remarks>
+    /// <returns>   A ScriptInfo? </returns>
+    public ScriptInfo? SelectAutoexecScript()
+    {
+        foreach ( ScriptInfo script in this.Items )
+        {
+            if ( !string.IsNullOrWhiteSpace( script.Title ) )
+            {
+                if ( script.IsAutoexec )
+                    return script;
+            }
+        }
+        return null;
+    }
+
+    /// <summary>   Determines if all scripts were loaded. </summary>
+    /// <remarks>   2025-04-30. </remarks>
+    /// <returns>   True if it succeeds, false if it fails. </returns>
+    public bool AllLoaded()
+    {
+        foreach ( ScriptInfo script in this.Items )
+        {
+            if ( !string.IsNullOrWhiteSpace( script.Title ) )
+            {
+                if ( ScriptStatuses.Loaded != (script.ScriptStatus & ScriptStatuses.Loaded) )
+                    return false;
+            }
+        }
+        return true;
+    }
+
+    /// <summary>   Determines if we can any scripts loaded. </summary>
+    /// <remarks>   2025-04-30. </remarks>
+    /// <returns>   True if it succeeds, false if it fails. </returns>
+    public bool AnyLoaded()
+    {
+        foreach ( ScriptInfo script in this.Items )
+        {
+            if ( !string.IsNullOrWhiteSpace( script.Title ) )
+            {
+                if ( ScriptStatuses.Loaded == (script.ScriptStatus & ScriptStatuses.Loaded) )
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    /// <summary>   Determines if we can any activated. </summary>
+    /// <remarks>   2025-04-30. </remarks>
+    /// <returns>   True if it succeeds, false if it fails. </returns>
+    public bool AnyActivated()
+    {
+        foreach ( ScriptInfo script in this.Items )
+        {
+            if ( !string.IsNullOrWhiteSpace( script.Title ) )
+            {
+                if ( ScriptStatuses.Activated == (script.ScriptStatus & ScriptStatuses.Activated) )
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    /// <summary>   Determines if we can any saved. </summary>
+    /// <remarks>   2025-04-30. </remarks>
+    /// <returns>   True if it succeeds, false if it fails. </returns>
+    public bool AnySaved()
+    {
+        foreach ( ScriptInfo script in this.Items )
+        {
+            if ( !string.IsNullOrWhiteSpace( script.Title ) )
+            {
+                if ( ScriptStatuses.Saved == (script.ScriptStatus & ScriptStatuses.Saved) )
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    /// <summary>   Gets a value indicating whether all was saved. </summary>
+    /// <value> True if all saved, false if not. </value>
+    public bool AllSaved
+    {
+        get
+        {
+            foreach ( ScriptInfo script in this.Items )
+            {
+                if ( !string.IsNullOrWhiteSpace( script.Title ) )
+                {
+                    if ( ScriptStatuses.Saved != (script.ScriptStatus & ScriptStatuses.Saved) )
+                        return false;
+                }
+            }
+            return true;
+        }
+    }
+
+    /// <summary>   Gets a value indicating whether one or more scripts can be deleted. </summary>
+    /// <value> True if may delete, false if not. </value>
+    public bool MayDelete => this.AnyLoaded();
+
+    /// <summary>   Gets a value indicating whether one or more scripts must be loaded. </summary>
+    /// <value> True if we must load, false if not. </value>
+    public bool MustLoad => !this.AllLoaded();
+
+    /// <summary>   Gets a value indicating whether one or more scripts must be saved. </summary>
+    /// <value> True if we must save, false if not. </value>
+    public bool MustSave => this.AnyLoaded() && !this.AllSaved;
+
     #endregion
+}
+
+/// <summary>   Collection of script information. </summary>
+/// <remarks>   2025-04-25. </remarks>
+public class ScriptInfoCollection : ScriptInfoBaseCollection<ScriptInfo>
+{
+    #region " construction and cleanup "
+
+    /// <summary>   Default constructor. </summary>
+    /// <remarks>   2025-04-25. </remarks>
+    public ScriptInfoCollection()
+    {
+    }
+
+    /// <summary>   Gets key for item. </summary>
+    /// <remarks>   2024-09-05. </remarks>
+    /// <param name="item"> The item. </param>
+    /// <returns>   The key for item. </returns>
+    protected override string GetKeyForItem( ScriptInfo item )
+    {
+        return base.GetKeyForItem( item );
+    }
+
+    #endregion
+
 }
 
 /// <summary>   Collection of node scripts. </summary>
@@ -528,6 +656,84 @@ public class NodesScriptsCollection : Dictionary<int, ScriptInfoCollection>
         }
         return builder.ToString().TrimEndNewLine();
     }
+
+    /// <summary>   Determines if we can all loaded. </summary>
+    /// <remarks>   2025-04-30. </remarks>
+    /// <returns>   True if it succeeds, false if it fails. </returns>
+    public bool AllLoaded()
+    {
+        foreach ( ScriptInfoCollection scriptInfoCollection in this.Values )
+        {
+            if ( !scriptInfoCollection.AllLoaded() )
+                return false;
+        }
+        return true;
+    }
+
+    /// <summary>   Determines if we can any loaded. </summary>
+    /// <remarks>   2025-04-30. </remarks>
+    /// <returns>   True if it succeeds, false if it fails. </returns>
+    public bool AnyLoaded()
+    {
+        foreach ( ScriptInfoCollection scriptInfoCollection in this.Values )
+        {
+            if ( scriptInfoCollection.AnyLoaded() )
+                return true;
+        }
+        return false;
+    }
+
+    /// <summary>   Determines if we can any activated. </summary>
+    /// <remarks>   2025-04-30. </remarks>
+    /// <returns>   True if it succeeds, false if it fails. </returns>
+    public bool AnyActivated()
+    {
+        foreach ( ScriptInfoCollection scriptInfoCollection in this.Values )
+        {
+            if ( scriptInfoCollection.AnyActivated() )
+                return true;
+        }
+        return false;
+    }
+
+    /// <summary>   Determines if we can any saved. </summary>
+    /// <remarks>   2025-04-30. </remarks>
+    /// <returns>   True if it succeeds, false if it fails. </returns>
+    public bool AnySaved()
+    {
+        foreach ( ScriptInfoCollection scriptInfoCollection in this.Values )
+        {
+            if ( scriptInfoCollection.AnySaved() )
+                return true;
+        }
+        return false;
+    }
+
+    /// <summary>   Determines if we can all saved. </summary>
+    /// <remarks>   2025-04-30. </remarks>
+    /// <returns>   True if it succeeds, false if it fails. </returns>
+    public bool AllSaved()
+    {
+        foreach ( ScriptInfoCollection scriptInfoCollection in this.Values )
+        {
+            if ( !scriptInfoCollection.AllSaved )
+                return false;
+        }
+        return true;
+    }
+
+    /// <summary>   Gets a value indicating whether one or more scripts can be deleted. </summary>
+    /// <value> True if may delete, false if not. </value>
+    public bool MayDelete => this.AnyLoaded();
+
+    /// <summary>   Gets a value indicating whether one or more scripts must be loaded. </summary>
+    /// <value> True if we must load, false if not. </value>
+    public bool MustLoad => !this.AllLoaded();
+
+    /// <summary>   Gets a value indicating whether one or more scripts must be saved. </summary>
+    /// <value> True if we must save, false if not. </value>
+    public bool MustSave => this.AnyLoaded() && !this.AllSaved();
+
 
     #endregion
 }

@@ -2,7 +2,12 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9251]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9252]: https://www.github.com/atecoder/dn.vi.ivi
+
+## [8.1.9251] - 2025-05-01
+- Device tsp Script
+  - Fix reading the script state: set the actual version.
+  - Script Info Collection: Add enumeration method such as All Save and Any Loaded.
 
 ## [8.1.9251] - 2025-04-30
 - Serilog Settings
