@@ -237,7 +237,6 @@ public static partial class SessionBaseExtensionMethods
         {
             // clear the script state
             ScriptStatus = ScriptStatuses.Unknown,
-            Version = string.Empty
         };
 
         if ( !session.IsNil( embeddedScript.Title ) )
@@ -279,7 +278,12 @@ public static partial class SessionBaseExtensionMethods
         if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
         if ( scripts is null ) throw new ArgumentNullException( nameof( scripts ) );
 
-        ScriptInfoCollection embeddedScriptInfoCollection = [];
+        ScriptInfoCollection embeddedScriptInfoCollection = new()
+        {
+            SerialNumber = scripts.SerialNumber,
+            ModelNumber = scripts.ModelNumber,
+            NodeNumber = scripts.NodeNumber
+        };
 
         foreach ( ScriptInfo script in scripts )
         {

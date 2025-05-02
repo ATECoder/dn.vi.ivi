@@ -314,4 +314,54 @@ public static partial class SessionBaseExtensionMethods
         System.IO.File.WriteAllText( toFilePath, ScriptCompressor.Compress( scriptSource ) );
     }
 
+    /// <summary>   A string extension method that decompress the script file. </summary>
+    /// <remarks>   2025-05-01. </remarks>
+    /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
+    ///                                                 are null. </exception>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <exception cref="FileNotFoundException">        Thrown when the requested file is not
+    ///                                                 present. </exception>
+    /// <param name="fromFilePath"> The source file path. </param>
+    /// <param name="toFilePath">   the destination file path. </param>
+    /// <param name="fromEol">      (Optional) end-of-line to change. </param>
+    /// <param name="toEol">        (Optional) end-of-line to change to. </param>
+    /// <param name="overWrite">    (Optional) [false] True to over write. </param>
+    public static void DecompressScriptFile( this string fromFilePath, string toFilePath, string fromEol = "\n", string toEol = "\r\n", bool overWrite = false )
+    {
+        if ( string.IsNullOrWhiteSpace( fromFilePath ) )
+            throw new ArgumentNullException( nameof( fromFilePath ) );
+        if ( string.IsNullOrWhiteSpace( toFilePath ) )
+            throw new ArgumentNullException( nameof( toFilePath ) );
+
+        if ( !overWrite && System.IO.File.Exists( toFilePath ) )
+            throw new InvalidOperationException( $"The script source cannot be exported because the file '{toFilePath}' exists." );
+
+        // read the source file.
+        string source = System.IO.File.ReadAllText( fromFilePath );
+
+        if ( ScriptCompressor.IsCompressed( source ) )
+            source = ScriptCompressor.Decompress( source );
+
+        if ( !(string.IsNullOrEmpty( fromEol ) || string.IsNullOrEmpty( toEol )) )
+        {
+            // if required, convert the line endings to windows format.
+            using TextReader? textReader = new System.IO.StringReader( source )
+                ?? throw new System.IO.FileNotFoundException( $"Failed creating a reader from the '{fromFilePath}' file source." );
+
+            StringBuilder sb = new();
+            using TextWriter? writer = new System.IO.StringWriter( sb )
+                ?? throw new System.IO.FileNotFoundException( $"Failed creating a writer for the string builder" );
+
+            // convert line ending to windows format.
+            textReader.ConvertEol( writer, fromEol, toEol );
+
+            // convert line ending to windows format.
+            source = sb.ToString();
+        }
+
+        // compress and export the source to the file as is.
+        System.IO.File.WriteAllText( toFilePath, source );
+    }
+
 }

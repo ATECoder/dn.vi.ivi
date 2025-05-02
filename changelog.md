@@ -2,7 +2,12 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9252]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9253]: https://www.github.com/atecoder/dn.vi.ivi
+
+## [8.1.9253] - 2025-05-02
+- Device tsp Script
+  - Add copy script between files to work around the read only attribute.
+  - Initialize script info collection properties when reading the embedded scripts.
 
 ## [8.1.9251] - 2025-05-01
 - Device tsp Script
