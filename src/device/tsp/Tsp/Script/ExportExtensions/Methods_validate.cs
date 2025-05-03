@@ -65,7 +65,8 @@ public static partial class ExportExtensionsMethods
     /// <remarks>
     /// 2025-05-02. <para>
     /// This became important after it was found that the stream miss-identified line endings when
-    /// reading TSP byte code. </para>
+    /// reading TSP byte code. </para> <para>
+    /// Note that this assumes that the original contents ends with a new line. </para>
     /// </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
     ///                                                 are null. </exception>
@@ -112,7 +113,8 @@ public static partial class ExportExtensionsMethods
     /// <remarks>
     /// 2025-05-02. <para>
     /// This became important after it was found that the stream miss-identified line endings when
-    /// reading TSP byte code. </para>
+    /// reading TSP byte code. </para><para>
+    /// Assumes that the original contents end with a new line. </para>
     /// </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
     ///                                                 are null. </exception>
@@ -124,6 +126,7 @@ public static partial class ExportExtensionsMethods
     public static void ValidateStringReaderStreamWriter( this string originalContents )
     {
         if ( originalContents is null || string.IsNullOrWhiteSpace( originalContents ) ) throw new ArgumentNullException( nameof( originalContents ) );
+
         string filePath = Path.GetTempFileName();
 
         // if required, convert the line endings to windows format.
@@ -140,6 +143,9 @@ public static partial class ExportExtensionsMethods
             if ( line is not null )
                 writer.WriteLine( line );
         }
+
+        // we got an exception trying to read back from the file path. 
+        writer.Close();
 
         // read back the contents of the file.
         string actualContents = File.ReadAllText( filePath );

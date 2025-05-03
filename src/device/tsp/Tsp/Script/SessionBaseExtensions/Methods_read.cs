@@ -52,47 +52,4 @@ public static partial class SessionBaseExtensionMethods
         if ( toFilePath is null || string.IsNullOrWhiteSpace( toFilePath ) ) throw new ArgumentNullException( nameof( toFilePath ) );
         cc.isr.VI.Syntax.Tsp.TspScriptParser.TrimTspSourceCode( fromFilePath, toFilePath, retainOutline );
     }
-
-    /// <summary>
-    /// A <see cref="TextReader"/> extension method that attempts to export script to file using the
-    /// stream reader.
-    /// </summary>
-    /// <remarks>
-    /// 2025-04-20. <para>
-    /// The stream reader fails reading a script that is saves in the TSP binary format because it 
-    /// may incorrectly interpret an a backslash as an end of file. For example, the following line from the 
-    /// source file became the last line of the destination file.<c>
-    /// "\91\201\2\185\92I\2\186\92\201\2\187\93I\2\188\93\201\2\189^",
-    /// "\91\201\2\185\92I\2\186\92\20
-    /// </c>
-    /// </para>
-    /// </remarks>
-    /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
-    ///                                                 are null. </exception>
-    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
-    ///                                                 invalid. </exception>
-    /// <param name="reader">   The reader. </param>
-    /// <param name="writer">   The writer. </param>
-    public static void ExportScript( this StreamReader reader, StreamWriter writer )
-    {
-        if ( reader == null ) throw new ArgumentNullException( nameof( reader ) );
-        if ( !reader.BaseStream.CanRead ) throw new InvalidOperationException( $"{nameof( reader )} cannot read." );
-        if ( writer == null ) throw new ArgumentNullException( nameof( writer ) );
-        if ( !writer.BaseStream.CanWrite ) throw new InvalidOperationException( $"{nameof( writer )} cannot write." );
-
-        string? line = "";
-        while ( line is not null )
-        {
-            line = reader.ReadLine();
-            if ( line is not null
-                && !string.IsNullOrWhiteSpace( line )
-                && !line.Contains( Syntax.Tsp.Script.LoadScriptCommand )
-                && !line.Contains( Syntax.Tsp.Script.LoadAndRunScriptCommand )
-                && !line.Contains( Syntax.Tsp.Script.EndScriptCommand ) )
-            {
-                writer.WriteLine( line );
-            }
-
-        }
-    }
 }

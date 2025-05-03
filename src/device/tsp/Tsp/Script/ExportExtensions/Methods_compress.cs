@@ -32,6 +32,9 @@ public static partial class ExportExtensionsMethods
 
         string scriptSource = System.IO.File.ReadAllText( fromFilePath );
 
+        // ensure that the source ends with a single line termination.
+        scriptSource = scriptSource.TrimMultipleLineEndings();
+
         // Note that the actual output is not validated against the input because the line endings might change.
         // Rather, what is validated is that the reader and writer are able to process the script source.
         if ( validate )
@@ -76,6 +79,9 @@ public static partial class ExportExtensionsMethods
         if ( !overWrite && File.Exists( toFilePath ) )
             throw new InvalidOperationException( $"The script source cannot be exported because the file '{toFilePath}' exists." );
 
+        // ensure that the source ends with a single line termination.
+        scriptSource = scriptSource.TrimMultipleLineEndings();
+
         // Note that the actual output is not validated against the input because the line endings might change.
         // Rather, what is validated is that the reader and writer are able to process the script source.
         if ( validate )
@@ -116,18 +122,21 @@ public static partial class ExportExtensionsMethods
             throw new InvalidOperationException( $"The script source cannot be exported because the file '{toFilePath}' exists." );
 
         // read the source file.
-        string source = System.IO.File.ReadAllText( fromFilePath );
+        string compressedSource = System.IO.File.ReadAllText( fromFilePath );
 
-        if ( ScriptCompressor.IsCompressed( source ) )
-            source = ScriptCompressor.Decompress( source );
+        if ( ScriptCompressor.IsCompressed( compressedSource ) )
+            compressedSource = ScriptCompressor.Decompress( compressedSource );
+
+        // ensure that the compressed source ends with a single line termination.
+        compressedSource = compressedSource.TrimMultipleLineEndings();
 
         // Note that the actual output is not validated against the input because the line endings might change.
         // Rather, what is validated is that the reader and writer are able to process the script source.
         if ( validate )
-            source.ValidateStringReaderStringWriter();
+            compressedSource.ValidateStringReaderStringWriter();
 
         // if required, convert the line endings to windows format.
-        using TextReader? textReader = new System.IO.StringReader( source )
+        using TextReader? textReader = new System.IO.StringReader( compressedSource )
             ?? throw new System.IO.FileNotFoundException( $"Failed creating a reader from the '{fromFilePath}' file source." );
 
         StringBuilder sb = new();

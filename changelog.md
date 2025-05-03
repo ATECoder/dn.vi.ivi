@@ -11,7 +11,11 @@ Notable changes to the `cc.isr.vi` solution are documented in this file using th
   - export:
     - use writer write line to convert from Linux to Windows instead of using the convert method.
 	- remove the end of line conversion.
- 
+  - Remove obsoleted reader methods.
+  - Ensure script source and compressed source end with a single line termination for validations.
+  - Script Compression:
+    - Add validation.
+	- Add string comparison using string readers. 
 ## [8.1.9253] - 2025-05-02
 - Device tsp Script
   - Add copy script between files to work around the read only attribute.

@@ -33,6 +33,16 @@ public static class ScriptCompressor
             return compressedContents;
     }
 
+    /// <summary>   Validates the compression described by contents. </summary>
+    /// <remarks>   2025-05-03. </remarks>
+    /// <param name="contents"> The string being compressed. </param>
+    /// <returns>   True if it succeeds, false if it fails. </returns>
+    public static bool ValidateCompression( string contents )
+    {
+        string decompressed = ScriptCompressor.Decompress( ScriptCompressor.Compress( contents ) );
+        return string.Equals( contents, decompressed, StringComparison.Ordinal );
+    }
+
     /// <summary>   Returns a compressed value. </summary>
     /// <remarks>   2024-09-05. </remarks>
     /// <param name="contents"> The string being compressed. </param>
@@ -65,6 +75,33 @@ public static class ScriptCompressor
         return ScriptCompressor.Compress( contents, ScriptCompressor.CompressedPrefix, ScriptCompressor.CompressedSuffix );
     }
 
+    /// <summary>   Strip decorations. </summary>
+    /// <remarks>   2025-05-03. </remarks>
+    /// <param name="contents"> The string being compressed. </param>
+    /// <param name="prefix">   The prefix. </param>
+    /// <param name="suffix">   The suffix. </param>
+    /// <returns>   A string. </returns>
+    public static string StripDecorations( string contents, string prefix, string suffix )
+    {
+        // this handles the case where the reader might have read the initial block.
+        int fromIndex = contents.Contains( prefix, StringComparison.Ordinal )
+            ? contents.IndexOf( prefix, StringComparison.OrdinalIgnoreCase ) + prefix.Length
+            : 0;
+        int count = contents.Contains( suffix, StringComparison.Ordinal )
+            ? contents.IndexOf( suffix, StringComparison.OrdinalIgnoreCase ) - fromIndex
+            : contents.Length - fromIndex;
+        return contents.Substring( fromIndex, count + 1 );
+    }
+
+    /// <summary>   Strip decorations. </summary>
+    /// <remarks>   2025-05-03. </remarks>
+    /// <param name="contents"> The string being compressed. </param>
+    /// <returns>   A string. </returns>
+    public static string StripDecorations( string contents )
+    {
+        return ScriptCompressor.StripDecorations( contents, ScriptCompressor.CompressedPrefix, ScriptCompressor.CompressedSuffix );
+    }
+
     /// <summary>   Returns the decompressed string of the value. </summary>
     /// <param name="contents">    The contents to decompress. </param>
     /// <param name="prefix">   The prefix. </param>
@@ -72,14 +109,7 @@ public static class ScriptCompressor
     /// <returns>   Decompressed value. </returns>
     public static string Decompress( string contents, string prefix, string suffix )
     {
-        // this handles the case where the reader read the initial block.
-        int fromIndex = contents.Contains( prefix, StringComparison.Ordinal )
-            ? contents.IndexOf( prefix, StringComparison.OrdinalIgnoreCase ) + prefix.Length
-            : 0;
-        int count = contents.Contains( suffix, StringComparison.Ordinal )
-            ? contents.IndexOf( suffix, StringComparison.OrdinalIgnoreCase ) - fromIndex
-            : contents.Length - fromIndex;
-        string source = contents.Substring( fromIndex, count + 1 );
+        string source = ScriptCompressor.StripDecorations( contents, prefix, suffix );
         source = cc.isr.Std.IO.Compression.StringCompressor.DecompressFromBase64( source );
         return source;
     }
@@ -93,6 +123,93 @@ public static class ScriptCompressor
     {
         return ScriptCompressor.Decompress( contents, ScriptCompressor.CompressedPrefix, ScriptCompressor.CompressedSuffix );
     }
+
+    /// <summary>   Compares to string using string readers. </summary>
+    /// <remarks>   2025-05-03. </remarks>
+    /// <param name="str1"> The first string. </param>
+    /// <param name="str2"> The second string. </param>
+    /// <returns>   True if it succeeds, false if it fails. </returns>
+    public static bool AreEqual( string str1, string str2 )
+    {
+        if ( str1 == null && str2 == null )
+            return true;
+        if ( str1 == null || str2 == null )
+            return false;
+        return ScriptCompressor.AreEqual( new StringReader( str1 ), new StringReader( str2 ) );
+    }
+
+    /// <summary>   Compares two strings using text readers. </summary>
+    /// <remarks>   2025-05-03. </remarks>
+    /// <param name="reader1">  The first reader. </param>
+    /// <param name="reader2">  The second reader. </param>
+    /// <returns>   True if it succeeds, false if it fails. </returns>
+    public static bool AreEqual( TextReader reader1, TextReader reader2 )
+    {
+        if ( reader1 == null && reader2 == null )
+            return true;
+        if ( reader1 == null || reader2 == null )
+            return false;
+        string line1;
+        string line2;
+        while ( reader1.Peek() != -1 && reader2.Peek() != -1 )
+        {
+            line1 = reader1.ReadLine();
+            line2 = reader2.ReadLine();
+            if ( line1 == null && line2 == null )
+                return true;
+            else if ( line1 == null || line2 == null )
+                return false;
+            else if ( !string.Equals( line1, line2, StringComparison.Ordinal ) )
+                return false;
+        }
+        return true;
+    }
+
+    /// <summary>   Determine if we are compressed equal. </summary>
+    /// <remarks>   2025-05-03. </remarks>
+    /// <param name="compressed1">          The first compressed. </param>
+    /// <param name="compressed2">          The second compressed. </param>
+    /// <returns>   True if compressed equal, false if not. </returns>
+    public static bool CompressedEqual( string compressed1, string compressed2 )
+    {
+        if ( compressed1 == null && compressed2 == null )
+            return true;
+        if ( compressed1 == null || compressed2 == null )
+            return false;
+        string decompressed1 = ScriptCompressor.Decompress( compressed1 );
+        string decompressed2 = ScriptCompressor.Decompress( compressed2 );
+        return ScriptCompressor.AreEqual( decompressed1, decompressed2 );
+
+        // string comparison failed when reader comparison did not fail!
+        // comparing the two strings in notepad++ we get equality.
+        // in a binary file the last terminated line is ))()
+        // return string.Equals( decompressed1, decompressed2, StringComparison.Ordinal );
+    }
+
+    /// <summary>   Compressed files equal. </summary>
+    /// <remarks>   2025-05-03. </remarks>
+    /// <exception cref="FileNotFoundException">    Thrown when the requested file is not present. </exception>
+    /// <param name="filePath1">            The first file path. </param>
+    /// <param name="filePath2">            The second file path. </param>
+    /// <returns>   True if it succeeds, false if it fails. </returns>
+    public static bool CompressedFilesEqual( string filePath1, string filePath2 )
+    {
+        if ( filePath1 == null && filePath2 == null )
+            return true;
+        else if ( filePath1 == null || filePath2 == null )
+            return false;
+        else if ( filePath1.Equals( filePath2, StringComparison.OrdinalIgnoreCase ) )
+            return true;
+        else if ( System.IO.File.Equals( filePath1, filePath2 ) )
+            return true;
+        else if ( System.IO.File.Exists( filePath1 ) && System.IO.File.Exists( filePath2 ) )
+        {
+            return ScriptCompressor.CompressedEqual( System.IO.File.ReadAllText( filePath1 ), System.IO.File.ReadAllText( filePath2 ) );
+        }
+        else
+            throw new FileNotFoundException( "One or both of the files do not exist.", filePath1 + " or " + filePath2 );
+    }
+
 
     /// <summary>   Query if 'contents' is compressed. </summary>
     /// <remarks>   2025-04-14. </remarks>

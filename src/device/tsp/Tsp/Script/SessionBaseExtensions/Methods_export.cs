@@ -37,8 +37,8 @@ public static partial class SessionBaseExtensionMethods
         if ( string.IsNullOrWhiteSpace( scriptSource ) )
             throw new InvalidOperationException( $"The script {scriptName} cannot be exported because it is empty." );
 
-        // append end of line to the script source.
-        scriptSource += "\r\n";
+        // ensure that the source ends with a single line termination.
+        scriptSource = scriptSource.TrimMultipleLineEndings();
 
         // write the source to file.
         scriptSource.ExportScript( filePath, overWrite, validate );
@@ -76,8 +76,8 @@ public static partial class SessionBaseExtensionMethods
         if ( string.IsNullOrWhiteSpace( scriptSource ) )
             throw new InvalidOperationException( $"The script {scriptName} cannot be exported because it is empty." );
 
-        // append end of line to the script source.
-        scriptSource += "\r\n";
+        // ensure that the source ends with a single line termination.
+        scriptSource = scriptSource.TrimMultipleLineEndings();
 
         // compress the source and write the source to file.
         scriptSource.CompressScript( filePath, overWrite, validate );

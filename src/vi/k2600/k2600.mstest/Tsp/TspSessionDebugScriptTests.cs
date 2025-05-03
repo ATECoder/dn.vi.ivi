@@ -74,24 +74,6 @@ public class TspSessionDebugScriptTests : Device.Tests.Base.ScriptTests
 
     #region " methods "
 
-    /// <summary>   Assert reader should export. </summary>
-    /// <remarks>
-    /// 2025-04-20. The reader read line files interpreting the Keithley binary script thus
-    /// terminating before completing the read.
-    /// </remarks>
-    /// <exception cref="FileNotFoundException">    Thrown when the requested file is not present. </exception>
-    /// <param name="filePath"> Full pathname of the file. </param>
-    public static void AssertReaderShouldExport( string filePath )
-    {
-        Assert.IsNotNull( filePath );
-        Assert.IsFalse( string.IsNullOrWhiteSpace( filePath ) );
-        StreamReader? reader = new StreamReader( filePath ) ??
-            throw new FileNotFoundException( $"Failed to open script file '{filePath}'." );
-        string outputPath = System.IO.Path.ChangeExtension( filePath, ".out" );
-        StreamWriter writer = new( outputPath, false, System.Text.Encoding.UTF8 );
-        reader.ExportScript( writer );
-    }
-
     /// <summary>   Assert script should import and run. </summary>
     /// <remarks>   2025-04-20. </remarks>
     /// <param name="session">                  The session. </param>
