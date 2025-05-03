@@ -73,10 +73,10 @@ public static class ScriptCompressor
     public static string Decompress( string contents, string prefix, string suffix )
     {
         // this handles the case where the reader read the initial block.
-        int fromIndex = contents.StartsWith( prefix, false, System.Globalization.CultureInfo.CurrentCulture )
+        int fromIndex = contents.Contains( prefix, StringComparison.Ordinal )
             ? contents.IndexOf( prefix, StringComparison.OrdinalIgnoreCase ) + prefix.Length
             : 0;
-        int count = contents.EndsWith( suffix, false, System.Globalization.CultureInfo.CurrentCulture )
+        int count = contents.Contains( suffix, StringComparison.Ordinal )
             ? contents.IndexOf( suffix, StringComparison.OrdinalIgnoreCase ) - fromIndex
             : contents.Length - fromIndex;
         string source = contents.Substring( fromIndex, count + 1 );

@@ -2,8 +2,16 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9253]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9254]: https://www.github.com/atecoder/dn.vi.ivi
 
+## [8.1.9254] - 2025-05-04
+- Device Tsp Script Namespace
+  - Export: add reader writer validations.
+  - String Compressor: Fix selecting the contents in case of extra text around the prefix and suffix.
+  - export:
+    - use writer write line to convert from Linux to Windows instead of using the convert method.
+	- remove the end of line conversion.
+ 
 ## [8.1.9253] - 2025-05-02
 - Device tsp Script
   - Add copy script between files to work around the read only attribute.

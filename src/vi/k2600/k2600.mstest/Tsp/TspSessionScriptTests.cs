@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Text;
+using cc.isr.VI.Tsp.Script.ExportExtensions;
 using cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
 namespace cc.isr.VI.Tsp.K2600.MSTest.Tsp;

@@ -1,3 +1,5 @@
+using cc.isr.VI.Tsp.Script.ExportExtensions;
+
 namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
 public static partial class SessionBaseExtensionMethods
@@ -150,5 +152,4 @@ public static partial class SessionBaseExtensionMethods
             session.RestoreDisplayCompleteQuery();
         }
     }
-
 }
