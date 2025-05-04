@@ -2,7 +2,17 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9254]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9255]: https://www.github.com/atecoder/dn.vi.ivi
+
+## [8.1.9254] - 2025-05-05
+- Device Tsp Script Namespace
+  - Set all writes to System.Text.Encoding.UTF8 )
+  - Add fetch script raw.
+  - Add line ending to the fetch method.
+  - Remove unnecessary line ending conversions.
+  - Add line ending extensions.
+  - Move unused code tot he line ending extensions. 
+  - Rename Binary to Byte Code.
 
 ## [8.1.9254] - 2025-05-04
 - Device Tsp Script Namespace

@@ -54,7 +54,7 @@ public static partial class SessionBaseExtensionMethods
     /// <remarks>   2025-04-20. <para>
     /// Notes:</para><para>
     /// 1. The script must not include the load script command or the end script command. </para><para>
-    /// 2. A binary script must include the <see cref="Syntax.Tsp.Lua.LoadStringCommand"/>. </para>
+    /// 2. A byte code script must include the <see cref="Syntax.Tsp.Lua.LoadStringCommand"/>. </para>
     /// </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>
@@ -79,7 +79,7 @@ public static partial class SessionBaseExtensionMethods
     /// <remarks>   2025-04-20. <para>
     /// Notes:</para><para>
     /// 1. The script must not include the load script command or the end script command. </para><para>
-    /// 2. A binary script must include the <see cref="Syntax.Tsp.Lua.LoadStringCommand"/>. </para>
+    /// 2. A byte code script must include the <see cref="Syntax.Tsp.Lua.LoadStringCommand"/>. </para>
     /// </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>

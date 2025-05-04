@@ -6,7 +6,7 @@ public static partial class SessionBaseExtensionMethods
     /// <remarks>   2025-04-20. <para>
     /// Notes:</para><para>
     /// 1. The script must not include the load script command or the end script command. </para><para>
-    /// 2. A binary script must include the <see cref="Syntax.Tsp.Lua.LoadStringCommand"/>. </para>
+    /// 2. A byte code script must include the <see cref="Syntax.Tsp.Lua.LoadStringCommand"/>. </para>
     /// </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>
@@ -31,7 +31,7 @@ public static partial class SessionBaseExtensionMethods
         if ( string.IsNullOrWhiteSpace( scriptSource ) )
             throw new ArgumentNullException( $"Failed reading {scriptNameOrAnonymous} script source from {filePath}" );
 
-        // This reads the entire source from the file and then loads the file line by line as source code or Binary
+        // This reads the entire source from the file and then loads the file line by line as source code or byte code
         session.LoadScript( scriptName, scriptSource, lineDelay, runScriptAfterLoading, deleteExisting, ignoreExisting );
     }
 }

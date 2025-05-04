@@ -1,10 +1,13 @@
+using System.Text;
 using cc.isr.VI.Pith;
+using cc.isr.VI.Tsp.Script.ExportExtensions;
+using cc.isr.VI.Tsp.Script.LineEndingExtensions;
 
 namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
 public static partial class SessionBaseExtensionMethods
 {
-    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that export a script to file. </summary>
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that fetches the raw script source, which has a Linux line endings. </summary>
     /// <remarks>   2025-04-10. </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
     ///                                                 are null. </exception>
@@ -12,14 +15,11 @@ public static partial class SessionBaseExtensionMethods
     ///                                                 invalid. </exception>
     /// <param name="session">      The session to act on. </param>
     /// <param name="scriptName">   Name of the script. </param>
-    public static string FetchScript( this SessionBase session, string scriptName )
+    public static string FetchRawScript( this SessionBase session, string scriptName )
     {
-        if ( session == null )
-            throw new ArgumentNullException( nameof( session ) );
-        if ( !session.IsSessionOpen )
-            throw new InvalidOperationException( $"{nameof( session )} is not open." );
-        if ( string.IsNullOrWhiteSpace( scriptName ) )
-            throw new ArgumentNullException( nameof( scriptName ) );
+        if ( session == null ) throw new ArgumentNullException( nameof( session ) );
+        if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
+        if ( string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
 
         session.SetLastAction( $"checking if the {scriptName} script exists;. " );
         session.LastNodeNumber = default;
@@ -44,6 +44,37 @@ public static partial class SessionBaseExtensionMethods
 
         if ( string.IsNullOrWhiteSpace( scriptSource ) )
             throw new InvalidOperationException( $"The script {scriptName} source is empty." );
+
         return scriptSource;
+    }
+
+    /// <summary>
+    /// A <see cref="Pith.SessionBase"/> extension method that fetches a script and replaces the
+    /// Linux with Windows line terminations including a terminating new line.
+    /// </summary>
+    /// <remarks>   2025-05-03. </remarks>
+    /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
+    ///                                                 are null. </exception>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <param name="session">      The session to act on. </param>
+    /// <param name="scriptName">   Name of the script. </param>
+    /// <param name="validate">     (Optional) True to validate the reader writer line ending
+    ///                             transformation. </param>
+    /// <returns>   The script with Windows style line terminations. </returns>
+    public static string FetchScript( this SessionBase session, string scriptName, bool validate = true )
+    {
+        if ( session == null ) throw new ArgumentNullException( nameof( session ) );
+        if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
+        if ( string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
+
+        // fetch the raw script
+        string rawScript = session.FetchRawScript( scriptName );
+
+        if ( string.IsNullOrWhiteSpace( rawScript ) )
+            throw new InvalidOperationException( $"The script {scriptName} source is empty." );
+
+        // replace Linux with Windows line terminations.
+        return rawScript.TerminateLines( validate );
     }
 }

@@ -7,6 +7,8 @@ using cc.isr.Std.Tests;
 using cc.isr.Std.Tests.Extensions;
 using cc.isr.VI.Tsp.Script.ExportExtensions;
 using cc.isr.VI.Tsp.Script.SessionBaseExtensions;
+using cc.isr.VI.Tsp.Script;
+using cc.isr.VI.Device.Tests.Base;
 
 namespace cc.isr.VI.Tsp.K2600.MSTest.Tsp;
 
@@ -149,12 +151,12 @@ public class TspScriptTests
         scriptSource.ToString().ExportScript( filePath, overWrite: true );
 
         string toFilePath = Path.Combine( folderPath, $"{fileTitle}_trimmed.tsp" );
-        SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tTrimming script file to '{toFilePath}'" );
+        TestBase.ConsoleOutputMemberMessage( $"Trimming script file to '{toFilePath}'" );
         filePath.TrimScript( toFilePath, true );
 
         toFilePath = Path.Combine( folderPath, $"{toFilePath}c" );
-        SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tCompressing trimmed script file to '{toFilePath}'" );
-        filePath.CompressScriptFile( toFilePath, overWrite: true );
+        TestBase.ConsoleOutputMemberMessage( $"Compressing '{filePath}'\r\n\t\tto '{toFilePath}'" );
+        System.IO.File.WriteAllText( toFilePath, ScriptCompressor.Compress( System.IO.File.ReadAllText( filePath ) ), System.Text.Encoding.UTF8 );
     }
 
 }

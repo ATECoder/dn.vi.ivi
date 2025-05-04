@@ -468,7 +468,7 @@ public static partial class FirmwareManager
     public static (bool TimedOut, ServiceRequests Status, TimeSpan Elapsed) LoadScriptSource( this Pith.SessionBase session, string scriptName,
         string scriptSource )
     {
-        if ( scriptSource.IsBinarySource() )
+        if ( scriptSource.IsByteCodeScript() )
         {
             Stopwatch sw = Stopwatch.StartNew();
             session.LoadScript( scriptName, scriptSource );

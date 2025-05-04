@@ -51,7 +51,7 @@ public static partial class FirmwareManager
         {
             displaySubsystem.DisplayLine( 2, $"{node.Number}:{scriptName} 2 binary" );
             if ( node.IsController )
-                session.ConvertToBinary( scriptName );
+                session.ConvertToByteCode( scriptName );
             else
                 // displaySubsystem.ConvertBinaryScript( binaryScriptName, node, timeoutInfo );
                 throw new InvalidOperationException( "loading binary scripts to a remote node is not supported at this time." );

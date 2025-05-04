@@ -88,7 +88,7 @@ public static partial class FirmwareManager
 
         // return true if the script is binary.
         session.SetLastAction( $"checking if {scriptName} is binary" );
-        if ( !session.IsBinaryScript( scriptName ) )
+        if ( !session.IsByteCodeScript( scriptName ) )
             throw new InvalidOperationException( $"Failed conversion {scriptName} to binary. The converted script is not binary." );
     }
 
@@ -112,7 +112,7 @@ public static partial class FirmwareManager
         if ( instrumentFirmwareVersion.FirmwareVersion is null ) throw new ArgumentNullException(
             $"{nameof( VersionInfo.FirmwareVersion )}.{nameof( instrumentFirmwareVersion.FirmwareVersion )}" );
 
-        if ( !session.IsBinaryScript( scriptName ) )
+        if ( !session.IsByteCodeScript( scriptName ) )
         {
             if ( node.IsController )
                 session.ConvertToBinary( scriptName, instrumentFirmwareVersion );

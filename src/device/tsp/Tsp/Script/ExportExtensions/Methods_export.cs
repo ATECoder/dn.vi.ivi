@@ -28,7 +28,7 @@ public static partial class ExportExtensionsMethods
     /// </summary>
     /// <remarks>
     /// 2025-04-20. <para>
-    /// The stream reader fails reading a script that is saved in the TSP binary format because it
+    /// The stream reader fails reading a script that is saved in the TSP byte code format because it
     /// may incorrectly interpret an a backslash as an end of file. For example, the following line
     /// from the source file became the last line of the destination file.<c>
     /// "\91\201\2\185\92I\2\186\92\201\2\187\93I\2\188\93\201\2\189^", "\91\201\2\185\92I\2\186\92\20
@@ -75,7 +75,7 @@ public static partial class ExportExtensionsMethods
     /// </summary>
     /// <remarks>
     /// 2025-04-20. <para>
-    /// The stream reader fails reading a script that is saved in the TSP binary format because it
+    /// The stream reader fails reading a script that is saved in the TSP byte code format because it
     /// may incorrectly interpret an a backslash as an end of file. For example, the following line
     /// from the source file became the last line of the destination file.<c>
     /// "\91\201\2\185\92I\2\186\92\201\2\187\93I\2\188\93\201\2\189^", "\91\201\2\185\92I\2\186\92\20

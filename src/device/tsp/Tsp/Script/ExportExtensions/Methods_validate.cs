@@ -11,7 +11,7 @@ public static partial class ExportExtensionsMethods
     /// <remarks> 2025-05-02. <para>
     /// This became important after it was found that the stream miss-identified line
     /// endings when reading TSP byte code. </para><para>
-    /// The stream reader fails reading a script that is saved in the TSP binary format because it
+    /// The stream reader fails reading a script that is saved in the TSP byte code format because it
     /// may incorrectly interpret an a backslash as an end of file. For example, the following line
     /// from the source file became the last line of the destination file.<c>
     /// "\91\201\2\185\92I\2\186\92\201\2\187\93I\2\188\93\201\2\189^", "\91\201\2\185\92I\2\186\92\20
@@ -50,8 +50,8 @@ public static partial class ExportExtensionsMethods
             string tempPath = System.IO.Path.GetTempPath();
             string readerFileName = $"ReaderContents.{System.DateTime.Now:yyyyMMddHHmmss}.txt";
             string writerFileName = $"WriterContents.{System.DateTime.Now:yyyyMMddHHmmss}.txt";
-            System.IO.File.WriteAllText( System.IO.Path.Combine( tempPath, readerFileName ), originalContents );
-            System.IO.File.WriteAllText( System.IO.Path.Combine( tempPath, writerFileName ), sb.ToString() );
+            System.IO.File.WriteAllText( System.IO.Path.Combine( tempPath, readerFileName ), originalContents, System.Text.Encoding.UTF8 );
+            System.IO.File.WriteAllText( System.IO.Path.Combine( tempPath, writerFileName ), sb.ToString(), System.Text.Encoding.UTF8 );
             throw new InvalidOperationException( $"String writer output {writerFileName} is not equal the string reader input {readerFileName}.\r\n\tin {tempPath}, " );
         }
     }
@@ -99,8 +99,8 @@ public static partial class ExportExtensionsMethods
             string tempPath = Path.GetTempPath();
             string readerFileName = $"ReaderContents.{DateTime.Now:yyyyMMddHHmmss}.txt";
             string writerFileName = $"WriterContents.{DateTime.Now:yyyyMMddHHmmss}.txt";
-            File.WriteAllText( Path.Combine( tempPath, readerFileName ), originalContents );
-            File.WriteAllText( Path.Combine( tempPath, writerFileName ), sb.ToString() );
+            File.WriteAllText( Path.Combine( tempPath, readerFileName ), originalContents, System.Text.Encoding.UTF8 );
+            File.WriteAllText( Path.Combine( tempPath, writerFileName ), sb.ToString(), System.Text.Encoding.UTF8 );
             throw new InvalidOperationException( $"String writer output {writerFileName} is not equal the string reader input {readerFileName}.\r\n\tin {tempPath}, " );
         }
     }
@@ -154,8 +154,8 @@ public static partial class ExportExtensionsMethods
             string tempPath = Path.GetTempPath();
             string readerFileName = $"ReaderContents.{DateTime.Now:yyyyMMddHHmmss}.txt";
             string writerFileName = $"WriterContents.{DateTime.Now:yyyyMMddHHmmss}.txt";
-            File.WriteAllText( Path.Combine( tempPath, readerFileName ), originalContents );
-            File.WriteAllText( Path.Combine( tempPath, writerFileName ), actualContents );
+            File.WriteAllText( Path.Combine( tempPath, readerFileName ), originalContents, System.Text.Encoding.UTF8 );
+            File.WriteAllText( Path.Combine( tempPath, writerFileName ), actualContents, System.Text.Encoding.UTF8 );
             throw new InvalidOperationException( $"Stream writer output {writerFileName} is not equal the string reader input {readerFileName}.\r\n\tin {tempPath}, " );
         }
     }

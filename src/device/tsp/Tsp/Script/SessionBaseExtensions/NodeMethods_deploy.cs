@@ -164,8 +164,8 @@ public static partial class NodeMethods
             {
                 embeddedScript.ScriptStatus |= ScriptStatuses.Activated;
                 embeddedScript.ActualVersion = session.QueryFirmwareVersion( nodeNumber, script );
-                if ( session.IsBinaryScript( nodeNumber, script ) )
-                    embeddedScript.ScriptStatus |= ScriptStatuses.BinaryByteCode;
+                if ( session.IsByteCodeScript( nodeNumber, script ) )
+                    embeddedScript.ScriptStatus |= ScriptStatuses.ByteCode;
             }
 
             if ( session.IsSavedScript( script.Title, nodeNumber ) )

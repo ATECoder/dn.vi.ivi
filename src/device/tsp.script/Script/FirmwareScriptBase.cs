@@ -63,7 +63,7 @@ public abstract class FirmwareScriptBase
     /// <returns>   A string. </returns>
     public static string SelectScriptFileExtension( ScriptFileFormats fileFormat )
     {
-        return (ScriptFileFormats.Binary == (fileFormat & ScriptFileFormats.Binary))
+        return (ScriptFileFormats.ByteCode == (fileFormat & ScriptFileFormats.ByteCode))
             ? (ScriptFileFormats.Compressed == (fileFormat & ScriptFileFormats.Compressed))
               ? FirmwareScriptBase.ScriptBinaryCompressedFileExtension
               : FirmwareScriptBase.ScriptBinaryFileExtension
@@ -101,7 +101,7 @@ public abstract class FirmwareScriptBase
             title = $"{title}.{scriptVersion}";
 
 
-        if ( ScriptFileFormats.Binary == (fileFormat & ScriptFileFormats.Binary) )
+        if ( ScriptFileFormats.ByteCode == (fileFormat & ScriptFileFormats.ByteCode) )
         {
             // binary files are always deployed or loaded from a deployed file.
             if ( string.IsNullOrWhiteSpace( baseModel ) )
@@ -213,7 +213,7 @@ public abstract class FirmwareScriptBase
     /// <returns>   A string. </returns>
     public static string BuildLoadStringSyntax( string source )
     {
-        if ( source.IsBinarySource() )
+        if ( source.IsByteCodeScript() )
         {
             if ( source[..50].Trim().StartsWith( "{", true, System.Globalization.CultureInfo.CurrentCulture ) )
             {
@@ -241,7 +241,7 @@ public abstract class FirmwareScriptBase
     public static string BuildLoadScriptSyntax( string source, string scriptName, bool runScriptAfterLoad )
     {
         string sourceStart = source[..50].Trim();
-        if ( source.IsBinarySource() )
+        if ( source.IsByteCodeScript() )
         {
             if ( sourceStart.StartsWith( "{", true, System.Globalization.CultureInfo.CurrentCulture ) )
             {
@@ -340,7 +340,7 @@ public abstract class FirmwareScriptBase
         get
         {
             string title = this.FileTitle;
-            if ( ScriptFileFormats.Binary == (this.DeployFileFormat & ScriptFileFormats.Binary) )
+            if ( ScriptFileFormats.ByteCode == (this.DeployFileFormat & ScriptFileFormats.ByteCode) )
             {
                 // binary files are always deployed or loaded from a deployed file.
                 if ( string.IsNullOrWhiteSpace( this.ModelMask ) )
@@ -368,7 +368,7 @@ public abstract class FirmwareScriptBase
     public static ScriptFileFormats BuildScriptFileFormat( bool binaryScript, bool compressedScript )
     {
         ScriptFileFormats scriptFileFormats = ScriptFileFormats.None;
-        if ( binaryScript ) scriptFileFormats |= ScriptFileFormats.Binary;
+        if ( binaryScript ) scriptFileFormats |= ScriptFileFormats.ByteCode;
         if ( compressedScript ) scriptFileFormats |= ScriptFileFormats.Compressed;
         return scriptFileFormats;
     }
@@ -391,7 +391,7 @@ public abstract class FirmwareScriptBase
 
     /// <summary>   Gets a value indicating whether the convert to binary. </summary>
     /// <value> True if convert to binary, false if not. </value>
-    public bool ConvertToBinary => ScriptFileFormats.Binary == (this.DeployFileFormat & ScriptFileFormats.Binary);
+    public bool ConvertToBinary => ScriptFileFormats.ByteCode == (this.DeployFileFormat & ScriptFileFormats.ByteCode);
 
     #endregion
 
@@ -549,14 +549,14 @@ public abstract class FirmwareScriptBase
 
             if ( !string.IsNullOrWhiteSpace( this.Source ) )
             {
-                isBinaryScript = source.IsBinarySource();
+                isBinaryScript = source.IsByteCodeScript();
             }
 
             if ( !source.EndsWith( " ", true, System.Globalization.CultureInfo.CurrentCulture ) )
                 source = source.Insert( source.Length, " " );
 
             if ( isBinaryScript )
-                sourceFormat |= ScriptFileFormats.Binary;
+                sourceFormat |= ScriptFileFormats.ByteCode;
         }
         this._source = source;
         this.IsBinaryScript = isBinaryScript;

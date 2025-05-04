@@ -61,42 +61,6 @@ public static partial class SessionBaseExtensionMethods
     }
 
     /// <summary>
-    /// A <see cref="Pith.SessionBase"/> extension method that loads the script from the deploy file
-    /// and saves it to non-volatile memory.
-    /// </summary>
-    /// <remarks>   2025-04-15. </remarks>
-    /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
-    ///                                                 are null. </exception>
-    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
-    ///                                                 invalid. </exception>
-    /// <param name="session">      The session. </param>
-    /// <param name="scriptInfo">   Information describing the script. </param>
-    /// <param name="folderPath">   Full pathname of the folder file. </param>
-    /// <param name="lineDelay">    The line delay. </param>
-    public static void ImportSaveToNvm( this Pith.SessionBase session, ScriptInfo scriptInfo, string folderPath, TimeSpan lineDelay )
-    {
-        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
-        if ( scriptInfo is null ) throw new ArgumentNullException( nameof( scriptInfo ) );
-
-        if ( !session.IsDeviceOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
-
-        // set the deploy file path.
-        string deployFilePath = Path.Combine( folderPath, scriptInfo.DeployFileName );
-
-        // delete the script if it exists.
-        session.DeleteScript( scriptInfo.Title );
-
-        SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tImporting script from {scriptInfo.DeployFileFormat} '{deployFilePath}' file" );
-        session.ImportScript( scriptInfo.Title, deployFilePath, lineDelay );
-
-        session.RunScript( scriptInfo.Title, scriptInfo.VersionGetterElement );
-
-        session.SaveScript( scriptInfo.Title );
-
-        session.RunScript( scriptInfo.Title, scriptInfo.VersionGetterElement );
-    }
-
-    /// <summary>
     /// A <see cref="Pith.SessionBase"/> extension method that queries if a load menu item exists.
     /// </summary>
     /// <remarks>   2025-04-21. </remarks>
@@ -250,8 +214,8 @@ public static partial class SessionBaseExtensionMethods
             {
                 embeddedScript.ScriptStatus |= ScriptStatuses.Activated;
                 embeddedScript.ActualVersion = session.QueryFirmwareVersion( script );
-                if ( session.IsBinaryScript( script.Title ) )
-                    embeddedScript.ScriptStatus |= ScriptStatuses.BinaryByteCode;
+                if ( session.IsByteCodeScript( script.Title ) )
+                    embeddedScript.ScriptStatus |= ScriptStatuses.ByteCode;
             }
 
             if ( session.IsSavedScript( script.Title ) )

@@ -182,7 +182,7 @@ public static class ScriptCompressor
 
         // string comparison failed when reader comparison did not fail!
         // comparing the two strings in notepad++ we get equality.
-        // in a binary file the last terminated line is ))()
+        // in a byte code file the last terminated line is ))()
         // return string.Equals( decompressed1, decompressed2, StringComparison.Ordinal );
     }
 

@@ -31,7 +31,7 @@ public static partial class FirmwareManager
             if ( string.IsNullOrWhiteSpace( scriptSource ) )
                 throw new cc.isr.VI.Pith.NativeException( $"Failed fetching script source for {script.FirmwareScript.Name}" );
 
-            bool isBinary = session.IsBinaryScript( scriptSource );
+            bool isBinary = session.IsByteCodeScript( scriptSource );
             ScriptFileFormats fileFormat = FirmwareScriptBase.BuildScriptFileFormat( isBinary, compress );
             string fileTitle = FirmwareScriptBase.BuildScriptFileTitle( script.FirmwareScript.Name, fileFormat,
                  script.FirmwareScript.FirmwareVersion, script.FirmwareScript.ModelMask, script.FirmwareScript.ModelMajorVersion );

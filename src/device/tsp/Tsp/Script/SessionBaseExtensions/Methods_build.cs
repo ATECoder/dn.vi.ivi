@@ -1,5 +1,3 @@
-using cc.isr.VI.Tsp.Script.ExportExtensions;
-
 namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
 public static partial class SessionBaseExtensionMethods
@@ -24,11 +22,12 @@ public static partial class SessionBaseExtensionMethods
         string compressedFilePath = trimmedFilePath + "c";
         if ( System.IO.File.Exists( fromFilePath ) )
         {
-            SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tTrimming script file '{fromFilePath}' to '{trimmedFilePath}'" );
+            SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tTrimming script file '{fromFilePath}'\r\n\t\tto '{trimmedFilePath}'" );
             fromFilePath.TrimScript( trimmedFilePath, true );
 
-            SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tCompressing trimmed script file to '{compressedFilePath}'" );
-            trimmedFilePath.CompressScriptFile( compressedFilePath, overWrite: true );
+            SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tCompressing '{trimmedFilePath}'\r\n\t\tto '{compressedFilePath}'" );
+            System.IO.File.WriteAllText( compressedFilePath, ScriptCompressor.Compress( System.IO.File.ReadAllText( trimmedFilePath ) ), System.Text.Encoding.UTF8 );
+
         }
         else
             throw new FileNotFoundException( fromFilePath );
@@ -36,7 +35,7 @@ public static partial class SessionBaseExtensionMethods
 
     /// <summary>
     /// A <see cref="Pith.SessionBase"/> extension method that trims, loads, optionally converts to
-    /// binary, and compresses the script to the deploy file.
+    /// byte code, and compresses the script to the deploy file.
     /// </summary>
     /// <remarks>   2025-04-15. </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
@@ -68,10 +67,10 @@ public static partial class SessionBaseExtensionMethods
             fromFilePath.TrimScript( trimmedFilePath, true );
 
             if ( scriptInfo.DeployFileFormat.HasFlag( ScriptFileFormats.Compressed )
-                && !scriptInfo.DeployFileFormat.HasFlag( ScriptFileFormats.Binary ) )
+                && !scriptInfo.DeployFileFormat.HasFlag( ScriptFileFormats.ByteCode ) )
             {
                 SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tCompressing '{trimmedFilePath}'\r\n\t\tto '{deployFilePath}'" );
-                trimmedFilePath.CompressScriptFile( deployFilePath, overWrite: true );
+                System.IO.File.WriteAllText( deployFilePath, ScriptCompressor.Compress( System.IO.File.ReadAllText( trimmedFilePath ) ), System.Text.Encoding.UTF8 );
             }
         }
         else
@@ -86,24 +85,24 @@ public static partial class SessionBaseExtensionMethods
         // run the script to ensure the code works.
         session.RunScript( scriptInfo.Title, scriptInfo.VersionGetterElement );
 
-        // convert the script to binary.
-        session.ConvertToBinary( scriptInfo.Title );
+        // convert the script to byte code.
+        session.ConvertToByteCode( scriptInfo.Title );
 
         // run the script to ensure the code works.
         session.RunScript( scriptInfo.Title, scriptInfo.VersionGetterElement );
 
-        if ( scriptInfo.DeployFileFormat.HasFlag( ScriptFileFormats.Binary ) )
+        if ( scriptInfo.DeployFileFormat.HasFlag( ScriptFileFormats.ByteCode ) )
         {
             if ( scriptInfo.DeployFileFormat.HasFlag( ScriptFileFormats.Compressed ) )
             {
                 // export and compress the script.
-                SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tFetching and compressing binary script to '{deployFilePath}'" );
+                SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tcompressing byte code to '{deployFilePath}'" );
                 session.CompressScript( scriptInfo.Title, deployFilePath, true );
             }
             else
             {
-                // if naked binary, export tot he deploy file name.
-                SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tFetching binary script to '{deployFilePath}'" );
+                // if naked byte code, export to the deploy file name.
+                SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tFetching byte code to '{deployFilePath}'" );
                 session.ExportScript( scriptInfo.Title, deployFilePath, true );
             }
         }
@@ -111,7 +110,7 @@ public static partial class SessionBaseExtensionMethods
 
     /// <summary>
     /// A <see cref="Pith.SessionBase"/> extension method that trims, loads, optionally converts to
-    /// binary, and compresses all scripts the deploy files.
+    /// byte code, and compresses all scripts the deploy files.
     /// </summary>
     /// <remarks>   2025-04-22. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are

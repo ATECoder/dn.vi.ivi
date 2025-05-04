@@ -1,5 +1,4 @@
 using cc.isr.VI.Pith;
-using cc.isr.VI.Tsp.Script.ExportExtensions;
 
 namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
@@ -17,8 +16,7 @@ public static partial class SessionBaseExtensionMethods
     /// <param name="scriptName">   Name of the script. </param>
     /// <param name="filePath">     Full pathname of the file. </param>
     /// <param name="overWrite">    (Optional) [false] True to over write. </param>
-    /// <param name="validate">     (Optional) True to validate. </param>
-    public static void ExportScript( this SessionBase session, string scriptName, string filePath, bool overWrite = false, bool validate = true )
+    public static void ExportScript( this SessionBase session, string scriptName, string filePath, bool overWrite = false )
     {
         if ( session == null ) throw new ArgumentNullException( nameof( session ) );
         if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
@@ -37,15 +35,13 @@ public static partial class SessionBaseExtensionMethods
         if ( string.IsNullOrWhiteSpace( scriptSource ) )
             throw new InvalidOperationException( $"The script {scriptName} cannot be exported because it is empty." );
 
-        // ensure that the source ends with a single line termination.
-        scriptSource = scriptSource.TrimMultipleLineEndings();
-
         // write the source to file.
-        scriptSource.ExportScript( filePath, overWrite, validate );
+        System.IO.File.WriteAllText( scriptSource, filePath, System.Text.Encoding.UTF8 );
     }
 
     /// <summary>
-    /// A <see cref="string"/> extension method that compress script source to a file.
+    /// A <see cref="string"/> extension method that fetches a script from the instrument and
+    /// compress it to a file.
     /// </summary>
     /// <remarks>   2025-04-16. </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
@@ -56,8 +52,7 @@ public static partial class SessionBaseExtensionMethods
     /// <param name="scriptName">   Name of the script. </param>
     /// <param name="filePath">     Full pathname of the destination file. </param>
     /// <param name="overWrite">    (Optional) [false] True to over write. </param>
-    /// <param name="validate">     (Optional) True to validate. </param>
-    public static void CompressScript( this SessionBase session, string scriptName, string filePath, bool overWrite = false, bool validate = true )
+    public static void CompressScript( this SessionBase session, string scriptName, string filePath, bool overWrite = false )
     {
         if ( session == null ) throw new ArgumentNullException( nameof( session ) );
         if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
@@ -76,10 +71,7 @@ public static partial class SessionBaseExtensionMethods
         if ( string.IsNullOrWhiteSpace( scriptSource ) )
             throw new InvalidOperationException( $"The script {scriptName} cannot be exported because it is empty." );
 
-        // ensure that the source ends with a single line termination.
-        scriptSource = scriptSource.TrimMultipleLineEndings();
-
-        // compress the source and write the source to file.
-        scriptSource.CompressScript( filePath, overWrite, validate );
+        // compress and export the source to the file as is.
+        File.WriteAllText( filePath, ScriptCompressor.Compress( scriptSource ), System.Text.Encoding.UTF8 );
     }
 }

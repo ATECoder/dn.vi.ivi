@@ -7,7 +7,7 @@ public static partial class SessionBaseExtensionMethods
 {
     /// <summary>   Copies a script source. </summary>
     /// <remarks>
-    /// For binary scripts, the controller and remote nodes must be binary compatible.
+    /// For byte code scripts, the controller and remote nodes must be byte code compatible.
     /// </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>
@@ -25,12 +25,12 @@ public static partial class SessionBaseExtensionMethods
     /// <param name="destinationName">  The name of the destination script. </param>
     public static void CopyScript( this string sourceName, string destinationName )
     {
-        System.IO.File.WriteAllText( destinationName, System.IO.File.ReadAllText( sourceName ) );
+        System.IO.File.WriteAllText( destinationName, System.IO.File.ReadAllText( sourceName ), System.Text.Encoding.UTF8 );
     }
 
     /// <summary>   Copies a script from the controller node to a remote node. </summary>
     /// <remarks>
-    /// For binary scripts, the controller and remote nodes must be binary compatible.
+    /// For byte code scripts, the controller and remote nodes must be byte code compatible.
     /// </remarks>
     /// <param name="session">          The session. </param>
     /// <param name="nodeNumber">       . </param>

@@ -13,9 +13,9 @@ public enum ScriptFileFormats
     [System.ComponentModel.Description( "Compressed" )]
     Compressed = 1,
 
-    /// <summary> An enum constant representing the binary option. </summary>
-    [System.ComponentModel.Description( "Binary format" )]
-    Binary = 2,
+    /// <summary> An enum constant representing the byte code option. </summary>
+    [System.ComponentModel.Description( "Byte Code format" )]
+    ByteCode = 2,
 }
 
 /// <summary>   A bit-field of flags for specifying script statuses. </summary>
@@ -23,29 +23,29 @@ public enum ScriptFileFormats
 [Flags()]
 public enum ScriptStatuses
 {
-    /// <summary>   A binary constant representing the none flag. </summary>
+    /// <summary>   A bit constant representing the none flag. </summary>
     [System.ComponentModel.Description( "Not set" )]
     None = 0,
 
-    /// <summary>   A binary constant representing the unknown flag. </summary>
+    /// <summary>   A bit constant representing the unknown flag. </summary>
     [System.ComponentModel.Description( "Unknow" )]
     Unknown = 1,
 
-    /// <summary>   A binary constant representing the loaded flag. </summary>
+    /// <summary>   A bit constant representing the loaded flag. </summary>
     [System.ComponentModel.Description( "Loaded" )]
     Loaded = 2,
 
-    /// <summary>   A binary constant representing the activated flag. </summary>
+    /// <summary>   A bit constant representing the activated flag. </summary>
     [System.ComponentModel.Description( "Activated" )]
     Activated = 4,
 
-    /// <summary>   A binary constant representing the saved flag. </summary>
+    /// <summary>   A bit constant representing the saved flag. </summary>
     [System.ComponentModel.Description( "Saved" )]
     Saved = 8,
 
-    /// <summary>   A binary constant representing the binary byte code flag. </summary>
-    [System.ComponentModel.Description( "Binary Byte Code" )]
-    BinaryByteCode = 16
+    /// <summary>   A bit constant representing the byte code flag. </summary>
+    [System.ComponentModel.Description( "Byte Code" )]
+    ByteCode = 16
 
 }
 

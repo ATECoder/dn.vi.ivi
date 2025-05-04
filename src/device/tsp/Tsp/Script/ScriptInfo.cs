@@ -40,14 +40,14 @@ public class ScriptInfo
     /// <summary>   (Immutable) the script file extension. </summary>
     public const string ScriptFileExtension = ".tsp";
 
-    /// <summary>   (Immutable) the script binary compressed file extension. </summary>
+    /// <summary>   (Immutable) the script compressed file extension. </summary>
     public const string ScriptCompressedFileExtension = ".tspc";
 
-    /// <summary>   (Immutable) the script binary file extension. </summary>
-    public const string ScriptBinaryFileExtension = ".tspb";
+    /// <summary>   (Immutable) the script byte code file extension. </summary>
+    public const string ScriptByteCodeFileExtension = ".tspb";
 
-    /// <summary>   (Immutable) the script binary compressed file extension. </summary>
-    public const string ScriptBinaryCompressedFileExtension = ".tspbc";
+    /// <summary>   (Immutable) the script byte code compressed file extension. </summary>
+    public const string ScriptByteCodeCompressedFileExtension = ".tspbc";
 
     /// <summary>   Select script file extension. </summary>
     /// <remarks>   2025-04-05. </remarks>
@@ -55,10 +55,10 @@ public class ScriptInfo
     /// <returns>   A string. </returns>
     public static string SelectScriptFileExtension( ScriptFileFormats fileFormat )
     {
-        return (ScriptFileFormats.Binary == (fileFormat & ScriptFileFormats.Binary))
+        return (ScriptFileFormats.ByteCode == (fileFormat & ScriptFileFormats.ByteCode))
             ? (ScriptFileFormats.Compressed == (fileFormat & ScriptFileFormats.Compressed))
-              ? ScriptInfo.ScriptBinaryCompressedFileExtension
-              : ScriptInfo.ScriptBinaryFileExtension
+              ? ScriptInfo.ScriptByteCodeCompressedFileExtension
+              : ScriptInfo.ScriptByteCodeFileExtension
             : (ScriptFileFormats.Compressed == (fileFormat & ScriptFileFormats.Compressed))
               ? ScriptInfo.ScriptCompressedFileExtension
               : ScriptInfo.ScriptFileExtension;
@@ -93,9 +93,9 @@ public class ScriptInfo
             title = $"{title}.{scriptVersion}";
 
 
-        if ( ScriptFileFormats.Binary == (fileFormat & ScriptFileFormats.Binary) )
+        if ( ScriptFileFormats.ByteCode == (fileFormat & ScriptFileFormats.ByteCode) )
         {
-            // binary files are always deployed or loaded from a deployed file.
+            // byte code files are always deployed or loaded from a deployed file.
             if ( string.IsNullOrWhiteSpace( baseModel ) )
                 throw new ArgumentNullException( nameof( baseModel ) );
             if ( string.IsNullOrWhiteSpace( modelMajorVersion ) )
@@ -193,7 +193,7 @@ public class ScriptInfo
     /// <returns>   The deploy file title. </returns>
     public virtual string BuildDeployFileTitle( string modelFamily, string modelMajorVersion )
     {
-        this.DeployFileTitle = ScriptFileFormats.Binary == (this.DeployFileFormat & ScriptFileFormats.Binary)
+        this.DeployFileTitle = ScriptFileFormats.ByteCode == (this.DeployFileFormat & ScriptFileFormats.ByteCode)
             ? $"{this.Title}.{modelFamily}.{modelMajorVersion}"
             : this.Title;
         return this.DeployFileTitle;
@@ -280,8 +280,8 @@ public class ScriptInfo
         _ = builder.AppendLine( $"\tReleased version: {this.Version}." );
         if ( ScriptStatuses.Loaded == (this.ScriptStatus & ScriptStatuses.Loaded) )
         {
-            if ( ScriptStatuses.BinaryByteCode == (this.ScriptStatus & ScriptStatuses.BinaryByteCode) )
-                _ = builder.AppendLine( $"\tLoaded binary byte code." );
+            if ( ScriptStatuses.ByteCode == (this.ScriptStatus & ScriptStatuses.ByteCode) )
+                _ = builder.AppendLine( $"\tLoaded byte code." );
             else
                 _ = builder.AppendLine( $"\tLoaded." );
 

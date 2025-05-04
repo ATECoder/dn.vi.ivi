@@ -70,7 +70,7 @@ public static partial class FirmwareManager
 
             script.Saved = !string.IsNullOrWhiteSpace( savedScripts )
                 && (savedScripts!.IndexOf( script.Name + ",", 0, StringComparison.OrdinalIgnoreCase ) >= 0);
-            script.LoadedAsBinary = session.IsBinaryScript( script.Name );
+            script.LoadedAsBinary = session.IsByteCodeScript( script.Name );
         }
 
         if ( script.Activated )

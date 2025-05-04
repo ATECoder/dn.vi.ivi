@@ -1,5 +1,5 @@
 using System;
-using System.IO;
+using cc.isr.VI.Device.Tests.Base;
 using cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
 namespace cc.isr.VI.Tsp.K2600.MSTest.Tsp;
@@ -89,7 +89,7 @@ public class TspSessionDebugScriptTests : Device.Tests.Base.ScriptTests
 
         try
         {
-            SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tImporting script from '{filePath}' file" );
+            TestBase.ConsoleOutputMemberMessage( $"Importing script from '{filePath}' file" );
             session.DeleteScript( scriptName );
             session.ImportScript( scriptName, filePath, TimeSpan.Zero );
             // session.ImportScript( scriptName, filePath );
