@@ -1,27 +1,8 @@
+using cc.isr.Std.LineEndingExtensions;
 namespace cc.isr.VI.Tsp.Script.ExportExtensions;
 
 public static partial class ExportExtensionsMethods
 {
-    /// <summary>   A <see cref="string"/> extension method ensure that the script source ends with only one <see cref="Environment.NewLine"/> ending. </summary>
-    /// <remarks>   2025-05-03. <para>
-    /// This ensures that source code exporting anc compression can be validated as both end with a single line terminations.. </para>
-    /// </remarks>
-    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
-    ///                                             null. </exception>
-    /// <param name="scriptSource"> The script source. </param>
-    /// <returns>   A string. </returns>
-    public static string TrimMultipleLineEndings( this string scriptSource )
-    {
-        if ( string.IsNullOrWhiteSpace( scriptSource ) ) throw new ArgumentNullException( nameof( scriptSource ) );
-
-        // ensure that the source ends with a single new line character.
-        while ( scriptSource.EndsWith( $"{Environment.NewLine}{Environment.NewLine}" ) )
-        {
-            scriptSource = scriptSource.TrimEnd( '\r', '\n' );
-        }
-        return $"{scriptSource.TrimEnd( '\r', '\n' )}{Environment.NewLine}";
-    }
-
     /// <summary>
     /// A <see cref="TextReader"/> extension method that exports a script to file in Windows end-of-
     /// line format.

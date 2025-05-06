@@ -1,4 +1,4 @@
-using cc.isr.VI.Tsp.Script.LineEndingExtensions;
+using cc.isr.Std.LineEndingExtensions;
 
 namespace cc.isr.VI.Tsp.Script.ExportExtensions;
 
@@ -26,16 +26,19 @@ public static partial class ExportExtensionsMethods
         if ( !overWrite && System.IO.File.Exists( toFilePath ) )
             throw new InvalidOperationException( $"The script source cannot be exported because the file '{toFilePath}' exists." );
 
-        // read the source file.
-        string compressedSource = System.IO.File.ReadAllText( fromFilePath );
+        // read the compressed contents from the file.
+        string contents = System.IO.File.ReadAllText( fromFilePath );
 
-        if ( ScriptCompressor.IsCompressed( compressedSource ) )
-            compressedSource = ScriptCompressor.Decompress( compressedSource );
+        if ( ScriptCompressor.IsCompressed( contents ) )
+            contents = ScriptCompressor.Decompress( contents );
 
-        // terminate lines in Windows line termination format.
-        compressedSource = compressedSource.TerminateLines( validate );
+        // terminate the decompressed contents with a single line ending.
+        contents = contents.TrimMultipleLineEndings();
+
+        // replace line endings with Windows new line validating with the LineEndingExtensions.ReplaceLineEnding method
+        contents = contents.TerminateLines( validate );
 
         // compress and export the source to the file as is.
-        System.IO.File.WriteAllText( toFilePath, compressedSource, System.Text.Encoding.UTF8 );
+        System.IO.File.WriteAllText( toFilePath, contents, System.Text.Encoding.Default );
     }
 }

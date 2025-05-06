@@ -156,7 +156,7 @@ public class TspScriptTests
 
         toFilePath = Path.Combine( folderPath, $"{toFilePath}c" );
         TestBase.ConsoleOutputMemberMessage( $"Compressing '{filePath}'\r\n\t\tto '{toFilePath}'" );
-        System.IO.File.WriteAllText( toFilePath, ScriptCompressor.Compress( System.IO.File.ReadAllText( filePath ) ), System.Text.Encoding.UTF8 );
+        System.IO.File.WriteAllText( toFilePath, ScriptCompressor.Compress( System.IO.File.ReadAllText( filePath ) ), System.Text.Encoding.Default );
     }
 
 }

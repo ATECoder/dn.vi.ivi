@@ -26,7 +26,7 @@ public static partial class SessionBaseExtensionMethods
             fromFilePath.TrimScript( trimmedFilePath, true );
 
             SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tCompressing '{trimmedFilePath}'\r\n\t\tto '{compressedFilePath}'" );
-            System.IO.File.WriteAllText( compressedFilePath, ScriptCompressor.Compress( System.IO.File.ReadAllText( trimmedFilePath ) ), System.Text.Encoding.UTF8 );
+            System.IO.File.WriteAllText( compressedFilePath, ScriptCompressor.Compress( System.IO.File.ReadAllText( trimmedFilePath ) ), System.Text.Encoding.Default );
 
         }
         else
@@ -70,7 +70,7 @@ public static partial class SessionBaseExtensionMethods
                 && !scriptInfo.DeployFileFormat.HasFlag( ScriptFileFormats.ByteCode ) )
             {
                 SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tCompressing '{trimmedFilePath}'\r\n\t\tto '{deployFilePath}'" );
-                System.IO.File.WriteAllText( deployFilePath, ScriptCompressor.Compress( System.IO.File.ReadAllText( trimmedFilePath ) ), System.Text.Encoding.UTF8 );
+                System.IO.File.WriteAllText( deployFilePath, ScriptCompressor.Compress( System.IO.File.ReadAllText( trimmedFilePath ) ), System.Text.Encoding.Default );
             }
         }
         else

@@ -1,8 +1,8 @@
 using cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 using cc.isr.VI.Tsp.Script;
-using cc.isr.VI.Tsp.Script.LineEndingExtensions;
 
 namespace cc.isr.VI.Tsp.Unused;
+
 internal static class UnusedMethods
 {
 
@@ -55,8 +55,7 @@ internal static class UnusedMethods
     /// <param name="fromFilePath"> The source file path. </param>
     /// <param name="toFilePath">   the destination file path. </param>
     /// <param name="overWrite">    (Optional) [false] True to over write. </param>
-    /// <param name="validate">     (Optional) True to validate. </param>
-    public static void CompressScriptFile( this string fromFilePath, string toFilePath, bool overWrite = false, bool validate = true )
+    public static void CompressScriptFile( this string fromFilePath, string toFilePath, bool overWrite = false )
     {
         if ( string.IsNullOrWhiteSpace( fromFilePath ) )
             throw new ArgumentNullException( nameof( fromFilePath ) );
@@ -66,10 +65,7 @@ internal static class UnusedMethods
         if ( !overWrite && System.IO.File.Exists( toFilePath ) )
             throw new InvalidOperationException( $"The script source cannot be exported because the file '{toFilePath}' exists." );
 
-        string scriptSource = LineEndingExtensionMethods.TerminateFileLines( fromFilePath, validate );
-
         // compress and export the source to the file as is.
-        System.IO.File.WriteAllText( toFilePath, ScriptCompressor.Compress( scriptSource ), System.Text.Encoding.UTF8 );
+        System.IO.File.WriteAllText( toFilePath, ScriptCompressor.Compress( System.IO.File.ReadAllText( fromFilePath ) ), System.Text.Encoding.Default );
     }
-
 }

@@ -36,7 +36,7 @@ public static partial class SessionBaseExtensionMethods
             throw new InvalidOperationException( $"The script {scriptName} cannot be exported because it is empty." );
 
         // write the source to file.
-        System.IO.File.WriteAllText( scriptSource, filePath, System.Text.Encoding.UTF8 );
+        System.IO.File.WriteAllText( scriptSource, filePath, System.Text.Encoding.Default );
     }
 
     /// <summary>
@@ -72,6 +72,6 @@ public static partial class SessionBaseExtensionMethods
             throw new InvalidOperationException( $"The script {scriptName} cannot be exported because it is empty." );
 
         // compress and export the source to the file as is.
-        File.WriteAllText( filePath, ScriptCompressor.Compress( scriptSource ), System.Text.Encoding.UTF8 );
+        File.WriteAllText( filePath, ScriptCompressor.Compress( scriptSource ), System.Text.Encoding.Default );
     }
 }

@@ -1,7 +1,5 @@
-using System.Text;
+using cc.isr.Std.LineEndingExtensions;
 using cc.isr.VI.Pith;
-using cc.isr.VI.Tsp.Script.ExportExtensions;
-using cc.isr.VI.Tsp.Script.LineEndingExtensions;
 
 namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
@@ -74,7 +72,10 @@ public static partial class SessionBaseExtensionMethods
         if ( string.IsNullOrWhiteSpace( rawScript ) )
             throw new InvalidOperationException( $"The script {scriptName} source is empty." );
 
-        // replace Linux with Windows line terminations.
+        // terminate the raw script with a single line ending.
+        rawScript = rawScript.TrimMultipleLineEndings();
+
+        // replace line endings with Windows new line validating with the LineEndingExtensions.ReplaceLineEnding method
         return rawScript.TerminateLines( validate );
     }
 }

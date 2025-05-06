@@ -20,14 +20,6 @@ public static partial class SessionBaseExtensionMethods
         _ = session.WriteLine( "{1}=script.new( {0}.source , '{1}' ) waitcomplete()", sourceName, destinationName );
     }
 
-    /// <summary>   Copies a script source. </summary>
-    /// <param name="sourceName">       The name of the source script. </param>
-    /// <param name="destinationName">  The name of the destination script. </param>
-    public static void CopyScript( this string sourceName, string destinationName )
-    {
-        System.IO.File.WriteAllText( destinationName, System.IO.File.ReadAllText( sourceName ), System.Text.Encoding.UTF8 );
-    }
-
     /// <summary>   Copies a script from the controller node to a remote node. </summary>
     /// <remarks>
     /// For byte code scripts, the controller and remote nodes must be byte code compatible.
