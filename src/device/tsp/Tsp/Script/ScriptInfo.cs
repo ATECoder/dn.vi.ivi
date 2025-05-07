@@ -147,17 +147,17 @@ public class ScriptInfo
     /// </summary>
     /// <value> True if this object is automatic execute, false if not. </value>
     [Description( "Indicates whether this script automatically executes [false]" )]
-    public virtual bool IsAutoexec { get; set; } = true;
+    public virtual bool IsAutoexec { get; set; } = false;
 
     /// <summary>   Gets or sets the title of the script. </summary>
     /// <value> The name and the file title of the script. </value>
-    [Description( "The name and the file title of the script [isr_ttm_autoexec]" )]
-    public virtual string Title { get; set; } = "isr_ttm_autoexec";
+    [Description( "The name and the file title of the script []" )]
+    public virtual string Title { get; set; } = string.Empty;
 
     /// <summary>   Gets or sets the released version of the script. </summary>
     /// <value> The released version of the script. </value>
-    [Description( "The released version the script [2.4.9243]" )]
-    public virtual string Version { get; set; } = "2.4.9243";
+    [Description( "The released version the script []" )]
+    public virtual string Version { get; set; } = string.Empty;
 
     /// <summary>   Gets or sets the version embedded script as read from the instrument. </summary>
     /// <value> The version embedded script as read from the instrument. </value>
@@ -166,13 +166,13 @@ public class ScriptInfo
 
     /// <summary>   The built file name [isr_ttm_autoexec.9243.tsp]. </summary>
     /// <value> The filename of the build file. </value>
-    [Description( "The build file name [isr_ttm_autoexec.9243.tsp]" )]
-    public virtual string BuiltFileName { get; set; } = "isr_ttm_autoexec.9243.tsp";
+    [Description( "The build file name []" )]
+    public virtual string BuiltFileName { get; set; } = string.Empty;
 
-    /// <summary>   The trimmed file name [isr_ttm_autoexec.tsp]. </summary>
+    /// <summary>   The trimmed file name. </summary>
     /// <value> The filename of the trimmed file. </value>
-    [Description( "The trimmed file name [isr_ttm_autoexec.tsp]" )]
-    public virtual string TrimmedFileName { get; set; } = "isr_ttm_autoexec.tsp";
+    [Description( "The trimmed file name []" )]
+    public virtual string TrimmedFileName { get; set; } = string.Empty;
 
     /// <summary>   Gets or sets the deploy file title. </summary>
     /// <value> The deploy file title. </value>
@@ -231,28 +231,27 @@ public class ScriptInfo
 
     /// <summary>   Gets or sets the Version Getter function of the script. </summary>
     /// <value> The version getter function of the script. </value>
-    [Description( "The version getter method of the script [_G.isr_ttm_autoexec_getVersion()]" )]
-    public virtual string VersionGetter { get; set; } = "_G.isr_ttm_autoexec_getVersion()";
+    [Description( "The version getter method of the script []" )]
+    public virtual string VersionGetter { get; set; } = string.Empty;
 
     /// <summary>   The version getter element the script [_G.isr_ttm_autoexec.getVersion]. </summary>
     /// <value> The version getter element. </value>
-    [Description( "The version getter method object of the script [_G.isr_ttm_autoexec.getVersion]" )]
-    public virtual string VersionGetterElement => this.VersionGetter.TrimEnd( ['(', ')'] );
+    [Description( "The version getter method object of the script []" )]
+    public virtual string VersionGetterElement => string.IsNullOrWhiteSpace( this.VersionGetter ) ? string.Empty : this.VersionGetter.TrimEnd( ['(', ')'] );
 
     /// <summary>
-    /// The name of a pre-requisite script for this script [core.tsp.string.base64.lua].
+    /// The name of a pre-requisite script for this script.
     /// </summary>
     /// <value> The name of the require chunk. </value>
-    [Description( "The name of a pre-requisite script for this script [core.tsp.string.base64.lua]" )]
-    public virtual string RequireChunkName { get; set; } = "core.tsp.string.base64.lua";
+    [Description( "The name of a pre-requisite script for this script []" )]
+    public virtual string RequireChunkName { get; set; } = string.Empty;
 
     /// <summary>
-    /// The name of this scrip as would be required independent scripts
-    /// [build.isr_ttm_autoexec_version.tsp].
+    /// The name of this scrip as would be required independent scripts.
     /// </summary>
     /// <value> The name of the required chunk. </value>
-    [Description( "The name of this scrip as would be required independent scripts [build.isr_ttm_autoexec_version.tsp]" )]
-    public virtual string RequiredChunkName { get; set; } = "core.tsp.string.base64.lua";
+    [Description( "The name of this scrip as would be required independent scripts []" )]
+    public virtual string RequiredChunkName { get; set; } = string.Empty;
 
     /// <summary>   Gets or sets the script status. </summary>
     /// <value> The script status. </value>

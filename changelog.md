@@ -6,7 +6,10 @@ Notable changes to the `cc.isr.vi` solution are documented in this file using th
 
 ## [8.1.9258] - 2025-05-07
 - Device Tsp Script Namespace
-  - Use string equals to compare the decompressed values.
+  - ScriptInfo
+    - Initialize string values to empty.
+  - Deploy:
+    - add reading status of scripts and saved scripts.
 
 ## [8.1.9257] - 2025-05-06
 - Write all text using default encoding.

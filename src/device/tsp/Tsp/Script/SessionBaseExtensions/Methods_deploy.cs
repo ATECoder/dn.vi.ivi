@@ -255,4 +255,79 @@ public static partial class SessionBaseExtensionMethods
         }
         return embeddedScriptInfoCollection;
     }
+
+    /// <summary>   Reads embedded scripts status. </summary>
+    /// <remarks>   2025-05-07. </remarks>
+    /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
+    ///                                                 are null. </exception>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <param name="session">  The session. </param>
+    /// <param name="scripts">  The scripts. </param>
+    /// <returns>   The embedded scripts status. </returns>
+    public static ScriptInfoCollection ReadEmbeddedScriptsStatus( SessionBase session, ScriptInfoCollection scripts )
+    {
+        if ( session is null ) throw new ArgumentNullException( $"{nameof( session )} is null" );
+        if ( !session.IsDeviceOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open" );
+
+        if ( scripts is null || scripts.Count == 0 )
+            throw new InvalidOperationException( $"{nameof( ScriptInfoCollection )} is null or empty." );
+
+        // try to run all the embedded scripts.
+        session.RunScripts( scripts );
+
+        // read the script status assuming we have loaded the released scripts
+        return session.ReadScriptState( scripts );
+    }
+
+    /// <summary>   Reads saved scripts status. </summary>
+    /// <remarks>   2025-05-07. </remarks>
+    /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
+    ///                                                 are null. </exception>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <param name="session">  The session. </param>
+    /// <param name="scripts">  The scripts. </param>
+    /// <returns>   The saved scripts status. </returns>
+    public static ScriptInfoCollection ReadSavedScriptsStatus( SessionBase session, ScriptInfoCollection scripts )
+    {
+        if ( session is null ) throw new ArgumentNullException( $"{nameof( session )} is null" );
+        if ( !session.IsDeviceOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open" );
+
+        if ( scripts is null || scripts.Count == 0 )
+            throw new InvalidOperationException( $"{nameof( ScriptInfoCollection )} is null or empty." );
+
+        // try to run all the candidate scripts.
+        session.RunScripts( scripts );
+
+        ScriptInfoCollection embeddedScripts = [];
+
+        // fetch the list of embedded scripts
+        string savedScripts = session.FetchSavedScriptsNames();
+
+        if ( !string.IsNullOrWhiteSpace( savedScripts ) )
+        {
+            // iterate over the saved scripts if any 
+
+            // build the report for the embedded saved scripts if any
+            foreach ( string scriptTitle in savedScripts.Split( ',' ) )
+            {
+                string title = scriptTitle.Trim();
+                if ( scripts.Contains( title ) )
+                {
+                    // add the script info to the collection.
+                    ScriptInfo scriptInfo = new()
+                    {
+                        Title = title,
+                        IsAutoexec = session.IsAutoRun( title ),
+                        Version = scripts[title].Version,
+                        VersionGetter = scripts[title].VersionGetter
+                    };
+                    embeddedScripts.Add( session.ReadScriptState( scriptInfo ) );
+                }
+            }
+        }
+        return embeddedScripts;
+    }
+
 }
