@@ -75,6 +75,9 @@ public static partial class SessionBaseExtensionMethods
         // terminate the raw script with a single line ending.
         rawScript = rawScript.TrimMultipleLineEndings();
 
+        // if ( rawScript.Contains( @"\u00A0" ) )
+        //     rawScript = rawScript.Replace( @"\u00A0", " " ); // replace non breaking space with space.
+
         // replace line endings with Windows new line validating with the LineEndingExtensions.ReplaceLineEnding method
         return rawScript.TerminateLines( validate );
     }

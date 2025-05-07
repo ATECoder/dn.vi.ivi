@@ -127,10 +127,11 @@ public static class ScriptCompressor
     /// <summary>   Compressed files equal. </summary>
     /// <remarks>   2025-05-03. </remarks>
     /// <exception cref="FileNotFoundException">    Thrown when the requested file is not present. </exception>
-    /// <param name="filePath1">            The first file path. </param>
-    /// <param name="filePath2">            The second file path. </param>
+    /// <param name="filePath1">        The first file path. </param>
+    /// <param name="filePath2">        The second file path. </param>
+    /// <param name="useStringEquals">  (Optional) True to use string equals. </param>
     /// <returns>   True if it succeeds, false if it fails. </returns>
-    public static bool CompressedFilesEqual( string filePath1, string filePath2 )
+    public static bool CompressedFilesEqual( string filePath1, string filePath2, bool useStringEquals = true )
     {
         if ( filePath1 == null && filePath2 == null )
             return true;
@@ -142,14 +143,11 @@ public static class ScriptCompressor
             return true;
         else if ( System.IO.File.Exists( filePath1 ) && System.IO.File.Exists( filePath2 ) )
         {
-            return ScriptCompressor.Decompress( System.IO.File.ReadAllText( filePath1 ) ).LinesEqual(
-                ScriptCompressor.Decompress( System.IO.File.ReadAllText( filePath2 ) ) );
-
-            // we resorted to line-by-line comparison failed because the simple string comparison failed
-            // even though notepad++ showed the two strings of byte code as equal.
-            // string decompressed1 = ScriptCompressor.Decompress( System.IO.File.ReadAllText( filePath1 ) );
-            // string decompressed2 = ScriptCompressor.Decompress( System.IO.File.ReadAllText( filePath2 ) );
-            // return string.Equals( decompressed1, decompressed2, StringComparison.Ordinal );
+            return useStringEquals
+                ? ScriptCompressor.Decompress( System.IO.File.ReadAllText( filePath1 ) ).Equals(
+                      ScriptCompressor.Decompress( System.IO.File.ReadAllText( filePath2 ) ), StringComparison.InvariantCulture )
+                : ScriptCompressor.Decompress( System.IO.File.ReadAllText( filePath1 ) ).LinesEqual(
+                      ScriptCompressor.Decompress( System.IO.File.ReadAllText( filePath2 ) ) );
         }
         else
             throw new FileNotFoundException( "One or both of the files do not exist.", filePath1 + " or " + filePath2 );

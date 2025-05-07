@@ -2,7 +2,11 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9257]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9258]: https://www.github.com/atecoder/dn.vi.ivi
+
+## [8.1.9258] - 2025-05-07
+- Device Tsp Script Namespace
+  - Use string equals to compare the decompressed values.
 
 ## [8.1.9257] - 2025-05-06
 - Write all text using default encoding.
