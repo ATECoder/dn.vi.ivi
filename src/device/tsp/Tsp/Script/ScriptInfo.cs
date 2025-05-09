@@ -149,6 +149,16 @@ public class ScriptInfo
     [Description( "Indicates whether this script automatically executes [false]" )]
     public virtual bool IsAutoexec { get; set; } = false;
 
+    /// <summary>   Indicates whether this script is a primary deploy script [true]. </summary>
+    /// <value> True if this object is primary, false if not. </value>
+    [Description( "Indicates whether this script is a primary deploy script [true]" )]
+    public virtual bool IsPrimary { get; set; } = true;
+
+    /// <summary>   Indicates whether this script is a support script [false]. The support script is used to determine if the script is certified.  </summary>
+    /// <value> True if this object is support, false if not. </value>
+    [Description( "Indicates whether this script is a support script [false]" )]
+    public virtual bool IsSupport { get; set; } = true;
+
     /// <summary>   Gets or sets the title of the script. </summary>
     /// <value> The name and the file title of the script. </value>
     [Description( "The name and the file title of the script []" )]

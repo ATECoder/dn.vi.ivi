@@ -113,6 +113,23 @@ public static partial class SessionBaseExtensionMethods
         }
     }
 
+    /// <summary>
+    /// A <see cref="Pith.SessionBase"/> extension method that queries firmware version.
+    /// </summary>
+    /// <remarks>   2025-05-08. </remarks>
+    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
+    ///                                             null. </exception>
+    /// <param name="session">          The session. </param>
+    /// <param name="versionGetter">    The version getter. </param>
+    /// <returns>   The firmware version or <see cref="Syntax.Tsp.Lua.NilValue"/>. </returns>
+    public static string QueryFirmwareVersion( this Pith.SessionBase session, string versionGetter )
+    {
+        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
+        return session.IsNil( versionGetter.TrimEnd( "()".ToCharArray() ) )
+            ? Syntax.Tsp.Lua.NilValue
+            : session.QueryTrimEnd( Syntax.Tsp.Lua.PrintCommand( versionGetter ) );
+    }
+
     /// <summary>   A <see cref="Pith.SessionBase"/> extension method that queries firmware version. </summary>
     /// <remarks>   2025-04-25. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
@@ -186,7 +203,7 @@ public static partial class SessionBaseExtensionMethods
         }
     }
 
-    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that reads script state. </summary>
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that reads script state running the script if it was not run. </summary>
     /// <remarks>   2025-04-25. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>
@@ -206,6 +223,11 @@ public static partial class SessionBaseExtensionMethods
         if ( !session.IsNil( embeddedScript.Title ) )
         {
             embeddedScript.ScriptStatus = ScriptStatuses.Loaded;
+
+            // run if version getter element was not found.
+            if ( session.IsNil( embeddedScript.VersionGetterElement ) )
+                session.RunScript( embeddedScript.Title );
+
             if ( session.IsNil( embeddedScript.VersionGetterElement ) )
             {
                 embeddedScript.ScriptStatus = ScriptStatuses.Loaded;

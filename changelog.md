@@ -2,7 +2,16 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9258]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9260]: https://www.github.com/atecoder/dn.vi.ivi
+
+## [8.1.9260] - 2025-05-09
+- Add Script Resource Manager Interface.
+- Scrip[t Info:
+  - Add IsSupport and IsPrimary properties.
+- Session Base Extensions
+  - Deploy: Add query of script version.
+  - Read State: run the script if the version getter is not found.
+  - Export: Add export saved scripts.
 
 ## [8.1.9258] - 2025-05-07
 - Device Tsp Script Namespace
