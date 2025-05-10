@@ -1,6 +1,6 @@
 using System.Reflection;
 
-namespace cc.isr.VI.Tsp.K2600.Ttmware;
+namespace cc.isr.VI.Tsp.Script;
 
 /// <summary>   Manager for resources. </summary>
 /// <remarks>   2025-04-05. </remarks>
@@ -24,6 +24,12 @@ public interface IScriptResourceManager
     #endregion
 
     #region " read embedded resource "
+
+    /// <summary>   Get executing assembly. </summary>
+    /// <remarks>   2025-05-09. <para>
+    /// Implements <see cref="Assembly.GetExecutingAssembly()"/>  </para></remarks>
+    /// <returns>   An Assembly </returns>
+    public Assembly GetExecutingAssembly();
 
     /// <summary>   Builds full resource name. </summary>
     /// <remarks>   2025-04-08. </remarks>
@@ -84,12 +90,17 @@ public interface IScriptResourceManager
 
     #region " read resource file "
 
+    /// <summary>   Gets the assembly folder path. </summary>
+    /// <remarks>   2025-05-09. <para>
+    /// Implements typeof( ScriptResourceManager ).Assembly.DirectoryPath </para>
+    /// </remarks>
+    /// <returns>   A string. </returns>
+    public string AssemblyFolderPath();
+
     /// <summary>   Builds the resource file folder path. </summary>
     /// <remarks>   2025-04-22. </remarks>
-    /// <param name="resourceFolderName">   (Optional) ['resources'] name of the folder holding the
-    ///                                     resource. </param>
     /// <returns>   A string. </returns>
-    public string BuildResourceFileFolderPath( string resourceFolderName = "resources" );
+    public string BuildResourceFileFolderPath();
 
     /// <summary>   Builds full resource file path. </summary>
     /// <remarks>   2025-04-08. </remarks>
