@@ -227,13 +227,13 @@ public static partial class FirmwareManager
             while ( !tspFile.EndOfStream )
             {
                 string line = tspFile.ReadLine();
-                chunkLine = Lua.ReplaceTabs( line );
+                chunkLine = VI.Syntax.Tsp.Lua.ReplaceTabs( line );
                 chunkLine = retainOutline ? chunkLine.TrimEnd() : chunkLine.Trim();
 
                 lineNumber += 1;
                 wasInCommentBlock = isInCommentBlock;
-                lineType = Lua.ParseLuaChunkLine( chunkLine, isInCommentBlock );
-                if ( lineType == LuaChunkLineContentType.None )
+                lineType = VI.Syntax.Tsp.Lua.ParseLuaChunkLine( chunkLine, isInCommentBlock );
+                if ( lineType == VI.Syntax.Tsp.LuaChunkLineContentType.None )
                 {
                     // if no data, nothing to do.
                 }
@@ -242,22 +242,22 @@ public static partial class FirmwareManager
                 {
                     // if was in a comment block exit the comment block if
                     // received a end of comment block
-                    if ( lineType == LuaChunkLineContentType.EndCommentBlock )
+                    if ( lineType == VI.Syntax.Tsp.LuaChunkLineContentType.EndCommentBlock )
                     {
                         isInCommentBlock = false;
                     }
                 }
-                else if ( lineType == LuaChunkLineContentType.StartCommentBlock )
+                else if ( lineType == VI.Syntax.Tsp.LuaChunkLineContentType.StartCommentBlock )
                 {
                     isInCommentBlock = true;
                 }
-                else if ( lineType == LuaChunkLineContentType.Comment )
+                else if ( lineType == VI.Syntax.Tsp.LuaChunkLineContentType.Comment )
                 {
                     // if comment line do nothing
                 }
                 else if ( lineType is LuaChunkLineContentType.Syntax or LuaChunkLineContentType.SyntaxStartCommentBlock )
                 {
-                    if ( lineType == LuaChunkLineContentType.SyntaxStartCommentBlock )
+                    if ( lineType == VI.Syntax.Tsp.LuaChunkLineContentType.SyntaxStartCommentBlock )
                     {
                         chunkLine = chunkLine[..chunkLine.IndexOf( Syntax.Tsp.Lua.StartCommentBlockChunk, StringComparison.OrdinalIgnoreCase )];
                     }
@@ -287,7 +287,7 @@ public static partial class FirmwareManager
                     // increment debug line number
                     trimmedFile.WriteLine( chunkLine );
 
-                    if ( lineType == LuaChunkLineContentType.SyntaxStartCommentBlock )
+                    if ( lineType == VI.Syntax.Tsp.LuaChunkLineContentType.SyntaxStartCommentBlock )
                         isInCommentBlock = true;
                 }
             }
@@ -362,13 +362,13 @@ public static partial class FirmwareManager
             while ( !tspFile.EndOfStream )
             {
                 string line = tspFile.ReadLine();
-                chunkLine = Lua.ReplaceTabs( line );
+                chunkLine = VI.Syntax.Tsp.Lua.ReplaceTabs( line );
                 chunkLine = retainOutline ? chunkLine.TrimEnd() : chunkLine.Trim();
 
                 lineNumber += 1;
                 wasInCommentBlock = isInCommentBlock;
-                lineType = Lua.ParseLuaChunkLine( chunkLine, isInCommentBlock );
-                if ( lineType == LuaChunkLineContentType.None )
+                lineType = VI.Syntax.Tsp.Lua.ParseLuaChunkLine( chunkLine, isInCommentBlock );
+                if ( lineType == VI.Syntax.Tsp.LuaChunkLineContentType.None )
                 {
                     // if no data, nothing to do.
                 }
@@ -377,22 +377,22 @@ public static partial class FirmwareManager
                 {
                     // if was in a comment block exit the comment block if
                     // received a end of comment block
-                    if ( lineType == LuaChunkLineContentType.EndCommentBlock )
+                    if ( lineType == VI.Syntax.Tsp.LuaChunkLineContentType.EndCommentBlock )
                     {
                         isInCommentBlock = false;
                     }
                 }
-                else if ( lineType == LuaChunkLineContentType.StartCommentBlock )
+                else if ( lineType == VI.Syntax.Tsp.LuaChunkLineContentType.StartCommentBlock )
                 {
                     isInCommentBlock = true;
                 }
-                else if ( lineType == LuaChunkLineContentType.Comment )
+                else if ( lineType == VI.Syntax.Tsp.LuaChunkLineContentType.Comment )
                 {
                     // if comment line do nothing
                 }
                 else if ( lineType is LuaChunkLineContentType.Syntax or LuaChunkLineContentType.SyntaxStartCommentBlock )
                 {
-                    if ( lineType == LuaChunkLineContentType.SyntaxStartCommentBlock )
+                    if ( lineType == VI.Syntax.Tsp.LuaChunkLineContentType.SyntaxStartCommentBlock )
                     {
                         chunkLine = chunkLine[..chunkLine.IndexOf( Syntax.Tsp.Lua.StartCommentBlockChunk, StringComparison.OrdinalIgnoreCase )];
                     }
@@ -422,7 +422,7 @@ public static partial class FirmwareManager
                     // increment debug line number
                     trimmedFile.WriteLine( chunkLine );
 
-                    if ( lineType == LuaChunkLineContentType.SyntaxStartCommentBlock )
+                    if ( lineType == VI.Syntax.Tsp.LuaChunkLineContentType.SyntaxStartCommentBlock )
                         isInCommentBlock = true;
                 }
             }
@@ -520,12 +520,12 @@ public static partial class FirmwareManager
         while ( chunkLines.Count > 0 )
         {
             string line = chunkLines.Dequeue();
-            chunkLine = Lua.ReplaceTabs( line );
+            chunkLine = VI.Syntax.Tsp.Lua.ReplaceTabs( line );
             chunkLine = retainOutline ? chunkLine.TrimEnd() : chunkLine.Trim();
             lineNumber += 1;
             wasInCommentBlock = isInCommentBlock;
-            lineType = Lua.ParseLuaChunkLine( chunkLine, isInCommentBlock );
-            if ( lineType == LuaChunkLineContentType.None )
+            lineType = VI.Syntax.Tsp.Lua.ParseLuaChunkLine( chunkLine, isInCommentBlock );
+            if ( lineType == VI.Syntax.Tsp.LuaChunkLineContentType.None )
             {
                 // if no data, nothing to do.
             }
@@ -534,22 +534,22 @@ public static partial class FirmwareManager
             {
                 // if was in a comment block exit the comment block if
                 // received a end of comment block
-                if ( lineType == LuaChunkLineContentType.EndCommentBlock )
+                if ( lineType == VI.Syntax.Tsp.LuaChunkLineContentType.EndCommentBlock )
                 {
                     isInCommentBlock = false;
                 }
             }
-            else if ( lineType == LuaChunkLineContentType.StartCommentBlock )
+            else if ( lineType == VI.Syntax.Tsp.LuaChunkLineContentType.StartCommentBlock )
             {
                 isInCommentBlock = true;
             }
-            else if ( lineType == LuaChunkLineContentType.Comment )
+            else if ( lineType == VI.Syntax.Tsp.LuaChunkLineContentType.Comment )
             {
                 // if comment line do nothing
             }
             else if ( lineType is LuaChunkLineContentType.Syntax or LuaChunkLineContentType.SyntaxStartCommentBlock )
             {
-                if ( lineType == LuaChunkLineContentType.SyntaxStartCommentBlock )
+                if ( lineType == VI.Syntax.Tsp.LuaChunkLineContentType.SyntaxStartCommentBlock )
                 {
                     chunkLine = chunkLine[..chunkLine.IndexOf( Syntax.Tsp.Lua.StartCommentBlockChunk, StringComparison.OrdinalIgnoreCase )];
                 }
@@ -579,7 +579,7 @@ public static partial class FirmwareManager
 
                 _ = session.WriteLine( chunkLine );
 
-                if ( lineType == LuaChunkLineContentType.SyntaxStartCommentBlock )
+                if ( lineType == VI.Syntax.Tsp.LuaChunkLineContentType.SyntaxStartCommentBlock )
                     isInCommentBlock = true;
             }
         }

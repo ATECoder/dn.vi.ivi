@@ -1,4 +1,5 @@
 using cc.isr.VI.Pith;
+using cc.isr.VI.Tsp.SessionBaseExtensions;
 
 namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
@@ -86,7 +87,7 @@ public static partial class FirmwareManager
         session.ThrowDeviceExceptionIfError();
 
         session.SetLastAction( $"nulling script '{scriptName}" );
-        session.NillScript( scriptName );
+        session.NillObject( scriptName );
         bool deleted = true;
 
         session.ThrowDeviceExceptionIfError();
@@ -155,7 +156,7 @@ public static partial class FirmwareManager
         session.ThrowDeviceExceptionIfError();
 
         session.SetLastAction( $"nulling script '{scriptName}" );
-        session.NillScript( nodeNumber, scriptName );
+        session.NillObject( nodeNumber, scriptName );
 
         session.ThrowDeviceExceptionIfError();
 
@@ -204,7 +205,7 @@ public static partial class FirmwareManager
                     if ( savedScripts.Contains( script.Name, StringComparison.OrdinalIgnoreCase ) )
                         session.DeleteScript( script.Name );
                     else
-                        session.NillScript( script.Name );
+                        session.NillObject( script.Name );
                 }
             }
         }

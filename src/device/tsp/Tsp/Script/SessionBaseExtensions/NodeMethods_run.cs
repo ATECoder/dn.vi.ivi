@@ -1,11 +1,12 @@
 using cc.isr.VI.Pith;
+using cc.isr.VI.Tsp.SessionBaseExtensions;
 
 namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
 public static partial class NodeMethods
 {
     /// <summary>
-    /// A Pith.SessionBase extension method that query if the script namespaces exist.
+    /// A <see cref="Pith.SessionBase"/> extension method that query if the script was activated.
     /// </summary>
     /// <remarks>   2024-09-09. </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
@@ -16,7 +17,7 @@ public static partial class NodeMethods
     /// <param name="nodeNumber">   . </param>
     /// <param name="script">       The script. </param>
     /// <returns>   True if script namespaces, false if not. </returns>
-    public static bool IsActivate( this Pith.SessionBase session, int nodeNumber, ScriptInfo script )
+    public static bool IsActive( this Pith.SessionBase session, int nodeNumber, ScriptInfo script )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( !session.IsDeviceOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );

@@ -1,8 +1,10 @@
+using cc.isr.VI.Tsp.SessionBaseExtensions;
+
 namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
 public static partial class NodeMethods
 {
-    /// <summary>   A Pith.SessionBase extension method that query if 'script' name is nil. </summary>
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that query if 'script' name is nil. </summary>
     /// <remarks>   2024-09-09. </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
     ///                                                 are null. </exception>

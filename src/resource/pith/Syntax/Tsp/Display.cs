@@ -47,4 +47,13 @@ public static class Display
 
     /// <summary> The maximum character number. </summary>
     public const int MaximumCharacterNumber = short.MaxValue - 1;
+
+    /// <summary>   (Immutable) the delete a load menu item command format. </summary>
+    public const string FindLoadMenuItemQueryFormat = "local exists=false for name in _G.display.loadmenu.catalog() do exists = (name=='{0}') if exists then break end end _G.print(exists)";
+
+    /// <summary>   (Immutable) the delete a load menu item command format. </summary>
+    public const string DeleteLoadMenuItemCommandFormat = "local exists=false for name in _G.display.loadmenu.catalog() do exists = (name=='{0}') if exists then break end end if exists then _G.display.loadmenu.delete( name ) end";
+
+    /// <summary>   (Immutable) the delete an existing load menu item command format. </summary>
+    public const string DeleteExistingLoadMenuItemCommandFormat = "_G.display.loadmenu.delete( '{0}' )";
 }

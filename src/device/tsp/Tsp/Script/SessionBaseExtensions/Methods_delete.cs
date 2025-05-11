@@ -1,41 +1,10 @@
 using cc.isr.VI.Pith;
+using cc.isr.VI.Tsp.SessionBaseExtensions;
 
 namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
 public static partial class SessionBaseExtensionMethods
 {
-    /// <summary>   Makes a script nil. </summary>
-    /// <remarks>   2024-09-05. </remarks>
-    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
-    ///                                             null. </exception>
-    /// <param name="session">              The session. </param>
-    /// <param name="scriptName">           Specifies the script name. </param>
-    /// <returns>   <c>true</c> if the script is nil; otherwise <c>false</c>. </returns>
-    public static void NillScript( this Pith.SessionBase session, string scriptName )
-    {
-        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
-        if ( scriptName is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
-
-        session.LastNodeNumber = default;
-
-        session.SetLastAction( $"checking if the {scriptName} script exists;. " );
-        session.LastNodeNumber = default;
-        if ( !session.IsNil( scriptName ) )
-        {
-            session.TraceLastAction( $"\r\n\tnulling the '{scriptName}' script;. " );
-            _ = session.WriteLine( $"{scriptName} = nil {cc.isr.VI.Syntax.Tsp.Lua.OperationCompletedQueryCommand} " );
-
-            // read query reply and throw if reply is not 1.
-            session.ReadAndThrowIfOperationIncomplete();
-
-            // throw if device errors
-            session.ThrowDeviceExceptionIfError();
-        }
-
-        if ( !session.IsNil( $"{scriptName}" ) )
-            throw new InvalidOperationException( $"The script {scriptName} was not nullified." );
-    }
-
     /// <summary>   A <see cref="Pith.SessionBase"/> extension method that removes the script from the list of user scripts. </summary>
     /// <remarks>   2025-04-11. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
@@ -87,7 +56,7 @@ public static partial class SessionBaseExtensionMethods
         session.RemoveUserScript( scriptName );
 
         // nill the script if is is not nil.
-        session.NillScript( scriptName );
+        session.NillObject( scriptName );
     }
 
     /// <summary>

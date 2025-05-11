@@ -13,7 +13,6 @@ public static class Node
 
     #endregion
 
-
     #region " node identity "
 
     /// <summary>

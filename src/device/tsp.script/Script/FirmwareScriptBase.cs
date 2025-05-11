@@ -1,6 +1,5 @@
 using System.Text;
 using cc.isr.Std.TrimExtensions;
-using cc.isr.VI.Syntax.Tsp;
 using cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
 namespace cc.isr.VI.Tsp.Script;
@@ -713,7 +712,7 @@ public abstract class FirmwareScriptBase
                 throw new InvalidOperationException( $"Failed reading script;. file '{folderPath}' includes no source." );
             else
             {
-                scriptSource = Lua.TrimLuaSourceCode( scriptSource!, retainOutline );
+                scriptSource = VI.Syntax.Tsp.Lua.TrimLuaSourceCode( scriptSource!, retainOutline );
                 if ( string.IsNullOrWhiteSpace( scriptSource ) )
                     throw new InvalidOperationException( $"Failed reading script;. parsed script from '{folderPath}' is empty." );
                 else

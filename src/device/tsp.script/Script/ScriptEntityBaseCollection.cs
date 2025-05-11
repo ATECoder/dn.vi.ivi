@@ -3,6 +3,7 @@ using System.Diagnostics;
 using cc.isr.Std.TrimExtensions;
 using cc.isr.VI.Pith;
 using cc.isr.VI.Tsp.Script.SessionBaseExtensions;
+using cc.isr.VI.Tsp.SessionBaseExtensions;
 
 namespace cc.isr.VI.Tsp.Script;
 
@@ -589,7 +590,7 @@ public class ScriptEntityBaseCollection<TItem>( NodeEntityBase node ) : System.C
             }
             else
             {
-                session.NillScript( scriptName );
+                session.NillObject( scriptName );
                 isNull = true;
             }
         }

@@ -2,6 +2,33 @@ namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
 public static partial class SessionBaseExtensionMethods
 {
+    /// <summary>   Reads the script from the script file and decompresses it if it is compressed. </summary>
+    /// <remarks>   2024-07-09. </remarks>
+    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
+    ///                                             null. </exception>
+    /// <param name="filePath"> Specifies the script file path. </param>
+    /// <returns>   The script. </returns>
+    public static string ReadScript( this string filePath )
+    {
+        if ( string.IsNullOrWhiteSpace( filePath ) ) throw new ArgumentNullException( nameof( filePath ) );
+
+        using StreamReader? reader = new System.IO.StreamReader( filePath ) ??
+            throw new FileNotFoundException( $"Failed opening script file '{filePath}'" );
+
+        string source = System.IO.File.Exists( filePath )
+            ? System.IO.File.ReadAllText( filePath )
+            : throw new FileNotFoundException( $"Script file '{filePath}' not found;. " );
+
+        if ( source is null || string.IsNullOrWhiteSpace( source ) )
+            throw new InvalidOperationException( $"Failed reading script;. file '{filePath}' includes no source;. " );
+        else if ( source.Length < 2 )
+            throw new InvalidOperationException( $"Failed reading script;. file '{filePath}' includes no source;. " );
+        else if ( ScriptCompressor.IsCompressed( source ) )
+            source = Tsp.Script.ScriptCompressor.Decompress( source );
+
+        return source;
+    }
+
     /// <summary>   A <see cref="Pith.SessionBase"/> extension method that loads script file. </summary>
     /// <remarks>   2025-04-20. <para>
     /// Notes:</para><para>

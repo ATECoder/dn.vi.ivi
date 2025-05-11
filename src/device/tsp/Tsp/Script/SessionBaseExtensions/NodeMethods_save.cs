@@ -1,4 +1,5 @@
 using cc.isr.VI.Pith;
+using cc.isr.VI.Tsp.SessionBaseExtensions;
 
 namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
@@ -165,7 +166,7 @@ public static partial class NodeMethods
         session.ThrowDeviceExceptionIfError();
 
         session.SetLastAction( $"nulling script '{scriptName}" );
-        session.NillScript( nodeNumber, scriptName );
+        session.NillObject( nodeNumber, scriptName );
 
         session.ThrowDeviceExceptionIfError();
     }
@@ -190,7 +191,7 @@ public static partial class NodeMethods
         session.ThrowDeviceExceptionIfError();
 
         session.SetLastAction( $"nulling script '{scriptName}" );
-        session.NillScript( nodeNumber, scriptName );
+        session.NillObject( nodeNumber, scriptName );
 
         session.ThrowDeviceExceptionIfError();
 

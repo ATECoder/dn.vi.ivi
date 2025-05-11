@@ -1,8 +1,8 @@
 using cc.isr.VI.Pith;
 
-namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
+namespace cc.isr.VI.Tsp.SessionBaseExtensions;
 
-public static partial class NodeMethods
+public static partial class SessionBaseMethods
 {
     /// <summary>   A <see cref="Pith.SessionBase"/>  extension method that queries controller node number. </summary>
     /// <remarks>   2025-04-26. </remarks>

@@ -86,7 +86,7 @@ public static partial class FirmwareManager
                 try
                 {
                     // remove the temporary script if there.
-                    session.NillScript( tempName );
+                    session.NillObject( tempName );
 
                     _ = session.TraceInformation();
                     _ = session.TraceDeviceExceptionIfError();
@@ -140,7 +140,7 @@ public static partial class FirmwareManager
 
                 // assign the new script name
                 session.SetLastAction( $"uploading script '{script.Name}' on node {script.Node.Number}" );
-                _ = session.ExecuteCommandQueryComplete( script.Node.Number, $"{script.Name} = {fullName} waitcomplete() " );
+                _ = session.ExecuteCommandQueryComplete( script.Node.Number, $"{script.Name} = {fullName} {Syntax.Tsp.Lua.WaitCommand} " );
 
                 // read query reply and throw if reply is not 1.
                 session.ReadAndThrowIfOperationIncomplete();
@@ -197,9 +197,9 @@ public static partial class FirmwareManager
         if ( session.IsNil( script.FirmwareVersionGetter.TrimEnd( ['(', ')'] ) ) )
         {
             // loads and runs the specified script.
-            _ = commands.Append( $"node[{script.Node.Number}].dataqueue.add({script.Name}.source) waitcomplete()" );
+            _ = commands.Append( $"node[{script.Node.Number}].{Lexemes.Lua.DataQueueLexeme}.add({script.Name}.source) {Syntax.Tsp.Lua.WaitCommand}" );
             _ = commands.AppendLine();
-            _ = commands.Append( $"node[{script.Node.Number}].execute('waitcomplete() {script.Name}=script.new(dataqueue.next(),[[{script.Name}]])')" );
+            _ = commands.Append( $"node[{script.Node.Number}].execute('{Syntax.Tsp.Lua.WaitCommand} {script.Name}=script.new({Lexemes.Lua.DataQueueLexeme}.next(),[[{script.Name}]])')" );
         }
         else
         {
@@ -207,7 +207,7 @@ public static partial class FirmwareManager
         }
 
         _ = commands.AppendLine();
-        _ = commands.AppendLine( "waitcomplete(0)" );
+        _ = commands.AppendLine( Syntax.Tsp.Lua.WaitCompleteAllNodesCommand );
         bool affirmative = false;
         try
         {

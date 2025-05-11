@@ -1,6 +1,5 @@
 using cc.isr.Std.NumericExtensions;
 using cc.isr.VI.Pith;
-using cc.isr.VI.Syntax.Tsp;
 
 namespace cc.isr.VI.Tsp.K2600.Ttm;
 
@@ -879,10 +878,10 @@ public class ThermalTransientMeasure : MeasureSubsystemBase
         this.Session.SetLastAction( "reading outcome" );
         if ( this.QueryFirmwareOutcome() is null )
         {
-            this.FirmwareReading = Lua.NilValue;
-            this.FirmwareOutcomeReading = Lua.NilValue;
-            this.FirmwareStatusReading = Lua.NilValue;
-            this.FirmwareOkayReading = Lua.NilValue;
+            this.FirmwareReading = VI.Syntax.Tsp.Lua.NilValue;
+            this.FirmwareOutcomeReading = VI.Syntax.Tsp.Lua.NilValue;
+            this.FirmwareStatusReading = VI.Syntax.Tsp.Lua.NilValue;
+            this.FirmwareOkayReading = VI.Syntax.Tsp.Lua.NilValue;
             throw new InvalidOperationException( "Measurement Not made." );
         }
         else if ( this.QueryFirmwareOkay().GetValueOrDefault( false ) )

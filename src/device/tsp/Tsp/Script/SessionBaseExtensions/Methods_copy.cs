@@ -17,7 +17,7 @@ public static partial class SessionBaseExtensionMethods
     public static void CopyScript( this Pith.SessionBase session, string sourceName, string destinationName )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
-        _ = session.WriteLine( "{1}=script.new( {0}.source , '{1}' ) waitcomplete()", sourceName, destinationName );
+        _ = session.WriteLine( Syntax.Tsp.Script.CopyScriptCommandFormat, sourceName, destinationName );
     }
 
     /// <summary>   Copies a script from the controller node to a remote node. </summary>
@@ -35,7 +35,7 @@ public static partial class SessionBaseExtensionMethods
 
         // loads and runs the specified script.
         string commands = string.Format( System.Globalization.CultureInfo.CurrentCulture,
-            "node[{0}].execute('waitcomplete() {2}=script.new({1}.source,[[{2}]])') waitcomplete({0}) waitcomplete()", nodeNumber, sourceName, destinationName );
+            Syntax.Tsp.Script.CopyScriptToNodeCommandFormat, nodeNumber, sourceName, destinationName );
         StringBuilder builder = new();
         _ = builder.AppendLine( $"{cc.isr.VI.Syntax.Tsp.Lua.LoadStringCommand}(table.concat(" );
         _ = builder.Append( commands );

@@ -28,6 +28,9 @@ public static class LocalNode
     /// <summary> The model query (print) command. </summary>
     public const string ModelQueryCommand = "_G.print(_G.localnode.model)";
 
+    /// <summary>   (Immutable) the reset known state command. </summary>
+    public const string ResetCommand = "_G.localnode.reset()";
+
     /// <summary>
     /// Gets or sets the IDN query (print) command returning an identity formatted for Keithley
     /// instruments matching the SCPI standard.

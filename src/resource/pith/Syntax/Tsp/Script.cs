@@ -21,6 +21,25 @@ public static class Script
     /// <summary>   (Immutable) the end of binary script. </summary>
     public const string EndOfBinaryScript = "\\128\\27\"";
 
+    /// <summary>   (Immutable) the copy script to node command format. </summary>
+    /// <remarks>
+    /// Examples <c>
+    /// _ = session.WriteLine( "{1}=script.new( {0}.source , '{1}' ) waitcomplete()", sourceName, destinationName );
+    /// </c></remarks>
+    public const string CopyScriptCommandFormat = "{1}=script.new( {0}.source , '{1}' ) waitcomplete()";
+
+    /// <summary>   (Immutable) the copy script to node command format. </summary>
+    /// <remarks>
+    /// Example: <c>
+    /// string.Format( Syntax.Tsp.CopyScriptCommandFormat, nodeNumber, sourceName, destinationName );
+    /// StringBuilder builder = new();
+    /// _ = builder.AppendLine( $"{cc.isr.VI.Syntax.Tsp.Lua.LoadStringCommand}(table.concat(" );
+    /// _ = builder.Append(commands );
+    /// _ = builder.AppendLine( "))()" );
+    /// session.WriteLines(builder.ToString(), Environment.NewLine, TimeSpan.Zero );
+    /// </c></remarks>
+    public const string CopyScriptToNodeCommandFormat = "node[{0}].execute('waitcomplete() {2}=script.new({1}.source,[[{2}]])') waitcomplete({0}) waitcomplete()";
+
     /// <summary>
     /// Gets a command to retrieve a catalog from the local node.
     /// This command must be enclosed in a 'do end' construct.
@@ -36,14 +55,4 @@ public static class Script
 
     /// <summary>   (Immutable) the find saved script command format. </summary>
     public const string FindSavedScriptQueryFormat = "local exists=false for name in _G.script.user.catalog() do exists = (name=='{0}') if exists then break end end print(exists)";
-
-    /// <summary>   (Immutable) the delete a load menu item command format. </summary>
-    public const string FindLoadMenuItemQueryFormat = "local exists=false for name in _G.display.loadmenu.catalog() do exists = (name=='{0}') if exists then break end end _G.print(exists)";
-
-    /// <summary>   (Immutable) the delete a load menu item command format. </summary>
-    public const string DeleteLoadMenuItemCommandFormat = "local exists=false for name in _G.display.loadmenu.catalog() do exists = (name=='{0}') if exists then break end end if exists then _G.display.loadmenu.delete( name ) end";
-
-    /// <summary>   (Immutable) the delete an existing load menu item command format. </summary>
-    public const string DeleteExistingLoadMenuItemCommandFormat = "_G.display.loadmenu.delete( '{0}' )";
-
 }

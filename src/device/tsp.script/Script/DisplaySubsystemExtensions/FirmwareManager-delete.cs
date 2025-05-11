@@ -57,10 +57,10 @@ public static partial class FirmwareManager
         bool deleted = script.Node.IsController
                 ? FirmwareScript.ScriptNameExists( scriptNames, script.Name )
                     ? session.DeleteSavedScript( script.Name )
-                    : session.NillScript( script.Name )
+                    : session.NillObject( script.Name )
                 : FirmwareScript.ScriptNameExists( scriptNames, script.Name )
                     ? session.DeleteSavedScript( script.Node.Number, script.Name )
-                    : session.NillScript( script.Node.Number, script.Name );
+                    : session.NillObject( script.Node.Number, script.Name );
 
         // todo: check status byte for errors.
 
@@ -161,7 +161,7 @@ public static partial class FirmwareManager
             try
             {
                 session.SetLastAction( "resetting local node" );
-                _ = session.WriteLine( "localnode.reset()" );
+                _ = session.WriteLine( Syntax.Tsp.LocalNode.ResetCommand );
                 _ = session.TraceInformation();
                 success = !session.IsErrorBitSet( session.TraceDeviceExceptionIfError().StatusByte );
             }

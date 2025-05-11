@@ -110,7 +110,9 @@ public static class Lua
     public const string PrintCommandStringFormat = "_G.print(string.format('{0}',{1}))";
 
     /// <summary> The query (print) command string number format. </summary>
-    /// <remarks> _G.print(string.format('%9.6f',smu.source.ilimit.level))\n </remarks>
+    /// <remarks> Example: <para><c>
+    /// _G.print(string.format('%9.6f',smu.source.ilimit))
+    /// </c></para> </remarks>
     public const string PrintCommandStringNumberFormat = "_G.print(string.format('%{0}f',{1}))";
 
     /// <summary> The query (print) command string integer format. </summary>
@@ -141,7 +143,7 @@ public static class Lua
     /// instrument operations of the overlapped command are still in progress.</para> <para>
     /// • Sequential commands: Commands whose operations must finish before the next command
     /// is executed.</para> <para>
-    /// The waitcomplete() command suspends the execution of commands until the instrument
+    /// The <see cref="WaitCommand"/> command suspends the execution of commands until the instrument
     /// operations of all previous overlapped commands are finished.This command is not needed for
     /// sequential commands.</para> <para>
     /// A group number may only be specified when this node is the master node.</para> <para>
@@ -149,6 +151,9 @@ public static class Lua
     /// If zero (0) is specified for the group, this function waits for all nodes in the system.</para>
     /// </remarks>
     public const string WaitGroupCommandFormat = "_G.waitcomplete({0})";
+
+    /// <summary>   (Immutable) the wait complete all nodes command. </summary>
+    public const string WaitCompleteAllNodesCommand = "_G.waitcomplete(0)";
 
     /// <summary>
     /// (Immutable) the wait command. This command is used to suspend the execution of subsequent
