@@ -136,8 +136,13 @@ public static partial class SessionBaseMethods
     /// <value> The restore display query complete command. </value>
     public static string RestoreMainCompleteQueryCommand { get; set; } = Syntax.Tsp.Display.RestoreMainCompleteQueryCommand;
 
-    /// <summary> A <see cref="Pith.SessionBase"/> extension method that restores the instrument display getting the complete query message. </summary>
-    public static void RestoreDisplayCompleteQuery( this SessionBase session )
+    /// <summary>
+    /// A <see cref="Pith.SessionBase"/> extension method that restores the main display and waits
+    /// for the complete query to return '1'.
+    /// </summary>
+    /// <remarks>   2025-05-12. </remarks>
+    /// <param name="session">  The session. </param>
+    public static void RestoreMainDisplay( this SessionBase session )
     {
         // Documentation error: Display Main equals 1, not 0. This code should work on other instruments.
         session.SetLastAction( "restoring display" );

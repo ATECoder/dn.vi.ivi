@@ -82,5 +82,50 @@ public sealed partial class Asserts
         _ = subsystem.ReadIdentity();
     }
 
+    /// <summary>   Assert status subsystem should read serial number. </summary>
+    /// <remarks>   2024-08-20. </remarks>
+    /// <param name="statusSubsystem">  The status subsystem. </param>
+    /// <param name="serialNumber">     [out] The serial number. </param>
+    public static void AssertStatusSubsystemShouldReadSerialNumber( StatusSubsystemBase statusSubsystem, out string? serialNumber )
+    {
+        Assert.IsNotNull( statusSubsystem );
+        // read the serial number.
+        serialNumber = statusSubsystem.QuerySerialNumber();
+        Assert.IsNotNull( serialNumber, "Device should read the serial number;. " );
+        Assert.IsFalse( string.IsNullOrWhiteSpace( serialNumber ), "Serial number must not be empty or white space;. " );
+        Assert.IsNotNull( statusSubsystem.SerialNumberReading, $"{nameof( StatusSubsystemBase.SerialNumberReading )} should have a value." );
+        Assert.AreEqual( statusSubsystem.SerialNumberReading, serialNumber,
+            $"{nameof( StatusSubsystemBase )}.{nameof( StatusSubsystemBase.QuerySerialNumber )} should equal the {nameof( StatusSubsystemBase )}.{nameof( StatusSubsystemBase.SerialNumberReading )}." );
+    }
+
+    /// <summary>   Assert status subsystem should read identity. </summary>
+    /// <remarks>   2024-08-20. </remarks>
+    /// <param name="statusSubsystem">  The status subsystem. </param>
+    public static void AssertStatusSubsystemShouldReadIdentity( StatusSubsystemBase statusSubsystem )
+    {
+        Assert.IsNotNull( statusSubsystem );
+
+        // read the instrument identity.
+        string identity = statusSubsystem.QueryIdentity();
+        Assert.IsFalse( string.IsNullOrWhiteSpace( identity ), "Device should read the identity;. " );
+        Assert.AreEqual( statusSubsystem.Identity, identity, "Read identity should match the Tsp Device subsystem identity." );
+        Assert.IsFalse( string.IsNullOrWhiteSpace( statusSubsystem.VersionInfoBase.Model ),
+            $"{nameof( StatusSubsystemBase )}.{nameof( StatusSubsystemBase.VersionInfoBase )}{nameof( StatusSubsystemBase.VersionInfoBase.Model )} should be parsed;. " );
+    }
+
+    /// <summary>   Assert serial number should match settings. </summary>
+    /// <remarks>   2024-11-18. </remarks>
+    /// <param name="statusSubsystem">      The status subsystem. </param>
+    /// <param name="expectedSerialNumber"> The expected serial number. </param>
+    public static void AssertSerialNumberShouldMatchSettings( StatusSubsystemBase statusSubsystem, string expectedSerialNumber )
+    {
+        Assert.IsNotNull( statusSubsystem );
+        Assert.IsNotNull( expectedSerialNumber );
+
+        Asserts.AssertStatusSubsystemShouldReadSerialNumber( statusSubsystem, out string? serialNumber );
+        Assert.AreEqual( expectedSerialNumber, serialNumber,
+            "The instrument serial number should match the settings value." );
+    }
+
     #endregion
 }

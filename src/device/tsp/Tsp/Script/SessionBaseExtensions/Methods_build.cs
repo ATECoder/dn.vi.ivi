@@ -168,7 +168,7 @@ public static partial class SessionBaseExtensionMethods
         }
         finally
         {
-            session.RestoreDisplayCompleteQuery();
+            session.RestoreMainDisplay();
         }
     }
 }

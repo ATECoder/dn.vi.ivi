@@ -30,19 +30,21 @@ public static partial class SessionBaseExtensionMethods
     /// A <see cref="Pith.SessionBase"/> extension method that queries if the LOADED table includes
     /// the specified item.
     /// </summary>
-    /// <remarks>   2025-04-22. <para>
+    /// <remarks>
+    /// 2025-04-22. <para>
     /// Each time an script is run, its <c>ChunkName</c> is added to the <c>_G._LOADED</c> table.
     /// Thus, script can determine their dependencies by checking if an item exists in the <c>
-    /// _G._LOADED</c> table. gets </para> </remarks>
+    /// _G._LOADED</c> table. gets </para>
+    /// </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
     ///                                                 are null. </exception>
     /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
     ///                                                 invalid. </exception>
-    /// <param name="session">  The session. </param>
-    /// <param name="itemName"> The name of the expected item. </param>
-    /// <param name="details">  [out] The details. </param>
+    /// <param name="session">          The session. </param>
+    /// <param name="codeChunkName">    Name of the code chunk. </param>
+    /// <param name="details">          [out] The details. </param>
     /// <returns>   True if it succeeds, false if it fails. </returns>
-    public static bool IncludedInLoadedTable( this SessionBase session, string itemName, out string details )
+    public static bool IncludedInLoadedTable( this SessionBase session, string codeChunkName, out string details )
     {
         if ( session == null ) throw new ArgumentNullException( nameof( session ) );
         if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
@@ -54,14 +56,14 @@ public static partial class SessionBaseExtensionMethods
             details = $"The LOADED table is empty.";
             return false;
         }
-        else if ( loadedItems.Contains( itemName, StringComparison.InvariantCulture ) )
+        else if ( loadedItems.Contains( codeChunkName, StringComparison.InvariantCulture ) )
         {
-            details = $"The LOADED table includes '{itemName}'.";
+            details = $"The LOADED table includes '{codeChunkName}'.";
             return true;
         }
         else
         {
-            details = $"The LOADED table does not include '{itemName}'.";
+            details = $"The LOADED table does not include '{codeChunkName}'.";
             return false;
         }
     }
@@ -71,17 +73,21 @@ public static partial class SessionBaseExtensionMethods
     /// the specified item using the TSP <c>_G.isInLoaded</c> method.
     /// </summary>
     /// <remarks>   2025-04-22. </remarks>
-    /// <param name="session">  The session. </param>
-    /// <param name="itemName"> The name of the expected item. </param>
-    /// <param name="details">  [out] The details. </param>
+    /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
+    ///                                                 are null. </exception>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <param name="session">          The session. </param>
+    /// <param name="codeChunkName">    Name of the code chunk. </param>
+    /// <param name="details">          [out] The details. </param>
     /// <returns>   True if in loaded, false if not. </returns>
-    public static bool IsInLoaded( this SessionBase session, string itemName, out string details )
+    public static bool IsInLoaded( this SessionBase session, string codeChunkName, out string details )
     {
         if ( session == null ) throw new ArgumentNullException( nameof( session ) );
         if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
 
         string functionName = "_G.isInLoaded";
-        string functionCommand = $"{functionName}('{itemName}')";
+        string functionCommand = $"{functionName}('{codeChunkName}')";
 
         if ( session.IsNil( functionName ) )
         {
@@ -93,12 +99,12 @@ public static partial class SessionBaseExtensionMethods
             string reply = session.QueryTrimEnd( Syntax.Tsp.Lua.PrintCommand( functionCommand ) );
             if ( reply == cc.isr.VI.Syntax.Tsp.Lua.TrueValue )
             {
-                details = $"The function {functionName} found the {itemName}.";
+                details = $"The function {functionName} found the {codeChunkName}.";
                 return true;
             }
             else
             {
-                details = $"The function {functionName} did not fine the {itemName}.";
+                details = $"The function {functionName} did not fine the {codeChunkName}.";
                 return false;
             }
         }

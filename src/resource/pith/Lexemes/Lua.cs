@@ -12,4 +12,7 @@ public static class Lua
     /// <summary>   (Immutable) the P-Call Lexeme. </summary>
     public const string PCallLexeme = "pcall";
 
+    /// <summary>   (Immutable) zero-based index of the pairs lexeme. </summary>
+    public const string IPairsLexeme = "ipairs";
+
 }

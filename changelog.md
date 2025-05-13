@@ -2,7 +2,13 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9262]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9264]: https://www.github.com/atecoder/dn.vi.ivi
+
+## [8.1.9264] - 2025-05-13
+- Lexemes: 
+  - Add TSP Lexeme for IPairs.
+- Tests Asserts:
+  - Add Generic status subsystem asserts.
 
 ## [8.1.9262] - 2025-05-11
 - Pith Tsp Syntax
