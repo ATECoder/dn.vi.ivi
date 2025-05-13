@@ -49,6 +49,14 @@ public static partial class SessionBaseExtensionMethods
         if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
         if ( string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
 
+        // turn off auto run
+        session.TraceLastAction( $"Checking auto run on {scriptName}" );
+        if ( session.IsAutoRun( scriptName ) )
+        {
+            session.TraceLastAction( $"disabling auto run on {scriptName}" );
+            session.TurnOffAutoRun( scriptName );
+        }
+
         // removes the saved script from the catalog of saved scripts. 
         session.RemoveSavedScript( scriptName );
 
@@ -57,6 +65,52 @@ public static partial class SessionBaseExtensionMethods
 
         // nill the script if is is not nil.
         session.NillObject( scriptName );
+    }
+
+    /// <summary>
+    /// A <see cref="Pith.SessionBase"/> extension method that deletes the saved scripts described by session.
+    /// </summary>
+    /// <remarks>   2025-05-13. </remarks>
+    /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
+    ///                                                 are null. </exception>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <param name="session">      The session. </param>
+    /// <param name="prefixFilter"> (Optional) A filter specifying the prefix. </param>
+    public static void DeleteSavedScripts( this SessionBase session, string prefixFilter = "isr_" )
+    {
+        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
+        if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
+
+        session.TraceLastAction( "enabling service request on operation completion" );
+        session.EnableServiceRequestOnOperationCompletion();
+
+        // string savedScripts =  session.QueryTrimEnd( "script.user.catalog()" );
+        string savedScripts = session.FetchSavedScriptsNames();
+
+        int removedCount = 0;
+        session.LastNodeNumber = default;
+        foreach ( string scriptName in savedScripts.Split( ',' ) )
+        {
+            string scriptTitle = scriptName.Trim();
+
+            if ( !string.IsNullOrWhiteSpace( scriptTitle ) )
+            {
+                if ( string.IsNullOrWhiteSpace( scriptTitle ) || scriptTitle.StartsWith( prefixFilter ) )
+                {
+                    removedCount += 1;
+                    session.DisplayLine( "Deleting scripts", 1 );
+                    session.DisplayLine( $"Removing {scriptTitle}", 2 );
+                    removedCount += 1;
+                    session.DeleteScript( scriptTitle );
+                }
+            }
+        }
+
+        if ( removedCount == 0 )
+            TraceLastAction( "\r\n\tNo scripts were removed." );
+        else
+            TraceLastAction( $"\r\n\t{removedCount} scripts were removed." );
     }
 
     /// <summary>

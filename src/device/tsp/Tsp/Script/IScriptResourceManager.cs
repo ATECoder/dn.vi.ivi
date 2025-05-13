@@ -12,10 +12,11 @@ public interface IScriptResourceManager
     /// <value> The pathname of the embedded resource folder. </value>
     public string EmbeddedResourceFolderName { get; set; }
 
-    /// <summary>   Gets or sets the identifier of the script framework. </summary>
-    /// <value> The identifier of the script framework. </value>
-    public string ScriptFrameworkId { get; set; }
-
+    /// <summary>
+    /// Gets or sets the a resource subfolder. This could be empty.
+    /// </summary>
+    /// <value> The resource subfolder. </value>
+    public string ResourceSubfolder { get; set; }
 
     /// <summary>   Gets or sets the assembly namespace. </summary>
     /// <value> The assembly namespace. </value>
@@ -92,7 +93,7 @@ public interface IScriptResourceManager
 
     /// <summary>   Gets the assembly folder path. </summary>
     /// <remarks>   2025-05-09. <para>
-    /// Implements typeof( ScriptResourceManager ).Assembly.DirectoryPath </para>
+    /// Implements typeof( ResourceManagerInstance ).Assembly.DirectoryPath </para>
     /// </remarks>
     /// <returns>   A string. </returns>
     public string AssemblyFolderPath();
@@ -107,6 +108,11 @@ public interface IScriptResourceManager
     /// <param name="resourceFileName">     Filename of the resource file. </param>
     /// <returns>   A string. </returns>
     public string BuildResourceFilePath( string resourceFileName );
+
+    /// <summary>   Query if the resource file <paramref name="resourceFileName"/> exists. </summary>
+    /// <param name="resourceFileName"> Filename of the resource file. </param>
+    /// <returns>   The resource file information. </returns>
+    public (bool exists, string resourceFullName, string assemlyLocation) ResourceFileExists( string resourceFileName );
 
     /// <summary>   Gets resource file info. </summary>
     /// <remarks>   2025-04-07. </remarks>

@@ -77,9 +77,11 @@ public abstract class ScriptResourceManagerBase : IScriptResourceManager
     /// <value> The assembly namespace. </value>
     public abstract string AssemblyNamespace { get; set; }
 
-    /// <summary>   Gets or sets the identifier of the script framework. </summary>
-    /// <value> The identifier of the script framework. </value>
-    public string ScriptFrameworkId { get; set; } = string.Empty;
+    /// <summary>
+    /// Gets or sets the a resource subfolder. This could be empty.
+    /// </summary>
+    /// <value> The resource subfolder. </value>
+    public string ResourceSubfolder { get; set; } = string.Empty;
 
     #endregion
 
@@ -97,7 +99,9 @@ public abstract class ScriptResourceManagerBase : IScriptResourceManager
     /// <returns>   A string. </returns>
     public string BuildFullResourceName( string resourceFileName )
     {
-        return $"{this.AssemblyNamespace}.{this.EmbeddedResourceFolderName}.{resourceFileName}";
+        return string.IsNullOrWhiteSpace( this.ResourceSubfolder )
+            ? $"{this.AssemblyNamespace}.{this.EmbeddedResourceFolderName}.{resourceFileName}"
+            : $"{this.AssemblyNamespace}.{this.EmbeddedResourceFolderName}.{this.ResourceSubfolder}.{resourceFileName}";
     }
 
     /// <summary>   Gets resource stream. </summary>
@@ -201,7 +205,7 @@ public abstract class ScriptResourceManagerBase : IScriptResourceManager
 
     /// <summary>   Gets the assembly folder path. </summary>
     /// <remarks>   2025-05-09. <para>
-    /// Implements typeof( ScriptResourceManager ).Assembly.DirectoryPath </para>
+    /// Implements typeof( ResourceManagerInstance ).Assembly.DirectoryPath </para>
     /// </remarks>
     /// <returns>   A string. </returns>
     public abstract string AssemblyFolderPath();
@@ -211,7 +215,9 @@ public abstract class ScriptResourceManagerBase : IScriptResourceManager
     /// <returns>   A string. </returns>
     public string BuildResourceFileFolderPath()
     {
-        return Path.Combine( this.AssemblyFolderPath(), this.EmbeddedResourceFolderName, this.ScriptFrameworkId );
+        return string.IsNullOrWhiteSpace( this.ResourceSubfolder )
+            ? Path.Combine( this.AssemblyFolderPath(), this.EmbeddedResourceFolderName )
+            : Path.Combine( this.AssemblyFolderPath(), this.EmbeddedResourceFolderName, this.ResourceSubfolder );
     }
 
     /// <summary>   Builds full resource file path. </summary>
@@ -221,6 +227,19 @@ public abstract class ScriptResourceManagerBase : IScriptResourceManager
     public string BuildResourceFilePath( string resourceFileName )
     {
         return Path.Combine( this.BuildResourceFileFolderPath(), resourceFileName );
+    }
+
+    /// <summary>   Query if the resource file <paramref name="resourceFileName"/> exists. </summary>
+    /// <remarks>   2025-05-13. </remarks>
+    /// <param name="resourceFileName"> Filename of the resource file. </param>
+    /// <returns>   The resource file information. </returns>
+    public (bool exists, string resourceFullName, string assemlyLocation) ResourceFileExists( string resourceFileName )
+    {
+        return (this.GetResourceFileInfo( resourceFileName ) != null,
+            string.IsNullOrWhiteSpace( this.ResourceSubfolder )
+              ? this.EmbeddedResourceFolderName
+              : Path.Combine( this.EmbeddedResourceFolderName, this.ResourceSubfolder ),
+            this.AssemblyFolderPath());
     }
 
     /// <summary>   Gets resource file info. </summary>

@@ -7,8 +7,15 @@ Notable changes to the `cc.isr.vi` solution are documented in this file using th
 ## [8.1.9264] - 2025-05-13
 - Lexemes: 
   - Add TSP Lexeme for IPairs.
-- Tests Asserts:
+- Device Tests Asserts:
   - Add Generic status subsystem asserts.
+- Device TSP Script:
+  - Resource Manager Base: 
+    - Add Resource File exists method.
+	- Handle an empty script framework ID for common resources to multiple frameworks.
+  - Session Base Extensions.
+    - Add Delete Saved Scripts.
+	- Add toggling auto run when deleting scripts.
 
 ## [8.1.9262] - 2025-05-11
 - Pith Tsp Syntax
