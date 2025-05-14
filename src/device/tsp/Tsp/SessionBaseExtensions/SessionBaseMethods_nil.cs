@@ -39,10 +39,12 @@ public static partial class SessionBaseMethods
             session.ThrowDeviceExceptionIfError();
 
             if ( session.IsNil( objectName ) )
+            {
                 if ( !session.CollectGarbageQueryComplete() )
                     _ = session.TraceWarning( message: "garbage collection incomplete (e.g., reading .ne. '1');. " );
-                else
-                    throw new InvalidOperationException( $"The {objectName} was not nullified;. " );
+            }
+            else
+                throw new InvalidOperationException( $"The {objectName} was not nullified;. " );
         }
     }
 

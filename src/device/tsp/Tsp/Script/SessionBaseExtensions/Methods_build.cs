@@ -1,3 +1,4 @@
+using System.Text;
 using cc.isr.VI.Tsp.SessionBaseExtensions;
 
 namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
@@ -170,5 +171,51 @@ public static partial class SessionBaseExtensionMethods
         {
             session.RestoreMainDisplay();
         }
+    }
+
+    /// <summary>   A helper method that returns a script for time display clear script. </summary>
+    /// <remarks>   2025-05-13. </remarks>
+    /// <returns>   A Tuple: script name, script source. script function name. </returns>
+    public static (string scriptName, string scriptSource, string scriptFunctionName) BuildTimeDisplayClearScript()
+    {
+        string scriptName = "timeDisplayClear";
+        string timeDisplayFunctionName = "timeDisplay";
+        StringBuilder scriptSource = new();
+        _ = scriptSource.AppendLine( $"{cc.isr.VI.Syntax.Tsp.Script.LoadScriptCommand} {scriptName}" );
+        _ = scriptSource.AppendLine( "do" );
+        _ = scriptSource.AppendLine( $"  {timeDisplayFunctionName}=function()" );
+        _ = scriptSource.AppendLine( "    timer.reset()" );
+        _ = scriptSource.AppendLine( "    display.clear()" );
+        _ = scriptSource.AppendLine( $"    local elapsed = timer.measure.t()" );
+        _ = scriptSource.AppendLine( "    timer.reset()" );
+        _ = scriptSource.AppendLine( "    _G.display.screen = _G.display.MAIN or 0 _G.waitcomplete()" );
+        _ = scriptSource.AppendLine( "    return elapsed" );
+        _ = scriptSource.AppendLine( "  end" );
+        _ = scriptSource.AppendLine( "end" );
+        _ = scriptSource.AppendLine( cc.isr.VI.Syntax.Tsp.Script.EndScriptCommand );
+
+        return (scriptName, scriptSource.ToString(), timeDisplayFunctionName);
+    }
+
+    /// <summary>
+    /// A <see cref="Pith.SessionBase"/> extension method that loads time display clear script.
+    /// </summary>
+    /// <remarks>   2025-05-13. </remarks>
+    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
+    ///                                             null. </exception>
+    /// <param name="session">  The session. </param>
+    /// <returns>   The time display clear script. </returns>
+    public static (string scriptName, string scriptFunctionName) LoadTimeDisplayClearScript( this Pith.SessionBase session )
+    {
+        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
+        (string scriptName, string scriptSource, string scriptFunctionName) = SessionBaseExtensionMethods.BuildTimeDisplayClearScript();
+        if ( !session.IsNil( scriptName ) )
+        {
+            session.TraceLastAction( $"\r\n\tDeleting {scriptName} script" );
+            session.DeleteScript( scriptName );
+        }
+        session.TraceLastAction( $"\r\n\tLoading {scriptName} script" );
+        session.LoadScript( scriptName, scriptSource, TimeSpan.Zero );
+        return (scriptName, scriptFunctionName);
     }
 }

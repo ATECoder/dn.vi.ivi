@@ -130,7 +130,7 @@ public static partial class SessionBaseMethods
 
     #endregion
 
-    #region " display script "
+    #region " restore display "
 
     /// <summary> Gets or sets the restore display command query complete. </summary>
     /// <value> The restore display query complete command. </value>
@@ -153,5 +153,4 @@ public static partial class SessionBaseMethods
     }
 
     #endregion
-
 }

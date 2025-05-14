@@ -126,22 +126,6 @@ public class ScriptInfo
 
     #region " Implementation "
 
-    /// <summary>   Initializes this object. </summary>
-    /// <remarks>   2025-04-15. </remarks>
-    public virtual void Initialize()
-    {
-        this.RebuildDynamicProperties();
-    }
-
-    /// <summary>   Rebuild dynamic properties. </summary>
-    /// <remarks>   2025-04-15. </remarks>
-    public virtual void RebuildDynamicProperties()
-    {
-        this.BuiltFileName = $"{this.Title}.{new Version( this.Version ).Build}{ScriptInfo.ScriptFileExtension}";
-        this.TrimmedFileName = $"{this.Title}{ScriptInfo.ScriptFileExtension}";
-        this.VersionGetter = $"_G.{this.Title}_getVersion()";
-    }
-
     /// <summary>
     /// Gets or sets a value indicating whether this script automatically executes.
     /// </summary>
