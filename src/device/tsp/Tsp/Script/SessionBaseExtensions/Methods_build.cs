@@ -138,9 +138,9 @@ public static partial class SessionBaseExtensionMethods
     ///                                             null. </exception>
     /// <param name="session">      The session. </param>
     /// <param name="versionInfo">  The versionInfo to act on. </param>
-    /// <param name="scripts">      The scripts. </param>
+    /// <param name="scripts">      The collection of scripts. </param>
     /// <param name="folderPath">   Full pathname of the folder file. </param>
-    public static void BuildUserScripts( this Pith.SessionBase session, VersionInfoBase versionInfo, ScriptInfoBaseCollection<ScriptInfo> scripts, string folderPath )
+    public static void BuildUserScripts( this Pith.SessionBase session, VersionInfoBase versionInfo, ScriptInfoCollection scripts, string folderPath )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( scripts is null ) throw new ArgumentNullException( nameof( scripts ) );
@@ -159,7 +159,7 @@ public static partial class SessionBaseExtensionMethods
                 // build the deploy file name based on the FrameworkInfo default file format for this script.
                 _ = scriptInfo.BuildDeployFileName( versionInfo );
 
-                session.DisplayLine( $"Building {scriptInfo.Title}...", 2, 1 );
+                session.DisplayLine( $"Building {scriptInfo.Title} ...", 2, 1 );
                 session.TrimCompressLoadConvertExport( scriptInfo, folderPath );
             }
         }
