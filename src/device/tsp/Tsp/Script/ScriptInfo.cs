@@ -435,9 +435,23 @@ public class ScriptInfoBaseCollection<TItem> : System.Collections.ObjectModel.Ke
         return this;
     }
 
+    /// <summary>   Script names. </summary>
+    /// <remarks>   2025-05-14. </remarks>
+    /// <returns>   A List{string}; </returns>
+    public List<string> ScriptNames()
+    {
+        List<string> names = [];
+        foreach ( TItem script in this.Items )
+        {
+            if ( !string.IsNullOrWhiteSpace( script.Title ) )
+                names.Add( script.Title );
+        }
+        return names;
+    }
+
     #endregion
 
-    #region " TSP link Node Inforamtion"
+    #region " TSP Device Inforamtion"
 
     /// <summary>   Gets or sets the node number. </summary>
     /// <remarks> The default node number represents the controller node. </remarks>
@@ -451,6 +465,29 @@ public class ScriptInfoBaseCollection<TItem> : System.Collections.ObjectModel.Ke
     /// <summary>   Gets or sets the serial number. </summary>
     /// <value> The serial number. </value>
     public string SerialNumber { get; set; } = string.Empty;
+
+    /// <summary>   Sets the device information. </summary>
+    /// <remarks>   2025-05-14. </remarks>
+    /// <param name="versionInfo">  Information describing the device version. </param>
+    /// <param name="nodeNumber">   The device node number. </param>
+    public void SetDeviceInfo( VersionInfoBase versionInfo, int nodeNumber )
+    {
+        this.NodeNumber = nodeNumber;
+        this.ModelNumber = versionInfo.Model;
+        this.SerialNumber = versionInfo.SerialNumber;
+        this.BuildDeployFileNames( versionInfo );
+    }
+
+    /// <summary>   Builds deploy file names. </summary>
+    /// <remarks>   2025-05-08. </remarks>
+    /// <param name="version">  The framework version. </param>
+    public void BuildDeployFileNames( VersionInfoBase version )
+    {
+        foreach ( ScriptInfo scriptInfo in this )
+        {
+            scriptInfo.DeployFileName = scriptInfo.BuildDeployFileName( version );
+        }
+    }
 
     #endregion
 
@@ -626,7 +663,6 @@ public class ScriptInfoCollection : ScriptInfoBaseCollection<ScriptInfo>
     }
 
     #endregion
-
 }
 
 /// <summary>   Collection of node scripts. </summary>

@@ -5,7 +5,7 @@ b921b7cb45bf229b41b80c5c4002705c3e1e6e0c,enums,lib\vs\core
 b9efc551d3c1413696e61d8c6a595dbaefccbdb2,tracing,lib\vs\core
 817b0a4bfeed75d003084041369174849d36f0a5,std,lib\vs\core
 b9efc551d3c1413696e61d8c6a595dbaefccbdb2,tracing,lib\vs\core
-8d9e6a1a3cdd93cf9347bbf63f760bd9c75d2825,vi,lib\vs\vi
+68d176a915fd651130545edca011133fe0a3de44,vi,lib\vs\vi
 7fab860c13d9a0a8c8ade9a5ba6d19f2b4c1e284,visa,lib\vs\io
 844081f3847d3bfbce57e69d4b7675b0367cde1b,ide,libraries\vs\core
 5ea133a6a6153353ef8e1a3cbbecc5a1288c7744,wix,libraries\vs\core

@@ -172,10 +172,10 @@ public class FirmwareInfo
                     {
                         _ = statusBuilder.AppendLine( $"{autoExecScript.Title} script not run. Report to the vendor." );
                         statusMessage = "Run Firmware";
-
                     }
                     else
                     {
+                        installedVersion = autoExecScript.ActualVersion;
                         releasedVersion = autoExecScript.Version;
 
                         // check if we have the most current firmware
@@ -188,12 +188,12 @@ public class FirmwareInfo
                         else if ( compareStatus < 0 )
                         {
                             firmwareStatus = FirmwareStatus.UpdateRequired;
-                            _ = statusBuilder.AppendLine($"The installed firmware version {installedVersion} needs updating. Load new firmware." );
+                            _ = statusBuilder.AppendLine( $"The installed firmware version {installedVersion} needs updating. Load new firmware." );
                         }
                         else if ( compareStatus > 0 )
                         {
                             firmwareStatus = FirmwareStatus.NewVersionAvailable;
-                            _ = statusBuilder.AppendLine($"The installed firmware version {installedVersion} is newer than the version you are trying to install; Contact the Vendor for the latest release" );
+                            _ = statusBuilder.AppendLine( $"The installed firmware version {installedVersion} is newer than the version you are trying to install; Contact the Vendor for the latest release" );
                         }
                     }
                 }

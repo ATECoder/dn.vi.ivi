@@ -117,7 +117,7 @@ public sealed partial class Asserts
     /// <remarks>   2024-11-18. </remarks>
     /// <param name="statusSubsystem">      The status subsystem. </param>
     /// <param name="expectedSerialNumber"> The expected serial number. </param>
-    public static void AssertSerialNumberShouldMatchSettings( StatusSubsystemBase statusSubsystem, string expectedSerialNumber )
+    public static void AssertSerialNumberShouldMatchSettings( StatusSubsystemBase? statusSubsystem, string expectedSerialNumber )
     {
         Assert.IsNotNull( statusSubsystem );
         Assert.IsNotNull( expectedSerialNumber );
