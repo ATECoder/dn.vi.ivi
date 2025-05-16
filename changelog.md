@@ -5,9 +5,11 @@ Notable changes to the `cc.isr.vi` solution are documented in this file using th
 [8.1.9267]: https://www.github.com/atecoder/dn.vi.ivi
 
 ## [8.1.9267] - 2025-05-16
-- Device Tsp Script
+- Device Tsp Script Session Base Extensions:
   - Script info: Add latest version.
   - Update script info and firmware status report format.
+  - Condition toggling auto run function on the existence of the script.
+  - Add the Lua 'isInLoaded' function if not found.
 - Firmware Info:
   - Compare actual version to the latest version instead of the released version.
   - Parse firmware version status based on the actual and latest firmware versions.

@@ -16,6 +16,10 @@ public static partial class SessionBaseExtensionMethods
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
 
+        // ensure the script is loaded.
+        if ( session.IsNil( scriptName ) )
+            return false;
+
         string tspCommand = $"print( {scriptName}.autorun )";
         string yesNo = session.QueryTrimEnd( tspCommand );
         bool isAutoRun = string.Equals( yesNo, "yes", StringComparison.OrdinalIgnoreCase );
@@ -35,9 +39,13 @@ public static partial class SessionBaseExtensionMethods
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
 
-        if ( session.IsAutoRun( scriptName ) )
-            _ = session.WriteLine( $"script.user.scripts.{scriptName}.autorun = \"no\" {cc.isr.VI.Syntax.Tsp.Lua.WaitCommand} " );
-        //  _ = session.WriteLine( $"{scriptName}.autorun = \"no\" {cc.isr.VI.Syntax.Tsp.Lua.WaitCommand}";
+        // ensure the script is loaded.
+        if ( !session.IsNil( scriptName ) )
+        {
+            if ( session.IsAutoRun( scriptName ) )
+                _ = session.WriteLine( $"script.user.scripts.{scriptName}.autorun = \"no\" {cc.isr.VI.Syntax.Tsp.Lua.WaitCommand} " );
+            //  _ = session.WriteLine( $"{scriptName}.autorun = \"no\" {cc.isr.VI.Syntax.Tsp.Lua.WaitCommand}";
+        }
     }
 
     /// <summary>
@@ -55,9 +63,13 @@ public static partial class SessionBaseExtensionMethods
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
 
-        if ( !session.IsAutoRun( scriptName ) )
-            _ = session.WriteLine( $"script.user.scripts.{scriptName}.autorun = \"yes\" {cc.isr.VI.Syntax.Tsp.Lua.WaitCommand} " );
-        //  _ = session.WriteLine( $"{scriptName}.autorun = \"yes\" {cc.isr.VI.Syntax.Tsp.Lua.WaitCommand}";
+        // ensure the script is loaded.
+        if ( !session.IsNil( scriptName ) )
+        {
+            if ( !session.IsAutoRun( scriptName ) )
+                _ = session.WriteLine( $"script.user.scripts.{scriptName}.autorun = \"yes\" {cc.isr.VI.Syntax.Tsp.Lua.WaitCommand} " );
+            //  _ = session.WriteLine( $"{scriptName}.autorun = \"yes\" {cc.isr.VI.Syntax.Tsp.Lua.WaitCommand}";
+        }
     }
 
     /// <summary>

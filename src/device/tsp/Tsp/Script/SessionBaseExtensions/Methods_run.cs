@@ -91,7 +91,15 @@ public static partial class SessionBaseExtensionMethods
 
         if ( session.IsNil( functionName ) )
         {
-            details = $"The function {functionName} was not found.";
+            string isInLoadedCode = "function isInLoaded( requiredName ) return nil ~= _G._LOADED[ requiredName or \"\" ] end";
+            session.SetLastAction( $"loading the {functionName} function;. " );
+            _ = session.WriteLine( isInLoadedCode );
+            _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay + session.StatusReadDelay );
+        }
+
+        if ( session.IsNil( functionName ) )
+        {
+            details = $"the function {functionName} was not found.";
             return false;
         }
         else
