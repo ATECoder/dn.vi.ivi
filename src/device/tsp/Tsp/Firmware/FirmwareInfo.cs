@@ -21,9 +21,13 @@ public class FirmwareInfo
     /// <value> The firmware installed status. </value>
     public string StatusDetails { get; set; } = string.Empty;
 
-    /// <summary>   Gets or sets the firmware installed version. </summary>
-    /// <value> The firmware installed version. </value>
+    /// <summary>   Gets or sets the firmware actually installed version. </summary>
+    /// <value> The firmware actually installed version. </value>
     public string? InstalledVersion { get; set; }
+
+    /// <summary>   Gets or sets the firmware latest version. </summary>
+    /// <value> The firmware latest version. </value>
+    public string? LatestVersion { get; set; }
 
     /// <summary>   Gets or sets the firmware released version. </summary>
     /// <value> The firmware released version. </value>
@@ -81,6 +85,7 @@ public class FirmwareInfo
         System.Text.StringBuilder statusBuilder = new();
         string? installedVersion = null;
         string? releasedVersion = null;
+        string? latestVersion = null;
         bool mayDelete = false;
         bool mustLoad = false;
         bool mustSave = false;
@@ -176,10 +181,11 @@ public class FirmwareInfo
                     else
                     {
                         installedVersion = autoExecScript.ActualVersion;
-                        releasedVersion = autoExecScript.Version;
+                        releasedVersion = autoExecScript.ReleaseVersion;
+                        latestVersion = autoExecScript.LatestVersion;
 
                         // check if we have the most current firmware
-                        int compareStatus = string.Compare( installedVersion, new Version( autoExecScript.Version ).ToString( 3 ), StringComparison.Ordinal );
+                        int compareStatus = string.Compare( installedVersion, new Version( latestVersion ).ToString( 3 ), StringComparison.Ordinal );
                         if ( compareStatus == 0 )
                         {
                             firmwareStatus = FirmwareStatus.Current;
@@ -224,7 +230,8 @@ public class FirmwareInfo
             Certified = certified,
             FirmwareStatus = firmwareStatus,
             InstalledVersion = installedVersion,
-            ReleasedVersion = releasedVersion
+            ReleasedVersion = releasedVersion,
+            LatestVersion = latestVersion
         };
 
     }
@@ -239,13 +246,15 @@ public class FirmwareInfo
             _ = sb.AppendLine( $"Status Message: {this.StatusMessage}" );
         if ( !string.IsNullOrEmpty( this.StatusDetails ) )
             _ = sb.AppendLine( $"Status Details: {this.StatusDetails}" );
-        _ = sb.AppendLine( $"Installed version: {this.InstalledVersion ?? "Unknown"}." );
-        _ = sb.AppendLine( $"Released Version: {this.ReleasedVersion ?? "Unknown"}." );
-        _ = sb.AppendLine( $"May delete., i.e., any script is loaded: {this.MayDelete}." );
-        _ = sb.AppendLine( $"Must load, i.e., not all scripts loaded: {this.MustLoad}." );
-        _ = sb.AppendLine( $"Must save, i.e., not all loaded scripts were saved: {this.MustSave}." );
+        _ = sb.AppendLine( $"Versions:" );
+        _ = sb.AppendLine( $"     Latest: {this.LatestVersion ?? "Unknown"}." );
+        _ = sb.AppendLine( $"   Released: {this.ReleasedVersion ?? "Unknown"}." );
+        _ = sb.AppendLine( $"  Installed: {this.InstalledVersion ?? "Unknown"}." );
+        _ = sb.AppendLine( $"May delete, i.e., any script is loaded: {this.MayDelete}." );
+        _ = sb.AppendLine( $" Must load, i.e., not all scripts loaded: {this.MustLoad}." );
+        _ = sb.AppendLine( $" Must save, i.e., not all loaded scripts were saved: {this.MustSave}." );
         _ = sb.AppendLine( $"Registered: {(this.Registered.HasValue ? this.Registered.Value ? "True" : "False" : "Unknown")}." );
-        _ = sb.AppendLine( $"Certified: {(this.Certified.HasValue ? this.Certified.Value ? "True" : "False" : "Unknown")}." );
+        _ = sb.AppendLine( $" Certified: {(this.Certified.HasValue ? this.Certified.Value ? "True" : "False" : "Unknown")}." );
         _ = sb.Append( $"Firmware status is '{this.FirmwareStatus}', i.e., {this.FirmwareStatus.Description()}" );
         return sb.ToString();
     }

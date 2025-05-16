@@ -73,9 +73,9 @@ public enum FirmwareVersionStatus
     [System.ComponentModel.Description( "Embedded version not known (empty)" )]
     Unknown = 4,
 
-    /// <summary> Released firmware was not set. </summary>
-    [System.ComponentModel.Description( "released firmware version was not specified (empty)" )]
-    ReleaseVersionNotSet = 5,
+    /// <summary> Latest firmware version was not set. </summary>
+    [System.ComponentModel.Description( "latest firmware version was not specified (empty)" )]
+    LatestVersionNotSet = 5,
 
     /// <summary> Version command function does not exist. </summary>
     [System.ComponentModel.Description( "Version command is missing -- version is nil" )]

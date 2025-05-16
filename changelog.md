@@ -2,7 +2,15 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9266]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9267]: https://www.github.com/atecoder/dn.vi.ivi
+
+## [8.1.9267] - 2025-05-16
+- Device Tsp Script
+  - Script info: Add latest version.
+  - Update script info and firmware status report format.
+- Firmware Info:
+  - Compare actual version to the latest version instead of the released version.
+  - Parse firmware version status based on the actual and latest firmware versions.
 
 ## [8.1.9266] - 2025-05-15
 - Device Tsp Script

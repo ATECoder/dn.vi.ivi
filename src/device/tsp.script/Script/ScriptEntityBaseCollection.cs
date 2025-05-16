@@ -322,7 +322,7 @@ public class ScriptEntityBaseCollection<TItem>( NodeEntityBase node ) : System.C
                             break;
                         }
 
-                    case FirmwareVersionStatus.ReleaseVersionNotSet:
+                    case FirmwareVersionStatus.LatestVersionNotSet:
                         {
                             _ = builder.AppendLine( $"\tThe released firmware version is not specified." );
                             break;

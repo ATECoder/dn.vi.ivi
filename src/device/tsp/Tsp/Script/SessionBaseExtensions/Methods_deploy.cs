@@ -112,25 +112,27 @@ public static partial class SessionBaseExtensionMethods
             script.ActualVersion = session.QueryFirmwareVersion( script );
     }
 
-    /// <summary>   A <see cref="ScriptInfo"/> extension method that validates the firmware. </summary>
+    /// <summary>
+    /// A <see cref="ScriptInfo"/> extension method that parses the firmware version based on the
+    /// script actually embedded version and latest release version.
+    /// </summary>
     /// <remarks>   2025-04-25. </remarks>
-    /// <param name="script">           The script. </param>
-    /// <param name="releaseVersion">   The release version. </param>
-    /// <returns>   The FirmwareVersionStatus. </returns>
-    public static FirmwareVersionStatus ValidateFirmware( this ScriptInfo script, string releaseVersion )
+    /// <param name="script">   The script. </param>
+    /// <returns>   The <see cref="FirmwareVersionStatus"/>. </returns>
+    public static FirmwareVersionStatus ParseFirmwareVersionStatis( this ScriptInfo script )
     {
-        if ( string.IsNullOrWhiteSpace( releaseVersion ) )
-            return FirmwareVersionStatus.ReleaseVersionNotSet;
+        if ( string.IsNullOrWhiteSpace( script.LatestVersion ) )
+            return FirmwareVersionStatus.LatestVersionNotSet;
 
-        else if ( string.IsNullOrWhiteSpace( script.Version ) )
+        else if ( string.IsNullOrWhiteSpace( script.ActualVersion ) )
             return FirmwareVersionStatus.Unknown;
 
-        else if ( (script.Version ?? "") == Syntax.Tsp.Lua.NilValue )
+        else if ( (script.ActualVersion ?? "") == Syntax.Tsp.Lua.NilValue )
             return FirmwareVersionStatus.Missing;
 
         else
         {
-            switch ( new Version( script.Version ).CompareTo( new Version( releaseVersion ) ) )
+            switch ( new Version( script.ActualVersion ).CompareTo( new Version( script.LatestVersion ) ) )
             {
                 case var @case when @case > 0:
                     {
@@ -165,6 +167,7 @@ public static partial class SessionBaseExtensionMethods
         {
             // clear the script state
             ScriptStatus = ScriptStatuses.Unknown,
+            ActualVersion = string.Empty
         };
 
         if ( !session.IsNil( embeddedScript.Title ) )
@@ -192,7 +195,7 @@ public static partial class SessionBaseExtensionMethods
                 embeddedScript.ScriptStatus |= ScriptStatuses.Saved;
             }
         }
-        embeddedScript.VersionStatus = SessionBaseExtensionMethods.ValidateFirmware( embeddedScript, script.Version );
+        embeddedScript.VersionStatus = SessionBaseExtensionMethods.ParseFirmwareVersionStatis( embeddedScript );
         return embeddedScript;
     }
 

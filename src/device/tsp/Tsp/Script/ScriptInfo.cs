@@ -20,7 +20,9 @@ public class ScriptInfo
     {
         this.IsAutoexec = script.IsAutoexec;
         this.Title = script.Title;
-        this.Version = script.Version;
+        this.ReleaseVersion = script.ReleaseVersion;
+        this.LatestVersion = script.LatestVersion;
+        this.ActualVersion = script.ActualVersion;
         this.BuiltFileName = script.BuiltFileName;
         this.TrimmedFileName = script.TrimmedFileName;
         this.DeployFileTitle = script.DeployFileTitle;
@@ -151,7 +153,14 @@ public class ScriptInfo
     /// <summary>   Gets or sets the released version of the script. </summary>
     /// <value> The released version of the script. </value>
     [Description( "The released version the script []" )]
-    public virtual string Version { get; set; } = string.Empty;
+    public virtual string ReleaseVersion { get; set; } = string.Empty;
+
+    /// <summary>
+    /// The latest version of the script that might be installed to replace this script.
+    /// </summary>
+    /// <value> The latest version. </value>
+    [Description( "The latest version of the script that might be installed to replace this script" )]
+    public virtual string LatestVersion { get; set; } = string.Empty;
 
     /// <summary>   Gets or sets the version embedded script as read from the instrument. </summary>
     /// <value> The version embedded script as read from the instrument. </value>
@@ -270,7 +279,13 @@ public class ScriptInfo
             return "Script name is empty ";
 
         _ = builder.AppendLine( $"Info for script '{this.Title}':" );
-        _ = builder.AppendLine( $"\tReleased version: {this.Version}." );
+        _ = builder.AppendLine( $"\tVersions:" );
+        _ = builder.AppendLine( $"\t\t   Latest: {(string.IsNullOrEmpty( this.LatestVersion ) ? "unknown" : this.LatestVersion)}." );
+        _ = builder.AppendLine( $"\t\t Released: {(string.IsNullOrEmpty( this.ReleaseVersion ) ? "unknown" : this.ReleaseVersion)}." );
+        _ = builder.AppendLine( $"\t\tInstalled: {(string.IsNullOrEmpty( this.ActualVersion ) ? "unknown" : this.ActualVersion)}." );
+        if ( string.IsNullOrWhiteSpace( this.ActualVersion ) )
+            _ = builder.AppendLine( $"\t{(string.IsNullOrWhiteSpace( this.VersionGetterElement ) ? "has a" : "does not have a")} firmware version getter." );
+
         if ( ScriptStatuses.Loaded == (this.ScriptStatus & ScriptStatuses.Loaded) )
         {
             if ( ScriptStatuses.ByteCode == (this.ScriptStatus & ScriptStatuses.ByteCode) )
@@ -281,17 +296,6 @@ public class ScriptInfo
             if ( ScriptStatuses.Activated == (this.ScriptStatus & ScriptStatuses.Activated) )
             {
                 _ = builder.AppendLine( $"\tActivated." );
-                if ( !string.IsNullOrWhiteSpace( this.VersionGetterElement ) )
-                {
-                    _ = builder.AppendLine( $"\tHas firmware version getter." );
-
-                    if ( string.IsNullOrWhiteSpace( this.ActualVersion ) )
-                        _ = builder.AppendLine( $"\tNo firmware version." );
-                    else
-                        _ = builder.AppendLine( $"\tEmbedded version: {this.ActualVersion}" );
-                }
-                else
-                    _ = builder.AppendLine( $"\tNo firmware version getter." );
             }
             else
                 _ = builder.AppendLine( $"\tNot activated." );
@@ -320,19 +324,19 @@ public class ScriptInfo
 
             case FirmwareVersionStatus.Newer:
                 {
-                    _ = builder.AppendLine( $"\tOutdated Program: The embedded firmware {this.ActualVersion} is newer than the released firmware {this.Version}. A newer version of this program is available." );
+                    _ = builder.AppendLine( $"\tOutdated Program: The embedded firmware {this.ActualVersion} is newer than the latest firmware {this.LatestVersion}. A newer version of this program is available." );
                     break;
                 }
 
             case FirmwareVersionStatus.Older:
                 {
-                    _ = builder.AppendLine( $"\tOutdated Firmware: The embedded firmware {this.ActualVersion} is older than the released firmware {this.Version}." );
+                    _ = builder.AppendLine( $"\tOutdated Firmware: The embedded firmware {this.ActualVersion} is older than the latest firmware {this.LatestVersion}." );
                     break;
                 }
 
-            case FirmwareVersionStatus.ReleaseVersionNotSet:
+            case FirmwareVersionStatus.LatestVersionNotSet:
                 {
-                    _ = builder.AppendLine( $"\tThe released firmware version is not specified." );
+                    _ = builder.AppendLine( $"\tThe latest firmware version is not specified." );
                     break;
                 }
 

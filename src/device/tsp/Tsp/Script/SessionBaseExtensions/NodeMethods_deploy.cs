@@ -151,7 +151,7 @@ public static partial class NodeMethods
         {
             // clear the script state
             ScriptStatus = ScriptStatuses.Unknown,
-            Version = string.Empty
+            ActualVersion = string.Empty
         };
 
         if ( !session.IsNil( nodeNumber, embeddedScript.Title ) )
@@ -174,7 +174,7 @@ public static partial class NodeMethods
                 embeddedScript.ScriptStatus |= ScriptStatuses.Saved;
             }
         }
-        embeddedScript.VersionStatus = SessionBaseExtensionMethods.ValidateFirmware( embeddedScript, script.Version );
+        embeddedScript.VersionStatus = SessionBaseExtensionMethods.ParseFirmwareVersionStatis( embeddedScript );
         return embeddedScript;
     }
 
