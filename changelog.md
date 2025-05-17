@@ -2,7 +2,11 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9267]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9268]: https://www.github.com/atecoder/dn.vi.ivi
+
+## [8.1.9268] - 2025-05-17
+- Device Tsp Script 
+  - Move Assembly Resources Scribe interface and base class to the Std framework project.
 
 ## [8.1.9267] - 2025-05-16
 - Device Tsp Script Session Base Extensions:
