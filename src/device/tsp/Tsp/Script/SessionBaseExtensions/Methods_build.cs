@@ -65,42 +65,53 @@ public static partial class SessionBaseExtensionMethods
     ///                                                 invalid. </exception>
     /// <exception cref="FileNotFoundException">        Thrown when the requested file is not
     ///                                                 present. </exception>
-    /// <param name="session">              The session. </param>
-    /// <param name="scriptInfo">           Information describing the script. </param>
-    /// <param name="sourceFolder">         Path of the source file folder. </param>
-    /// <param name="destinationFolder">    (Optional) [empty] Path of the destination folder. If
-    ///                                     empty, the destination folder is set to the source folder. </param>
-    public static void TrimCompressLoadConvertExport( this Pith.SessionBase session, ScriptInfo scriptInfo, string sourceFolder, string destinationFolder = "" )
+    /// <param name="session">      The session. </param>
+    /// <param name="scriptInfo">   Information describing the script. </param>
+    /// <param name="buildFolder">  Pathname of the build folder. </param>
+    /// <param name="deployFolder"> Pathname of the deploy folder. </param>
+    /// <param name="consoleOut">   (Optional) True to console out. </param>
+    public static void TrimCompressLoadConvertExport( this Pith.SessionBase session, ScriptInfo scriptInfo, string buildFolder, string deployFolder, bool consoleOut = false )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( scriptInfo is null ) throw new ArgumentNullException( nameof( scriptInfo ) );
 
         if ( !session.IsDeviceOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
 
-        string fromFilePath = Path.Combine( sourceFolder, scriptInfo.BuiltFileName );
-        if ( string.IsNullOrWhiteSpace( destinationFolder ) )
-            destinationFolder = sourceFolder;
-        string trimmedFilePath = Path.Combine( destinationFolder, scriptInfo.TrimmedFileName );
-        string deployFilePath = Path.Combine( destinationFolder, scriptInfo.DeployFileName );
-        if ( System.IO.File.Exists( fromFilePath ) )
+        string builtFilePath = Path.Combine( buildFolder, scriptInfo.BuiltFileName );
+        string trimmedFilePath = Path.Combine( buildFolder, scriptInfo.TrimmedFileName );
+        string deployFilePath = Path.Combine( deployFolder, scriptInfo.DeployFileName );
+        string message;
+        if ( System.IO.File.Exists( builtFilePath ) )
         {
-            SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tTrimming script file '{fromFilePath}'\r\n\t\tto '{trimmedFilePath}'" );
-            fromFilePath.TrimScript( trimmedFilePath, true );
+            message = $"Trimming script file\r\n\t\tfrom '{builtFilePath}'\r\n\t\tto '{trimmedFilePath}'";
+            if ( consoleOut )
+                SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
+            else
+                SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
+            builtFilePath.TrimScript( trimmedFilePath, true );
 
             if ( scriptInfo.DeployFileFormat.HasFlag( ScriptFileFormats.Compressed )
                 && !scriptInfo.DeployFileFormat.HasFlag( ScriptFileFormats.ByteCode ) )
             {
-                SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tCompressing '{trimmedFilePath}'\r\n\t\tto '{deployFilePath}'" );
+                message = $"Compressing '{trimmedFilePath}'\r\n\t\tto '{deployFilePath}'";
+                if ( consoleOut )
+                    SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
+                else
+                    SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
                 System.IO.File.WriteAllText( deployFilePath, ScriptCompressor.Compress( System.IO.File.ReadAllText( trimmedFilePath ) ), System.Text.Encoding.Default );
             }
         }
         else
-            throw new FileNotFoundException( fromFilePath );
+            throw new FileNotFoundException( builtFilePath );
 
         // delete the script if it exists.
         session.DeleteScript( scriptInfo.Title );
 
-        SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tImporting script from trimmed '{trimmedFilePath}' file" );
+        message = $"Importing script from trimmed '{trimmedFilePath}' file";
+        if ( consoleOut )
+            SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
+        else
+            SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
         session.ImportScript( scriptInfo.Title, trimmedFilePath, TimeSpan.Zero );
 
         // run the script to ensure the code works.
@@ -117,7 +128,11 @@ public static partial class SessionBaseExtensionMethods
             if ( scriptInfo.DeployFileFormat.HasFlag( ScriptFileFormats.Compressed ) )
             {
                 // export and compress the script.
-                SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tcompressing byte code to '{deployFilePath}'" );
+                message = $"compressing byte code to '{deployFilePath}'";
+                if ( consoleOut )
+                    SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
+                else
+                    SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
                 session.CompressScript( scriptInfo.Title, deployFilePath, true );
             }
             else
@@ -139,8 +154,11 @@ public static partial class SessionBaseExtensionMethods
     /// <param name="session">      The session. </param>
     /// <param name="versionInfo">  The versionInfo to act on. </param>
     /// <param name="scripts">      The collection of scripts. </param>
-    /// <param name="folderPath">   Full pathname of the folder file. </param>
-    public static void BuildUserScripts( this Pith.SessionBase session, VersionInfoBase versionInfo, ScriptInfoCollection scripts, string folderPath )
+    /// <param name="buildFolder">  Pathname of the build folder. </param>
+    /// <param name="deployFolder"> Pathname of the deploy folder. </param>
+    /// <param name="consoleOut">   (Optional) True to console out. </param>
+    public static void BuildUserScripts( this Pith.SessionBase session, VersionInfoBase versionInfo, ScriptInfoCollection scripts,
+        string buildFolder, string deployFolder, bool consoleOut = false )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( scripts is null ) throw new ArgumentNullException( nameof( scripts ) );
@@ -160,7 +178,7 @@ public static partial class SessionBaseExtensionMethods
                 _ = scriptInfo.BuildDeployFileName( versionInfo );
 
                 session.DisplayLine( $"Building {scriptInfo.Title} ...", 2, 1 );
-                session.TrimCompressLoadConvertExport( scriptInfo, folderPath );
+                session.TrimCompressLoadConvertExport( scriptInfo, buildFolder, deployFolder, consoleOut );
             }
         }
         catch ( Exception )
@@ -188,7 +206,7 @@ public static partial class SessionBaseExtensionMethods
         _ = scriptSource.AppendLine( "    display.clear()" );
         _ = scriptSource.AppendLine( $"    local elapsed = timer.measure.t()" );
         _ = scriptSource.AppendLine( "    timer.reset()" );
-        _ = scriptSource.AppendLine( "    _G.display.screen = _G.display.MAIN or 0 _G.waitcomplete()" );
+        _ = scriptSource.AppendLine( $"    _G.display.screen = _G.display.MAIN or 0 {Syntax.Tsp.Lua.WaitCommand}" );
         _ = scriptSource.AppendLine( "    return elapsed" );
         _ = scriptSource.AppendLine( "  end" );
         _ = scriptSource.AppendLine( "end" );

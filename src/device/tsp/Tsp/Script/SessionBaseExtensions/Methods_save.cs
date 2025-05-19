@@ -4,19 +4,24 @@ namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
 public static partial class SessionBaseExtensionMethods
 {
-    /// <summary>
-    /// Fetches the names of the saved scripts. </summary>
+    /// <summary>   Fetches the names of the saved scripts. </summary>
     /// <remarks>   2024-09-05. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>
-    /// <param name="session">  The session. </param>
+    /// <param name="session">      The session. </param>
+    /// <param name="consoleOut">   (Optional) True to console out. </param>
     /// <returns>   The saved scripts. </returns>
-    public static string FetchSavedScriptsNames( this Pith.SessionBase session )
+    public static string FetchSavedScriptsNames( this Pith.SessionBase session, bool consoleOut = false )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         session.LastNodeNumber = default;
         string scriptNames;
-        session.TraceLastAction( "fetching saved scripts" );
+        string message = "fetching saved scripts";
+        if ( consoleOut )
+            SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
+        else
+            SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
+
         _ = session.WriteLine( "do {0} print( names ) end ", Syntax.Tsp.Script.ScriptCatalogGetterCommand );
         _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay );
 
@@ -56,10 +61,11 @@ public static partial class SessionBaseExtensionMethods
 
     /// <summary>   A <see cref="Pith.SessionBase"/> extension method that all saved. </summary>
     /// <remarks>   2025-04-25. </remarks>
-    /// <param name="session">  The session to act on. </param>
-    /// <param name="scripts">  The scripts. </param>
+    /// <param name="session">      The session to act on. </param>
+    /// <param name="scripts">      The scripts. </param>
+    /// <param name="consoleOut">   (Optional) True to console out. </param>
     /// <returns>   True if it succeeds, false if it fails. </returns>
-    public static bool AllSaved( this Pith.SessionBase session, ScriptInfoBaseCollection<ScriptInfo> scripts )
+    public static bool AllSaved( this Pith.SessionBase session, ScriptInfoBaseCollection<ScriptInfo> scripts, bool consoleOut = false )
     {
         string scriptNames = session.FetchSavedScriptsNames();
         bool affirmative = true;
@@ -68,22 +74,30 @@ public static partial class SessionBaseExtensionMethods
             affirmative = scriptNames.Contains( $"{script.Title}," );
             if ( !affirmative )
             {
-                session.TraceLastAction( $"\r\n\tscript {script.Title} was not saved;. " );
+                string message = $"script {script.Title} was not saved;. ";
+                if ( consoleOut )
+                    SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
+                else
+                    SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
                 break;
             }
         }
         return affirmative;
     }
 
-    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that removed a script from Non-Volatile-Memory (NVM). </summary>
+    /// <summary>
+    /// A <see cref="Pith.SessionBase"/> extension method that removed a script from Non-Volatile-
+    /// Memory (NVM).
+    /// </summary>
     /// <remarks>   2025-04-10. </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
     ///                                                 are null. </exception>
-    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
-    ///                      v                          invalid. </exception>
-    /// <param name="session">          The session. </param>
-    /// <param name="scriptName">       Name of the script. </param>
-    public static void RemoveSavedScript( this SessionBase session, string scriptName )
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is v
+    ///                                                 invalid. </exception>
+    /// <param name="session">      The session. </param>
+    /// <param name="scriptName">   Name of the script. </param>
+    /// <param name="consoleOut">   (Optional) True to console out. </param>
+    public static void RemoveSavedScript( this SessionBase session, string scriptName, bool consoleOut = false )
     {
         if ( session == null )
             throw new ArgumentNullException( nameof( session ) );
@@ -94,9 +108,15 @@ public static partial class SessionBaseExtensionMethods
 
         session.LastNodeNumber = default;
         session.SetLastAction( $"checking if a '{scriptName}' saved script exists;. " );
+        string message;
         if ( session.IsSavedScript( scriptName ) )
         {
-            session.TraceLastAction( $"\r\n\tremoving the '{scriptName}' script from the saved script catalog;. " );
+            message = $"removing the '{scriptName}' script from the saved script catalog;. ";
+            if ( consoleOut )
+                SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
+            else
+                SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
+
             _ = session.WriteLine( $"script.delete('{scriptName}')" );
             _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay + session.StatusReadDelay );
 
@@ -110,7 +130,12 @@ public static partial class SessionBaseExtensionMethods
             // throw if device error occurred
             session.ThrowDeviceExceptionIfError();
 
-            session.SetLastAction( $"checking if the saved '{scriptName}' script was deleted;. " );
+            message = $"checking if the saved '{scriptName}' script was deleted;. ";
+            if ( consoleOut )
+                SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
+            else
+                SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
+
             if ( !session.IsSavedScript( scriptName ) )
                 SessionBaseExtensionMethods.TraceLastAction( "script was deleted;. " );
             else
@@ -139,7 +164,8 @@ public static partial class SessionBaseExtensionMethods
     ///                                                 invalid. </exception>
     /// <param name="session">      The session to act on. </param>
     /// <param name="scriptName">   Name of the script. </param>
-    public static void SaveScript( this SessionBase session, string scriptName )
+    /// <param name="consoleOut">   (Optional) True to console out. </param>
+    public static void SaveScript( this SessionBase session, string scriptName, bool consoleOut = false )
     {
         if ( session == null )
             throw new ArgumentNullException( nameof( session ) );
@@ -148,15 +174,29 @@ public static partial class SessionBaseExtensionMethods
         if ( string.IsNullOrWhiteSpace( scriptName ) )
             throw new ArgumentNullException( nameof( scriptName ) );
 
-        session.SetLastAction( $"checking if the {scriptName} script was loaded;. " );
+        string message = $"checking if the {scriptName} script was loaded;. ";
+        if ( consoleOut )
+            SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
+        else
+            SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
+
         session.LastNodeNumber = default;
         if ( session.IsNil( scriptName ) )
             throw new InvalidOperationException( $"The script {scriptName} cannot be saved because it was not loaded." );
 
-        session.SetLastAction( $"checking if the {scriptName} saved script exists;. " );
+        message = $"checking if the {scriptName} saved script exists;. ";
+        if ( consoleOut )
+            SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
+        else
+            SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
         session.LastNodeNumber = default;
 
-        session.TraceLastAction( $"\r\n\tsaving the {scriptName} script;. " );
+        message = $"saving the {scriptName} script;. ";
+        if ( consoleOut )
+            SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
+        else
+            SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
+
         _ = session.WriteLine( $"{scriptName}.save()" );
         _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay + session.StatusReadDelay );
 
