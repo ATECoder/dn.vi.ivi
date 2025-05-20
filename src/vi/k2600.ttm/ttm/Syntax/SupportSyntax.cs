@@ -5,10 +5,15 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Syntax;
 /// Licensed under The MIT License.</para> </remarks>
 public static class SupportSyntax
 {
-    /// <summary> The version query command. </summary>
-    public const string VersionQueryCommand = "_G.print(_G.isr_support_getVersion())";
+    /// <summary>   (Immutable) the legacy version getter. </summary>
+    public const string LegacyVersionGetter = "_G.isr.version()";
 
-    /// <summary> The thermal transient script version query command. </summary>
-    public const string ThermalTransientScriptVersionQueryCommand = "_G.print(_G.isr_ttm_getVersion())";
+    /// <summary>   (Immutable) the latest version getter. </summary>
+    public const string LatestVersionGetter = "_G.isr_support_getVersion()";
+
+    /// <summary>   (Immutable)  the version query command. </summary>
+    public static string VersionQueryCommand => MeterSubsystem.LegacyFirmware
+        ? $"_G.print({SupportSyntax.LegacyVersionGetter})"
+        : $"_G.print({SupportSyntax.LatestVersionGetter})";
 
 }

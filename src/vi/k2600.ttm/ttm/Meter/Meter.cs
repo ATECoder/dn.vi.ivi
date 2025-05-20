@@ -317,7 +317,13 @@ public partial class Meter : CommunityToolkit.Mvvm.ComponentModel.ObservableObje
             // if ( this.IsDeviceOpen ) _ = this.TspDevice.Session!.WriteLine( "ttm=_G.isr.meters.thermalTransient" );
 
             // read the firmware version to determine if using hte legacy software.
-            MeterSubsystem.FirmwareVersion = new Version( this.TspDevice.Session.QueryTrimEnd( cc.isr.VI.Tsp.K2600.Ttm.Syntax.ThermalTransient.VersionQueryCommand ) );
+            MeterSubsystem.LegacyFirmware = !this.TspDevice.Session.IsNil( Syntax.ThermalTransient.LegacyVersionGetter.TrimEnd( "()".ToCharArray() ) )
+                || (!this.TspDevice.Session.IsNil( Syntax.ThermalTransient.LatestVersionGetter.TrimEnd( "()".ToCharArray() ) )
+                  ? false
+                  : throw new InvalidOperationException( "" ));
+
+            // get the meter firmware version
+            MeterSubsystem.FirmwareVersion = new Version( this.TspDevice.Session.QueryTrimEnd( Syntax.ThermalTransient.VersionQueryCommand ) );
 
             // meter subsystem must be first
             this.BindMeterSubsystem( new MeterSubsystem( this.TspDevice.StatusSubsystem, this.ConfigInfo.MeterMain!, ThermalTransientMeterEntity.MeterMain ) );

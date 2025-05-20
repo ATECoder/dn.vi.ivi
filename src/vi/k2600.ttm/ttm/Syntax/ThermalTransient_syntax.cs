@@ -5,8 +5,19 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Syntax;
 /// Licensed under The MIT License.</para> </remarks>
 public static partial class ThermalTransient
 {
-    /// <summary> The version query command. </summary>
-    public const string VersionQueryCommand = "_G.print(_G.isr_ttm_getVersion())";
+    /// <summary>   (Immutable) the legacy version getter. </summary>
+    public const string LegacyVersionGetter = "_G.isr.ttm.version()";
+
+    /// <summary>   (Immutable) the latest version query command. </summary>
+    public const string LatestVersionGetter = "_G.isr_ttm_getVersion()";
+
+    /// <summary>   (Immutable)  the version query command. </summary>
+    public static string VersionQueryCommand => MeterSubsystem.LegacyFirmware
+        ? $"_G.print({ThermalTransient.LegacyVersionGetter})"
+        : $"_G.print({ThermalTransient.LatestVersionGetter})";
+
+    /// <summary>   (Immutable) the latest version query command. </summary>
+    public const string LatestVersionQueryCommand = "_G.print(_G.isr_ttm_getVersion())";
 
     /// <summary> Name of the global. </summary>
     public const string GlobalName = "_G";

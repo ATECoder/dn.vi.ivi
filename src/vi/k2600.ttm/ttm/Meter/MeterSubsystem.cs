@@ -80,7 +80,11 @@ public class MeterSubsystem : MeterSubsystemBase
 
     /// <summary>   Parses the firmware version returns true if this code is addressing the legacy firmware version 2.3.x. </summary>
     /// <value> True if legacy firmware, false if not. </value>
-    public static bool LegacyFirmware => (2 == FirmwareVersion.Major) && (3 == FirmwareVersion.Minor);
+    public static bool LegacyFirmware { get; set; }
+
+    /// <summary>   Gets a value indicating whether the expected legacy firmware. </summary>
+    /// <value> True if expected legacy firmware, false if not. </value>
+    public static bool ExpectedLegacyFirmware => (2 == FirmwareVersion.Major) && (3 == FirmwareVersion.Minor);
 
     /// <summary>   Gets or sets the firmware version. </summary>
     /// <value> The firmware version. </value>
