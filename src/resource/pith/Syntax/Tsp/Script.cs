@@ -45,7 +45,7 @@ public static class Script
     /// This command must be enclosed in a 'do end' construct.
     /// a print(names) or dataqueue.add(names) needs to be added to get the data through.
     /// </summary>
-    public const string ScriptCatalogGetterCommand = "local names='' for name in _G.script.user.catalog() do names = names .. name .. ',' end";
+    public const string ScriptCatalogGetterCommand = "local names for name in _G.script.user.catalog() do if names then names = names .. ',' .. name else names = name end end";
 
     /// <summary>   (Immutable) the saved script find command format. </summary>
     public const string FindSavedScriptCommandFormat = "local exists=false for name in _G.script.user.catalog() do exists = (name=='{0}') if exists then break end end";

@@ -2,7 +2,12 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9268]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9270]: https://www.github.com/atecoder/dn.vi.ivi
+
+## [8.1.9270] - 2025-05-19
+- K2600 TTM:
+  - Add legacy version getter to the meter and support syntax.
+  - Set the legacy firmware boolean based onteh legacy vs. latest version getters.
 
 ## [8.1.9268] - 2025-05-17
 - Device Tsp Script 

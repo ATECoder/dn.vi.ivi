@@ -99,7 +99,7 @@ public static partial class SessionBaseExtensionMethods
         if ( string.IsNullOrWhiteSpace( topPath ) )
             topPath = System.IO.Path.GetTempPath();
 
-        string savedScriptsNames = session.FetchSavedScriptsNames();
+        string savedScriptsNames = session.FetchSavedScriptsNames().Trim();
 
         string message = "No saved scripts were found.";
         if ( string.IsNullOrWhiteSpace( savedScriptsNames ) )
