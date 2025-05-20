@@ -2,7 +2,11 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9270]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9271]: https://www.github.com/atecoder/dn.vi.ivi
+
+## [8.1.9271] - 2025-05-20
+Pith:
+  - Tsp.Syntax.Script: Update the getter command for the saved scripts to end with a script name rather than a comma.
 
 ## [8.1.9270] - 2025-05-19
 - K2600 TTM:
