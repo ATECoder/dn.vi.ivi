@@ -68,7 +68,8 @@ public static partial class SessionBaseExtensionMethods
     }
 
     /// <summary>
-    /// A <see cref="Pith.SessionBase"/> extension method that deletes the saved scripts described by session.
+    /// A <see cref="Pith.SessionBase"/> extension method that deletes the saved scripts described by
+    /// session.
     /// </summary>
     /// <remarks>   2025-05-13. </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
@@ -77,7 +78,8 @@ public static partial class SessionBaseExtensionMethods
     ///                                                 invalid. </exception>
     /// <param name="session">      The session. </param>
     /// <param name="prefixFilter"> (Optional) A filter specifying the prefix. </param>
-    public static void DeleteSavedScripts( this SessionBase session, string prefixFilter = "isr_" )
+    /// <returns>   A tuple: TTM embedded script count, Deleted Scripts count). </returns>
+    public static (int TtmScriptCount, int deletedScriptCount) DeleteSavedScripts( this SessionBase session, string prefixFilter = "isr_" )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
@@ -85,32 +87,40 @@ public static partial class SessionBaseExtensionMethods
         session.TraceLastAction( "enabling service request on operation completion" );
         session.EnableServiceRequestOnOperationCompletion();
 
-        // string savedScripts =  session.QueryTrimEnd( "script.user.catalog()" );
         string savedScripts = session.FetchSavedScriptsNames();
 
         int removedCount = 0;
+        string[] scriptNames = savedScripts.Split( ',' );
+        int scriptCount = scriptNames.Length;
+
+        session.DisplayLine( "Deleting scripts", 1 );
+
         session.LastNodeNumber = default;
-        foreach ( string scriptName in savedScripts.Split( ',' ) )
+        foreach ( string scriptName in scriptNames )
         {
             string scriptTitle = scriptName.Trim();
 
-            if ( !string.IsNullOrWhiteSpace( scriptTitle ) )
+            if ( string.IsNullOrWhiteSpace( scriptTitle ) )
+                continue;
+
+            if ( scriptTitle.StartsWith( prefixFilter ) )
             {
-                if ( string.IsNullOrWhiteSpace( scriptTitle ) || scriptTitle.StartsWith( prefixFilter ) )
-                {
-                    removedCount += 1;
-                    session.DisplayLine( "Deleting scripts", 1 );
-                    session.DisplayLine( $"Removing {scriptTitle}", 2 );
-                    removedCount += 1;
-                    session.DeleteScript( scriptTitle );
-                }
+                removedCount += 1;
+                session.DisplayLine( $"Removing {scriptTitle}", 2 );
+                session.DeleteScript( scriptTitle );
+            }
+            else
+            {
+                // if the script is non isr script, decrement the script count and skip it.
+                session.DisplayLine( $"Skipping {scriptTitle} script", 2 );
+                scriptCount -= 1;
             }
         }
 
-        if ( removedCount == 0 )
-            TraceLastAction( "\r\n\tNo scripts were removed." );
-        else
-            TraceLastAction( $"\r\n\t{removedCount} scripts were removed." );
+        string message = $"Removed {removedCount} of {scriptCount} TTM embedded scripts";
+        session.DisplayLine( message, 2 );
+        TraceLastAction( $"\r\n\t{message}" );
+        return (scriptCount, removedCount);
     }
 
     /// <summary>
