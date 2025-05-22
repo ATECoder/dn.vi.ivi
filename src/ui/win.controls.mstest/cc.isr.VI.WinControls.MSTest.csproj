@@ -76,7 +76,7 @@
     <ProjectReference Include="..\..\..\..\..\core\std\src\mstest\mstest\cc.isr.Std.MSTest.csproj" />
     <Content Include="cc.isr.VI.WinControls.MSTest.Settings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
     <!-- Already included with the default profile of the MSTest.SDK
       <PackageReference Update="Microsoft.Testing.Extensions.CodeCoverage" />
     -->
