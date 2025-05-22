@@ -93,4 +93,8 @@
 
   <Import Project="..\visa\version.build.props" />
 
+  <ItemGroup>
+    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.14.0" />
+  </ItemGroup>
+
 </Project>

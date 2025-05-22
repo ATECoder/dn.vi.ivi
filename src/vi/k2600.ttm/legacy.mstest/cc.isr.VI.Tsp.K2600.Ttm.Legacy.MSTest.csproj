@@ -95,5 +95,9 @@
       <PackageReference Update="Microsoft.Testing.Extensions.CodeCoverage" />
     -->
   </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.14.0" />
+  </ItemGroup>
 
 </Project>
