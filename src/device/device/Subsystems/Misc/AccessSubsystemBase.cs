@@ -1,3 +1,5 @@
+using cc.isr.Std;
+
 namespace cc.isr.VI;
 
 /// <summary> Defines the contract that must be implemented by an Output Subsystem. </summary>
@@ -55,15 +57,16 @@ public abstract class AccessSubsystemBase( StatusSubsystemBase statusSubsystem )
 
     /// <summary>   Certifies this instrument for Api access if it is registered. </summary>
     /// <remarks>   2024-08-24. </remarks>
-    /// <param name="details">      [out] The details. </param>
+    /// <param name="details">          [out] The details. </param>
     /// <returns>   <c>true</c> if the instrument is certified; otherwise, false. </returns>
     public abstract bool CertifyIfRegistered( out string details );
 
     /// <summary>   Registers this controller instrument and certifies is for API access. </summary>
     /// <remarks>   2024-08-24. </remarks>
-    /// <param name="details">      [out] The details. </param>
+    /// <param name="resourcesScribe">  The resources scribe. </param>
+    /// <param name="details">          [out] The details. </param>
     /// <returns>   True if it succeeds, false if it fails. </returns>
-    public virtual bool RegisterAndCertify( out string details )
+    public virtual bool RegisterAndCertify( IAssemblyResourcesScribe? resourcesScribe, out string details )
     {
         details = "Please contact the developer to request support for this feature.";
         return false;
@@ -82,10 +85,11 @@ public abstract class AccessSubsystemBase( StatusSubsystemBase statusSubsystem )
 
     /// <summary>   Registers an instrument with the specified serial number. </summary>
     /// <remarks>   2024-12-12. </remarks>
-    /// <param name="serialNumber"> The serial number. </param>
-    /// <param name="details">      [out] The details. </param>
+    /// <param name="resourcesScribe">   The resource scribe. </param>
+    /// <param name="serialNumber">     The serial number. </param>
+    /// <param name="details">          [out] The details. </param>
     /// <returns>   True if it succeeds, false if it fails. </returns>
-    public virtual bool Register( string serialNumber, out string details )
+    public virtual bool Register( IAssemblyResourcesScribe? resourcesScribe, string serialNumber, out string details )
     {
         details = $"{serialNumber} Please contact the developer to request support for this feature.";
         return false;
@@ -93,9 +97,10 @@ public abstract class AccessSubsystemBase( StatusSubsystemBase statusSubsystem )
 
     /// <summary>   Registers this instrument. </summary>
     /// <remarks>   2024-12-12. </remarks>
-    /// <param name="details">      [out] The details. </param>
+    /// <param name="resourcesScribe">   The resource scribe. </param>
+    /// <param name="details">          [out] The details. </param>
     /// <returns>   True if it succeeds, false if it fails. </returns>
-    public virtual bool Register( out string details )
+    public virtual bool Register( IAssemblyResourcesScribe? resourcesScribe, out string details )
     {
         details = "Please contact the developer to request support for this feature.";
         return false;

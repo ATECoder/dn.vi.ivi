@@ -145,6 +145,11 @@ public class ScriptInfo
     [Description( "Indicates whether this script is a support script [false]" )]
     public virtual bool IsSupport { get; set; } = true;
 
+    /// <summary>   Indicates whether this script is encrypted [false]. </summary>
+    /// <value> True if this object is encrypted, false if not. </value>
+    [Description( "Indicates whether this script is encrypted [false]" )]
+    public virtual bool IsEncrypted { get; set; } = false;
+
     /// <summary>   Gets or sets the title of the script. </summary>
     /// <value> The name and the file title of the script. </value>
     [Description( "The name and the file title of the script []" )]

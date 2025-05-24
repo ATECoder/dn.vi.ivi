@@ -2,7 +2,11 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9272]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9275]: https://www.github.com/atecoder/dn.vi.ivi
+
+## [8.1.9275] - 2025-05-24
+- Device Tsp Script
+  - Script Info: Add IsEncrypted property.
 
 ## [8.1.9272] - 2025-05-21
 - Device Tsp Script Session Base Extension
