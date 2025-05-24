@@ -21,6 +21,7 @@
 
     <!-- Coding -->
     <OptionExplicit>On</OptionExplicit>
+
     <OptionCompare>Binary</OptionCompare>
     <OptionStrict>On</OptionStrict>
     <OptionInfer>Off</OptionInfer>
