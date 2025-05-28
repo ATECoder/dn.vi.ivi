@@ -136,7 +136,7 @@ public class FirmwareInfo
             {
                 string scriptName = supportScriptInfo.Title;
                 session.RunScript( scriptName );
-                certified = accessSubsystem.CertifyIfRegistered( out details );
+                certified = accessSubsystem.TryCertifyIfRegistered( out details );
                 // if the Support Firmware Script exists, we can check for the certification.
                 if ( !certified.GetValueOrDefault( false ) )
                 {

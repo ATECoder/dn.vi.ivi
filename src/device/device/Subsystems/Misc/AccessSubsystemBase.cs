@@ -1,5 +1,3 @@
-using cc.isr.Std;
-
 namespace cc.isr.VI;
 
 /// <summary> Defines the contract that must be implemented by an Output Subsystem. </summary>
@@ -55,71 +53,51 @@ public abstract class AccessSubsystemBase( StatusSubsystemBase statusSubsystem )
         protected set => this.SetProperty( ref this._certified, value );
     }
 
-    /// <summary>   Certifies this instrument for Api access if it is registered. </summary>
+    /// <summary>   Queries if the instrument is certified for API access. </summary>
+    /// <remarks>   2025-05-26. </remarks>
+    /// <param name="details">  [out] The details. </param>
+    /// <returns>   True if certified, false if not. </returns>
+    public abstract bool IsCertified( out string details );
+
+    /// <summary>   Attempts to certifies the connected instrument for Api access if it is registered. </summary>
     /// <remarks>   2024-08-24. </remarks>
     /// <param name="details">          [out] The details. </param>
     /// <returns>   <c>true</c> if the instrument is certified; otherwise, false. </returns>
-    public abstract bool CertifyIfRegistered( out string details );
-
-    /// <summary>   Registers this controller instrument and certifies is for API access. </summary>
-    /// <remarks>   2024-08-24. </remarks>
-    /// <param name="resourcesScribe">  The resources scribe. </param>
-    /// <param name="details">          [out] The details. </param>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
-    public virtual bool RegisterAndCertify( IAssemblyResourcesScribe? resourcesScribe, out string details )
-    {
-        details = "Please contact the developer to request support for this feature.";
-        return false;
-    }
+    public abstract bool TryCertifyIfRegistered( out string details );
 
     /// <summary>
-    /// Decertifies this instrument. This does not remove the instrument from the registration
-    /// dictionary.
+    /// Attempts to register and certify a connected instrument.
+    /// </summary>
+    /// <remarks>   2025-05-26. </remarks>
+    /// <param name="details">          [out] The details. </param>
+    /// <returns>   True if it succeeds, false if it fails. </returns>
+    public abstract bool TryRegisterAndCertify( out string details );
+
+    /// <summary>
+    /// Tries to decertify the connected instrument. This does not remove the instrument from the
+    /// registration dictionary.
     /// </summary>
     /// <remarks>   2024-12-09. </remarks>
-    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
-    ///                                                 invalid. </exception>
-    /// <param name="details">                      [out] The details. </param>
+    /// <param name="details">  [out] The details. </param>
     /// <returns>   True if it succeeds, false if it fails. </returns>
-    public abstract bool Decertify( out string details );
+    public abstract bool TryDecertify( out string details );
 
-    /// <summary>   Registers an instrument with the specified serial number. </summary>
+    /// <summary>   Attempts to register an instrument with the specified serial number. </summary>
     /// <remarks>   2024-12-12. </remarks>
-    /// <param name="resourcesScribe">   The resource scribe. </param>
     /// <param name="serialNumber">     The serial number. </param>
     /// <param name="details">          [out] The details. </param>
     /// <returns>   True if it succeeds, false if it fails. </returns>
-    public virtual bool Register( IAssemblyResourcesScribe? resourcesScribe, string serialNumber, out string details )
-    {
-        details = $"{serialNumber} Please contact the developer to request support for this feature.";
-        return false;
-    }
-
-    /// <summary>   Registers this instrument. </summary>
-    /// <remarks>   2024-12-12. </remarks>
-    /// <param name="resourcesScribe">   The resource scribe. </param>
-    /// <param name="details">          [out] The details. </param>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
-    public virtual bool Register( IAssemblyResourcesScribe? resourcesScribe, out string details )
-    {
-        details = "Please contact the developer to request support for this feature.";
-        return false;
-    }
+    public abstract bool TryRegister( string serialNumber, out string details );
 
     /// <summary>
-    /// Deregisters an instrument with the specified serial number removing this instrument from the
-    /// registration list but not removing the API access code from the current instrument.
+    /// Attempts to deregister an instrument with the specified serial number by removing this instrument from the
+    /// registration dictionary but not removing the API access code from the current instrument.
     /// </summary>
     /// <remarks>   2024-12-12. </remarks>
     /// <param name="serialNumber"> The serial number. </param>
     /// <param name="details">      [out] The details. </param>
     /// <returns>   True if it succeeds, false if it fails. </returns>
-    public abstract bool Deregister( string serialNumber, out string details );
-
-    /// <summary>   Deregisters this instrument. </summary>
-    /// <remarks>   2024-12-12. </remarks>
-    /// <param name="details">      [out] The details. </param>
-    public abstract bool Deregister( out string details );
+    public abstract bool TryDeregister( string serialNumber, out string details );
 
     /// <summary>   Queries an instrument with the specified serial number is registered. </summary>
     /// <remarks>   2024-08-24. </remarks>
@@ -127,12 +105,6 @@ public abstract class AccessSubsystemBase( StatusSubsystemBase statusSubsystem )
     /// <param name="details">      [out] The details. </param>
     /// <returns>   <c>true</c> if the instrument is certified; otherwise, false. </returns>
     public abstract bool IsRegistered( string serialNumber, out string details );
-
-    /// <summary>   Queries if the controller instrument is registered. </summary>
-    /// <remarks>   2024-08-24. </remarks>
-    /// <param name="details">      [out] The details. </param>
-    /// <returns>   <c>true</c> if the instrument is certified; otherwise, false. </returns>
-    public abstract bool IsRegistered( out string details );
 
     /// <summary> Checks if the custom scripts were loaded successfully. </summary>
     /// <returns> <c>true</c> if loaded; otherwise, <c>false</c>. </returns>

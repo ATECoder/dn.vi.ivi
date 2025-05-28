@@ -498,6 +498,18 @@ public class ScriptInfoBaseCollection<TItem> : System.Collections.ObjectModel.Ke
         }
     }
 
+    /// <summary>   Builds deploy file names. </summary>
+    /// <remarks>   2025-05-26. </remarks>
+    /// <param name="modelFamily">          The model family. </param>
+    /// <param name="modelMajorVersion">    The model major version. </param>
+    public void BuildDeployFileNames( string modelFamily, string modelMajorVersion )
+    {
+        foreach ( ScriptInfo scriptInfo in this )
+        {
+            _ = scriptInfo.BuildDeployFileName( modelFamily, modelMajorVersion );
+        }
+    }
+
     #endregion
 
     #region " script status report "
