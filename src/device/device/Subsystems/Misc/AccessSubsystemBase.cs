@@ -106,6 +106,37 @@ public abstract class AccessSubsystemBase( StatusSubsystemBase statusSubsystem )
     /// <returns>   <c>true</c> if the instrument is certified; otherwise, false. </returns>
     public abstract bool IsRegistered( string serialNumber, out string details );
 
+    /// <summary>   Queries if the connected instrument is registered. </summary>
+    /// <remarks>   2025-06-02. </remarks>
+    /// <returns>   <c>true</c> if the instrument is certified; otherwise, false. </returns>
+    public abstract bool IsRegistered();
+
+    /// <summary>   Queries if the connected instrument is certified for API access. </summary>
+    /// <remarks>   2025-06-02. </remarks>
+    /// <returns>   <c>true</c> if the instrument is certified; otherwise, false. </returns>
+    public abstract bool IsCertified();
+
+    /// <summary>   Reads certification codes. </summary>
+    /// <remarks>   2025-06-02. </remarks>
+    /// <returns>   The certification codes. </returns>
+    public abstract (string releaseCode, string versionCode) ReadCertificationCodes();
+
+    /// <summary>   Export certification codes. </summary>
+    /// <remarks>   2025-06-02. </remarks>
+    /// <param name="filePath"> Full pathname of the file. </param>
+    public abstract void ExportCertificationCodes( string filePath );
+
+    /// <summary>   Restore certification codes. </summary>
+    /// <remarks>   2025-06-02. </remarks>
+    /// <param name="releaseCode">  The release code. </param>
+    /// <param name="versionCode">  The version code. </param>
+    public abstract void RestoreCertificationCodes( string releaseCode, string versionCode );
+
+    /// <summary>   Import certification codes. </summary>
+    /// <remarks>   2025-06-02. </remarks>
+    /// <param name="filePath"> Full pathname of the file. </param>
+    public abstract void ImportCertificationCodes( string filePath );
+
     /// <summary> Checks if the custom scripts were loaded successfully. </summary>
     /// <returns> <c>true</c> if loaded; otherwise, <c>false</c>. </returns>
     public abstract bool Loaded();
