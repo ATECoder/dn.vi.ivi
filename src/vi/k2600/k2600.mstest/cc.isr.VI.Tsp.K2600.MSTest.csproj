@@ -101,7 +101,7 @@
   <Import Project="..\k2600\version.build.props" />
 
   <ItemGroup>
-    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.14.0" />
+    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.14.1" />
   </ItemGroup>
 
 </Project>
