@@ -106,15 +106,28 @@ public abstract class AccessSubsystemBase( StatusSubsystemBase statusSubsystem )
     /// <returns>   <c>true</c> if the instrument is certified; otherwise, false. </returns>
     public abstract bool IsRegistered( string serialNumber, out string details );
 
-    /// <summary>   Queries if the connected instrument is registered. </summary>
+    /// <summary>   Validates the cached registration value. </summary>
     /// <remarks>   2025-06-02. </remarks>
-    /// <returns>   <c>true</c> if the instrument is certified; otherwise, false. </returns>
-    public abstract bool IsRegistered();
+    /// <param name="details">  [out] The details. </param>
+    /// <returns>   True if the registration is cached and is valid, otherwise, false. </returns>
+    public abstract bool ValidateRegistration( out string details );
 
-    /// <summary>   Queries if the connected instrument is certified for API access. </summary>
+    /// <summary>   Queries if the connected instrument registration is cached in the connected instrument. </summary>
     /// <remarks>   2025-06-02. </remarks>
-    /// <returns>   <c>true</c> if the instrument is certified; otherwise, false. </returns>
-    public abstract bool IsCertified();
+    /// <param name="details">      [out] The details. </param>
+    /// <returns>   <c>true</c> if the instrument registration code is saved in the instrument user string. </returns>
+    public abstract bool IsRegistrationCached( out string details );
+
+    /// <summary>   Validates the cached certification value. </summary>
+    /// <remarks>   2025-06-02. </remarks>
+    /// <param name="details">  [out] The details. </param>
+    /// <returns>   True if the certification is cached and is valid, otherwise, false. </returns>
+    public abstract bool ValidateCertification( out string details );
+
+    /// <summary>   Queries if the connected instrument certification cached in the connected instrument. </summary>
+    /// <remarks>   2025-06-02. </remarks>
+    /// <returns>   <c>true</c> if the instrument certification code is saved in the instrument user string. </returns>
+    public abstract bool IsCertificationCached( out string details );
 
     /// <summary>   Reads certification codes. </summary>
     /// <remarks>   2025-06-02. </remarks>
