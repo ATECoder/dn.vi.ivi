@@ -2,7 +2,12 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9285]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9286]: https://www.github.com/atecoder/dn.vi.ivi
+
+## [8.1.9286] - 2025-06-04
+- Access subsystem base: 
+  - Rename Is Certified to Is Registered and Certified.
+  - Rename Loaded to Is Certified and add a details argument.
 
 ## [8.1.9285] - 2025-06-03
 - Access Subsystem Base:

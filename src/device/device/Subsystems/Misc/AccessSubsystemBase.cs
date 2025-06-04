@@ -59,6 +59,35 @@ public abstract class AccessSubsystemBase( StatusSubsystemBase statusSubsystem )
     /// <returns>   True if certified, false if not. </returns>
     public abstract bool IsCertified( out string details );
 
+    /// <summary>   Queries if the instrument is registered and certified for API access. </summary>
+    /// <remarks>   2025-05-26. </remarks>
+    /// <param name="details">  [out] The details. </param>
+    /// <returns>   True if registered and certified, false if not. </returns>
+    public abstract bool IsRegisteredAndCertified( out string details );
+
+    /// <summary>   Queries if the instrument is registered and certified for API access. </summary>
+    /// <remarks>   2025-06-03. </remarks>
+    /// <param name="serialNumber"> The serial number. </param>
+    /// <param name="details">      [out] The details. </param>
+    /// <returns>   True if registered and certified, false if not. </returns>
+    public bool IsRegisteredAndCertified( string serialNumber, out string details )
+    {
+        // If the serial number is not specified, use the connected instrument's serial number.
+        if ( string.IsNullOrEmpty( serialNumber ) )
+            serialNumber = this.StatusSubsystem.VersionInfoBase.SerialNumber;
+        if ( string.IsNullOrEmpty( serialNumber ) )
+        {
+            details = "Serial number is not specified and the connected instrument does not have a serial number.";
+            return false;
+        }
+        else if ( !serialNumber.Equals( this.StatusSubsystem.VersionInfoBase.SerialNumber, StringComparison.Ordinal ) )
+        {
+            details = $"Serial number '{serialNumber}' does not match the connected instrument's serial number '{this.StatusSubsystem.VersionInfoBase.SerialNumber}'.";
+            return false;
+        }
+        return this.IsRegistered( serialNumber, out details ) && this.IsCertified( out details );
+    }
+
     /// <summary>   Attempts to certifies the connected instrument for Api access if it is registered. </summary>
     /// <remarks>   2024-08-24. </remarks>
     /// <param name="details">          [out] The details. </param>
@@ -149,10 +178,6 @@ public abstract class AccessSubsystemBase( StatusSubsystemBase statusSubsystem )
     /// <remarks>   2025-06-02. </remarks>
     /// <param name="filePath"> Full pathname of the file. </param>
     public abstract void ImportCertificationCodes( string filePath );
-
-    /// <summary> Checks if the custom scripts were loaded successfully. </summary>
-    /// <returns> <c>true</c> if loaded; otherwise, <c>false</c>. </returns>
-    public abstract bool Loaded();
 
     #endregion
 
