@@ -66,6 +66,9 @@
       <DependentUpon>isr.Visa.IO.Demo.SerilogSettings.tt</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Update="cc.isr.Visa.IO.Demo.Serilog.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="cc.isr.Visa.IO.Demo.SerilogSettings.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>isr.Visa.IO.Demo.Serilog.json</LastGenOutput>

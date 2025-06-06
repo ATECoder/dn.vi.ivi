@@ -144,9 +144,10 @@ public class Settings : System.ComponentModel.INotifyPropertyChanged
 
         AssemblyFileInfo ai = new( declaringType.Assembly, null, ".Settings", ".json" );
 
-        // copy application context settings if these do not exist; use restore if the settings are bad.
+        // Copy application context settings if these do not exist or if the debugger is attached as when running under the IDE.
+        // A damaged settings file can be restored from the AppSettingsScribe.AppContextSettingsPath by AppSettingsScribe.Restore().
 
-        AppSettingsScribe.InitializeSettingsFiles( ai, false, false );
+        AppSettingsScribe.InitializeSettingsFiles( ai, Debugger.IsAttached, Debugger.IsAttached );
 
         return ai;
     }

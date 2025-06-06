@@ -2,7 +2,13 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9286]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9288]: https://www.github.com/atecoder/dn.vi.ivi
+
+## [8.1.9288] - 2025-06-06
+- Visa Console and Demo:
+  - Set Serilog setting to copy to the output folder.
+  - Add 'Exists' property to the settings Json file.
+  - Initialize the application settings upon creating the settings instance when a debugger is attached as when running under the IDE.
 
 ## [8.1.9286] - 2025-06-04
 - Access subsystem base: 

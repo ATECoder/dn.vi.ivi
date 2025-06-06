@@ -1,11 +1,13 @@
 {
   "Settings": {
+    "Exists": true,
     "ApplicationLogLevel": "Trace",
     "AssemblyLogLevel": "Trace",
     "MessageDisplayLevel": "Verbose",
     "MultiSessionEnabled": true,
     "ServiceRequestEnabled": true,
-    "ResourceName": "tcpip0::192.168.0.254::gpib0,26::INSTR",
+    "ResourceName": "TCPIP0::192.168.0.150::inst0::INSTR",
+    "ResourceName2612": "TCPIP0::192.168.0.150::inst0::INSTR",
     "ResourceName2601": "TCPIP0::192.168.0.50::inst0::INSTR",
     "ResourceName2602": "tcpip0::192.168.0.254::gpib0,26::INSTR",
     "ResourceName7510": "TCPIP0::192.168.0.144::inst0::INSTR",
