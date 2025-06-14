@@ -215,7 +215,7 @@ public class FirmwareInfo
             string savedScriptNames = embeddedScripts.GetSavedScriptsNames();
             if ( !string.IsNullOrWhiteSpace( savedScriptNames ) )
             {
-                _ = statusBuilder.AppendLine( $"The following scripts are in non-volatile memory:\t{savedScriptNames}" );
+                _ = statusBuilder.AppendLine( $"The following scripts are in non-volatile memory: {savedScriptNames}" );
             }
         }
 

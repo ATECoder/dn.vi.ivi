@@ -98,9 +98,7 @@ public static partial class FirmwareManager
             session.SetLastAction( $"checking if loaded script '{scriptName}' is binary on node {node.Number}" );
         return node is null
             ? throw new ArgumentNullException( nameof( node ) )
-            : node.IsController
-                ? session.IsStatementTrue( "_G.isr.script.isBinary({0})", scriptName )
-                : session.IsStatementTrue( "_G.isr.script.isBinary({0},{1})", scriptName, node.Number );
+            : session.IsByteCodeScript( node.Number, scriptName );
     }
 
     /// <summary>   Checks if the script is Binary. </summary>
@@ -111,8 +109,8 @@ public static partial class FirmwareManager
     public static bool? IsBinaryScript( this Pith.SessionBase session, ScriptEntityBase script )
     {
         return script.Node.IsController
-                ? session.IsStatementTrue( "_G.isr.script.isBinary({0})", script.Name )
-                : session.IsStatementTrue( "_G.isr.script.isBinary({0},{1})", script.Name, script.Node.Number );
+                ? session.IsByteCodeScript( script.Name )
+                : session.IsByteCodeScript( script.Node.Number, script.Name );
     }
 
     /// <summary>   A Pith.SessionBase extension method that query if 'script' name is nil. </summary>

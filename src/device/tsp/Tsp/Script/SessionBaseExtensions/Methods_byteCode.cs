@@ -22,9 +22,33 @@ public static partial class SessionBaseExtensionMethods
     /// <returns>   <c>true</c> if the script is a byte code script; otherwise, <c>false</c>. </returns>
     public static bool IsByteCodeScript( this Pith.SessionBase session, string scriptName, bool usingSupportScript = false )
     {
+        string commandObject = "_G.isr.script.isBinary";
+        usingSupportScript = usingSupportScript && !session.IsNil( commandObject );
         return usingSupportScript
             ? session.IsStatementTrue( "_G.isr.script.isBinary({0})", scriptName )
             : !session.IsNil( $"_G.string.find( _G.string.sub( {scriptName}.source , 1 , 50 ), 'loadstring(table.concat(' , 1 , true )" );
+    }
+
+    /// <summary>   Checks if the script is byte code. </summary>
+    /// <remarks>   2025-06-14. </remarks>
+    /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
+    ///                                                 are null. </exception>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <param name="session">              The session. </param>
+    /// <param name="nodeNumber">           The node number. </param>
+    /// <param name="scriptName">           Specifies the script name. </param>
+    /// <param name="usingSupportScript">   (Optional) [false] True to using support script. </param>
+    /// <returns>   <c>true</c> if the script is a byte code script; otherwise, <c>false</c>. </returns>
+    public static bool IsByteCodeScript( this Pith.SessionBase session, int nodeNumber, string scriptName, bool usingSupportScript = false )
+    {
+        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
+        if ( !session.IsDeviceOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
+        string commandObject = "_G.isr.script.isBinary";
+        usingSupportScript = usingSupportScript && !session.IsNil( commandObject );
+        return session.IsControllerNode( nodeNumber )
+                ? session.IsByteCodeScript( scriptName, usingSupportScript )
+                : session.IsStatementTrue( "_G.isr.script.isBinary({0},{1})", scriptName, nodeNumber );
     }
 
     /// <summary>   Checks if the script is byte code. </summary>
@@ -40,12 +64,7 @@ public static partial class SessionBaseExtensionMethods
     /// <returns>   <c>true</c> if the script is a byte code script; otherwise, <c>false</c>. </returns>
     public static bool IsByteCodeScript( this Pith.SessionBase session, int nodeNumber, ScriptInfo script, bool usingSupportScript = false )
     {
-        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
-        if ( !session.IsDeviceOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
-
-        return session.IsControllerNode( nodeNumber )
-                ? session.IsByteCodeScript( script.Title, usingSupportScript )
-                : session.IsStatementTrue( "_G.isr.script.isBinary({0},{1})", script.Title, nodeNumber );
+        return SessionBaseExtensionMethods.IsByteCodeScript( session, nodeNumber, script.Title, usingSupportScript );
     }
 
     /// <summary>

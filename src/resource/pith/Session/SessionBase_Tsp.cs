@@ -697,11 +697,12 @@ public partial class SessionBase
 
     #region " tsp / lua syntax "
 
-    /// <summary> Returns true if the validation command returns true. </summary>
+    /// <summary> Returns true if the statement built using the provided arguments is true. </summary>
+    /// <remarks> The <paramref name="format"/> might be a function or a compound statement such as <c>a==b</c>. </remarks>
     /// <exception cref="FormatException">          Thrown when the commandFormat of the ? is incorrect. </exception>
     /// <exception cref="InvalidOperationException"> Thrown when operation failed to execute. </exception>
-    /// <param name="format"> The commandFormat for constructing the assertion. </param>
-    /// <param name="args">   The commandFormat arguments. </param>
+    /// <param name="format"> The format for constructing the assertion. </param>
+    /// <param name="args">   The format arguments. </param>
     /// <returns> True if statement true, false if not. </returns>
     public bool IsStatementTrue( string format, params object[] args )
     {
@@ -710,9 +711,10 @@ public partial class SessionBase
         {
             string? result = this.QueryPrintTrimEnd( format, args );
             value = string.Equals( cc.isr.VI.Syntax.Tsp.Lua.TrueValue, result, StringComparison.OrdinalIgnoreCase )
-                        || (string.Equals( cc.isr.VI.Syntax.Tsp.Lua.FalseValue, result, StringComparison.OrdinalIgnoreCase )
+                || (string.Equals( cc.isr.VI.Syntax.Tsp.Lua.FalseValue, result, StringComparison.OrdinalIgnoreCase )
                     ? false
-                    : throw new FormatException( $"Statement '{string.Format( System.Globalization.CultureInfo.CurrentCulture, format, args )}' returned '{result}', which is not Boolean" ));
+                    : throw new FormatException(
+                        $"Statement '{string.Format( System.Globalization.CultureInfo.CurrentCulture, format, args )}' returned '{result}', which is not Boolean" ));
         }
         catch ( FormatException )
         {
@@ -725,6 +727,38 @@ public partial class SessionBase
         }
 
         return value;
+    }
+
+    /// <summary>   Query if the command <paramref name="command"/> command exists. </summary>
+    /// <remarks>   2025-06-14. </remarks>
+    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
+    ///                                             null. </exception>
+    /// <param name="command">  The command. </param>
+    /// <returns>   True if the command exists, false if not. </returns>
+    public bool IsCommandExist( string command )
+    {
+        if ( string.IsNullOrWhiteSpace( command ) )
+            throw new ArgumentNullException( nameof( command ) );
+
+        string commandObject = command;
+        if ( commandObject.Contains( '(' ) )
+            commandObject = commandObject[..commandObject.IndexOf( '(' )];
+
+        return !this.IsNil( commandObject );
+    }
+
+    /// <summary>
+    /// Query if the command represented by <paramref name="commandFormat"/> exists and returns a <see cref="cc.isr.VI.Syntax.Tsp.Lua"/>.
+    /// 
+    /// <see cref="cc.isr.VI.Syntax.Tsp.Lua.TrueValue"/>.
+    /// </summary>
+    /// <remarks>   2025-06-14. </remarks>
+    /// <param name="commandFormat">    The format for building the LUA command to be printed. </param>
+    /// <param name="args">             The commandFormat arguments. </param>
+    /// <returns>   True if command not nil and true, false if not. </returns>
+    public bool IsCommandExistAndTrue( string commandFormat, params object[] args )
+    {
+        return this.IsCommandExist( commandFormat ) && this.IsStatementTrue( commandFormat, args );
     }
 
     #endregion
