@@ -7,6 +7,12 @@ Notable changes to the `cc.isr.vi` solution are documented in this file using th
 ## [8.1.9296] - 2025-06-14
 - TTM Console:
   - Specify System Diagnostics when referencing the debugger.
+- Pith Session Base:
+  - Add method: Is Command Exist and True.
+- Device TSP Session Base Extensions:
+  - Byte code: Throw exception if the byte code query command does not exist.
+- Device TSP Script Session Base Extensions:
+  - Is Binary Script Queries: Use Device Tsp Is Byte Code queries.
 
 ## [8.1.9288] - 2025-06-06
 - Visa Console and Demo:
