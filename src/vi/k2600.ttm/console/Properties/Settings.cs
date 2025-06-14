@@ -154,7 +154,7 @@ public class Settings : System.ComponentModel.INotifyPropertyChanged
         // Copy application context settings if these do not exist or if the debugger is attached as when running under the IDE.
         // A damaged settings file can be restored from the AppSettingsScribe.AppContextSettingsPath by AppSettingsScribe.Restore().
 
-        AppSettingsScribe.InitializeSettingsFiles( ai, Debugger.IsAttached, Debugger.IsAttached );
+        AppSettingsScribe.InitializeSettingsFiles( ai, System.Diagnostics.Debugger.IsAttached, System.Diagnostics.Debugger.IsAttached );
 
         return ai;
     }
