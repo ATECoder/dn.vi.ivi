@@ -12,7 +12,6 @@ namespace cc.isr.VI.DeviceWinControls.Tests;
 [TestClass()]
 public class VisaViewTests : cc.isr.VI.DeviceWinControls.Tests.Base.IVisaViewTests
 {
-
     #region " construction and cleanup "
 
     /// <summary>   Initializes the test class before running the first test. </summary>
@@ -52,7 +51,7 @@ public class VisaViewTests : cc.isr.VI.DeviceWinControls.Tests.Base.IVisaViewTes
 
         VisaSession visaSession = new();
         Assert.IsNotNull( visaSession.Session );
-        Assert.AreEqual( VI.Syntax.Tsp.Lua.ClearExecutionStateCommand, visaSession.Session.ClearExecutionStateCommand );
+        Assert.AreEqual( VI.Syntax.Ieee488Syntax.ClearExecutionStateCommand, visaSession.Session.ClearExecutionStateCommand );
         visaSession.Session.ReadSettings( this.GetType().Assembly, ".Session", true, true );
         Assert.IsTrue( visaSession.Session.TimingSettings.Exists,
             $"{nameof( VisaSession )}.{nameof( VisaSession.Session )}.{nameof( VisaSession.Session.TimingSettings )} does not exist." );

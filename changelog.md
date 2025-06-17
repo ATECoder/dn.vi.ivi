@@ -7,6 +7,9 @@ Notable changes to the `cc.isr.vi` solution are documented in this file using th
 ## [8.1.9299] - 2025-06-17
 - Pith Session Base:
   - Add Nullable Is Command True method.
+- Device Tsp Session Base Extensions
+  - Methods_Export: Export Scripts. Correct the call to save all text.
+- Update MS Test SDK from 3.9.2 to 3.9.3.
 
 ## [8.1.9296] - 2025-06-14
 - TTM Console:
