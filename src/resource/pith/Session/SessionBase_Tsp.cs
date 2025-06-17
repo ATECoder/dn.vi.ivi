@@ -699,7 +699,7 @@ public partial class SessionBase
 
     /// <summary> Returns true if the statement built using the provided arguments is true. </summary>
     /// <remarks> The <paramref name="format"/> might be a function or a compound statement such as <c>a==b</c>. </remarks>
-    /// <exception cref="FormatException">          Thrown when the commandFormat of the ? is incorrect. </exception>
+    /// <exception cref="FormatException">          Thrown when the output is neither true nor false. </exception>
     /// <exception cref="InvalidOperationException"> Thrown when operation failed to execute. </exception>
     /// <param name="format"> The format for constructing the assertion. </param>
     /// <param name="args">   The format arguments. </param>
@@ -759,6 +759,20 @@ public partial class SessionBase
     public bool IsCommandExistAndTrue( string commandFormat, params object[] args )
     {
         return this.IsCommandExist( commandFormat ) && this.IsStatementTrue( commandFormat, args );
+    }
+
+    /// <summary>   Is command true. </summary>
+    /// <remarks>   2025-06-16. </remarks>
+    /// <exception cref="FormatException">           Thrown when the output is neither true nor false. </exception>
+    /// <exception cref="InvalidOperationException"> Thrown when command failed to execute. </exception>
+    /// <param name="commandFormat">    The format for building the LUA command to be printed. </param>
+    /// <param name="args">             The commandFormat arguments. </param>
+    /// <returns>   A bool?: null if command is not known. </returns>
+    public bool? IsCommandTrue( string commandFormat, params object[] args )
+    {
+        return this.IsCommandExist( commandFormat )
+            ? this.IsStatementTrue( commandFormat, args )
+            : new bool?();
     }
 
     #endregion

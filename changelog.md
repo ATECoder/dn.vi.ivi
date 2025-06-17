@@ -2,7 +2,11 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9296]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9299]: https://www.github.com/atecoder/dn.vi.ivi
+
+## [8.1.9299] - 2025-06-17
+- Pith Session Base:
+  - Add Nullable Is Command True method.
 
 ## [8.1.9296] - 2025-06-14
 - TTM Console:
