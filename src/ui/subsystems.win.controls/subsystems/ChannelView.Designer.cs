@@ -55,7 +55,6 @@ namespace cc.isr.VI.SubsystemsWinControls
             _subsystemSplitButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
             _subsystemSplitButton.DropDownItems.AddRange(new ToolStripItem[] { _closeChannelMenuItem, _openChannelMenuItem, _openAllMenuItem, _readSettingsMenuItem });
             _subsystemSplitButton.Font = new System.Drawing.Font("Segoe UI", 9.0f, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, 0);
-            _subsystemSplitButton.Image = (System.Drawing.Image)resources.GetObject("_SubsystemSplitButton.Image");
             _subsystemSplitButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             _subsystemSplitButton.Name = "_SubsystemSplitButton";
             _subsystemSplitButton.Size = new System.Drawing.Size(68, 23);
@@ -105,7 +104,6 @@ namespace cc.isr.VI.SubsystemsWinControls
             // _closeChannelButton
             //
             _closeChannelButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _closeChannelButton.Image = (System.Drawing.Image)resources.GetObject("_CloseChannelButton.Image");
             _closeChannelButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             _closeChannelButton.Name = "_CloseChannelButton";
             _closeChannelButton.Size = new System.Drawing.Size(40, 23);
@@ -115,7 +113,6 @@ namespace cc.isr.VI.SubsystemsWinControls
             // _openChannelButton
             //
             _openChannelButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _openChannelButton.Image = (System.Drawing.Image)resources.GetObject("_OpenChannelButton.Image");
             _openChannelButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             _openChannelButton.Name = "_OpenChannelButton";
             _openChannelButton.Size = new System.Drawing.Size(40, 23);
@@ -125,7 +122,6 @@ namespace cc.isr.VI.SubsystemsWinControls
             // _openChannelsButton
             //
             _openChannelsButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _openChannelsButton.Image = (System.Drawing.Image)resources.GetObject("_OpenChannelsButton.Image");
             _openChannelsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             _openChannelsButton.Name = "_OpenChannelsButton";
             _openChannelsButton.Size = new System.Drawing.Size(57, 23);

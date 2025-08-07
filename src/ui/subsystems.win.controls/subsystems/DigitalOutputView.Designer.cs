@@ -134,7 +134,6 @@ namespace cc.isr.VI.SubsystemsWinControls
             _subsystemSplitButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
             _subsystemSplitButton.DropDownItems.AddRange(new ToolStripItem[] { _applySettingsMenuItem, _readSettingsMenuItem });
             _subsystemSplitButton.Font = new System.Drawing.Font("Segoe UI", 9.0f, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, 0);
-            _subsystemSplitButton.Image = (System.Drawing.Image)resources.GetObject("_SubsystemSplitButton.Image");
             _subsystemSplitButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             _subsystemSplitButton.Name = "_SubsystemSplitButton";
             _subsystemSplitButton.Size = new System.Drawing.Size(82, 22);
@@ -156,7 +155,6 @@ namespace cc.isr.VI.SubsystemsWinControls
             // _strobeButton
             //
             _strobeButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _strobeButton.Image = (System.Drawing.Image)resources.GetObject("_StrobeButton.Image");
             _strobeButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             _strobeButton.Name = "_StrobeButton";
             _strobeButton.Size = new System.Drawing.Size(45, 22);

@@ -63,7 +63,6 @@ namespace cc.isr.VI.SubsystemsWinControls
             _subsystemSplitButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
             _subsystemSplitButton.DropDownItems.AddRange(new ToolStripItem[] { _displayBufferMenuItem, _clearBufferDisplayMenuItem, _bufferStreamingMenuItem });
             _subsystemSplitButton.Font = new System.Drawing.Font("Segoe UI", 9.0f, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, 0);
-            _subsystemSplitButton.Image = (System.Drawing.Image)resources.GetObject("_SubsystemSplitButton.Image");
             _subsystemSplitButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             _subsystemSplitButton.Name = "_SubsystemSplitButton";
             _subsystemSplitButton.Size = new System.Drawing.Size(55, 24);
@@ -126,7 +125,6 @@ namespace cc.isr.VI.SubsystemsWinControls
             //
             _abortButton.Alignment = ToolStripItemAlignment.Right;
             _abortButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _abortButton.Image = (System.Drawing.Image)resources.GetObject("_abortButton.Image");
             _abortButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             _abortButton.Name = "_abortButton";
             _abortButton.Size = new System.Drawing.Size(45, 24);
@@ -181,7 +179,6 @@ namespace cc.isr.VI.SubsystemsWinControls
             // _assertBusTriggerButton
             //
             _assertBusTriggerButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _assertBusTriggerButton.Image = (System.Drawing.Image)resources.GetObject("_assertBusTriggerButton.Image");
             _assertBusTriggerButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             _assertBusTriggerButton.Name = "_assertBusTriggerButton";
             _assertBusTriggerButton.Size = new System.Drawing.Size(48, 24);

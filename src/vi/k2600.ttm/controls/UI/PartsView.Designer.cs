@@ -83,7 +83,6 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             //
             _addPartToolStripButton.AutoToolTip = false;
             _addPartToolStripButton.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
-            _addPartToolStripButton.Image = (System.Drawing.Image)resources.GetObject("_addPartToolStripButton.Image");
             _addPartToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             _addPartToolStripButton.Name = "_addPartToolStripButton";
             _addPartToolStripButton.Size = new System.Drawing.Size(93, 22);
@@ -94,7 +93,6 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             //
             _clearPartListToolStripButton.AutoToolTip = false;
             _clearPartListToolStripButton.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
-            _clearPartListToolStripButton.Image = (System.Drawing.Image)resources.GetObject("_ClearPartListToolStripButton.Image");
             _clearPartListToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             _clearPartListToolStripButton.Name = "_ClearPartListToolStripButton";
             _clearPartListToolStripButton.Size = new System.Drawing.Size(140, 22);
@@ -105,7 +103,6 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             //
             _savePartsToolStripButton.AutoToolTip = false;
             _savePartsToolStripButton.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
-            _savePartsToolStripButton.Image = (System.Drawing.Image)resources.GetObject("_SavePartsToolStripButton.Image");
             _savePartsToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             _savePartsToolStripButton.Name = "_SavePartsToolStripButton";
             _savePartsToolStripButton.Size = new System.Drawing.Size(102, 22);
@@ -192,7 +189,6 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             // _toolStripSplitButton
             //
             _toolStripSplitButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { _autoAddToolStripMenuItem, _clearMeasurementsToolStripMenuItem });
-            _toolStripSplitButton.Image = (System.Drawing.Image)resources.GetObject("_ToolStripSplitButton.Image");
             _toolStripSplitButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             _toolStripSplitButton.Name = "_ToolStripSplitButton";
             _toolStripSplitButton.Size = new System.Drawing.Size(86, 22);

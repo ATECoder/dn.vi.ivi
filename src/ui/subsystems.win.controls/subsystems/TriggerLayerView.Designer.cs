@@ -203,7 +203,6 @@ namespace cc.isr.VI.SubsystemsWinControls
             _bypassToggleButton.CheckOnClick = true;
             _bypassToggleButton.CheckState = CheckState.Indeterminate;
             _bypassToggleButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _bypassToggleButton.Image = (System.Drawing.Image)resources.GetObject("_BypassToggleButton.Image");
             _bypassToggleButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             _bypassToggleButton.Name = "_BypassToggleButton";
             _bypassToggleButton.Size = new System.Drawing.Size(55, 25);

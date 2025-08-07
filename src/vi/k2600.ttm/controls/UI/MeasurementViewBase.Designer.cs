@@ -105,7 +105,6 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _measureToolStripDropDownButton.AutoToolTip = false;
             _measureToolStripDropDownButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             _measureToolStripDropDownButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { _abortSequenceToolStripMenuItem, _measureAllToolStripMenuItem, _finalResistanceToolStripMenuItem, _thermalTransientToolStripMenuItem, _initialResistanceToolStripMenuItem, _clearToolStripMenuItem, _logTraceLevelComboBox, _displayTraceLevelComboBox });
-            _measureToolStripDropDownButton.Image = (System.Drawing.Image)resources.GetObject("_MeasureToolStripDropDownButton.Image");
             _measureToolStripDropDownButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             _measureToolStripDropDownButton.Name = "_MeasureToolStripDropDownButton";
             _measureToolStripDropDownButton.Size = new System.Drawing.Size(78, 22);
@@ -183,7 +182,6 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             _triggerToolStripDropDownButton.AutoToolTip = false;
             _triggerToolStripDropDownButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             _triggerToolStripDropDownButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { _waitForTriggerToolStripMenuItem, _assertTriggerToolStripMenuItem, _abortToolStripMenuItem });
-            _triggerToolStripDropDownButton.Image = (System.Drawing.Image)resources.GetObject("_TriggerToolStripDropDownButton.Image");
             _triggerToolStripDropDownButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             _triggerToolStripDropDownButton.Name = "_TriggerToolStripDropDownButton";
             _triggerToolStripDropDownButton.Size = new System.Drawing.Size(71, 22);
@@ -235,7 +233,6 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Controls
             //
             _traceToolStripDropDownButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             _traceToolStripDropDownButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { _modelTraceToolStripMenuItem, _saveTraceToolStripMenuItem, _clearTraceToolStripMenuItem, _readTraceToolStripMenuItem });
-            _traceToolStripDropDownButton.Image = (System.Drawing.Image)resources.GetObject("_TraceToolStripDropDownButton.Image");
             _traceToolStripDropDownButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             _traceToolStripDropDownButton.Name = "_TraceToolStripDropDownButton";
             _traceToolStripDropDownButton.Size = new System.Drawing.Size(62, 22);

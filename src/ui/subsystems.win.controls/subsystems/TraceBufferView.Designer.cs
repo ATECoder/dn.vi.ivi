@@ -121,7 +121,6 @@ namespace cc.isr.VI.SubsystemsWinControls
             _elementGroupToggleButton.CheckOnClick = true;
             _elementGroupToggleButton.CheckState = CheckState.Indeterminate;
             _elementGroupToggleButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _elementGroupToggleButton.Image = (System.Drawing.Image)resources.GetObject("_ElementGroupToggleButton.Image");
             _elementGroupToggleButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             _elementGroupToggleButton.Name = "_ElementGroupToggleButton";
             _elementGroupToggleButton.Size = new System.Drawing.Size(67, 22);
@@ -199,7 +198,6 @@ namespace cc.isr.VI.SubsystemsWinControls
             // _clearBufferButton
             //
             _clearBufferButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _clearBufferButton.Image = (System.Drawing.Image)resources.GetObject("_ClearBufferButton.Image");
             _clearBufferButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             _clearBufferButton.Name = "_ClearBufferButton";
             _clearBufferButton.Size = new System.Drawing.Size(38, 25);
@@ -243,7 +241,6 @@ namespace cc.isr.VI.SubsystemsWinControls
             _timestampFormatToggleButton.CheckOnClick = true;
             _timestampFormatToggleButton.CheckState = CheckState.Indeterminate;
             _timestampFormatToggleButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _timestampFormatToggleButton.Image = (System.Drawing.Image)resources.GetObject("_TimestampFormatToggleButton.Image");
             _timestampFormatToggleButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             _timestampFormatToggleButton.Name = "_TimestampFormatToggleButton";
             _timestampFormatToggleButton.Size = new System.Drawing.Size(131, 22);

@@ -44,8 +44,7 @@ public partial class SessionView : cc.isr.WinControls.ModelViewBase
             if ( !this.IsDisposed && disposing )
             {
                 this.InitializingComponents = true;
-                if ( this.components is not null )
-                    this.components?.Dispose();
+                // this.components?.Dispose();
             }
         }
         finally

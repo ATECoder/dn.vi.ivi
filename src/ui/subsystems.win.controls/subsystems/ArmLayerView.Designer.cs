@@ -16,260 +16,388 @@ namespace cc.isr.VI.SubsystemsWinControls
         [DebuggerStepThrough()]
         private void InitializeComponent()
         {
-            var resources = new System.ComponentModel.ComponentResourceManager(typeof(ArmLayerView));
-            _toolStripPanel = new ToolStripPanel();
-            _subsystemToolStrip = new ToolStrip();
-            _subsystemSplitButton = new ToolStripSplitButton();
-            _applyMenuItem = new ToolStripMenuItem();
-            _applyMenuItem.Click += new EventHandler(ApplyMenuIte_Click);
-            _readMenuItem = new ToolStripMenuItem();
-            _readMenuItem.Click += new EventHandler(ReadMenuIte_Click);
-            _countNumericLabel = new ToolStripLabel();
-            _countNumeric = new cc.isr.WinControls.ToolStripNumericUpDown();
-            _infiniteCountButton = new ToolStripButton();
-            _infiniteCountButton.CheckStateChanged += new EventHandler(InfiniteCountButton_CheckStateChanged);
-            _sourceComboLabel = new ToolStripLabel();
-            _sourceComboBox = new ToolStripComboBox();
-            _triggerConfigurationToolStrip = new ToolStrip();
-            _triggerCondigureLabel = new ToolStripLabel();
-            _inputLineNumericLabel = new ToolStripLabel();
-            _inputLineNumeric = new cc.isr.WinControls.ToolStripNumericUpDown();
-            _outputLineNumericLabel = new ToolStripLabel();
-            _outputLineNumeric = new cc.isr.WinControls.ToolStripNumericUpDown();
-            _bypassToggleButton = new ToolStripButton();
-            _bypassToggleButton.CheckStateChanged += new EventHandler(BypassToggleButton_CheckStateChanged);
-            _layerTimingToolStrip = new ToolStrip();
-            _layerTimingLabel = new ToolStripLabel();
-            _delayNumericLabel = new ToolStripLabel();
-            _delayNumeric = new cc.isr.WinControls.ToolStripNumericUpDown();
-            _timerIntervalNumericLabel = new ToolStripLabel();
-            _timerIntervalNumeric = new cc.isr.WinControls.ToolStripNumericUpDown();
-            _toolStripPanel.SuspendLayout();
-            _subsystemToolStrip.SuspendLayout();
-            _triggerConfigurationToolStrip.SuspendLayout();
-            _layerTimingToolStrip.SuspendLayout();
-            SuspendLayout();
-            //
+            this._toolStripPanel = new System.Windows.Forms.ToolStripPanel();
+            this._subsystemToolStrip = new System.Windows.Forms.ToolStrip();
+            this._subsystemSplitButton = new System.Windows.Forms.ToolStripSplitButton();
+            this._applyMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._readMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._countNumericLabel = new System.Windows.Forms.ToolStripLabel();
+            this._countNumeric = new cc.isr.WinControls.ToolStripNumericUpDown();
+            this._infiniteCountButton = new System.Windows.Forms.ToolStripButton();
+            this._sourceComboLabel = new System.Windows.Forms.ToolStripLabel();
+            this._sourceComboBox = new System.Windows.Forms.ToolStripComboBox();
+            this._triggerConfigurationToolStrip = new System.Windows.Forms.ToolStrip();
+            this._triggerCondigureLabel = new System.Windows.Forms.ToolStripLabel();
+            this._inputLineNumericLabel = new System.Windows.Forms.ToolStripLabel();
+            this._inputLineNumeric = new cc.isr.WinControls.ToolStripNumericUpDown();
+            this._outputLineNumericLabel = new System.Windows.Forms.ToolStripLabel();
+            this._outputLineNumeric = new cc.isr.WinControls.ToolStripNumericUpDown();
+            this._bypassToggleButton = new System.Windows.Forms.ToolStripButton();
+            this._layerTimingToolStrip = new System.Windows.Forms.ToolStrip();
+            this._layerTimingLabel = new System.Windows.Forms.ToolStripLabel();
+            this._delayNumericLabel = new System.Windows.Forms.ToolStripLabel();
+            this._delayNumeric = new cc.isr.WinControls.ToolStripNumericUpDown();
+            this._timerIntervalNumericLabel = new System.Windows.Forms.ToolStripLabel();
+            this._timerIntervalNumeric = new cc.isr.WinControls.ToolStripNumericUpDown();
+            this._toolStripPanel.SuspendLayout();
+            this._subsystemToolStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this._countNumeric.NumericUpDown)).BeginInit();
+            this._triggerConfigurationToolStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this._inputLineNumeric.NumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._outputLineNumeric.NumericUpDown)).BeginInit();
+            this._layerTimingToolStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this._delayNumeric.NumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._timerIntervalNumeric.NumericUpDown)).BeginInit();
+            this.SuspendLayout();
+            // 
             // _toolStripPanel
-            //
-            _toolStripPanel.BackColor = System.Drawing.Color.Transparent;
-            _toolStripPanel.Controls.Add(_subsystemToolStrip);
-            _toolStripPanel.Controls.Add(_triggerConfigurationToolStrip);
-            _toolStripPanel.Controls.Add(_layerTimingToolStrip);
-            _toolStripPanel.Dock = DockStyle.Top;
-            _toolStripPanel.Location = new System.Drawing.Point(1, 1);
-            _toolStripPanel.Name = "_ToolStripPanel";
-            _toolStripPanel.Orientation = Orientation.Horizontal;
-            _toolStripPanel.RowMargin = new Padding(0);
-            _toolStripPanel.Size = new System.Drawing.Size(376, 84);
-            //
+            // 
+            this._toolStripPanel.BackColor = System.Drawing.Color.Transparent;
+            this._toolStripPanel.Controls.Add(this._subsystemToolStrip);
+            this._toolStripPanel.Controls.Add(this._triggerConfigurationToolStrip);
+            this._toolStripPanel.Controls.Add(this._layerTimingToolStrip);
+            this._toolStripPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this._toolStripPanel.Location = new System.Drawing.Point(1, 1);
+            this._toolStripPanel.Name = "_toolStripPanel";
+            this._toolStripPanel.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            this._toolStripPanel.RowMargin = new System.Windows.Forms.Padding(0);
+            this._toolStripPanel.Size = new System.Drawing.Size(430, 75);
+            // 
             // _subsystemToolStrip
-            //
-            _subsystemToolStrip.BackColor = System.Drawing.Color.Transparent;
-            _subsystemToolStrip.Dock = DockStyle.None;
-            _subsystemToolStrip.GripMargin = new Padding(0);
-            _subsystemToolStrip.Items.AddRange(new ToolStripItem[] { _subsystemSplitButton, _countNumericLabel, _countNumeric, _infiniteCountButton, _sourceComboLabel, _sourceComboBox });
-            _subsystemToolStrip.Location = new System.Drawing.Point(0, 0);
-            _subsystemToolStrip.Name = "_SubsystemToolStrip";
-            _subsystemToolStrip.Size = new System.Drawing.Size(376, 28);
-            _subsystemToolStrip.Stretch = true;
-            _subsystemToolStrip.TabIndex = 3;
-            //
+            // 
+            this._subsystemToolStrip.BackColor = System.Drawing.Color.Transparent;
+            this._subsystemToolStrip.Dock = System.Windows.Forms.DockStyle.None;
+            this._subsystemToolStrip.GripMargin = new System.Windows.Forms.Padding(0);
+            this._subsystemToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._subsystemSplitButton,
+            this._countNumericLabel,
+            this._countNumeric,
+            this._infiniteCountButton,
+            this._sourceComboLabel,
+            this._sourceComboBox});
+            this._subsystemToolStrip.Location = new System.Drawing.Point(0, 0);
+            this._subsystemToolStrip.Name = "_subsystemToolStrip";
+            this._subsystemToolStrip.Size = new System.Drawing.Size(430, 25);
+            this._subsystemToolStrip.Stretch = true;
+            this._subsystemToolStrip.TabIndex = 3;
+            // 
             // _subsystemSplitButton
-            //
-            _subsystemSplitButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _subsystemSplitButton.DoubleClickEnabled = true;
-            _subsystemSplitButton.DropDownItems.AddRange(new ToolStripItem[] { _applyMenuItem, _readMenuItem });
-            _subsystemSplitButton.Font = new System.Drawing.Font("Segoe UI", 9.0f, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, 0);
-            _subsystemSplitButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            _subsystemSplitButton.Name = "_SubsystemSplitButton";
-            _subsystemSplitButton.Size = new System.Drawing.Size(54, 25);
-            _subsystemSplitButton.Text = "Arm1";
-            //
+            // 
+            this._subsystemSplitButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this._subsystemSplitButton.DoubleClickEnabled = true;
+            this._subsystemSplitButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._applyMenuItem,
+            this._readMenuItem});
+            this._subsystemSplitButton.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._subsystemSplitButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._subsystemSplitButton.Name = "_subsystemSplitButton";
+            this._subsystemSplitButton.Size = new System.Drawing.Size(51, 22);
+            this._subsystemSplitButton.Text = "Arm1";
+            // 
             // _applyMenuItem
-            //
-            _applyMenuItem.Name = "_applyMenuItem";
-            _applyMenuItem.Size = new System.Drawing.Size(105, 22);
-            _applyMenuItem.Text = "Apply";
-            _applyMenuItem.ToolTipText = "Applies settings onto the instrument";
-            //
+            // 
+            this._applyMenuItem.Name = "_applyMenuItem";
+            this._applyMenuItem.Size = new System.Drawing.Size(105, 22);
+            this._applyMenuItem.Text = "Apply";
+            this._applyMenuItem.ToolTipText = "Applies settings onto the instrument";
+            this._applyMenuItem.Click += new System.EventHandler(this.ApplyMenuIte_Click);
+            // 
             // _readMenuItem
-            //
-            _readMenuItem.Name = "_ReadMenuItem";
-            _readMenuItem.Size = new System.Drawing.Size(105, 22);
-            _readMenuItem.Text = "Read";
-            _readMenuItem.ToolTipText = "Reads settings from the instrument";
-            //
+            // 
+            this._readMenuItem.Name = "_readMenuItem";
+            this._readMenuItem.Size = new System.Drawing.Size(105, 22);
+            this._readMenuItem.Text = "Read";
+            this._readMenuItem.ToolTipText = "Reads settings from the instrument";
+            this._readMenuItem.Click += new System.EventHandler(this.ReadMenuIte_Click);
+            // 
             // _countNumericLabel
-            //
-            _countNumericLabel.Name = "_CountNumericLabel";
-            _countNumericLabel.Size = new System.Drawing.Size(43, 25);
-            _countNumericLabel.Text = "Count:";
-            //
+            // 
+            this._countNumericLabel.Name = "_countNumericLabel";
+            this._countNumericLabel.Size = new System.Drawing.Size(43, 22);
+            this._countNumericLabel.Text = "Count:";
+            // 
             // _countNumeric
-            //
-            _countNumeric.AutoSize = false;
-            _countNumeric.Name = "_CountNumeric";
-            _countNumeric.Size = new System.Drawing.Size(60, 25);
-            _countNumeric.Text = "0";
-            _countNumeric.Value = new decimal(new int[] { 0, 0, 0, 0 });
-            //
+            // 
+            this._countNumeric.AutoSize = false;
+            this._countNumeric.Name = "_countNumeric";
+            // 
+            // _countNumeric
+            // 
+            this._countNumeric.NumericUpDown.Location = new System.Drawing.Point(99, 1);
+            this._countNumeric.NumericUpDown.Name = "_countNumeric";
+            this._countNumeric.NumericUpDown.ReadOnlyBackColor = System.Drawing.SystemColors.Control;
+            this._countNumeric.NumericUpDown.ReadOnlyForeColor = System.Drawing.SystemColors.WindowText;
+            this._countNumeric.NumericUpDown.ReadWriteBackColor = System.Drawing.SystemColors.Window;
+            this._countNumeric.NumericUpDown.ReadWriteForeColor = System.Drawing.SystemColors.ControlText;
+            this._countNumeric.NumericUpDown.Size = new System.Drawing.Size(60, 22);
+            this._countNumeric.NumericUpDown.TabIndex = 0;
+            this._countNumeric.NumericUpDown.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this._countNumeric.Size = new System.Drawing.Size(60, 22);
+            this._countNumeric.Text = "0";
+            this._countNumeric.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            // 
             // _infiniteCountButton
-            //
-            _infiniteCountButton.Checked = true;
-            _infiniteCountButton.CheckOnClick = true;
-            _infiniteCountButton.CheckState = CheckState.Indeterminate;
-            _infiniteCountButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _infiniteCountButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            _infiniteCountButton.Name = "_InfiniteCountButton";
-            _infiniteCountButton.Size = new System.Drawing.Size(37, 25);
-            _infiniteCountButton.Text = "INF ?";
-            _infiniteCountButton.ToolTipText = "Toggle to enable infinite count";
-            //
+            // 
+            this._infiniteCountButton.Checked = true;
+            this._infiniteCountButton.CheckOnClick = true;
+            this._infiniteCountButton.CheckState = System.Windows.Forms.CheckState.Indeterminate;
+            this._infiniteCountButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this._infiniteCountButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._infiniteCountButton.Name = "_infiniteCountButton";
+            this._infiniteCountButton.Size = new System.Drawing.Size(37, 22);
+            this._infiniteCountButton.Text = "INF ?";
+            this._infiniteCountButton.ToolTipText = "Toggle to enable infinite count";
+            this._infiniteCountButton.CheckStateChanged += new System.EventHandler(this.InfiniteCountButton_CheckStateChanged);
+            // 
             // _sourceComboLabel
-            //
-            _sourceComboLabel.Name = "_SourceComboLabel";
-            _sourceComboLabel.Size = new System.Drawing.Size(46, 25);
-            _sourceComboLabel.Text = "Source:";
-            //
+            // 
+            this._sourceComboLabel.Name = "_sourceComboLabel";
+            this._sourceComboLabel.Size = new System.Drawing.Size(46, 22);
+            this._sourceComboLabel.Text = "Source:";
+            // 
             // _sourceComboBox
-            //
-            _sourceComboBox.Name = "_SourceComboBox";
-            _sourceComboBox.Size = new System.Drawing.Size(80, 28);
-            _sourceComboBox.Text = "Immediate";
-            _sourceComboBox.ToolTipText = "Selects the source";
-            //
+            // 
+            this._sourceComboBox.Name = "_sourceComboBox";
+            this._sourceComboBox.Size = new System.Drawing.Size(80, 25);
+            this._sourceComboBox.Text = "Immediate";
+            this._sourceComboBox.ToolTipText = "Selects the source";
+            // 
             // _triggerConfigurationToolStrip
-            //
-            _triggerConfigurationToolStrip.BackColor = System.Drawing.Color.Transparent;
-            _triggerConfigurationToolStrip.Dock = DockStyle.None;
-            _triggerConfigurationToolStrip.GripMargin = new Padding(0);
-            _triggerConfigurationToolStrip.Items.AddRange(new ToolStripItem[] { _triggerCondigureLabel, _inputLineNumericLabel, _inputLineNumeric, _outputLineNumericLabel, _outputLineNumeric, _bypassToggleButton });
-            _triggerConfigurationToolStrip.Location = new System.Drawing.Point(0, 28);
-            _triggerConfigurationToolStrip.Name = "_TriggerConfigurationToolStrip";
-            _triggerConfigurationToolStrip.Size = new System.Drawing.Size(376, 28);
-            _triggerConfigurationToolStrip.Stretch = true;
-            _triggerConfigurationToolStrip.TabIndex = 2;
-            //
+            // 
+            this._triggerConfigurationToolStrip.BackColor = System.Drawing.Color.Transparent;
+            this._triggerConfigurationToolStrip.Dock = System.Windows.Forms.DockStyle.None;
+            this._triggerConfigurationToolStrip.GripMargin = new System.Windows.Forms.Padding(0);
+            this._triggerConfigurationToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._triggerCondigureLabel,
+            this._inputLineNumericLabel,
+            this._inputLineNumeric,
+            this._outputLineNumericLabel,
+            this._outputLineNumeric,
+            this._bypassToggleButton});
+            this._triggerConfigurationToolStrip.Location = new System.Drawing.Point(0, 25);
+            this._triggerConfigurationToolStrip.Name = "_triggerConfigurationToolStrip";
+            this._triggerConfigurationToolStrip.Size = new System.Drawing.Size(430, 25);
+            this._triggerConfigurationToolStrip.Stretch = true;
+            this._triggerConfigurationToolStrip.TabIndex = 2;
+            // 
             // _triggerCondigureLabel
-            //
-            _triggerCondigureLabel.Font = new System.Drawing.Font("Segoe UI", 9.0f, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, 0);
-            _triggerCondigureLabel.Margin = new Padding(6, 1, 0, 2);
-            _triggerCondigureLabel.Name = "_TriggerCondigureLabel";
-            _triggerCondigureLabel.Size = new System.Drawing.Size(44, 25);
-            _triggerCondigureLabel.Text = "Trigger";
-            //
+            // 
+            this._triggerCondigureLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._triggerCondigureLabel.Margin = new System.Windows.Forms.Padding(6, 1, 0, 2);
+            this._triggerCondigureLabel.Name = "_triggerCondigureLabel";
+            this._triggerCondigureLabel.Size = new System.Drawing.Size(44, 22);
+            this._triggerCondigureLabel.Text = "Trigger";
+            // 
             // _inputLineNumericLabel
-            //
-            _inputLineNumericLabel.Name = "_InputLineNumericLabel";
-            _inputLineNumericLabel.Size = new System.Drawing.Size(63, 25);
-            _inputLineNumericLabel.Text = "Input Line:";
-            //
+            // 
+            this._inputLineNumericLabel.Name = "_inputLineNumericLabel";
+            this._inputLineNumericLabel.Size = new System.Drawing.Size(63, 22);
+            this._inputLineNumericLabel.Text = "Input Line:";
+            // 
             // _inputLineNumeric
-            //
-            _inputLineNumeric.Name = "_InputLineNumeric";
-            _inputLineNumeric.Size = new System.Drawing.Size(41, 25);
-            _inputLineNumeric.Text = "3";
-            _inputLineNumeric.ToolTipText = "Asynchronous trigger link input line";
-            _inputLineNumeric.Value = new decimal(new int[] { 3, 0, 0, 0 });
-            //
+            // 
+            this._inputLineNumeric.Name = "_inputLineNumeric";
+            // 
+            // _inputLineNumeric
+            // 
+            this._inputLineNumeric.NumericUpDown.Location = new System.Drawing.Point(118, 1);
+            this._inputLineNumeric.NumericUpDown.Name = "_inputLineNumeric";
+            this._inputLineNumeric.NumericUpDown.ReadOnlyBackColor = System.Drawing.SystemColors.Control;
+            this._inputLineNumeric.NumericUpDown.ReadOnlyForeColor = System.Drawing.SystemColors.WindowText;
+            this._inputLineNumeric.NumericUpDown.ReadWriteBackColor = System.Drawing.SystemColors.Window;
+            this._inputLineNumeric.NumericUpDown.ReadWriteForeColor = System.Drawing.SystemColors.ControlText;
+            this._inputLineNumeric.NumericUpDown.Size = new System.Drawing.Size(41, 22);
+            this._inputLineNumeric.NumericUpDown.TabIndex = 0;
+            this._inputLineNumeric.NumericUpDown.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this._inputLineNumeric.Size = new System.Drawing.Size(41, 22);
+            this._inputLineNumeric.Text = "0";
+            this._inputLineNumeric.ToolTipText = "Asynchronous trigger link input line";
+            this._inputLineNumeric.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            // 
             // _outputLineNumericLabel
-            //
-            _outputLineNumericLabel.Margin = new Padding(3, 1, 0, 2);
-            _outputLineNumericLabel.Name = "_OutputLineNumericLabel";
-            _outputLineNumericLabel.Size = new System.Drawing.Size(73, 25);
-            _outputLineNumericLabel.Text = "Output Line:";
-            //
+            // 
+            this._outputLineNumericLabel.Margin = new System.Windows.Forms.Padding(3, 1, 0, 2);
+            this._outputLineNumericLabel.Name = "_outputLineNumericLabel";
+            this._outputLineNumericLabel.Size = new System.Drawing.Size(73, 22);
+            this._outputLineNumericLabel.Text = "Output Line:";
+            // 
             // _outputLineNumeric
-            //
-            _outputLineNumeric.Name = "_OutputLineNumeric";
-            _outputLineNumeric.Size = new System.Drawing.Size(41, 25);
-            _outputLineNumeric.Text = "0";
-            _outputLineNumeric.ToolTipText = "Trigger Link output line";
-            _outputLineNumeric.Value = new decimal(new int[] { 0, 0, 0, 0 });
-            //
+            // 
+            this._outputLineNumeric.Name = "_outputLineNumeric";
+            // 
+            // _outputLineNumeric
+            // 
+            this._outputLineNumeric.NumericUpDown.Location = new System.Drawing.Point(235, 1);
+            this._outputLineNumeric.NumericUpDown.Name = "_outputLineNumeric";
+            this._outputLineNumeric.NumericUpDown.ReadOnlyBackColor = System.Drawing.SystemColors.Control;
+            this._outputLineNumeric.NumericUpDown.ReadOnlyForeColor = System.Drawing.SystemColors.WindowText;
+            this._outputLineNumeric.NumericUpDown.ReadWriteBackColor = System.Drawing.SystemColors.Window;
+            this._outputLineNumeric.NumericUpDown.ReadWriteForeColor = System.Drawing.SystemColors.ControlText;
+            this._outputLineNumeric.NumericUpDown.Size = new System.Drawing.Size(41, 22);
+            this._outputLineNumeric.NumericUpDown.TabIndex = 1;
+            this._outputLineNumeric.NumericUpDown.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this._outputLineNumeric.Size = new System.Drawing.Size(41, 22);
+            this._outputLineNumeric.Text = "0";
+            this._outputLineNumeric.ToolTipText = "Trigger Link output line";
+            this._outputLineNumeric.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            // 
             // _bypassToggleButton
-            //
-            _bypassToggleButton.Checked = true;
-            _bypassToggleButton.CheckOnClick = true;
-            _bypassToggleButton.CheckState = CheckState.Indeterminate;
-            _bypassToggleButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _bypassToggleButton.Image = (System.Drawing.Image)resources.GetObject("_BypassToggleButton.Image");
-            _bypassToggleButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            _bypassToggleButton.Name = "_BypassToggleButton";
-            _bypassToggleButton.Size = new System.Drawing.Size(55, 25);
-            _bypassToggleButton.Text = "Bypass ?";
-            _bypassToggleButton.ToolTipText = "Toggle to bypass or enable triggers";
-            //
+            // 
+            this._bypassToggleButton.Checked = true;
+            this._bypassToggleButton.CheckOnClick = true;
+            this._bypassToggleButton.CheckState = System.Windows.Forms.CheckState.Indeterminate;
+            this._bypassToggleButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this._bypassToggleButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._bypassToggleButton.Name = "_bypassToggleButton";
+            this._bypassToggleButton.Size = new System.Drawing.Size(55, 22);
+            this._bypassToggleButton.Text = "Bypass ?";
+            this._bypassToggleButton.ToolTipText = "Toggle to bypass or enable triggers";
+            this._bypassToggleButton.CheckStateChanged += new System.EventHandler(this.BypassToggleButton_CheckStateChanged);
+            // 
             // _layerTimingToolStrip
-            //
-            _layerTimingToolStrip.BackColor = System.Drawing.Color.Transparent;
-            _layerTimingToolStrip.Dock = DockStyle.None;
-            _layerTimingToolStrip.GripMargin = new Padding(0);
-            _layerTimingToolStrip.Items.AddRange(new ToolStripItem[] { _layerTimingLabel, _delayNumericLabel, _delayNumeric, _timerIntervalNumericLabel, _timerIntervalNumeric });
-            _layerTimingToolStrip.Location = new System.Drawing.Point(0, 56);
-            _layerTimingToolStrip.Name = "_LayerTimingToolStrip";
-            _layerTimingToolStrip.Size = new System.Drawing.Size(376, 28);
-            _layerTimingToolStrip.Stretch = true;
-            _layerTimingToolStrip.TabIndex = 1;
-            //
+            // 
+            this._layerTimingToolStrip.BackColor = System.Drawing.Color.Transparent;
+            this._layerTimingToolStrip.Dock = System.Windows.Forms.DockStyle.None;
+            this._layerTimingToolStrip.GripMargin = new System.Windows.Forms.Padding(0);
+            this._layerTimingToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._layerTimingLabel,
+            this._delayNumericLabel,
+            this._delayNumeric,
+            this._timerIntervalNumericLabel,
+            this._timerIntervalNumeric});
+            this._layerTimingToolStrip.Location = new System.Drawing.Point(0, 50);
+            this._layerTimingToolStrip.Name = "_layerTimingToolStrip";
+            this._layerTimingToolStrip.Size = new System.Drawing.Size(430, 25);
+            this._layerTimingToolStrip.Stretch = true;
+            this._layerTimingToolStrip.TabIndex = 1;
+            // 
             // _layerTimingLabel
-            //
-            _layerTimingLabel.Font = new System.Drawing.Font("Segoe UI", 9.0f, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, 0);
-            _layerTimingLabel.Margin = new Padding(6, 1, 2, 2);
-            _layerTimingLabel.Name = "_LayerTimingLabel";
-            _layerTimingLabel.Size = new System.Drawing.Size(43, 25);
-            _layerTimingLabel.Text = "Timing";
-            //
+            // 
+            this._layerTimingLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._layerTimingLabel.Margin = new System.Windows.Forms.Padding(6, 1, 2, 2);
+            this._layerTimingLabel.Name = "_layerTimingLabel";
+            this._layerTimingLabel.Size = new System.Drawing.Size(43, 22);
+            this._layerTimingLabel.Text = "Timing";
+            // 
             // _delayNumericLabel
-            //
-            _delayNumericLabel.Name = "_DelayNumericLabel";
-            _delayNumericLabel.Size = new System.Drawing.Size(50, 25);
-            _delayNumericLabel.Text = "Delay, s:";
-            //
+            // 
+            this._delayNumericLabel.Name = "_delayNumericLabel";
+            this._delayNumericLabel.Size = new System.Drawing.Size(50, 22);
+            this._delayNumericLabel.Text = "Delay, s:";
+            // 
             // _delayNumeric
-            //
-            _delayNumeric.AutoSize = false;
-            _delayNumeric.Name = "_DelayNumeric";
-            _delayNumeric.Size = new System.Drawing.Size(61, 25);
-            _delayNumeric.Text = "3";
-            _delayNumeric.ToolTipText = "Delay in seconds";
-            _delayNumeric.Value = new decimal(new int[] { 3, 0, 0, 0 });
-            //
+            // 
+            this._delayNumeric.AutoSize = false;
+            this._delayNumeric.Name = "_delayNumeric";
+            // 
+            // _delayNumeric
+            // 
+            this._delayNumeric.NumericUpDown.Location = new System.Drawing.Point(106, 1);
+            this._delayNumeric.NumericUpDown.Name = "_delayNumeric";
+            this._delayNumeric.NumericUpDown.ReadOnlyBackColor = System.Drawing.SystemColors.Control;
+            this._delayNumeric.NumericUpDown.ReadOnlyForeColor = System.Drawing.SystemColors.WindowText;
+            this._delayNumeric.NumericUpDown.ReadWriteBackColor = System.Drawing.SystemColors.Window;
+            this._delayNumeric.NumericUpDown.ReadWriteForeColor = System.Drawing.SystemColors.ControlText;
+            this._delayNumeric.NumericUpDown.Size = new System.Drawing.Size(61, 22);
+            this._delayNumeric.NumericUpDown.TabIndex = 0;
+            this._delayNumeric.NumericUpDown.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this._delayNumeric.Size = new System.Drawing.Size(61, 22);
+            this._delayNumeric.Text = "0";
+            this._delayNumeric.ToolTipText = "Delay in seconds";
+            this._delayNumeric.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            // 
             // _timerIntervalNumericLabel
-            //
-            _timerIntervalNumericLabel.Margin = new Padding(3, 1, 0, 2);
-            _timerIntervalNumericLabel.Name = "_TimerIntervalNumericLabel";
-            _timerIntervalNumericLabel.Size = new System.Drawing.Size(51, 25);
-            _timerIntervalNumericLabel.Text = "Timer, s:";
-            //
+            // 
+            this._timerIntervalNumericLabel.Margin = new System.Windows.Forms.Padding(3, 1, 0, 2);
+            this._timerIntervalNumericLabel.Name = "_timerIntervalNumericLabel";
+            this._timerIntervalNumericLabel.Size = new System.Drawing.Size(51, 22);
+            this._timerIntervalNumericLabel.Text = "Timer, s:";
+            // 
             // _timerIntervalNumeric
-            //
-            _timerIntervalNumeric.AutoSize = false;
-            _timerIntervalNumeric.Name = "_TimerIntervalNumeric";
-            _timerIntervalNumeric.Size = new System.Drawing.Size(61, 25);
-            _timerIntervalNumeric.Text = "10";
-            _timerIntervalNumeric.ToolTipText = "Timer interval in seconds";
-            _timerIntervalNumeric.Value = new decimal(new int[] { 9999, 0, 0, 196608 });
-            //
+            // 
+            this._timerIntervalNumeric.AutoSize = false;
+            this._timerIntervalNumeric.Name = "_timerIntervalNumeric";
+            // 
+            // _timerIntervalNumeric
+            // 
+            this._timerIntervalNumeric.NumericUpDown.Location = new System.Drawing.Point(221, 1);
+            this._timerIntervalNumeric.NumericUpDown.Name = "_timerIntervalNumeric";
+            this._timerIntervalNumeric.NumericUpDown.ReadOnlyBackColor = System.Drawing.SystemColors.Control;
+            this._timerIntervalNumeric.NumericUpDown.ReadOnlyForeColor = System.Drawing.SystemColors.WindowText;
+            this._timerIntervalNumeric.NumericUpDown.ReadWriteBackColor = System.Drawing.SystemColors.Window;
+            this._timerIntervalNumeric.NumericUpDown.ReadWriteForeColor = System.Drawing.SystemColors.ControlText;
+            this._timerIntervalNumeric.NumericUpDown.Size = new System.Drawing.Size(61, 22);
+            this._timerIntervalNumeric.NumericUpDown.TabIndex = 1;
+            this._timerIntervalNumeric.NumericUpDown.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this._timerIntervalNumeric.Size = new System.Drawing.Size(61, 22);
+            this._timerIntervalNumeric.Text = "0";
+            this._timerIntervalNumeric.ToolTipText = "Timer interval in seconds";
+            this._timerIntervalNumeric.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            // 
             // ArmLayerView
-            //
-            AutoScaleDimensions = new System.Drawing.SizeF(7.0f, 17.0f);
-            AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(_toolStripPanel);
-            Name = "ArmLayerView";
-            Padding = new Padding(1);
-            Size = new System.Drawing.Size(378, 84);
-            _toolStripPanel.ResumeLayout(false);
-            _toolStripPanel.PerformLayout();
-            _subsystemToolStrip.ResumeLayout(false);
-            _subsystemToolStrip.PerformLayout();
-            _triggerConfigurationToolStrip.ResumeLayout(false);
-            _triggerConfigurationToolStrip.PerformLayout();
-            _layerTimingToolStrip.ResumeLayout(false);
-            _layerTimingToolStrip.PerformLayout();
-            ResumeLayout(false);
-            PerformLayout();
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this._toolStripPanel);
+            this.Name = "ArmLayerView";
+            this.Padding = new System.Windows.Forms.Padding(1);
+            this.Size = new System.Drawing.Size(432, 79);
+            this._toolStripPanel.ResumeLayout(false);
+            this._toolStripPanel.PerformLayout();
+            this._subsystemToolStrip.ResumeLayout(false);
+            this._subsystemToolStrip.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this._countNumeric.NumericUpDown)).EndInit();
+            this._triggerConfigurationToolStrip.ResumeLayout(false);
+            this._triggerConfigurationToolStrip.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this._inputLineNumeric.NumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._outputLineNumeric.NumericUpDown)).EndInit();
+            this._layerTimingToolStrip.ResumeLayout(false);
+            this._layerTimingToolStrip.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this._delayNumeric.NumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._timerIntervalNumeric.NumericUpDown)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         private ToolStripPanel _toolStripPanel;

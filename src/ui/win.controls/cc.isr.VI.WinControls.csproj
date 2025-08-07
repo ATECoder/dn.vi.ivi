@@ -108,6 +108,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="resources\Clear-22x22.png" />
+    <EmbeddedResource Include="resources\Connected-22x22.png" />
+    <EmbeddedResource Include="resources\Disconnected-22x22.png" />
+    <EmbeddedResource Include="resources\EventHandleGreen16.png" />
+    <EmbeddedResource Include="resources\Find-22x22.png" />
+    <EmbeddedResource Include="resources\lightning-16.png" />
+    <EmbeddedResource Include="resources\user-offline-2.png" />
+    <EmbeddedResource Include="resources\user-online-2.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\..\..\..\core\win.controls\src\model.view.logger\model.view.logger\cc.isr.WinControls.ModelViewLogger.csproj" />
   </ItemGroup>
  

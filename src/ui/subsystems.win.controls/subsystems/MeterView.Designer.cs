@@ -122,7 +122,6 @@ namespace cc.isr.VI.SubsystemsWinControls
             // _measureValueButton
             //
             _measureValueButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _measureValueButton.Image = (System.Drawing.Image)resources.GetObject("_MeasureValueButton.Image");
             _measureValueButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             _measureValueButton.Name = "_MeasureValueButton";
             _measureValueButton.Size = new System.Drawing.Size(56, 22);
@@ -197,7 +196,6 @@ namespace cc.isr.VI.SubsystemsWinControls
             _autoZeroToggleButton.CheckOnClick = true;
             _autoZeroToggleButton.CheckState = CheckState.Indeterminate;
             _autoZeroToggleButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _autoZeroToggleButton.Image = (System.Drawing.Image)resources.GetObject("_autoZeroToggleButton.Image");
             _autoZeroToggleButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             _autoZeroToggleButton.Name = "_autoZeroToggleButton";
             _autoZeroToggleButton.Size = new System.Drawing.Size(43, 25);
@@ -295,7 +293,6 @@ namespace cc.isr.VI.SubsystemsWinControls
             // _applyFunctionModeButton
             //
             _applyFunctionModeButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _applyFunctionModeButton.Image = (System.Drawing.Image)resources.GetObject("_applyFunctionModeButton.Image");
             _applyFunctionModeButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             _applyFunctionModeButton.Name = "_applyFunctionModeButton";
             _applyFunctionModeButton.Size = new System.Drawing.Size(27, 22);
@@ -329,7 +326,6 @@ namespace cc.isr.VI.SubsystemsWinControls
             _filterEnabledToggleButton.CheckOnClick = true;
             _filterEnabledToggleButton.CheckState = CheckState.Indeterminate;
             _filterEnabledToggleButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _filterEnabledToggleButton.Image = (System.Drawing.Image)resources.GetObject("_FilterEnabledToggleButton.Image");
             _filterEnabledToggleButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             _filterEnabledToggleButton.Name = "_FilterEnabledToggleButton";
             _filterEnabledToggleButton.Size = new System.Drawing.Size(35, 25);
@@ -372,7 +368,6 @@ namespace cc.isr.VI.SubsystemsWinControls
             _windowTypeToggleButton.CheckOnClick = true;
             _windowTypeToggleButton.CheckState = CheckState.Indeterminate;
             _windowTypeToggleButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _windowTypeToggleButton.Image = (System.Drawing.Image)resources.GetObject("_WindowTypeToggleButton.Image");
             _windowTypeToggleButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             _windowTypeToggleButton.Name = "_WindowTypeToggleButton";
             _windowTypeToggleButton.Size = new System.Drawing.Size(60, 25);
@@ -405,7 +400,6 @@ namespace cc.isr.VI.SubsystemsWinControls
             _autoDelayToggleButton.CheckOnClick = true;
             _autoDelayToggleButton.CheckState = CheckState.Indeterminate;
             _autoDelayToggleButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _autoDelayToggleButton.Image = (System.Drawing.Image)resources.GetObject("_autoDelayToggleButton.Image");
             _autoDelayToggleButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             _autoDelayToggleButton.Name = "_autoDelayToggleButton";
             _autoDelayToggleButton.Size = new System.Drawing.Size(51, 25);
@@ -417,7 +411,6 @@ namespace cc.isr.VI.SubsystemsWinControls
             _openDetectorToggleButton.CheckOnClick = true;
             _openDetectorToggleButton.CheckState = CheckState.Indeterminate;
             _openDetectorToggleButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _openDetectorToggleButton.Image = (System.Drawing.Image)resources.GetObject("_OpenDetectorToggleButton.Image");
             _openDetectorToggleButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             _openDetectorToggleButton.Name = "_OpenDetectorToggleButton";
             _openDetectorToggleButton.Size = new System.Drawing.Size(96, 25);
@@ -429,7 +422,6 @@ namespace cc.isr.VI.SubsystemsWinControls
             _terminalStateReadButton.Checked = true;
             _terminalStateReadButton.CheckState = CheckState.Indeterminate;
             _terminalStateReadButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _terminalStateReadButton.Image = (System.Drawing.Image)resources.GetObject("_TerminalStateReadButton.Image");
             _terminalStateReadButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             _terminalStateReadButton.Name = "_TerminalStateReadButton";
             _terminalStateReadButton.Size = new System.Drawing.Size(98, 25);

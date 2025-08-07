@@ -17,7 +17,7 @@ If a developed application is intended to work with various third-party VISA imp
 
 This is a simple example of an application bypassing those limitations by using the unofficial NuGet VISA.NET Shared Components distribution, [Kelary.Ivi.Visa].
 
-# Using VISA.NET in .NET 5+ solutions #
+## Using VISA.NET in .NET 5+ solutions
 
 .NET Standard, introduced in 2016, marked a pivotal moment in the evolution of the .NET ecosystem.
 Since then, many versions of .NET have emerged, diminishing the relevance of the traditional .NET Framework for new projects.

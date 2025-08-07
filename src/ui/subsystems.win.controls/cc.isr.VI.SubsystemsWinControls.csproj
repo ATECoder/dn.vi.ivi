@@ -91,6 +91,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="resources\Clear-22x22.png" />
+    <EmbeddedResource Include="resources\Connected-22x22.png" />
+    <EmbeddedResource Include="resources\Disconnected-22x22.png" />
+    <EmbeddedResource Include="resources\EventHandleGreen16.png" />
+    <EmbeddedResource Include="resources\Find-22x22.png" />
+    <EmbeddedResource Include="resources\lightning-16.png" />
+    <EmbeddedResource Include="resources\user-offline-2.png" />
+    <EmbeddedResource Include="resources\user-online-2.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <!-- 
     This Service element runs the C:\Program Files\Microsoft Visual Studio 9.0\Common7\IDE\UserControlTestContainer.exe executable, passing the assembly path as a parameter.
     -->
@@ -125,10 +136,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-  </ItemGroup>
-    
-  <ItemGroup>
-    <Folder Include="Views\" />
   </ItemGroup>
     
 </Project>

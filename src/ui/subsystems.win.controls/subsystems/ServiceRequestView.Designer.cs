@@ -50,7 +50,6 @@ namespace cc.isr.VI.SubsystemsWinControls
             _subsystemSplitButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
             _subsystemSplitButton.DropDownItems.AddRange(new ToolStripItem[] { _serviceRequestEnabledMenuItem, _usingNegativeTransitionsMenuItem, _toggleServiceRequestMenuItem, _hexadecimalToolStripMenuItem });
             _subsystemSplitButton.Font = new System.Drawing.Font("Segoe UI", 9.0f, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, 0);
-            _subsystemSplitButton.Image = (System.Drawing.Image)resources.GetObject("_SubsystemSplitButton.Image");
             _subsystemSplitButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             _subsystemSplitButton.Name = "_SubsystemSplitButton";
             _subsystemSplitButton.Size = new System.Drawing.Size(45, 23);
@@ -98,7 +97,6 @@ namespace cc.isr.VI.SubsystemsWinControls
             // _serviceRequestMaskAddButton
             //
             _serviceRequestMaskAddButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _serviceRequestMaskAddButton.Image = (System.Drawing.Image)resources.GetObject("_ServiceRequestMaskAddButton.Image");
             _serviceRequestMaskAddButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             _serviceRequestMaskAddButton.Name = "_ServiceRequestMaskAddButton";
             _serviceRequestMaskAddButton.Size = new System.Drawing.Size(23, 23);
@@ -108,7 +106,6 @@ namespace cc.isr.VI.SubsystemsWinControls
             // _serviceRequestMaskRemoveButton
             //
             _serviceRequestMaskRemoveButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _serviceRequestMaskRemoveButton.Image = (System.Drawing.Image)resources.GetObject("_ServiceRequestMaskRemoveButton.Image");
             _serviceRequestMaskRemoveButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             _serviceRequestMaskRemoveButton.Name = "_ServiceRequestMaskRemoveButton";
             _serviceRequestMaskRemoveButton.Size = new System.Drawing.Size(23, 23);

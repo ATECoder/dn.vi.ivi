@@ -13,8 +13,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="IviFoundation.Visa" Version="8.0.2" />
+    <!--
+    <PackageReference Include="IviFoundation.Visa" Version="8.0.2" />
+    -->
+    <!--
     <PackageReference Include="Kelary.Ivi.Visa" Version="7.2.0" />
+    -->
   </ItemGroup>
+
 
   <ItemGroup>
     <None Update="version.build.props">

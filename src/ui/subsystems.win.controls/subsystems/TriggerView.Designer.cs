@@ -129,7 +129,6 @@ namespace cc.isr.VI.SubsystemsWinControls
             _subsystemSplitButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
             _subsystemSplitButton.DropDownItems.AddRange(new ToolStripItem[] { _applySettingsMenuItem, _readSettingsMenuItem });
             _subsystemSplitButton.Font = new System.Drawing.Font("Segoe UI", 9.0f, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, 0);
-            _subsystemSplitButton.Image = (System.Drawing.Image)resources.GetObject("_SubsystemSplitButton.Image");
             _subsystemSplitButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             _subsystemSplitButton.Name = "_SubsystemSplitButton";
             _subsystemSplitButton.Size = new System.Drawing.Size(60, 22);
@@ -151,7 +150,6 @@ namespace cc.isr.VI.SubsystemsWinControls
             // _initiateButton
             //
             _initiateButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _initiateButton.Image = (System.Drawing.Image)resources.GetObject("_InitiateButton.Image");
             _initiateButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             _initiateButton.Name = "_InitiateButton";
             _initiateButton.Size = new System.Drawing.Size(47, 22);
@@ -162,7 +160,6 @@ namespace cc.isr.VI.SubsystemsWinControls
             //
             _abortButton.Alignment = ToolStripItemAlignment.Right;
             _abortButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _abortButton.Image = (System.Drawing.Image)resources.GetObject("_abortButton.Image");
             _abortButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             _abortButton.Margin = new Padding(10, 1, 0, 2);
             _abortButton.Name = "_abortButton";
@@ -173,7 +170,6 @@ namespace cc.isr.VI.SubsystemsWinControls
             // _sendBusTriggerButton
             //
             _sendBusTriggerButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _sendBusTriggerButton.Image = (System.Drawing.Image)resources.GetObject("_SendBusTriggerButton.Image");
             _sendBusTriggerButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             _sendBusTriggerButton.Name = "_SendBusTriggerButton";
             _sendBusTriggerButton.Size = new System.Drawing.Size(43, 22);

@@ -8,7 +8,7 @@ namespace cc.isr.VI.DeviceWinControls
     public partial class SessionView
     {
         // Required by the Windows Form Designer
-        private System.ComponentModel.IContainer components;
+        // private System.ComponentModel.IContainer components;
 
         // NOTE: The following procedure is required by the Windows Form Designer
         // It can be modified using the Windows Form Designer.
@@ -16,191 +16,244 @@ namespace cc.isr.VI.DeviceWinControls
         [DebuggerStepThrough()]
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
-            var resources = new System.ComponentModel.ComponentResourceManager(typeof(SessionView));
-            _writeComboBox = new ComboBox();
-            _readTextBox = new TextBox();
-            _queryButton = new cc.isr.WinControls.ToolStripButton();
-            _writeButton = new cc.isr.WinControls.ToolStripButton();
-            _readButton = new cc.isr.WinControls.ToolStripButton();
-            _readDelayNumeric = new cc.isr.WinControls.ToolStripNumericUpDown();
-            _statusReadDelayNumeric = new cc.isr.WinControls.ToolStripNumericUpDown();
-            _toolStrip = new ToolStrip();
-            _moreOptionsSplitButton = new ToolStripSplitButton();
-            _eraseDisplayMenuItem = new cc.isr.WinControls.ToolStripMenuItem();
-            _clearSessionMenuItem = new cc.isr.WinControls.ToolStripMenuItem();
-            _readStatusMenuItem = new cc.isr.WinControls.ToolStripMenuItem();
-            _showPollReadingsMenuItem = new cc.isr.WinControls.ToolStripMenuItem();
-            _showServiceRequestReadingMenuItem = new ToolStripMenuItem();
-            _appendTerminationMenuItem = new ToolStripMenuItem();
-            _toolStrip.SuspendLayout();
-            SuspendLayout();
-            //
+            this._writeComboBox = new System.Windows.Forms.ComboBox();
+            this._readTextBox = new System.Windows.Forms.TextBox();
+            this._queryButton = new cc.isr.WinControls.ToolStripButton();
+            this._writeButton = new cc.isr.WinControls.ToolStripButton();
+            this._readButton = new cc.isr.WinControls.ToolStripButton();
+            this._readDelayNumeric = new cc.isr.WinControls.ToolStripNumericUpDown();
+            this._statusReadDelayNumeric = new cc.isr.WinControls.ToolStripNumericUpDown();
+            this._toolStrip = new System.Windows.Forms.ToolStrip();
+            this._moreOptionsSplitButton = new System.Windows.Forms.ToolStripSplitButton();
+            this._eraseDisplayMenuItem = new cc.isr.WinControls.ToolStripMenuItem();
+            this._clearSessionMenuItem = new cc.isr.WinControls.ToolStripMenuItem();
+            this._readStatusMenuItem = new cc.isr.WinControls.ToolStripMenuItem();
+            this._showPollReadingsMenuItem = new cc.isr.WinControls.ToolStripMenuItem();
+            this._showServiceRequestReadingMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._appendTerminationMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            ((System.ComponentModel.ISupportInitialize)(this._readDelayNumeric.NumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._statusReadDelayNumeric.NumericUpDown)).BeginInit();
+            this._toolStrip.SuspendLayout();
+            this.SuspendLayout();
+            // 
             // _writeComboBox
-            //
-            _writeComboBox.Dock = DockStyle.Top;
-            _writeComboBox.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Bold);
-            _writeComboBox.FormattingEnabled = true;
-            _writeComboBox.Location = new System.Drawing.Point(1, 1);
-            _writeComboBox.Margin = new Padding(3, 4, 3, 4);
-            _writeComboBox.Name = "_WriteComboBox";
-            _writeComboBox.Size = new System.Drawing.Size(388, 25);
-            _writeComboBox.TabIndex = 53;
-            //
+            // 
+            this._writeComboBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this._writeComboBox.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
+            this._writeComboBox.FormattingEnabled = true;
+            this._writeComboBox.Location = new System.Drawing.Point(1, 1);
+            this._writeComboBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this._writeComboBox.Name = "_writeComboBox";
+            this._writeComboBox.Size = new System.Drawing.Size(444, 25);
+            this._writeComboBox.TabIndex = 53;
+            // 
             // _readTextBox
-            //
-            _readTextBox.Dock = DockStyle.Fill;
-            _readTextBox.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Bold);
-            _readTextBox.Location = new System.Drawing.Point(1, 54);
-            _readTextBox.Margin = new Padding(3, 5, 3, 5);
-            _readTextBox.Multiline = true;
-            _readTextBox.Name = "_ReadTextBox";
-            _readTextBox.ReadOnly = true;
-            _readTextBox.ScrollBars = ScrollBars.Vertical;
-            _readTextBox.Size = new System.Drawing.Size(388, 273);
-            _readTextBox.TabIndex = 59;
-            _readTextBox.TabStop = false;
-            //
+            // 
+            this._readTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._readTextBox.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold);
+            this._readTextBox.Location = new System.Drawing.Point(1, 54);
+            this._readTextBox.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this._readTextBox.Multiline = true;
+            this._readTextBox.Name = "_readTextBox";
+            this._readTextBox.ReadOnly = true;
+            this._readTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this._readTextBox.Size = new System.Drawing.Size(444, 254);
+            this._readTextBox.TabIndex = 59;
+            this._readTextBox.TabStop = false;
+            // 
             // _queryButton
-            //
-            _queryButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _queryButton.Image = (System.Drawing.Image)resources.GetObject("_QueryButton.Image");
-            _queryButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            _queryButton.Margin = new Padding(0, 1, 1, 2);
-            _queryButton.Name = "_QueryButton";
-            _queryButton.Size = new System.Drawing.Size(47, 25);
-            _queryButton.Text = "&Query";
-            _queryButton.ToolTipText = "Write (send) the 'Message to Send' to the instrument, read the reply and display " + "in the 'Received data' text box";
-            _queryButton.Click += new EventHandler( QueryButton_Click );
-            //
+            // 
+            this._queryButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this._queryButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._queryButton.Margin = new System.Windows.Forms.Padding(0, 1, 1, 2);
+            this._queryButton.Name = "_queryButton";
+            this._queryButton.Size = new System.Drawing.Size(47, 25);
+            this._queryButton.Text = "&Query";
+            this._queryButton.ToolTipText = "Write (send) the \'Message to Send\' to the instrument, read the reply and display " +
+    "in the \'Received data\' text box";
+            this._queryButton.Click += new System.EventHandler(this.QueryButton_Click);
+            // 
             // _writeButton
-            //
-            _writeButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _writeButton.Image = (System.Drawing.Image)resources.GetObject("_WriteButton.Image");
-            _writeButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            _writeButton.Margin = new Padding(0, 1, 2, 2);
-            _writeButton.Name = "_WriteButton";
-            _writeButton.Size = new System.Drawing.Size(43, 25);
-            _writeButton.Text = "&Write";
-            _writeButton.ToolTipText = "Write (send) the 'Message to Send' to the instrument";
-            _writeButton.Click += new EventHandler( WriteButton_Click );
-            //
+            // 
+            this._writeButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this._writeButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._writeButton.Margin = new System.Windows.Forms.Padding(0, 1, 2, 2);
+            this._writeButton.Name = "_writeButton";
+            this._writeButton.Size = new System.Drawing.Size(43, 25);
+            this._writeButton.Text = "&Write";
+            this._writeButton.ToolTipText = "Write (send) the \'Message to Send\' to the instrument";
+            this._writeButton.Click += new System.EventHandler(this.WriteButton_Click);
+            // 
             // _readButton
-            //
-            _readButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _readButton.Image = (System.Drawing.Image)resources.GetObject("_ReadButton.Image");
-            _readButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            _readButton.Margin = new Padding(0, 1, 2, 2);
-            _readButton.Name = "_ReadButton";
-            _readButton.Size = new System.Drawing.Size(42, 25);
-            _readButton.Text = "&Read";
-            _readButton.ToolTipText = "Read a message from the instrument and display in the 'Received data' text box";
-            _readButton.Click += new EventHandler( ReadButton_Click );
-            //
+            // 
+            this._readButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this._readButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._readButton.Margin = new System.Windows.Forms.Padding(0, 1, 2, 2);
+            this._readButton.Name = "_readButton";
+            this._readButton.Size = new System.Drawing.Size(42, 25);
+            this._readButton.Text = "&Read";
+            this._readButton.ToolTipText = "Read and display a message from the instrument";
+            this._readButton.Click += new System.EventHandler(this.ReadButton_Click);
+            // 
             // _readDelayNumeric
-            //
-            _readDelayNumeric.Name = "_ReadDelayNumeric";
-            _readDelayNumeric.Size = new System.Drawing.Size(45, 25);
-            _readDelayNumeric.Text = "10";
-            _readDelayNumeric.ToolTipText = "Delay before reading in milliseconds";
-            _readDelayNumeric.Value = new decimal(new int[] { 10, 0, 0, 0 });
-            _readDelayNumeric.NumericUpDown.ValueChanged += new EventHandler( ReadDelayNumeric_ValueChanged );
-            //
+            // 
+            this._readDelayNumeric.Name = "_readDelayNumeric";
+            // 
+            // _readDelayNumeric
+            // 
+            this._readDelayNumeric.NumericUpDown.Location = new System.Drawing.Point(137, 1);
+            this._readDelayNumeric.NumericUpDown.Name = "_readDelayNumeric";
+            this._readDelayNumeric.NumericUpDown.ReadOnlyBackColor = System.Drawing.SystemColors.Control;
+            this._readDelayNumeric.NumericUpDown.ReadOnlyForeColor = System.Drawing.SystemColors.WindowText;
+            this._readDelayNumeric.NumericUpDown.ReadWriteBackColor = System.Drawing.SystemColors.Window;
+            this._readDelayNumeric.NumericUpDown.ReadWriteForeColor = System.Drawing.SystemColors.ControlText;
+            this._readDelayNumeric.NumericUpDown.Size = new System.Drawing.Size(45, 25);
+            this._readDelayNumeric.NumericUpDown.TabIndex = 0;
+            this._readDelayNumeric.NumericUpDown.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this._readDelayNumeric.NumericUpDown.ValueChanged += new System.EventHandler(this.ReadDelayNumeric_ValueChanged);
+            this._readDelayNumeric.Size = new System.Drawing.Size(45, 25);
+            this._readDelayNumeric.Text = "0";
+            this._readDelayNumeric.ToolTipText = "Delay before reading in milliseconds";
+            this._readDelayNumeric.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            // 
             // _statusReadDelayNumeric
-            //
-            _statusReadDelayNumeric.Name = "_StatusReadDelayNumeric";
-            _statusReadDelayNumeric.Size = new System.Drawing.Size(45, 25);
-            _statusReadDelayNumeric.Text = "10";
-            _statusReadDelayNumeric.ToolTipText = "Delay time before reading status in milliseconds";
-            _statusReadDelayNumeric.Value = new decimal(new int[] { 10, 0, 0, 0 });
-            _statusReadDelayNumeric.NumericUpDown.ValueChanged += new EventHandler( StatusReadDelayNumeric_ValueChanged );
-            //
+            // 
+            this._statusReadDelayNumeric.Name = "_statusReadDelayNumeric";
+            // 
+            // _statusReadDelayNumeric
+            // 
+            this._statusReadDelayNumeric.NumericUpDown.Location = new System.Drawing.Point(182, 1);
+            this._statusReadDelayNumeric.NumericUpDown.Name = "_statusReadDelayNumeric";
+            this._statusReadDelayNumeric.NumericUpDown.ReadOnlyBackColor = System.Drawing.SystemColors.Control;
+            this._statusReadDelayNumeric.NumericUpDown.ReadOnlyForeColor = System.Drawing.SystemColors.WindowText;
+            this._statusReadDelayNumeric.NumericUpDown.ReadWriteBackColor = System.Drawing.SystemColors.Window;
+            this._statusReadDelayNumeric.NumericUpDown.ReadWriteForeColor = System.Drawing.SystemColors.ControlText;
+            this._statusReadDelayNumeric.NumericUpDown.Size = new System.Drawing.Size(45, 25);
+            this._statusReadDelayNumeric.NumericUpDown.TabIndex = 1;
+            this._statusReadDelayNumeric.NumericUpDown.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this._statusReadDelayNumeric.NumericUpDown.ValueChanged += new System.EventHandler(this.StatusReadDelayNumeric_ValueChanged);
+            this._statusReadDelayNumeric.Size = new System.Drawing.Size(45, 25);
+            this._statusReadDelayNumeric.Text = "0";
+            this._statusReadDelayNumeric.ToolTipText = "Delay time before reading status in milliseconds";
+            this._statusReadDelayNumeric.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            // 
             // _toolStrip
-            //
-            _toolStrip.BackColor = System.Drawing.Color.Transparent;
-            _toolStrip.Font = new System.Drawing.Font("Segoe UI", 9.75f, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
-            _toolStrip.GripMargin = new Padding(0);
-            _toolStrip.GripStyle = ToolStripGripStyle.Hidden;
-            _toolStrip.Items.AddRange(new ToolStripItem[] { _queryButton, _writeButton, _readButton, _readDelayNumeric, _statusReadDelayNumeric, _moreOptionsSplitButton });
-            _toolStrip.Location = new System.Drawing.Point(1, 26);
-            _toolStrip.Name = "_ToolStrip";
-            _toolStrip.Size = new System.Drawing.Size(388, 28);
-            _toolStrip.TabIndex = 65;
-            _toolStrip.Text = "ToolStrip1";
-            //
+            // 
+            this._toolStrip.BackColor = System.Drawing.Color.Transparent;
+            this._toolStrip.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._toolStrip.GripMargin = new System.Windows.Forms.Padding(0);
+            this._toolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this._toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._queryButton,
+            this._writeButton,
+            this._readButton,
+            this._readDelayNumeric,
+            this._statusReadDelayNumeric,
+            this._moreOptionsSplitButton});
+            this._toolStrip.Location = new System.Drawing.Point(1, 26);
+            this._toolStrip.Name = "_toolStrip";
+            this._toolStrip.Size = new System.Drawing.Size(444, 28);
+            this._toolStrip.TabIndex = 65;
+            this._toolStrip.Text = "ToolStrip1";
+            // 
             // _moreOptionsSplitButton
-            //
-            _moreOptionsSplitButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _moreOptionsSplitButton.DropDownItems.AddRange(new ToolStripItem[] { _eraseDisplayMenuItem, _clearSessionMenuItem, _readStatusMenuItem, _showPollReadingsMenuItem, _showServiceRequestReadingMenuItem, _appendTerminationMenuItem });
-            _moreOptionsSplitButton.Image = (System.Drawing.Image)resources.GetObject("_MoreOptionsSplitButton.Image");
-            _moreOptionsSplitButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            _moreOptionsSplitButton.Name = "_MoreOptionsSplitButton";
-            _moreOptionsSplitButton.Size = new System.Drawing.Size(79, 25);
-            _moreOptionsSplitButton.Text = "&Options...";
-            _moreOptionsSplitButton.ToolTipText = "Select from additional options";
-            //
+            // 
+            this._moreOptionsSplitButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this._moreOptionsSplitButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._eraseDisplayMenuItem,
+            this._clearSessionMenuItem,
+            this._readStatusMenuItem,
+            this._showPollReadingsMenuItem,
+            this._showServiceRequestReadingMenuItem,
+            this._appendTerminationMenuItem});
+            this._moreOptionsSplitButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._moreOptionsSplitButton.Name = "_moreOptionsSplitButton";
+            this._moreOptionsSplitButton.Size = new System.Drawing.Size(79, 25);
+            this._moreOptionsSplitButton.Text = "&Options...";
+            this._moreOptionsSplitButton.ToolTipText = "Select from additional options";
+            // 
             // _eraseDisplayMenuItem
-            //
-            _eraseDisplayMenuItem.Name = "_EraseDisplayMenuItem";
-            _eraseDisplayMenuItem.Size = new System.Drawing.Size(194, 22);
-            _eraseDisplayMenuItem.Text = "&Erase Display";
-            _eraseDisplayMenuItem.ToolTipText = "Clears the display";
-            _eraseDisplayMenuItem.Click += new EventHandler( EraseDisplayMenuItem_Click );
-            //
+            // 
+            this._eraseDisplayMenuItem.Name = "_eraseDisplayMenuItem";
+            this._eraseDisplayMenuItem.Size = new System.Drawing.Size(194, 22);
+            this._eraseDisplayMenuItem.Text = "&Erase Display";
+            this._eraseDisplayMenuItem.ToolTipText = "Clears the display";
+            this._eraseDisplayMenuItem.Click += new System.EventHandler(this.EraseDisplayMenuItem_Click);
+            // 
             // _clearSessionMenuItem
-            //
-            _clearSessionMenuItem.Name = "_ClearSessionMenuItem";
-            _clearSessionMenuItem.Size = new System.Drawing.Size(194, 22);
-            _clearSessionMenuItem.Text = "&Clear Session";
-            _clearSessionMenuItem.ToolTipText = "Clears the session (*CLS)";
-            _clearSessionMenuItem.Click += new EventHandler( ClearSessionMenuItem_Click );
-            //
+            // 
+            this._clearSessionMenuItem.Name = "_clearSessionMenuItem";
+            this._clearSessionMenuItem.Size = new System.Drawing.Size(194, 22);
+            this._clearSessionMenuItem.Text = "&Clear Session";
+            this._clearSessionMenuItem.ToolTipText = "Clears the session (*CLS)";
+            this._clearSessionMenuItem.Click += new System.EventHandler(this.ClearSessionMenuItem_Click);
+            // 
             // _readStatusMenuItem
-            //
-            _readStatusMenuItem.Name = "_ReadStatusMenuItem";
-            _readStatusMenuItem.Size = new System.Drawing.Size(194, 22);
-            _readStatusMenuItem.Text = "&Read Status Byte";
-            _readStatusMenuItem.ToolTipText = "Reads the status byte";
-            _readStatusMenuItem.Click += new EventHandler( ReadStatusMenuItem_Click );
-            //
+            // 
+            this._readStatusMenuItem.Name = "_readStatusMenuItem";
+            this._readStatusMenuItem.Size = new System.Drawing.Size(194, 22);
+            this._readStatusMenuItem.Text = "&Read Status Byte";
+            this._readStatusMenuItem.ToolTipText = "Reads the status byte";
+            this._readStatusMenuItem.Click += new System.EventHandler(this.ReadStatusMenuItem_Click);
+            // 
             // _showPollReadingsMenuItem
-            //
-            _showPollReadingsMenuItem.CheckOnClick = true;
-            _showPollReadingsMenuItem.Name = "_ShowPollReadingsMenuItem";
-            _showPollReadingsMenuItem.Size = new System.Drawing.Size(194, 22);
-            _showPollReadingsMenuItem.Text = "Show &Poll Readings";
-            _showPollReadingsMenuItem.ToolTipText = "Displays polled reading when session polling is enabled";
-            //
+            // 
+            this._showPollReadingsMenuItem.CheckOnClick = true;
+            this._showPollReadingsMenuItem.Name = "_showPollReadingsMenuItem";
+            this._showPollReadingsMenuItem.Size = new System.Drawing.Size(194, 22);
+            this._showPollReadingsMenuItem.Text = "Show &Poll Readings";
+            this._showPollReadingsMenuItem.ToolTipText = "Displays polled reading when session polling is enabled";
+            // 
             // _showServiceRequestReadingMenuItem
-            //
-            _showServiceRequestReadingMenuItem.CheckOnClick = true;
-            _showServiceRequestReadingMenuItem.Name = "_ShowServiceRequestReadingMenuItem";
-            _showServiceRequestReadingMenuItem.Size = new System.Drawing.Size(194, 22);
-            _showServiceRequestReadingMenuItem.Text = "Show SR&Q Reading";
-            _showServiceRequestReadingMenuItem.ToolTipText = "Shows service request reading when service request auto read is enabled";
-            //
+            // 
+            this._showServiceRequestReadingMenuItem.CheckOnClick = true;
+            this._showServiceRequestReadingMenuItem.Name = "_showServiceRequestReadingMenuItem";
+            this._showServiceRequestReadingMenuItem.Size = new System.Drawing.Size(194, 22);
+            this._showServiceRequestReadingMenuItem.Text = "Show SR&Q Reading";
+            this._showServiceRequestReadingMenuItem.ToolTipText = "Shows service request reading when service request auto read is enabled";
+            // 
             // _appendTerminationMenuItem
-            //
-            _appendTerminationMenuItem.CheckOnClick = true;
-            _appendTerminationMenuItem.Name = "_appendTerminationMenuItem";
-            _appendTerminationMenuItem.Size = new System.Drawing.Size(194, 22);
-            _appendTerminationMenuItem.Text = "&Append Termination";
-            _appendTerminationMenuItem.ToolTipText = "Appends termination to instrument commands thus not having the add the terminatio" + @"n character (\n)";
-            //
+            // 
+            this._appendTerminationMenuItem.CheckOnClick = true;
+            this._appendTerminationMenuItem.Name = "_appendTerminationMenuItem";
+            this._appendTerminationMenuItem.Size = new System.Drawing.Size(194, 22);
+            this._appendTerminationMenuItem.Text = "&Append Termination";
+            this._appendTerminationMenuItem.ToolTipText = "Appends termination to instrument commands thus not having the add the " +
+    "termination character (\n)";
+            // 
             // SessionView
-            //
-            AutoScaleDimensions = new System.Drawing.SizeF(7.0f, 17.0f);
-            AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(_readTextBox);
-            Controls.Add(_toolStrip);
-            Controls.Add(_writeComboBox);
-            Name = "SessionView";
-            Padding = new Padding(1);
-            Size = new System.Drawing.Size(390, 328);
-            _toolStrip.ResumeLayout(false);
-            _toolStrip.PerformLayout();
-            ResumeLayout(false);
-            PerformLayout();
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this._readTextBox);
+            this.Controls.Add(this._toolStrip);
+            this.Controls.Add(this._writeComboBox);
+            this.Name = "SessionView";
+            this.Padding = new System.Windows.Forms.Padding(1);
+            this.Size = new System.Drawing.Size(446, 309);
+            ((System.ComponentModel.ISupportInitialize)(this._readDelayNumeric.NumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._statusReadDelayNumeric.NumericUpDown)).EndInit();
+            this._toolStrip.ResumeLayout(false);
+            this._toolStrip.PerformLayout();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         private ComboBox _writeComboBox;

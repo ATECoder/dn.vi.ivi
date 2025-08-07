@@ -93,6 +93,8 @@ void QueryIdentity()
     try
     {
         // Connect to the instrument.
+        Console.WriteLine();
+        Console.WriteLine( $"Opening a VISA session to '{resourceName}'..." );
         using IVisaSession resource = GlobalResourceManager.Open( resourceName, AccessModes.ExclusiveLock, 2000 );
         if ( resource is IMessageBasedSession session )
         {

@@ -17,548 +17,602 @@ namespace cc.isr.VI.DeviceWinControls
         [DebuggerStepThrough()]
         private void InitializeComponent()
         {
-            var resources = new System.ComponentModel.ComponentResourceManager(typeof(StatusView));
-            _toolStrip = new ToolStrip();
-            _applicationDropDownButton = new ToolStripDropDownButton();
-            EditSettingsToolStripMenuItem = new ToolStripMenuItem();
-            _sessionSettingsMenuItem = new ToolStripMenuItem();
-            _deviceSettingsMenuItem = new ToolStripMenuItem();
-            _userInterfaceSettingsMenuItem = new ToolStripMenuItem();
-            _uIBaseSettingsMenuItem = new ToolStripMenuItem();
-            _traceMenuItem = new ToolStripMenuItem();
-            _traceLogLevelMenuItem = new ToolStripMenuItem();
-            _traceLogLevelComboBox = new cc.isr.WinControls.ToolStripComboBox();
-            _traceShowLevelMenuItem = new ToolStripMenuItem();
-            _traceShowLevelComboBox = new cc.isr.WinControls.ToolStripComboBox();
-            _sessionNotificationLevelMenuItem = new ToolStripMenuItem();
-            _sessionNotificationLevelComboBox = new cc.isr.WinControls.ToolStripComboBox();
-            _usingStatusSubsystemMenuItem = new cc.isr.WinControls.ToolStripMenuItem();
-            _deviceDropDownButton = new cc.isr.WinControls.ToolStripDropDownButton();
-            _resetMenuItem = new ToolStripMenuItem();
-            _clearInterfaceMenuItem = new cc.isr.WinControls.ToolStripMenuItem();
-            _clearDeviceMenuItem = new ToolStripMenuItem();
-            _resetKnownStateMenuItem = new ToolStripMenuItem();
-            _clearExecutionStateMenuItem = new ToolStripMenuItem();
-            _initKnownStateMenuItem = new ToolStripMenuItem();
-            _clearErrorReportMenuItem = new ToolStripMenuItem();
-            _readDeviceErrorsMenuItem = new ToolStripMenuItem();
-            _readTerminalsStateMenuItem = new ToolStripMenuItem();
-            _sessionDownDownButton = new cc.isr.WinControls.ToolStripDropDownButton();
-            _readTerminationMenuItem = new ToolStripMenuItem();
-            _readTerminationTextBox = new cc.isr.WinControls.ToolStripTextBox();
-            _readTerminationEnabledMenuItem = new cc.isr.WinControls.ToolStripMenuItem();
-            _writeTerminationMenuItem = new ToolStripMenuItem();
-            _writeTerminationTextBox = new cc.isr.WinControls.ToolStripTextBox();
-            _sessionTimeoutMenuItem = new ToolStripMenuItem();
-            _sessionTimeoutTextBox = new cc.isr.WinControls.ToolStripTextBox();
-            _storeTimeoutMenuItem = new ToolStripMenuItem();
-            _restoreTimeoutMenuItem = new ToolStripMenuItem();
-            _sessionReadStatusByteMenuItem = new ToolStripMenuItem();
-            _sessionReadStandardEventRegisterMenuItem = new ToolStripMenuItem();
-            _sendBusTriggerMenuItem = new ToolStripMenuItem();
-            _pollSplitButton = new cc.isr.WinControls.ToolStripDropDownButton();
-            _pollMessageStatusBitMenuItem = new ToolStripMenuItem();
-            _pollMessageStatusBitTextBox = new cc.isr.WinControls.ToolStripTextBox();
-            _pollCommandMenuItem = new ToolStripMenuItem();
-            _pollWriteCommandTextBox = new cc.isr.WinControls.ToolStripTextBox();
-            _pollIntervalMenuItem = new ToolStripMenuItem();
-            _pollIntervalTextBox = new cc.isr.WinControls.ToolStripTextBox();
-            _pollEnabledMenuItem = new cc.isr.WinControls.ToolStripMenuItem();
-            _pollEnabledMenuItem.CheckStateChanged += new EventHandler(PollEnabledMenuItem_CheckStateChanged);
-            _pollAutoReadMenuItem = new cc.isr.WinControls.ToolStripMenuItem();
-            _pollSendMenuItem = new ToolStripMenuItem();
-            _serviceRequestSplitButton = new cc.isr.WinControls.ToolStripDropDownButton();
-            _serviceRequestBitmaskMenuItem = new cc.isr.WinControls.ToolStripMenuItem();
-            _serviceRequestBitMaskTextBox = new cc.isr.WinControls.ToolStripTextBox();
-            _serviceRequestEnableCommandMenuItem = new ToolStripMenuItem();
-            _serviceRequestEnableCommandTextBox = new cc.isr.WinControls.ToolStripTextBox();
-            _programServiceRequestEnableBitmaskMenuItem = new cc.isr.WinControls.ToolStripMenuItem();
-            _toggleVisaEventHandlerMenuItem = new cc.isr.WinControls.ToolStripMenuItem();
-            _serviceRequestHandlerAddRemoveMenuItem = new cc.isr.WinControls.ToolStripMenuItem();
-            _serviceRequestAutoReadMenuItem = new cc.isr.WinControls.ToolStripMenuItem();
-            EditResourceNamesMenuItem = new ToolStripMenuItem();
-            _toolStrip.SuspendLayout();
-            SuspendLayout();
-            //
+            this._toolStrip = new System.Windows.Forms.ToolStrip();
+            this._applicationDropDownButton = new System.Windows.Forms.ToolStripDropDownButton();
+            this.EditSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._sessionSettingsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._deviceSettingsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._userInterfaceSettingsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._uIBaseSettingsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._traceMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._traceLogLevelMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._traceLogLevelComboBox = new cc.isr.WinControls.ToolStripComboBox();
+            this._traceShowLevelMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._traceShowLevelComboBox = new cc.isr.WinControls.ToolStripComboBox();
+            this._sessionNotificationLevelMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._sessionNotificationLevelComboBox = new cc.isr.WinControls.ToolStripComboBox();
+            this._usingStatusSubsystemMenuItem = new cc.isr.WinControls.ToolStripMenuItem();
+            this.EditResourceNamesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._deviceDropDownButton = new cc.isr.WinControls.ToolStripDropDownButton();
+            this._resetMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._clearInterfaceMenuItem = new cc.isr.WinControls.ToolStripMenuItem();
+            this._clearDeviceMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._resetKnownStateMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._clearExecutionStateMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._initKnownStateMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._clearErrorReportMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._readDeviceErrorsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._readTerminalsStateMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._sessionDownDownButton = new cc.isr.WinControls.ToolStripDropDownButton();
+            this._readTerminationMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._readTerminationTextBox = new cc.isr.WinControls.ToolStripTextBox();
+            this._readTerminationEnabledMenuItem = new cc.isr.WinControls.ToolStripMenuItem();
+            this._writeTerminationMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._writeTerminationTextBox = new cc.isr.WinControls.ToolStripTextBox();
+            this._sessionTimeoutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._sessionTimeoutTextBox = new cc.isr.WinControls.ToolStripTextBox();
+            this._storeTimeoutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._restoreTimeoutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._sessionReadStatusByteMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._sessionReadStandardEventRegisterMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._sendBusTriggerMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._pollSplitButton = new cc.isr.WinControls.ToolStripDropDownButton();
+            this._pollMessageStatusBitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._pollMessageStatusBitTextBox = new cc.isr.WinControls.ToolStripTextBox();
+            this._pollCommandMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._pollWriteCommandTextBox = new cc.isr.WinControls.ToolStripTextBox();
+            this._pollIntervalMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._pollIntervalTextBox = new cc.isr.WinControls.ToolStripTextBox();
+            this._pollEnabledMenuItem = new cc.isr.WinControls.ToolStripMenuItem();
+            this._pollAutoReadMenuItem = new cc.isr.WinControls.ToolStripMenuItem();
+            this._pollSendMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._serviceRequestSplitButton = new cc.isr.WinControls.ToolStripDropDownButton();
+            this._serviceRequestBitmaskMenuItem = new cc.isr.WinControls.ToolStripMenuItem();
+            this._serviceRequestBitMaskTextBox = new cc.isr.WinControls.ToolStripTextBox();
+            this._serviceRequestEnableCommandMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._serviceRequestEnableCommandTextBox = new cc.isr.WinControls.ToolStripTextBox();
+            this._programServiceRequestEnableBitmaskMenuItem = new cc.isr.WinControls.ToolStripMenuItem();
+            this._toggleVisaEventHandlerMenuItem = new cc.isr.WinControls.ToolStripMenuItem();
+            this._serviceRequestHandlerAddRemoveMenuItem = new cc.isr.WinControls.ToolStripMenuItem();
+            this._serviceRequestAutoReadMenuItem = new cc.isr.WinControls.ToolStripMenuItem();
+            this._toolStrip.SuspendLayout();
+            this.SuspendLayout();
+            // 
             // _toolStrip
-            //
-            _toolStrip.BackColor = Color.Transparent;
-            _toolStrip.Dock = DockStyle.Fill;
-            _toolStrip.Font = new Font("Segoe UI", 9.75f, FontStyle.Bold, GraphicsUnit.Point, 0);
-            _toolStrip.GripMargin = new Padding(0);
-            _toolStrip.GripStyle = ToolStripGripStyle.Hidden;
-            _toolStrip.Items.AddRange(new ToolStripItem[] { _applicationDropDownButton, _deviceDropDownButton, _sessionDownDownButton, _pollSplitButton, _serviceRequestSplitButton });
-            _toolStrip.Location = new Point(0, 0);
-            _toolStrip.Name = "_ToolStrip";
-            _toolStrip.Size = new Size(474, 31);
-            _toolStrip.TabIndex = 12;
-            //
+            // 
+            this._toolStrip.BackColor = System.Drawing.Color.Transparent;
+            this._toolStrip.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._toolStrip.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._toolStrip.GripMargin = new System.Windows.Forms.Padding(0);
+            this._toolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this._toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._applicationDropDownButton,
+            this._deviceDropDownButton,
+            this._sessionDownDownButton,
+            this._pollSplitButton,
+            this._serviceRequestSplitButton});
+            this._toolStrip.Location = new System.Drawing.Point(0, 0);
+            this._toolStrip.Name = "_toolStrip";
+            this._toolStrip.Size = new System.Drawing.Size(474, 31);
+            this._toolStrip.TabIndex = 12;
+            // 
             // _applicationDropDownButton
-            //
-            _applicationDropDownButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _applicationDropDownButton.DropDownItems.AddRange(new ToolStripItem[] { EditSettingsToolStripMenuItem, _traceMenuItem, _sessionNotificationLevelMenuItem, _usingStatusSubsystemMenuItem, EditResourceNamesMenuItem });
-            _applicationDropDownButton.Image = (Image)resources.GetObject("_applicationDropDownButton.Image");
-            _applicationDropDownButton.ImageTransparentColor = Color.Magenta;
-            _applicationDropDownButton.Name = "_applicationDropDownButton";
-            _applicationDropDownButton.Size = new Size(46, 28);
-            _applicationDropDownButton.Text = "App";
-            _applicationDropDownButton.ToolTipText = "Application options";
-            //
+            // 
+            this._applicationDropDownButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this._applicationDropDownButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.EditSettingsToolStripMenuItem,
+            this._traceMenuItem,
+            this._sessionNotificationLevelMenuItem,
+            this._usingStatusSubsystemMenuItem,
+            this.EditResourceNamesMenuItem});
+            this._applicationDropDownButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._applicationDropDownButton.Name = "_applicationDropDownButton";
+            this._applicationDropDownButton.Size = new System.Drawing.Size(46, 28);
+            this._applicationDropDownButton.Text = "App";
+            this._applicationDropDownButton.ToolTipText = "Application options";
+            // 
             // EditSettingsToolStripMenuItem
-            //
-            EditSettingsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { _sessionSettingsMenuItem, _deviceSettingsMenuItem, _userInterfaceSettingsMenuItem, _uIBaseSettingsMenuItem });
-            EditSettingsToolStripMenuItem.Name = "EditSettingsToolStripMenuItem";
-            EditSettingsToolStripMenuItem.Size = new Size(256, 22);
-            EditSettingsToolStripMenuItem.Text = "Edit Settings";
-            //
+            // 
+            this.EditSettingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._sessionSettingsMenuItem,
+            this._deviceSettingsMenuItem,
+            this._userInterfaceSettingsMenuItem,
+            this._uIBaseSettingsMenuItem});
+            this.EditSettingsToolStripMenuItem.Name = "EditSettingsToolStripMenuItem";
+            this.EditSettingsToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
+            this.EditSettingsToolStripMenuItem.Text = "Edit Settings";
+            // 
             // _sessionSettingsMenuItem
-            //
-            _sessionSettingsMenuItem.Name = "_SessionSettingsMenuItem";
-            _sessionSettingsMenuItem.Size = new Size(134, 22);
-            _sessionSettingsMenuItem.Text = "Session...";
-            _sessionSettingsMenuItem.ToolTipText = "Opens session settings dialog";
-            _sessionSettingsMenuItem.Click += new EventHandler( SessionSettingsMenuItem_Click );
-            //
+            // 
+            this._sessionSettingsMenuItem.Name = "_sessionSettingsMenuItem";
+            this._sessionSettingsMenuItem.Size = new System.Drawing.Size(134, 22);
+            this._sessionSettingsMenuItem.Text = "Session...";
+            this._sessionSettingsMenuItem.ToolTipText = "Opens session settings dialog";
+            this._sessionSettingsMenuItem.Click += new System.EventHandler(this.SessionSettingsMenuItem_Click);
+            // 
             // _deviceSettingsMenuItem
-            //
-            _deviceSettingsMenuItem.Name = "_DeviceSettingsMenuItem";
-            _deviceSettingsMenuItem.Size = new Size(134, 22);
-            _deviceSettingsMenuItem.Text = "Device...";
-            _deviceSettingsMenuItem.ToolTipText = "Opens device settings editor dialog";
-            _deviceSettingsMenuItem.Click += new EventHandler( DeviceSettingsMenuItem_Click );
-            //
+            // 
+            this._deviceSettingsMenuItem.Name = "_deviceSettingsMenuItem";
+            this._deviceSettingsMenuItem.Size = new System.Drawing.Size(134, 22);
+            this._deviceSettingsMenuItem.Text = "Device...";
+            this._deviceSettingsMenuItem.ToolTipText = "Opens device settings editor dialog";
+            this._deviceSettingsMenuItem.Click += new System.EventHandler(this.DeviceSettingsMenuItem_Click);
+            // 
             // _userInterfaceSettingsMenuItem
-            //
-            _userInterfaceSettingsMenuItem.Name = "_UserInterfaceSettingsMenuItem";
-            _userInterfaceSettingsMenuItem.Size = new Size(134, 22);
-            _userInterfaceSettingsMenuItem.Text = "UI...";
-            _userInterfaceSettingsMenuItem.ToolTipText = "Opens User Interface settings editor dialog";
-            _userInterfaceSettingsMenuItem.Click += new EventHandler( UserInterfaceToolStripMenuItem_Click );
-            //
+            // 
+            this._userInterfaceSettingsMenuItem.Name = "_userInterfaceSettingsMenuItem";
+            this._userInterfaceSettingsMenuItem.Size = new System.Drawing.Size(134, 22);
+            this._userInterfaceSettingsMenuItem.Text = "UI...";
+            this._userInterfaceSettingsMenuItem.ToolTipText = "Opens User Interface settings editor dialog";
+            this._userInterfaceSettingsMenuItem.Click += new System.EventHandler(this.UserInterfaceToolStripMenuItem_Click);
+            // 
             // _uIBaseSettingsMenuItem
-            //
-            _uIBaseSettingsMenuItem.Name = "_UIBaseSettingsMenuItem";
-            _uIBaseSettingsMenuItem.Size = new Size(134, 22);
-            _uIBaseSettingsMenuItem.Text = "UI Base...";
-            _uIBaseSettingsMenuItem.ToolTipText = "Edits the user interface base settings";
-            _uIBaseSettingsMenuItem.Click += new EventHandler( UIBaseSettingsMenuItem_Click );
-            //
+            // 
+            this._uIBaseSettingsMenuItem.Name = "_uIBaseSettingsMenuItem";
+            this._uIBaseSettingsMenuItem.Size = new System.Drawing.Size(134, 22);
+            this._uIBaseSettingsMenuItem.Text = "UI Base...";
+            this._uIBaseSettingsMenuItem.ToolTipText = "Edits the user interface base settings";
+            this._uIBaseSettingsMenuItem.Click += new System.EventHandler(this.UIBaseSettingsMenuItem_Click);
+            // 
             // _traceMenuItem
-            //
-            _traceMenuItem.DropDownItems.AddRange(new ToolStripItem[] { _traceLogLevelMenuItem, _traceShowLevelMenuItem });
-            _traceMenuItem.Name = "_TraceMenuItem";
-            _traceMenuItem.Size = new Size(256, 22);
-            _traceMenuItem.Text = "Select Trace Levels";
-            _traceMenuItem.ToolTipText = "Opens the trace menus";
-            //
+            // 
+            this._traceMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._traceLogLevelMenuItem,
+            this._traceShowLevelMenuItem});
+            this._traceMenuItem.Name = "_traceMenuItem";
+            this._traceMenuItem.Size = new System.Drawing.Size(256, 22);
+            this._traceMenuItem.Text = "Select Trace Levels";
+            this._traceMenuItem.ToolTipText = "Opens the trace menus";
+            // 
             // _traceLogLevelMenuItem
-            //
-            _traceLogLevelMenuItem.DropDownItems.AddRange(new ToolStripItem[] { _traceLogLevelComboBox });
-            _traceLogLevelMenuItem.Name = "_TraceLogLevelMenuItem";
-            _traceLogLevelMenuItem.Size = new Size(194, 22);
-            _traceLogLevelMenuItem.Text = "Trace Log Level";
-            _traceLogLevelMenuItem.ToolTipText = "Selects trace level for logging";
-            //
+            // 
+            this._traceLogLevelMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._traceLogLevelComboBox});
+            this._traceLogLevelMenuItem.Name = "_traceLogLevelMenuItem";
+            this._traceLogLevelMenuItem.Size = new System.Drawing.Size(194, 22);
+            this._traceLogLevelMenuItem.Text = "Trace Log Level";
+            this._traceLogLevelMenuItem.ToolTipText = "Selects trace level for logging";
+            // 
             // _traceLogLevelComboBox
-            //
-            _traceLogLevelComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            _traceLogLevelComboBox.Name = "_TraceLogLevelComboBox";
-            _traceLogLevelComboBox.Size = new Size(100, 22);
-            _traceLogLevelComboBox.ToolTipText = "Selects trace level for logging";
-            //
+            // 
+            this._traceLogLevelComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this._traceLogLevelComboBox.Name = "_traceLogLevelComboBox";
+            this._traceLogLevelComboBox.Size = new System.Drawing.Size(100, 22);
+            this._traceLogLevelComboBox.ToolTipText = "Selects trace level for logging";
+            // 
             // _traceShowLevelMenuItem
-            //
-            _traceShowLevelMenuItem.DropDownItems.AddRange(new ToolStripItem[] { _traceShowLevelComboBox });
-            _traceShowLevelMenuItem.Name = "_TraceShowLevelMenuItem";
-            _traceShowLevelMenuItem.Size = new Size(194, 22);
-            _traceShowLevelMenuItem.Text = "Display Trace Level";
-            _traceShowLevelMenuItem.ToolTipText = "Selects trace level for display";
-            //
+            // 
+            this._traceShowLevelMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._traceShowLevelComboBox});
+            this._traceShowLevelMenuItem.Name = "_traceShowLevelMenuItem";
+            this._traceShowLevelMenuItem.Size = new System.Drawing.Size(194, 22);
+            this._traceShowLevelMenuItem.Text = "Display Trace Level";
+            this._traceShowLevelMenuItem.ToolTipText = "Selects trace level for display";
+            // 
             // _traceShowLevelComboBox
-            //
-            _traceShowLevelComboBox.Name = "_TraceShowLevelComboBox";
-            _traceShowLevelComboBox.Size = new Size(100, 22);
-            _traceShowLevelComboBox.ToolTipText = "Selects trace level for display";
-            //
+            // 
+            this._traceShowLevelComboBox.Name = "_traceShowLevelComboBox";
+            this._traceShowLevelComboBox.Size = new System.Drawing.Size(100, 22);
+            this._traceShowLevelComboBox.ToolTipText = "Selects trace level for display";
+            // 
             // _sessionNotificationLevelMenuItem
-            //
-            _sessionNotificationLevelMenuItem.DropDownItems.AddRange(new ToolStripItem[] { _sessionNotificationLevelComboBox });
-            _sessionNotificationLevelMenuItem.Name = "_SessionNotificationLevelMenuItem";
-            _sessionNotificationLevelMenuItem.Size = new Size(256, 22);
-            _sessionNotificationLevelMenuItem.Text = "Session Notification Level";
-            _sessionNotificationLevelMenuItem.ToolTipText = "Shows the session notification level selector";
-            //
+            // 
+            this._sessionNotificationLevelMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._sessionNotificationLevelComboBox});
+            this._sessionNotificationLevelMenuItem.Name = "_sessionNotificationLevelMenuItem";
+            this._sessionNotificationLevelMenuItem.Size = new System.Drawing.Size(256, 22);
+            this._sessionNotificationLevelMenuItem.Text = "Session Notification Level";
+            this._sessionNotificationLevelMenuItem.ToolTipText = "Shows the session notification level selector";
+            // 
             // _sessionNotificationLevelComboBox
-            //
-            _sessionNotificationLevelComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            _sessionNotificationLevelComboBox.Name = "_SessionNotificationLevelComboBox";
-            _sessionNotificationLevelComboBox.Size = new Size(100, 22);
-            _sessionNotificationLevelComboBox.ToolTipText = "Select the session notification level";
-            //
+            // 
+            this._sessionNotificationLevelComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this._sessionNotificationLevelComboBox.Name = "_sessionNotificationLevelComboBox";
+            this._sessionNotificationLevelComboBox.Size = new System.Drawing.Size(100, 22);
+            this._sessionNotificationLevelComboBox.ToolTipText = "Select the session notification level";
+            // 
             // _usingStatusSubsystemMenuItem
-            //
-            _usingStatusSubsystemMenuItem.CheckOnClick = true;
-            _usingStatusSubsystemMenuItem.Name = "_UsingStatusSubsystemMenuItem";
-            _usingStatusSubsystemMenuItem.Size = new Size(256, 22);
-            _usingStatusSubsystemMenuItem.Text = "Using Status Subsystem Only";
-            _usingStatusSubsystemMenuItem.ToolTipText = "Toggle to use status or all subsystems";
-            _usingStatusSubsystemMenuItem.CheckStateChanged += new EventHandler( OpenStatusSubsystemMenuItem_CheckStateChanged );
-            //
-            // _deviceDropDownButton
-            //
-            _deviceDropDownButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _deviceDropDownButton.DropDownItems.AddRange(new ToolStripItem[] { _resetMenuItem, _clearErrorReportMenuItem, _readDeviceErrorsMenuItem, _readTerminalsStateMenuItem });
-            _deviceDropDownButton.ImageTransparentColor = Color.Magenta;
-            _deviceDropDownButton.Name = "_DeviceDropDownButton";
-            _deviceDropDownButton.Size = new Size(62, 28);
-            _deviceDropDownButton.Text = "Device";
-            _deviceDropDownButton.ToolTipText = "Device resets, Service Requests and trace management";
-            //
-            // _resetMenuItem
-            //
-            _resetMenuItem.DropDownItems.AddRange(new ToolStripItem[] { _clearInterfaceMenuItem, _clearDeviceMenuItem, _resetKnownStateMenuItem, _clearExecutionStateMenuItem, _initKnownStateMenuItem });
-            _resetMenuItem.Name = "_ResetMenuItem";
-            _resetMenuItem.Size = new Size(205, 22);
-            _resetMenuItem.Text = "Reset...";
-            _resetMenuItem.ToolTipText = "Opens the reset menus";
-            //
-            // _clearInterfaceMenuItem
-            //
-            _clearInterfaceMenuItem.Font = new Font("Segoe UI", 9.75f, FontStyle.Bold, GraphicsUnit.Point, 0);
-            _clearInterfaceMenuItem.Name = "_ClearInterfaceMenuItem";
-            _clearInterfaceMenuItem.Size = new Size(242, 22);
-            _clearInterfaceMenuItem.Text = "Clear Interface";
-            _clearInterfaceMenuItem.ToolTipText = "Issues an interface clear command";
-            _clearInterfaceMenuItem.Click += new EventHandler( ClearInterfaceMenuItem_Click );
-            //
-            // _clearDeviceMenuItem
-            //
-            _clearDeviceMenuItem.Font = new Font("Segoe UI", 9.75f, FontStyle.Bold, GraphicsUnit.Point, 0);
-            _clearDeviceMenuItem.Name = "_ClearDeviceMenuItem";
-            _clearDeviceMenuItem.Size = new Size(242, 22);
-            _clearDeviceMenuItem.Text = "Clear Device (SDC)";
-            _clearDeviceMenuItem.ToolTipText = "Issues Selective Device Clear";
-            _clearDeviceMenuItem.Click += new EventHandler( ClearDeviceMenuItem_Click );
-            //
-            // _resetKnownStateMenuItem
-            //
-            _resetKnownStateMenuItem.Font = new Font("Segoe UI", 9.75f, FontStyle.Bold, GraphicsUnit.Point, 0);
-            _resetKnownStateMenuItem.Name = "_ResetKnownStateMenuItem";
-            _resetKnownStateMenuItem.Size = new Size(242, 22);
-            _resetKnownStateMenuItem.Text = "Reset Known State (RST)";
-            _resetKnownStateMenuItem.ToolTipText = "Issues *RST";
-            _resetKnownStateMenuItem.Click += new EventHandler( ResetKnownStateMenuItem_Click );
-            //
-            // _clearExecutionStateMenuItem
-            //
-            _clearExecutionStateMenuItem.Name = "_ClearExecutionStateMenuItem";
-            _clearExecutionStateMenuItem.Size = new Size(242, 22);
-            _clearExecutionStateMenuItem.Text = "Clear Execution State (CLS)";
-            _clearExecutionStateMenuItem.ToolTipText = "Clears execution state (CLS)";
-            _clearExecutionStateMenuItem.Click += new EventHandler( ClearExecutionStateMenuItem_Click );
-            //
-            // _initKnownStateMenuItem
-            //
-            _initKnownStateMenuItem.Font = new Font("Segoe UI", 9.75f, FontStyle.Bold, GraphicsUnit.Point, 0);
-            _initKnownStateMenuItem.Name = "_InitKnownStateMenuItem";
-            _initKnownStateMenuItem.Size = new Size(242, 22);
-            _initKnownStateMenuItem.Text = "Initialize Known State";
-            _initKnownStateMenuItem.ToolTipText = "Issues *RST, CLear and initialize to custom known state";
-            _initKnownStateMenuItem.Click += new EventHandler( InitKnownStateMenuItem_Click );
-            //
-            // _clearErrorReportMenuItem
-            //
-            _clearErrorReportMenuItem.Name = "_ClearErrorReportMenuItem";
-            _clearErrorReportMenuItem.Size = new Size(205, 22);
-            _clearErrorReportMenuItem.Text = "Clear Error Report";
-            _clearErrorReportMenuItem.ToolTipText = "Clears the error report";
-            _clearErrorReportMenuItem.Click += new EventHandler( ClearErrorReportMenuItem_Click );
-            //
-            // _readDeviceErrorsMenuItem
-            //
-            _readDeviceErrorsMenuItem.Name = "_ReadDeviceErrorsMenuItem";
-            _readDeviceErrorsMenuItem.Size = new Size(205, 22);
-            _readDeviceErrorsMenuItem.Text = "Read Device Errors";
-            _readDeviceErrorsMenuItem.ToolTipText = "Reads device errors";
-            _readDeviceErrorsMenuItem.Click += new EventHandler( ReadDeviceErrorsMenuItem_Click );
-            //
-            // _readTerminalsStateMenuItem
-            //
-            _readTerminalsStateMenuItem.Name = "_ReadTerminalsStateMenuItem";
-            _readTerminalsStateMenuItem.Size = new Size(205, 22);
-            _readTerminalsStateMenuItem.Text = "Read Terminals State";
-            _readTerminalsStateMenuItem.Click += new EventHandler( ReadTerminalsStateMenuItem_Click );
-            //
-            // _sessionDownDownButton
-            //
-            _sessionDownDownButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _sessionDownDownButton.DropDownItems.AddRange(new ToolStripItem[] { _readTerminationMenuItem, _writeTerminationMenuItem, _sessionTimeoutMenuItem, _sessionReadStatusByteMenuItem, _sessionReadStandardEventRegisterMenuItem, _sendBusTriggerMenuItem });
-            _sessionDownDownButton.Image = (Image)resources.GetObject("_SessionDownDownButton.Image");
-            _sessionDownDownButton.ImageTransparentColor = Color.Magenta;
-            _sessionDownDownButton.Name = "_SessionDownDownButton";
-            _sessionDownDownButton.Size = new Size(67, 28);
-            _sessionDownDownButton.Text = "Session";
-            _sessionDownDownButton.ToolTipText = "Select Session Options";
-            //
-            // _readTerminationMenuItem
-            //
-            _readTerminationMenuItem.DropDownItems.AddRange(new ToolStripItem[] { _readTerminationTextBox, _readTerminationEnabledMenuItem });
-            _readTerminationMenuItem.Name = "_ReadTerminationMenuItem";
-            _readTerminationMenuItem.Size = new Size(257, 22);
-            _readTerminationMenuItem.Text = "Read Termination";
-            _readTerminationMenuItem.ToolTipText = "Read termination. Typically Line Feed (10)";
-            //
-            // _readTerminationTextBox
-            //
-            _readTerminationTextBox.Font = new Font("Segoe UI", 9.75f, FontStyle.Bold, GraphicsUnit.Point, 0);
-            _readTerminationTextBox.Name = "_ReadTerminationTextBox";
-            _readTerminationTextBox.Size = new Size(100, 22);
-            _readTerminationTextBox.ToolTipText = "Read termination in Hex";
-            //
-            // _readTerminationEnabledMenuItem
-            //
-            _readTerminationEnabledMenuItem.CheckOnClick = true;
-            _readTerminationEnabledMenuItem.Name = "_ReadTerminationEnabledMenuItem";
-            _readTerminationEnabledMenuItem.Size = new Size(160, 22);
-            _readTerminationEnabledMenuItem.Text = "Enabled";
-            _readTerminationEnabledMenuItem.ToolTipText = "Checked to enable read termination";
-            //
-            // _writeTerminationMenuItem
-            //
-            _writeTerminationMenuItem.DropDownItems.AddRange(new ToolStripItem[] { _writeTerminationTextBox });
-            _writeTerminationMenuItem.Name = "_WriteTerminationMenuItem";
-            _writeTerminationMenuItem.Size = new Size(257, 22);
-            _writeTerminationMenuItem.Text = "Write Termination";
-            _writeTerminationMenuItem.ToolTipText = @"Write termination; typically \n (line feed)";
-            //
-            // _writeTerminationTextBox
-            //
-            _writeTerminationTextBox.Font = new Font("Segoe UI", 9.75f, FontStyle.Bold, GraphicsUnit.Point, 0);
-            _writeTerminationTextBox.Name = "_WriteTerminationTextBox";
-            _writeTerminationTextBox.Size = new Size(100, 22);
-            _writeTerminationTextBox.ToolTipText = @"Write termination escape sequence, e.g., \n\r";
-            //
-            // _sessionTimeoutMenuItem
-            //
-            _sessionTimeoutMenuItem.DropDownItems.AddRange(new ToolStripItem[] { _sessionTimeoutTextBox, _storeTimeoutMenuItem, _restoreTimeoutMenuItem });
-            _sessionTimeoutMenuItem.Name = "_SessionTimeoutMenuItem";
-            _sessionTimeoutMenuItem.Size = new Size(257, 22);
-            _sessionTimeoutMenuItem.Text = "Timeout";
-            //
-            // _sessionTimeoutTextBox
-            //
-            _sessionTimeoutTextBox.Font = new Font("Segoe UI", 9.75f, FontStyle.Bold, GraphicsUnit.Point, 0);
-            _sessionTimeoutTextBox.Name = "_SessionTimeoutTextBox";
-            _sessionTimeoutTextBox.Size = new Size(100, 22);
-            _sessionTimeoutTextBox.ToolTipText = "Timeout in seconds";
-            //
-            // _storeTimeoutMenuItem
-            //
-            _storeTimeoutMenuItem.Name = "_StoreTimeoutMenuItem";
-            _storeTimeoutMenuItem.Size = new Size(172, 22);
-            _storeTimeoutMenuItem.Text = "Store and Set";
-            _storeTimeoutMenuItem.ToolTipText = "Pushes the previous timeout onto the stack and set a new timeout value";
-            _storeTimeoutMenuItem.Click += new EventHandler( StoreTimeoutMenuItem_Click );
-            //
-            // _restoreTimeoutMenuItem
-            //
-            _restoreTimeoutMenuItem.Name = "_RestoreTimeoutMenuItem";
-            _restoreTimeoutMenuItem.Size = new Size(172, 22);
-            _restoreTimeoutMenuItem.Text = "Restore and Set";
-            _restoreTimeoutMenuItem.ToolTipText = "Pulls the last timeout from the stack and sets it";
-            _restoreTimeoutMenuItem.Click += new EventHandler( RestoreTimeoutMenuItem_Click );
-            //
-            // _sessionReadStatusByteMenuItem
-            //
-            _sessionReadStatusByteMenuItem.Name = "_SessionReadStatusByteMenuItem";
-            _sessionReadStatusByteMenuItem.Size = new Size(257, 22);
-            _sessionReadStatusByteMenuItem.Text = "Read Status Register";
-            _sessionReadStatusByteMenuItem.ToolTipText = "Reads the session status byte";
-            _sessionReadStatusByteMenuItem.Click += new EventHandler( SessionReadStatusByteMenuItem_Click );
-            //
-            // _sessionReadStandardEventRegisterMenuItem
-            //
-            _sessionReadStandardEventRegisterMenuItem.Name = "_SessionReadStandardEventRegisterMenuItem";
-            _sessionReadStandardEventRegisterMenuItem.Size = new Size(257, 22);
-            _sessionReadStandardEventRegisterMenuItem.Text = "Read Standard Event Register";
-            _sessionReadStandardEventRegisterMenuItem.ToolTipText = "Reads the standard event register";
-            _sessionReadStandardEventRegisterMenuItem.Click += new EventHandler( SessionReadStandardEventRegisterMenuItem_Click );
-            //
-            // _sendBusTriggerMenuItem
-            //
-            _sendBusTriggerMenuItem.Name = "_SendBusTriggerMenuItem";
-            _sendBusTriggerMenuItem.Size = new Size(257, 22);
-            _sendBusTriggerMenuItem.Text = "Send Bus Trigger";
-            _sendBusTriggerMenuItem.ToolTipText = "Sends a bus trigger to the instrument";
-            _sendBusTriggerMenuItem.Click += new EventHandler( SendBusTrigger_Click );
-            //
-            // _pollSplitButton
-            //
-            _pollSplitButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _pollSplitButton.DropDownItems.AddRange(new ToolStripItem[] { _pollMessageStatusBitMenuItem, _pollCommandMenuItem, _pollIntervalMenuItem, _pollEnabledMenuItem, _pollAutoReadMenuItem, _pollSendMenuItem });
-            _pollSplitButton.Image = (Image)resources.GetObject("_PollSplitButton.Image");
-            _pollSplitButton.ImageTransparentColor = Color.Magenta;
-            _pollSplitButton.Name = "_PollSplitButton";
-            _pollSplitButton.Size = new Size(45, 28);
-            _pollSplitButton.Text = "Poll";
-            //
-            // _pollMessageStatusBitMenuItem
-            //
-            _pollMessageStatusBitMenuItem.DropDownItems.AddRange(new ToolStripItem[] { _pollMessageStatusBitTextBox });
-            _pollMessageStatusBitMenuItem.Name = "_PollMessageStatusBitMenuItem";
-            _pollMessageStatusBitMenuItem.Size = new Size(193, 22);
-            _pollMessageStatusBitMenuItem.Text = "Bitmask:";
-            _pollMessageStatusBitMenuItem.ToolTipText = "Message is flagged as received when status byte message bit  is on";
-            //
-            // _pollMessageStatusBitTextBox
-            //
-            _pollMessageStatusBitTextBox.Font = new Font("Segoe UI", 9.75f, FontStyle.Bold, GraphicsUnit.Point, 0);
-            _pollMessageStatusBitTextBox.Name = "_PollMessageStatusBitTextBox";
-            _pollMessageStatusBitTextBox.Size = new Size(100, 22);
-            _pollMessageStatusBitTextBox.ToolTipText = "Message status bit used to detect if a message is available for reading";
-            //
-            // _pollCommandMenuItem
-            //
-            _pollCommandMenuItem.DropDownItems.AddRange(new ToolStripItem[] { _pollWriteCommandTextBox });
-            _pollCommandMenuItem.Name = "_PollCommandMenuItem";
-            _pollCommandMenuItem.Size = new Size(193, 22);
-            _pollCommandMenuItem.Text = "Command:";
-            _pollCommandMenuItem.ToolTipText = "Click Send Command to send this command to the instrument";
-            //
-            // _pollWriteCommandTextBox
-            //
-            _pollWriteCommandTextBox.Font = new Font("Segoe UI", 9.75f, FontStyle.Bold, GraphicsUnit.Point, 0);
-            _pollWriteCommandTextBox.Name = "_PollWriteCommandTextBox";
-            _pollWriteCommandTextBox.Size = new Size(100, 22);
-            _pollWriteCommandTextBox.Text = @"*IDN?\n";
-            _pollWriteCommandTextBox.ToolTipText = "Command to write";
-            //
-            // _pollIntervalMenuItem
-            //
-            _pollIntervalMenuItem.DropDownItems.AddRange(new ToolStripItem[] { _pollIntervalTextBox });
-            _pollIntervalMenuItem.Name = "_PollIntervalMenuItem";
-            _pollIntervalMenuItem.Size = new Size(193, 22);
-            _pollIntervalMenuItem.Text = "Interval:";
-            //
-            // _pollIntervalTextBox
-            //
-            _pollIntervalTextBox.Font = new Font("Segoe UI", 9.75f, FontStyle.Bold, GraphicsUnit.Point, 0);
-            _pollIntervalTextBox.Name = "_PollIntervalTextBox";
-            _pollIntervalTextBox.Size = new Size(100, 22);
-            _pollIntervalTextBox.ToolTipText = "Sets the polling interval in seconds";
-            //
-            // _pollEnabledMenuItem
-            //
-            _pollEnabledMenuItem.Name = "_PollEnabledMenuItem";
-            _pollEnabledMenuItem.Size = new Size(193, 22);
-            _pollEnabledMenuItem.Text = "Press to Start";
-            _pollEnabledMenuItem.ToolTipText = "Check to enable polling the instrument service request on a timer";
-            _pollEnabledMenuItem.Click += new EventHandler( PollEnabledMenuItem_Click );
-            //
-            // _pollAutoReadMenuItem
-            //
-            _pollAutoReadMenuItem.CheckOnClick = true;
-            _pollAutoReadMenuItem.Name = "_PollAutoReadMenuItem";
-            _pollAutoReadMenuItem.Size = new Size(193, 22);
-            _pollAutoReadMenuItem.Text = "Auto Read Enabled";
-            _pollAutoReadMenuItem.ToolTipText = "Reads upon detecting the message available bit";
-            //
-            // _pollSendMenuItem
-            //
-            _pollSendMenuItem.Name = "_PollSendMenuItem";
-            _pollSendMenuItem.Size = new Size(193, 22);
-            _pollSendMenuItem.Text = "Send Command";
-            _pollSendMenuItem.ToolTipText = "Click to send the poll command.  A command can also be sent from the Session pane" + "l.";
-            _pollSendMenuItem.Click += new EventHandler( PollSendMenuItem_Click );
-            //
-            // _serviceRequestSplitButton
-            //
-            _serviceRequestSplitButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _serviceRequestSplitButton.DropDownItems.AddRange(new ToolStripItem[] { _serviceRequestBitmaskMenuItem, _serviceRequestEnableCommandMenuItem, _programServiceRequestEnableBitmaskMenuItem, _toggleVisaEventHandlerMenuItem, _serviceRequestHandlerAddRemoveMenuItem, _serviceRequestAutoReadMenuItem });
-            _serviceRequestSplitButton.Image = (Image)resources.GetObject("_ServiceRequestSplitButton.Image");
-            _serviceRequestSplitButton.ImageTransparentColor = Color.Magenta;
-            _serviceRequestSplitButton.Name = "_ServiceRequestSplitButton";
-            _serviceRequestSplitButton.Size = new Size(46, 28);
-            _serviceRequestSplitButton.Text = "SRQ";
-            //
-            // _serviceRequestBitmaskMenuItem
-            //
-            _serviceRequestBitmaskMenuItem.DropDownItems.AddRange(new ToolStripItem[] { _serviceRequestBitMaskTextBox });
-            _serviceRequestBitmaskMenuItem.Font = new Font("Segoe UI", 9.75f, FontStyle.Bold, GraphicsUnit.Point, 0);
-            _serviceRequestBitmaskMenuItem.Name = "_ServiceRequestBitmaskMenuItem";
-            _serviceRequestBitmaskMenuItem.Size = new Size(232, 22);
-            _serviceRequestBitmaskMenuItem.Text = "Events Enable Bitmask:";
-            _serviceRequestBitmaskMenuItem.ToolTipText = "Specifies which instrument events invoke service request";
-            //
-            // _serviceRequestBitMaskTextBox
-            //
-            _serviceRequestBitMaskTextBox.Font = new Font("Segoe UI", 9.75f, FontStyle.Bold, GraphicsUnit.Point, 0);
-            _serviceRequestBitMaskTextBox.Name = "_ServiceRequestBitMaskTextBox";
-            _serviceRequestBitMaskTextBox.Size = new Size(100, 22);
-            _serviceRequestBitMaskTextBox.ToolTipText = "Service request Bit Mask in Hex";
-            //
-            // _serviceRequestEnableCommandMenuItem
-            //
-            _serviceRequestEnableCommandMenuItem.DropDownItems.AddRange(new ToolStripItem[] { _serviceRequestEnableCommandTextBox });
-            _serviceRequestEnableCommandMenuItem.Name = "_ServiceRequestEnableCommandMenuItem";
-            _serviceRequestEnableCommandMenuItem.Size = new Size(232, 22);
-            _serviceRequestEnableCommandMenuItem.Text = "Events Enable Command:";
-            //
-            // _serviceRequestEnableCommandTextBox
-            //
-            _serviceRequestEnableCommandTextBox.Font = new Font("Segoe UI", 9.0f);
-            _serviceRequestEnableCommandTextBox.Name = "_ServiceRequestEnableCommandTextBox";
-            _serviceRequestEnableCommandTextBox.Size = new Size(100, 22);
-            _serviceRequestEnableCommandTextBox.ToolTipText = "Enter the service request enable command, e.g., *SRE {0:D}\" ";
-            //
-            // _programServiceRequestEnableBitmaskMenuItem
-            //
-            _programServiceRequestEnableBitmaskMenuItem.Name = "_ProgramServiceRequestEnableBitmaskMenuItem";
-            _programServiceRequestEnableBitmaskMenuItem.Size = new Size(232, 22);
-            _programServiceRequestEnableBitmaskMenuItem.Text = "Apply SRQ Bitmask";
-            _programServiceRequestEnableBitmaskMenuItem.ToolTipText = "Sets the service request enable bitmask";
-            _programServiceRequestEnableBitmaskMenuItem.Click += new EventHandler( ProgramServiceRequestEnableBitmaskMenuItem_Click );
-            //
-            // _toggleVisaEventHandlerMenuItem
-            //
-            _toggleVisaEventHandlerMenuItem.Name = "_ToggleVisaEventHandlerMenuItem";
-            _toggleVisaEventHandlerMenuItem.Size = new Size(232, 22);
-            _toggleVisaEventHandlerMenuItem.Text = "Toggle Visa Events";
-            _toggleVisaEventHandlerMenuItem.Click += new EventHandler( ToggleVisaEventHandlerMenuItem_CheckStateChanged );
-            //
-            // _serviceRequestHandlerAddRemoveMenuItem
-            //
-            _serviceRequestHandlerAddRemoveMenuItem.Name = "_ServiceRequestHandlerAddRemoveMenuItem";
-            _serviceRequestHandlerAddRemoveMenuItem.Size = new Size(232, 22);
-            _serviceRequestHandlerAddRemoveMenuItem.Text = "Toggle SRQ Handling";
-            _serviceRequestHandlerAddRemoveMenuItem.ToolTipText = "Check to handle device service request";
-            _serviceRequestHandlerAddRemoveMenuItem.Click += new EventHandler( ServiceRequestHandlerAddRemoveMenuItem_CheckStateChanged );
-            //
-            // _serviceRequestAutoReadMenuItem
-            //
-            _serviceRequestAutoReadMenuItem.CheckOnClick = true;
-            _serviceRequestAutoReadMenuItem.Name = "_ServiceRequestAutoReadMenuItem";
-            _serviceRequestAutoReadMenuItem.Size = new Size(232, 22);
-            _serviceRequestAutoReadMenuItem.Text = "Auto Read Enabled";
-            _serviceRequestAutoReadMenuItem.ToolTipText = "Enables reading messages when service request is enabled";
-            //
+            // 
+            this._usingStatusSubsystemMenuItem.CheckOnClick = true;
+            this._usingStatusSubsystemMenuItem.Name = "_usingStatusSubsystemMenuItem";
+            this._usingStatusSubsystemMenuItem.Size = new System.Drawing.Size(256, 22);
+            this._usingStatusSubsystemMenuItem.Text = "Using Status Subsystem Only";
+            this._usingStatusSubsystemMenuItem.ToolTipText = "Toggle to use status or all subsystems";
+            this._usingStatusSubsystemMenuItem.CheckStateChanged += new System.EventHandler(this.OpenStatusSubsystemMenuItem_CheckStateChanged);
+            // 
             // EditResourceNamesMenuItem
-            //
-            EditResourceNamesMenuItem.Name = "_EditResourceNamesMenuItem";
-            EditResourceNamesMenuItem.Size = new Size(256, 22);
-            EditResourceNamesMenuItem.Text = "Edit Resource Names";
-            EditResourceNamesMenuItem.Click += new EventHandler( EditResourceNamesMenuItem_Click );
-            //
+            // 
+            this.EditResourceNamesMenuItem.Name = "EditResourceNamesMenuItem";
+            this.EditResourceNamesMenuItem.Size = new System.Drawing.Size(256, 22);
+            this.EditResourceNamesMenuItem.Text = "Edit Resource Names";
+            this.EditResourceNamesMenuItem.Click += new System.EventHandler(this.EditResourceNamesMenuItem_Click);
+            // 
+            // _deviceDropDownButton
+            // 
+            this._deviceDropDownButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this._deviceDropDownButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._resetMenuItem,
+            this._clearErrorReportMenuItem,
+            this._readDeviceErrorsMenuItem,
+            this._readTerminalsStateMenuItem});
+            this._deviceDropDownButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._deviceDropDownButton.Name = "_deviceDropDownButton";
+            this._deviceDropDownButton.Size = new System.Drawing.Size(62, 28);
+            this._deviceDropDownButton.Text = "Device";
+            this._deviceDropDownButton.ToolTipText = "Device resets, Service Requests and trace management";
+            // 
+            // _resetMenuItem
+            // 
+            this._resetMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._clearInterfaceMenuItem,
+            this._clearDeviceMenuItem,
+            this._resetKnownStateMenuItem,
+            this._clearExecutionStateMenuItem,
+            this._initKnownStateMenuItem});
+            this._resetMenuItem.Name = "_resetMenuItem";
+            this._resetMenuItem.Size = new System.Drawing.Size(205, 22);
+            this._resetMenuItem.Text = "Reset...";
+            this._resetMenuItem.ToolTipText = "Opens the reset menus";
+            // 
+            // _clearInterfaceMenuItem
+            // 
+            this._clearInterfaceMenuItem.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._clearInterfaceMenuItem.Name = "_clearInterfaceMenuItem";
+            this._clearInterfaceMenuItem.Size = new System.Drawing.Size(242, 22);
+            this._clearInterfaceMenuItem.Text = "Clear Interface";
+            this._clearInterfaceMenuItem.ToolTipText = "Issues an interface clear command";
+            this._clearInterfaceMenuItem.Click += new System.EventHandler(this.ClearInterfaceMenuItem_Click);
+            // 
+            // _clearDeviceMenuItem
+            // 
+            this._clearDeviceMenuItem.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._clearDeviceMenuItem.Name = "_clearDeviceMenuItem";
+            this._clearDeviceMenuItem.Size = new System.Drawing.Size(242, 22);
+            this._clearDeviceMenuItem.Text = "Clear Device (SDC)";
+            this._clearDeviceMenuItem.ToolTipText = "Issues Selective Device Clear";
+            this._clearDeviceMenuItem.Click += new System.EventHandler(this.ClearDeviceMenuItem_Click);
+            // 
+            // _resetKnownStateMenuItem
+            // 
+            this._resetKnownStateMenuItem.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._resetKnownStateMenuItem.Name = "_resetKnownStateMenuItem";
+            this._resetKnownStateMenuItem.Size = new System.Drawing.Size(242, 22);
+            this._resetKnownStateMenuItem.Text = "Reset Known State (RST)";
+            this._resetKnownStateMenuItem.ToolTipText = "Issues *RST";
+            this._resetKnownStateMenuItem.Click += new System.EventHandler(this.ResetKnownStateMenuItem_Click);
+            // 
+            // _clearExecutionStateMenuItem
+            // 
+            this._clearExecutionStateMenuItem.Name = "_clearExecutionStateMenuItem";
+            this._clearExecutionStateMenuItem.Size = new System.Drawing.Size(242, 22);
+            this._clearExecutionStateMenuItem.Text = "Clear Execution State (CLS)";
+            this._clearExecutionStateMenuItem.ToolTipText = "Clears execution state (CLS)";
+            this._clearExecutionStateMenuItem.Click += new System.EventHandler(this.ClearExecutionStateMenuItem_Click);
+            // 
+            // _initKnownStateMenuItem
+            // 
+            this._initKnownStateMenuItem.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._initKnownStateMenuItem.Name = "_initKnownStateMenuItem";
+            this._initKnownStateMenuItem.Size = new System.Drawing.Size(242, 22);
+            this._initKnownStateMenuItem.Text = "Initialize Known State";
+            this._initKnownStateMenuItem.ToolTipText = "Issues *RST, CLear and initialize to custom known state";
+            this._initKnownStateMenuItem.Click += new System.EventHandler(this.InitKnownStateMenuItem_Click);
+            // 
+            // _clearErrorReportMenuItem
+            // 
+            this._clearErrorReportMenuItem.Name = "_clearErrorReportMenuItem";
+            this._clearErrorReportMenuItem.Size = new System.Drawing.Size(205, 22);
+            this._clearErrorReportMenuItem.Text = "Clear Error Report";
+            this._clearErrorReportMenuItem.ToolTipText = "Clears the error report";
+            this._clearErrorReportMenuItem.Click += new System.EventHandler(this.ClearErrorReportMenuItem_Click);
+            // 
+            // _readDeviceErrorsMenuItem
+            // 
+            this._readDeviceErrorsMenuItem.Name = "_readDeviceErrorsMenuItem";
+            this._readDeviceErrorsMenuItem.Size = new System.Drawing.Size(205, 22);
+            this._readDeviceErrorsMenuItem.Text = "Read Device Errors";
+            this._readDeviceErrorsMenuItem.ToolTipText = "Reads device errors";
+            this._readDeviceErrorsMenuItem.Click += new System.EventHandler(this.ReadDeviceErrorsMenuItem_Click);
+            // 
+            // _readTerminalsStateMenuItem
+            // 
+            this._readTerminalsStateMenuItem.Name = "_readTerminalsStateMenuItem";
+            this._readTerminalsStateMenuItem.Size = new System.Drawing.Size(205, 22);
+            this._readTerminalsStateMenuItem.Text = "Read Terminals State";
+            this._readTerminalsStateMenuItem.Click += new System.EventHandler(this.ReadTerminalsStateMenuItem_Click);
+            // 
+            // _sessionDownDownButton
+            // 
+            this._sessionDownDownButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this._sessionDownDownButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._readTerminationMenuItem,
+            this._writeTerminationMenuItem,
+            this._sessionTimeoutMenuItem,
+            this._sessionReadStatusByteMenuItem,
+            this._sessionReadStandardEventRegisterMenuItem,
+            this._sendBusTriggerMenuItem});
+            this._sessionDownDownButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._sessionDownDownButton.Name = "_sessionDownDownButton";
+            this._sessionDownDownButton.Size = new System.Drawing.Size(67, 28);
+            this._sessionDownDownButton.Text = "Session";
+            this._sessionDownDownButton.ToolTipText = "Select Session Options";
+            // 
+            // _readTerminationMenuItem
+            // 
+            this._readTerminationMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._readTerminationTextBox,
+            this._readTerminationEnabledMenuItem});
+            this._readTerminationMenuItem.Name = "_readTerminationMenuItem";
+            this._readTerminationMenuItem.Size = new System.Drawing.Size(257, 22);
+            this._readTerminationMenuItem.Text = "Read Termination";
+            this._readTerminationMenuItem.ToolTipText = "Read termination. Typically Line Feed (10)";
+            // 
+            // _readTerminationTextBox
+            // 
+            this._readTerminationTextBox.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._readTerminationTextBox.Name = "_readTerminationTextBox";
+            this._readTerminationTextBox.Size = new System.Drawing.Size(100, 22);
+            this._readTerminationTextBox.ToolTipText = "Read termination in Hex";
+            // 
+            // _readTerminationEnabledMenuItem
+            // 
+            this._readTerminationEnabledMenuItem.CheckOnClick = true;
+            this._readTerminationEnabledMenuItem.Name = "_readTerminationEnabledMenuItem";
+            this._readTerminationEnabledMenuItem.Size = new System.Drawing.Size(160, 22);
+            this._readTerminationEnabledMenuItem.Text = "Enabled";
+            this._readTerminationEnabledMenuItem.ToolTipText = "Checked to enable read termination";
+            // 
+            // _writeTerminationMenuItem
+            // 
+            this._writeTerminationMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._writeTerminationTextBox});
+            this._writeTerminationMenuItem.Name = "_writeTerminationMenuItem";
+            this._writeTerminationMenuItem.Size = new System.Drawing.Size(257, 22);
+            this._writeTerminationMenuItem.Text = "Write Termination";
+            this._writeTerminationMenuItem.ToolTipText = "Write termination; typically \\n (line feed)";
+            // 
+            // _writeTerminationTextBox
+            // 
+            this._writeTerminationTextBox.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._writeTerminationTextBox.Name = "_writeTerminationTextBox";
+            this._writeTerminationTextBox.Size = new System.Drawing.Size(100, 22);
+            this._writeTerminationTextBox.ToolTipText = "Write termination escape sequence, e.g., \\n\\r";
+            // 
+            // _sessionTimeoutMenuItem
+            // 
+            this._sessionTimeoutMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._sessionTimeoutTextBox,
+            this._storeTimeoutMenuItem,
+            this._restoreTimeoutMenuItem});
+            this._sessionTimeoutMenuItem.Name = "_sessionTimeoutMenuItem";
+            this._sessionTimeoutMenuItem.Size = new System.Drawing.Size(257, 22);
+            this._sessionTimeoutMenuItem.Text = "Timeout";
+            // 
+            // _sessionTimeoutTextBox
+            // 
+            this._sessionTimeoutTextBox.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._sessionTimeoutTextBox.Name = "_sessionTimeoutTextBox";
+            this._sessionTimeoutTextBox.Size = new System.Drawing.Size(100, 22);
+            this._sessionTimeoutTextBox.ToolTipText = "Timeout in seconds";
+            // 
+            // _storeTimeoutMenuItem
+            // 
+            this._storeTimeoutMenuItem.Name = "_storeTimeoutMenuItem";
+            this._storeTimeoutMenuItem.Size = new System.Drawing.Size(172, 22);
+            this._storeTimeoutMenuItem.Text = "Store and Set";
+            this._storeTimeoutMenuItem.ToolTipText = "Pushes the previous timeout onto the stack and set a new timeout value";
+            this._storeTimeoutMenuItem.Click += new System.EventHandler(this.StoreTimeoutMenuItem_Click);
+            // 
+            // _restoreTimeoutMenuItem
+            // 
+            this._restoreTimeoutMenuItem.Name = "_restoreTimeoutMenuItem";
+            this._restoreTimeoutMenuItem.Size = new System.Drawing.Size(172, 22);
+            this._restoreTimeoutMenuItem.Text = "Restore and Set";
+            this._restoreTimeoutMenuItem.ToolTipText = "Pulls the last timeout from the stack and sets it";
+            this._restoreTimeoutMenuItem.Click += new System.EventHandler(this.RestoreTimeoutMenuItem_Click);
+            // 
+            // _sessionReadStatusByteMenuItem
+            // 
+            this._sessionReadStatusByteMenuItem.Name = "_sessionReadStatusByteMenuItem";
+            this._sessionReadStatusByteMenuItem.Size = new System.Drawing.Size(257, 22);
+            this._sessionReadStatusByteMenuItem.Text = "Read Status Register";
+            this._sessionReadStatusByteMenuItem.ToolTipText = "Reads the session status byte";
+            this._sessionReadStatusByteMenuItem.Click += new System.EventHandler(this.SessionReadStatusByteMenuItem_Click);
+            // 
+            // _sessionReadStandardEventRegisterMenuItem
+            // 
+            this._sessionReadStandardEventRegisterMenuItem.Name = "_sessionReadStandardEventRegisterMenuItem";
+            this._sessionReadStandardEventRegisterMenuItem.Size = new System.Drawing.Size(257, 22);
+            this._sessionReadStandardEventRegisterMenuItem.Text = "Read Standard Event Register";
+            this._sessionReadStandardEventRegisterMenuItem.ToolTipText = "Reads the standard event register";
+            this._sessionReadStandardEventRegisterMenuItem.Click += new System.EventHandler(this.SessionReadStandardEventRegisterMenuItem_Click);
+            // 
+            // _sendBusTriggerMenuItem
+            // 
+            this._sendBusTriggerMenuItem.Name = "_sendBusTriggerMenuItem";
+            this._sendBusTriggerMenuItem.Size = new System.Drawing.Size(257, 22);
+            this._sendBusTriggerMenuItem.Text = "Send Bus Trigger";
+            this._sendBusTriggerMenuItem.ToolTipText = "Sends a bus trigger to the instrument";
+            this._sendBusTriggerMenuItem.Click += new System.EventHandler(this.SendBusTrigger_Click);
+            // 
+            // _pollSplitButton
+            // 
+            this._pollSplitButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this._pollSplitButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._pollMessageStatusBitMenuItem,
+            this._pollCommandMenuItem,
+            this._pollIntervalMenuItem,
+            this._pollEnabledMenuItem,
+            this._pollAutoReadMenuItem,
+            this._pollSendMenuItem});
+            this._pollSplitButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._pollSplitButton.Name = "_pollSplitButton";
+            this._pollSplitButton.Size = new System.Drawing.Size(45, 28);
+            this._pollSplitButton.Text = "Poll";
+            // 
+            // _pollMessageStatusBitMenuItem
+            // 
+            this._pollMessageStatusBitMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._pollMessageStatusBitTextBox});
+            this._pollMessageStatusBitMenuItem.Name = "_pollMessageStatusBitMenuItem";
+            this._pollMessageStatusBitMenuItem.Size = new System.Drawing.Size(193, 22);
+            this._pollMessageStatusBitMenuItem.Text = "Bitmask:";
+            this._pollMessageStatusBitMenuItem.ToolTipText = "Message is flagged as received when status byte message bit  is on";
+            // 
+            // _pollMessageStatusBitTextBox
+            // 
+            this._pollMessageStatusBitTextBox.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._pollMessageStatusBitTextBox.Name = "_pollMessageStatusBitTextBox";
+            this._pollMessageStatusBitTextBox.Size = new System.Drawing.Size(100, 22);
+            this._pollMessageStatusBitTextBox.ToolTipText = "Message status bit used to detect if a message is available for reading";
+            // 
+            // _pollCommandMenuItem
+            // 
+            this._pollCommandMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._pollWriteCommandTextBox});
+            this._pollCommandMenuItem.Name = "_pollCommandMenuItem";
+            this._pollCommandMenuItem.Size = new System.Drawing.Size(193, 22);
+            this._pollCommandMenuItem.Text = "Command:";
+            this._pollCommandMenuItem.ToolTipText = "Click Send Command to send this command to the instrument";
+            // 
+            // _pollWriteCommandTextBox
+            // 
+            this._pollWriteCommandTextBox.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._pollWriteCommandTextBox.Name = "_pollWriteCommandTextBox";
+            this._pollWriteCommandTextBox.Size = new System.Drawing.Size(100, 22);
+            this._pollWriteCommandTextBox.Text = "*IDN?\\n";
+            this._pollWriteCommandTextBox.ToolTipText = "Command to write";
+            // 
+            // _pollIntervalMenuItem
+            // 
+            this._pollIntervalMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._pollIntervalTextBox});
+            this._pollIntervalMenuItem.Name = "_pollIntervalMenuItem";
+            this._pollIntervalMenuItem.Size = new System.Drawing.Size(193, 22);
+            this._pollIntervalMenuItem.Text = "Interval:";
+            // 
+            // _pollIntervalTextBox
+            // 
+            this._pollIntervalTextBox.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._pollIntervalTextBox.Name = "_pollIntervalTextBox";
+            this._pollIntervalTextBox.Size = new System.Drawing.Size(100, 22);
+            this._pollIntervalTextBox.ToolTipText = "Sets the polling interval in seconds";
+            // 
+            // _pollEnabledMenuItem
+            // 
+            this._pollEnabledMenuItem.Name = "_pollEnabledMenuItem";
+            this._pollEnabledMenuItem.Size = new System.Drawing.Size(193, 22);
+            this._pollEnabledMenuItem.Text = "Press to Start";
+            this._pollEnabledMenuItem.ToolTipText = "Check to enable polling the instrument service request on a timer";
+            this._pollEnabledMenuItem.CheckStateChanged += new System.EventHandler(this.PollEnabledMenuItem_CheckStateChanged);
+            this._pollEnabledMenuItem.Click += new System.EventHandler(this.PollEnabledMenuItem_Click);
+            // 
+            // _pollAutoReadMenuItem
+            // 
+            this._pollAutoReadMenuItem.CheckOnClick = true;
+            this._pollAutoReadMenuItem.Name = "_pollAutoReadMenuItem";
+            this._pollAutoReadMenuItem.Size = new System.Drawing.Size(193, 22);
+            this._pollAutoReadMenuItem.Text = "Auto Read Enabled";
+            this._pollAutoReadMenuItem.ToolTipText = "Reads upon detecting the message available bit";
+            // 
+            // _pollSendMenuItem
+            // 
+            this._pollSendMenuItem.Name = "_pollSendMenuItem";
+            this._pollSendMenuItem.Size = new System.Drawing.Size(193, 22);
+            this._pollSendMenuItem.Text = "Send Command";
+            this._pollSendMenuItem.ToolTipText = "Click to send the poll command.  A command can also be sent from the Session pane" +
+    "l.";
+            this._pollSendMenuItem.Click += new System.EventHandler(this.PollSendMenuItem_Click);
+            // 
+            // _serviceRequestSplitButton
+            // 
+            this._serviceRequestSplitButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this._serviceRequestSplitButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._serviceRequestBitmaskMenuItem,
+            this._serviceRequestEnableCommandMenuItem,
+            this._programServiceRequestEnableBitmaskMenuItem,
+            this._toggleVisaEventHandlerMenuItem,
+            this._serviceRequestHandlerAddRemoveMenuItem,
+            this._serviceRequestAutoReadMenuItem});
+            this._serviceRequestSplitButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._serviceRequestSplitButton.Name = "_serviceRequestSplitButton";
+            this._serviceRequestSplitButton.Size = new System.Drawing.Size(46, 28);
+            this._serviceRequestSplitButton.Text = "SRQ";
+            // 
+            // _serviceRequestBitmaskMenuItem
+            // 
+            this._serviceRequestBitmaskMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._serviceRequestBitMaskTextBox});
+            this._serviceRequestBitmaskMenuItem.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._serviceRequestBitmaskMenuItem.Name = "_serviceRequestBitmaskMenuItem";
+            this._serviceRequestBitmaskMenuItem.Size = new System.Drawing.Size(232, 22);
+            this._serviceRequestBitmaskMenuItem.Text = "Events Enable Bitmask:";
+            this._serviceRequestBitmaskMenuItem.ToolTipText = "Specifies which instrument events invoke service request";
+            // 
+            // _serviceRequestBitMaskTextBox
+            // 
+            this._serviceRequestBitMaskTextBox.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._serviceRequestBitMaskTextBox.Name = "_serviceRequestBitMaskTextBox";
+            this._serviceRequestBitMaskTextBox.Size = new System.Drawing.Size(100, 22);
+            this._serviceRequestBitMaskTextBox.ToolTipText = "Service request Bit Mask in Hex";
+            // 
+            // _serviceRequestEnableCommandMenuItem
+            // 
+            this._serviceRequestEnableCommandMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._serviceRequestEnableCommandTextBox});
+            this._serviceRequestEnableCommandMenuItem.Name = "_serviceRequestEnableCommandMenuItem";
+            this._serviceRequestEnableCommandMenuItem.Size = new System.Drawing.Size(232, 22);
+            this._serviceRequestEnableCommandMenuItem.Text = "Events Enable Command:";
+            // 
+            // _serviceRequestEnableCommandTextBox
+            // 
+            this._serviceRequestEnableCommandTextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this._serviceRequestEnableCommandTextBox.Name = "_serviceRequestEnableCommandTextBox";
+            this._serviceRequestEnableCommandTextBox.Size = new System.Drawing.Size(100, 22);
+            this._serviceRequestEnableCommandTextBox.ToolTipText = "Enter the service request enable command, e.g., *SRE {0:D}\" ";
+            // 
+            // _programServiceRequestEnableBitmaskMenuItem
+            // 
+            this._programServiceRequestEnableBitmaskMenuItem.Name = "_programServiceRequestEnableBitmaskMenuItem";
+            this._programServiceRequestEnableBitmaskMenuItem.Size = new System.Drawing.Size(232, 22);
+            this._programServiceRequestEnableBitmaskMenuItem.Text = "Apply SRQ Bitmask";
+            this._programServiceRequestEnableBitmaskMenuItem.ToolTipText = "Sets the service request enable bitmask";
+            this._programServiceRequestEnableBitmaskMenuItem.Click += new System.EventHandler(this.ProgramServiceRequestEnableBitmaskMenuItem_Click);
+            // 
+            // _toggleVisaEventHandlerMenuItem
+            // 
+            this._toggleVisaEventHandlerMenuItem.Name = "_toggleVisaEventHandlerMenuItem";
+            this._toggleVisaEventHandlerMenuItem.Size = new System.Drawing.Size(232, 22);
+            this._toggleVisaEventHandlerMenuItem.Text = "Toggle Visa Events";
+            this._toggleVisaEventHandlerMenuItem.Click += new System.EventHandler(this.ToggleVisaEventHandlerMenuItem_CheckStateChanged);
+            // 
+            // _serviceRequestHandlerAddRemoveMenuItem
+            // 
+            this._serviceRequestHandlerAddRemoveMenuItem.Name = "_serviceRequestHandlerAddRemoveMenuItem";
+            this._serviceRequestHandlerAddRemoveMenuItem.Size = new System.Drawing.Size(232, 22);
+            this._serviceRequestHandlerAddRemoveMenuItem.Text = "Toggle SRQ Handling";
+            this._serviceRequestHandlerAddRemoveMenuItem.ToolTipText = "Check to handle device service request";
+            this._serviceRequestHandlerAddRemoveMenuItem.Click += new System.EventHandler(this.ServiceRequestHandlerAddRemoveMenuItem_CheckStateChanged);
+            // 
+            // _serviceRequestAutoReadMenuItem
+            // 
+            this._serviceRequestAutoReadMenuItem.CheckOnClick = true;
+            this._serviceRequestAutoReadMenuItem.Name = "_serviceRequestAutoReadMenuItem";
+            this._serviceRequestAutoReadMenuItem.Size = new System.Drawing.Size(232, 22);
+            this._serviceRequestAutoReadMenuItem.Text = "Auto Read Enabled";
+            this._serviceRequestAutoReadMenuItem.ToolTipText = "Enables reading messages when service request is enabled";
+            // 
             // StatusView
-            //
-            BackColor = Color.Transparent;
-            Controls.Add(_toolStrip);
-            Name = "StatusView";
-            Size = new Size(474, 31);
-            _toolStrip.ResumeLayout(false);
-            _toolStrip.PerformLayout();
-            ResumeLayout(false);
-            PerformLayout();
+            // 
+            this.BackColor = System.Drawing.Color.Transparent;
+            this.Controls.Add(this._toolStrip);
+            this.Name = "StatusView";
+            this.Size = new System.Drawing.Size(474, 31);
+            this._toolStrip.ResumeLayout(false);
+            this._toolStrip.PerformLayout();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         private ToolStrip _toolStrip;

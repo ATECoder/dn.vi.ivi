@@ -251,6 +251,7 @@ public partial class MeterView : cc.isr.WinControls.ModelViewBase
 
     /// <summary> Updates the shunt bound values. </summary>
     /// <remarks> David, 2020-10-12. </remarks>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0051:Remove unused private members", Justification = "<Pending>" )]
     private void UpdateShuntBoundValues()
     {
         if ( this.Meter is not null && this.Meter.ShuntResistance is not null )
@@ -510,6 +511,7 @@ public partial class MeterView : cc.isr.WinControls.ModelViewBase
     /// <remarks> David, 2020-10-12. </remarks>
     /// <param name="textBox">    The text box control. </param>
     /// <param name="resistance"> The resistance. </param>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0051:Remove unused private members", Justification = "<Pending>" )]
     private void ShowThermalTransient( TextBox textBox, MeasureBase resistance )
     {
         textBox.Text = resistance.MeasuredValueCaption;
@@ -577,14 +579,11 @@ public partial class MeterView : cc.isr.WinControls.ModelViewBase
                 }
                 else if ( dialogResult == DialogResult.Cancel )
                 {
-                    if ( e is not null )
-                    {
-                        e.Cancel = true;
-                    }
+                    e?.Cancel = true;
                 }
-                else if ( e is not null )
+                else
                 {
-                    e.Cancel = true;
+                    e?.Cancel = true;
                 }
             }
 
@@ -1366,6 +1365,7 @@ public partial class MeterView : cc.isr.WinControls.ModelViewBase
 
     /// <summary> Ends a completed sequence. </summary>
     /// <remarks> David, 2020-10-12. </remarks>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0051:Remove unused private members", Justification = "<Pending>" )]
     private void OnMeasurementSequenceCompleted()
     {
         _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"Measurement completed;. " );
@@ -1831,6 +1831,7 @@ public partial class MeterView : cc.isr.WinControls.ModelViewBase
     /// rows when navigating.
     /// </remarks>
     /// <value> <c>true</c> if navigating; otherwise, <c>false</c>. </value>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0052:Remove unread private members", Justification = "<Pending>" )]
     private bool Navigating { get; set; }
 
     /// <summary> Handles the BeforeSelect event of the _navigatorTreeView control. </summary>
@@ -1854,8 +1855,7 @@ public partial class MeterView : cc.isr.WinControls.ModelViewBase
         try
         {
             activity = $"{this.Meter?.ResourceName} handling navigator after select event";
-            if ( this._lastNodeSelected is not null )
-                this._lastNodeSelected.BackColor = this._navigatorTreeView.BackColor;
+            _ = (this._lastNodeSelected?.BackColor = this._navigatorTreeView.BackColor);
 
             if ( sender is not null && sender is Control s && s.Enabled && e is not null && e.Node is not null && e.Node.IsSelected )
             {

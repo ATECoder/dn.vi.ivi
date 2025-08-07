@@ -99,7 +99,6 @@ namespace cc.isr.VI.SubsystemsWinControls
             //
             _passBitPatternNumericButton.CheckOnClick = true;
             _passBitPatternNumericButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _passBitPatternNumericButton.Image = (System.Drawing.Image)resources.GetObject("_PassBitPatternNumericButton.Image");
             _passBitPatternNumericButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             _passBitPatternNumericButton.Name = "_PassBitPatternNumericButton";
             _passBitPatternNumericButton.Size = new System.Drawing.Size(52, 25);
@@ -119,7 +118,6 @@ namespace cc.isr.VI.SubsystemsWinControls
             _BinningStrobeToggleButton.CheckOnClick = true;
             _BinningStrobeToggleButton.CheckState = CheckState.Indeterminate;
             _BinningStrobeToggleButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _BinningStrobeToggleButton.Image = (System.Drawing.Image)resources.GetObject("_BinningStrobeToggleButton.Image");
             _BinningStrobeToggleButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             _BinningStrobeToggleButton.Name = "_BinningStrobeToggleButton";
             _BinningStrobeToggleButton.Size = new System.Drawing.Size(52, 25);
@@ -131,7 +129,6 @@ namespace cc.isr.VI.SubsystemsWinControls
             _limitFailedButton.Checked = true;
             _limitFailedButton.CheckState = CheckState.Indeterminate;
             _limitFailedButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _limitFailedButton.Image = (System.Drawing.Image)resources.GetObject("_LimitFailedButton.Image");
             _limitFailedButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             _limitFailedButton.Name = "_LimitFailedButton";
             _limitFailedButton.Size = new System.Drawing.Size(47, 25);

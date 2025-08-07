@@ -16,306 +16,455 @@ namespace cc.isr.VI.SubsystemsWinControls
         [DebuggerStepThrough()]
         private void InitializeComponent()
         {
-            var resources = new System.ComponentModel.ComponentResourceManager(typeof(LimitView));
-            _limitToolStripPanel = new ToolStripPanel();
-            _subsystemToolStrip = new ToolStrip();
-            _subsystemSplitButton = new ToolStripSplitButton();
-            _applySettingsMenuItem = new ToolStripMenuItem();
-            _applySettingsMenuItem.Click += new EventHandler(ApplySettingsMenuItem_Click);
-            _readSettingsMenuItem = new ToolStripMenuItem();
-            _readSettingsMenuItem.Click += new EventHandler(ReadSettingsMenuItem_Click);
-            _performLimitStripMenuItem = new ToolStripMenuItem();
-            _performLimitStripMenuItem.Click += new EventHandler(PerformLimitStripMenuItem_Click);
-            _readLimitTestMenuItem = new ToolStripMenuItem();
-            _readLimitTestMenuItem.Click += new EventHandler(ReadLimitTestMenuItem_Click);
-            _limitEnabledToggleButton = new ToolStripButton();
-            _limitEnabledToggleButton.CheckStateChanged += new EventHandler(LimitEnabledToggleButton_CheckStateChanged);
-            _autoClearToggleButton = new ToolStripButton();
-            _autoClearToggleButton.CheckStateChanged += new EventHandler(AutoClearButton_CheckStateChanged);
-            _limitFailedButton = new ToolStripButton();
-            _limitFailedButton.CheckStateChanged += new EventHandler(LimitFailedToggleButton_CheckStateChanged);
-            _upperLimitToolStrip = new ToolStrip();
-            _upperLimitLabel = new ToolStripLabel();
-            _upperLimitDecimalsNumericLabel = new ToolStripLabel();
-            _upperLimitDecimalsNumeric = new cc.isr.WinControls.ToolStripNumericUpDown();
-            _upperLimitDecimalsNumeric.NumericUpDown.ValueChanged += new EventHandler(UpperLimitDecimalsNumeric_ValueChanged);
-            _upperLimitNumericLabel = new ToolStripLabel();
-            _upperLimitNumeric = new cc.isr.WinControls.ToolStripNumericUpDown();
-            _upperLimitBitPatternNumericButton = new ToolStripButton();
-            _upperLimitBitPatternNumericButton.CheckStateChanged += new EventHandler(UpperLimitBitPatternNumericButton_CheckStateChanged);
-            _upperLimitBitPatternNumeric = new cc.isr.WinControls.ToolStripNumericUpDown();
-            _lowerLimitToolStrip = new ToolStrip();
-            _lowerLimitLabel = new ToolStripLabel();
-            _lowerLimitDecimalsNumericLabel = new ToolStripLabel();
-            _lowerLimitDecimalsNumeric = new cc.isr.WinControls.ToolStripNumericUpDown();
-            _lowerLimitDecimalsNumeric.NumericUpDown.ValueChanged += new EventHandler(LowerLimitDecimalsNumeric_ValueChanged);
-            _lowerLimitNumericLabel = new ToolStripLabel();
-            _lowerLimitNumeric = new cc.isr.WinControls.ToolStripNumericUpDown();
-            _lowerLimitBitPatternNumericButton = new ToolStripButton();
-            _lowerLimitBitPatternNumericButton.CheckStateChanged += new EventHandler(LowerBitPatternNumericButton_CheckStateChanged);
-            _lowerLimitBitPatternNumeric = new cc.isr.WinControls.ToolStripNumericUpDown();
-            _limitToolStripPanel.SuspendLayout();
-            _subsystemToolStrip.SuspendLayout();
-            _upperLimitToolStrip.SuspendLayout();
-            _lowerLimitToolStrip.SuspendLayout();
-            SuspendLayout();
-            //
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LimitView));
+            this._limitToolStripPanel = new System.Windows.Forms.ToolStripPanel();
+            this._subsystemToolStrip = new System.Windows.Forms.ToolStrip();
+            this._subsystemSplitButton = new System.Windows.Forms.ToolStripSplitButton();
+            this._applySettingsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._readSettingsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._performLimitStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._readLimitTestMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this._limitEnabledToggleButton = new System.Windows.Forms.ToolStripButton();
+            this._autoClearToggleButton = new System.Windows.Forms.ToolStripButton();
+            this._limitFailedButton = new System.Windows.Forms.ToolStripButton();
+            this._upperLimitToolStrip = new System.Windows.Forms.ToolStrip();
+            this._upperLimitLabel = new System.Windows.Forms.ToolStripLabel();
+            this._upperLimitDecimalsNumericLabel = new System.Windows.Forms.ToolStripLabel();
+            this._upperLimitDecimalsNumeric = new cc.isr.WinControls.ToolStripNumericUpDown();
+            this._upperLimitNumericLabel = new System.Windows.Forms.ToolStripLabel();
+            this._upperLimitNumeric = new cc.isr.WinControls.ToolStripNumericUpDown();
+            this._upperLimitBitPatternNumericButton = new System.Windows.Forms.ToolStripButton();
+            this._upperLimitBitPatternNumeric = new cc.isr.WinControls.ToolStripNumericUpDown();
+            this._lowerLimitToolStrip = new System.Windows.Forms.ToolStrip();
+            this._lowerLimitLabel = new System.Windows.Forms.ToolStripLabel();
+            this._lowerLimitDecimalsNumericLabel = new System.Windows.Forms.ToolStripLabel();
+            this._lowerLimitDecimalsNumeric = new cc.isr.WinControls.ToolStripNumericUpDown();
+            this._lowerLimitNumericLabel = new System.Windows.Forms.ToolStripLabel();
+            this._lowerLimitNumeric = new cc.isr.WinControls.ToolStripNumericUpDown();
+            this._lowerLimitBitPatternNumericButton = new System.Windows.Forms.ToolStripButton();
+            this._lowerLimitBitPatternNumeric = new cc.isr.WinControls.ToolStripNumericUpDown();
+            this._limitToolStripPanel.SuspendLayout();
+            this._subsystemToolStrip.SuspendLayout();
+            this._upperLimitToolStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this._upperLimitDecimalsNumeric.NumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._upperLimitNumeric.NumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._upperLimitBitPatternNumeric.NumericUpDown)).BeginInit();
+            this._lowerLimitToolStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this._lowerLimitDecimalsNumeric.NumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._lowerLimitNumeric.NumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._lowerLimitBitPatternNumeric.NumericUpDown)).BeginInit();
+            this.SuspendLayout();
+            // 
             // _limitToolStripPanel
-            //
-            _limitToolStripPanel.BackColor = System.Drawing.Color.Transparent;
-            _limitToolStripPanel.Controls.Add(_subsystemToolStrip);
-            _limitToolStripPanel.Controls.Add(_upperLimitToolStrip);
-            _limitToolStripPanel.Controls.Add(_lowerLimitToolStrip);
-            _limitToolStripPanel.Dock = DockStyle.Top;
-            _limitToolStripPanel.Location = new System.Drawing.Point(1, 1);
-            _limitToolStripPanel.Name = "_LimitToolStripPanel";
-            _limitToolStripPanel.Orientation = Orientation.Horizontal;
-            _limitToolStripPanel.RowMargin = new Padding(0);
-            _limitToolStripPanel.Size = new System.Drawing.Size(387, 81);
-            //
+            // 
+            this._limitToolStripPanel.BackColor = System.Drawing.Color.Transparent;
+            this._limitToolStripPanel.Controls.Add(this._subsystemToolStrip);
+            this._limitToolStripPanel.Controls.Add(this._upperLimitToolStrip);
+            this._limitToolStripPanel.Controls.Add(this._lowerLimitToolStrip);
+            this._limitToolStripPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this._limitToolStripPanel.Location = new System.Drawing.Point(1, 1);
+            this._limitToolStripPanel.Name = "_limitToolStripPanel";
+            this._limitToolStripPanel.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            this._limitToolStripPanel.RowMargin = new System.Windows.Forms.Padding(0);
+            this._limitToolStripPanel.Size = new System.Drawing.Size(443, 75);
+            // 
             // _subsystemToolStrip
-            //
-            _subsystemToolStrip.BackColor = System.Drawing.Color.Transparent;
-            _subsystemToolStrip.Dock = DockStyle.None;
-            _subsystemToolStrip.GripMargin = new Padding(0);
-            _subsystemToolStrip.Items.AddRange(new ToolStripItem[] { _subsystemSplitButton, _limitEnabledToggleButton, _autoClearToggleButton, _limitFailedButton });
-            _subsystemToolStrip.Location = new System.Drawing.Point(0, 0);
-            _subsystemToolStrip.Name = "_SubsystemToolStrip";
-            _subsystemToolStrip.Size = new System.Drawing.Size(387, 25);
-            _subsystemToolStrip.Stretch = true;
-            _subsystemToolStrip.TabIndex = 3;
-            //
+            // 
+            this._subsystemToolStrip.BackColor = System.Drawing.Color.Transparent;
+            this._subsystemToolStrip.Dock = System.Windows.Forms.DockStyle.None;
+            this._subsystemToolStrip.GripMargin = new System.Windows.Forms.Padding(0);
+            this._subsystemToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._subsystemSplitButton,
+            this._limitEnabledToggleButton,
+            this._autoClearToggleButton,
+            this._limitFailedButton});
+            this._subsystemToolStrip.Location = new System.Drawing.Point(0, 0);
+            this._subsystemToolStrip.Name = "_subsystemToolStrip";
+            this._subsystemToolStrip.Size = new System.Drawing.Size(443, 25);
+            this._subsystemToolStrip.Stretch = true;
+            this._subsystemToolStrip.TabIndex = 3;
+            // 
             // _subsystemSplitButton
-            //
-            _subsystemSplitButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _subsystemSplitButton.DoubleClickEnabled = true;
-            _subsystemSplitButton.DropDownItems.AddRange(new ToolStripItem[] { _applySettingsMenuItem, _readSettingsMenuItem, _performLimitStripMenuItem, _readLimitTestMenuItem });
-            _subsystemSplitButton.Font = new System.Drawing.Font("Segoe UI", 9.0f, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, 0);
-            _subsystemSplitButton.Image = (System.Drawing.Image)resources.GetObject("_SubsystemSplitButton.Image");
-            _subsystemSplitButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            _subsystemSplitButton.Name = "_SubsystemSplitButton";
-            _subsystemSplitButton.Size = new System.Drawing.Size(57, 22);
-            _subsystemSplitButton.Text = "Limit1";
-            _subsystemSplitButton.ToolTipText = "Double-click to read limit state";
-            //
+            // 
+            this._subsystemSplitButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this._subsystemSplitButton.DoubleClickEnabled = true;
+            this._subsystemSplitButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._applySettingsMenuItem,
+            this._readSettingsMenuItem,
+            this._performLimitStripMenuItem,
+            this._readLimitTestMenuItem});
+            this._subsystemSplitButton.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._subsystemSplitButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._subsystemSplitButton.Name = "_subsystemSplitButton";
+            this._subsystemSplitButton.Size = new System.Drawing.Size(55, 22);
+            this._subsystemSplitButton.Text = "Limit1";
+            this._subsystemSplitButton.ToolTipText = "Double-click to read limit state";
+            // 
             // _applySettingsMenuItem
-            //
-            _applySettingsMenuItem.Name = "_applySettingsMenuItem";
-            _applySettingsMenuItem.Size = new System.Drawing.Size(184, 22);
-            _applySettingsMenuItem.Text = "Apply Settings";
-            _applySettingsMenuItem.ToolTipText = "Applies settings onto the instrument";
-            //
+            // 
+            this._applySettingsMenuItem.Name = "_applySettingsMenuItem";
+            this._applySettingsMenuItem.Size = new System.Drawing.Size(184, 22);
+            this._applySettingsMenuItem.Text = "Apply Settings";
+            this._applySettingsMenuItem.ToolTipText = "Applies settings onto the instrument";
+            this._applySettingsMenuItem.Click += new System.EventHandler(this.ApplySettingsMenuItem_Click);
+            // 
             // _readSettingsMenuItem
-            //
-            _readSettingsMenuItem.Name = "_ReadSettingsMenuItem";
-            _readSettingsMenuItem.Size = new System.Drawing.Size(184, 22);
-            _readSettingsMenuItem.Text = "Read Settings";
-            _readSettingsMenuItem.ToolTipText = "Reads settings from the instrument";
-            //
+            // 
+            this._readSettingsMenuItem.Name = "_readSettingsMenuItem";
+            this._readSettingsMenuItem.Size = new System.Drawing.Size(184, 22);
+            this._readSettingsMenuItem.Text = "Read Settings";
+            this._readSettingsMenuItem.ToolTipText = "Reads settings from the instrument";
+            this._readSettingsMenuItem.Click += new System.EventHandler(this.ReadSettingsMenuItem_Click);
+            // 
             // _performLimitStripMenuItem
-            //
-            _performLimitStripMenuItem.Name = "_PerformLimitStripMenuItem";
-            _performLimitStripMenuItem.Size = new System.Drawing.Size(184, 22);
-            _performLimitStripMenuItem.Text = "Perform Limit Test";
-            _performLimitStripMenuItem.ToolTipText = "Perform limit test";
-            //
+            // 
+            this._performLimitStripMenuItem.Name = "_performLimitStripMenuItem";
+            this._performLimitStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this._performLimitStripMenuItem.Text = "Perform Limit Test";
+            this._performLimitStripMenuItem.ToolTipText = "Perform limit test";
+            this._performLimitStripMenuItem.Click += new System.EventHandler(this.PerformLimitStripMenuItem_Click);
+            // 
             // _readLimitTestMenuItem
-            //
-            _readLimitTestMenuItem.Name = "_ReadLimitTestMenuItem";
-            _readLimitTestMenuItem.Size = new System.Drawing.Size(184, 22);
-            _readLimitTestMenuItem.Text = "Read Limit Test State";
-            _readLimitTestMenuItem.ToolTipText = "Read limit test result";
-            //
+            // 
+            this._readLimitTestMenuItem.Name = "_readLimitTestMenuItem";
+            this._readLimitTestMenuItem.Size = new System.Drawing.Size(184, 22);
+            this._readLimitTestMenuItem.Text = "Read Limit Test State";
+            this._readLimitTestMenuItem.ToolTipText = "Read limit test result";
+            this._readLimitTestMenuItem.Click += new System.EventHandler(this.ReadLimitTestMenuItem_Click);
+            // 
             // _limitEnabledToggleButton
-            //
-            _limitEnabledToggleButton.Checked = true;
-            _limitEnabledToggleButton.CheckOnClick = true;
-            _limitEnabledToggleButton.CheckState = CheckState.Indeterminate;
-            _limitEnabledToggleButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _limitEnabledToggleButton.Image = (System.Drawing.Image)resources.GetObject("_LimitEnabledToggleButton.Image");
-            _limitEnabledToggleButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            _limitEnabledToggleButton.Name = "_LimitEnabledToggleButton";
-            _limitEnabledToggleButton.Size = new System.Drawing.Size(56, 22);
-            _limitEnabledToggleButton.Text = "Disabled";
-            _limitEnabledToggleButton.ToolTipText = "toggle to enable or disable this limit";
-            //
+            // 
+            this._limitEnabledToggleButton.Checked = true;
+            this._limitEnabledToggleButton.CheckOnClick = true;
+            this._limitEnabledToggleButton.CheckState = System.Windows.Forms.CheckState.Indeterminate;
+            this._limitEnabledToggleButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this._limitEnabledToggleButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._limitEnabledToggleButton.Name = "_limitEnabledToggleButton";
+            this._limitEnabledToggleButton.Size = new System.Drawing.Size(56, 22);
+            this._limitEnabledToggleButton.Text = "Disabled";
+            this._limitEnabledToggleButton.ToolTipText = "toggle to enable or disable this limit";
+            this._limitEnabledToggleButton.CheckStateChanged += new System.EventHandler(this.LimitEnabledToggleButton_CheckStateChanged);
+            // 
             // _autoClearToggleButton
-            //
-            _autoClearToggleButton.Checked = true;
-            _autoClearToggleButton.CheckOnClick = true;
-            _autoClearToggleButton.CheckState = CheckState.Indeterminate;
-            _autoClearToggleButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _autoClearToggleButton.Image = (System.Drawing.Image)resources.GetObject("_autoClearToggleButton.Image");
-            _autoClearToggleButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            _autoClearToggleButton.Name = "_autoClearToggleButton";
-            _autoClearToggleButton.Size = new System.Drawing.Size(90, 22);
-            _autoClearToggleButton.Text = "Auto Clear: Off";
-            _autoClearToggleButton.ToolTipText = "Toggle to turn auto clear on or off";
-            //
+            // 
+            this._autoClearToggleButton.Checked = true;
+            this._autoClearToggleButton.CheckOnClick = true;
+            this._autoClearToggleButton.CheckState = System.Windows.Forms.CheckState.Indeterminate;
+            this._autoClearToggleButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this._autoClearToggleButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._autoClearToggleButton.Name = "_autoClearToggleButton";
+            this._autoClearToggleButton.Size = new System.Drawing.Size(90, 22);
+            this._autoClearToggleButton.Text = "Auto Clear: Off";
+            this._autoClearToggleButton.ToolTipText = "Toggle to turn auto clear on or off";
+            this._autoClearToggleButton.CheckStateChanged += new System.EventHandler(this.AutoClearButton_CheckStateChanged);
+            // 
             // _limitFailedButton
-            //
-            _limitFailedButton.Checked = true;
-            _limitFailedButton.CheckState = CheckState.Indeterminate;
-            _limitFailedButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _limitFailedButton.Image = (System.Drawing.Image)resources.GetObject("_LimitFailedButton.Image");
-            _limitFailedButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            _limitFailedButton.Name = "_LimitFailedButton";
-            _limitFailedButton.Size = new System.Drawing.Size(47, 22);
-            _limitFailedButton.Text = "Failed?";
-            _limitFailedButton.ToolTipText = "displays fail state";
-            //
+            // 
+            this._limitFailedButton.Checked = true;
+            this._limitFailedButton.CheckState = System.Windows.Forms.CheckState.Indeterminate;
+            this._limitFailedButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this._limitFailedButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._limitFailedButton.Name = "_limitFailedButton";
+            this._limitFailedButton.Size = new System.Drawing.Size(47, 22);
+            this._limitFailedButton.Text = "Failed?";
+            this._limitFailedButton.ToolTipText = "displays fail state";
+            this._limitFailedButton.CheckStateChanged += new System.EventHandler(this.LimitFailedToggleButton_CheckStateChanged);
+            // 
             // _upperLimitToolStrip
-            //
-            _upperLimitToolStrip.BackColor = System.Drawing.Color.Transparent;
-            _upperLimitToolStrip.Dock = DockStyle.None;
-            _upperLimitToolStrip.GripMargin = new Padding(0);
-            _upperLimitToolStrip.Items.AddRange(new ToolStripItem[] { _upperLimitLabel, _upperLimitDecimalsNumericLabel, _upperLimitDecimalsNumeric, _upperLimitNumericLabel, _upperLimitNumeric, _upperLimitBitPatternNumericButton, _upperLimitBitPatternNumeric });
-            _upperLimitToolStrip.Location = new System.Drawing.Point(0, 25);
-            _upperLimitToolStrip.Name = "_UpperLimitToolStrip";
-            _upperLimitToolStrip.Size = new System.Drawing.Size(340, 28);
-            _upperLimitToolStrip.TabIndex = 2;
-            //
+            // 
+            this._upperLimitToolStrip.BackColor = System.Drawing.Color.Transparent;
+            this._upperLimitToolStrip.Dock = System.Windows.Forms.DockStyle.None;
+            this._upperLimitToolStrip.GripMargin = new System.Windows.Forms.Padding(0);
+            this._upperLimitToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._upperLimitLabel,
+            this._upperLimitDecimalsNumericLabel,
+            this._upperLimitDecimalsNumeric,
+            this._upperLimitNumericLabel,
+            this._upperLimitNumeric,
+            this._upperLimitBitPatternNumericButton,
+            this._upperLimitBitPatternNumeric});
+            this._upperLimitToolStrip.Location = new System.Drawing.Point(0, 25);
+            this._upperLimitToolStrip.Name = "_upperLimitToolStrip";
+            this._upperLimitToolStrip.Size = new System.Drawing.Size(340, 25);
+            this._upperLimitToolStrip.TabIndex = 2;
+            // 
             // _upperLimitLabel
-            //
-            _upperLimitLabel.Font = new System.Drawing.Font("Segoe UI", 9.0f, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, 0);
-            _upperLimitLabel.Margin = new Padding(6, 1, 0, 2);
-            _upperLimitLabel.Name = "_UpperLimitLabel";
-            _upperLimitLabel.Size = new System.Drawing.Size(39, 25);
-            _upperLimitLabel.Text = "Upper";
-            //
+            // 
+            this._upperLimitLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._upperLimitLabel.Margin = new System.Windows.Forms.Padding(6, 1, 0, 2);
+            this._upperLimitLabel.Name = "_upperLimitLabel";
+            this._upperLimitLabel.Size = new System.Drawing.Size(39, 22);
+            this._upperLimitLabel.Text = "Upper";
+            // 
             // _upperLimitDecimalsNumericLabel
-            //
-            _upperLimitDecimalsNumericLabel.Name = "_UpperLimitDecimalsNumericLabel";
-            _upperLimitDecimalsNumericLabel.Size = new System.Drawing.Size(58, 25);
-            _upperLimitDecimalsNumericLabel.Text = "Decimals:";
-            //
+            // 
+            this._upperLimitDecimalsNumericLabel.Name = "_upperLimitDecimalsNumericLabel";
+            this._upperLimitDecimalsNumericLabel.Size = new System.Drawing.Size(58, 22);
+            this._upperLimitDecimalsNumericLabel.Text = "Decimals:";
+            // 
             // _upperLimitDecimalsNumeric
-            //
-            _upperLimitDecimalsNumeric.Name = "_UpperLimitDecimalsNumeric";
-            _upperLimitDecimalsNumeric.Size = new System.Drawing.Size(41, 25);
-            _upperLimitDecimalsNumeric.Text = "3";
-            _upperLimitDecimalsNumeric.ToolTipText = "Number of decimal places for setting the limits";
-            _upperLimitDecimalsNumeric.Value = new decimal(new int[] { 3, 0, 0, 0 });
-            //
+            // 
+            this._upperLimitDecimalsNumeric.Name = "_upperLimitDecimalsNumeric";
+            // 
+            // _upperLimitDecimalsNumeric
+            // 
+            this._upperLimitDecimalsNumeric.NumericUpDown.Location = new System.Drawing.Point(108, 1);
+            this._upperLimitDecimalsNumeric.NumericUpDown.Name = "_upperLimitDecimalsNumeric";
+            this._upperLimitDecimalsNumeric.NumericUpDown.ReadOnlyBackColor = System.Drawing.SystemColors.Control;
+            this._upperLimitDecimalsNumeric.NumericUpDown.ReadOnlyForeColor = System.Drawing.SystemColors.WindowText;
+            this._upperLimitDecimalsNumeric.NumericUpDown.ReadWriteBackColor = System.Drawing.SystemColors.Window;
+            this._upperLimitDecimalsNumeric.NumericUpDown.ReadWriteForeColor = System.Drawing.SystemColors.ControlText;
+            this._upperLimitDecimalsNumeric.NumericUpDown.Size = new System.Drawing.Size(41, 22);
+            this._upperLimitDecimalsNumeric.NumericUpDown.TabIndex = 0;
+            this._upperLimitDecimalsNumeric.NumericUpDown.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this._upperLimitDecimalsNumeric.NumericUpDown.ValueChanged += new System.EventHandler(this.UpperLimitDecimalsNumeric_ValueChanged);
+            this._upperLimitDecimalsNumeric.Size = new System.Drawing.Size(41, 22);
+            this._upperLimitDecimalsNumeric.Text = "0";
+            this._upperLimitDecimalsNumeric.ToolTipText = "Number of decimal places for setting the limits";
+            this._upperLimitDecimalsNumeric.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            // 
             // _upperLimitNumericLabel
-            //
-            _upperLimitNumericLabel.Margin = new Padding(3, 1, 0, 2);
-            _upperLimitNumericLabel.Name = "_UpperLimitNumericLabel";
-            _upperLimitNumericLabel.Size = new System.Drawing.Size(38, 25);
-            _upperLimitNumericLabel.Text = "Value:";
-            //
+            // 
+            this._upperLimitNumericLabel.Margin = new System.Windows.Forms.Padding(3, 1, 0, 2);
+            this._upperLimitNumericLabel.Name = "_upperLimitNumericLabel";
+            this._upperLimitNumericLabel.Size = new System.Drawing.Size(38, 22);
+            this._upperLimitNumericLabel.Text = "Value:";
+            // 
             // _upperLimitNumeric
-            //
-            _upperLimitNumeric.Name = "_UpperLimitNumeric";
-            _upperLimitNumeric.Size = new System.Drawing.Size(41, 25);
-            _upperLimitNumeric.Text = "0";
-            _upperLimitNumeric.ToolTipText = "Upper limit";
-            _upperLimitNumeric.Value = new decimal(new int[] { 0, 0, 0, 0 });
-            //
+            // 
+            this._upperLimitNumeric.Name = "_upperLimitNumeric";
+            // 
+            // _upperLimitNumeric
+            // 
+            this._upperLimitNumeric.NumericUpDown.Location = new System.Drawing.Point(190, 1);
+            this._upperLimitNumeric.NumericUpDown.Name = "_upperLimitNumeric";
+            this._upperLimitNumeric.NumericUpDown.ReadOnlyBackColor = System.Drawing.SystemColors.Control;
+            this._upperLimitNumeric.NumericUpDown.ReadOnlyForeColor = System.Drawing.SystemColors.WindowText;
+            this._upperLimitNumeric.NumericUpDown.ReadWriteBackColor = System.Drawing.SystemColors.Window;
+            this._upperLimitNumeric.NumericUpDown.ReadWriteForeColor = System.Drawing.SystemColors.ControlText;
+            this._upperLimitNumeric.NumericUpDown.Size = new System.Drawing.Size(41, 22);
+            this._upperLimitNumeric.NumericUpDown.TabIndex = 1;
+            this._upperLimitNumeric.NumericUpDown.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this._upperLimitNumeric.Size = new System.Drawing.Size(41, 22);
+            this._upperLimitNumeric.Text = "0";
+            this._upperLimitNumeric.ToolTipText = "Upper limit";
+            this._upperLimitNumeric.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            // 
             // _upperLimitBitPatternNumericButton
-            //
-            _upperLimitBitPatternNumericButton.CheckOnClick = true;
-            _upperLimitBitPatternNumericButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _upperLimitBitPatternNumericButton.Image = (System.Drawing.Image)resources.GetObject("_UpperLimitBitPatternNumericButton.Image");
-            _upperLimitBitPatternNumericButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            _upperLimitBitPatternNumericButton.Name = "_UpperLimitBitPatternNumericButton";
-            _upperLimitBitPatternNumericButton.Size = new System.Drawing.Size(65, 25);
-            _upperLimitBitPatternNumericButton.Text = "Source: 0x";
-            _upperLimitBitPatternNumericButton.ToolTipText = "Toggle to switch between decimal and hex display";
-            //
+            // 
+            this._upperLimitBitPatternNumericButton.CheckOnClick = true;
+            this._upperLimitBitPatternNumericButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this._upperLimitBitPatternNumericButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._upperLimitBitPatternNumericButton.Name = "_upperLimitBitPatternNumericButton";
+            this._upperLimitBitPatternNumericButton.Size = new System.Drawing.Size(65, 22);
+            this._upperLimitBitPatternNumericButton.Text = "Source: 0x";
+            this._upperLimitBitPatternNumericButton.ToolTipText = "Toggle to switch between decimal and hex display";
+            this._upperLimitBitPatternNumericButton.CheckStateChanged += new System.EventHandler(this.UpperLimitBitPatternNumericButton_CheckStateChanged);
+            // 
             // _upperLimitBitPatternNumeric
-            //
-            _upperLimitBitPatternNumeric.Name = "_UpperLimitBitPatternNumeric";
-            _upperLimitBitPatternNumeric.Size = new System.Drawing.Size(41, 25);
-            _upperLimitBitPatternNumeric.Text = "0";
-            _upperLimitBitPatternNumeric.ToolTipText = "Upper limit bit pattern";
-            _upperLimitBitPatternNumeric.Value = new decimal(new int[] { 0, 0, 0, 0 });
-            //
+            // 
+            this._upperLimitBitPatternNumeric.Name = "_upperLimitBitPatternNumeric";
+            // 
+            // _upperLimitBitPatternNumeric
+            // 
+            this._upperLimitBitPatternNumeric.NumericUpDown.Location = new System.Drawing.Point(296, 1);
+            this._upperLimitBitPatternNumeric.NumericUpDown.Name = "_upperLimitBitPatternNumeric";
+            this._upperLimitBitPatternNumeric.NumericUpDown.ReadOnlyBackColor = System.Drawing.SystemColors.Control;
+            this._upperLimitBitPatternNumeric.NumericUpDown.ReadOnlyForeColor = System.Drawing.SystemColors.WindowText;
+            this._upperLimitBitPatternNumeric.NumericUpDown.ReadWriteBackColor = System.Drawing.SystemColors.Window;
+            this._upperLimitBitPatternNumeric.NumericUpDown.ReadWriteForeColor = System.Drawing.SystemColors.ControlText;
+            this._upperLimitBitPatternNumeric.NumericUpDown.Size = new System.Drawing.Size(41, 22);
+            this._upperLimitBitPatternNumeric.NumericUpDown.TabIndex = 2;
+            this._upperLimitBitPatternNumeric.NumericUpDown.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this._upperLimitBitPatternNumeric.Size = new System.Drawing.Size(41, 22);
+            this._upperLimitBitPatternNumeric.Text = "0";
+            this._upperLimitBitPatternNumeric.ToolTipText = "Upper limit bit pattern";
+            this._upperLimitBitPatternNumeric.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            // 
             // _lowerLimitToolStrip
-            //
-            _lowerLimitToolStrip.BackColor = System.Drawing.Color.Transparent;
-            _lowerLimitToolStrip.Dock = DockStyle.None;
-            _lowerLimitToolStrip.GripMargin = new Padding(0);
-            _lowerLimitToolStrip.Items.AddRange(new ToolStripItem[] { _lowerLimitLabel, _lowerLimitDecimalsNumericLabel, _lowerLimitDecimalsNumeric, _lowerLimitNumericLabel, _lowerLimitNumeric, _lowerLimitBitPatternNumericButton, _lowerLimitBitPatternNumeric });
-            _lowerLimitToolStrip.Location = new System.Drawing.Point(0, 53);
-            _lowerLimitToolStrip.Name = "_LowerLimitToolStrip";
-            _lowerLimitToolStrip.Size = new System.Drawing.Size(341, 28);
-            _lowerLimitToolStrip.TabIndex = 1;
-            //
+            // 
+            this._lowerLimitToolStrip.BackColor = System.Drawing.Color.Transparent;
+            this._lowerLimitToolStrip.Dock = System.Windows.Forms.DockStyle.None;
+            this._lowerLimitToolStrip.GripMargin = new System.Windows.Forms.Padding(0);
+            this._lowerLimitToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._lowerLimitLabel,
+            this._lowerLimitDecimalsNumericLabel,
+            this._lowerLimitDecimalsNumeric,
+            this._lowerLimitNumericLabel,
+            this._lowerLimitNumeric,
+            this._lowerLimitBitPatternNumericButton,
+            this._lowerLimitBitPatternNumeric});
+            this._lowerLimitToolStrip.Location = new System.Drawing.Point(0, 50);
+            this._lowerLimitToolStrip.Name = "_lowerLimitToolStrip";
+            this._lowerLimitToolStrip.Size = new System.Drawing.Size(372, 25);
+            this._lowerLimitToolStrip.TabIndex = 1;
+            // 
             // _lowerLimitLabel
-            //
-            _lowerLimitLabel.Font = new System.Drawing.Font("Segoe UI", 9.0f, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, 0);
-            _lowerLimitLabel.Margin = new Padding(6, 1, 2, 2);
-            _lowerLimitLabel.Name = "_LowerLimitLabel";
-            _lowerLimitLabel.Size = new System.Drawing.Size(38, 25);
-            _lowerLimitLabel.Text = "Lower";
-            //
+            // 
+            this._lowerLimitLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._lowerLimitLabel.Margin = new System.Windows.Forms.Padding(6, 1, 2, 2);
+            this._lowerLimitLabel.Name = "_lowerLimitLabel";
+            this._lowerLimitLabel.Size = new System.Drawing.Size(38, 22);
+            this._lowerLimitLabel.Text = "Lower";
+            // 
             // _lowerLimitDecimalsNumericLabel
-            //
-            _lowerLimitDecimalsNumericLabel.Name = "_LowerLimitDecimalsNumericLabel";
-            _lowerLimitDecimalsNumericLabel.Size = new System.Drawing.Size(58, 25);
-            _lowerLimitDecimalsNumericLabel.Text = "Decimals:";
-            //
+            // 
+            this._lowerLimitDecimalsNumericLabel.Name = "_lowerLimitDecimalsNumericLabel";
+            this._lowerLimitDecimalsNumericLabel.Size = new System.Drawing.Size(58, 22);
+            this._lowerLimitDecimalsNumericLabel.Text = "Decimals:";
+            // 
             // _lowerLimitDecimalsNumeric
-            //
-            _lowerLimitDecimalsNumeric.Name = "_LowerLimitDecimalsNumeric";
-            _lowerLimitDecimalsNumeric.Size = new System.Drawing.Size(41, 25);
-            _lowerLimitDecimalsNumeric.Text = "3";
-            _lowerLimitDecimalsNumeric.ToolTipText = "Number of decimal places for setting the limits";
-            _lowerLimitDecimalsNumeric.Value = new decimal(new int[] { 3, 0, 0, 0 });
-            //
+            // 
+            this._lowerLimitDecimalsNumeric.Name = "_lowerLimitDecimalsNumeric";
+            // 
+            // _lowerLimitDecimalsNumeric
+            // 
+            this._lowerLimitDecimalsNumeric.NumericUpDown.Location = new System.Drawing.Point(109, 1);
+            this._lowerLimitDecimalsNumeric.NumericUpDown.Name = "_lowerLimitDecimalsNumeric";
+            this._lowerLimitDecimalsNumeric.NumericUpDown.ReadOnlyBackColor = System.Drawing.SystemColors.Control;
+            this._lowerLimitDecimalsNumeric.NumericUpDown.ReadOnlyForeColor = System.Drawing.SystemColors.WindowText;
+            this._lowerLimitDecimalsNumeric.NumericUpDown.ReadWriteBackColor = System.Drawing.SystemColors.Window;
+            this._lowerLimitDecimalsNumeric.NumericUpDown.ReadWriteForeColor = System.Drawing.SystemColors.ControlText;
+            this._lowerLimitDecimalsNumeric.NumericUpDown.Size = new System.Drawing.Size(41, 22);
+            this._lowerLimitDecimalsNumeric.NumericUpDown.TabIndex = 0;
+            this._lowerLimitDecimalsNumeric.NumericUpDown.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this._lowerLimitDecimalsNumeric.NumericUpDown.ValueChanged += new System.EventHandler(this.LowerLimitDecimalsNumeric_ValueChanged);
+            this._lowerLimitDecimalsNumeric.Size = new System.Drawing.Size(41, 22);
+            this._lowerLimitDecimalsNumeric.Text = "0";
+            this._lowerLimitDecimalsNumeric.ToolTipText = "Number of decimal places for setting the limits";
+            this._lowerLimitDecimalsNumeric.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            // 
             // _lowerLimitNumericLabel
-            //
-            _lowerLimitNumericLabel.Margin = new Padding(3, 1, 0, 2);
-            _lowerLimitNumericLabel.Name = "_LowerLimitNumericLabel";
-            _lowerLimitNumericLabel.Size = new System.Drawing.Size(38, 25);
-            _lowerLimitNumericLabel.Text = "Value:";
-            //
+            // 
+            this._lowerLimitNumericLabel.Margin = new System.Windows.Forms.Padding(3, 1, 0, 2);
+            this._lowerLimitNumericLabel.Name = "_lowerLimitNumericLabel";
+            this._lowerLimitNumericLabel.Size = new System.Drawing.Size(38, 22);
+            this._lowerLimitNumericLabel.Text = "Value:";
+            // 
             // _lowerLimitNumeric
-            //
-            _lowerLimitNumeric.Name = "_LowerLimitNumeric";
-            _lowerLimitNumeric.Size = new System.Drawing.Size(41, 25);
-            _lowerLimitNumeric.Text = "0";
-            _lowerLimitNumeric.ToolTipText = "Start delay in seconds";
-            _lowerLimitNumeric.Value = new decimal(new int[] { 20, 0, 0, 196608 });
-            //
+            // 
+            this._lowerLimitNumeric.Name = "_lowerLimitNumeric";
+            // 
+            // _lowerLimitNumeric
+            // 
+            this._lowerLimitNumeric.NumericUpDown.Location = new System.Drawing.Point(191, 1);
+            this._lowerLimitNumeric.NumericUpDown.Name = "_lowerLimitNumeric";
+            this._lowerLimitNumeric.NumericUpDown.ReadOnlyBackColor = System.Drawing.SystemColors.Control;
+            this._lowerLimitNumeric.NumericUpDown.ReadOnlyForeColor = System.Drawing.SystemColors.WindowText;
+            this._lowerLimitNumeric.NumericUpDown.ReadWriteBackColor = System.Drawing.SystemColors.Window;
+            this._lowerLimitNumeric.NumericUpDown.ReadWriteForeColor = System.Drawing.SystemColors.ControlText;
+            this._lowerLimitNumeric.NumericUpDown.Size = new System.Drawing.Size(41, 22);
+            this._lowerLimitNumeric.NumericUpDown.TabIndex = 1;
+            this._lowerLimitNumeric.NumericUpDown.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this._lowerLimitNumeric.Size = new System.Drawing.Size(41, 22);
+            this._lowerLimitNumeric.Text = "0";
+            this._lowerLimitNumeric.ToolTipText = "Start delay in seconds";
+            this._lowerLimitNumeric.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            // 
             // _lowerLimitBitPatternNumericButton
-            //
-            _lowerLimitBitPatternNumericButton.CheckOnClick = true;
-            _lowerLimitBitPatternNumericButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _lowerLimitBitPatternNumericButton.Image = (System.Drawing.Image)resources.GetObject("_LowerLimitBitPatternNumericButton.Image");
-            _lowerLimitBitPatternNumericButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            _lowerLimitBitPatternNumericButton.Name = "_LowerLimitBitPatternNumericButton";
-            _lowerLimitBitPatternNumericButton.Size = new System.Drawing.Size(65, 25);
-            _lowerLimitBitPatternNumericButton.Text = "Source: 0x";
-            _lowerLimitBitPatternNumericButton.ToolTipText = "Toggle to switch between decimal and hex display";
-            //
+            // 
+            this._lowerLimitBitPatternNumericButton.CheckOnClick = true;
+            this._lowerLimitBitPatternNumericButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this._lowerLimitBitPatternNumericButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._lowerLimitBitPatternNumericButton.Name = "_lowerLimitBitPatternNumericButton";
+            this._lowerLimitBitPatternNumericButton.Size = new System.Drawing.Size(65, 22);
+            this._lowerLimitBitPatternNumericButton.Text = "Source: 0x";
+            this._lowerLimitBitPatternNumericButton.ToolTipText = "Toggle to switch between decimal and hex display";
+            this._lowerLimitBitPatternNumericButton.CheckStateChanged += new System.EventHandler(this.LowerBitPatternNumericButton_CheckStateChanged);
+            // 
             // _lowerLimitBitPatternNumeric
-            //
-            _lowerLimitBitPatternNumeric.Name = "_LowerLimitBitPatternNumeric";
-            _lowerLimitBitPatternNumeric.Size = new System.Drawing.Size(41, 25);
-            _lowerLimitBitPatternNumeric.Text = "1";
-            _lowerLimitBitPatternNumeric.ToolTipText = "Lower limit bit pattern";
-            _lowerLimitBitPatternNumeric.Value = new decimal(new int[] { 1, 0, 0, 0 });
-            //
+            // 
+            this._lowerLimitBitPatternNumeric.Name = "_lowerLimitBitPatternNumeric";
+            // 
+            // _lowerLimitBitPatternNumeric
+            // 
+            this._lowerLimitBitPatternNumeric.NumericUpDown.Location = new System.Drawing.Point(297, 1);
+            this._lowerLimitBitPatternNumeric.NumericUpDown.Name = "_lowerLimitBitPatternNumeric";
+            this._lowerLimitBitPatternNumeric.NumericUpDown.ReadOnlyBackColor = System.Drawing.SystemColors.Control;
+            this._lowerLimitBitPatternNumeric.NumericUpDown.ReadOnlyForeColor = System.Drawing.SystemColors.WindowText;
+            this._lowerLimitBitPatternNumeric.NumericUpDown.ReadWriteBackColor = System.Drawing.SystemColors.Window;
+            this._lowerLimitBitPatternNumeric.NumericUpDown.ReadWriteForeColor = System.Drawing.SystemColors.ControlText;
+            this._lowerLimitBitPatternNumeric.NumericUpDown.Size = new System.Drawing.Size(41, 22);
+            this._lowerLimitBitPatternNumeric.NumericUpDown.TabIndex = 2;
+            this._lowerLimitBitPatternNumeric.NumericUpDown.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this._lowerLimitBitPatternNumeric.Size = new System.Drawing.Size(41, 22);
+            this._lowerLimitBitPatternNumeric.Text = "0";
+            this._lowerLimitBitPatternNumeric.ToolTipText = "Lower limit bit pattern";
+            this._lowerLimitBitPatternNumeric.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            // 
             // LimitView
-            //
-            AutoScaleDimensions = new System.Drawing.SizeF(7.0f, 17.0f);
-            AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(_limitToolStripPanel);
-            Name = "LimitView";
-            Padding = new Padding(1);
-            Size = new System.Drawing.Size(389, 81);
-            _limitToolStripPanel.ResumeLayout(false);
-            _limitToolStripPanel.PerformLayout();
-            _subsystemToolStrip.ResumeLayout(false);
-            _subsystemToolStrip.PerformLayout();
-            _upperLimitToolStrip.ResumeLayout(false);
-            _upperLimitToolStrip.PerformLayout();
-            _lowerLimitToolStrip.ResumeLayout(false);
-            _lowerLimitToolStrip.PerformLayout();
-            ResumeLayout(false);
-            PerformLayout();
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this._limitToolStripPanel);
+            this.Name = "LimitView";
+            this.Padding = new System.Windows.Forms.Padding(1);
+            this.Size = new System.Drawing.Size(445, 76);
+            this._limitToolStripPanel.ResumeLayout(false);
+            this._limitToolStripPanel.PerformLayout();
+            this._subsystemToolStrip.ResumeLayout(false);
+            this._subsystemToolStrip.PerformLayout();
+            this._upperLimitToolStrip.ResumeLayout(false);
+            this._upperLimitToolStrip.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this._upperLimitDecimalsNumeric.NumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._upperLimitNumeric.NumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._upperLimitBitPatternNumeric.NumericUpDown)).EndInit();
+            this._lowerLimitToolStrip.ResumeLayout(false);
+            this._lowerLimitToolStrip.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this._lowerLimitDecimalsNumeric.NumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._lowerLimitNumeric.NumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._lowerLimitBitPatternNumeric.NumericUpDown)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         private ToolStripPanel _limitToolStripPanel;

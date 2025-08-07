@@ -2,7 +2,13 @@
 All notable changes to these libraries will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+[8.0.9350]: https://www.github.com/atecoder/dn.vi.ivi
+
 Current IVI Visa Compatibility: 7.2.7619
+Next IVI Visa Compatibility: 8.0.9350
+
+## [8.0.9350] - 2025-08-07
+- Update to Keysight IO Suite 21.1.209 and IVI Visa Compatibility to 8.0.2.
 
 ## [7.2.9220] - 2025-03-30
 - Replace tabs with spaces.
@@ -44,6 +50,5 @@ GAC Loader:
 
 &copy; 2012 Integrated Scientific Resources, Inc. All rights reserved.
 
-[7.2.9220]: https://www.github.com/atecoder/dn.vi.ivi
 [vs.VI]: https://www.github.com/atecoder/dn.vi.ivi
 [vs.Visa]: https://bitbucket.org/davidhary/vs.io.visa

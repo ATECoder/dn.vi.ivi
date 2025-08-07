@@ -137,7 +137,6 @@ namespace cc.isr.VI.SubsystemsWinControls
             // _readButton
             //
             _readButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _readButton.Image = (System.Drawing.Image)resources.GetObject("_ReadButton.Image");
             _readButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             _readButton.Name = "_ReadButton";
             _readButton.Size = new System.Drawing.Size(37, 25);
@@ -171,7 +170,6 @@ namespace cc.isr.VI.SubsystemsWinControls
             // _writeButton
             //
             _writeButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _writeButton.Image = (System.Drawing.Image)resources.GetObject("_WriteButton.Image");
             _writeButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             _writeButton.Name = "_WriteButton";
             _writeButton.Size = new System.Drawing.Size(39, 25);
@@ -181,7 +179,6 @@ namespace cc.isr.VI.SubsystemsWinControls
             // _pulseButton
             //
             _pulseButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _pulseButton.Image = (System.Drawing.Image)resources.GetObject("_PulseButton.Image");
             _pulseButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             _pulseButton.Name = "_PulseButton";
             _pulseButton.Size = new System.Drawing.Size(61, 25);
@@ -191,7 +188,6 @@ namespace cc.isr.VI.SubsystemsWinControls
             // _toggleButton
             //
             _toggleButton.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            _toggleButton.Image = (System.Drawing.Image)resources.GetObject("_ToggleButton.Image");
             _toggleButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             _toggleButton.Name = "_ToggleButton";
             _toggleButton.Size = new System.Drawing.Size(46, 25);

@@ -49,7 +49,9 @@ Ivi.VisaNet.GacLoader.LoadInstalledVisaAssemblies();
 try
 {
     // Connect to the instrument.
-    using IVisaSession resource = GlobalResourceManager.Open( resourceName, AccessModes.ExclusiveLock, 2000 );
+    Console.WriteLine();
+    Console.WriteLine( $"Opening a VISA session to '{resourceName}'..." );
+    using IVisaSession resource = Ivi.Visa.GlobalResourceManager.Open( resourceName, AccessModes.ExclusiveLock, 2000 );
     if ( resource is IMessageBasedSession session )
     {
         // Ensure termination character is enabled as here in example we use a SOCKET connection.
