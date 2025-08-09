@@ -51,8 +51,8 @@
     <Compile Include="..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
   </ItemGroup>
 
-    <ItemGroup>
-    <PackageReference Include="Kelary.Ivi.Visa" Version="7.2.0" />
+  <ItemGroup>
+    <PackageReference Include="KeysightTechnologies.Visa" Version="18.5.73" />
   </ItemGroup>
 
   <ItemGroup>

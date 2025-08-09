@@ -31,11 +31,11 @@ The list of resources consists of the resources that are explicitly defined in t
 # .NET 9.0
 ```
 Running under .NETCoreApp,Version=v9.0.
-VISA.NET Shared Components version 7.2.0.0.
-VISA Shared Components version 7.2.7619.0 detected.
+VISA.NET Shared Components version 8.0.1.0.
+VISA Shared Components version 8.0.7331.0 detected.
 Loaded assembly "Keysight VISA.NET".
 Executing GlobalResourceManager.Find( "TCPIP?*INSTR"  )
-IVI GlobalResourceManager ImplementationVersion:7.2.0.0 SpecificationVersion:7.2.0.0
+IVI GlobalResourceManager ImplementationVersion:8.0.0.0 SpecificationVersion:7.2.0.0
 Selected the VISA.NET Implementation by Keysight Technologies, Inc. version 18.4.0.0
 tcpip0::192.168.0.150::inst0::instr Identification string:
 Keithley Instruments Inc., Model 2612A, 1214466, 2.2.6

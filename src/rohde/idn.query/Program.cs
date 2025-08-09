@@ -18,7 +18,7 @@ internal sealed class Program
         string resourceName = args[0];
 
         TargetFrameworkAttribute framework = Assembly.GetEntryAssembly()?.GetCustomAttribute<TargetFrameworkAttribute>();
-        Console.WriteLine( $"Running under {framework.FrameworkName}." );
+        Console.WriteLine( $"Running under {framework?.FrameworkName ?? "--unable to resolve .NET Framework!"} runtime {System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription}" );
 
         // Get VISA.NET Shared Components version.
         Version visaNetSharedComponentsVersion = typeof( GlobalResourceManager ).Assembly.GetName().Version;

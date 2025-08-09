@@ -24,7 +24,7 @@ TargetFrameworkAttribute? framework = Assembly.GetEntryAssembly()?.GetCustomAttr
 Console.WriteLine();
 System.Reflection.Assembly? executingAssembly = System.Reflection.Assembly.GetExecutingAssembly();
 Console.WriteLine( executingAssembly?.FullName );
-Console.WriteLine( $"Running under {framework?.FrameworkName}." );
+Console.WriteLine( $"\tRunning under {framework?.FrameworkName} runtime {System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription}" );
 
 // Check whether VISA Shared Components is installed before using VISA.NET.
 // If access VISA.NET without the visaConfMgr.dll library, an unhandled exception will

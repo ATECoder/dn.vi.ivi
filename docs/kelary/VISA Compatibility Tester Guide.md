@@ -37,11 +37,11 @@ The following outcome:
 ```
 Checking IVI VISA Compatibility
 
-IviVisaCompatibilityTester, Version=7.2.9111.101, Culture=neutral, PublicKeyToken=456c916a0c4a68ef
+IviVisaCompatibilityTester, Version=8.0.1.9352, Culture=neutral, PublicKeyToken=456c916a0c4a68ef
 Running under .NETCoreApp,Version=v9.0.
-VISA.NET Shared Components version 7.2.0.0.
-VISA Shared Components version 7.2.7619.0 detected.
-Loaded Keysight.Visa, Version=18.4.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73.
+VISA.NET Shared Components version 8.0.0.0.
+VISA Shared Components version 8.0.7331.0 detected.
+Loaded Keysight.Visa, Version=18.5.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73.
 ```
 
 Shows that the program found a compatible implementation.
@@ -75,11 +75,11 @@ Command: tcpip0::192.168.0.150::inst0::instr;
 
 Make sure that the instrument at tcpip0::192.168.0.150::inst0::instr is turned on.
 
-IviVisaCompatibilityTester, Version=7.2.9111.101, Culture=neutral, PublicKeyToken=456c916a0c4a68ef
+IviVisaCompatibilityTester, Version=8.0.1.9352, Culture=neutral, PublicKeyToken=456c916a0c4a68ef
 Running under .NETCoreApp,Version=v9.0.
-VISA.NET Shared Components version 7.2.0.0.
-VISA Shared Components version 7.2.7619.0 detected.
-Loaded Keysight.Visa, Version=18.4.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73.
+VISA.NET Shared Components version 8.0.0.0.
+VISA Shared Components version 8.0.7331.0 detected.
+Loaded Keysight.Visa, Version=18.5.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73.
 Instrument found at '192.168.0.150'.
 ID: Keithley Instruments Inc., Model 2612A, 1214466, 2.2.6
 ```
@@ -98,11 +98,11 @@ Command: tcpip0::192.168.1.150::inst0::instr;
 
 Make sure that the instrument at tcpip0::192.168.1.150::inst0::instr is turned on.
 
-IviVisaCompatibilityTester, Version=7.2.9111.101, Culture=neutral, PublicKeyToken=456c916a0c4a68ef
+IviVisaCompatibilityTester, Version=8.0.1.9352, Culture=neutral, PublicKeyToken=456c916a0c4a68ef
 Running under .NETCoreApp,Version=v9.0.
-VISA.NET Shared Components version 7.2.0.0.
-VISA Shared Components version 7.2.7619.0 detected.
-Loaded Keysight.Visa, Version=18.4.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73.
+VISA.NET Shared Components version 8.0.0.0.
+VISA Shared Components version 8.0.7331.0 detected.
+Loaded Keysight.Visa, Version=18.5.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73.
 Attempt Ping instrument at '192.168.1.150' failed.
 ```
 
@@ -113,7 +113,7 @@ Shows that the program could not find the instrument with the specified resource
 
 The TTM Framework [Microsoft .NET] API uses the Virtual Instruments (VISA) framework from the [IVI Foundation] for communicating with the TTM instrument. [IVI VISA] is installed by members of the [IVI Foundation] such as Keysight, Rohde-Schwartz and NI (former National Instruments). Implementations such as the [IO Suite] from Keysight or [NI Visa] from NI must be installed for running applications based on [IVI VISA].
 
-The current TTM software was developed based on version 7.2.0.0 of [IVI VISA]. Any VISA implementation, such as [IO Suite] version 21.1.47 is compatible with the ISR TTM API.
+The current TTM software was developed based on version 8.0.1 of [IVI VISA]. Any VISA implementation, such as [IO Suite] version 21.1.209 is compatible with the ISR TTM API.
 
 <a name="Attributions"></a>
 ## Attributions

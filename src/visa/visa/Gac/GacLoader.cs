@@ -7,8 +7,8 @@ namespace cc.isr.Visa.Gac;
 /// </summary>
 public static class GacLoader
 {
-    /// <summary>   (Immutable) the visa shared components DLL. </summary>
-    public const string VISA_SHARED_COMPONENTS_DLL = "visaConfMgr.dll";
+    /// <summary>   (Immutable) the visa configuration management assembly name. </summary>
+    public const string VisaConfigManagerFileName = "visaConfMgr.dll";
 
     /// <summary>   Load an assembly from the GAC. </summary>
     /// <remarks>   2024-07-13. </remarks>
@@ -86,10 +86,10 @@ public static class GacLoader
     /// <summary>   Gets visa shared components information. </summary>
     /// <remarks>   2024-07-02. </remarks>
     /// <returns>   The visa shared components information. </returns>
-    public static System.Diagnostics.FileVersionInfo? GetVisaSharedComponentsInfo()
+    public static System.Diagnostics.FileVersionInfo? VisaConfigManagerFileVersionInfo()
     {
         // Get an available version of the VISA Shared Components.
-        return System.Diagnostics.FileVersionInfo.GetVersionInfo( System.IO.Path.Combine( Environment.SystemDirectory, VISA_SHARED_COMPONENTS_DLL ) );
+        return System.Diagnostics.FileVersionInfo.GetVersionInfo( System.IO.Path.Combine( Environment.SystemDirectory, VisaConfigManagerFileName ) );
     }
 
     /// <summary>   Static constructor. </summary>
@@ -117,12 +117,12 @@ public static class GacLoader
         try
         {
             // Get an available version of the VISA Shared Components.
-            System.Diagnostics.FileVersionInfo? visaSharedComponentsInfo = GacLoader.GetVisaSharedComponentsInfo();
+            System.Diagnostics.FileVersionInfo? visaSharedComponentsInfo = GacLoader.VisaConfigManagerFileVersionInfo();
 
             if ( visaSharedComponentsInfo is not null )
                 Console.WriteLine( $"{nameof( GacLoader )}: VISA Shared Components version {visaSharedComponentsInfo.ProductVersion} detected." );
             else
-                throw new System.IO.IOException( $"Failed getting the VISA shared component {GacLoader.VISA_SHARED_COMPONENTS_DLL} info." );
+                throw new System.IO.IOException( $"Failed getting the VISA shared component {GacLoader.VisaConfigManagerFileName} info." );
         }
         catch ( System.IO.FileNotFoundException ex )
         {

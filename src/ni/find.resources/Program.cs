@@ -16,22 +16,24 @@ internal static class Program
     private static void Main()
     {
         TargetFrameworkAttribute? framework = Assembly.GetEntryAssembly()?.GetCustomAttribute<TargetFrameworkAttribute>();
-        Console.WriteLine( $"Running under {framework?.FrameworkName ?? "--unable to resolve .NET Framework!"}." );
+        Console.WriteLine( $"\tRunning under {framework?.FrameworkName ?? "--unable to resolve .NET Framework!"} runtime {System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription}" );
 
-        // Get VISA.NET Shared Components version.
-        Version? visaNetSharedComponentsVersion = typeof( GlobalResourceManager ).Assembly.GetName().Version;
-        Console.WriteLine();
-        Console.WriteLine( $"VISA.NET Shared Components version {visaNetSharedComponentsVersion?.ToString() ?? "was not resolved!"}." );
-
+// Get VISA.NET Shared Components version.
+Assembly visaNetSharedComponentsAssembly = typeof( GlobalResourceManager ).Assembly;
+Version? visaNetSharedComponentsVersion = visaNetSharedComponentsAssembly.GetName().Version;
+Console.WriteLine();
+Console.WriteLine( $"VISA.NET Shared Components {visaNetSharedComponentsAssembly.GetName()}." );
+Console.WriteLine( $"	Version: {System.Diagnostics.FileVersionInfo.GetVersionInfo( typeof( GlobalResourceManager ).Assembly.Location ).FileVersion}." );
         // Check whether VISA Shared Components is installed before using VISA.NET.
         // If access VISA.NET without the visaConfMgr.dll library, an unhandled exception will
         // be thrown during termination process due to a bug in the implementation of the
         // VISA.NET Shared Components, and the application will crash.
         try
         {
-            // Get an available version of the VISA Shared Components.
-            FileVersionInfo visaSharedComponentsInfo = FileVersionInfo.GetVersionInfo( Path.Combine( Environment.SystemDirectory, "visaConfMgr.dll" ) );
-            Console.WriteLine( $"The VISA Shared Components version {visaSharedComponentsInfo.ProductVersion} was detected." );
+    // Get an available version of the VISA Shared Components.
+    string visaConfigManagerPath = Path.Combine( Environment.SystemDirectory, "visaConfMgr.dll" );
+    FileVersionInfo visaSharedComponentsInfo = FileVersionInfo.GetVersionInfo( visaConfigManagerPath );
+    Console.WriteLine( $"	{visaSharedComponentsInfo.InternalName} version {visaSharedComponentsInfo.ProductVersion} detected." );
         }
         catch ( FileNotFoundException )
         {

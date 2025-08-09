@@ -92,7 +92,7 @@ Both the [Legacy Driver](#Legacy_Deriver) and [Meter Driver](#Meter_Deriver) as 
 
 The new legacy driver `cc.isr.VI.Tsp.K2600.Ttm.Legacy` implementation entails the following changes:
 - Targets the [Microsoft .NET Standard] 2.0.
-- Targets [IVI VISA] 7.2.0 thus requiring the installations compatible editions of the [Keysight IO Suite] (e.g., version 21.1.47) or [NI Visa].
+- Targets [IVI VISA] 8.0.1 thus requiring the installations compatible editions of the [Keysight IO Suite] (e.g., version 21.1.209) or [NI Visa].
 - Uses a Message-Based session rather than a GPIB session to access the instrument. Thus, the driver can access a GPIB device by way of a USB-GPIB or TCP/IP-GPIB adapters.
 - Uses a `cc` prefix to precede the `isr` namespace such as `cc.isr.Ttm.Device` instead of `isr.Ttm.Device`, which is commensurate with the registered `isr.cc` domain of Integrated Scientific Resources, Inc.
 - Targets either the legacy TTM Firmware version 2.3.4009 or the Firmware version 2.4.9111 and above.
@@ -106,7 +106,7 @@ The new legacy driver `cc.isr.VI.Tsp.K2600.Ttm.Legacy` implementation entails th
 
 The new meter driver `cc.isr.VI.Tsp.K2600.Ttm` implementation entails the following changes:
 - Targets the [Microsoft .NET Standard] 2.0.
-- Targets [IVI VISA] 7.2.0 thus requiring the installations compatible editions of the [Keysight IO Suite] (e.g., version 21.1.47) or [NI Visa].
+- Targets [IVI VISA] 8.0.1 thus requiring the installations compatible editions of the [Keysight IO Suite] (e.g., version 21.1.209) or [NI Visa].
 - Uses a Message-Based session rather than a GPIB session to access the instrument. Thus, the driver can access a GPIB device by way of a USB-GPIB or TCP/IP-GPIB adapters.
 - Uses a `cc` prefix to precede the `isr` namespace such as `cc.isr.Ttm.Device` instead of `isr.Ttm.Device`, which is commensurate with the registered `isr.cc` domain of Integrated Scientific Resources, Inc.
 - Targets the new TTM Firmware version 2.4.9111 and above.

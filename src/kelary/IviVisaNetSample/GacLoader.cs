@@ -1,9 +1,8 @@
 using System;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 using Ivi.Visa.ConflictManager;
+
+#nullable enable
 
 namespace Ivi.VisaNet;
 /// <summary>
@@ -12,13 +11,16 @@ namespace Ivi.VisaNet;
 /// </summary>
 public static class GacLoader
 {
+    /// <summary>   (Immutable) the visa configuration management assembly name. </summary>
+    public const string VisaConfigManagerFileName = "visaConfMgr.dll";
+
     /// <summary>
     /// Load an assembly from the GAC.
     /// </summary>
     /// <param name="assemblyName"></param>
     /// <returns>Loaded assembly</returns>
     /// <exception cref="FileNotFoundException"></exception>
-    private static Assembly Load( AssemblyName assemblyName )
+    private static System.Reflection.Assembly Load( System.Reflection.AssemblyName assemblyName )
     {
         string[] gacPaths =
         [
@@ -26,20 +28,20 @@ public static class GacLoader
            $"{Environment.GetFolderPath(Environment.SpecialFolder.Windows)}\\assembly\\GAC_MSIL\\{assemblyName.Name}",
         ];
 
-        foreach ( string folder in gacPaths.Where( Directory.Exists ) )
+        foreach ( string folder in gacPaths.Where( System.IO.Directory.Exists ) )
         {
-            foreach ( string subfolder in Directory.EnumerateDirectories( folder ) )
+            foreach ( string subfolder in System.IO.Directory.EnumerateDirectories( folder ) )
             {
                 if ( subfolder.Contains( BytesToHex( assemblyName.GetPublicKeyToken()! ), StringComparison.OrdinalIgnoreCase )
                     && subfolder.Contains( assemblyName.Version!.ToString(), StringComparison.OrdinalIgnoreCase ) )
                 {
-                    string assemblyPath = Path.Combine( subfolder, assemblyName.Name + ".dll" );
-                    if ( File.Exists( assemblyPath ) )
-                        return Assembly.LoadFrom( assemblyPath );
+                    string assemblyPath = System.IO.Path.Combine( subfolder, assemblyName.Name + ".dll" );
+                    if ( System.IO.File.Exists( assemblyPath ) )
+                        return System.Reflection.Assembly.LoadFrom( assemblyPath );
                 }
             }
         }
-        throw new FileNotFoundException( $"Assembly {assemblyName} not found." );
+        throw new System.IO.FileNotFoundException( $"Assembly {assemblyName} not found." );
     }
 
     /// <summary>
@@ -71,7 +73,7 @@ public static class GacLoader
     private static string BytesToHex( byte[] byteArray )
     {
         // Convert byte array to hexadecimal string
-        StringBuilder hexBuilder = new();
+        System.Text.StringBuilder hexBuilder = new();
         foreach ( byte b in byteArray )
         {
 #if NET5_0_OR_GREATER
@@ -81,6 +83,24 @@ public static class GacLoader
 #endif
         }
         return hexBuilder.ToString();
+    }
+
+    private static System.Reflection.Assembly? _visaNetShareComponentsAssembly;
+    /// <summary>   Gets visa net share components assembly. </summary>
+    /// <remarks>   2024-07-02. </remarks>
+    /// <returns>   The visa net share components version. </returns>
+    public static System.Reflection.Assembly? GetVisaNetShareComponentsAssembly()
+    {
+        _visaNetShareComponentsAssembly ??= typeof( Ivi.Visa.GlobalResourceManager ).Assembly;
+        return _visaNetShareComponentsAssembly;
+    }
+
+    /// <summary>   Gets the visa configuration manager file version info. </summary>
+    /// <remarks>   2024-07-02. </remarks>
+    /// <returns>   The visa configuration manager file version info. </returns>
+    public static System.Diagnostics.FileVersionInfo? VisaConfigManagerFileVersionInfo()
+    {
+        return System.Diagnostics.FileVersionInfo.GetVersionInfo( System.IO.Path.Combine( Environment.SystemDirectory, GacLoader.VisaConfigManagerFileName ) );
     }
 
     /// <summary>
@@ -93,18 +113,18 @@ public static class GacLoader
         {
             try
             {
+                string fileName =
 #if NET20_OR_GREATER
-                Assembly installedAssembly = GacLoader.Load( new AssemblyName( visaLibrary.Location.Substring( visaLibrary.Location.IndexOf( "," ) + 1 ) ) );
+                visaLibrary.Location.Substring( visaLibrary.Location.IndexOf( ',' ) + 1 );
 #else
-                Assembly installedAssembly = GacLoader.Load( new AssemblyName( visaLibrary.Location[(visaLibrary.Location.IndexOf( ',' ) + 1)..] ) );
+                visaLibrary.Location[(visaLibrary.Location.IndexOf( ',' ) + 1)..];
 #endif
-                Console.WriteLine( "Loaded Visa Implementation:" );
-                Console.WriteLine( $"   Friendly name: \"{visaLibrary.FriendlyName}\"." );
-                Console.WriteLine( $"       Full name: \"{installedAssembly.FullName}\"." );
+                System.Reflection.Assembly installedAssembly = GacLoader.Load( new System.Reflection.AssemblyName( fileName ) );
+                Console.WriteLine( $"Loaded {installedAssembly.FullName}, {System.Diagnostics.FileVersionInfo.GetVersionInfo( installedAssembly.Location ).FileVersion}" );
             }
             catch ( Exception exception )
             {
-                Console.WriteLine( $"Failed to load assembly \"{visaLibrary.FriendlyName}\": {exception.Message}" );
+                Console.WriteLine( $"Failed to load assembly {visaLibrary.FriendlyName}: {exception.Message}" );
             }
         }
     }

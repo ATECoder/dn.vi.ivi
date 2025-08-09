@@ -1,5 +1,7 @@
 using System;
 using System.Linq;
+using System.Reflection;
+using Ivi.Visa;
 using Ivi.Visa.ConflictManager;
 
 namespace Ivi.VisaNet;
@@ -9,8 +11,8 @@ namespace Ivi.VisaNet;
 /// </summary>
 public static class GacLoader
 {
-    /// <summary>   (Immutable) the visa shared components DLL. </summary>
-    public const string VISA_SHARED_COMPONENTS_DLL = "visaConfMgr.dll";
+    /// <summary>   (Immutable) the visa configuration management assembly name. </summary>
+    public const string VisaConfigManagerFileName = "visaConfMgr.dll";
 
     /// <summary>   Load an assembly from the GAC. </summary>
     /// <remarks>   2024-07-13. </remarks>
@@ -76,22 +78,22 @@ public static class GacLoader
         return hexBuilder.ToString();
     }
 
-    /// <summary>   Gets visa net share components version. </summary>
+    private static System.Reflection.Assembly? _visaNetShareComponentsAssembly;
+    /// <summary>   Gets visa net share components assembly. </summary>
     /// <remarks>   2024-07-02. </remarks>
     /// <returns>   The visa net share components version. </returns>
-    public static System.Version? GetVisaNetShareComponentsVersion()
+    public static System.Reflection.Assembly? GetVisaNetShareComponentsAssembly()
     {
-        // Get VISA.NET Shared Components version.
-        return typeof( Ivi.Visa.GlobalResourceManager ).Assembly.GetName().Version;
+        _visaNetShareComponentsAssembly ??= typeof( Ivi.Visa.GlobalResourceManager ).Assembly;
+        return _visaNetShareComponentsAssembly;
     }
 
-    /// <summary>   Gets visa shared components information. </summary>
+    /// <summary>   Gets the visa configuration manager file version info. </summary>
     /// <remarks>   2024-07-02. </remarks>
-    /// <returns>   The visa shared components information. </returns>
-    public static System.Diagnostics.FileVersionInfo? GetVisaSharedComponentsInfo()
+    /// <returns>   The visa configuration manager file version info. </returns>
+    public static System.Diagnostics.FileVersionInfo? VisaConfigManagerFileVersionInfo()
     {
-        // Get an available version of the VISA Shared Components.
-        return System.Diagnostics.FileVersionInfo.GetVersionInfo( System.IO.Path.Combine( Environment.SystemDirectory, VISA_SHARED_COMPONENTS_DLL ) );
+        return System.Diagnostics.FileVersionInfo.GetVersionInfo( System.IO.Path.Combine( Environment.SystemDirectory, GacLoader.VisaConfigManagerFileName ) );
     }
 
     /// <summary>   Static constructor. </summary>
@@ -104,8 +106,11 @@ public static class GacLoader
         System.Version? visaNetSharedComponentsVersion = new();
         try
         {
-            visaNetSharedComponentsVersion = GacLoader.GetVisaNetShareComponentsVersion();
-            Console.WriteLine( $"VISA.NET Shared Components version {visaNetSharedComponentsVersion}." );
+            Assembly visaNetSharedComponentsAssembly = typeof( Ivi.Visa.GlobalResourceManager ).Assembly;
+            visaNetSharedComponentsVersion = visaNetSharedComponentsAssembly.GetName().Version;
+            Console.WriteLine();
+            Console.WriteLine( $"VISA.NET Shared Components {visaNetSharedComponentsAssembly.GetName()}." );
+            Console.WriteLine( $"\tVersion: {System.Diagnostics.FileVersionInfo.GetVersionInfo( typeof( GlobalResourceManager ).Assembly.Location ).FileVersion}." );
         }
         catch ( Exception ex )
         {
@@ -119,12 +124,11 @@ public static class GacLoader
         try
         {
             // Get an available version of the VISA Shared Components.
-            System.Diagnostics.FileVersionInfo? visaSharedComponentsInfo = GacLoader.GetVisaSharedComponentsInfo();
-
+            System.Diagnostics.FileVersionInfo? visaSharedComponentsInfo = GacLoader.VisaConfigManagerFileVersionInfo();
             if ( visaSharedComponentsInfo is not null )
-                Console.WriteLine( $"VISA Shared Components version {visaSharedComponentsInfo.ProductVersion} detected." );
+                Console.WriteLine( $"\t{visaSharedComponentsInfo.InternalName} version {visaSharedComponentsInfo.ProductVersion} detected." );
             else
-                throw new System.IO.IOException( $"Failed getting the VISA shared component {GacLoader.VISA_SHARED_COMPONENTS_DLL} info." );
+                throw new System.IO.IOException( $"\tFailed getting the VISA shared component {GacLoader.VisaConfigManagerFileName} info." );
         }
         catch ( System.IO.FileNotFoundException ex )
         {
@@ -152,9 +156,8 @@ public static class GacLoader
         {
             try
             {
-                System.Reflection.Assembly installedAssembly = GacLoader.Load( new System.Reflection.AssemblyName(
-                    visaLibrary.Location.Substring( visaLibrary.Location.IndexOf( "," ) + 1 ) ) );
-                Console.WriteLine( $"Loaded {installedAssembly.FullName}." );
+                System.Reflection.Assembly installedAssembly = GacLoader.Load( new System.Reflection.AssemblyName( visaLibrary.Location.Substring( visaLibrary.Location.IndexOf( "," ) + 1 ) ) );
+                Console.WriteLine( $"Loaded {installedAssembly.FullName}, {System.Diagnostics.FileVersionInfo.GetVersionInfo( installedAssembly.Location ).FileVersion}" );
             }
             catch ( Exception exception )
             {

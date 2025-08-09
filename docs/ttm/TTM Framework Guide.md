@@ -82,7 +82,7 @@ The TTM Framework has undergone a few revisions since it's inception in 2005. Th
 | Firmware | 2.3.4009 | 2.4.9111 |
 | Loader | isr.Ttm.Loader 2.3.4049 | cc.isr.VI.Tsp.K2600.Ttmware.Loader 8.1.9210 |
 | Driver | isr.Ttm.Driver 2.3.4077 | TBA |
-| VISA | NI-VISA NS 8.1.20 | IVI-VISA 7.2.0 |
+| VISA | NI-VISA NS 8.1.20 | IVI-VISA 8.0.1 |
 
 <a name="Terminology"></a>
 ## Terminology
@@ -142,7 +142,7 @@ The TTM applications are based on the Microsoft [.NET Framework] 9.0 and [Micros
 
 The TTM Framework [Microsoft .NET] API uses the Virtual Instruments (VISA) framework from the [IVI Foundation] for communicating with the TTM instrument. [IVI VISA] is installed by members of the [IVI Foundation] such as Keysight, Rohde-Schwartz and NI (former National Instruments). Implementations such as the [Keysight IO Suite] or [NI Visa] must be installed for running applications based on [IVI VISA].
 
-The current TTM software was developed based on version 7.2.0.0 of [IVI VISA]. Any VISA implementation, such as [Keysight IO Suite] version 21.1.47 is compatible with the ISR TTM API.
+The current TTM software was developed based on version 8.0.1 of [IVI VISA]. Any VISA implementation, such as [Keysight IO Suite] version 21.1.209 is compatible with the ISR TTM API.
 
 <a name="Attributions"></a>
 ## Attributions

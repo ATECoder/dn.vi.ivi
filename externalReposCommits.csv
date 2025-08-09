@@ -5,7 +5,7 @@ CommitID,LocalRepoName,TargetDirectory
 90e85961ecd3cd9277fe80a05cbe1ae053055ad2,tracing,lib\vs\core
 42ab8a7d0ad5cf84b48fd5d888c8680d3c03520c,std,lib\vs\core
 90e85961ecd3cd9277fe80a05cbe1ae053055ad2,tracing,lib\vs\core
-7efa8c9d3ff1aa743155ffc94f248b79248b3417,vi,lib\vs\vi
+d787103528e9939bb43a460cbc5960a9ae44538d,vi,lib\vs\vi
 a4762dadb279896aa5d1b723ceb17c8f65dab259,visa,lib\vs\io
 ced724cc3b90b70a6373e1782a79786546f0f098,ide,libraries\vs\core
 5ea133a6a6153353ef8e1a3cbbecc5a1288c7744,wix,libraries\vs\core
