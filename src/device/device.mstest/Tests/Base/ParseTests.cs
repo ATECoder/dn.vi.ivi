@@ -244,7 +244,7 @@ public abstract class ParseTests
     private static void TestUnknownEnumReadWriteValue( Pith.EnumReadWriteCollection enumReadWrites, long expectedEnumValue )
     {
         Assert.IsFalse( enumReadWrites.Exists( expectedEnumValue ), $"{expectedEnumValue} should Not exist" );
-        _ = Assert.ThrowsException<KeyNotFoundException>( () => enumReadWrites.SelectItem( expectedEnumValue ), $"{expectedEnumValue} enum value Is out of range" );
+        _ = Assert.ThrowsExactly<KeyNotFoundException>( () => enumReadWrites.SelectItem( expectedEnumValue ), $"{expectedEnumValue} enum value Is out of range" );
     }
 
     /// <summary> Tests unknown enum read write value. </summary>
@@ -253,7 +253,7 @@ public abstract class ParseTests
     private static void TestUnknownEnumReadWriteValue( Pith.EnumReadWriteCollection enumReadWrites, string expectedReadValue )
     {
         Assert.IsFalse( enumReadWrites.Exists( expectedReadValue ), $"{expectedReadValue} should Not exist" );
-        _ = Assert.ThrowsException<KeyNotFoundException>( () => enumReadWrites.SelectItem( expectedReadValue ), $"{expectedReadValue} read value should Not exist" );
+        _ = Assert.ThrowsExactly<KeyNotFoundException>( () => enumReadWrites.SelectItem( expectedReadValue ), $"{expectedReadValue} read value should Not exist" );
     }
 
     /// <summary> Tests enum read write value. </summary>
@@ -365,12 +365,12 @@ public abstract class ParseTests
 
         // test non existing key
         queryKey = ( int ) MeasurementEventBitmaskKey.FirstReadingInGroup;
-        _ = Assert.ThrowsException<ArgumentException>( () => measurementBitmasks.IsAnyBitOn( queryKey ), $"Bitmask of key 0x{queryKey:X} should throw an exception" );
+        _ = Assert.ThrowsExactly<ArgumentException>( () => measurementBitmasks.IsAnyBitOn( queryKey ), $"Bitmask of key 0x{queryKey:X} should throw an exception" );
 
         // test invalid bitmask
         queryKey = ( int ) MeasurementEventBitmaskKey.FirstReadingInGroup;
         int existingBitmask = 1 << 4;
-        _ = Assert.ThrowsException<ArgumentException>( () => measurementBitmasks.Add( queryKey, existingBitmask ), $"Bitmask of key 0x{queryKey:X} should throw an exception because {existingBitmask} already exists" );
+        _ = Assert.ThrowsExactly<ArgumentException>( () => measurementBitmasks.Add( queryKey, existingBitmask ), $"Bitmask of key 0x{queryKey:X} should throw an exception because {existingBitmask} already exists" );
         OperationEventsBitmaskDictionary operationBitmasks = [];
         DefineBitmasks( operationBitmasks );
 
@@ -382,12 +382,12 @@ public abstract class ParseTests
 
         // test non existing key
         queryKey = ( int ) OperationEventBitmaskKey.Setting;
-        _ = Assert.ThrowsException<ArgumentException>( () => operationBitmasks.IsAnyBitOn( queryKey ), $"Bitmask of key 0x{queryKey:X} should throw an exception" );
+        _ = Assert.ThrowsExactly<ArgumentException>( () => operationBitmasks.IsAnyBitOn( queryKey ), $"Bitmask of key 0x{queryKey:X} should throw an exception" );
 
         // test invalid bitmask
         queryKey = ( int ) OperationEventBitmaskKey.Setting;
         existingBitmask = 1 << 6;
-        _ = Assert.ThrowsException<ArgumentException>( () => operationBitmasks.Add( queryKey, existingBitmask ), $"Bitmask of key 0x{queryKey:X} should throw an exception because {existingBitmask} already exists" );
+        _ = Assert.ThrowsExactly<ArgumentException>( () => operationBitmasks.Add( queryKey, existingBitmask ), $"Bitmask of key 0x{queryKey:X} should throw an exception because {existingBitmask} already exists" );
         QuestionableEventsBitmaskDictionary questionableBitmasks = [];
         DefineBitmasks( questionableBitmasks );
 
@@ -399,12 +399,12 @@ public abstract class ParseTests
 
         // test non existing key
         queryKey = ( int ) QuestionableEventBitmaskKey.TemperatureSummary;
-        _ = Assert.ThrowsException<ArgumentException>( () => questionableBitmasks.IsAnyBitOn( queryKey ), $"Bitmask of key 0x{queryKey:X} should throw an exception" );
+        _ = Assert.ThrowsExactly<ArgumentException>( () => questionableBitmasks.IsAnyBitOn( queryKey ), $"Bitmask of key 0x{queryKey:X} should throw an exception" );
 
         // test invalid bitmask
         queryKey = ( int ) QuestionableEventBitmaskKey.TemperatureSummary;
         existingBitmask = 1 << 4;
-        _ = Assert.ThrowsException<ArgumentException>( () => questionableBitmasks.Add( queryKey, existingBitmask ), $"Bitmask of key 0x{queryKey:X} should throw an exception because {existingBitmask} already exists" );
+        _ = Assert.ThrowsExactly<ArgumentException>( () => questionableBitmasks.Add( queryKey, existingBitmask ), $"Bitmask of key 0x{queryKey:X} should throw an exception because {existingBitmask} already exists" );
     }
 
     #endregion
