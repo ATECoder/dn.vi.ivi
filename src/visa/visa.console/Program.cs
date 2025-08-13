@@ -24,7 +24,7 @@ internal static class Program
         System.Console.WriteLine();
         System.Reflection.Assembly? executionAssembly = System.Reflection.Assembly.GetExecutingAssembly();
         System.Console.WriteLine( executionAssembly?.FullName );
-        Console.WriteLine( $"\tRunning under {framework?.FrameworkName ?? "--unable to resolve .NET Framework!"} runtime {System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription}" );
+        System.Console.WriteLine( $"\tRunning under {framework?.FrameworkName ?? "--unable to resolve .NET Framework!"} runtime {System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription}" );
 
         // Check whether VISA Shared Components is installed before using VISA.NET.
         // If access VISA.NET without the visaConfMgr.dll library, an unhandled exception will

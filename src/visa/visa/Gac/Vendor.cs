@@ -137,12 +137,34 @@ public static partial class Vendor
         }
     }
 
-    /// <summary>   Checks if an IVI Visa assembly with the specified full name exists in the current execution path. </summary>
-    /// <remarks>   2024-07-13. </remarks>
+    /// <summary>
+    /// Checks if an IVI Visa assembly with the specified full name exists in the current execution
+    /// path.
+    /// </summary>
+    /// <remarks>
+    /// 2024-07-13. <para>
+    /// 2025-08-12: Ivi.Visa.dll no longer exist in the execution path for the .NET framework. The
+    /// shared assembly detected by the GAC Loader is used to verify the existence of the IVI Visa
+    /// assembly.
+    /// </para>
+    /// </remarks>
     /// <returns>   A Tuple. </returns>
     public static (bool Success, string Details) IsIviVisaAssemblyExists()
     {
-        return Vendor.IsAssemblyExists( IVI_VISA_FILENAME, IVI_VISA_FULL_NAME );
+        if ( GacLoader.GetVisaNetShareComponentsAssembly() is not System.Reflection.Assembly visaNetSharedComponentsAssembly )
+            return (false, "Failed getting the VISA.NET Shared Components assembly.");
+        else if ( string.IsNullOrWhiteSpace( IVI_VISA_FILENAME ) || string.IsNullOrWhiteSpace( IVI_VISA_FULL_NAME ) )
+            return (false, "The IVI filename or full name is null or white space.");
+        else if ( visaNetSharedComponentsAssembly.ManifestModule.Name is not string assemblyName )
+            return (false, $"The VISA.NET Shared Components assembly name failed to return value.");
+        else if ( !string.Equals( IVI_VISA_FILENAME, assemblyName, StringComparison.OrdinalIgnoreCase ) )
+            return (false, $"The VISA.NET Shared Components assembly name '{assemblyName}' does not match the expected IVI VISA filename '{IVI_VISA_FILENAME}'.");
+        else if ( visaNetSharedComponentsAssembly.FullName is not string fullName )
+            return (false, "The VISA.NET Shared Components assembly full name is null or white space.");
+        else if ( !string.Equals( IVI_VISA_FULL_NAME, fullName, StringComparison.OrdinalIgnoreCase ) )
+            return (false, $"The VISA.NET Shared Components assembly full name '{fullName}' does not match the expected IVI VISA full name '{IVI_VISA_FULL_NAME}'.");
+        else
+            return (true, string.Empty);
     }
 
     /// <summary>   Has Keysight visa implementation. </summary>
@@ -175,12 +197,13 @@ public static partial class Vendor
         return Vendor.IsResourceMangerExists( KEYSIGHT_RESOURCE_MANAGER_TYPE_NAME );
     }
 
-    /// <summary>   Query if the Gac Loader loaded the keysight implementation. </summary>
+    /// <summary>   Query if the Gac Loader loaded the Keysight implementation. </summary>
     /// <remarks>   2024-07-13. </remarks>
-    /// <returns>   True if loaded keysight implementation, false if not. </returns>
+    /// <returns>   True if loaded Keysight implementation, false if not. </returns>
     public static bool IsLoadedKeysightImplementation()
     {
-        return GacLoader.HasDotNetImplementations && GacLoader.LoadedImplementation is not null
+        return GacLoader.HasDotNetImplementations.GetValueOrDefault( false )
+            && GacLoader.LoadedImplementation is not null
             && string.Equals( Vendor.KEYSIGHT_VISA_FRIENDLY_NAME, GacLoader.LoadedImplementation.FriendlyName, StringComparison.OrdinalIgnoreCase );
     }
 
@@ -219,9 +242,9 @@ public static partial class Vendor
     /// <returns>   True if loaded national instruments implementation, false if not. </returns>
     public static bool IsLoadedNImplementation()
     {
-        return GacLoader.HasDotNetImplementations && GacLoader.LoadedImplementation is not null
+        return GacLoader.HasDotNetImplementations.GetValueOrDefault( false )
+            && GacLoader.LoadedImplementation is not null
             && string.Equals( Vendor.NI_VISA_FRIENDLY_NAME, GacLoader.LoadedImplementation.FriendlyName, StringComparison.OrdinalIgnoreCase );
     }
-
 }
 

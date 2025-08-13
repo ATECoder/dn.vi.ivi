@@ -80,14 +80,14 @@ Apparently the IVI Foundation Nuget packages conflict with the shared component 
 | Keysight.Visa      | 18.5.73       | 2025-05-11 17:28 | 18.5.73    | 175K |
 | IviFoundation.Visa | 8.0.0         | 2025-02-28 11:12 | 8.0.7428.0 | 254K |
 | IviFoundation.Visa | 8.0.1         | 2025-03-11 09:42 | 8.0.7511.0 | 254K |
-| IviFoundation.Visa | 8.0.2         | 2025-06-02 17:19 | 8.0.7808.0 | 254K |
+| IviFoundation.Visa | 8.0.2         | 2025-06-02 17:19 | 8.0.7803.0 | 254K |
 
 | Source             | Net4 Version  | Date Modified    | Version    | Size |
 |--------------------|---------------|------------------|------------|------|
 | Keysight.Visa      | 18.5.73       | 2025-05-11 17:28 | 18.5.73    | 160K |
 | IviFoundation.Visa | 8.0.0         | 2025-02-28 11:12 | 8.0.7428.0 | 111K |
 | IviFoundation.Visa | 8.0.1         | 2025-03-11 09:41 | 8.0.7511.0 | 111K |
-| IviFoundation.Visa | 8.0.2         | 2025-06-02 17:18 | 8.0.7808.0 | 111K |
+| IviFoundation.Visa | 8.0.2         | 2025-06-02 17:18 | 8.0.7803.0 | 111K |
 
 
 C:\Program Files\IVI Foundation\VISA\Microsoft.NET\VendorAssemblies\kt\8.0\Keysight.Visa

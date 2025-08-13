@@ -46,6 +46,5 @@ public partial class VisaIoControl : UserControl
         cc.isr.Tracing.TracingPlatform.Instance.AddTraceEventWriter( this.TextBoxTextWriter );
 
         _ = Program.TraceLogger.LogVerbose( "VISA IO Control loaded" );
-
     }
 }

@@ -21,7 +21,7 @@ Console.WriteLine( $"\tRunning under {framework?.FrameworkName} runtime {System.
 Version? visaNetSharedComponentsVersion;
 try
 {
-    visaNetSharedComponentsVersion = GacLoader.VerifyVisaImplementationPresence();
+    visaNetSharedComponentsVersion = GacLoader.VerifyVisaImplementationPresence( true );
 }
 catch ( System.IO.IOException ex )
 {
@@ -31,10 +31,13 @@ catch ( System.IO.IOException ex )
 }
 
 // Preload installed VISA implementation assemblies
-Ivi.VisaNet.GacLoader.LoadInstalledVisaAssemblies();
+Ivi.VisaNet.GacLoader.LoadInstalledVisaAssemblies( true );
 
 try
 {
+    Console.WriteLine();
+    Console.WriteLine( $"\tID: {Ivi.VisaNet.GacLoader.QueryIdentity( resourceName, true )}" );
+#if false
     // Connect to the instrument.
     Console.WriteLine();
     Console.WriteLine( $"Opening a VISA session to '{resourceName}'..." );
@@ -57,6 +60,7 @@ try
         Console.WriteLine();
         Console.WriteLine( "Not a message-based session." );
     }
+#endif
 }
 catch ( Exception exception )
 {

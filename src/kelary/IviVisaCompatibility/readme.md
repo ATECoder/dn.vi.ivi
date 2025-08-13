@@ -2,6 +2,10 @@
 
 ## Category: VISA
 
+### Updated for Keysight Tehcnologies and IVI Visa Packages 2025-04-25
+
+Starting with version 8.0.0, the IVI Foundationad Keysight began distributing their own version of the IVI.Visa assembly via NuGet. These packages do comply with the same compatibility issues discuss by Kelary with reference to the Kelary.IVI.Visa package below.
+
 ## Description:
 This class library demonstrates how IVI.Visa, which targets the 4.6.1 up to 4.72 frameworks can be targeted from .NET Standard 2.0 using the [.Net Stadnard Compatibility Mode], which means that *... .NET Standard and .NET Core projects [can] reference .NET Framework libraries. Referencing .NET Framework libraries doesn't work for all projects, such as if the library uses Windows Presentation Foundation (WPF) APIs, but it does unblock many porting scenarios.*
 

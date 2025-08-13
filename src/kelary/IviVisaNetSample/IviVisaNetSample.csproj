@@ -13,6 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="IviFoundation.Visa" Version="8.0.2" />
     <PackageReference Include="KeysightTechnologies.Visa" Version="18.5.73" />
     <!--
     <Reference Include="Ivi.Visa">

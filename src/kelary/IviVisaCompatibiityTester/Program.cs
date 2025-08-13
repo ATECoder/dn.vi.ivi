@@ -1,6 +1,5 @@
 using Ivi.Visa;
 using Ivi.VisaNet;
-using System.Net;
 using System.Reflection;
 using System.Runtime.Versioning;
 
@@ -33,7 +32,7 @@ Console.WriteLine( $"\tRunning under {framework?.FrameworkName} runtime {System.
 Version? visaNetSharedComponentsVersion;
 try
 {
-    visaNetSharedComponentsVersion = GacLoader.VerifyVisaImplementationPresence();
+    visaNetSharedComponentsVersion = GacLoader.VerifyVisaImplementationPresence( true );
 }
 catch ( System.IO.IOException ex )
 {
@@ -43,74 +42,25 @@ catch ( System.IO.IOException ex )
 }
 
 // Preload installed VISA implementation assemblies
-Ivi.VisaNet.GacLoader.LoadInstalledVisaAssemblies();
+Ivi.VisaNet.GacLoader.LoadInstalledVisaAssemblies( true );
 
 if ( !string.IsNullOrWhiteSpace( resourceName ) )
 {
-    if ( TryPing( resourceName ) )
+    if ( GacLoader.TryPing( resourceName, out string details ) )
         QueryIdentity();
+    else
+        Console.WriteLine( details );
 }
 
 Console.WriteLine();
 Console.WriteLine( "Press any key to finish." );
 _ = Console.ReadKey();
 
-
-bool TryPing( string resourceName )
-{
-    bool outcome;
-    try
-    {
-        System.Net.NetworkInformation.Ping ping = new();
-        System.Net.NetworkInformation.PingOptions pingOptions = new( 4, true );
-        byte[] buffer = [0, 0];
-        if ( resourceName.StartsWith( "TCPIP", StringComparison.OrdinalIgnoreCase ) )
-            resourceName = resourceName.Split( ":" )[2];
-        if ( IPAddress.TryParse( resourceName, out IPAddress? address ) )
-        {
-            outcome = ping.Send( address, 1000, buffer, pingOptions ).Status == System.Net.NetworkInformation.IPStatus.Success;
-            if ( outcome )
-                Console.WriteLine( $"Instrument found at '{resourceName}'." );
-            else
-                Console.WriteLine( $"Attempt Ping instrument at '{resourceName}' failed." );
-        }
-        else
-        {
-            Console.WriteLine( $"Instrument at '{resourceName}'." );
-            outcome = true;
-        }
-    }
-    catch ( Exception )
-    {
-        Console.WriteLine( $"Exception occurred pinging {resourceName}." );
-        throw;
-    }
-    return outcome;
-}
-
 void QueryIdentity()
 {
     try
     {
-        // Connect to the instrument.
-        Console.WriteLine();
-        Console.WriteLine( $"Opening a VISA session to '{resourceName}'..." );
-        using IVisaSession resource = GlobalResourceManager.Open( resourceName, AccessModes.ExclusiveLock, 2000 );
-        if ( resource is IMessageBasedSession session )
-        {
-            // Ensure termination character is enabled as here in example we use a SOCKET connection.
-            session.TerminationCharacterEnabled = true;
-
-            // Request information about an instrument.
-            session.FormattedIO.WriteLine( "*IDN?" );
-            string instrumentInfo = session.FormattedIO.ReadLine();
-            Console.WriteLine( $"ID: {instrumentInfo}" );
-        }
-        else
-        {
-            Console.WriteLine();
-            Console.WriteLine( "Not a message-based session." );
-        }
+        Console.WriteLine( $"ID: {GacLoader.QueryIdentity( resourceName, true )} " );
     }
     catch ( Exception exception )
     {

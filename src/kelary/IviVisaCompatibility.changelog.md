@@ -2,12 +2,12 @@
 All notable changes to these libraries will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-[8.0.9351]: https://www.github.com/atecoder/dn.vi.ivi
+[8.0.1.9356]: https://www.github.com/atecoder/dn.vi.ivi
 
-Current IVI Visa Compatibility: 8.0.1.9351
+Current IVI Visa Compatibility: 8.0.1.9356
 
-## [8.0.9351] - 2025-08-08
-- Update to Keysight IO Suite 21.1.209 and IVI Visa Compatibility to 8.0.1.
+## [8.0.1.9356] - 2025-08-13
+- Update to Keysight IO Suite 21.1.209 and use KeySight Technologies VISA 18.5.73 package.
 
 ## [7.2.9220] - 2025-03-30
 - Replace tabs with spaces.

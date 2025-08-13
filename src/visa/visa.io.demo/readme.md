@@ -1,6 +1,6 @@
 # About
 
-[cc.isr.Visa.IO.Demo] demonstrates using the [VISA Win Controls].
+[cc.isr.Visa.IO.Demo] demonstrates using the [VISA Win Controls] for basic VISA IO.
 
 # How to Use
 

@@ -1,6 +1,6 @@
 # About
 
-[cc.isr.Visa.Console] using the [ISR VISA Win Controls].for communicating with virtual instruments using [IVI] VISA.
+[cc.isr.Visa.Console] using the [ISR VISA Win Controls] for communicating with virtual instruments using [IVI] VISA.
 
 # How to Use
 

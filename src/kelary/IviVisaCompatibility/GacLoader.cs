@@ -1,8 +1,6 @@
 using System;
 using System.Linq;
-using System.Reflection;
-using Ivi.Visa;
-using Ivi.Visa.ConflictManager;
+using System.Net;
 
 namespace Ivi.VisaNet;
 /// <summary>
@@ -88,6 +86,15 @@ public static class GacLoader
         return _visaNetShareComponentsAssembly;
     }
 
+    /// <summary>   Gets visa net share components version. </summary>
+    /// <remarks>   2024-07-02. </remarks>
+    /// <returns>   The visa net share components version. </returns>
+    public static System.Version? GetVisaNetShareComponentsVersion()
+    {
+        System.Reflection.Assembly? assembly = GacLoader.GetVisaNetShareComponentsAssembly();
+        return assembly?.GetName().Version;
+    }
+
     /// <summary>   Gets the visa configuration manager file version info. </summary>
     /// <remarks>   2024-07-02. </remarks>
     /// <returns>   The visa configuration manager file version info. </returns>
@@ -96,21 +103,23 @@ public static class GacLoader
         return System.Diagnostics.FileVersionInfo.GetVersionInfo( System.IO.Path.Combine( Environment.SystemDirectory, GacLoader.VisaConfigManagerFileName ) );
     }
 
-    /// <summary>   Static constructor. </summary>
-    /// <remarks>   2024-07-02. </remarks>
-    /// <exception cref="System.IO.IOException">    Thrown when the requested operation is
-    ///                                                 invalid. </exception>
-    public static System.Version? VerifyVisaImplementationPresence()
+    /// <summary>   Verify visa implementation presence. </summary>
+    /// <remarks>   2025-08-12. </remarks>
+    /// <exception cref="IOException">  Thrown when an I/O failure occurred. </exception>
+    /// <param name="verbose">  (Optional) True to verbose. </param>
+    /// <returns>   A System.Version? </returns>
+    public static System.Version? VerifyVisaImplementationPresence( bool verbose = false )
     {
         // get the shared components version.
         System.Version? visaNetSharedComponentsVersion = new();
         try
         {
-            Assembly visaNetSharedComponentsAssembly = typeof( Ivi.Visa.GlobalResourceManager ).Assembly;
-            visaNetSharedComponentsVersion = visaNetSharedComponentsAssembly.GetName().Version;
-            Console.WriteLine();
-            Console.WriteLine( $"VISA.NET Shared Components {visaNetSharedComponentsAssembly.GetName()}." );
-            Console.WriteLine( $"\tVersion: {System.Diagnostics.FileVersionInfo.GetVersionInfo( typeof( GlobalResourceManager ).Assembly.Location ).FileVersion}." );
+            System.Reflection.Assembly? assembly = GacLoader.GetVisaNetShareComponentsAssembly();
+            if ( verbose )
+            {
+                Console.WriteLine( $"\nVISA.NET Shared Components {assembly?.GetName()}." );
+                Console.WriteLine( $"\tVersion: {System.Diagnostics.FileVersionInfo.GetVersionInfo( assembly?.Location ).FileVersion}." );
+            }
         }
         catch ( Exception ex )
         {
@@ -126,7 +135,10 @@ public static class GacLoader
             // Get an available version of the VISA Shared Components.
             System.Diagnostics.FileVersionInfo? visaSharedComponentsInfo = GacLoader.VisaConfigManagerFileVersionInfo();
             if ( visaSharedComponentsInfo is not null )
-                Console.WriteLine( $"\t{visaSharedComponentsInfo.InternalName} version {visaSharedComponentsInfo.ProductVersion} detected." );
+            {
+                if ( verbose )
+                    Console.WriteLine( $"\t{visaSharedComponentsInfo.InternalName} version {visaSharedComponentsInfo.ProductVersion} detected." );
+            }
             else
                 throw new System.IO.IOException( $"\tFailed getting the VISA shared component {GacLoader.VisaConfigManagerFileName} info." );
         }
@@ -147,22 +159,107 @@ public static class GacLoader
     }
 
     /// <summary>
-    /// Preloading installed VISA implementation assemblies for NET 5+
+    /// Gets or sets a value indicating whether this object has dot net implementations.
     /// </summary>
-    public static void LoadInstalledVisaAssemblies()
+    /// <value> True if this object has dot net implementations, false if not. </value>
+    public static bool? HasDotNetImplementations { get; private set; }
+
+    /// <summary>   Gets or sets the loaded implementation. </summary>
+    /// <value> The loaded implementation. </value>
+    public static Ivi.Visa.ConflictManager.VisaImplementation? LoadedImplementation { get; private set; }
+
+    /// <summary>   Loads installed visa assemblies. </summary>
+    /// <remarks>   2025-08-12. </remarks>
+    /// <exception cref="IOException">  Thrown when an I/O failure occurred. </exception>
+    /// <param name="verbose">  (Optional) True to verbose. </param>
+    public static void LoadInstalledVisaAssemblies( bool verbose = false )
     {
-        System.Collections.Generic.List<Ivi.Visa.ConflictManager.VisaImplementation> installedVisas = new Ivi.Visa.ConflictManager.ConflictManager().GetInstalledVisas( ApiType.DotNet );
+        // skip if already loaded.
+        if ( GacLoader.LoadedImplementation is not null ) return;
+
+        System.Collections.Generic.List<Ivi.Visa.ConflictManager.VisaImplementation> installedVisas =
+            new Ivi.Visa.ConflictManager.ConflictManager().GetInstalledVisas( Ivi.Visa.ConflictManager.ApiType.DotNet );
+        GacLoader.HasDotNetImplementations = installedVisas.Count > 0;
         foreach ( Ivi.Visa.ConflictManager.VisaImplementation visaLibrary in installedVisas )
         {
             try
             {
-                System.Reflection.Assembly installedAssembly = GacLoader.Load( new System.Reflection.AssemblyName( visaLibrary.Location.Substring( visaLibrary.Location.IndexOf( "," ) + 1 ) ) );
-                Console.WriteLine( $"Loaded {installedAssembly.FullName}, {System.Diagnostics.FileVersionInfo.GetVersionInfo( installedAssembly.Location ).FileVersion}" );
+                // load the installed VISA assembly.
+                System.Reflection.Assembly visaAssembly = GacLoader.Load( new System.Reflection.AssemblyName(
+                    visaLibrary.Location.Substring( visaLibrary.Location.IndexOf( "," ) + 1 ) ) );
+                if ( verbose )
+                    Console.WriteLine( $"Loaded {visaAssembly.FullName}, {System.Diagnostics.FileVersionInfo.GetVersionInfo( visaAssembly.Location ).FileVersion}" );
+                GacLoader.LoadedImplementation = visaLibrary;
             }
             catch ( Exception exception )
             {
-                throw new System.IO.IOException( $"Failed to load assembly \"{visaLibrary.FriendlyName}\": {exception.Message}", exception );
+                throw new System.IO.IOException( $"Failed to load assembly '{visaLibrary.FriendlyName}': {exception.Message}", exception );
             }
         }
+    }
+
+    /// <summary>   Queries the instrument identity string. </summary>
+    /// <remarks>   2025-08-12. </remarks>
+    /// <exception cref="ArgumentException">            Thrown when one or more arguments have
+    ///                                                 unsupported or illegal values. </exception>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <param name="resourceName"> Name of the resource. </param>
+    /// <param name="verbose">      (Optional) True to verbose. </param>
+    /// <returns>   The identity. </returns>
+    public static string QueryIdentity( string resourceName, bool verbose = false )
+    {
+        if ( string.IsNullOrWhiteSpace( resourceName ) )
+            throw new ArgumentException( $"{nameof( resourceName )} cannot be null or empty.", nameof( resourceName ) );
+        // Connect to the instrument.
+        if ( verbose ) Console.WriteLine( $"Opening a VISA session to '{resourceName}'..." );
+        using Ivi.Visa.IVisaSession resource = Ivi.Visa.GlobalResourceManager.Open( resourceName, Ivi.Visa.AccessModes.ExclusiveLock, 2000 );
+        if ( resource is Ivi.Visa.IMessageBasedSession session )
+        {
+            // Ensure termination character is enabled as here in example we use a SOCKET connection.
+            session.TerminationCharacterEnabled = true;
+            // Request information about an instrument.
+            if ( verbose ) Console.WriteLine( "\tReading instrument identification string..." );
+            session.FormattedIO.WriteLine( "*IDN?" );
+            return session.FormattedIO.ReadLine();
+        }
+        else
+        {
+            throw new InvalidOperationException( "Not a message-based session." );
+        }
+    }
+
+    /// <summary>   Attempts to ping. </summary>
+    /// <remarks>   2025-08-12. </remarks>
+    /// <param name="resourceName"> Name of the resource. </param>
+    /// <returns>   True if it succeeds, false if it fails. </returns>
+    public static bool TryPing( string resourceName, out string details )
+    {
+        bool outcome = false;
+        try
+        {
+            System.Net.NetworkInformation.Ping ping = new();
+            System.Net.NetworkInformation.PingOptions pingOptions = new( 4, true );
+            byte[] buffer = [0, 0];
+            if ( resourceName.StartsWith( "TCPIP", StringComparison.OrdinalIgnoreCase ) )
+                resourceName = resourceName.Split( ':' )[2];
+            if ( IPAddress.TryParse( resourceName, out IPAddress? address ) )
+            {
+                outcome = ping.Send( address, 1000, buffer, pingOptions ).Status == System.Net.NetworkInformation.IPStatus.Success;
+                details = outcome
+                    ? $"Instrument found at '{resourceName}'."
+                    : $"Attempt Ping instrument at '{resourceName}' failed.";
+            }
+            else
+            {
+                details = $"Non TCPIP Instrument at '{resourceName}'.";
+                outcome = true;
+            }
+        }
+        catch ( Exception )
+        {
+            details = $"Exception occurred pinging {resourceName}; .";
+        }
+        return outcome;
     }
 }
