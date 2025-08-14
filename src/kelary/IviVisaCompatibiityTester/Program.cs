@@ -48,9 +48,25 @@ if ( !string.IsNullOrWhiteSpace( resourceName ) )
 {
     if ( GacLoader.TryPing( resourceName, out string details ) )
     {
-        QueryIdentity();
+        Console.WriteLine( $"\nReading '{resourceName}' identity..." );
+        if ( GacLoader.TryQueryIdentity( resourceName, out string? identity, true ) )
+        {
+            Console.WriteLine( $"\tVISA resource '{resourceName}' identified as:\n\t{identity}" );
+        }
+        else
+        {
+            Console.WriteLine( $"Failed to identify VISA resource '{resourceName}'." );
+        }
         Console.WriteLine();
-        IdentifyVisaSession();
+
+        try
+        {
+            Console.WriteLine( GacLoader.IdentifyVisaSession( resourceName ) );
+        }
+        catch ( Exception exception )
+        {
+            Console.WriteLine( $"Exception: {exception.Message}" );
+        }
     }
     else
         Console.WriteLine( details );
@@ -59,46 +75,3 @@ if ( !string.IsNullOrWhiteSpace( resourceName ) )
 Console.WriteLine();
 Console.WriteLine( "Press any key to finish." );
 _ = Console.ReadKey();
-
-void QueryIdentity()
-{
-    try
-    {
-        Console.WriteLine( $"ID: {GacLoader.QueryIdentity( resourceName, true )} " );
-    }
-    catch ( Exception exception )
-    {
-        if ( exception is TypeInitializationException && exception.InnerException is DllNotFoundException )
-        {
-            // VISA Shared Components is not installed.
-            Console.WriteLine( $"VISA implementation compatible with VISA.NET Shared Components {visaNetSharedComponentsVersion} not found. Please install corresponding vendor-specific VISA implementation first." );
-        }
-        else if ( exception is VisaException && exception.Message == "No vendor-specific VISA .NET implementation is installed." )
-        {
-            // Vendor-specific VISA.NET implementation is not available.
-            Console.WriteLine( $"VISA implementation compatible with VISA.NET Shared Components {visaNetSharedComponentsVersion} not found. Please install corresponding vendor-specific VISA implementation first." );
-        }
-        else if ( exception is EntryPointNotFoundException )
-        {
-            // Installed VISA Shared Components are not compatible with VISA.NET Shared Components.
-            Console.WriteLine( $"Installed VISA Shared Components version {visaNetSharedComponentsVersion} does not support VISA.NET. Please upgrade VISA implementation." );
-        }
-        else
-        {
-            // Handle remaining errors.
-            Console.WriteLine( $"Exception: {exception.Message}" );
-        }
-    }
-}
-
-void IdentifyVisaSession()
-{
-    try
-    {
-        Console.WriteLine( GacLoader.IdentifyVisaSession( resourceName ) );
-    }
-    catch ( Exception exception )
-    {
-        Console.WriteLine( $"Exception: {exception.Message}" );
-    }
-}

@@ -33,57 +33,14 @@ catch ( System.IO.IOException ex )
 // Preload installed VISA implementation assemblies
 Ivi.VisaNet.GacLoader.LoadInstalledVisaAssemblies( true );
 
-try
+Console.WriteLine( $"\nReading '{resourceName}' identity..." );
+if ( GacLoader.TryQueryIdentity( resourceName, out string? identity, true ) )
 {
-    Console.WriteLine();
-    Console.WriteLine( $"\tID: {Ivi.VisaNet.GacLoader.QueryIdentity( resourceName, true )}" );
-#if false
-    // Connect to the instrument.
-    Console.WriteLine();
-    Console.WriteLine( $"Opening a VISA session to '{resourceName}'..." );
-    using IVisaSession resource = Ivi.Visa.GlobalResourceManager.Open( resourceName, AccessModes.ExclusiveLock, 2000 );
-    if ( resource is IMessageBasedSession session )
-    {
-        // Ensure termination character is enabled as here in example we use a SOCKET connection.
-        session.TerminationCharacterEnabled = true;
-
-        // Request information about an instrument.
-        Console.WriteLine();
-        Console.WriteLine( "Reading instrument identification string..." );
-        session.FormattedIO.WriteLine( "*IDN?" );
-        string instrumentInfo = session.FormattedIO.ReadLine();
-        Console.WriteLine();
-        Console.WriteLine( $"{resourceName} Identification string:\n\n{instrumentInfo}" );
-    }
-    else
-    {
-        Console.WriteLine();
-        Console.WriteLine( "Not a message-based session." );
-    }
-#endif
+    Console.WriteLine( $"\tVISA resource '{resourceName}' identified as:\n\t{identity}" );
 }
-catch ( Exception exception )
+else
 {
-    if ( exception is TypeInitializationException && exception.InnerException is DllNotFoundException )
-    {
-        // VISA Shared Components is not installed.
-        Console.WriteLine( $"VISA implementation compatible with VISA.NET Shared Components {visaNetSharedComponentsVersion} not found. Please install corresponding vendor-specific VISA implementation first." );
-    }
-    else if ( exception is VisaException && exception.Message == "No vendor-specific VISA .NET implementation is installed." )
-    {
-        // Vendor-specific VISA.NET implementation is not available.
-        Console.WriteLine( $"VISA implementation compatible with VISA.NET Shared Components {visaNetSharedComponentsVersion} not found. Please install corresponding vendor-specific VISA implementation first." );
-    }
-    else if ( exception is EntryPointNotFoundException )
-    {
-        // Installed VISA Shared Components are not compatible with VISA.NET Shared Components.
-        Console.WriteLine( $"Installed VISA Shared Components version {visaNetSharedComponentsVersion} does not support VISA.NET. Please upgrade VISA implementation." );
-    }
-    else
-    {
-        // Handle remaining errors.
-        Console.WriteLine( $"Exception: {exception.Message}" );
-    }
+    Console.WriteLine( $"Failed to identify VISA resource '{resourceName}'." );
 }
 
 Console.WriteLine();
