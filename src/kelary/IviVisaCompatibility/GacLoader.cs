@@ -2,6 +2,8 @@ using System;
 using System.Linq;
 using System.Net;
 
+#pragma warning disable IDE0150
+
 namespace Ivi.VisaNet;
 /// <summary>
 /// Class used to load .NET Framework assemblies located in GAC from .NET 5+
@@ -213,20 +215,111 @@ public static class GacLoader
             throw new ArgumentException( $"{nameof( resourceName )} cannot be null or empty.", nameof( resourceName ) );
         // Connect to the instrument.
         if ( verbose ) Console.WriteLine( $"Opening a VISA session to '{resourceName}'..." );
-        using Ivi.Visa.IVisaSession resource = Ivi.Visa.GlobalResourceManager.Open( resourceName, Ivi.Visa.AccessModes.ExclusiveLock, 2000 );
-        if ( resource is Ivi.Visa.IMessageBasedSession session )
+        using Ivi.Visa.IVisaSession visaSession = Ivi.Visa.GlobalResourceManager.Open( resourceName, Ivi.Visa.AccessModes.ExclusiveLock, 2000 );
+        if ( visaSession is Ivi.Visa.IMessageBasedSession messageBasedSession )
         {
             // Ensure termination character is enabled as here in example we use a SOCKET connection.
-            session.TerminationCharacterEnabled = true;
+            messageBasedSession.TerminationCharacterEnabled = true;
             // Request information about an instrument.
             if ( verbose ) Console.WriteLine( "\tReading instrument identification string..." );
-            session.FormattedIO.WriteLine( "*IDN?" );
-            return session.FormattedIO.ReadLine();
+            messageBasedSession.FormattedIO.WriteLine( "*IDN?" );
+            return messageBasedSession.FormattedIO.ReadLine();
         }
         else
         {
             throw new InvalidOperationException( "Not a message-based session." );
         }
+    }
+
+    /// <summary>   Identify visa session. </summary>
+    /// <remarks>   2025-08-13. </remarks>
+    /// <param name="resourceName"> Name of the resource. </param>
+    /// <returns>   A string. </returns>
+    public static string IdentifyVisaSession( string resourceName )
+    {
+        if ( string.IsNullOrWhiteSpace( resourceName ) )
+        {
+            return $"{nameof( resourceName )} is null or empty or white space.";
+        }
+
+        if ( resourceName.StartsWith( "TCPIP", StringComparison.OrdinalIgnoreCase ) )
+        {
+            System.Text.StringBuilder sb = new();
+            _ = sb.AppendLine( $"Visa Session for '{resourceName}': " );
+
+            using Ivi.Visa.IVisaSession visaSession = Ivi.Visa.GlobalResourceManager.Open( resourceName, Ivi.Visa.AccessModes.ExclusiveLock, 2000 );
+
+            // MessageBasedSession, ITcpipSession2, ITcpipSession, IMessageBasedSession, IVisaSession, IDisposable
+
+            if ( visaSession is Ivi.Visa.IMessageBasedSession )
+            {
+                _ = sb.AppendLine( $"\tis a '{nameof( Ivi )}.{nameof( Ivi.Visa )}.{nameof( Ivi.Visa.IMessageBasedSession )}'." );
+
+                _ = sb.Append( visaSession is Keysight.Visa.MessageBasedSession
+                    ? $"\tis"
+                    : $"\tis not" );
+                _ = sb.AppendLine( $" a '{nameof( Keysight )}.{nameof( Keysight.Visa )}.{nameof( Keysight.Visa.MessageBasedSession )}'." );
+
+                _ = sb.Append( visaSession is Keysight.Visa.TcpipSession
+                    ? $"\tis"
+                    : $"\tis not" );
+                _ = sb.AppendLine( $" a '{nameof( Keysight )}.{nameof( Keysight.Visa )}.{nameof( Keysight.Visa.TcpipSession )}'." );
+
+                _ = sb.Append( visaSession is Ivi.Visa.IVisaSession
+                    ? $"\tis"
+                    : $"\tis not" );
+                _ = sb.AppendLine( $" a '{nameof( Ivi )}.{nameof( Ivi.Visa )}.{nameof( Ivi.Visa.IVisaSession )}'." );
+
+                _ = sb.Append( visaSession is Ivi.Visa.ITcpipSession
+                    ? $"\tis"
+                    : $"\tis not" );
+                _ = sb.AppendLine( $" a '{nameof( Ivi )}.{nameof( Ivi.Visa )}.{nameof( Ivi.Visa.ITcpipSession )}'." );
+
+#if NET9_0_OR_GREATER
+                string typeName = "Ivi.Visa.ITcpipSession2";
+                Type? iTcpIpSession2 = Type.GetType( typeName, false, true );
+                if ( iTcpIpSession2 == null )
+                    _ = sb.AppendLine( $"\tThe type '{typeName}' does not exist in the namespace '{nameof( Ivi )}.{nameof( Ivi.Visa )}'." );
+                else
+                {
+                    try
+                    {
+                        _ = sb.Append( iTcpIpSession2 is not null
+                            ? $"\tis"
+                            : $"\tis not" );
+                        _ = sb.AppendLine( $" a 'typeName'." );
+                    }
+                    catch ( Exception ex )
+                    {
+                        _ = sb.AppendLine( $"\tException handling 'typeName':\n\t\t{ex.Message}." );
+                    }
+                }
+
+#else
+                try
+                {
+                    _ = sb.Append( visaSession is Ivi.Visa.ITcpipSession2
+                        ? $"\tis"
+                        : $"\tis not" );
+                    _ = sb.AppendLine( $" a '{nameof( Ivi )}.{nameof( Ivi.Visa )}.{nameof( Ivi.Visa.ITcpipSession2 )}'." );
+                }
+                catch ( Exception ex )
+                {
+                    _ = sb.AppendLine( $" Exception handling '{nameof( Ivi )}.{nameof( Ivi.Visa )}.{nameof( Ivi.Visa.ITcpipSession2 )}'; {ex.Message}." );
+                }
+#endif
+            }
+            else
+            {
+                _ = sb.AppendLine( $"\tis not a '{nameof( Ivi )}.{nameof( Ivi.Visa )}.{nameof( Ivi.Visa.IMessageBasedSession )}'." );
+            }
+            return sb.ToString();
+        }
+        else
+        {
+            return $"Resource '{resourceName}' is not a TCPIP resource.";
+        }
+
     }
 
     /// <summary>   Attempts to ping. </summary>

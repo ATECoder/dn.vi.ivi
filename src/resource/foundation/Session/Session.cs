@@ -38,7 +38,7 @@ public partial class Session : Pith.SessionBase
             {
                 try
                 {
-                    this.TcpIpSession = null;
+                    this.TcpipSession = null;
                     this.DisposeSession();
                 }
                 catch ( Exception ex )
@@ -78,7 +78,17 @@ public partial class Session : Pith.SessionBase
         set
         {
             this._visaSession = value;
-            this.TcpIpSession = ( ITcpipSession ) this.VisaSession!;
+            if ( value is Ivi.Visa.ITcpipSession tcpipSession )
+            {
+                // if the session is a TCP/IP session, set the TcpIpSession property.
+                // This is done here to avoid casting issues.
+                this.TcpipSession = tcpipSession;
+            }
+            else
+            {
+                // otherwise, set the TcpIpSession to null.
+                this.TcpipSession = null;
+            }
         }
     }
 
@@ -87,10 +97,10 @@ public partial class Session : Pith.SessionBase
     [CLSCompliant( false )]
     public HardwareInterfaceType HardwareInterfaceType => this.VisaSession is null ? HardwareInterfaceType.Custom : this.VisaSession.HardwareInterfaceType;
 
-    /// <summary> Gets the TCP IP session. </summary>
-    /// <value> The TCP IP session. </value>
+    /// <summary> Gets the TCP/IP session. </summary>
+    /// <value> The TCP/IP session. </value>
     [CLSCompliant( false )]
-    public ITcpipSession? TcpIpSession { get; private set; }
+    public ITcpipSession? TcpipSession { get; private set; }
 
     /// <summary>
     /// Gets the session open sentinel. When open, the session is capable of addressing the hardware.
@@ -185,7 +195,7 @@ public partial class Session : Pith.SessionBase
             try
             {
                 this._visaSession?.Dispose();
-                this.TcpIpSession?.Dispose();
+                this.TcpipSession?.Dispose();
             }
             catch
             {
@@ -194,7 +204,7 @@ public partial class Session : Pith.SessionBase
             finally
             {
                 this.ResourceOpenState = Pith.ResourceOpenState.Unknown;
-                this.TcpIpSession = null;
+                this.TcpipSession = null;
                 this._visaSession = null;
             }
         }
@@ -277,8 +287,8 @@ public partial class Session : Pith.SessionBase
         get => base.ReadTerminationCharacter;
         set
         {
-            if ( this.TcpIpSession is not null )
-                this.TcpIpSession.TerminationCharacter = value;
+            if ( this.TcpipSession is not null )
+                this.TcpipSession.TerminationCharacter = value;
             if ( this.VisaSession is not null )
                 this.VisaSession.TerminationCharacter = value;
             base.ReadTerminationCharacter = value;
@@ -295,8 +305,8 @@ public partial class Session : Pith.SessionBase
         get => base.ReadTerminationCharacterEnabled;
         set
         {
-            if ( this.TcpIpSession is not null )
-                this.TcpIpSession.TerminationCharacterEnabled = value;
+            if ( this.TcpipSession is not null )
+                this.TcpipSession.TerminationCharacterEnabled = value;
 
             if ( this.VisaSession is not null )
                 this.VisaSession.TerminationCharacterEnabled = value;
@@ -312,8 +322,8 @@ public partial class Session : Pith.SessionBase
         get => base.CommunicationTimeout;
         set
         {
-            if ( this.TcpIpSession is not null )
-                this.TcpIpSession.TimeoutMilliseconds = ( int ) value.TotalMilliseconds;
+            if ( this.TcpipSession is not null )
+                this.TcpipSession.TimeoutMilliseconds = ( int ) value.TotalMilliseconds;
 
             if ( this.VisaSession is not null )
                 this.VisaSession.TimeoutMilliseconds = ( int ) value.TotalMilliseconds;
@@ -746,12 +756,12 @@ public partial class Session : Pith.SessionBase
                     // Apparently, the service request event is enabled when removing the event handler.
                     // Note that disabling twice does not cause an exception.
                     // Removed per above note: Me.VisaSession.DisableEvent(Ivi.Visa.EventType.ServiceRequest)
-                    if ( this.HardwareInterfaceType == HardwareInterfaceType.Tcp )
+                    if ( this.HardwareInterfaceType == HardwareInterfaceType.Tcp && this.TcpipSession is not null )
                     {
                         lastMessage = "remove TCP/IP SRQ handler";
-                        this.TcpIpSession!.ServiceRequest -= this.OnServiceRequested;
+                        this.TcpipSession.ServiceRequest -= this.OnServiceRequested;
                     }
-                    else
+                    else if ( this.VisaSession is not null )
                     {
                         lastMessage = "SRQ handler";
                         this.VisaSession!.ServiceRequest -= this.OnServiceRequested;
@@ -864,13 +874,13 @@ public partial class Session : Pith.SessionBase
     /// <returns> <c>true</c> if success; otherwise <c>false</c> </returns>
     public override void KeepAlive()
     {
-        if ( this.IsSessionOpen && this.TcpIpSession is not null )
+        if ( this.IsSessionOpen && this.TcpipSession is not null )
         {
-            if ( this.TcpIpSession.ResourceLockState == Ivi.Visa.ResourceLockState.NoLock )
+            if ( this.TcpipSession.ResourceLockState == Ivi.Visa.ResourceLockState.NoLock )
             {
-                this.TcpIpSession.LockResource( ( int ) this.KeepAliveLockTimeout.TotalMilliseconds );
+                this.TcpipSession.LockResource( ( int ) this.KeepAliveLockTimeout.TotalMilliseconds );
             }
-            this.TcpIpSession.UnlockResource();
+            this.TcpipSession.UnlockResource();
         }
     }
 

@@ -74,11 +74,11 @@ catch ( FileNotFoundException )
     return;
 }
 
-// #if NET5_0_OR_GREATER
-Console.WriteLine();
+#if false // NET5_0_OR_GREATER
+Console.WriteLine( "Preloading installed VISA implementation" );
 // Preloading installed VISA implementation assemblies for NET 5+
 Ivi.VisaNet.GacLoader.LoadInstalledVisaAssemblies();
-// #endif
+#endif
 
 try
 {
@@ -127,6 +127,15 @@ catch ( Exception exception )
         // Handle remaining errors.
         Console.WriteLine( $"Exception: {exception.Message}" );
     }
+}
+
+try
+{
+    Console.WriteLine( GacLoader.IdentifyVisaSession( resourceName ) );
+}
+catch ( Exception exception )
+{
+    Console.WriteLine( $"Exception: {exception.Message}" );
 }
 
 Console.WriteLine();

@@ -2,11 +2,22 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9356]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9357]: https://www.github.com/atecoder/dn.vi.ivi
 Current IVI Visa Compatibility: 8.0.1.9356
 
-## [8.1.9356] - 2025-08-13
-- Update to Keysight IO Suite 21.1.209 and use KeySight Technologies VISA 18.5.73 package.
+## [8.1.9357] - 2025-08-14
+- Supports Keysight IO Suite 21.1.209 and IVI Visa 8.0.1.
+- Document failure to cast Keysight.Visa.TcpipSession to Ivi.Visa.TcpipSession.
+- Session and Session Base:
+  - Handle the case where the Tcp/IP Session is null.
+- Device Visa Session Base
+  - Initialize resource filter.
+- Device Win Controls
+  - Status View:
+    - Bind Combo box to a list from I Enumerable.
+	- Correct getting the names of the key value pair elements.
+- Device Win Controls MS Test
+  - Fix binding test by binding to a new binding.
 
 ## [8.1.9302] - 2025-06-20
 - Win Controls

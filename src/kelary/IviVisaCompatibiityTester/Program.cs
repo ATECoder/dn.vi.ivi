@@ -47,7 +47,11 @@ Ivi.VisaNet.GacLoader.LoadInstalledVisaAssemblies( true );
 if ( !string.IsNullOrWhiteSpace( resourceName ) )
 {
     if ( GacLoader.TryPing( resourceName, out string details ) )
+    {
         QueryIdentity();
+        Console.WriteLine();
+        IdentifyVisaSession();
+    }
     else
         Console.WriteLine( details );
 }
@@ -87,3 +91,14 @@ void QueryIdentity()
     }
 }
 
+void IdentifyVisaSession()
+{
+    try
+    {
+        Console.WriteLine( GacLoader.IdentifyVisaSession( resourceName ) );
+    }
+    catch ( Exception exception )
+    {
+        Console.WriteLine( $"Exception: {exception.Message}" );
+    }
+}

@@ -802,8 +802,9 @@ public partial class StatusView : cc.isr.WinControls.ModelViewBase
             {
                 this._usingStatusSubsystemOnly = value;
                 this.NotifyPropertyChanged();
-                if ( this.VisaSessionBaseInternal is not null )
-                    this.VisaSessionBaseInternal.SubsystemSupportMode = value ? SubsystemSupportMode.StatusOnly : SubsystemSupportMode.Full;
+                if ( this.VisaSessionBaseInternal is null )
+                    return;
+                this.VisaSessionBaseInternal.SubsystemSupportMode = value ? SubsystemSupportMode.StatusOnly : SubsystemSupportMode.Full;
             }
         }
     }
@@ -830,9 +831,14 @@ public partial class StatusView : cc.isr.WinControls.ModelViewBase
         binding.DataSourceUpdateMode = DataSourceUpdateMode.Never;
         if ( add )
         {
-            this._traceShowLevelComboBox.ComboBox.DataSource = TraceEventType.Error.ValueDescriptionPairs();
+            this._traceShowLevelComboBox.ComboBox.DataSource = new List<KeyValuePair<Enum, string>>( TraceEventType.Error.ValueDescriptionPairs() );
+#if NET9_0_OR_GREATER
+            this._traceShowLevelComboBox.ComboBox.ValueMember = nameof( KeyValuePair<,>.Key );
+            this._traceShowLevelComboBox.ComboBox.DisplayMember = nameof( KeyValuePair<,>.Value );
+#else
             this._traceShowLevelComboBox.ComboBox.ValueMember = nameof( KeyValuePair<Enum, string>.Key );
             this._traceShowLevelComboBox.ComboBox.DisplayMember = nameof( KeyValuePair<Enum, string>.Value );
+#endif
             this._traceShowLevelComboBox.ComboBox.BindingContext = this.BindingContext;
             // this is necessary because the combo box binding does not set the data source value on it item change event
             this._traceShowLevelComboBox.ComboBox.SelectedValueChanged += this.HandleTraceShowLevelComboBoxValueChanged;
@@ -852,9 +858,14 @@ public partial class StatusView : cc.isr.WinControls.ModelViewBase
         binding.DataSourceUpdateMode = DataSourceUpdateMode.Never;
         if ( add )
         {
-            this._traceLogLevelComboBox.ComboBox.DataSource = TraceEventType.Error.ValueDescriptionPairs();
+            this._traceLogLevelComboBox.ComboBox.DataSource = new List<KeyValuePair<Enum, string>>( TraceEventType.Error.ValueDescriptionPairs() );
+#if NET9_0_OR_GREATER
+            this._traceLogLevelComboBox.ComboBox.ValueMember = nameof( KeyValuePair<,>.Key );
+            this._traceLogLevelComboBox.ComboBox.DisplayMember = nameof( KeyValuePair<,>.Value );
+#else
             this._traceLogLevelComboBox.ComboBox.ValueMember = nameof( KeyValuePair<Enum, string>.Key );
             this._traceLogLevelComboBox.ComboBox.DisplayMember = nameof( KeyValuePair<Enum, string>.Value );
+#endif
             this._traceLogLevelComboBox.ComboBox.BindingContext = this.BindingContext;
             // this is necessary because the combo box binding does not set the data source value on it item change event
             this._traceLogLevelComboBox.ComboBox.SelectedValueChanged += this.HandleTraceLogLevelComboBoxValueChanged;

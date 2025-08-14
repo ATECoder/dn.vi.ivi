@@ -56,6 +56,9 @@ public abstract partial class VisaSessionBase : IDisposable
         if ( this.Session is null )
             throw new InvalidOperationException( "Failed creating a new session" );
 
+        if ( string.IsNullOrWhiteSpace( this.Session.ResourcesFilter ) )
+            this.Session.ResourcesFilter = SessionFactory.Instance.Factory.ResourcesProvider().ResourceFinder!.BuildMinimalResourcesFilter();
+
         this.ApplyDefaultSyntax();
         base.ResourceClosedCaption = "<closed>";
         base.CandidateResourceModel = string.Empty;

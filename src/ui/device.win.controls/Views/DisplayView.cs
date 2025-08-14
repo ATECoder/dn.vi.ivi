@@ -1222,33 +1222,53 @@ public partial class DisplayView : cc.isr.WinControls.ModelViewBase
         this._statusStrip.BackColor = backColor;
     }
 
+    private static void CloneBinding( Control control, Binding binding )
+    {
+        Binding bind = new( binding.PropertyName, binding.DataSource, binding.BindingMemberInfo.BindingMember,
+            true, DataSourceUpdateMode.OnPropertyChanged );
+        if ( control.DataBindings.Exists( bind ) ) { control.DataBindings.Remove( bind ); }
+        control.DataBindings.Add( bind );
+    }
+
     /// <summary> Bind settings. </summary>
     public void BindSettings()
     {
         this._layout.BackColor = DisplayView.DisplayViewSettings.CharcoalColor;
-        Binding binding = new( nameof( this.BackColor ), DisplayView.DisplayViewSettings, nameof( DisplayView.DisplayViewSettings.CharcoalColor ), true, DataSourceUpdateMode.OnPropertyChanged );
-        if ( this._layout.DataBindings.Exists( binding ) ) { this._layout.DataBindings.Remove( binding ); }
-        this._layout.DataBindings.Add( binding );
+        Binding binding = new( nameof( this.BackColor ), DisplayView.DisplayViewSettings,
+            nameof( DisplayView.DisplayViewSettings.CharcoalColor ), true, DataSourceUpdateMode.OnPropertyChanged );
+        CloneBinding( this._layout, binding );
+        // if ( this._layout.DataBindings.Exists( binding ) ) { this._layout.DataBindings.Remove( binding ); }
+        // this._layout.DataBindings.Add( binding );
 
         this._sessionReadingStatusStrip.BackColor = DisplayView.DisplayViewSettings.CharcoalColor;
-        if ( this._sessionReadingStatusStrip.DataBindings.Exists( binding ) ) { this._layout.DataBindings.Remove( binding ); }
-        this._sessionReadingStatusStrip.DataBindings.Add( binding );
+        CloneBinding( this._sessionReadingStatusStrip, binding );
+
+        // if ( this._sessionReadingStatusStrip.DataBindings.Exists( binding ) ) { this._layout.DataBindings.Remove( binding ); }
+        // this._sessionReadingStatusStrip.DataBindings.Add( binding );
 
         this._subsystemStatusStrip.BackColor = DisplayView.DisplayViewSettings.CharcoalColor;
-        if ( this._subsystemStatusStrip.DataBindings.Exists( binding ) ) { this._layout.DataBindings.Remove( binding ); }
-        this._subsystemStatusStrip.DataBindings.Add( binding );
+        CloneBinding( this._subsystemStatusStrip, binding );
+
+        // if ( this._subsystemStatusStrip.DataBindings.Exists( binding ) ) { this._layout.DataBindings.Remove( binding ); }
+        // this._subsystemStatusStrip.DataBindings.Add( binding );
 
         this._titleStatusStrip.BackColor = DisplayView.DisplayViewSettings.CharcoalColor;
-        if ( this._titleStatusStrip.DataBindings.Exists( binding ) ) { this._layout.DataBindings.Remove( binding ); }
-        this._titleStatusStrip.DataBindings.Add( binding );
+        CloneBinding( this._titleStatusStrip, binding );
+
+        // if ( this._titleStatusStrip.DataBindings.Exists( binding ) ) { this._layout.DataBindings.Remove( binding ); }
+        // this._titleStatusStrip.DataBindings.Add( binding );
 
         this._errorStatusStrip.BackColor = DisplayView.DisplayViewSettings.CharcoalColor;
-        if ( this._errorStatusStrip.DataBindings.Exists( binding ) ) { this._layout.DataBindings.Remove( binding ); }
-        this._errorStatusStrip.DataBindings.Add( binding );
+        CloneBinding( this._errorStatusStrip, binding );
+
+        // if ( this._errorStatusStrip.DataBindings.Exists( binding ) ) { this._layout.DataBindings.Remove( binding ); }
+        // this._errorStatusStrip.DataBindings.Add( binding );
 
         this._statusStrip.BackColor = DisplayView.DisplayViewSettings.CharcoalColor;
-        if ( this._statusStrip.DataBindings.Exists( binding ) ) { this._layout.DataBindings.Remove( binding ); }
-        this._statusStrip.DataBindings.Add( binding );
+        CloneBinding( this._statusStrip, binding );
+
+        // if ( this._statusStrip.DataBindings.Exists( binding ) ) { this._layout.DataBindings.Remove( binding ); }
+        // this._statusStrip.DataBindings.Add( binding );
     }
 
     #endregion

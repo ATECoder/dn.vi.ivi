@@ -24,7 +24,12 @@ public abstract partial class StatusSubsystemBase : CommunityToolkit.Mvvm.Compon
     protected StatusSubsystemBase( Pith.SessionBase session )
     {
         this._presetRefractoryPeriod = TimeSpan.FromMilliseconds( 100d );
-        session.ResourcesFilter = SessionFactory.Instance.Factory.ResourcesProvider().ResourceFinder!.BuildMinimalResourcesFilter();
+
+        if ( session is null )
+            throw new ArgumentNullException( nameof( session ), $"{nameof( session )} is required." );
+
+        if ( string.IsNullOrWhiteSpace( session.ResourcesFilter ) )
+            session.ResourcesFilter = SessionFactory.Instance.Factory.ResourcesProvider().ResourceFinder!.BuildMinimalResourcesFilter();
 
         this.Session = session;
         this.Session.PropertyChanged += this.SessionPropertyChanged;
