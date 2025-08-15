@@ -6,6 +6,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 
+#pragma warning disable IDE0130 // Namespace does not match folder structure
+
 namespace Ivi.VisaNet;
 /// <summary>
 /// Class used to load .NET Framework assemblies located in GAC from .NET 5+
@@ -57,7 +59,6 @@ internal static class GacLoader
             try
             {
                 Assembly installedAssembly = GacLoader.Load( new AssemblyName( visaLibrary.Location[(visaLibrary.Location.IndexOf( ',' ) + 1)..] ) );
-                // Console.WriteLine( $"Loaded assembly \"{visaLibrary.FriendlyName}\"." );
                 Console.WriteLine( $"Loaded {installedAssembly.FullName}, {System.Diagnostics.FileVersionInfo.GetVersionInfo( installedAssembly.Location ).FileVersion}" );
             }
             catch ( Exception exception )

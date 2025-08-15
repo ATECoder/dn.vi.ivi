@@ -5,6 +5,14 @@ Notable changes to the `cc.isr.vi` solution are documented in this file using th
 [8.1.9357]: https://www.github.com/atecoder/dn.vi.ivi
 Current IVI Visa Compatibility: 8.0.1.9356
 
+## [8.1.9358] - 2025-08-15
+- Update IVI Visa Compatibility demo console messages.
+- Device
+  - Visa Session Base
+    - Throw exception if status subsystem is not set with non-native SubsystemSupportMode.
+- Device Win Controls Tests
+  - Set visa session SubsystemSupportMode to SubsystemSupportMode.Native.
+
 ## [8.1.9357] - 2025-08-14
 - Supports Keysight IO Suite 21.1.209 and IVI Visa 8.0.1.
 - Document failure to cast Keysight.Visa.TcpipSession to Ivi.Visa.TcpipSession.

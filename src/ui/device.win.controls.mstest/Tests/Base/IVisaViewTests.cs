@@ -58,8 +58,9 @@ public abstract class IVisaViewTests
     [TestInitialize()]
     public virtual void InitializeBeforeEachTest()
     {
-        Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {TimeZoneInfo.Local}" );
-        Console.WriteLine( $"\tTesting {typeof( VisaSession ).Assembly.FullName}" );
+        // called in the sub class.
+        // Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {TimeZoneInfo.Local}" );
+        // Console.WriteLine( $"\tTesting {typeof( VisaSession ).Assembly.FullName}" );
 
         // assert reading of test settings from the configuration file.
         Assert.IsNotNull( this.TestSiteSettings, $"{nameof( this.TestSiteSettings )} should not be null." );

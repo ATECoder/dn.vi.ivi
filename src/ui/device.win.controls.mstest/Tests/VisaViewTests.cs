@@ -49,7 +49,10 @@ public class VisaViewTests : cc.isr.VI.DeviceWinControls.Tests.Base.IVisaViewTes
         this.TestSiteSettings = AllSettings.Instance.TestSiteSettings;
         this.ResourceSettings = AllSettings.Instance.ResourceSettings;
 
-        VisaSession visaSession = new();
+        VisaSession visaSession = new()
+        {
+            SubsystemSupportMode = SubsystemSupportMode.Native
+        };
         Assert.IsNotNull( visaSession.Session );
         Assert.AreEqual( VI.Syntax.Ieee488Syntax.ClearExecutionStateCommand, visaSession.Session.ClearExecutionStateCommand );
         visaSession.Session.ReadSettings( this.GetType().Assembly, ".Session", true, true );

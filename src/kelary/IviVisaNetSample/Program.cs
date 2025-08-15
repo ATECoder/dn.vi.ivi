@@ -9,8 +9,8 @@ using System.Runtime.Versioning;
 
 string resourceName = args[0];
 
-Console.WriteLine();
-Console.WriteLine( $"Make sure that the instrument at {resourceName} is turned on." );
+Console.Write( $"\nTurn on the instrument at {resourceName} and press any key »" );
+_ = Console.ReadKey();
 
 TargetFrameworkAttribute? framework = Assembly.GetEntryAssembly()?.GetCustomAttribute<TargetFrameworkAttribute>();
 Console.WriteLine();
@@ -74,9 +74,8 @@ catch ( FileNotFoundException )
     return;
 }
 
-#if false // NET5_0_OR_GREATER
-Console.WriteLine( "Preloading installed VISA implementation" );
-// Preloading installed VISA implementation assemblies for NET 5+
+#if NET5_0_OR_GREATER
+Console.WriteLine( "\nPreloading VISA implementation assembly" );
 Ivi.VisaNet.GacLoader.LoadInstalledVisaAssemblies();
 #endif
 
@@ -99,6 +98,5 @@ catch ( Exception exception )
     Console.WriteLine( $"Exception: {exception.Message}" );
 }
 
-Console.WriteLine();
-Console.WriteLine( "Press any key to finish." );
+Console.Write( "\nPress any key to finish »" );
 _ = Console.ReadKey();

@@ -1,12 +1,11 @@
-using Ivi.Visa;
 using Ivi.VisaNet;
 using System.Reflection;
 using System.Runtime.Versioning;
 
 string resourceName = args[0];
 
-Console.WriteLine();
-Console.WriteLine( $"Make sure that the instrument at {resourceName} is turned on." );
+Console.Write( $"\nTurn on the instrument at {resourceName} and press any key »" );
+_ = Console.ReadKey();
 
 TargetFrameworkAttribute? framework = Assembly.GetEntryAssembly()?.GetCustomAttribute<TargetFrameworkAttribute>();
 Console.WriteLine();
@@ -43,7 +42,6 @@ else
     Console.WriteLine( $"Failed to identify VISA resource '{resourceName}'." );
 }
 
-Console.WriteLine();
-Console.WriteLine( "Press any key to finish." );
+Console.Write( "\nPress any key to finish »" );
 _ = Console.ReadKey();
 

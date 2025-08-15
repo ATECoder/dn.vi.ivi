@@ -186,8 +186,11 @@ public sealed partial class Asserts
         actualBoolean = visaSessionBase.IsDeviceOpen;
         expectedBoolean = true;
         Assert.AreEqual( expectedBoolean, actualBoolean, $"{trialNumber} opening session {resourceSettings.ResourceName} device not open" );
-        Assert.IsNotNull( visaSessionBase.StatusSubsystemBase );
-        AssertModelShouldMatch( visaSessionBase.StatusSubsystemBase, resourceSettings );
+        if ( visaSessionBase.SubsystemSupportMode != SubsystemSupportMode.Native )
+        {
+            Assert.IsNotNull( visaSessionBase.StatusSubsystemBase );
+            AssertModelShouldMatch( visaSessionBase.StatusSubsystemBase, resourceSettings );
+        }
         if ( visaSessionBase.IsSessionOpen )
             // report device errors if the error bit is set.
             _ = visaSessionBase.Session.TryQueryAndReportDeviceErrors( visaSessionBase.Session.ReadStatusByte() );
@@ -220,7 +223,8 @@ public sealed partial class Asserts
     public static void AssertVisaSessionBaseShouldClose( int trialNumber, VisaSessionBase visaSessionBase )
     {
         Assert.IsNotNull( visaSessionBase, $"{nameof( visaSessionBase )} should not be null." );
-        Assert.IsNotNull( visaSessionBase.StatusSubsystemBase );
+        if ( visaSessionBase.SubsystemSupportMode != SubsystemSupportMode.Native )
+            Assert.IsNotNull( visaSessionBase.StatusSubsystemBase );
         Assert.IsNotNull( visaSessionBase.Session, $"{nameof( visaSessionBase )}.{nameof( visaSessionBase.Session )} should not be null." );
         bool actualBoolean;
         try

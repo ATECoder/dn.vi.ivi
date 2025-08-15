@@ -12,7 +12,6 @@ namespace cc.isr.VI.DeviceWinControls.Tests;
 [TestClass()]
 public class VisaTreeViewTests : cc.isr.VI.DeviceWinControls.Tests.Base.IVisaViewTests
 {
-
     #region " construction and cleanup "
 
     /// <summary>   Initializes the test class before running the first test. </summary>
@@ -46,11 +45,16 @@ public class VisaTreeViewTests : cc.isr.VI.DeviceWinControls.Tests.Base.IVisaVie
 
         // create an instance of the Serilog logger.
         SessionLogger.Instance.CreateSerilogLogger( typeof( VisaTreeViewTests ) );
+        // _ = SessionLogger.Instance.LogCallerMessage( LogLevel.Information, $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
+        // Console.WriteLine( $"\tLogging to {cc.isr.Logging.Orlog.HeaderWriter.FullFileName}" );
 
         this.TestSiteSettings = AllSettings.Instance.TestSiteSettings;
         this.ResourceSettings = AllSettings.Instance.ResourceSettings;
 
-        VisaSession visaSession = new();
+        VisaSession visaSession = new()
+        {
+            SubsystemSupportMode = SubsystemSupportMode.Native
+        };
         Assert.IsNotNull( visaSession.Session );
         Assert.AreEqual( VI.Syntax.Ieee488Syntax.ClearExecutionStateCommand, visaSession.Session.ClearExecutionStateCommand );
         visaSession.Session.ReadSettings( this.GetType().Assembly, ".Session", true, true );

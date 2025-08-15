@@ -43,7 +43,7 @@ internal sealed class Program
         }
 
 #if NET5_0_OR_GREATER
-        // Preloading installed VISA implementation assemblies for NET 5+
+        Console.WriteLine( "\nPreloading VISA implementation assembly" );
         Ivi.VisaNet.GacLoader.LoadInstalledVisaAssemblies();
 #endif
 
@@ -59,7 +59,7 @@ internal sealed class Program
         {
             Console.WriteLine();
             Console.WriteLine( "Error finding resources:\n{0}", e.Message );
-            Console.WriteLine( "Press any key to finish." );
+            Console.Write( "\nPress any key to finish »" );
             _ = Console.ReadKey();
             return;
         }
@@ -80,7 +80,7 @@ internal sealed class Program
         {
             Console.WriteLine();
             Console.WriteLine( "Error initializing the io session at '{0}' :\n{1}", resourceName, e.Message );
-            Console.WriteLine( "Press any key to finish." );
+            Console.Write( "\nPress any key to finish »" );
             _ = Console.ReadKey();
             return;
 
@@ -106,7 +106,7 @@ internal sealed class Program
         }
         finally
         {
-            Console.WriteLine( "Press any key to finish." );
+            Console.Write( "\nPress any key to finish »" );
             _ = Console.ReadKey();
         }
     }

@@ -52,7 +52,6 @@ internal static class GacLoader
             try
             {
                 Assembly installedAssembly = GacLoader.Load( new AssemblyName( visaLibrary.Location[(visaLibrary.Location.IndexOf( ',' ) + 1)..] ) );
-                // Console.WriteLine( $"Loaded assembly \"{visaLibrary.FriendlyName}\"." );
                 Console.WriteLine( $"Loaded {installedAssembly.FullName}, {System.Diagnostics.FileVersionInfo.GetVersionInfo( installedAssembly.Location ).FileVersion}" );
             }
             catch ( Exception exception )

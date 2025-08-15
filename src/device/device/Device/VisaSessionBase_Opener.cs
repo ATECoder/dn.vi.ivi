@@ -525,7 +525,11 @@ public partial class VisaSessionBase : cc.isr.Std.Notifiers.OpenResourceBase
 
         // reset and clear the device to remove any existing errors.
         if ( this.SubsystemSupportMode != SubsystemSupportMode.Native )
-            this.StatusSubsystemBase!.OnDeviceOpen();
+        {
+            if ( this.StatusSubsystemBase is null )
+                throw new InvalidOperationException( $"{nameof( this.StatusSubsystemBase )} is null whereas the {nameof( this.SubsystemSupportMode )} is {this.SubsystemSupportMode}." );
+            this.StatusSubsystemBase.OnDeviceOpen();
+        }
 
         // 20181219: this is included in the base method: Me.NotifyPropertyChanged(NameOf(VisaSessionBase.IsDeviceOpen))
         // 2016/01/18: this was done before adding listeners, which was useful when using the device
