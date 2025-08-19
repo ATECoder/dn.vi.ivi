@@ -3,7 +3,6 @@
     <TargetFrameworks>net472;net48;net9.0</TargetFrameworks>
     <OutputType>Exe</OutputType>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <NoWarn>NU1701;RAZORSDK1006</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

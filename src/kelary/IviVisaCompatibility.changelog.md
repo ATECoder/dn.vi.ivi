@@ -2,9 +2,12 @@
 All notable changes to these libraries will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-[8.0.1.9356]: https://www.github.com/atecoder/dn.vi.ivi
+[8.0.1.9362]: https://www.github.com/atecoder/dn.vi.ivi
 
-Current IVI Visa Compatibility: 8.0.1.9356
+Current IVI Visa Compatibility: 8.0.1.9362
+
+## [8.0.1.9362] - 2025-08-19
+- Remove unnecessary supression of NuGet NU1701 and RAZORSDK1006 warnings.
 
 ## [8.0.1.9356] - 2025-08-13
 - Update to Keysight IO Suite 21.1.209 and use KeySight Technologies VISA 18.5.73 package.

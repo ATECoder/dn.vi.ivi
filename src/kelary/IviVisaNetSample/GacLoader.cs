@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Text;
 using Ivi.Visa;
 using Ivi.Visa.ConflictManager;
 
@@ -221,6 +222,78 @@ public static class GacLoader
         return false;
     }
 
+    /// <summary>   Query if 'typeName' exists in the 'Ivi.Visa' assembly. </summary>
+    /// <remarks>   2025-08-18. </remarks>
+    /// <exception cref="ArgumentException">            Thrown when one or more arguments have
+    ///                                                 unsupported or illegal values. </exception>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <param name="typeName"> Name of the type. </param>
+    /// <returns>   True if type exists, false if not. </returns>
+    public static bool IsTypeExists( string typeName )
+    {
+        if ( string.IsNullOrWhiteSpace( typeName ) )
+            throw new ArgumentException( $"{nameof( typeName )} cannot be null or empty.", nameof( typeName ) );
+        System.Reflection.Assembly? assembly = GacLoader.GetVisaNetShareComponentsAssembly()
+            ?? throw new InvalidOperationException( "VISA.NET Shared Components assembly is not loaded." );
+        _ = System.Reflection.Assembly.LoadFrom( assembly.Location );
+        Type? type = assembly.GetType( typeName, false, true );
+        return type is not null;
+    }
+
+    /// <summary>   Query if the specific interface is implemented in 'visaSession' . </summary>
+    /// <remarks>   2025-08-18. </remarks>
+    /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
+    ///                                                 are null. </exception>
+    /// <exception cref="ArgumentException">            Thrown when one or more arguments have
+    ///                                                 unsupported or illegal values. </exception>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <param name="visaSession">      The visa session. </param>
+    /// <param name="interfaceName">    Name of the interface. </param>
+    /// <returns>   True if interface implemented, false if not. </returns>
+    public static bool IsInterfaceImplemented( Ivi.Visa.IVisaSession visaSession, string interfaceName )
+    {
+        if ( visaSession is null ) throw new ArgumentNullException( nameof( visaSession ), $"{nameof( visaSession )} cannot be null." );
+        if ( string.IsNullOrWhiteSpace( interfaceName ) ) throw new ArgumentException( $"{nameof( interfaceName )} cannot be null or empty.", nameof( interfaceName ) );
+        if ( GacLoader.IsTypeExists( interfaceName ) )
+        {
+            return visaSession.GetType().GetInterfaces().Any( i => i.FullName == interfaceName || i.Name == interfaceName );
+        }
+        else
+            throw new InvalidOperationException( $"The type '{interfaceName}' does not exist in the namespace '{nameof( Ivi )}.{nameof( Ivi.Visa )}'." );
+    }
+
+    /// <summary>   Validates the visa session interface. </summary>
+    /// <remarks>   2025-08-18. </remarks>
+    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
+    ///                                             null. </exception>
+    /// <exception cref="ArgumentException">        Thrown when one or more arguments have
+    ///                                             unsupported or illegal values. </exception>
+    /// <param name="visaSession">      The visa session. </param>
+    /// <param name="interfaceName">    Name of the interface. </param>
+    /// <returns>   A string. </returns>
+    public static string ValidateVisaSessionInterface( Ivi.Visa.IVisaSession visaSession, string interfaceName )
+    {
+        StringBuilder sb = new();
+        if ( visaSession is null ) throw new ArgumentNullException( nameof( visaSession ), $"{nameof( visaSession )} cannot be null." );
+        if ( string.IsNullOrWhiteSpace( interfaceName ) ) throw new ArgumentException( $"{nameof( interfaceName )} cannot be null or empty.", nameof( interfaceName ) );
+        if ( GacLoader.IsTypeExists( interfaceName ) )
+        {
+            // The type exists in the assembly, so we can use it.
+            _ = sb.Append( visaSession.GetType().GetInterfaces().Any( interfaceType => interfaceType.FullName == interfaceName || interfaceType.Name == interfaceName )
+                ? $"\tis"
+                : $"\tis not" );
+            _ = sb.AppendLine( $" a '{interfaceName}'." );
+        }
+        else
+        {
+            // The type does not exist in the assembly.
+            _ = sb.AppendLine( $"\tThe type '{interfaceName}' does not exist in the namespace '{nameof( Ivi )}.{nameof( Ivi.Visa )}'." );
+        }
+        return sb.ToString();
+    }
+
     /// <summary>   Identify visa session. </summary>
     /// <remarks>   2025-08-13. </remarks>
     /// <param name="resourceName"> Name of the resource. </param>
@@ -228,87 +301,92 @@ public static class GacLoader
     public static string IdentifyVisaSession( string resourceName )
     {
         if ( string.IsNullOrWhiteSpace( resourceName ) )
-        {
             return $"{nameof( resourceName )} is null or empty or white space.";
-        }
 
-        if ( resourceName.StartsWith( "TCPIP", StringComparison.OrdinalIgnoreCase ) )
+        System.Text.StringBuilder sb = new();
+        _ = sb.AppendLine( $"Identifying '{resourceName}' session implementations by type casting:" );
+
+        using Ivi.Visa.IVisaSession visaSession = Ivi.Visa.GlobalResourceManager.Open( resourceName, Ivi.Visa.AccessModes.ExclusiveLock, 2000 );
+
+        if ( visaSession is Ivi.Visa.IMessageBasedSession )
         {
-            System.Text.StringBuilder sb = new();
-            _ = sb.AppendLine( $"Visa Session for '{resourceName}': " );
+            _ = sb.AppendLine( $"\tis a '{nameof( Ivi )}.{nameof( Ivi.Visa )}.{nameof( Ivi.Visa.IMessageBasedSession )}'." );
 
-            using Ivi.Visa.IVisaSession visaSession = Ivi.Visa.GlobalResourceManager.Open( resourceName, Ivi.Visa.AccessModes.ExclusiveLock, 2000 );
+            _ = sb.Append( visaSession is Keysight.Visa.MessageBasedSession
+                ? $"\tis"
+                : $"\tis not" );
+            _ = sb.AppendLine( $" a '{nameof( Keysight )}.{nameof( Keysight.Visa )}.{nameof( Keysight.Visa.MessageBasedSession )}'." );
 
-            // MessageBasedSession, ITcpipSession2, ITcpipSession, IMessageBasedSession, IVisaSession, IDisposable
-
-            if ( visaSession is Ivi.Visa.IMessageBasedSession )
+            if ( resourceName.StartsWith( "TCPIP", StringComparison.OrdinalIgnoreCase ) )
             {
-                _ = sb.AppendLine( $"\tis a '{nameof( Ivi )}.{nameof( Ivi.Visa )}.{nameof( Ivi.Visa.IMessageBasedSession )}'." );
 
-                _ = sb.Append( visaSession is Keysight.Visa.MessageBasedSession
-                    ? $"\tis"
-                    : $"\tis not" );
-                _ = sb.AppendLine( $" a '{nameof( Keysight )}.{nameof( Keysight.Visa )}.{nameof( Keysight.Visa.MessageBasedSession )}'." );
+                if ( visaSession is Ivi.Visa.IMessageBasedSession )
+                {
+                    _ = sb.Append( visaSession is Keysight.Visa.TcpipSession
+                        ? $"\tis"
+                        : $"\tis not" );
+                    _ = sb.AppendLine( $" a '{nameof( Keysight )}.{nameof( Keysight.Visa )}.{nameof( Keysight.Visa.TcpipSession )}'." );
 
-                _ = sb.Append( visaSession is Keysight.Visa.TcpipSession
-                    ? $"\tis"
-                    : $"\tis not" );
-                _ = sb.AppendLine( $" a '{nameof( Keysight )}.{nameof( Keysight.Visa )}.{nameof( Keysight.Visa.TcpipSession )}'." );
+                    _ = sb.Append( visaSession is Ivi.Visa.IVisaSession
+                        ? $"\tis"
+                        : $"\tis not" );
+                    _ = sb.AppendLine( $" a '{nameof( Ivi )}.{nameof( Ivi.Visa )}.{nameof( Ivi.Visa.IVisaSession )}'." );
 
-                _ = sb.Append( visaSession is Ivi.Visa.IVisaSession
-                    ? $"\tis"
-                    : $"\tis not" );
-                _ = sb.AppendLine( $" a '{nameof( Ivi )}.{nameof( Ivi.Visa )}.{nameof( Ivi.Visa.IVisaSession )}'." );
-
-                _ = sb.Append( visaSession is Ivi.Visa.ITcpipSession
-                    ? $"\tis"
-                    : $"\tis not" );
-                _ = sb.AppendLine( $" a '{nameof( Ivi )}.{nameof( Ivi.Visa )}.{nameof( Ivi.Visa.ITcpipSession )}'." );
+                    _ = sb.Append( visaSession is Ivi.Visa.ITcpipSession
+                        ? $"\tis"
+                        : $"\tis not" );
+                    _ = sb.AppendLine( $" a '{nameof( Ivi )}.{nameof( Ivi.Visa )}.{nameof( Ivi.Visa.ITcpipSession )}'." );
 
 #if NET9_0_OR_GREATER
-                string typeName = "Ivi.Visa.ITcpipSession2";
-                Type? iTcpIpSession2 = Type.GetType( typeName, false, true );
-                if ( iTcpIpSession2 == null )
-                    _ = sb.AppendLine( $"\tThe type '{typeName}' does not exist in the namespace '{nameof( Ivi )}.{nameof( Ivi.Visa )}'." );
-                else
-                {
+                    _ = sb.AppendLine( $"\nIdentifying '{resourceName}' session implementations by type names:" );
+
+                    string typeName = "Ivi.Visa.ITcpipSession";
                     try
                     {
-                        _ = sb.Append( iTcpIpSession2 is not null
-                            ? $"\tis"
-                            : $"\tis not" );
-                        _ = sb.AppendLine( $" a 'typeName'." );
+                        _ = sb.Append( GacLoader.ValidateVisaSessionInterface( visaSession, typeName ) );
                     }
                     catch ( Exception ex )
                     {
                         _ = sb.AppendLine( $"\tException handling 'typeName':\n\t\t{ex.Message}." );
                     }
-                }
 
+                    try
+                    {
+                        typeName = "Ivi.Visa.ITcpipSession2";
+                        _ = sb.Append( GacLoader.ValidateVisaSessionInterface( visaSession, typeName ) );
+                    }
+                    catch ( Exception ex )
+                    {
+                        _ = sb.AppendLine( $"\tException handling 'typeName':\n\t\t{ex.Message}." );
+                    }
 #else
-                try
-                {
-                    _ = sb.Append( visaSession is Ivi.Visa.ITcpipSession2
-                        ? $"\tis"
-                        : $"\tis not" );
-                    _ = sb.AppendLine( $" a '{nameof( Ivi )}.{nameof( Ivi.Visa )}.{nameof( Ivi.Visa.ITcpipSession2 )}'." );
-                }
-                catch ( Exception ex )
-                {
-                    _ = sb.AppendLine( $" Exception handling '{nameof( Ivi )}.{nameof( Ivi.Visa )}.{nameof( Ivi.Visa.ITcpipSession2 )}'; {ex.Message}." );
-                }
+                    try
+                    {
+                        _ = sb.Append( visaSession is Ivi.Visa.ITcpipSession2
+                            ? $"\tis"
+                            : $"\tis not" );
+                        _ = sb.AppendLine( $" a '{nameof( Ivi )}.{nameof( Ivi.Visa )}.{nameof( Ivi.Visa.ITcpipSession2 )}'." );
+                    }
+                    catch ( Exception ex )
+                    {
+                        _ = sb.AppendLine( $" Exception handling '{nameof( Ivi )}.{nameof( Ivi.Visa )}.{nameof( Ivi.Visa.ITcpipSession2 )}'; {ex.Message}." );
+                    }
 #endif
+                }
+                else
+                {
+                    _ = sb.AppendLine( $"\tis not a '{nameof( Ivi )}.{nameof( Ivi.Visa )}.{nameof( Ivi.Visa.IMessageBasedSession )}'." );
+                }
             }
             else
             {
-                _ = sb.AppendLine( $"\tis not a '{nameof( Ivi )}.{nameof( Ivi.Visa )}.{nameof( Ivi.Visa.IMessageBasedSession )}'." );
+                _ = sb.AppendLine( $"\tResource '{resourceName}' is not a TCPIP resource." );
             }
-            return sb.ToString();
         }
         else
-        {
-            return $"Resource '{resourceName}' is not a TCPIP resource.";
-        }
+            _ = sb.AppendLine( $"\tis not a '{nameof( Ivi )}.{nameof( Ivi.Visa )}.{nameof( Ivi.Visa.IMessageBasedSession )}'." );
+
+        return sb.ToString();
 
     }
 

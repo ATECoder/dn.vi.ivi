@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <NoWarn>NU1701;RAZORSDK1006</NoWarn>
+    <NoWarn>NU1701</NoWarn>
     <OutputType>Library</OutputType>
     <LangVersion>latest</LangVersion>
 

@@ -1,4 +1,3 @@
-using Ivi.VisaNet;
 using System.Reflection;
 using System.Runtime.Versioning;
 
@@ -20,7 +19,7 @@ Console.WriteLine( $"\tRunning under {framework?.FrameworkName} runtime {System.
 Version? visaNetSharedComponentsVersion;
 try
 {
-    visaNetSharedComponentsVersion = GacLoader.VerifyVisaImplementationPresence( true );
+    visaNetSharedComponentsVersion = Ivi.VisaNet.GacLoader.VerifyVisaImplementationPresence( true );
 }
 catch ( System.IO.IOException ex )
 {
@@ -32,14 +31,42 @@ catch ( System.IO.IOException ex )
 // Preload installed VISA implementation assemblies
 Ivi.VisaNet.GacLoader.LoadInstalledVisaAssemblies( true );
 
-Console.WriteLine( $"\nReading '{resourceName}' identity..." );
-if ( GacLoader.TryQueryIdentity( resourceName, out string? identity, true ) )
+if ( !string.IsNullOrWhiteSpace( resourceName ) )
 {
-    Console.WriteLine( $"\tVISA resource '{resourceName}' identified as:\n\t{identity}" );
-}
-else
-{
-    Console.WriteLine( $"Failed to identify VISA resource '{resourceName}'." );
+    if ( Ivi.VisaNet.GacLoader.TryPing( resourceName, out string details ) )
+    {
+        Console.WriteLine( $"\nReading '{resourceName}' identity..." );
+        if ( Ivi.VisaNet.GacLoader.TryQueryIdentity( resourceName, out string? identity, true ) )
+        {
+            Console.WriteLine( $"\tVISA resource '{resourceName}' identified as:\n\t{identity}" );
+        }
+        else
+        {
+            Console.WriteLine( $"Failed to identify VISA resource '{resourceName}'." );
+        }
+        Console.WriteLine();
+
+        if ( Ivi.VisaNet.GacLoader.TryQueryIdentity( resourceName, out identity, true ) )
+        {
+            Console.WriteLine( $"\tVISA resource '{resourceName}' identified as:\n\t{identity}" );
+        }
+        else
+        {
+            Console.WriteLine( $"Failed to identify VISA resource '{resourceName}'." );
+        }
+        Console.WriteLine();
+
+        try
+        {
+            Console.WriteLine( Ivi.VisaNet.GacLoader.IdentifyVisaSession( resourceName ) );
+        }
+        catch ( Exception exception )
+        {
+            Console.WriteLine( $"Exception: {exception.Message}" );
+        }
+    }
+    else
+        Console.WriteLine( details );
 }
 
 Console.Write( "\nPress any key to finish »" );

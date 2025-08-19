@@ -2,8 +2,11 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9357]: https://www.github.com/atecoder/dn.vi.ivi
-Current IVI Visa Compatibility: 8.0.1.9356
+[8.1.9362]: https://www.github.com/atecoder/dn.vi.ivi
+Current IVI Visa Compatibility: 8.0.1.9362
+
+## [8.1.9362] - 2025-08-19
+- Remove unnecessary supression of NuGet NU1701 and RAZORSDK1006 warnings.
 
 ## [8.1.9358] - 2025-08-15
 - Update IVI Visa Compatibility demo console messages.

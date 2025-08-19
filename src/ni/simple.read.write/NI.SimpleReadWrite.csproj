@@ -9,8 +9,6 @@
 
     <LangVersion>latest</LangVersion>
 
-    <NoWarn>NU1701;RAZORSDK1006</NoWarn>
-
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 

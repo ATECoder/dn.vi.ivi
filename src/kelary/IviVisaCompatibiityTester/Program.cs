@@ -1,5 +1,3 @@
-using Ivi.Visa;
-using Ivi.VisaNet;
 using System.Reflection;
 using System.Runtime.Versioning;
 
@@ -32,7 +30,7 @@ Console.WriteLine( $"\tRunning under {framework?.FrameworkName} runtime {System.
 Version? visaNetSharedComponentsVersion;
 try
 {
-    visaNetSharedComponentsVersion = GacLoader.VerifyVisaImplementationPresence( true );
+    visaNetSharedComponentsVersion = Ivi.VisaNet.GacLoader.VerifyVisaImplementationPresence( true );
 }
 catch ( System.IO.IOException ex )
 {
@@ -46,10 +44,10 @@ Ivi.VisaNet.GacLoader.LoadInstalledVisaAssemblies( true );
 
 if ( !string.IsNullOrWhiteSpace( resourceName ) )
 {
-    if ( GacLoader.TryPing( resourceName, out string details ) )
+    if ( Ivi.VisaNet.GacLoader.TryPing( resourceName, out string details ) )
     {
         Console.WriteLine( $"\nReading '{resourceName}' identity..." );
-        if ( GacLoader.TryQueryIdentity( resourceName, out string? identity, true ) )
+        if ( Ivi.VisaNet.GacLoader.TryQueryIdentity( resourceName, out string? identity, true ) )
         {
             Console.WriteLine( $"\tVISA resource '{resourceName}' identified as:\n\t{identity}" );
         }
@@ -61,7 +59,7 @@ if ( !string.IsNullOrWhiteSpace( resourceName ) )
 
         try
         {
-            Console.WriteLine( GacLoader.IdentifyVisaSession( resourceName ) );
+            Console.WriteLine( Ivi.VisaNet.GacLoader.IdentifyVisaSession( resourceName ) );
         }
         catch ( Exception exception )
         {

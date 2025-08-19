@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFrameworks>net472;net48;net9.0-windows</TargetFrameworks>
-    <NoWarn>NU1701;RAZORSDK1006</NoWarn>
     <OutputType>Library</OutputType>
     <UseWindowsForms>true</UseWindowsForms>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>

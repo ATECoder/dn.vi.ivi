@@ -7,8 +7,6 @@
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <StartupObject>NI.FindResources.Program</StartupObject>
 
-    <NoWarn>NU1701;RAZORSDK1006</NoWarn>
-
     <LangVersion>latest</LangVersion>
 
     <ImplicitUsings>enable</ImplicitUsings>

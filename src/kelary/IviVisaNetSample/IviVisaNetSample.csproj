@@ -4,7 +4,7 @@
     <OutputType>Exe</OutputType>
     <TargetFrameworks>net48;net9.0</TargetFrameworks>
     <Platforms>AnyCPU;x64;x86</Platforms>
-    <NoWarn>NU1701;RAZORSDK1006</NoWarn>
+
     <RootNamespace>Ivi.VisaNet</RootNamespace>
 
     <GenerateAssemblyVersionAttribute>true</GenerateAssemblyVersionAttribute>

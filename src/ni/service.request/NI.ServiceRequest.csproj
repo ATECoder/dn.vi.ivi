@@ -6,9 +6,6 @@
     <MyType>WindowsForms</MyType>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <StartupObject>NI.ServiceRequest.Program</StartupObject>
-
-    <NoWarn>NU1701;RAZORSDK1006</NoWarn>
-
     <LangVersion>latest</LangVersion>
 
     <ImplicitUsings>enable</ImplicitUsings>
