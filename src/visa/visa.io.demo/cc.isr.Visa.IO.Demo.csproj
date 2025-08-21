@@ -66,9 +66,6 @@
       <DependentUpon>isr.Visa.IO.Demo.SerilogSettings.tt</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Update="cc.isr.Visa.IO.Demo.Serilog.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Update="cc.isr.Visa.IO.Demo.SerilogSettings.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>isr.Visa.IO.Demo.Serilog.json</LastGenOutput>
@@ -79,8 +76,10 @@
   </ItemGroup>
 
   <ItemGroup>
+
     <ProjectReference Include="..\visa\cc.isr.Visa.csproj" />
   </ItemGroup>
+
 
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
