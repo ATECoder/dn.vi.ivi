@@ -70,7 +70,7 @@ public class DeviceTests
         Console.WriteLine( $"\tTesting {typeof( LegacyDevice ).Assembly.FullName}" );
 
         // create an instance of the Serilog logger.
-        SessionLogger.Instance.CreateSerilogLogger( typeof( DeviceTests ) );
+        SessionLogger.Instance.CreateLogger( typeof( DeviceTests ) );
 
         // read the TTM Driver settings
         // this.TtmSettings.ReadSettings( this.GetType().Assembly, ".Driver", true, true );

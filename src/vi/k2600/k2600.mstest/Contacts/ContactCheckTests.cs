@@ -45,7 +45,7 @@ public class ContactCheckTests : Device.Tests.Base.ContactCheckTests
         Console.WriteLine( $"\tTesting {typeof( MeasureResistanceSubsystem ).Assembly.FullName}" );
 
         // create an instance of the Serilog logger.
-        SessionLogger.Instance.CreateSerilogLogger( typeof( ContactCheckTests ) );
+        SessionLogger.Instance.CreateLogger( typeof( ContactCheckTests ) );
 
         this.TestSiteSettings = Settings.AllSettings.Instance.TestSiteSettings;
         this.ResourceSettings = Settings.AllSettings.Instance.ResourceSettings;

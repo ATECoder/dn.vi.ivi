@@ -44,7 +44,7 @@ public class DeviceTests : Device.Tests.Base.DeviceTests
         Console.WriteLine( $"\tTesting {typeof( cc.isr.VI.Tsp.K2600.K2600Device ).Assembly.FullName}" );
 
         // create an instance of the Serilog logger.
-        SessionLogger.Instance.CreateSerilogLogger( typeof( DeviceTests ) );
+        SessionLogger.Instance.CreateLogger( typeof( DeviceTests ) );
 
         this.TestSiteSettings = Settings.AllSettings.Instance.TestSiteSettings;
         this.ResourceSettings = Settings.AllSettings.Instance.ResourceSettings;

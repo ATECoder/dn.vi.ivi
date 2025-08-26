@@ -45,7 +45,7 @@ public class ResistanceTests : Device.Tests.Base.TestBase
         Console.WriteLine( $"\tTesting {typeof( cc.isr.VI.Tsp.K2600.MeasureResistanceSubsystem ).Assembly.FullName}" );
 
         // create an instance of the Serilog logger.
-        SessionLogger.Instance.CreateSerilogLogger( typeof( ResistanceTests ) );
+        SessionLogger.Instance.CreateLogger( typeof( ResistanceTests ) );
 
         this.TestSiteSettings = Settings.AllSettings.Instance.TestSiteSettings;
         this.ResourceSettings = Settings.AllSettings.Instance.ResourceSettings;

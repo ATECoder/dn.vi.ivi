@@ -73,7 +73,7 @@ public class TspScriptTests
         Console.WriteLine( $"\tTesting {typeof( cc.isr.VI.Tsp.Script.ScriptCompressor ).Assembly.FullName}" );
 
         // create an instance of the Serilog logger.
-        SessionLogger.Instance.CreateSerilogLogger( typeof( TspScriptTests ) );
+        SessionLogger.Instance.CreateLogger( typeof( TspScriptTests ) );
 
         if ( Logger is not null )
         {

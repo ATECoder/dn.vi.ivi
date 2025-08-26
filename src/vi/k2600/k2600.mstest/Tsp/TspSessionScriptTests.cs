@@ -50,7 +50,7 @@ public class TspSessionScriptTests : Device.Tests.Base.ScriptTests
         Console.WriteLine( $"\tTesting {typeof( cc.isr.VI.Tsp.Script.ScriptCompressor ).Assembly.FullName}" );
 
         // create an instance of the Serilog logger.
-        SessionLogger.Instance.CreateSerilogLogger( typeof( TspSessionScriptTests ) );
+        SessionLogger.Instance.CreateLogger( typeof( TspSessionScriptTests ) );
 
         this.TestSiteSettings = Settings.AllSettings.Instance.TestSiteSettings;
         this.ResourceSettings = Settings.AllSettings.Instance.ResourceSettings;

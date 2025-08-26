@@ -44,7 +44,7 @@ public class DeviceStatusOnlyTests : Device.Tests.Base.DeviceStatusOnlyTests
         Console.WriteLine( $"\tTesting {typeof( cc.isr.VI.VisaSessionBase ).Assembly.FullName}" );
 
         // create an instance of the Serilog logger.
-        SessionLogger.Instance.CreateSerilogLogger( typeof( DeviceStatusOnlyTests ) );
+        SessionLogger.Instance.CreateLogger( typeof( DeviceStatusOnlyTests ) );
 
         this.TestSiteSettings = Settings.AllSettings.Instance.TestSiteSettings;
         this.ResourceSettings = Settings.AllSettings.Instance.ResourceSettings;

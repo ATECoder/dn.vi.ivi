@@ -40,7 +40,7 @@ public partial class VisaSessionTests : Device.Tests.Base.VisaSessionTests
         Console.WriteLine( $"\tTesting {typeof( cc.isr.VI.Tsp.K2600.K2600Device ).Assembly.FullName}" );
 
         // create an instance of the Serilog logger.
-        SessionLogger.Instance.CreateSerilogLogger( typeof( VisaSessionTests ) );
+        SessionLogger.Instance.CreateLogger( typeof( VisaSessionTests ) );
 
         this.TestSiteSettings = Settings.AllSettings.Instance.TestSiteSettings;
         this.ResourceSettings = Settings.AllSettings.Instance.ResourceSettings;

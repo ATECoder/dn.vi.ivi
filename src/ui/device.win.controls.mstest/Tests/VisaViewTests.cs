@@ -44,7 +44,7 @@ public class VisaViewTests : cc.isr.VI.DeviceWinControls.Tests.Base.IVisaViewTes
         Console.WriteLine( $"\tTesting {typeof( cc.isr.VI.DeviceWinControls.VisaView ).Assembly.FullName}" );
 
         // create an instance of the Serilog logger.
-        SessionLogger.Instance.CreateSerilogLogger( typeof( VisaViewTests ) );
+        SessionLogger.Instance.CreateLogger( typeof( VisaViewTests ) );
 
         this.TestSiteSettings = AllSettings.Instance.TestSiteSettings;
         this.ResourceSettings = AllSettings.Instance.ResourceSettings;

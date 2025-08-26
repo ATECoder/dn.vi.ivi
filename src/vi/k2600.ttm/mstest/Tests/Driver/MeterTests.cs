@@ -70,7 +70,7 @@ public class MeterTests
         Console.WriteLine( $"\tTesting {typeof( cc.isr.VI.Tsp.K2600.Ttm.Meter ).Assembly.FullName}" );
 
         // create an instance of the Serilog logger.
-        SessionLogger.Instance.CreateSerilogLogger( typeof( MeterTests ) );
+        SessionLogger.Instance.CreateLogger( typeof( MeterTests ) );
 
         // read settings and throw if not found.
         this.TestSiteSettings = Settings.AllSettings.Instance.TestSiteSettings;

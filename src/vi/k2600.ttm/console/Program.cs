@@ -17,7 +17,7 @@ internal static class Program
     [STAThread]
     private static void Main()
     {
-        TraceLogger.CreateSerilogLogger( typeof( TtmForm ) );
+        TraceLogger.CreateLogger( typeof( TtmForm ) );
         TraceLogger.MinimumLogLevel = Microsoft.Extensions.Logging.LogLevel.Trace;
 
 #if NET5_0_OR_GREATER

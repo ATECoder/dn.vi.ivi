@@ -45,7 +45,7 @@ public class CurrentSourceTests : Device.Tests.Base.TestBase
         Console.WriteLine( $"\tTesting {typeof( cc.isr.VI.Tsp.K2600.CurrentSourceSubsystem ).Assembly.FullName}" );
 
         // create an instance of the Serilog logger.
-        SessionLogger.Instance.CreateSerilogLogger( typeof( CurrentSourceTests ) );
+        SessionLogger.Instance.CreateLogger( typeof( CurrentSourceTests ) );
 
         this.TestSiteSettings = Settings.AllSettings.Instance.TestSiteSettings;
         this.ResourceSettings = Settings.AllSettings.Instance.ResourceSettings;

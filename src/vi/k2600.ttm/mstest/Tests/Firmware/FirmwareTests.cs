@@ -71,7 +71,7 @@ public class FirmwareTests
         Console.WriteLine( $"\tTesting {typeof( cc.isr.VI.Tsp.K2600.Ttm.Meter ).Assembly.FullName}" );
 
         // create an instance of the Serilog logger.
-        SessionLogger.Instance.CreateSerilogLogger( typeof( FirmwareTests ) );
+        SessionLogger.Instance.CreateLogger( typeof( FirmwareTests ) );
 
         // read settings and throw if not found.
         this.TestSiteSettings = Settings.AllSettings.Instance.TestSiteSettings;

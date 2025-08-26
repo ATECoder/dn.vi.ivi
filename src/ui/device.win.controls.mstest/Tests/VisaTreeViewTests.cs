@@ -44,7 +44,7 @@ public class VisaTreeViewTests : cc.isr.VI.DeviceWinControls.Tests.Base.IVisaVie
         Console.WriteLine( $"\tTesting {typeof( cc.isr.VI.DeviceWinControls.VisaTreeView ).Assembly.FullName}" );
 
         // create an instance of the Serilog logger.
-        SessionLogger.Instance.CreateSerilogLogger( typeof( VisaTreeViewTests ) );
+        SessionLogger.Instance.CreateLogger( typeof( VisaTreeViewTests ) );
         // _ = SessionLogger.Instance.LogCallerMessage( LogLevel.Information, $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
         // Console.WriteLine( $"\tLogging to {cc.isr.Logging.Orlog.HeaderWriter.FullFileName}" );
 

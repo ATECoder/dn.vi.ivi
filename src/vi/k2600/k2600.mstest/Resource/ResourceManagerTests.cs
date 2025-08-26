@@ -43,7 +43,7 @@ public class ResourceManagerTests : Device.Tests.Base.ResourceManagerTests
         Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
         Console.WriteLine( $"\tTesting {typeof( cc.isr.VI.Pith.ResourceNamesManager ).Assembly.FullName}" );
 
-        SessionLogger.Instance.CreateSerilogLogger( typeof( ResourceManagerTests ) );
+        SessionLogger.Instance.CreateLogger( typeof( ResourceManagerTests ) );
 
         this.TestSiteSettings = Settings.AllSettings.Instance.TestSiteSettings;
         this.ResourceSettings = Settings.AllSettings.Instance.ResourceSettings;
