@@ -14,7 +14,9 @@
     <RootNamespace>cc.isr.Visa</RootNamespace>
     <Description>Unit tests of Virtual Instruments Device and Subsystems</Description>
 
-    <GenerateAssemblyVersionAttribute>true</GenerateAssemblyVersionAttribute>
+    <!--
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+    -->
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 
     <!-- Coding -->

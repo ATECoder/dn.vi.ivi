@@ -2,7 +2,6 @@
   <PropertyGroup>
     <EnablePreviewFeatures>true</EnablePreviewFeatures>
     <TargetFrameworks>net472;net48;net9.0-windows</TargetFrameworks>
-    <OutputType>Library</OutputType>
     <UseWindowsForms>true</UseWindowsForms>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -18,7 +17,6 @@
     <ApplicationTitle>cc.isr.VI.DeviceWinControls</ApplicationTitle>
     <ApplicationId>cc.isr.vi.device.win.controls</ApplicationId>
 
-    <GenerateAssemblyVersionAttribute>true</GenerateAssemblyVersionAttribute>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 
     <!-- Coding -->

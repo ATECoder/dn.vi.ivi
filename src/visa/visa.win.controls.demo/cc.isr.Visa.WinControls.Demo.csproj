@@ -19,7 +19,9 @@
     <ApplicationIcon>..\..\items\favicon.ico</ApplicationIcon>
     <AppDesignerFolder>Properties</AppDesignerFolder>
 
-    <GenerateAssemblyVersionAttribute>true</GenerateAssemblyVersionAttribute>
+    <!--
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+    -->
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 
     <!-- Coding -->

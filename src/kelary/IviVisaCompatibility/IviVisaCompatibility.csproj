@@ -2,17 +2,31 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Nullable>enable</Nullable>
+    <LangVersion>preview</LangVersion>
+
     <NoWarn>NU1701</NoWarn>
+
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <!-- Assembly Info -->
     <RootNamespace>Ivi.VisaNet</RootNamespace>
-    
-    <GenerateAssemblyVersionAttribute>true</GenerateAssemblyVersionAttribute>
+
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+
+    <!-- Coding -->
+    <OptionExplicit>On</OptionExplicit>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionStrict>On</OptionStrict>
+    <OptionInfer>Off</OptionInfer>
 
     <!-- Signature -->
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\..\items\keyPair.snk</AssemblyOriginatorKeyFile>
     <DelaySign>false</DelaySign>
+
+    <!-- NuGet -->
+    <IsPackable>false</IsPackable>
 
   </PropertyGroup>
 

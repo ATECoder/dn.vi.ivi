@@ -7,7 +7,6 @@
 
     <RootNamespace>Ivi.VisaNet</RootNamespace>
 
-    <GenerateAssemblyVersionAttribute>true</GenerateAssemblyVersionAttribute>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 
   </PropertyGroup>

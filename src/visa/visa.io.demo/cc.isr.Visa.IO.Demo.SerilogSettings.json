@@ -1,9 +1,3 @@
-<#@ template debug="false" hostspecific="false" language="C#" #>
-<#@ assembly name="System.Core" #>
-<#@ import namespace="System.Linq" #>
-<#@ import namespace="System.Text" #>
-<#@ import namespace="System.Collections.Generic" #>
-<#@ output extension=".json" #>
 {
   "Logging": {
     "LogLevel": {
@@ -75,7 +69,7 @@
               "Args": {
                 "levelSwitch": "$fileSwitch",
                 "hooks": "isr.Logging.SerilogHooks::MyHeaderWriter, isr.Logging",
-                "path": "%ProgramData%/isr.cc/<#= this.ProjectName #>/8.0.1.<#= this.RevisionNumber #>/%ComputerName%_.log",
+                "path": "%ProgramData%/isr.cc/isr.Visa.IO.Demo/8.0.1.9371/%ComputerName%_.log",
                 "outputTemplate": "{Timestamp:HH:mm:ss.fff zzz}, [{Level:u3}], {Message}{NewLine}{Exception}",
                 "rollingInterval": "Day",
                 "retainedFileCountLimit": 7
@@ -100,11 +94,7 @@
       }
     ],
     "Properties": {
-      "Application": "<#= this.ProjectName #>"
+      "Application": "isr.Visa.IO.Demo"
     }
   }
 }
-<#+
-	string ProjectName = "isr.Visa.IO.Demo";
-    int RevisionNumber = (int)Math.Floor((DateTime.UtcNow - new DateTime(2000,1,1)).TotalDays);
-#>

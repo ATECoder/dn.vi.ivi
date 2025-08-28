@@ -16,7 +16,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <ApplicationIcon>..\..\items\favicon.ico</ApplicationIcon>
 
-    <GenerateAssemblyVersionAttribute>true</GenerateAssemblyVersionAttribute>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <!--
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+    -->
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 
     <!-- Coding -->
@@ -66,9 +69,17 @@
       <DependentUpon>isr.Visa.IO.Demo.SerilogSettings.tt</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Update="cc.isr.Visa.IO.Demo.Serilog.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="cc.isr.Visa.IO.Demo.SerilogSettings.json">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>cc.isr.Visa.IO.Demo.SerilogSettings.tt</DependentUpon>
+    </None>
     <None Update="cc.isr.Visa.IO.Demo.SerilogSettings.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>isr.Visa.IO.Demo.Serilog.json</LastGenOutput>
+      <LastGenOutput>cc.isr.Visa.IO.Demo.SerilogSettings.json</LastGenOutput>
     </None>
     <Content Include="cc.isr.Visa.IO.Demo.Settings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -94,7 +105,23 @@
     </EmbeddedResource>
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <!--
   <Import Project="..\visa.win.controls\version.build.props" />
+  -->
+
+  <PropertyGroup>
+    <AssemblyVersion>8.0.1.9356</AssemblyVersion>
+    <FileVersion>8.0.1.9356</FileVersion>
+    <InformationalVersion>8.0.1.9356</InformationalVersion>
+    <Version>8.0.1</Version>
+    <ApplicationDisplayVersion>8.0.1</ApplicationDisplayVersion>
+    <ApplicationVersion>8</ApplicationVersion>
+  </PropertyGroup>
 
   <PropertyGroup>
     <!-- WiX Toolset; See https://github.com/wixtoolset/issues/issues/5705

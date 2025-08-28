@@ -2,8 +2,16 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9362]: https://www.github.com/atecoder/dn.vi.ivi
-Current IVI Visa Compatibility: 8.0.1.9362
+[8.1.9371]: https://www.github.com/atecoder/dn.vi.ivi
+
+Current IVI Visa Compatibility: 8.0.1.9371
+
+## [8.1.9371] - 2025-08-28
+- Use preview in net standard classes.
+- use isr.cc as company name in the Serilog settings generator.
+- Turn off source version in MS Test, Demo and Console projects.
+- Remove incorrect Generate Assembly Version Attribute project settings.
+- Use file version rather than product version when building the Product folder name because starting with .NET 8 the product version includes the source code commit information, which is not necessary for defining the product folder for settings and logging.
 
 ## [8.1.9362] - 2025-08-19
 - Remove unnecessary supression of NuGet NU1701 and RAZORSDK1006 warnings.

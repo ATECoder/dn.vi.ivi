@@ -75,7 +75,7 @@
               "Args": {
                 "levelSwitch": "$fileSwitch",
                 "hooks": "isr.Logging.SerilogHooks::MyHeaderWriter, isr.Logging",
-                "path": "%ProgramData%/Integrated Scientific Resources/<#= this.ProjectName #>/4.0.<#= this.BuildNumber #>/%ComputerName%_.log",
+                "path": "%ProgramData%/isr.cc/<#= this.ProjectName #>/8.1.<#= this.BuildNumber #>/%ComputerName%_.log",
                 "outputTemplate": "{Timestamp:HH:mm:ss.fff zzz}, [{Level:u3}], {Message}{NewLine}{Exception}",
                 "rollingInterval": "Day",
                 "retainedFileCountLimit": 7

@@ -1,0 +1,87 @@
+<Project>
+
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <NuGetAudit>true</NuGetAudit>
+    <WaningsNotAsErrors>NU1900;NU1901;NU1802</WaningsNotAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup Condition="$(DefineConstants.Contains(';PACK;GitHub;'))" >
+    <!-- Suppress warning about newton soft 9.0.1 which is part of the .net fx testing extensions code coverage. -->
+    <NuGetAuditSuppress Include="https://github.com/advisories/GHSA-5crp-9r3c-p9vr" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <DefineConstants>$(DefineConstants);TRACE;PROJREF_;PACK_;GitHub;</DefineConstants>
+  </PropertyGroup>
+ 
+  <PropertyGroup Condition="$(DefineConstants.Contains(';PACK;'))" >
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+
+  <ItemGroup Condition="$(DefineConstants.Contains(';PACK;GitHub;'))" >
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(DefineConstants.Contains(';PACK;GitHub_;'))" >
+    <PackageReference Include="Microsoft.SourceLink.Bitbucket.Git" Version="1.1.1" PrivateAssets="All" />
+  </ItemGroup>
+
+  <PropertyGroup Condition="$(DefineConstants.Contains(';GitHub;'))" >
+	<GitRepositoryRemoteName>origin</GitRepositoryRemoteName>
+    <PackageProjectUrl>https://github.com/ATECoder/dn.vi.ivi</PackageProjectUrl>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(DefineConstants.Contains(';GitHub_;'))" >
+	<GitRepositoryRemoteName>origin</GitRepositoryRemoteName>
+    <PackageProjectUrl>https://bitbucket.org/davidhary/dn.vi</PackageProjectUrl>
+  </PropertyGroup>
+
+  <PropertyGroup Label="BasePath">
+    <!-- This fixed missing property when using from dotnet cli -->
+    <SolutionDir Condition="'$(SolutionDir)'==''">$(MSBuildThisFileDirectory)..\..\</SolutionDir>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <Datestamp>$([System.DateTime]::UtcNow.ToString("yyyy-MM-dd"))</Datestamp>
+    <Timestamp>$([System.DateTime]::UtcNow.ToString("yyyy-MM-ddHHmm"))</Timestamp>
+    <LangVersion>latest</LangVersion>
+	<Authors>David Hary</Authors>
+    <Company>isr.cc</Company>
+    <Copyright>(c) 2012 Integrated Scientific Resources, Inc. All rights reserved.</Copyright>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- NuGet -->
+	<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+	<RepositoryUrl>$(PackageProjectUrl)</RepositoryUrl>
+	<RepositoryType>Git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIcon>ms-icon-70x70.png</PackageIcon>
+    <PackageOutputDir>c:\my\nuget</PackageOutputDir>
+    <PackageOwners>Integrated Scientific Resources, Inc.</PackageOwners>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SourceLink.Copy.PdbFiles" Version="2.8.3" PrivateAssets="All" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Include="C:\my\lib\vs\io\vi\src\items\ms-icon-70x70.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+      <Visible>false</Visible>
+    </None>
+  </ItemGroup>
+  
+  <Import Project="items\version.build.props" />
+    
+</Project>
+

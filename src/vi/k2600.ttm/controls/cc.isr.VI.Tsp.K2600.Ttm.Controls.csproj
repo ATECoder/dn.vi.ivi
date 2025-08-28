@@ -3,7 +3,6 @@
   <PropertyGroup>
     <EnablePreviewFeatures>true</EnablePreviewFeatures>
     <TargetFrameworks>net9.0-windows</TargetFrameworks>
-    <OutputType>Library</OutputType>
     <UseWindowsForms>true</UseWindowsForms>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -19,7 +18,6 @@
     <ApplicationTitle>cc.isr.VI.Tsp.K2600.Ttm.Controls</ApplicationTitle>
     <ApplicationId>cc.isr.vi.tsp.k2600.ttm.controls</ApplicationId>
 
-    <GenerateAssemblyVersionAttribute>true</GenerateAssemblyVersionAttribute>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 
     <!-- Coding -->

@@ -18,7 +18,6 @@
     <ApplicationIcon>..\..\items\favicon.ico</ApplicationIcon>
     <AppDesignerFolder>Properties</AppDesignerFolder>
 
-    <GenerateAssemblyVersionAttribute>true</GenerateAssemblyVersionAttribute>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 
     <!-- NuGet -->
