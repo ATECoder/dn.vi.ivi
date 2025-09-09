@@ -1,13 +1,12 @@
-<Project Sdk="MSTest.Sdk">
-
+﻿<Project Sdk="MSTest.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net472;net48;net9.0</TargetFrameworks>
-
-    <LangVersion>latest</LangVersion>
-    <IsTestProject>true</IsTestProject>
+    <LangVersion>preview</LangVersion>
 
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 
     <!-- Assembly Info -->
     <RootNamespace>cc.isr.VI.Device</RootNamespace>
@@ -29,9 +28,14 @@
     
   </PropertyGroup>
 
-
+  <!-- Assembly attributes -->
   <ItemGroup>
-    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+    <AssemblyAttribute Include="System.CLSCompliantAttribute">
+      <_Parameter1>false</_Parameter1>
+    </AssemblyAttribute>
+    <AssemblyAttribute Include="System.Runtime.InteropServices.ComVisibleAttribute">
+      <_Parameter1>false</_Parameter1>
+    </AssemblyAttribute>
   </ItemGroup>
 
   <PropertyGroup>
@@ -41,6 +45,7 @@
   <Choose>
     <When Condition="$(DefineConstants.Contains(';PROJREF;')) OR $(DefineConstants.Contains(';MYPROJREF;'))">
       <ItemGroup>
+        <ProjectReference Include="..\..\..\..\..\core\std\src\mstest\mstest\cc.isr.Std.MSTest.csproj" />
         <ProjectReference Include="..\..\..\..\..\core\json\src\app.settings\app.settings.view.models\cc.isr.Json.AppSettings.ViewModels.csproj" />
         <ProjectReference Include="..\device\cc.isr.VI.Device.csproj" />
       </ItemGroup>
@@ -54,10 +59,7 @@
 
   <ItemGroup>
     <Compile Include="..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\core\std\src\mstest\mstest\cc.isr.Std.MSTest.csproj" />
+    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting"/>
   </ItemGroup>
 
   <ItemGroup>
@@ -85,8 +87,4 @@
   
   <Import Project="..\device\version.build.props" />
   
-  <ItemGroup>
-    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.14.1" />
-  </ItemGroup>
-
 </Project>

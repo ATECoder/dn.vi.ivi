@@ -137,7 +137,8 @@ public class VisaTreeViewTests : cc.isr.VI.DeviceWinControls.Tests.Base.IVisaVie
         using ( VisaTreeView view = new( this.VisaSessionBase ) )
         {
             Asserts.AssertVisaViewSessionShouldOpenAndClose( trialNumber, view, this.ResourceSettings );
-            Task.Delay( TimeSpan.FromMilliseconds( 100d ) ).Wait();
+            Task.Delay( TimeSpan.FromMilliseconds( 100d ),
+                this.TestContext?.CancellationTokenSource.Token ?? System.Threading.CancellationToken.None ).Wait( this.TestContext?.CancellationTokenSource.Token ?? System.Threading.CancellationToken.None );
             trialNumber += 1;
             Asserts.AssertVisaViewSessionShouldOpenAndClose( trialNumber, view, this.ResourceSettings );
         }

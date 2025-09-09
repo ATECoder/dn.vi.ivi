@@ -185,6 +185,7 @@ public class Settings : System.ComponentModel.INotifyPropertyChanged
     /// <summary>   Gets the <see cref="AppSettingsScribe">settings reader and writer</see>. </summary>
     /// <value> The scribe. </value>
     [JsonIgnore]
+    [CLSCompliant( false )]
     public static AppSettingsScribe Scribe => _scribe.Value;
 
     private static readonly Lazy<AppSettingsScribe> _scribe = new( CreateScribe, true );

@@ -1,5 +1,3 @@
-using System;
-using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Text;
@@ -171,6 +169,7 @@ public static class GacLoader
 
     /// <summary>   Gets or sets the loaded implementation. </summary>
     /// <value> The loaded implementation. </value>
+    [CLSCompliant( false )]
     public static Ivi.Visa.ConflictManager.VisaImplementation? LoadedImplementation { get; private set; }
 
     /// <summary>   Loads installed visa assemblies. </summary>
@@ -318,6 +317,7 @@ public static class GacLoader
     /// <param name="visaSession">      The visa session. </param>
     /// <param name="interfaceName">    Name of the interface. </param>
     /// <returns>   True if interface implemented, false if not. </returns>
+    [CLSCompliant( false )]
     public static bool IsInterfaceImplemented( Ivi.Visa.IVisaSession visaSession, string interfaceName )
     {
         if ( visaSession is null ) throw new ArgumentNullException( nameof( visaSession ), $"{nameof( visaSession )} cannot be null." );
@@ -340,6 +340,7 @@ public static class GacLoader
     /// <param name="visaSession">      The visa session. </param>
     /// <param name="interfaceName">    Name of the interface. </param>
     /// <returns>   A string. </returns>
+    [CLSCompliant( false )]
     public static string ValidateVisaSessionInterface( Ivi.Visa.IVisaSession visaSession, string interfaceName )
     {
         StringBuilder sb = new();

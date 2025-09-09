@@ -1,3 +1,4 @@
+using System;
 using cc.isr.Std.SplitExtensions;
 
 namespace cc.isr.VI.Device.Tests;

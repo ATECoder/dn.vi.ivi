@@ -12,6 +12,7 @@ namespace cc.isr.VI.Device.Tests.Base;
 /// Licensed under The MIT License.</para><para>
 /// David, 2017-10-11 </para>
 /// </remarks>
+[CLSCompliant( false )]
 public abstract class VisaResourceTests
 {
     #region " construction and cleanup "

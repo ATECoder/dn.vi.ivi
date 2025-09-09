@@ -6,13 +6,13 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+
     <!-- Assembly Info -->
     <RootNamespace>cc.isr.VI</RootNamespace>
     <AssemblyName>cc.isr.VI.Pith</AssemblyName>
     <ApplicationTitle>cc.isr.VI.Pith</ApplicationTitle>
     <ApplicationId>cc.isr.vi.pith</ApplicationId>
-
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 
     <!-- Coding -->
     <OptionExplicit>On</OptionExplicit>
@@ -39,6 +39,16 @@
 
   </PropertyGroup>
 
+  <!-- Assembly attributes -->
+  <ItemGroup>
+    <AssemblyAttribute Include="System.CLSCompliantAttribute">
+      <_Parameter1>true</_Parameter1>
+    </AssemblyAttribute>
+    <AssemblyAttribute Include="System.Runtime.InteropServices.ComVisibleAttribute">
+      <_Parameter1>false</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
+
   <ItemGroup>
     <None Include="readme.md" Pack="true" PackagePath="" />
   </ItemGroup>
@@ -53,7 +63,6 @@
         <ProjectReference Include="..\..\..\..\..\core\enums\src\enums\enums\cc.isr.Enums.csproj" />
         <ProjectReference Include="..\..\..\..\..\core\json\src\app.settings\app.settings.view.models\cc.isr.Json.AppSettings.ViewModels.csproj" />
         <ProjectReference Include="..\..\..\..\..\core\std\src\framework\framework\cc.isr.Std.Framework.csproj" />
-        <ProjectReference Include="..\..\..\..\..\core\std\src\net21\net21\cc.isr.Std.Net21.csproj" />
         <ProjectReference Include="..\..\..\..\..\core\units.amounts\src\units.amounts\standard.units\cc.isr.UnitsAmounts.StandardUnits.csproj" />
         <ProjectReference Include="..\..\..\..\..\core\units.amounts\src\units.amounts\units.amounts\cc.isr.UnitsAmounts.csproj" />
         <ProjectReference Include="..\..\..\..\..\core\logging\src\tracelog\tracelog\cc.isr.Logging.TraceLog.csproj" />
@@ -92,6 +101,5 @@
   <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
   </ItemGroup>
-
 
 </Project>

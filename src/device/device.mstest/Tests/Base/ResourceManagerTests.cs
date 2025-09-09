@@ -7,6 +7,7 @@ namespace cc.isr.VI.Device.Tests.Base;
 
 /// <summary>   A Resource Manager tests base class. </summary>
 /// <remarks>   David, 2021-03-25. </remarks>
+[CLSCompliant( false )]
 public abstract class ResourceManagerTests
 {
     #region " construction and cleanup "

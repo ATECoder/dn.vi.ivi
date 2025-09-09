@@ -1,7 +1,7 @@
 <Project>
 
   <PropertyGroup>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>preview</LangVersion>
     <NuGetAudit>true</NuGetAudit>
     <WaningsNotAsErrors>NU1900;NU1901;NU1802</WaningsNotAsErrors>
   </PropertyGroup>
@@ -29,12 +29,12 @@
   </ItemGroup>
 
   <PropertyGroup Condition="$(DefineConstants.Contains(';GitHub;'))" >
-	<GitRepositoryRemoteName>origin</GitRepositoryRemoteName>
+    <GitRepositoryRemoteName>origin</GitRepositoryRemoteName>
     <PackageProjectUrl>https://github.com/ATECoder/dn.vi.ivi</PackageProjectUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="$(DefineConstants.Contains(';GitHub_;'))" >
-	<GitRepositoryRemoteName>origin</GitRepositoryRemoteName>
+    <GitRepositoryRemoteName>origin</GitRepositoryRemoteName>
     <PackageProjectUrl>https://bitbucket.org/davidhary/dn.vi</PackageProjectUrl>
   </PropertyGroup>
 
@@ -46,8 +46,7 @@
   <PropertyGroup>
     <Datestamp>$([System.DateTime]::UtcNow.ToString("yyyy-MM-dd"))</Datestamp>
     <Timestamp>$([System.DateTime]::UtcNow.ToString("yyyy-MM-ddHHmm"))</Timestamp>
-    <LangVersion>latest</LangVersion>
-	<Authors>David Hary</Authors>
+    <Authors>David Hary</Authors>
     <Company>isr.cc</Company>
     <Copyright>(c) 2012 Integrated Scientific Resources, Inc. All rights reserved.</Copyright>
     <NeutralLanguage>en-US</NeutralLanguage>
@@ -57,9 +56,9 @@
 
   <PropertyGroup>
     <!-- NuGet -->
-	<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-	<RepositoryUrl>$(PackageProjectUrl)</RepositoryUrl>
-	<RepositoryType>Git</RepositoryType>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <RepositoryUrl>$(PackageProjectUrl)</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>ms-icon-70x70.png</PackageIcon>
     <PackageOutputDir>c:\my\nuget</PackageOutputDir>

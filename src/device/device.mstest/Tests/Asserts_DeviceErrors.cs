@@ -6,6 +6,7 @@ using cc.isr.VI.Device.Tests.Settings;
 
 namespace cc.isr.VI.Device.Tests;
 
+[CLSCompliant( false )]
 public sealed partial class Asserts
 {
     #region " orphan messages "

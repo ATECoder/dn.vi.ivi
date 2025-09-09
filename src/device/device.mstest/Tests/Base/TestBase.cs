@@ -8,6 +8,7 @@ namespace cc.isr.VI.Device.Tests.Base;
 
 /// <summary>   A device status only tests base class. </summary>
 /// <remarks>   David, 2021-03-25. </remarks>
+[CLSCompliant( false )]
 public abstract class TestBase
 {
     #region " construction and cleanup "

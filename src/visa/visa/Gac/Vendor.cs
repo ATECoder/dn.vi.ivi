@@ -11,6 +11,7 @@ public static partial class Vendor
     /// <remarks>   David, 2021-11-06. </remarks>
     /// <param name="typeName"> Name of the type. </param>
     /// <returns>   The new vendor resource manager. </returns>
+    [CLSCompliant( false )]
     public static IResourceManager? CreateVendorResourceManager( string typeName )
     {
         Type? type = Type.GetType( typeName );
@@ -43,6 +44,7 @@ public static partial class Vendor
     /// An enumerator that allows foreach to be used to process the implementations in this
     /// collection.
     /// </returns>
+    [CLSCompliant( false )]
     public static IEnumerable<VisaImplementation> EnumerateDotNetImplementations()
     {
         ConflictManager conflictManager = new();
@@ -62,6 +64,7 @@ public static partial class Vendor
     /// <remarks>   2024-07-13. </remarks>
     /// <param name="friendlyName"> Name of the friendly. </param>
     /// <returns>   A Tuple. </returns>
+    [CLSCompliant( false )]
     public static (Ivi.Visa.ConflictManager.VisaImplementation? implementation, string details) TryFindImplementation( string friendlyName )
     {
         System.Collections.Generic.IEnumerable<Ivi.Visa.ConflictManager.VisaImplementation> installedVisas = cc.isr.Visa.Gac.Vendor.EnumerateDotNetImplementations();

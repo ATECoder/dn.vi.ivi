@@ -6,13 +6,13 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+
     <!-- Assembly Info -->
     <RootNamespace>cc.isr.VI.Tsp</RootNamespace>
     <AssemblyName>cc.isr.VI.Tsp.Script.Obsolete</AssemblyName>
     <ApplicationTitle>cc.isr.VI.Tsp.Script.Obsolete</ApplicationTitle>
     <ApplicationId>cc.isr.vi.tsp.script.obsolete</ApplicationId>
-
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 
     <!-- Coding -->
     <OptionExplicit>On</OptionExplicit>
@@ -56,6 +56,16 @@
     <DefineTrace>true</DefineTrace>
   </PropertyGroup>
 
+  <!-- Assembly attributes -->
+  <ItemGroup>
+    <AssemblyAttribute Include="System.CLSCompliantAttribute">
+      <_Parameter1>true</_Parameter1>
+    </AssemblyAttribute>
+    <AssemblyAttribute Include="System.Runtime.InteropServices.ComVisibleAttribute">
+      <_Parameter1>false</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
+
   <ItemGroup>
     <Compile Include="..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
   </ItemGroup>
@@ -67,6 +77,5 @@
   <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
   </ItemGroup>
-
 
 </Project>

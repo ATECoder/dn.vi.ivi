@@ -1,13 +1,17 @@
-<Project Sdk="MSTest.Sdk">
+﻿<Project Sdk="MSTest.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net472;net48;net9.0-windows</TargetFrameworks>
-    <UseWindowsForms>true</UseWindowsForms>
+    <EnablePreviewFeatures>true</EnablePreviewFeatures>
 
-    <LangVersion>latest</LangVersion>
-    <IsTestProject>true</IsTestProject>
+    <TargetFrameworks>net472;net48;net9.0-windows</TargetFrameworks>
+    <LangVersion>preview</LangVersion>
+
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
 
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 
     <!-- Assembly Info -->
     <RootNamespace>cc.isr.VI.WinControls</RootNamespace>
@@ -29,8 +33,14 @@
 
   </PropertyGroup>
 
+  <!-- Assembly attributes -->
   <ItemGroup>
-    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+    <AssemblyAttribute Include="System.CLSCompliantAttribute">
+      <_Parameter1>false</_Parameter1>
+    </AssemblyAttribute>
+    <AssemblyAttribute Include="System.Runtime.InteropServices.ComVisibleAttribute">
+      <_Parameter1>false</_Parameter1>
+    </AssemblyAttribute>
   </ItemGroup>
 
   <PropertyGroup>
@@ -68,7 +78,9 @@
 
   <ItemGroup>
     <Compile Include="..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
+    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting"/>
   </ItemGroup>
+
 
   <ItemGroup>
     <!-- Suppress warning about newton soft 9.0.1 which is part of the .net fx testing extensions code coverage.
@@ -90,8 +102,6 @@
 
   <Import Project="..\win.controls\version.build.props" />
 
-  <ItemGroup>
-    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.14.1" />
-  </ItemGroup>
+
   
 </Project>

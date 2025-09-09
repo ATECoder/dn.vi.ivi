@@ -100,7 +100,6 @@ public class LotSettings() : System.ComponentModel.INotifyPropertyChanged
 
     #region " exists "
 
-
     /// <summary>
     /// Gets or sets a value indicating whether this settings section exists and the values were thus
     /// fetched from the settings file.

@@ -8,6 +8,7 @@ namespace cc.isr.VI.Device.Tests.Base;
 /// <summary>  A Visa Session service request tests base class. </summary>
 /// <remarks>   David, 2021-03-25. </remarks>
 [TestClass]
+[CLSCompliant( false )]
 public abstract class VisaSessionServiceRequestTests
 {
     #region " construction and cleanup "

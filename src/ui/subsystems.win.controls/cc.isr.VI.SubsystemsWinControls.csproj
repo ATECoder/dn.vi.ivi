@@ -1,23 +1,22 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <EnablePreviewFeatures>true</EnablePreviewFeatures>
     <TargetFrameworks>net48;net9.0-windows</TargetFrameworks>
+    <LangVersion>preview</LangVersion>
+
     <UseWindowsForms>true</UseWindowsForms>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-
-    <LangVersion>latest</LangVersion>
 
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 
     <!-- Assembly Info -->
     <RootNamespace>cc.isr.VI.SubsystemsWinControls</RootNamespace>
     <AssemblyName>cc.isr.VI.SubsystemsWinControls</AssemblyName>
     <ApplicationTitle>cc.isr.VI.SubsystemsWinControls</ApplicationTitle>
     <ApplicationId>cc.isr.vi.subsystems.win.controls</ApplicationId>
-
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 
     <!-- Coding -->
     <OptionExplicit>On</OptionExplicit>
@@ -43,6 +42,16 @@
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
 
   </PropertyGroup>
+
+  <!-- Assembly attributes -->
+  <ItemGroup>
+    <AssemblyAttribute Include="System.CLSCompliantAttribute">
+      <_Parameter1>false</_Parameter1>
+    </AssemblyAttribute>
+    <AssemblyAttribute Include="System.Runtime.InteropServices.ComVisibleAttribute">
+      <_Parameter1>false</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
 
   <ItemGroup>
     <None Include="readme.md" Pack="true" PackagePath="" />

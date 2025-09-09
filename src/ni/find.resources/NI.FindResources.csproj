@@ -1,16 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net9.0-windows</TargetFramework>
+    <LangVersion>preview</LangVersion>
+
     <OutputType>WinExe</OutputType>
     <UseWindowsForms>true</UseWindowsForms>
-    <MyType>WindowsForms</MyType>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
-    <StartupObject>NI.FindResources.Program</StartupObject>
-
-    <LangVersion>latest</LangVersion>
 
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+    <StartupObject>NI.FindResources.Program</StartupObject>
 
     <!-- Assembly Info -->
     <ApplicationIcon>App.ico</ApplicationIcon>
@@ -33,6 +33,16 @@
     <IsPackable>false</IsPackable>
 
   </PropertyGroup>
+
+  <!-- Assembly attributes -->
+  <ItemGroup>
+    <AssemblyAttribute Include="System.CLSCompliantAttribute">
+      <_Parameter1>true</_Parameter1>
+    </AssemblyAttribute>
+    <AssemblyAttribute Include="System.Runtime.InteropServices.ComVisibleAttribute">
+      <_Parameter1>false</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="KeysightTechnologies.Visa" Version="18.5.73" />

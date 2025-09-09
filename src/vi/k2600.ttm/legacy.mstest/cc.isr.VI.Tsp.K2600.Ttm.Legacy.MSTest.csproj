@@ -2,12 +2,12 @@
   
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
-
-    <LangVersion>latest</LangVersion>
-    <IsTestProject>true</IsTestProject>
+    <LangVersion>preview</LangVersion>
 
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 
     <!-- Assembly Info -->
     <RootNamespace>cc.isr.VI.Tsp.K2600.Ttm.Legacy</RootNamespace>
@@ -29,8 +29,14 @@
 
   </PropertyGroup>
 
+  <!-- Assembly attributes -->
   <ItemGroup>
-    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+    <AssemblyAttribute Include="System.CLSCompliantAttribute">
+      <_Parameter1>true</_Parameter1>
+    </AssemblyAttribute>
+    <AssemblyAttribute Include="System.Runtime.InteropServices.ComVisibleAttribute">
+      <_Parameter1>false</_Parameter1>
+    </AssemblyAttribute>
   </ItemGroup>
 
   <PropertyGroup>
@@ -97,8 +103,6 @@
     -->
   </ItemGroup>
   
-  <ItemGroup>
-    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.14.1" />
-  </ItemGroup>
+
 
 </Project>

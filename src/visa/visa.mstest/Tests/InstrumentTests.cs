@@ -202,6 +202,7 @@ public abstract partial class InstrumentTests
     /// <summary>   Virtual method for implementing instrument specific syntax tests. </summary>
     /// <remarks>   2024-09-25. </remarks>
     /// <param name="session">  The session. </param>
+    [CLSCompliant( false )]
     protected virtual void AssertSyntaxTestsShouldPass( Ivi.Visa.IMessageBasedSession? session )
     {
     }

@@ -159,6 +159,7 @@ public static class GacLoader
 
     /// <summary>   Gets or sets the loaded implementation. </summary>
     /// <value> The loaded implementation. </value>
+    [CLSCompliant( false )]
     public static Ivi.Visa.ConflictManager.VisaImplementation? LoadedImplementation { get; private set; }
 
     /// <summary>   Loads installed visa assemblies. </summary>

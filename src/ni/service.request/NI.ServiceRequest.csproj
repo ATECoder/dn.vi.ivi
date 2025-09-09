@@ -1,15 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net9.0-windows</TargetFramework>
-    <OutputType>WinExe</OutputType>
+    <LangVersion>preview</LangVersion>
+
     <UseWindowsForms>true</UseWindowsForms>
-    <MyType>WindowsForms</MyType>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+    <OutputType>WinExe</OutputType>
+
     <StartupObject>NI.ServiceRequest.Program</StartupObject>
-    <LangVersion>latest</LangVersion>
 
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 
     <!-- Assembly Info -->
     <ApplicationIcon>App.ico</ApplicationIcon>
@@ -32,6 +35,16 @@
     <IsPackable>false</IsPackable>
 
   </PropertyGroup>
+
+  <!-- Assembly attributes -->
+  <ItemGroup>
+    <AssemblyAttribute Include="System.CLSCompliantAttribute">
+      <_Parameter1>true</_Parameter1>
+    </AssemblyAttribute>
+    <AssemblyAttribute Include="System.Runtime.InteropServices.ComVisibleAttribute">
+      <_Parameter1>false</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="KeysightTechnologies.Visa" Version="18.5.73" />

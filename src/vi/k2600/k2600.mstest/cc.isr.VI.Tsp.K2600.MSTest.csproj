@@ -1,12 +1,12 @@
 <Project Sdk="MSTest.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net472;net48;net9.0</TargetFrameworks>
-
-    <LangVersion>latest</LangVersion>
-    <IsTestProject>true</IsTestProject>
+    <LangVersion>preview</LangVersion>
 
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 
     <!-- Assembly Info -->
     <RootNamespace>cc.isr.VI.Tsp.K2600.MSTest</RootNamespace>
@@ -28,10 +28,6 @@
 
   </PropertyGroup>
   
-  <ItemGroup>
-    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
-  </ItemGroup>
-
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);MYPROJREF;</DefineConstants>
   </PropertyGroup>
@@ -99,9 +95,5 @@
   </ItemGroup>
 
   <Import Project="..\k2600\version.build.props" />
-
-  <ItemGroup>
-    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.14.1" />
-  </ItemGroup>
 
 </Project>

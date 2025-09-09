@@ -1,15 +1,15 @@
 <Project Sdk="MSTest.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net9.0</TargetFrameworks>
     <!-- update later - build often fails on FW 4.72 after running tests
     <TargetFrameworks>net472;net48;net9.0</TargetFrameworks>
     -->
-
-    <LangVersion>latest</LangVersion>
-    <IsTestProject>true</IsTestProject>
+    <TargetFrameworks>net9.0</TargetFrameworks>
+    <LangVersion>preview</LangVersion>
 
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 
     <!-- Assembly Info -->
     <RootNamespace>cc.isr.VI.Tsp.K2600.Ttm</RootNamespace>
@@ -31,8 +31,14 @@
 
   </PropertyGroup>
 
+  <!-- Assembly attributes -->
   <ItemGroup>
-    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+    <AssemblyAttribute Include="System.CLSCompliantAttribute">
+      <_Parameter1>true</_Parameter1>
+    </AssemblyAttribute>
+    <AssemblyAttribute Include="System.Runtime.InteropServices.ComVisibleAttribute">
+      <_Parameter1>false</_Parameter1>
+    </AssemblyAttribute>
   </ItemGroup>
 
   <PropertyGroup>
@@ -103,9 +109,7 @@
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.14.1" />
-  </ItemGroup>
+
 
 
 </Project>

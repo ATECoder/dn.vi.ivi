@@ -1,14 +1,14 @@
-<Project Sdk="MSTest.Sdk">
-
+﻿<Project Sdk="MSTest.Sdk">
   <PropertyGroup>
     <EnablePreviewFeatures>true</EnablePreviewFeatures>
-    <TargetFrameworks>net472;net48;net9.0</TargetFrameworks>
 
-    <LangVersion>latest</LangVersion>
-    <IsTestProject>true</IsTestProject>
+    <TargetFrameworks>net472;net48;net9.0</TargetFrameworks>
+    <LangVersion>preview</LangVersion>
 
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 
     <!-- Assembly Info -->
     <RootNamespace>cc.isr.Visa</RootNamespace>
@@ -33,13 +33,17 @@
     <!-- NuGet -->
     <IsPackable>false</IsPackable>
 
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
-
   </PropertyGroup>
 
+  <!-- Assembly attributes -->
   <ItemGroup>
-    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+    <AssemblyAttribute Include="Microsoft.VisualStudio.TestTools.UnitTesting.Parallelize" />
+    <AssemblyAttribute Include="System.CLSCompliantAttribute">
+      <_Parameter1>true</_Parameter1>
+    </AssemblyAttribute>
+    <AssemblyAttribute Include="System.Runtime.InteropServices.ComVisibleAttribute">
+      <_Parameter1>false</_Parameter1>
+    </AssemblyAttribute>
   </ItemGroup>
 
   <PropertyGroup>
@@ -64,6 +68,7 @@
 
   <ItemGroup>
     <Compile Include="..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
+    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting"/>
   </ItemGroup>
 
   <ItemGroup>
@@ -95,9 +100,5 @@
   </PropertyGroup>
 
   <Import Project="..\visa\version.build.props" />
-
-  <ItemGroup>
-    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.14.1" />
-  </ItemGroup>
 
 </Project>

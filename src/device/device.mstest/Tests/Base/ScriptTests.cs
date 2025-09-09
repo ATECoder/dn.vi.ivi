@@ -7,6 +7,7 @@ namespace cc.isr.VI.Device.Tests.Base;
 
 /// <summary>   A script tests. </summary>
 /// <remarks>   2025-04-10. </remarks>
+[CLSCompliant( false )]
 public abstract class ScriptTests
 {
     #region " construction and cleanup "

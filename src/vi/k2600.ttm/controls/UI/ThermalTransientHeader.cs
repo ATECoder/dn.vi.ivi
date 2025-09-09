@@ -123,7 +123,6 @@ public partial class ThermalTransientHeader : cc.isr.WinControls.ModelViewBase
 
     #region " part: thermal transient "
 
-
     /// <summary> The Part Thermal Transient. </summary>
     [System.Diagnostics.CodeAnalysis.SuppressMessage( "CodeQuality", "IDE0052:Remove unread private members", Justification = "<Pending>" )]
     private ThermalTransient? ThermalTransientInternal

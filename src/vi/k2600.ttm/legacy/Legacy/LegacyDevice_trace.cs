@@ -159,7 +159,6 @@ public partial class LegacyDevice : CommunityToolkit.Mvvm.ComponentModel.Observa
 
     #region " current level "
 
-
     /// <summary> The thermal transient current level. </summary>
 
     /// <summary> Gets the current level for measuring Thermal Transient. </summary>
@@ -370,7 +369,6 @@ public partial class LegacyDevice : CommunityToolkit.Mvvm.ComponentModel.Observa
     #endregion
 
     #region " low limit "
-
 
     /// <summary> Gets the maximum allowed voltage change measuring Thermal Transient. </summary>
     /// <value> The thermal transient low limit. </value>

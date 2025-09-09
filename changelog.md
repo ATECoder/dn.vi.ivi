@@ -2,9 +2,21 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9371]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9382]: https://www.github.com/atecoder/dn.vi.ivi
 
 Current IVI Visa Compatibility: 8.0.1.9371
+
+## [8.1.9382] - 2025-09-08
+- Use language preview in windows and net standard projects so as to enable auto properties.
+- Implement code analysis recommendations.
+- Unify project file structure.
+- Remove legacy leftover Visual Basic project file entries.
+- Remove UnitTesting Using statement from Test project files.
+- Move assembly information such as CLS Compliance and COM visibility to the project file.
+- Remove words that are no longer tagged as misspelled from the exclusion dictionary file.
+- Remove references to Std.Net21 project.
+- Remove the old exclusion dictionary (exclusion.dix and dix.xml) file.
+- MS Test: Add cancellation token to the wait task.
 
 ## [8.1.9371] - 2025-08-28
 - Use preview in net standard classes.

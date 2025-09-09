@@ -64,6 +64,7 @@ public class K2600Tests : InstrumentTests
     /// <summary>   Method for implementing instrument specific syntax tests. </summary>
     /// <remarks>   2024-09-25. </remarks>
     /// <param name="session">  The session. </param>
+    [CLSCompliant( false )]
     protected override void AssertSyntaxTestsShouldPass( Ivi.Visa.IMessageBasedSession? session )
     {
         Assert.IsNotNull( session, $"{nameof( session )} should not be null." );

@@ -1,15 +1,17 @@
 <Project Sdk="MSTest.Sdk">
-
   <PropertyGroup>
     <EnablePreviewFeatures>true</EnablePreviewFeatures>
-    <TargetFrameworks>net48;net9.0-windows</TargetFrameworks>
-    <UseWindowsForms>true</UseWindowsForms>
 
-    <LangVersion>latest</LangVersion>
+    <TargetFrameworks>net48;net9.0-windows</TargetFrameworks>
+    <LangVersion>preview</LangVersion>
+
+    <UseWindowsForms>true</UseWindowsForms>
     <IsTestProject>true</IsTestProject>
 
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 
     <!-- Assembly Info -->
     <RootNamespace>cc.isr.VI.SubsystemsWinControls</RootNamespace>
@@ -31,8 +33,14 @@
 
   </PropertyGroup>
 
+  <!-- Assembly attributes -->
   <ItemGroup>
-    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+    <AssemblyAttribute Include="System.CLSCompliantAttribute">
+      <_Parameter1>true</_Parameter1>
+    </AssemblyAttribute>
+    <AssemblyAttribute Include="System.Runtime.InteropServices.ComVisibleAttribute">
+      <_Parameter1>false</_Parameter1>
+    </AssemblyAttribute>
   </ItemGroup>
 
   <PropertyGroup>
@@ -91,13 +99,10 @@
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
   </PropertyGroup>
 
-
   <Import Project="..\subsystems.win.controls\version.build.props" />
 
 
-  <ItemGroup>
-    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.14.1" />
-  </ItemGroup>
+
 
 
 </Project>

@@ -1,23 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <EnablePreviewFeatures>true</EnablePreviewFeatures>
+
     <TargetFrameworks>net472;net48;net9.0-windows</TargetFrameworks>
+    <LangVersion>preview</LangVersion>
+
     <UseWindowsForms>true</UseWindowsForms>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-
-    <LangVersion>latest</LangVersion>
 
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 
     <!-- Assembly Info -->
     <RootNamespace>cc.isr.VI.DeviceWinControls</RootNamespace>
     <AssemblyName>cc.isr.VI.DeviceWinControls</AssemblyName>
     <ApplicationTitle>cc.isr.VI.DeviceWinControls</ApplicationTitle>
     <ApplicationId>cc.isr.vi.device.win.controls</ApplicationId>
-
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 
     <!-- Coding -->
     <OptionExplicit>On</OptionExplicit>
@@ -42,13 +42,16 @@
     <!-- Documentation -->
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
 
-    <GenerateResourceWarnOnBinaryFormatterUse>false</GenerateResourceWarnOnBinaryFormatterUse>
-
   </PropertyGroup>
+
+  <!-- Assembly attributes -->
   <ItemGroup>
-    <Compile Remove="Temp\**" />
-    <EmbeddedResource Remove="Temp\**" />
-    <None Remove="Temp\**" />
+    <AssemblyAttribute Include="System.CLSCompliantAttribute">
+      <_Parameter1>false</_Parameter1>
+    </AssemblyAttribute>
+    <AssemblyAttribute Include="System.Runtime.InteropServices.ComVisibleAttribute">
+      <_Parameter1>false</_Parameter1>
+    </AssemblyAttribute>
   </ItemGroup>
 
   <ItemGroup>
@@ -132,6 +135,11 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
   </ItemGroup>
-    
+
+  <PropertyGroup Condition="'$(TargetFramework)'=='net472' or '$(TargetFramework)'=='net48'">
+    <!-- is this required?
+      <GenerateResourceWarnOnBinaryFormatterUse>false</GenerateResourceWarnOnBinaryFormatterUse>
+    -->
+  </PropertyGroup>
 
 </Project>

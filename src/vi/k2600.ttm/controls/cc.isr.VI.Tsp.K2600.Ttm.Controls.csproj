@@ -2,23 +2,25 @@
 
   <PropertyGroup>
     <EnablePreviewFeatures>true</EnablePreviewFeatures>
+
     <TargetFrameworks>net9.0-windows</TargetFrameworks>
+    <LangVersion>preview</LangVersion>
+
     <UseWindowsForms>true</UseWindowsForms>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
 
-    <LangVersion>latest</LangVersion>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
 
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 
     <!-- Assembly Info -->
     <RootNamespace>cc.isr.VI.Tsp.K2600.Ttm.Controls</RootNamespace>
     <AssemblyName>cc.isr.VI.Tsp.K2600.Ttm.Controls</AssemblyName>
     <ApplicationTitle>cc.isr.VI.Tsp.K2600.Ttm.Controls</ApplicationTitle>
     <ApplicationId>cc.isr.vi.tsp.k2600.ttm.controls</ApplicationId>
-
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 
     <!-- Coding -->
     <OptionExplicit>On</OptionExplicit>
@@ -57,6 +59,16 @@
     -->
     
   </PropertyGroup>
+
+  <!-- Assembly attributes -->
+  <ItemGroup>
+    <AssemblyAttribute Include="System.CLSCompliantAttribute">
+      <_Parameter1>true</_Parameter1>
+    </AssemblyAttribute>
+    <AssemblyAttribute Include="System.Runtime.InteropServices.ComVisibleAttribute">
+      <_Parameter1>false</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
 
   <ItemGroup>
     <None Include="readme.md" Pack="true" PackagePath="" />
