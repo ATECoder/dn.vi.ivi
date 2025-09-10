@@ -284,9 +284,6 @@ public abstract partial class MultimeterSubsystemBase
     /// <value> A Dictionary of multimeter function mode parses. </value>
     public Pith.EnumReadWriteCollection FunctionModeReadWrites { get; private set; }
 
-    /// <summary> The supported function modes. </summary>
-    private MultimeterFunctionModes _supportedFunctionModes;
-
     /// <summary>
     /// Gets or sets the supported Function Modes. This is a subset of the functions supported by the
     /// instrument.
@@ -294,19 +291,16 @@ public abstract partial class MultimeterSubsystemBase
     /// <value> The supported multimeter function modes. </value>
     public MultimeterFunctionModes SupportedFunctionModes
     {
-        get => this._supportedFunctionModes;
+        get;
         set
         {
             if ( !this.SupportedFunctionModes.Equals( value ) )
             {
-                this._supportedFunctionModes = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
     }
-
-    /// <summary> The function mode. </summary>
-    private MultimeterFunctionModes? _functionMode;
 
     /// <summary> Gets or sets the cached multimeter function mode. </summary>
     /// <value>
@@ -314,13 +308,13 @@ public abstract partial class MultimeterSubsystemBase
     /// </value>
     public MultimeterFunctionModes? FunctionMode
     {
-        get => this._functionMode;
+        get;
 
         protected set
         {
             if ( !this.FunctionMode.Equals( value ) )
             {
-                this._functionMode = value;
+                field = value;
                 if ( value.HasValue )
                 {
                     this.FunctionRange = this.ToRange( ( int ) value.Value );
@@ -413,9 +407,6 @@ public abstract partial class MultimeterSubsystemBase
     /// <value> A Dictionary of multimeter Input Impedance Mode parses. </value>
     public Pith.EnumReadWriteCollection InputImpedanceModeReadWrites { get; private set; }
 
-    /// <summary> The supported input impedance modes. </summary>
-    private InputImpedanceModes _supportedInputImpedanceModes;
-
     /// <summary>
     /// Gets or sets the supported Input Impedance Modes. This is a subset of the InputImpedances
     /// supported by the instrument.
@@ -423,19 +414,16 @@ public abstract partial class MultimeterSubsystemBase
     /// <value> The supported multimeter Input Impedance Modes. </value>
     public InputImpedanceModes SupportedInputImpedanceModes
     {
-        get => this._supportedInputImpedanceModes;
+        get;
         set
         {
             if ( !this.SupportedInputImpedanceModes.Equals( value ) )
             {
-                this._supportedInputImpedanceModes = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
     }
-
-    /// <summary> The input impedance mode. </summary>
-    private InputImpedanceModes? _inputImpedanceMode;
 
     /// <summary> Gets or sets the cached multimeter Input Impedance Mode. </summary>
     /// <value>
@@ -444,13 +432,13 @@ public abstract partial class MultimeterSubsystemBase
     /// </value>
     public InputImpedanceModes? InputImpedanceMode
     {
-        get => this._inputImpedanceMode;
+        get;
 
         protected set
         {
             if ( !this.InputImpedanceMode.Equals( value ) )
             {
-                this._inputImpedanceMode = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -577,9 +565,6 @@ public abstract partial class MultimeterSubsystemBase
     /// <value> A Dictionary of multimeter Input Impedance Mode parses. </value>
     public Pith.EnumReadWriteCollection MultimeterMeasurementUnitReadWrites { get; private set; }
 
-    /// <summary> The supported multimeter measurement units. </summary>
-    private MultimeterMeasurementUnits _supportedMultimeterMeasurementUnits;
-
     /// <summary>
     /// Gets or sets the supported Input Impedance Modes. This is a subset of the InputImpedances
     /// supported by the instrument.
@@ -587,19 +572,16 @@ public abstract partial class MultimeterSubsystemBase
     /// <value> The supported multimeter Input Impedance Modes. </value>
     public MultimeterMeasurementUnits SupportedMultimeterMeasurementUnits
     {
-        get => this._supportedMultimeterMeasurementUnits;
+        get;
         set
         {
             if ( !this.SupportedMultimeterMeasurementUnits.Equals( value ) )
             {
-                this._supportedMultimeterMeasurementUnits = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
     }
-
-    /// <summary> The multimeter measurement unit. </summary>
-    private MultimeterMeasurementUnits? _multimeterMeasurementUnit;
 
     /// <summary> Gets or sets the cached multimeter Input Impedance Mode. </summary>
     /// <value>
@@ -608,13 +590,13 @@ public abstract partial class MultimeterSubsystemBase
     /// </value>
     public MultimeterMeasurementUnits? MultimeterMeasurementUnit
     {
-        get => this._multimeterMeasurementUnit;
+        get;
 
         protected set
         {
             if ( !this.MultimeterMeasurementUnit.Equals( value ) )
             {
-                this._multimeterMeasurementUnit = value;
+                field = value;
                 if ( value.HasValue )
                 {
                     this.FunctionUnit = this.ToMeasurementUnit( value.Value );

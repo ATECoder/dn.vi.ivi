@@ -77,8 +77,8 @@ public abstract class VisaResourceTests
         Assert.IsNotNull( this.TestSiteSettings );
         Assert.IsTrue( this.TestSiteSettings.Exists );
         double expectedUpperLimit = 12d;
-        Assert.IsTrue( Math.Abs( this.TestSiteSettings.TimeZoneOffset() ) < expectedUpperLimit,
-                       $"{nameof( this.TestSiteSettings.TimeZoneOffset )} should be lower than {expectedUpperLimit}" );
+        Assert.IsLessThan( expectedUpperLimit,
+Math.Abs( this.TestSiteSettings.TimeZoneOffset() ), $"{nameof( this.TestSiteSettings.TimeZoneOffset )} should be lower than {expectedUpperLimit}" );
 
         if ( Logger is not null )
         {
@@ -172,12 +172,12 @@ public abstract class VisaResourceTests
         using ( ResourcesProviderBase rm = SessionFactory.Instance.Factory.ResourcesProvider() )
         {
             resourcesFilter = rm.ResourceFinder!.BuildMinimalResourcesFilter();
-            resources = rm.FindResources( resourcesFilter ).ToArray();
+            resources = [.. rm.FindResources( resourcesFilter )];
         }
         Assert.IsNotNull( resources, nameof( resources ) );
         Assert.IsNotNull( resourcesFilter, nameof( resourcesFilter ) );
 
-        Assert.IsTrue( resources.Length > 0, $"VISA Resources should exit for the {resourcesFilter} search pattern" );
+        Assert.IsGreaterThan( 0, resources.Length, $"VISA Resources should exit for the {resourcesFilter} search pattern" );
 
         resourcesFilter = "[TCPIP|GPIB|USB]?*INSTR";
         bool usingLikePattern = false;
@@ -186,24 +186,24 @@ public abstract class VisaResourceTests
         Assert.AreEqual( expectedResourceFiler, actualResourceFilter, $"VISA Resources should translate when Using Like Pattern is {usingLikePattern}" );
 
         using ( ResourcesProviderBase rm = SessionFactory.Instance.Factory.ResourcesProvider() )
-            resources = rm.FindResources( actualResourceFilter ).ToArray();
-        Assert.IsTrue( resources.Length > 0, $"VISA Resources should exist for the {actualResourceFilter} search pattern" );
+            resources = [.. rm.FindResources( actualResourceFilter )];
+        Assert.IsGreaterThan( 0, resources.Length, $"VISA Resources should exist for the {actualResourceFilter} search pattern" );
 
         usingLikePattern = true;
         actualResourceFilter = ResourceNamesManager.TranslatePattern( actualResourceFilter, usingLikePattern );
         expectedResourceFiler = resourcesFilter;
         Assert.AreEqual( expectedResourceFiler, actualResourceFilter, $"VISA Resources should translate when Using Like Pattern is {usingLikePattern}" );
         using ( ResourcesProviderBase rm = SessionFactory.Instance.Factory.ResourcesProvider() )
-            resources = rm.FindResources( actualResourceFilter ).ToArray();
+            resources = [.. rm.FindResources( actualResourceFilter )];
         Assert.IsNotNull( resources, nameof( resources ) );
 
-        Assert.IsTrue( resources.Length > 0, $"VISA Resources should exist for the {actualResourceFilter} search pattern" );
+        Assert.IsGreaterThan( 0, resources.Length, $"VISA Resources should exist for the {actualResourceFilter} search pattern" );
 
         actualResourceFilter = actualResourceFilter.Replace( '?', '_' );
         using ( ResourcesProviderBase rm = SessionFactory.Instance.Factory.ResourcesProvider() )
-            resources = rm.FindResources( actualResourceFilter ).ToArray();
+            resources = [.. rm.FindResources( actualResourceFilter )];
         Assert.IsNotNull( resources, nameof( resources ) );
-        Assert.IsFalse( resources.Length > 0, $"VISA Resources should not exist for the {actualResourceFilter} search pattern" );
+        Assert.IsLessThanOrEqualTo( 0, resources.Length, $"VISA Resources should not exist for the {actualResourceFilter} search pattern" );
 
     }
 
@@ -229,7 +229,7 @@ public abstract class VisaResourceTests
             resourceNameInfoCollection.ReadResources();
             actualCount = resourceNameInfoCollection.Count;
             Assert.AreEqual( expectedCount, actualCount, $"{nameof( ResourceNameInfoCollection )}.count should match" );
-            Assert.IsTrue( resourceNameInfoCollection.Contains( resourceName ), $"{nameof( ResourceNameInfoCollection )} should contain {resourceName}" );
+            Assert.Contains<string>( resourceName, ( System.Collections.Generic.IEnumerable<string> ) resourceNameInfoCollection, $"{nameof( ResourceNameInfoCollection )} should contain {resourceName}" );
         }
 
         resourceNameInfoCollection.ReadResources();

@@ -30,18 +30,17 @@ public abstract class MeasureResistanceSubsystemBase : MeasureSubsystemBase
     #region " resistance range "
 
     /// <summary> The current. </summary>
-    private decimal _current;
 
     /// <summary> Gets or sets the current for the specific range. </summary>
     /// <value> The current. </value>
     public decimal Current
     {
-        get => this._current;
+        get;
         set
         {
             if ( value != this.Current )
             {
-                this._current = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -54,19 +53,16 @@ public abstract class MeasureResistanceSubsystemBase : MeasureSubsystemBase
     /// <value> The resistance range currents. </value>
     public ResistanceRangeCurrentCollection ResistanceRangeCurrents { get; private set; }
 
-    /// <summary> The resistance range current. </summary>
-    private ResistanceRangeCurrent? _resistanceRangeCurrent;
-
     /// <summary> Gets or sets the resistance range current. </summary>
     /// <value> The resistance range current. </value>
     public ResistanceRangeCurrent? ResistanceRangeCurrent
     {
-        get => this._resistanceRangeCurrent;
+        get;
         set
         {
             if ( value is not null && (this.ResistanceRangeCurrent is null || (value.ResistanceRange != this.ResistanceRangeCurrent.ResistanceRange)) )
             {
-                this._resistanceRangeCurrent = value;
+                field = value;
                 this.NotifyPropertyChanged();
                 this.Current = value.RangeCurrent;
                 _ = this.ApplyRange( ( double ) value.ResistanceRange );

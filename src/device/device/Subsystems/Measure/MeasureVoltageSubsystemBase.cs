@@ -54,7 +54,7 @@ public abstract class MeasureVoltageSubsystemBase : MeasureSubsystemBase
         Stopwatch sw = Stopwatch.StartNew();
         do
         {
-            TimeSpan.FromMilliseconds( 1 ).AsyncWait();
+            _ = TimeSpan.FromMilliseconds( 1 ).AsyncWait();
             _ = this.MeasureReadingAmounts();
         }
         while ( limen > this.Level && sw.Elapsed <= timeout );
@@ -75,7 +75,7 @@ public abstract class MeasureVoltageSubsystemBase : MeasureSubsystemBase
         bool hasValue;
         do
         {
-            TimeSpan.FromMilliseconds( 1 ).AsyncWait();
+            _ = TimeSpan.FromMilliseconds( 1 ).AsyncWait();
             _ = this.MeasureReadingAmounts();
             hasValue = this.Level.HasValue && Math.Abs( targetLevel - this.Level.Value ) <= delta;
         }
@@ -83,20 +83,17 @@ public abstract class MeasureVoltageSubsystemBase : MeasureSubsystemBase
         return hasValue;
     }
 
-    /// <summary> The level. </summary>
-    private double? _level;
-
     /// <summary> Gets or sets the cached voltage level. </summary>
     /// <value> The voltage. </value>
     public double? Level
     {
-        get => this._level;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.Level, value ) )
             {
-                this._level = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

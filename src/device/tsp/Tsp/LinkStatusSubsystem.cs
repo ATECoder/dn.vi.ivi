@@ -92,14 +92,12 @@ public class LinkStatusSubsystem( Pith.SessionBase session ) : Tsp.StatusSubsyst
         }
     }
 
-    private int? _errorQueueCount;
-
     /// <summary> Gets or sets the cached error queue count. </summary>
     /// <value> <c>null</c> if value is not known. </value>
     public int? ErrorQueueCount
     {
-        get => this._errorQueueCount;
-        protected set => _ = this.SetProperty( ref this._errorQueueCount, value );
+        get;
+        protected set => _ = this.SetProperty( ref field, value );
     }
 
     /// <summary> Clears the error queue. </summary>

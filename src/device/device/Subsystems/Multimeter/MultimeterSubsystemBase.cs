@@ -192,7 +192,6 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
     #region " auto delay enabled "
 
     /// <summary> Auto Delay enabled. </summary>
-    private bool? _autoDelayEnabled;
 
     /// <summary> Gets or sets the cached Auto Delay Enabled sentinel. </summary>
     /// <remarks> When this is enabled, a delay is added before each measurement. </remarks>
@@ -202,13 +201,13 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
     /// </value>
     public bool? AutoDelayEnabled
     {
-        get => this._autoDelayEnabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.AutoDelayEnabled, value ) )
             {
-                this._autoDelayEnabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -270,9 +269,6 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
     /// <value> A Dictionary of multimeter Auto Delay Mode parses. </value>
     public Pith.EnumReadWriteCollection AutoDelayModeReadWrites { get; private set; }
 
-    /// <summary> The supported automatic delay modes. </summary>
-    private MultimeterAutoDelayModes _supportedAutoDelayModes;
-
     /// <summary>
     /// Gets or sets the supported Auto Delay Modes. This is a subset of the AutoDelays supported by
     /// the instrument.
@@ -280,19 +276,16 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
     /// <value> The supported multimeter Auto Delay Modes. </value>
     public MultimeterAutoDelayModes SupportedAutoDelayModes
     {
-        get => this._supportedAutoDelayModes;
+        get;
         set
         {
             if ( !this.SupportedAutoDelayModes.Equals( value ) )
             {
-                this._supportedAutoDelayModes = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
     }
-
-    /// <summary> The automatic delay mode. </summary>
-    private MultimeterAutoDelayModes? _autoDelayMode;
 
     /// <summary> Gets or sets the cached multimeter Auto Delay Mode. </summary>
     /// <value>
@@ -300,13 +293,13 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
     /// </value>
     public MultimeterAutoDelayModes? AutoDelayMode
     {
-        get => this._autoDelayMode;
+        get;
 
         protected set
         {
             if ( !this.AutoDelayMode.Equals( value ) )
             {
-                this._autoDelayMode = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -369,7 +362,6 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
     #region " auto range enabled "
 
     /// <summary> Auto Range enabled. </summary>
-    private bool? _autoRangeEnabled;
 
     /// <summary> Gets or sets the cached Auto Range Enabled sentinel. </summary>
     /// <remarks>
@@ -390,13 +382,13 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
     /// </value>
     public bool? AutoRangeEnabled
     {
-        get => this._autoRangeEnabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.AutoRangeEnabled, value ) )
             {
-                this._autoRangeEnabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
                 if ( value.HasValue && value.Value )
                 {
@@ -452,7 +444,6 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
     #region " auto zero enabled "
 
     /// <summary> Auto Zero enabled. </summary>
-    private bool? _autoZeroEnabled;
 
     /// <summary> Gets or sets the cached Auto Zero Enabled sentinel. </summary>
     /// <remarks>
@@ -475,13 +466,13 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
     /// </value>
     public bool? AutoZeroEnabled
     {
-        get => this._autoZeroEnabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.AutoZeroEnabled, value ) )
             {
-                this._autoZeroEnabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -549,7 +540,6 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
     #region " bias actual "
 
     /// <summary> The BiasActual. </summary>
-    private double? _biasActual;
 
     /// <summary>
     /// Gets or sets the cached Multimeter Bias Actual. Set to
@@ -559,13 +549,13 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
     /// <value> <c>null</c> if value is not known. </value>
     public double? BiasActual
     {
-        get => this._biasActual;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.BiasActual, value ) )
             {
-                this._biasActual = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -588,7 +578,6 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
     #region " bias level "
 
     /// <summary> The BiasLevel. </summary>
-    private double? _biasLevel;
 
     /// <summary>
     /// Gets or sets the cached Multimeter Bias Level. Set to
@@ -602,13 +591,13 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
     /// <value> <c>null</c> if value is not known. </value>
     public double? BiasLevel
     {
-        get => this._biasLevel;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.BiasLevel, value ) )
             {
-                this._biasLevel = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -702,9 +691,6 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
         }
     }
 
-    /// <summary> The FilterCount. </summary>
-    private int? _filterCount;
-
     /// <summary>
     /// Gets or sets the cached sense Filter Count. Set to
     /// <see cref="VI.Syntax.ScpiSyntax.Infinity">infinity</see> to set to maximum or to
@@ -713,13 +699,13 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
     /// <value> <c>null</c> if value is not known. </value>
     public int? FilterCount
     {
-        get => this._filterCount;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.FilterCount, value ) )
             {
-                this._filterCount = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -765,7 +751,6 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
     #region " filter enabled "
 
     /// <summary> Filter enabled. </summary>
-    private bool? _filterEnabled;
 
     /// <summary> Gets or sets the cached Filter Enabled sentinel. </summary>
     /// <value>
@@ -774,13 +759,13 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
     /// </value>
     public bool? FilterEnabled
     {
-        get => this._filterEnabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.FilterEnabled, value ) )
             {
-                this._filterEnabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -832,7 +817,6 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
     #region " moving average filter enabled "
 
     /// <summary> Moving Average Filter enabled. </summary>
-    private bool? _movingAverageFilterEnabled;
 
     /// <summary> Gets or sets the cached Moving Average Filter Enabled sentinel. </summary>
     /// <value>
@@ -842,13 +826,13 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
     /// </value>
     public bool? MovingAverageFilterEnabled
     {
-        get => this._movingAverageFilterEnabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.MovingAverageFilterEnabled, value ) )
             {
-                this._movingAverageFilterEnabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -917,9 +901,6 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
         }
     }
 
-    /// <summary> The FilterWindow. </summary>
-    private double? _filterWindow;
-
     /// <summary>
     /// Gets or sets the cached sense Filter Window. Set to
     /// <see cref="VI.Syntax.ScpiSyntax.Infinity">infinity</see> to set to maximum or to
@@ -928,13 +909,13 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
     /// <value> <c>null</c> if value is not known. </value>
     public double? FilterWindow
     {
-        get => this._filterWindow;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.FilterWindow, value ) )
             {
-                this._filterWindow = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -953,23 +934,20 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
     /// <value> The FilterWindow query command. </value>
     protected virtual string FilterWindowQueryCommand { get; set; } = string.Empty;
 
-    /// <summary> The filter window scale. </summary>
-    private double _filterWindowScale = 100d;
-
     /// <summary> Gets or sets the filter window scale. </summary>
     /// <value> The filter window scale. </value>
     public double FilterWindowScale
     {
-        get => this._filterWindowScale;
+        get;
         set
         {
             if ( this.FilterWindowScale != value )
             {
-                this._filterWindowScale = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
-    }
+    } = 100d;
 
     /// <summary> Queries The Filter Window. </summary>
     /// <returns> The Filter Window or none if unknown. </returns>
@@ -1022,9 +1000,6 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
     /// </value>
     public bool SupportsFrontTerminalsSelectionQuery => !string.IsNullOrWhiteSpace( this.FrontTerminalsSelectedQueryCommand );
 
-    /// <summary> Front Terminals Selected. </summary>
-    private bool? _frontTerminalsSelected;
-
     /// <summary> Gets or sets the cached Front Terminals Selected sentinel. </summary>
     /// <value>
     /// <c>null</c> if Front Terminals Selected is not known; <c>true</c> if output is on; otherwise,
@@ -1032,13 +1007,13 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
     /// </value>
     public bool? FrontTerminalsSelected
     {
-        get => this._frontTerminalsSelected;
+        get;
 
         protected set
         {
             if ( !Equals( this.FrontTerminalsSelected, value ) )
             {
-                this._frontTerminalsSelected = value;
+                field = value;
                 this.NotifyPropertyChanged();
                 this.NotifyPropertyChanged( nameof( this.TerminalsCaption ) );
             }
@@ -1091,7 +1066,6 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
     #region " limit1 auto clear "
 
     /// <summary> Limit1 Auto Clear. </summary>
-    private bool? _limit1AutoClear;
 
     /// <summary> Gets or sets the cached Limit1 Auto Clear sentinel. </summary>
     /// <remarks>
@@ -1109,13 +1083,13 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
     /// </value>
     public bool? Limit1AutoClear
     {
-        get => this._limit1AutoClear;
+        get;
 
         protected set
         {
             if ( !Equals( this.Limit1AutoClear, value ) )
             {
-                this._limit1AutoClear = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -1167,7 +1141,6 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
     #region " limit1 enabled "
 
     /// <summary> Limit1 enabled. </summary>
-    private bool? _limit1Enabled;
 
     /// <summary> Gets or sets the cached Limit1 Enabled sentinel. </summary>
     /// <remarks>
@@ -1182,13 +1155,13 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
     /// </value>
     public bool? Limit1Enabled
     {
-        get => this._limit1Enabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.Limit1Enabled, value ) )
             {
-                this._limit1Enabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -1240,7 +1213,6 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
     #region " limit1 lower level "
 
     /// <summary> The Limit1 Lower Level. </summary>
-    private double? _limit1LowerLevel;
 
     /// <summary>
     /// Gets or sets the cached Limit1 Lower Level. Set to
@@ -1256,13 +1228,13 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
     /// <value> <c>null</c> if value is not known. </value>
     public double? Limit1LowerLevel
     {
-        get => this._limit1LowerLevel;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.Limit1LowerLevel, value ) )
             {
-                this._limit1LowerLevel = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -1310,7 +1282,6 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
     #region " limit1 upper level "
 
     /// <summary> The Limit1 Upper Level. </summary>
-    private double? _limit1UpperLevel;
 
     /// <summary>
     /// Gets or sets the cached Limit1 Upper Level. Set to
@@ -1327,13 +1298,13 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
     /// <value> <c>null</c> if value is not known. </value>
     public double? Limit1UpperLevel
     {
-        get => this._limit1UpperLevel;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.Limit1UpperLevel, value ) )
             {
-                this._limit1UpperLevel = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -1385,7 +1356,6 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
     #region " limit2 auto clear "
 
     /// <summary> Limit2 Auto Clear. </summary>
-    private bool? _limit2AutoClear;
 
     /// <summary> Gets or sets the cached Limit2 Auto Clear sentinel. </summary>
     /// <remarks>
@@ -1403,13 +1373,13 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
     /// </value>
     public bool? Limit2AutoClear
     {
-        get => this._limit2AutoClear;
+        get;
 
         protected set
         {
             if ( !Equals( this.Limit2AutoClear, value ) )
             {
-                this._limit2AutoClear = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -1461,7 +1431,6 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
     #region " limit2 enabled "
 
     /// <summary> Limit2 enabled. </summary>
-    private bool? _limit2Enabled;
 
     /// <summary> Gets or sets the cached Limit2 Enabled sentinel. </summary>
     /// <remarks>
@@ -1476,13 +1445,13 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
     /// </value>
     public bool? Limit2Enabled
     {
-        get => this._limit2Enabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.Limit2Enabled, value ) )
             {
-                this._limit2Enabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -1534,7 +1503,6 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
     #region " limit2 lower level "
 
     /// <summary> The Limit2 Lower Level. </summary>
-    private double? _limit2LowerLevel;
 
     /// <summary>
     /// Gets or sets the cached Limit2 Lower Level. Set to
@@ -1550,13 +1518,13 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
     /// <value> <c>null</c> if value is not known. </value>
     public double? Limit2LowerLevel
     {
-        get => this._limit2LowerLevel;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.Limit2LowerLevel, value ) )
             {
-                this._limit2LowerLevel = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -1604,7 +1572,6 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
     #region " limit2 upper level "
 
     /// <summary> The Limit2 Upper Level. </summary>
-    private double? _limit2UpperLevel;
 
     /// <summary>
     /// Gets or sets the cached Limit2 Upper Level. Set to
@@ -1622,13 +1589,13 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
     /// <value> <c>null</c> if value is not known. </value>
     public double? Limit2UpperLevel
     {
-        get => this._limit2UpperLevel;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.Limit2UpperLevel, value ) )
             {
-                this._limit2UpperLevel = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -1767,27 +1734,21 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
         return this.OpenDetectorCapabilities[functionMode];
     }
 
-    /// <summary> True if function open detector capable. </summary>
-    private bool _functionOpenDetectorCapable;
-
     /// <summary> Gets or sets the function open detector capable. </summary>
     /// <value> The function open detector capable. </value>
     public bool FunctionOpenDetectorCapable
     {
-        get => this._functionOpenDetectorCapable;
+        get;
 
         protected set
         {
             if ( this.FunctionOpenDetectorCapable != value )
             {
-                this._functionOpenDetectorCapable = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
     }
-
-    /// <summary> Open Detector enabled. </summary>
-    private bool? _openDetectorEnabled;
 
     /// <summary> Gets or sets the cached Open Detector Enabled sentinel. </summary>
     /// <value>
@@ -1796,13 +1757,13 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
     /// </value>
     public bool? OpenDetectorEnabled
     {
-        get => this._openDetectorEnabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.OpenDetectorEnabled, value ) )
             {
-                this._openDetectorEnabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -1875,9 +1836,6 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
         }
     }
 
-    /// <summary> The Power Line Cycles. </summary>
-    private double? _powerLineCycles;
-
     /// <summary>
     /// Gets or sets the cached sense PowerLineCycles. Set to
     /// <see cref="VI.Syntax.ScpiSyntax.Infinity">infinity</see> to set to maximum or to
@@ -1886,14 +1844,14 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
     /// <value> <c>null</c> if value is not known. </value>
     public double? PowerLineCycles
     {
-        get => this._powerLineCycles;
+        get;
 
         protected set
         {
             if ( value.HasValue && !Nullable.Equals( this.PowerLineCycles, value ) )
             {
-                this._powerLineCycles = value;
-                this._aperture = StatusSubsystemBase.FromPowerLineCycles( this._powerLineCycles.Value ).TotalSeconds;
+                field = value;
+                this._aperture = StatusSubsystemBase.FromPowerLineCycles( field.Value ).TotalSeconds;
                 this.NotifyPropertyChanged();
             }
         }
@@ -1941,7 +1899,6 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
     #region " range "
 
     /// <summary> The Range. </summary>
-    private double? _range;
 
     /// <summary>
     /// Gets or sets the cached sense Range. Set to
@@ -1962,13 +1919,13 @@ public abstract partial class MultimeterSubsystemBase : SubsystemBase
     /// <value> <c>null</c> if value is not known. </value>
     public double? Range
     {
-        get => this._range;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.Range, value ) )
             {
-                this._range = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

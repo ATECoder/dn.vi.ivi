@@ -86,7 +86,6 @@ public abstract partial class ArmLayerSubsystemBase : SubsystemBase
     #region " arm count "
 
     /// <summary> Number of maximum arms. </summary>
-    private int _maximumArmCount;
 
     /// <summary> Gets or sets the cached Maximum Arm Count. </summary>
     /// <remarks>
@@ -95,17 +94,14 @@ public abstract partial class ArmLayerSubsystemBase : SubsystemBase
     /// <value> The Arm MaximumArmCount or none if not set or unknown. </value>
     public int MaximumArmCount
     {
-        get => this._maximumArmCount;
+        get;
 
-        protected set => _ = this.SetProperty( ref this._maximumArmCount, value );
+        protected set => _ = this.SetProperty( ref field, value );
     }
 
     /// <summary> Returns <c>true</c> if using an infinite Arm count. </summary>
     /// <value> The number of is infinite Arms. </value>
     public bool? IsArmCountInfinite => this.ArmCount.HasValue ? this.ArmCount >= int.MaxValue : new bool?();
-
-    /// <summary> Number of arms. </summary>
-    private int? _armCount;
 
     /// <summary> Gets or sets the cached Arm Count. </summary>
     /// <remarks>
@@ -114,13 +110,13 @@ public abstract partial class ArmLayerSubsystemBase : SubsystemBase
     /// <value> The Arm ArmCount or none if not set or unknown. </value>
     public int? ArmCount
     {
-        get => this._armCount;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.ArmCount, value ) )
             {
-                this._armCount = value;
+                field = value;
                 this.NotifyPropertyChanged();
                 this.NotifyPropertyChanged( nameof( this.IsArmCountInfinite ) );
             }
@@ -252,14 +248,13 @@ public abstract partial class ArmLayerSubsystemBase : SubsystemBase
     #region " input line number "
 
     /// <summary> The input line number. </summary>
-    private int? _inputLineNumber;
 
     /// <summary> Gets or sets the cached Arm Input Line Number. </summary>
     /// <value> The Arm InputLineNumber or none if not set or unknown. </value>
     public int? InputLineNumber
     {
-        get => this._inputLineNumber;
-        protected set => _ = this.SetProperty( ref this._inputLineNumber, value );
+        get;
+        protected set => _ = this.SetProperty( ref field, value );
     }
 
     /// <summary> Writes and reads back the Input Line Number. </summary>
@@ -305,15 +300,14 @@ public abstract partial class ArmLayerSubsystemBase : SubsystemBase
     #region " output line number "
 
     /// <summary> The output line number. </summary>
-    private int? _outputLineNumber;
 
     /// <summary> Gets or sets the cached Output Line Number. </summary>
     /// <value> The Arm OutputLineNumber or none if not set or unknown. </value>
     public int? OutputLineNumber
     {
-        get => this._outputLineNumber;
+        get;
 
-        protected set => _ = this.SetProperty( ref this._outputLineNumber, value );
+        protected set => _ = this.SetProperty( ref field, value );
     }
 
     /// <summary> Writes and reads back the Arm Output Line Number. </summary>

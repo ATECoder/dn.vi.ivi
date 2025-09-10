@@ -1,3 +1,5 @@
+using CommunityToolkit.Mvvm.ComponentModel;
+
 namespace cc.isr.VI;
 
 /// <summary> Defines the contract that must be implemented by an Output Subsystem. </summary>
@@ -12,7 +14,7 @@ namespace cc.isr.VI;
 /// <param name="statusSubsystem"> A reference to a <see cref="StatusSubsystemBase">status
 /// subsystem</see>. </param>
 [CLSCompliant( false )]
-public abstract class AccessSubsystemBase( StatusSubsystemBase statusSubsystem ) : SubsystemBase( statusSubsystem )
+public abstract partial class AccessSubsystemBase( StatusSubsystemBase statusSubsystem ) : SubsystemBase( statusSubsystem )
 {
     #region " i presettable "
 
@@ -41,17 +43,12 @@ public abstract class AccessSubsystemBase( StatusSubsystemBase statusSubsystem )
         set => this.SetProperty( ref this._certifyTimeout, value );
     }
 
-    private bool? _certified;
-
     /// <summary> Gets or sets the cached certification sentinel. </summary>
     /// <value>
     /// <c>null</c> if not known; <c>true</c> if certified on; otherwise, <c>false</c>.
     /// </value>
-    public bool? Certified
-    {
-        get => this._certified;
-        protected set => this.SetProperty( ref this._certified, value );
-    }
+    [ObservableProperty]
+    public partial bool? Certified { get; protected set; }
 
     /// <summary>   Queries if the instrument is certified for API access. </summary>
     /// <remarks>   2025-05-26. </remarks>

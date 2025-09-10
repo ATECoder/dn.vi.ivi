@@ -60,32 +60,38 @@ public partial class Session
         if ( nativeVisaSession is not null )
         {
             result = IsSupportedVendorAttribute( attribute );
-            if ( result && nativeVisaSession.HardwareInterfaceType != Ivi.Visa.HardwareInterfaceType.Gpib && attribute.ToString().StartsWith( Ivi.Visa.HardwareInterfaceType.Gpib.ToString(), StringComparison.OrdinalIgnoreCase ) )
+            if ( result && nativeVisaSession.HardwareInterfaceType != Ivi.Visa.HardwareInterfaceType.Gpib
+                && attribute.ToString().StartsWith( Ivi.Visa.HardwareInterfaceType.Gpib.ToString(), StringComparison.OrdinalIgnoreCase ) )
             {
                 result = false;
             }
 
-            if ( result && nativeVisaSession.HardwareInterfaceType != Ivi.Visa.HardwareInterfaceType.Pxi && attribute.ToString().StartsWith( Ivi.Visa.HardwareInterfaceType.Pxi.ToString(), StringComparison.OrdinalIgnoreCase ) )
+            if ( result && nativeVisaSession.HardwareInterfaceType != Ivi.Visa.HardwareInterfaceType.Pxi
+                && attribute.ToString().StartsWith( Ivi.Visa.HardwareInterfaceType.Pxi.ToString(), StringComparison.OrdinalIgnoreCase ) )
             {
                 result = false;
             }
 
-            if ( result && nativeVisaSession.HardwareInterfaceType != Ivi.Visa.HardwareInterfaceType.Serial && attribute.ToString().StartsWith( Ivi.Visa.HardwareInterfaceType.Serial.ToString(), StringComparison.OrdinalIgnoreCase ) )
+            if ( result && nativeVisaSession.HardwareInterfaceType != Ivi.Visa.HardwareInterfaceType.Serial
+                && attribute.ToString().StartsWith( Ivi.Visa.HardwareInterfaceType.Serial.ToString(), StringComparison.OrdinalIgnoreCase ) )
             {
                 result = false;
             }
 
-            if ( result && nativeVisaSession.HardwareInterfaceType != Ivi.Visa.HardwareInterfaceType.Tcp && attribute.ToString().StartsWith( Ivi.Visa.HardwareInterfaceType.Tcp.ToString(), StringComparison.OrdinalIgnoreCase ) )
+            if ( result && nativeVisaSession.HardwareInterfaceType != Ivi.Visa.HardwareInterfaceType.Tcp
+                && attribute.ToString().StartsWith( Ivi.Visa.HardwareInterfaceType.Tcp.ToString(), StringComparison.OrdinalIgnoreCase ) )
             {
                 result = false;
             }
 
-            if ( result && nativeVisaSession.HardwareInterfaceType != Ivi.Visa.HardwareInterfaceType.Usb && attribute.ToString().StartsWith( Ivi.Visa.HardwareInterfaceType.Usb.ToString(), StringComparison.OrdinalIgnoreCase ) )
+            if ( result && nativeVisaSession.HardwareInterfaceType != Ivi.Visa.HardwareInterfaceType.Usb
+                && attribute.ToString().StartsWith( Ivi.Visa.HardwareInterfaceType.Usb.ToString(), StringComparison.OrdinalIgnoreCase ) )
             {
                 result = false;
             }
 
-            if ( result && nativeVisaSession.HardwareInterfaceType != Ivi.Visa.HardwareInterfaceType.Vxi && attribute.ToString().StartsWith( Ivi.Visa.HardwareInterfaceType.Vxi.ToString(), StringComparison.OrdinalIgnoreCase ) )
+            if ( result && nativeVisaSession.HardwareInterfaceType != Ivi.Visa.HardwareInterfaceType.Vxi
+                && attribute.ToString().StartsWith( Ivi.Visa.HardwareInterfaceType.Vxi.ToString(), StringComparison.OrdinalIgnoreCase ) )
             {
                 result = false;
             }
@@ -98,18 +104,16 @@ public partial class Session
     /// <param name="attribute">    The attribute. </param>
     /// <param name="defaultValue"> The default value. </param>
     /// <returns> The attribute. </returns>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage( "CodeQuality", "IDE0051:Remove unused private members", Justification = "<Pending>" )]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0051:Remove unused private members", Justification = "<Pending>" )]
     private bool ReadAttribute( Ivi.Visa.NativeVisaAttribute attribute, bool defaultValue )
     {
         return this.VisaSession is Ivi.Visa.INativeVisaSession s && IsSupported( s, attribute ) ? s.GetAttributeBoolean( attribute ) : defaultValue;
     }
 
-
-
     /// <summary> Writes an attribute. </summary>
     /// <param name="attribute"> The attribute. </param>
     /// <param name="value">     The value. </param>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage( "CodeQuality", "IDE0051:Remove unused private members", Justification = "<Pending>" )]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0051:Remove unused private members", Justification = "<Pending>" )]
     private void WriteAttribute( Ivi.Visa.NativeVisaAttribute attribute, bool value )
     {
         if ( this.VisaSession is Ivi.Visa.INativeVisaSession s && IsSupported( s, attribute ) )
@@ -122,7 +126,7 @@ public partial class Session
     /// <param name="attribute">    The attribute. </param>
     /// <param name="defaultValue"> The default value. </param>
     /// <returns> The attribute. </returns>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage( "CodeQuality", "IDE0051:Remove unused private members", Justification = "<Pending>" )]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0051:Remove unused private members", Justification = "<Pending>" )]
     private byte ReadAttribute( Ivi.Visa.NativeVisaAttribute attribute, byte defaultValue )
     {
         return this.VisaSession is Ivi.Visa.INativeVisaSession s && IsSupported( s, attribute ) ? s.GetAttributeByte( attribute ) : defaultValue;
@@ -131,7 +135,7 @@ public partial class Session
     /// <summary> Writes an attribute. </summary>
     /// <param name="attribute"> The attribute. </param>
     /// <param name="value">     The value. </param>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage( "CodeQuality", "IDE0051:Remove unused private members", Justification = "<Pending>" )]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0051:Remove unused private members", Justification = "<Pending>" )]
     private void WriteAttribute( Ivi.Visa.NativeVisaAttribute attribute, byte value )
     {
         if ( this.VisaSession is Ivi.Visa.INativeVisaSession s && IsSupported( s, attribute ) )

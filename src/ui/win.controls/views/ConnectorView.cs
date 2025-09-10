@@ -321,22 +321,20 @@ public partial class ConnectorView : UserControl
         }
     }
 
-    private string? _resourceName;
-
     /// <summary> Gets or sets the name of the resource. </summary>
     /// <value> The name of the resource. </value>
     [DesignerSerializationVisibility( DesignerSerializationVisibility.Hidden )]
     [Browsable( false )]
     public string? ResourceName
     {
-        get => this._resourceName;
+        get;
         set
         {
             if ( value is null || string.IsNullOrWhiteSpace( value ) ) value = string.Empty;
             if ( this.VisaSessionBase is not null && this.VisaSessionBase.SessionFactory is not null
                 && !string.Equals( value, this.ResourceName, StringComparison.Ordinal ) )
             {
-                this._resourceName = value;
+                field = value;
                 this.VisaSessionBase.SessionFactory.CandidateResourceName = value;
             }
         }

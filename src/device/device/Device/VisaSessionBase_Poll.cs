@@ -6,27 +6,25 @@ namespace cc.isr.VI;
 
 public partial class VisaSessionBase
 {
-    private System.Timers.Timer? _pollTimerInternal;
-
     /// <summary>   Gets or sets the poll timer internal. </summary>
     /// <value> The poll timer internal. </value>
     private System.Timers.Timer? PollTimerInternal
     {
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
-        get => this._pollTimerInternal;
+        get;
 
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( this._pollTimerInternal is not null )
+            if ( field is not null )
             {
-                this._pollTimerInternal.Elapsed -= this.PollTimer_Elapsed;
+                field.Elapsed -= this.PollTimer_Elapsed;
             }
 
-            this._pollTimerInternal = value;
-            if ( this._pollTimerInternal is not null )
+            field = value;
+            if ( field is not null )
             {
-                this._pollTimerInternal.Elapsed += this.PollTimer_Elapsed;
+                field.Elapsed += this.PollTimer_Elapsed;
             }
         }
     }
@@ -35,32 +33,23 @@ public partial class VisaSessionBase
     /// <value> The poll synchronizing object. </value>
     public System.ComponentModel.ISynchronizeInvoke? PollSynchronizingObject
     {
-        get => this.PollTimerInternal?.SynchronizingObject;
-        set
-        {
-            if ( this.PollTimerInternal is not null )
-                this.PollTimerInternal.SynchronizingObject = value;
-        }
+        get => this.PollTimerInternal?.SynchronizingObject; set => this.PollTimerInternal?.SynchronizingObject = value;
     }
-
-    private string? _pollReading;
 
     /// <summary> Gets or sets the poll reading. </summary>
     /// <value> The poll reading. </value>
     public string? PollReading
     {
-        get => this._pollReading;
-        set => _ = this.SetProperty( ref this._pollReading, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
-
-    private bool _pollAutoRead;
 
     /// <summary> Gets or sets the automatic read polling option . </summary>
     /// <value> The automatic read status. </value>
     public bool PollAutoRead
     {
-        get => this._pollAutoRead;
-        set => _ = this.SetProperty( ref this._pollAutoRead, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
 
     /// <summary> Gets or sets the poll Timespan. </summary>
@@ -106,15 +95,13 @@ public partial class VisaSessionBase
         }
     }
 
-    private int _pollMessageAvailableBitmask = ( int ) ServiceRequests.MessageAvailable;
-
     /// <summary> Gets or sets the poll message available bitmask. </summary>
     /// <value> The message available bitmask. </value>
     public int PollMessageAvailableBitmask
     {
-        get => this._pollMessageAvailableBitmask;
-        set => _ = this.SetProperty( ref this._pollMessageAvailableBitmask, value );
-    }
+        get;
+        set => _ = this.SetProperty( ref field, value );
+    } = ( int ) ServiceRequests.MessageAvailable;
 
     /// <summary> Queries if a message is available. </summary>
     /// <param name="statusByte"> The status byte. </param>
@@ -124,17 +111,13 @@ public partial class VisaSessionBase
         return SessionBase.IsFullyMasked( statusByte, this.PollMessageAvailableBitmask );
     }
 
-    private bool _pollMessageAvailable;
-
     /// <summary> Gets or sets the poll message available status. </summary>
     /// <value> The poll message available. </value>
     public bool PollMessageAvailable
     {
-        get => this._pollMessageAvailable;
-        private set => _ = this.SetProperty( ref this._pollMessageAvailable, value );
+        get;
+        private set => _ = this.SetProperty( ref field, value );
     }
-
-    private bool _pollStatusByteErrorBitSet;
 
     /// <summary>
     /// Gets or sets a value indicating whether the poll status byte error bit set.
@@ -142,8 +125,8 @@ public partial class VisaSessionBase
     /// <value> True if poll status byte error bit set, false if not. </value>
     public bool PollStatusByteErrorBitSet
     {
-        get => this._pollStatusByteErrorBitSet;
-        private set => _ = this.SetProperty( ref this._pollStatusByteErrorBitSet, value );
+        get;
+        private set => _ = this.SetProperty( ref field, value );
     }
 
     /// <summary> Event handler. Called by _pollTimer for tick events. </summary>

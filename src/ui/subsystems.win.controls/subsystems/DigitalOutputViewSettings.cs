@@ -4,12 +4,13 @@ using cc.isr.Json.AppSettings.Models;
 using System.Text.Json.Serialization;
 using cc.isr.Json.AppSettings.ViewModels;
 using System.Windows.Forms;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace cc.isr.VI.SubsystemsWinControls;
 
 /// <summary>   A settings. </summary>
 /// <remarks>   David, 2021-02-01. </remarks>
-public class DigitalOutputViewSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
+public partial class DigitalOutputViewSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
 {
     #region " construction "
 
@@ -89,7 +90,6 @@ public class DigitalOutputViewSettings : CommunityToolkit.Mvvm.ComponentModel.Ob
 
     #region " exists "
 
-    private bool _exists;
 
     /// <summary>
     /// Gets or sets a value indicating whether this settings section exists and the values were thus
@@ -99,53 +99,34 @@ public class DigitalOutputViewSettings : CommunityToolkit.Mvvm.ComponentModel.Ob
     [Description( "True if this settings section exists and was read from the JSon settings file." )]
     public bool Exists
     {
-        get => this._exists;
-        set => _ = this.SetProperty( ref this._exists, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
 
     #endregion
 
     #region " values "
 
-    private int _strobeLineNumber = 4;
 
     /// <summary>   Gets or sets the strobe line number. </summary>
     /// <value> The strobe line number. </value>
-    public int StrobeLineNumber
-    {
-        get => this._strobeLineNumber;
-        set => this.SetProperty( ref this._strobeLineNumber, value );
-    }
-
-    private int _strobeDuration = 10;
+    [ObservableProperty]
+    public partial int StrobeLineNumber { get; set; } = 4;
 
     /// <summary>   Gets or sets the duration of the strobe. </summary>
     /// <value> The strobe duration. </value>
-    public int StrobeDuration
-    {
-        get => this._strobeDuration;
-        set => this.SetProperty( ref this._strobeDuration, value );
-    }
-
-    private int _binLineNumber = 1;
+    [ObservableProperty]
+    public partial int StrobeDuration { get; set; } = 10;
 
     /// <summary>   Gets or sets the bin line number. </summary>
     /// <value> The bin line number. </value>
-    public int BinLineNumber
-    {
-        get => this._binLineNumber;
-        set => this.SetProperty( ref this._binLineNumber, value );
-    }
-
-    private int _binDuration = 20;
+    [ObservableProperty]
+    public partial int BinLineNumber { get; set; } = 1;
 
     /// <summary>   Gets or sets the duration of the bin. </summary>
     /// <value> The bin duration. </value>
-    public int BinDuration
-    {
-        get => this._binDuration;
-        set => this.SetProperty( ref this._binDuration, value );
-    }
+    [ObservableProperty]
+    public partial int BinDuration { get; set; } = 20;
 
     #endregion
 

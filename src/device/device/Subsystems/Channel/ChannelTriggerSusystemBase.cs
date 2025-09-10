@@ -42,7 +42,6 @@ public abstract class ChannelTriggerSubsystemBase( int channelNumber, StatusSubs
     #region " continuous enabled "
 
     /// <summary> The continuous enabled. </summary>
-    private bool? _continuousEnabled;
 
     /// <summary> Gets or sets the cached Continuous Enabled sentinel. </summary>
     /// <value>
@@ -51,13 +50,13 @@ public abstract class ChannelTriggerSubsystemBase( int channelNumber, StatusSubs
     /// </value>
     public bool? ContinuousEnabled
     {
-        get => this._continuousEnabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.ContinuousEnabled, value ) )
             {
-                this._continuousEnabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

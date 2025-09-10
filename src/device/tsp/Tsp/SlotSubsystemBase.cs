@@ -35,14 +35,13 @@ public abstract class SlotSubsystemBase : SubsystemBase
     #region " exists "
 
     /// <summary> The is slot exists. </summary>
-    private bool? _isSlotExists;
 
     /// <summary> Gets or sets (Protected) the Slot existence indicator. </summary>
     /// <value> The Slot existence indicator. </value>
     public bool? IsSlotExists
     {
-        get => this._isSlotExists;
-        protected set => _ = this.SetProperty( ref this._isSlotExists, value );
+        get;
+        protected set => _ = this.SetProperty( ref field, value );
     }
 
     /// <summary> Queries slot exists. </summary>
@@ -79,14 +78,13 @@ public abstract class SlotSubsystemBase : SubsystemBase
     #region " supports interlock "
 
     /// <summary> The supports interlock. </summary>
-    private bool? _supportsInterlock;
 
     /// <summary> Gets or sets the supports interlock. </summary>
     /// <value> The supports interlock. </value>
     public bool? SupportsInterlock
     {
-        get => this._supportsInterlock;
-        protected set => _ = this.SetProperty( ref this._supportsInterlock, value );
+        get;
+        protected set => _ = this.SetProperty( ref field, value );
     }
 
     /// <summary> Queries supports interlock. </summary>
@@ -111,14 +109,13 @@ public abstract class SlotSubsystemBase : SubsystemBase
     #region " interlocak state "
 
     /// <summary> State of the interlocks. </summary>
-    private int? _interlocksState;
 
     /// <summary> Gets or sets the state of the interlocks. </summary>
     /// <value> The interlock state. </value>
     public int? InterlocksState
     {
-        get => this._interlocksState;
-        protected set => _ = this.SetProperty( ref this._interlocksState, value );
+        get;
+        protected set => _ = this.SetProperty( ref field, value );
     }
 
     /// <summary> Queries interlocks state. </summary>

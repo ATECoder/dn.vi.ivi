@@ -17,26 +17,20 @@ public partial class TraceSubsystemBase
     /// <value> A Dictionary of Feed source parses. </value>
     public Pith.EnumReadWriteCollection FeedSourceReadWrites { get; private set; }
 
-    /// <summary> The supported feed sources. </summary>
-    private FeedSources _supportedFeedSources;
-
     /// <summary> Gets or sets the supported Feed sources. </summary>
     /// <value> The supported Feed sources. </value>
     public FeedSources SupportedFeedSources
     {
-        get => this._supportedFeedSources;
+        get;
         set
         {
             if ( !this.SupportedFeedSources.Equals( value ) )
             {
-                this._supportedFeedSources = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
     }
-
-    /// <summary> The feed source. </summary>
-    private FeedSources? _feedSource;
 
     /// <summary> Gets or sets the cached source FeedSource. </summary>
     /// <value>
@@ -44,13 +38,13 @@ public partial class TraceSubsystemBase
     /// </value>
     public FeedSources? FeedSource
     {
-        get => this._feedSource;
+        get;
 
         protected set
         {
             if ( !this.FeedSource.Equals( value ) )
             {
-                this._feedSource = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -109,26 +103,20 @@ public partial class TraceSubsystemBase
     /// <value> A Dictionary of Feed Control parses. </value>
     public Pith.EnumReadWriteCollection FeedControlReadWrites { get; private set; }
 
-    /// <summary> The supported feed controls. </summary>
-    private FeedControls _supportedFeedControls;
-
     /// <summary> Gets or sets the supported Feed Controls. </summary>
     /// <value> The supported Feed Controls. </value>
     public FeedControls SupportedFeedControls
     {
-        get => this._supportedFeedControls;
+        get;
         set
         {
             if ( !this.SupportedFeedControls.Equals( value ) )
             {
-                this._supportedFeedControls = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
     }
-
-    /// <summary> The feed control. </summary>
-    private FeedControls? _feedControl;
 
     /// <summary> Gets or sets the cached Control FeedControl. </summary>
     /// <value>
@@ -136,13 +124,13 @@ public partial class TraceSubsystemBase
     /// </value>
     public FeedControls? FeedControl
     {
-        get => this._feedControl;
+        get;
 
         protected set
         {
             if ( !this.FeedControl.Equals( value ) )
             {
-                this._feedControl = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

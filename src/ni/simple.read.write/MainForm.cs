@@ -439,10 +439,7 @@ public partial class MainForm : Form
 
     private void TimeoutNumeric_ValueChanged( object? sender, EventArgs e )
     {
-        if ( this._session is not null )
-        {
-            this._session.TimeoutMilliseconds = ( int ) Math.Round( this.TimeoutNumeric.Value );
-        }
+        _ = this._session?.TimeoutMilliseconds = ( int ) Math.Round( this.TimeoutNumeric.Value );
     }
 
     private void ReadTerminationCharacter_ValueChanged( object? sender, EventArgs e )

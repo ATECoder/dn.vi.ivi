@@ -17,8 +17,6 @@ public class MeasureResistanceSubsystemBase( Tsp.StatusSubsystemBase statusSubsy
     #region " reading "
 
     /// <summary> The reading. </summary>
-    private string? _reading;
-
     /// <summary>
     /// Gets or sets or sets (protected) the reading.  When set, the value is converted to
     /// resistance.
@@ -26,8 +24,8 @@ public class MeasureResistanceSubsystemBase( Tsp.StatusSubsystemBase statusSubsy
     /// <value> The reading. </value>
     public string? Reading
     {
-        get => this._reading;
-        protected set => _ = this.SetProperty( ref this._reading, value );
+        get;
+        protected set => _ = this.SetProperty( ref field, value );
     }
 
     #endregion
@@ -35,14 +33,13 @@ public class MeasureResistanceSubsystemBase( Tsp.StatusSubsystemBase statusSubsy
     #region " resistance "
 
     /// <summary> The resistance. </summary>
-    private double? _resistance;
 
     /// <summary> Gets or sets (protected) the measured resistance. </summary>
     /// <value> The resistance. </value>
     public double? Resistance
     {
-        get => this._resistance;
-        protected set => _ = this.SetProperty( ref this._resistance, value );
+        get;
+        protected set => _ = this.SetProperty( ref field, value );
     }
 
     /// <summary> Measures and reads the resistance. </summary>

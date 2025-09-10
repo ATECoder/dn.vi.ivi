@@ -35,7 +35,6 @@ public class SourceSubsystemBase( Tsp.StatusSubsystemBase statusSubsystem ) : So
     #region " source function "
 
     /// <summary> The Source Function. </summary>
-    private SourceFunctionMode? _sourceFunction;
 
     /// <summary> Gets or sets the cached Source Function. </summary>
     /// <value>
@@ -43,8 +42,8 @@ public class SourceSubsystemBase( Tsp.StatusSubsystemBase statusSubsystem ) : So
     /// </value>
     public SourceFunctionMode? SourceFunction
     {
-        get => this._sourceFunction;
-        protected set => _ = this.SetProperty( ref this._sourceFunction, value );
+        get;
+        protected set => _ = this.SetProperty( ref field, value );
     }
 
     /// <summary> Writes and reads back the Source Function. </summary>

@@ -249,9 +249,9 @@ Write *ESE 255{this.Termination} if opening a stand alone VISA Session";
             this.SessionBase!.StatusPrompt = "Session Open";
             this.ReadStatusRegister();
         }
-        else if ( this.SessionBase is not null )
+        else
         {
-            this.SessionBase.StatusPrompt = "Session Not open; open session";
+            _ = (this.SessionBase?.StatusPrompt = "Session Not open; open session");
         }
     }
 
@@ -273,10 +273,7 @@ Write *ESE 255{this.Termination} if opening a stand alone VISA Session";
     /// <param name="e">      Event information. </param>
     private void ReadDelayNumeric_ValueChanged( object? sender, EventArgs e )
     {
-        if ( this.SessionBase is not null )
-        {
-            this.SessionBase.ReadAfterWriteDelay = TimeSpan.FromMilliseconds( ( double ) this._readDelayNumeric.Value );
-        }
+        _ = (this.SessionBase?.ReadAfterWriteDelay = TimeSpan.FromMilliseconds( ( double ) this._readDelayNumeric.Value ));
     }
 
     /// <summary> Status read delay numeric value changed. </summary>
@@ -284,10 +281,7 @@ Write *ESE 255{this.Termination} if opening a stand alone VISA Session";
     /// <param name="e">      Event information. </param>
     private void StatusReadDelayNumeric_ValueChanged( object? sender, EventArgs e )
     {
-        if ( this.SessionBase is not null )
-        {
-            this.SessionBase.StatusReadDelay = TimeSpan.FromMilliseconds( ( double ) this._statusReadDelayNumeric.Value );
-        }
+        _ = (this.SessionBase?.StatusReadDelay = TimeSpan.FromMilliseconds( ( double ) this._statusReadDelayNumeric.Value ));
     }
 
     #endregion

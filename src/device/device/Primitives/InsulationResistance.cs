@@ -84,112 +84,94 @@ public class InsulationResistance : CommunityToolkit.Mvvm.ComponentModel.Observa
         }
     }
 
-    /// <summary> The current limit. </summary>
-    private double _currentLimit;
-
     /// <summary> Gets or sets the current limit. </summary>
     /// <value> The current limit. </value>
     public double CurrentLimit
     {
-        get => this._currentLimit;
+        get;
         set
         {
             if ( value != this.CurrentLimit )
             {
-                this._currentLimit = value;
+                field = value;
                 this.NotifyPropertyChanged();
                 this.NotifyPropertyChanged( nameof( this.CurrentRange ) );
             }
         }
     }
-
-    /// <summary> The power line cycles. </summary>
-    private double _powerLineCycles;
 
     /// <summary> Gets or sets the power line cycles. </summary>
     /// <value> The power line cycles. </value>
     public double PowerLineCycles
     {
-        get => this._powerLineCycles;
+        get;
         set
         {
             if ( value != this.PowerLineCycles )
             {
-                this._powerLineCycles = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
     }
-
-    /// <summary> The voltage level. </summary>
-    private double _voltageLevel;
 
     /// <summary> Gets or sets the voltage level. </summary>
     /// <value> The voltage level. </value>
     public double VoltageLevel
     {
-        get => this._voltageLevel;
+        get;
         set
         {
             if ( value != this.VoltageLevel )
             {
-                this._voltageLevel = value;
+                field = value;
                 this.NotifyPropertyChanged();
                 this.NotifyPropertyChanged( nameof( this.CurrentRange ) );
             }
         }
     }
-
-    /// <summary> The resistance low limit. </summary>
-    private double _resistanceLowLimit;
 
     /// <summary> Gets or sets the resistance low limit. </summary>
     /// <value> The resistance low limit. </value>
     public double ResistanceLowLimit
     {
-        get => this._resistanceLowLimit;
+        get;
         set
         {
             if ( value != this.ResistanceLowLimit )
             {
-                this._resistanceLowLimit = value;
+                field = value;
                 this.NotifyPropertyChanged();
                 this.NotifyPropertyChanged( nameof( this.CurrentRange ) );
             }
         }
     }
 
-    /// <summary> The resistance range. </summary>
-    private double _resistanceRange;
-
     /// <summary> Gets or sets the resistance range. </summary>
     /// <value> The resistance range. </value>
     public double ResistanceRange
     {
-        get => this._resistanceRange;
+        get;
         set
         {
             if ( value != this.ResistanceRange )
             {
-                this._resistanceRange = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
     }
 
-    /// <summary> True to enable, false to disable the contact check. </summary>
-    private bool _contactCheckEnabled;
-
     /// <summary> Gets or sets the contact check enabled. </summary>
     /// <value> The contact check enabled. </value>
     public bool ContactCheckEnabled
     {
-        get => this._contactCheckEnabled;
+        get;
         set
         {
             if ( value != this.ContactCheckEnabled )
             {
-                this._contactCheckEnabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

@@ -7,8 +7,6 @@ namespace cc.isr.VI.Pith.Settings;
 [CLSCompliant( false )]
 public class ScpiExceptionsSettings() : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
 {
-    private bool _exists;
-
     /// <summary>
     /// Gets or sets a value indicating whether this settings section exists and the values were thus
     /// fetched from the settings file.
@@ -17,11 +15,9 @@ public class ScpiExceptionsSettings() : CommunityToolkit.Mvvm.ComponentModel.Obs
     [Description( "True if this settings were found and read from the settings file." )]
     public bool Exists
     {
-        get => this._exists;
-        set => _ = this.SetProperty( ref this._exists, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
-
-    private bool _statusClearDistractive = false;
 
     /// <summary>
     /// Gets or sets a value indicating whether the *CLS command is distractive and clears the event
@@ -33,22 +29,18 @@ public class ScpiExceptionsSettings() : CommunityToolkit.Mvvm.ComponentModel.Obs
     [Description( "True if *CLS clears the event enable registers [false]" )]
     public bool StatusClearDistractive
     {
-        get => this._statusClearDistractive;
-        set => _ = this.SetProperty( ref this._statusClearDistractive, value );
-    }
-
-    private bool _clearsDeviceStructures = true;
+        get;
+        set => _ = this.SetProperty( ref field, value );
+    } = false;
 
     /// <summary>   True if *CLS clears the device structures [true]. </summary>
     /// <value> True if clears device structures, false if not. </value>
     [Description( "True if *CLS clears the device structures [true]" )]
     public bool ClearsDeviceStructures
     {
-        get => this._clearsDeviceStructures;
-        set => _ = this.SetProperty( ref this._clearsDeviceStructures, value );
-    }
-
-    private bool _splitCommonCommands;
+        get;
+        set => _ = this.SetProperty( ref field, value );
+    } = true;
 
     /// <summary>   Gets or sets a value indicating whether to split common commands when writing to the instrument. </summary>
     /// <remarks> TSP instruments do not accept common command separate by semicolon. This commands need to be split and executed as separate commands. </remarks>
@@ -56,7 +48,7 @@ public class ScpiExceptionsSettings() : CommunityToolkit.Mvvm.ComponentModel.Obs
     [Description( "Compound common of TSP instruments such as the 2600 must execute as separate commands [false]" )]
     public bool SplitCommonCommands
     {
-        get => this._splitCommonCommands;
-        set => _ = this.SetProperty( ref this._splitCommonCommands, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
 }

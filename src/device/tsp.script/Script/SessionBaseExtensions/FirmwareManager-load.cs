@@ -489,7 +489,6 @@ public static partial class FirmwareManager
     /// <param name="retainOutline">    (Optional) (false) Specifies if the code outline is retained or
     ///                                 trimmed. </param>
     /// <returns>   The script source. </returns>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0306:Simplify collection initialization", Justification = "<Pending>" )]
     public static (bool TimedOut, ServiceRequests Status, TimeSpan Elapsed) ParseAndLoadScriptSource( this Pith.SessionBase session, string scriptName,
         string scriptSource, bool retainOutline = false )
     {

@@ -222,20 +222,17 @@ public abstract partial class TraceSubsystemBase : SubsystemBase, IDisposable
         return this.PointsCount.GetValueOrDefault( 0 ) > 0 && this.FeedSource.GetValueOrDefault( FeedSources.None ) != FeedSources.None && this.FeedControl.GetValueOrDefault( FeedControls.None ) != FeedControls.None;
     }
 
-    /// <summary> Number of points. </summary>
-    private int? _pointsCount;
-
     /// <summary> Gets or sets the cached Trace Points Count. </summary>
     /// <value> The Trace Points Count or none if not set or unknown. </value>
     public int? PointsCount
     {
-        get => this._pointsCount;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.PointsCount, value ) )
             {
-                this._pointsCount = value;
+                field = value;
                 this.NotifyPropertyChanged();
                 this.ActualPointCount = value;
             }
@@ -294,19 +291,18 @@ public abstract partial class TraceSubsystemBase : SubsystemBase, IDisposable
     #region " actual point count "
 
     /// <summary> Number of ActualPoint. </summary>
-    private int? _actualPointCount;
 
     /// <summary> Gets or sets the cached Trace Actual Point Count. </summary>
     /// <value> The Trace Actual Point Count or none if not set or unknown. </value>
     public int? ActualPointCount
     {
-        get => this._actualPointCount;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.ActualPointCount, value ) )
             {
-                this._actualPointCount = value;
+                field = value;
                 this.NotifyPropertyChanged();
                 this.PointsCount = value;
             }
@@ -341,19 +337,18 @@ public abstract partial class TraceSubsystemBase : SubsystemBase, IDisposable
     #region " first point number "
 
     /// <summary> Number of First Point. </summary>
-    private int? _firstPointNumber;
 
     /// <summary> Gets or sets the cached buffer First Point Number. </summary>
     /// <value> The buffer First Point Number or none if not set or unknown. </value>
     public int? FirstPointNumber
     {
-        get => this._firstPointNumber;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.FirstPointNumber, value ) )
             {
-                this._firstPointNumber = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -387,19 +382,18 @@ public abstract partial class TraceSubsystemBase : SubsystemBase, IDisposable
     #region " last point number "
 
     /// <summary> Number of Last Point. </summary>
-    private int? _lastPointNumber;
 
     /// <summary> Gets or sets the cached buffer Last Point Number. </summary>
     /// <value> The buffer Last Point Number or none if not set or unknown. </value>
     public int? LastPointNumber
     {
-        get => this._lastPointNumber;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.LastPointNumber, value ) )
             {
-                this._lastPointNumber = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -433,19 +427,18 @@ public abstract partial class TraceSubsystemBase : SubsystemBase, IDisposable
     #region " available point count "
 
     /// <summary> Number of Available Points. </summary>
-    private int? _availablePointCount;
 
     /// <summary> Gets or sets the number of points still available to fill in the buffer. </summary>
     /// <value> The Available Points Count or none if not set or unknown. </value>
     public int? AvailablePointCount
     {
-        get => this._availablePointCount;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.AvailablePointCount, value ) )
             {
-                this._availablePointCount = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -508,19 +501,18 @@ public abstract partial class TraceSubsystemBase : SubsystemBase, IDisposable
     #region " data "
 
     /// <summary> String. </summary>
-    private string? _data;
 
     /// <summary> Gets or sets the cached Trace Data. </summary>
     /// <value> The data. </value>
     public string? Data
     {
-        get => this._data;
+        get;
 
         protected set
         {
             if ( !Equals( this.Data, value ) )
             {
-                this._data = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -666,37 +658,31 @@ public abstract partial class TraceSubsystemBase : SubsystemBase, IDisposable
         return result;
     }
 
-    /// <summary> Type of the measured element. </summary>
-    private ReadingElementTypes _measuredElementType;
-
     /// <summary> Gets or sets the type of the measured element. </summary>
     /// <value> The type of the measured element. </value>
     public ReadingElementTypes MeasuredElementType
     {
-        get => this._measuredElementType;
+        get;
         set
         {
             if ( this.MeasuredElementType != value )
             {
-                this._measuredElementType = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
     }
 
-    /// <summary> List of types of the reading elements. </summary>
-    private ReadingElementTypes _readingElementTypes;
-
     /// <summary> Gets or sets a list of types of the reading elements. </summary>
     /// <value> A list of types of the reading elements. </value>
     public ReadingElementTypes ReadingElementTypes
     {
-        get => this._readingElementTypes;
+        get;
         set
         {
             if ( this.ReadingElementTypes != value )
             {
-                this._readingElementTypes = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -767,37 +753,31 @@ public abstract partial class TraceSubsystemBase : SubsystemBase, IDisposable
         }
     }
 
-    /// <summary> The last buffer reading status. </summary>
-    private string? _lastBufferReadingStatus;
-
     /// <summary> Gets or sets the last buffer reading readings. </summary>
     /// <value> The last buffer reading. </value>
     public string? LastBufferReadingStatus
     {
-        get => this._lastBufferReadingStatus;
+        get;
         set
         {
             if ( !string.Equals( value, this.LastBufferReadingStatus, StringComparison.Ordinal ) )
             {
-                this._lastBufferReadingStatus = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
     }
 
-    /// <summary> The last raw reading. </summary>
-    private string? _lastRawReading;
-
     /// <summary> Gets or sets the last buffer reading readings. </summary>
     /// <value> The last buffer reading. </value>
     public string? LastRawReading
     {
-        get => this._lastRawReading;
+        get;
         set
         {
             if ( !string.Equals( value, this.LastRawReading, StringComparison.Ordinal ) )
             {
-                this._lastRawReading = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -822,19 +802,16 @@ public abstract partial class TraceSubsystemBase : SubsystemBase, IDisposable
         }
     }
 
-    /// <summary> The last buffer reading caption. </summary>
-    private string? _lastBufferReadingCaption;
-
     /// <summary> Gets or sets the last buffer reading. </summary>
     /// <value> The last buffer reading. </value>
     public string? LastBufferReadingCaption
     {
-        get => this._lastBufferReadingCaption;
+        get;
         set
         {
             if ( !string.Equals( value, this.LastBufferReadingCaption, StringComparison.Ordinal ) )
             {
-                this._lastBufferReadingCaption = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

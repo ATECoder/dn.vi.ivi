@@ -22,8 +22,7 @@ public partial class VisaSessionBase : cc.isr.Std.Notifiers.OpenResourceBase
                 this._sessionFactory.ResourcesFilter = value;
                 this.NotifyPropertyChanged();
 
-                if ( this.Session is not null )
-                    this.Session.ResourcesFilter = value;
+                _ = (this.Session?.ResourcesFilter = value);
             }
         }
     }
@@ -40,8 +39,7 @@ public partial class VisaSessionBase : cc.isr.Std.Notifiers.OpenResourceBase
             // enable validation; Validation is disabled by default to facilitate
             // resource selection in case of resource manager mismatch between
             // VISA implementations.
-            if ( this._sessionFactory is not null )
-                this._sessionFactory.ValidationEnabled = this.ValidationEnabled;
+            _ = (this._sessionFactory?.ValidationEnabled = this.ValidationEnabled);
             return this._sessionFactory;
         }
     }
@@ -167,8 +165,7 @@ public partial class VisaSessionBase : cc.isr.Std.Notifiers.OpenResourceBase
         get => base.CandidateResourceNameValidated;
         set
         {
-            if ( this.Session is not null )
-                this.Session.CandidateResourceNameConnected = value;
+            _ = (this.Session?.CandidateResourceNameConnected = value);
             base.CandidateResourceNameValidated = value;
             this.NotifyPropertyChanged();
         }
@@ -630,19 +627,16 @@ public partial class VisaSessionBase : cc.isr.Std.Notifiers.OpenResourceBase
         return (success && !this.IsDeviceOpen, details);
     }
 
-    /// <summary> The subsystem support mode. </summary>
-    private SubsystemSupportMode _subsystemSupportMode;
-
     /// <summary> Gets or sets the subsystem support mode. </summary>
     /// <value> The subsystem support mode. </value>
     public SubsystemSupportMode SubsystemSupportMode
     {
-        get => this._subsystemSupportMode;
+        get;
         set
         {
             if ( value != this.SubsystemSupportMode )
             {
-                this._subsystemSupportMode = value;
+                field = value;
                 this.NotifyOpenChanged();
             }
         }

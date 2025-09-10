@@ -5,40 +5,35 @@ public partial class HarmonicsMeasureSubsystemBase
     #region " measured amount "
 
     /// <summary> The last reading. </summary>
-    private string _lastReading = string.Empty;
-
     /// <summary> Gets or sets the last reading. </summary>
     /// <value> The last reading. </value>
     public string LastReading
     {
-        get => this._lastReading;
+        get;
         set
         {
             if ( !string.Equals( value, this.LastReading, StringComparison.Ordinal ) )
             {
-                this._lastReading = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
-    }
-
-    /// <summary> The reading caption. </summary>
-    private string _readingCaption = string.Empty;
+    } = string.Empty;
 
     /// <summary> Gets or sets the reading caption. </summary>
     /// <value> The reading caption. </value>
     public string ReadingCaption
     {
-        get => this._readingCaption;
+        get;
         set
         {
             if ( !string.Equals( value, this.ReadingCaption, StringComparison.Ordinal ) )
             {
-                this._readingCaption = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
-    }
+    } = string.Empty;
 
     /// <summary> Notifies that reading changed. </summary>
     public void NotifyReadingChanged()

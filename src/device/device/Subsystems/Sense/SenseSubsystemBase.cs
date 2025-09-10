@@ -59,7 +59,6 @@ public abstract partial class SenseSubsystemBase : SubsystemBase
     #region " auto range enabled "
 
     /// <summary> Auto Range enabled. </summary>
-    private bool? _autoRangeEnabled;
 
     /// <summary> Gets or sets the cached Auto Range Enabled sentinel. </summary>
     /// <value>
@@ -68,13 +67,13 @@ public abstract partial class SenseSubsystemBase : SubsystemBase
     /// </value>
     public bool? AutoRangeEnabled
     {
-        get => this._autoRangeEnabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.AutoRangeEnabled, value ) )
             {
-                this._autoRangeEnabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -126,7 +125,6 @@ public abstract partial class SenseSubsystemBase : SubsystemBase
     #region " concurrent sense enabled "
 
     /// <summary> Auto Range enabled. </summary>
-    private bool? _concurrentSenseEnabled;
 
     /// <summary> Gets or sets the cached Auto Range Enabled sentinel. </summary>
     /// <value>
@@ -135,13 +133,13 @@ public abstract partial class SenseSubsystemBase : SubsystemBase
     /// </value>
     public bool? ConcurrentSenseEnabled
     {
-        get => this._concurrentSenseEnabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.ConcurrentSenseEnabled, value ) )
             {
-                this._concurrentSenseEnabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -193,7 +191,6 @@ public abstract partial class SenseSubsystemBase : SubsystemBase
     #region " power line cycles (nplc) "
 
     /// <summary> The Power Line Cycles. </summary>
-    private double? _powerLineCycles;
 
     /// <summary> Gets the integration period. </summary>
     /// <value> The integration period. </value>
@@ -203,13 +200,13 @@ public abstract partial class SenseSubsystemBase : SubsystemBase
     /// <value> <c>null</c> if value is not known. </value>
     public double? PowerLineCycles
     {
-        get => this._powerLineCycles;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.PowerLineCycles, value ) )
             {
-                this._powerLineCycles = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -257,7 +254,6 @@ public abstract partial class SenseSubsystemBase : SubsystemBase
     #region " protection level "
 
     /// <summary> The Current Limit. </summary>
-    private double? _protectionLevel;
 
     /// <summary>
     /// Gets or sets the cached source current Limit for a voltage source. Set to
@@ -267,13 +263,13 @@ public abstract partial class SenseSubsystemBase : SubsystemBase
     /// <value> <c>null</c> if value is not known. </value>
     public double? ProtectionLevel
     {
-        get => this._protectionLevel;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.ProtectionLevel, value ) )
             {
-                this._protectionLevel = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -321,7 +317,6 @@ public abstract partial class SenseSubsystemBase : SubsystemBase
     #region " range "
 
     /// <summary> The Range. </summary>
-    private double? _range;
 
     /// <summary>
     /// Gets or sets the cached sense Range. Set to
@@ -342,13 +337,13 @@ public abstract partial class SenseSubsystemBase : SubsystemBase
     /// <value> <c>null</c> if value is not known. </value>
     public double? Range
     {
-        get => this._range;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.Range, value ) )
             {
-                this._range = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

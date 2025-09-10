@@ -60,14 +60,13 @@ public partial class SessionBase
     #region " suspension "
 
     /// <summary> Number of suspended service requested. </summary>
-    private int _suspendedServiceRequestedCount;
 
     /// <summary> Gets or sets the number of services requested while suspended. </summary>
     /// <statusByte> The number of services requested. </statusByte>
     public int SuspendedServiceRequestedCount
     {
-        get => this._suspendedServiceRequestedCount;
-        protected set => _ = base.SetProperty( ref this._suspendedServiceRequestedCount, value );
+        get;
+        protected set => _ = base.SetProperty( ref field, value );
     }
 
     /// <summary> Gets or sets the type of the service request. </summary>
@@ -180,17 +179,13 @@ public partial class SessionBase
         return this.ServiceRequestEventEnabled && (this.ServiceRequestEnableBitmask & bitmask) != 0;
     }
 
-    private ServiceRequests _serviceRequestEnableEventsBitmask = ServiceRequests.All & ~ServiceRequests.RequestingService;
-
     /// <summary>   Gets or sets the service request events enable bitmask. </summary>
     /// <statusByte> The service request events enable bitmask. </statusByte>
     public ServiceRequests ServiceRequestEnableEventsBitmask
     {
-        get => this._serviceRequestEnableEventsBitmask;
-        set => _ = this.SetProperty( ref this._serviceRequestEnableEventsBitmask, value );
-    }
-
-    private ServiceRequests? _serviceRequestEnableBitmask;
+        get;
+        set => _ = this.SetProperty( ref field, value );
+    } = ServiceRequests.All & ~ServiceRequests.RequestingService;
 
     /// <summary>   Gets or sets the cached service request enable bit mask. </summary>
     /// <statusByte>
@@ -199,11 +194,9 @@ public partial class SessionBase
     /// </statusByte>
     public ServiceRequests? ServiceRequestEnableBitmask
     {
-        get => this._serviceRequestEnableBitmask;
-        set => _ = base.SetProperty( ref this._serviceRequestEnableBitmask, value );
+        get;
+        set => _ = base.SetProperty( ref field, value );
     }
-
-    private string _serviceRequestEnableQueryCommand = Syntax.Ieee488Syntax.ServiceRequestEnableQueryCommand;
 
     /// <summary> Gets or sets the service request enable query command. </summary>
     /// <remarks>
@@ -216,11 +209,9 @@ public partial class SessionBase
     /// <statusByte> The service request enable command format. </statusByte>
     public string ServiceRequestEnableQueryCommand
     {
-        get => this._serviceRequestEnableQueryCommand;
-        set => _ = base.SetProperty( ref this._serviceRequestEnableQueryCommand, value );
-    }
-
-    private string _serviceRequestEnableQueryNodeCommandFormat = string.Empty;
+        get;
+        set => _ = base.SetProperty( ref field, value );
+    } = Syntax.Ieee488Syntax.ServiceRequestEnableQueryCommand;
 
     /// <summary> Gets or sets the service request enable query command. </summary>
     /// <remarks>
@@ -232,11 +223,9 @@ public partial class SessionBase
     /// <statusByte> The service request enable command format. </statusByte>
     public string ServiceRequestEnableQueryNodeCommandFormat
     {
-        get => this._serviceRequestEnableQueryNodeCommandFormat;
-        set => _ = base.SetProperty( ref this._serviceRequestEnableQueryNodeCommandFormat, value );
-    }
-
-    private string _serviceRequestEnableCommandFormat = Syntax.Ieee488Syntax.ServiceRequestEnableCommandFormat;
+        get;
+        set => _ = base.SetProperty( ref field, value );
+    } = string.Empty;
 
     /// <summary> Gets or sets the service request enable command format. </summary>
     /// <remarks>
@@ -246,9 +235,9 @@ public partial class SessionBase
     /// <statusByte> The service request enable command format. </statusByte>
     public string ServiceRequestEnableCommandFormat
     {
-        get => this._serviceRequestEnableCommandFormat;
-        set => _ = base.SetProperty( ref this._serviceRequestEnableCommandFormat, value );
-    }
+        get;
+        set => _ = base.SetProperty( ref field, value );
+    } = Syntax.Ieee488Syntax.ServiceRequestEnableCommandFormat;
 
     /// <summary> Queries the service request enable bit mask. </summary>
     /// <returns>
@@ -485,26 +474,21 @@ public partial class SessionBase
     /// <statusByte> The register statusByte format. </statusByte>
     protected static string? RegisterValueFormat { get; set; } = "0x{0:X2}";
 
-    /// <summary> The status register caption. </summary>
-    private string? _statusRegisterCaption = "0x..";
-
     /// <summary> Gets or sets the status register caption. </summary>
     /// <statusByte> The status register caption. </statusByte>
     public string? StatusRegisterCaption
     {
-        get => this._statusRegisterCaption;
-        set => _ = base.SetProperty( ref this._statusRegisterCaption, value ?? string.Empty );
-    }
-
-    private string _statusByteQueryCommand = Syntax.Ieee488Syntax.StatusByteQueryCommand;
+        get;
+        set => _ = base.SetProperty( ref field, value ?? string.Empty );
+    } = "0x..";
 
     /// <summary>   Gets or sets the 'status byte query' command. </summary>
     /// <statusByte> The 'status byte query' command. </statusByte>
     public string StatusByteQueryCommand
     {
-        get => this._statusByteQueryCommand;
-        set => _ = this.SetProperty( ref this._statusByteQueryCommand, value );
-    }
+        get;
+        set => _ = this.SetProperty( ref field, value );
+    } = Syntax.Ieee488Syntax.StatusByteQueryCommand;
 
 
     #endregion

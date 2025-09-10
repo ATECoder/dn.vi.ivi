@@ -42,7 +42,6 @@ public abstract class SourceCurrentSubsystemBase( StatusSubsystemBase statusSubs
     #region " protection enabled "
 
     /// <summary> The protection enabled. </summary>
-    private bool? _protectionEnabled;
 
     /// <summary>
     /// Gets or sets a cached value indicating whether source current protection is enabled.
@@ -60,13 +59,13 @@ public abstract class SourceCurrentSubsystemBase( StatusSubsystemBase statusSubs
     /// </value>
     public bool? ProtectionEnabled
     {
-        get => this._protectionEnabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.ProtectionEnabled, value ) )
             {
-                this._protectionEnabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

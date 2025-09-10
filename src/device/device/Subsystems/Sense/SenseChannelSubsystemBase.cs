@@ -54,19 +54,18 @@ public abstract class SenseChannelSubsystemBase : SenseFunctionSubsystemBase
     #region " sweep points "
 
     /// <summary> The sweep points. </summary>
-    private int? _sweepPoints;
 
     /// <summary> Gets or sets the cached Sweep Points. </summary>
     /// <value> The Sweep Points or none if not set or unknown. </value>
     public int? SweepPoints
     {
-        get => this._sweepPoints;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.SweepPoints, value ) )
             {
-                this._sweepPoints = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -122,19 +121,18 @@ public abstract class SenseChannelSubsystemBase : SenseFunctionSubsystemBase
     #region " sweep start "
 
     /// <summary> The sweep start. </summary>
-    private double? _sweepStart;
 
     /// <summary> Gets or sets the cached Sweep Start. </summary>
     /// <value> The Sweep Start or none if not set or unknown. </value>
     public double? SweepStart
     {
-        get => this._sweepStart;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.SweepStart, value ) )
             {
-                this._sweepStart = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -190,19 +188,18 @@ public abstract class SenseChannelSubsystemBase : SenseFunctionSubsystemBase
     #region " sweep stop "
 
     /// <summary> The sweep stop. </summary>
-    private double? _sweepStop;
 
     /// <summary> Gets or sets the cached Sweep Stop. </summary>
     /// <value> The Sweep Stop or none if not set or unknown. </value>
     public double? SweepStop
     {
-        get => this._sweepStop;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.SweepStop, value ) )
             {
-                this._sweepStop = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -258,7 +255,6 @@ public abstract class SenseChannelSubsystemBase : SenseFunctionSubsystemBase
     #region " adapter type "
 
     /// <summary> List of types of the supported adapters. </summary>
-    private AdapterTypes _supportedAdapterTypes;
 
     /// <summary>
     /// Gets or sets the supported Adapter Type. This is a subset of the functions supported by the
@@ -267,12 +263,12 @@ public abstract class SenseChannelSubsystemBase : SenseFunctionSubsystemBase
     /// <value> A list of types of the supported adapters. </value>
     public AdapterTypes SupportedAdapterTypes
     {
-        get => this._supportedAdapterTypes;
+        get;
         set
         {
             if ( !this.SupportedAdapterTypes.Equals( value ) )
             {
-                this._supportedAdapterTypes = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -455,7 +451,6 @@ public abstract class SenseChannelSubsystemBase : SenseFunctionSubsystemBase
     #region " sweep type "
 
     /// <summary> List of types of the supported sweeps. </summary>
-    private SweepTypes _supportedSweepTypes;
 
     /// <summary>
     /// Gets or sets the supported Sweep Type. This is a subset of the functions supported by the
@@ -464,12 +459,12 @@ public abstract class SenseChannelSubsystemBase : SenseFunctionSubsystemBase
     /// <value> A list of types of the supported sweeps. </value>
     public SweepTypes SupportedSweepTypes
     {
-        get => this._supportedSweepTypes;
+        get;
         set
         {
             if ( !this.SupportedSweepTypes.Equals( value ) )
             {
-                this._supportedSweepTypes = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

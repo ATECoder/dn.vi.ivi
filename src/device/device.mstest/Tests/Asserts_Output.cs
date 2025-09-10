@@ -46,13 +46,10 @@ public sealed partial class Asserts
             inputLineNumber = currentInputLineNumber;
             if ( inputLineNumbersCaption.Length > 0 )
                 _ = inputLineNumbersCaption.Append( ',' );
-
 #if NET5_0_OR_GREATER
-#pragma warning disable CA1305
-#endif
+            _ = inputLineNumbersCaption.Append( System.Globalization.CultureInfo.CurrentCulture, $"{inputLineNumber}" );
+#else
             _ = inputLineNumbersCaption.Append( $"{inputLineNumber}" );
-#if NET5_0_OR_GREATER
-#pragma warning restore CA1305
 #endif
             initialPolarities.Add( subsystem.QueryDigitalActiveLevel( inputLineNumber ).GetValueOrDefault( DigitalActiveLevels.Low ) );
         }
@@ -81,7 +78,7 @@ public sealed partial class Asserts
         Assert.IsTrue( actualPolarity.HasValue, $"{activity} should have a value" );
         Assert.AreEqual( expectedPolarity, ( object ) actualPolarity, $"{activity} should equal actual value" );
         activity = $"Applying initial [{deviceName}].[{propertyName}s] to lines {inputLineNumbersCaption}";
-        List<DigitalActiveLevels?> actualPolarities = new( subsystem.ApplyDigitalActiveLevels( inputLineNumbers, initialPolarities ) );
+        List<DigitalActiveLevels?> actualPolarities = [.. subsystem.ApplyDigitalActiveLevels( inputLineNumbers, initialPolarities )];
         foreach ( int currentInputLineNumber2 in inputLineNumbers )
         {
             inputLineNumber = currentInputLineNumber2;

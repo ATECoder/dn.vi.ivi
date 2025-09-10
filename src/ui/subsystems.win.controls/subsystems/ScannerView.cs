@@ -126,8 +126,7 @@ public partial class ScannerView : cc.isr.WinControls.ModelViewBase
         }
         catch ( Exception ex )
         {
-            if ( this.Device.Session is not null )
-                this.Device.Session.StatusPrompt = $"failed {activity}";
+            _ = (this.Device.Session?.StatusPrompt = $"failed {activity}");
             activity = cc.isr.VI.SessionLogger.Instance.LogException( ex, activity );
             _ = this.InfoProvider?.Annunciate( this._subsystemSplitButton, cc.isr.WinControls.InfoProviderLevel.Error, activity );
             try
@@ -137,8 +136,7 @@ public partial class ScannerView : cc.isr.WinControls.ModelViewBase
             }
             catch
             {
-                if ( this.Device.Session is not null )
-                    this.Device.Session.StatusPrompt = $"failed {activity}";
+                _ = (this.Device.Session?.StatusPrompt = $"failed {activity}");
                 activity = cc.isr.VI.SessionLogger.Instance.LogException( ex, activity );
                 _ = this.InfoProvider?.Annunciate( this._subsystemSplitButton, cc.isr.WinControls.InfoProviderLevel.Error, activity );
             }
@@ -231,8 +229,7 @@ public partial class ScannerView : cc.isr.WinControls.ModelViewBase
             _ = this.TriggerSubsystem.ApplyTriggerCount( 9999 ); // in place of infinite
             _ = this.TriggerSubsystem.ApplyDelay( TimeSpan.Zero );
             _ = this.TriggerSubsystem.ApplyTriggerLayerBypassMode( TriggerLayerBypassModes.Acceptor );
-            if ( this.Device.Session != null )
-                this.Device.Session.StatusPrompt = "Ready: Initiate (1) Meter; (2) 7001r";
+            _ = (this.Device.Session?.StatusPrompt = "Ready: Initiate (1) Meter; (2) 7001r");
         }
         catch ( Exception ex )
         {
@@ -294,8 +291,7 @@ public partial class ScannerView : cc.isr.WinControls.ModelViewBase
             _ = this.TriggerSubsystem.ApplyTriggerCount( 9999 ); // in place of infinite
             _ = this.TriggerSubsystem.ApplyDelay( TimeSpan.Zero );
             _ = this.TriggerSubsystem.ApplyTriggerLayerBypassMode( TriggerLayerBypassModes.Source );
-            if ( this.Device.Session != null )
-                this.Device.Session.StatusPrompt = "Ready: Initiate (1) 7001; (2) Meter";
+            _ = (this.Device.Session?.StatusPrompt = "Ready: Initiate (1) 7001; (2) Meter");
         }
         catch ( Exception ex )
         {

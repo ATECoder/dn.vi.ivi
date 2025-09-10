@@ -61,15 +61,12 @@ public abstract class SourceMeasureUnitBase : SubsystemBase
         return !this.Session.IsNil( this.SourceMeasureUnitReference );
     }
 
-    /// <summary> The local node number. </summary>
-    private int _localNodeNumber;
-
     /// <summary> Gets or sets the local node number. </summary>
     /// <value> The local node number. </value>
     public int LocalNodeNumber
     {
-        get => this._localNodeNumber;
-        set => _ = this.SetProperty( ref this._localNodeNumber, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
 
     /// <summary> The node number. </summary>
@@ -91,9 +88,6 @@ public abstract class SourceMeasureUnitBase : SubsystemBase
         }
     }
 
-    /// <summary> Source measure unit reference. </summary>
-    private string _sourceMeasureUnitReference = string.Empty;
-
     /// <summary>   Updates the source measure unit reference. </summary>
     /// <remarks>   2025-01-23. </remarks>
     private void UpdateSourceMeasureUnitReference()
@@ -107,39 +101,33 @@ public abstract class SourceMeasureUnitBase : SubsystemBase
     /// <value> The SMU reference. </value>
     public string SourceMeasureUnitReference
     {
-        get => this._sourceMeasureUnitReference;
-        protected set => _ = this.SetProperty( ref this._sourceMeasureUnitReference, value ?? string.Empty );
-    }
-
-    /// <summary> Name of the source measure unit. </summary>
-    private string _sourceMeasureUnitName = "smua";
+        get;
+        protected set => _ = this.SetProperty( ref field, value ?? string.Empty );
+    } = string.Empty;
 
     /// <summary> Gets or sets the SMU name string, e.g., 'smua'. </summary>
     /// <value> The SMU reference. </value>
     public string SourceMeasureUnitName
     {
-        get => this._sourceMeasureUnitName;
-        protected set => _ = this.SetProperty( ref this._sourceMeasureUnitName, value ?? "smua" );
-    }
-
-    /// <summary> Gets or sets the SMU Unit number. </summary>
-    private string _unitNumber = string.Empty;
+        get;
+        protected set => _ = this.SetProperty( ref field, value ?? "smua" );
+    } = "smua";
 
     /// <summary> Gets or sets the SMU unit number (a or b). </summary>
     /// <value> The unit number. </value>
     public string UnitNumber
     {
-        get => this._unitNumber;
+        get;
         set
         {
-            if ( this.SetProperty( ref this._unitNumber, value ?? "a" ) )
+            if ( this.SetProperty( ref field, value ?? "a" ) )
             {
                 this.SourceMeasureBasedSubsystems.UnitNumber = value ?? "a";
                 this.SourceMeasureUnitName = Syntax.Tsp.SourceMeasureUnit.BuildSmuName( this.UnitNumber );
                 this.UpdateSourceMeasureUnitReference();
             }
         }
-    }
+    } = string.Empty;
 
     /// <summary> Gets the unique key. </summary>
     /// <value> The unique key. </value>
@@ -198,17 +186,14 @@ public class SourceMeasureUnitBaseCollection<TItem> : System.Collections.ObjectM
 /// <summary> Collection of source measure unit subsystems. </summary>
 public class SourceMeasureUnitSubsystemCollection : System.Collections.ObjectModel.Collection<SourceMeasureUnitBase>
 {
-    /// <summary> The unit number. </summary>
-    private string? _unitNumber;
-
     /// <summary> Gets or sets the unit number. </summary>
     /// <value> The unit number. </value>
     public string? UnitNumber
     {
-        get => this._unitNumber;
+        get;
         set
         {
-            this._unitNumber = value;
+            field = value;
             if ( value is not null )
             {
                 foreach ( SourceMeasureUnitBase smu in this )
@@ -217,17 +202,14 @@ public class SourceMeasureUnitSubsystemCollection : System.Collections.ObjectMod
         }
     }
 
-    /// <summary> The node number. </summary>
-    private int _nodeNumber;
-
     /// <summary> Gets or sets the node number. </summary>
     /// <value> The node number. </value>
     public int NodeNumber
     {
-        get => this._nodeNumber;
+        get;
         set
         {
-            this._nodeNumber = value;
+            field = value;
             foreach ( SourceMeasureUnitBase smu in this )
                 smu.NodeNumber = value;
         }

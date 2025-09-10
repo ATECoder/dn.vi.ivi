@@ -43,20 +43,19 @@ public abstract partial class RouteSubsystemBase : SubsystemBase
     #region " closed channel "
 
     /// <summary> The closed channel. </summary>
-    private string? _closedChannel;
 
     /// <summary> Gets or sets the closed Channel. </summary>
     /// <remarks> Nothing is not set. </remarks>
     /// <value> The closed Channel. </value>
     public string? ClosedChannel
     {
-        get => this._closedChannel;
+        get;
 
         protected set
         {
             if ( !string.Equals( value, this.ClosedChannel, StringComparison.Ordinal ) )
             {
-                this._closedChannel = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -151,40 +150,36 @@ public abstract partial class RouteSubsystemBase : SubsystemBase
     #region " closed channels "
 
     /// <summary> State of the closed channels. </summary>
-    private string? _closedChannelsState;
 
     /// <summary> Gets or sets the closed channels state. </summary>
     /// <remarks> Nothing is not set. </remarks>
     /// <value> The closed channels. </value>
     public string? ClosedChannelsState
     {
-        get => this._closedChannelsState;
+        get;
 
         protected set
         {
             if ( !string.Equals( value, this.ClosedChannelsState, StringComparison.Ordinal ) )
             {
-                this._closedChannelsState = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
     }
-
-    /// <summary> The closed channels checked. </summary>
-    private string? _closedChannelsChecked;
 
     /// <summary> Gets or sets the closed channels checked for state. </summary>
     /// <remarks> Nothing is not set. </remarks>
     /// <value> The closed channels. </value>
     public string? ClosedChannelsChecked
     {
-        get => this._closedChannelsChecked;
+        get;
 
         protected set
         {
             if ( !string.Equals( value, this.ClosedChannelsChecked, StringComparison.Ordinal ) )
             {
-                this._closedChannelsChecked = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -209,21 +204,18 @@ public abstract partial class RouteSubsystemBase : SubsystemBase
         return this.ClosedChannelsState;
     }
 
-    /// <summary> The closed channels. </summary>
-    private string? _closedChannels;
-
     /// <summary> Gets or sets the closed channels. </summary>
     /// <remarks> Nothing is not set. </remarks>
     /// <value> The closed channels. </value>
     public string? ClosedChannels
     {
-        get => this._closedChannels;
+        get;
 
         protected set
         {
             if ( !string.Equals( value, this.ClosedChannels, StringComparison.Ordinal ) )
             {
-                this._closedChannels = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -348,41 +340,35 @@ public abstract partial class RouteSubsystemBase : SubsystemBase
         return builder.ToString();
     }
 
-    /// <summary> State of the open channels. </summary>
-    private string? _openChannelsState;
-
     /// <summary> Gets or sets the Open channels state. </summary>
     /// <remarks> Nothing is not set. </remarks>
     /// <value> The Open channels state. </value>
     public string? OpenChannelsState
     {
-        get => this._openChannelsState;
+        get;
 
         protected set
         {
             if ( !string.Equals( value, this.OpenChannelsState, StringComparison.Ordinal ) )
             {
-                this._openChannelsState = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
     }
-
-    /// <summary> The open channels checked. </summary>
-    private string? _openChannelsChecked;
 
     /// <summary> Gets or sets the Open channels Checked. </summary>
     /// <remarks> Nothing is not set. </remarks>
     /// <value> The Open channels Checked. </value>
     public string? OpenChannelsChecked
     {
-        get => this._openChannelsChecked;
+        get;
 
         protected set
         {
             if ( !string.Equals( value, this.OpenChannelsChecked, StringComparison.Ordinal ) )
             {
-                this._openChannelsChecked = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -407,21 +393,18 @@ public abstract partial class RouteSubsystemBase : SubsystemBase
         return this.OpenChannelsState;
     }
 
-    /// <summary> The open channels. </summary>
-    private string? _openChannels;
-
     /// <summary> Gets or sets the Open channels. </summary>
     /// <remarks> Nothing is not set. </remarks>
     /// <value> The Open channels. </value>
     public string? OpenChannels
     {
-        get => this._openChannels;
+        get;
 
         protected set
         {
             if ( !string.Equals( value, this.OpenChannels, StringComparison.Ordinal ) )
             {
-                this._openChannels = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -706,13 +689,12 @@ public abstract partial class RouteSubsystemBase : SubsystemBase
     #region " scan list function "
 
     /// <summary> List of scans. </summary>
-    private string? _scanListFunction;
 
     /// <summary> Gets or sets the cached Scan List. </summary>
     /// <value> A List of scans. </value>
     public string? ScanListFunction
     {
-        get => this._scanListFunction;
+        get;
 
         protected set
         {
@@ -720,7 +702,7 @@ public abstract partial class RouteSubsystemBase : SubsystemBase
                 value = string.Empty;
             if ( !string.Equals( value, this.ScanListFunction, StringComparison.Ordinal ) )
             {
-                this._scanListFunction = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -789,12 +771,9 @@ public abstract partial class RouteSubsystemBase : SubsystemBase
     /// <summary> Define function mode read writes. </summary>
     protected virtual void DefineScanListTypeReadWrites()
     {
-        this._scanListTypeReadWrites = [];
+        this.ScanListTypeReadWrites = [];
         DefineScanListTypeReadWrites( this.ScanListTypeReadWrites );
     }
-
-    /// <summary> The scan list type read writes. </summary>
-    private Pith.EnumReadWriteCollection? _scanListTypeReadWrites;
 
     /// <summary> Gets a dictionary of Sense function mode parses. </summary>
     /// <value> A Dictionary of Sense function mode parses. </value>
@@ -802,17 +781,16 @@ public abstract partial class RouteSubsystemBase : SubsystemBase
     {
         get
         {
-            if ( this._scanListTypeReadWrites is null )
+            if ( field is null )
             {
                 this.DefineScanListTypeReadWrites();
             }
 
-            return this._scanListTypeReadWrites!;
+            return field!;
         }
-    }
 
-    /// <summary> Type of the scan list. </summary>
-    private ScanListType _scanListType;
+        private set;
+    }
 
     /// <summary>
     /// Gets or sets the supported Function Modes. This is a subset of the functions supported by the
@@ -821,32 +799,29 @@ public abstract partial class RouteSubsystemBase : SubsystemBase
     /// <value> The supported Sense function modes. </value>
     public ScanListType ScanListType
     {
-        get => this._scanListType;
+        get;
         set
         {
             if ( !this.ScanListType.Equals( value ) )
             {
-                this._scanListType = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
     }
 
-    /// <summary> List of scans. </summary>
-    private string? _selectedScanListType;
-
     /// <summary> Gets or sets the cached Selected Scan List Type. </summary>
     /// <value> A List of scans. </value>
     public string? SelectedScanListType
     {
-        get => this._selectedScanListType;
+        get;
 
         protected set
         {
             if ( string.IsNullOrWhiteSpace( value ) ) value = string.Empty;
             if ( !string.Equals( value, this.SelectedScanListType, StringComparison.Ordinal ) )
             {
-                this._selectedScanListType = value;
+                field = value;
                 this.ScanListType = ( ScanListType ) ( int ) this.ScanListTypeReadWrites.SelectItem( value! ).EnumValue;
                 this.NotifyPropertyChanged();
             }

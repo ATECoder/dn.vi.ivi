@@ -49,22 +49,19 @@ public partial class SessionBase
 
     private const string Elapsed_Time_Format_Default = @"s\.ffff";
 
-    /// <summary> The elapsed time format. </summary>
-    private string _elapsedTimeFormat = @"s\.ffff";
-
     /// <summary> Gets or sets the elapsed time format. </summary>
     /// <value> The elapsed time. </value>
     public string ElapsedTimeFormat
     {
-        get => this._elapsedTimeFormat;
+        get;
         set
         {
-            if ( _ = base.SetProperty( ref this._elapsedTimeFormat, value ) )
+            if ( _ = base.SetProperty( ref field, value ) )
             {
                 base.OnPropertyChanged( new System.ComponentModel.PropertyChangedEventArgs( nameof( this.ElapsedTimeCaption ) ) );
             }
         }
-    }
+    } = @"s\.ffff";
 
     /// <summary> Gets the elapsed time caption. </summary>
     /// <value> The elapsed time caption. </value>

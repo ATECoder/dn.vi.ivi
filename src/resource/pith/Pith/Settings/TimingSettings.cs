@@ -7,8 +7,6 @@ namespace cc.isr.VI.Pith.Settings;
 [CLSCompliant( false )]
 public class TimingSettings() : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
 {
-    private bool _exists;
-
     /// <summary>
     /// Gets or sets a value indicating whether this settings section exists and the values were thus
     /// fetched from the settings file.
@@ -17,8 +15,8 @@ public class TimingSettings() : CommunityToolkit.Mvvm.ComponentModel.ObservableO
     [Description( "True if this settings were found and read from the settings file." )]
     public bool Exists
     {
-        get => this._exists;
-        set => _ = this.SetProperty( ref this._exists, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
 
     private TimeSpan _openSessionTimeout = TimeSpan.FromSeconds( 0.5 );

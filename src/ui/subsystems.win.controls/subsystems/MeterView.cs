@@ -132,27 +132,25 @@ public partial class MeterView : cc.isr.WinControls.ModelViewBase
         }
     }
 
-    private DataGridView? _dataGridViewThis;
-
     /// <summary>   Gets or sets the reference to the data grid view. </summary>
     /// <value> The reference to the data grid view. </value>
     private DataGridView? DataGridViewThis
     {
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
-        get => this._dataGridViewThis;
+        get;
 
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( this._dataGridViewThis is not null )
+            if ( field is not null )
             {
-                this._dataGridViewThis.DataError -= this.DataGridView_DataError;
+                field.DataError -= this.DataGridView_DataError;
             }
 
-            this._dataGridViewThis = value;
-            if ( this._dataGridViewThis is not null )
+            field = value;
+            if ( field is not null )
             {
-                this._dataGridViewThis.DataError += this.DataGridView_DataError;
+                field.DataError += this.DataGridView_DataError;
             }
         }
     }
@@ -703,6 +701,7 @@ public partial class MeterView : cc.isr.WinControls.ModelViewBase
 
     /// <summary> Reads a buffer. </summary>
     /// <param name="subsystem"> The subsystem. </param>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0051:Remove unused private members", Justification = "<Pending>" )]
     private void ReadBuffer( BufferSubsystemBase subsystem )
     {
         if ( this.InitializingComponents ) return;
@@ -936,6 +935,7 @@ public partial class MeterView : cc.isr.WinControls.ModelViewBase
 
     /// <summary> Reads the given subsystem. </summary>
     /// <param name="subsystem"> The subsystem. </param>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0051:Remove unused private members", Justification = "<Pending>" )]
     private static void Read( HarmonicsMeasureSubsystemBase subsystem )
     {
         subsystem.StartElapsedStopwatch();
@@ -2070,6 +2070,7 @@ public partial class MeterView : cc.isr.WinControls.ModelViewBase
 
     /// <summary> Reads the <see cref="TraceSubsystemBase"/> settings. </summary>
     /// <param name="subsystem"> The subsystem. </param>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0051:Remove unused private members", Justification = "<Pending>" )]
     private static void ReadSettings( TraceSubsystemBase subsystem )
     {
         subsystem.StartElapsedStopwatch();

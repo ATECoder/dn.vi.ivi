@@ -6,8 +6,6 @@ public partial class SessionBase
 {
     #region " cls "
 
-    private bool _statusClearDistractive;
-
     /// <summary>   Gets or sets a value indicating whether the status clear is distractive. </summary>
     /// <remarks>
     /// Per the SCPI standard, the clear execution state (*CLS) command must not clear the enable
@@ -18,11 +16,9 @@ public partial class SessionBase
     /// <value> True if status clear is distractive, false if not. </value>
     public bool StatusClearDistractive
     {
-        get => this._statusClearDistractive;
-        set => _ = this.SetProperty( ref this._statusClearDistractive, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
-
-    private bool _clearsDeviceStructures = true;
 
     /// <summary>   True if *CLS clears the device structures [true]. </summary>
     /// <remarks>
@@ -35,9 +31,9 @@ public partial class SessionBase
     [Description( "True if *CLS clears the device structures [true]" )]
     public bool ClearsDeviceStructures
     {
-        get => this._clearsDeviceStructures;
-        set => _ = this.SetProperty( ref this._clearsDeviceStructures, value );
-    }
+        get;
+        set => _ = this.SetProperty( ref field, value );
+    } = true;
 
     /// <summary> The clear refractory period. </summary>
     private TimeSpan _clearRefractoryPeriod;

@@ -102,7 +102,6 @@ public abstract class BufferSubsystemBase( StatusSubsystemBase statusSubsystem )
     #region " fill once enabled "
 
     /// <summary> Fill Once enabled. </summary>
-    private bool? _fillOnceEnabled;
 
     /// <summary> Gets or sets the cached Fill Once Enabled sentinel. </summary>
     /// <remarks> When this is enabled, a delay is added before each measurement. </remarks>
@@ -112,13 +111,13 @@ public abstract class BufferSubsystemBase( StatusSubsystemBase statusSubsystem )
     /// </value>
     public bool? FillOnceEnabled
     {
-        get => this._fillOnceEnabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.FillOnceEnabled, value ) )
             {
-                this._fillOnceEnabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -255,19 +254,18 @@ public abstract class BufferSubsystemBase( StatusSubsystemBase statusSubsystem )
     #region " actual point count "
 
     /// <summary> Number of ActualPoint. </summary>
-    private int? _actualPointCount;
 
     /// <summary> Gets or sets the cached Buffer ActualPointCount. </summary>
     /// <value> The Buffer ActualPointCount or none if not set or unknown. </value>
     public int? ActualPointCount
     {
-        get => this._actualPointCount;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.ActualPointCount, value ) )
             {
-                this._actualPointCount = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -295,19 +293,18 @@ public abstract class BufferSubsystemBase( StatusSubsystemBase statusSubsystem )
     #region " first point number "
 
     /// <summary> Number of First Point. </summary>
-    private int? _firstPointNumber;
 
     /// <summary> Gets or sets the cached buffer First Point Number. </summary>
     /// <value> The buffer First Point Number or none if not set or unknown. </value>
     public int? FirstPointNumber
     {
-        get => this._firstPointNumber;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.FirstPointNumber, value ) )
             {
-                this._firstPointNumber = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -335,19 +332,18 @@ public abstract class BufferSubsystemBase( StatusSubsystemBase statusSubsystem )
     #region " last point number "
 
     /// <summary> Number of Last Point. </summary>
-    private int? _lastPointNumber;
 
     /// <summary> Gets or sets the cached buffer Last Point Number. </summary>
     /// <value> The buffer Last Point Number or none if not set or unknown. </value>
     public int? LastPointNumber
     {
-        get => this._lastPointNumber;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.LastPointNumber, value ) )
             {
-                this._lastPointNumber = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -375,19 +371,18 @@ public abstract class BufferSubsystemBase( StatusSubsystemBase statusSubsystem )
     #region " available point count "
 
     /// <summary> Number of Available Points. </summary>
-    private int? _availablePointCount;
 
     /// <summary> Gets or sets the number of points still available to fill in the buffer. </summary>
     /// <value> The Available Points Count or none if not set or unknown. </value>
     public int? AvailablePointCount
     {
-        get => this._availablePointCount;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.AvailablePointCount, value ) )
             {
-                this._availablePointCount = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -450,19 +445,18 @@ public abstract class BufferSubsystemBase( StatusSubsystemBase statusSubsystem )
     #region " data "
 
     /// <summary> String. </summary>
-    private string? _data;
 
     /// <summary> Gets or sets the cached Buffer Data. </summary>
     /// <value> The data. </value>
     public string? Data
     {
-        get => this._data;
+        get;
 
         protected set
         {
             if ( !Equals( this.Data, value ) )
             {
-                this._data = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -541,24 +535,22 @@ public abstract class BufferSubsystemBase( StatusSubsystemBase statusSubsystem )
             : this.EnumerateBufferReadings( this.Data );
     }
 
-    private IEnumerable<ReadingElementTypes> _orderedReadingElementTypes = [ReadingElementTypes.Reading, ReadingElementTypes.Timestamp, ReadingElementTypes.Status, ReadingElementTypes.Units];
-
     /// <summary> Gets or sets a list of types of the readings. </summary>
     /// <value> A list of types of the readings. </value>
     public IEnumerable<ReadingElementTypes> OrderedReadingElementTypes
     {
-        get => this._orderedReadingElementTypes;
+        get;
         set
         {
             if ( !Equals( value, this.OrderedReadingElementTypes ) )
             {
-                this._orderedReadingElementTypes = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
 
             this.ReadingElementTypes = JoinReadingElementTypes( value );
         }
-    }
+    } = [ReadingElementTypes.Reading, ReadingElementTypes.Timestamp, ReadingElementTypes.Status, ReadingElementTypes.Units];
 
     /// <summary> Join reading Element types. </summary>
     /// <param name="values"> The values. </param>
@@ -571,37 +563,31 @@ public abstract class BufferSubsystemBase( StatusSubsystemBase statusSubsystem )
         return result;
     }
 
-    /// <summary> Type of the measured element. </summary>
-    private ReadingElementTypes _measuredElementType;
-
     /// <summary> Gets or sets the type of the measured element. </summary>
     /// <value> The type of the measured element. </value>
     public ReadingElementTypes MeasuredElementType
     {
-        get => this._measuredElementType;
+        get;
         set
         {
             if ( this.MeasuredElementType != value )
             {
-                this._measuredElementType = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
     }
 
-    /// <summary> List of types of the reading elements. </summary>
-    private ReadingElementTypes _readingElementTypes;
-
     /// <summary> Gets or sets a list of types of the reading elements. </summary>
     /// <value> A list of types of the reading elements. </value>
     public ReadingElementTypes ReadingElementTypes
     {
-        get => this._readingElementTypes;
+        get;
         set
         {
             if ( this.ReadingElementTypes != value )
             {
-                this._readingElementTypes = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -646,35 +632,29 @@ public abstract class BufferSubsystemBase( StatusSubsystemBase statusSubsystem )
     /// <value> The number of buffer readings. </value>
     public int BufferReadingsCount => this.BufferReadingsBindingList.Count;
 
-    /// <summary> The buffer reading unit. </summary>
-    private cc.isr.UnitsAmounts.Unit _bufferReadingUnit = new();
-
     /// <summary> Gets or sets the buffer reading unit. </summary>
     /// <value> The buffer reading unit. </value>
     public cc.isr.UnitsAmounts.Unit BufferReadingUnit
     {
-        get => this._bufferReadingUnit;
+        get;
         set
         {
             if ( !Equals( value, this.BufferReadingUnit ) )
             {
-                this._bufferReadingUnit = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
-    }
-
-    /// <summary> The last reading. </summary>
-    private BufferReading _lastReading = new();
+    } = new();
 
     /// <summary> Gets or sets the last buffer reading. </summary>
     /// <value> The last buffer reading. </value>
     public BufferReading LastReading
     {
-        get => this._lastReading;
+        get;
         set
         {
-            this._lastReading = value;
+            field = value;
             if ( value is null )
             {
                 this.LastReadingCaption = "-.---";
@@ -688,57 +668,48 @@ public abstract class BufferSubsystemBase( StatusSubsystemBase statusSubsystem )
                 this.LastReadingStatus = this.LastReading.StatusReading;
             }
         }
-    }
-
-    /// <summary> The last reading status. </summary>
-    private string? _lastReadingStatus;
+    } = new();
 
     /// <summary> Gets or sets the last buffer reading readings. </summary>
     /// <value> The last buffer reading. </value>
     public string? LastReadingStatus
     {
-        get => this._lastReadingStatus;
+        get;
         set
         {
             if ( !string.Equals( value, this.LastReadingStatus, StringComparison.Ordinal ) )
             {
-                this._lastReadingStatus = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
     }
-
-    /// <summary> The last raw reading. </summary>
-    private string? _lastRawReading;
 
     /// <summary> Gets or sets the last buffer reading readings. </summary>
     /// <value> The last buffer reading. </value>
     public string? LastRawReading
     {
-        get => this._lastRawReading;
+        get;
         set
         {
             if ( !string.Equals( value, this.LastRawReading, StringComparison.Ordinal ) )
             {
-                this._lastRawReading = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
     }
 
-    /// <summary> The last reading caption. </summary>
-    private string? _lastReadingCaption;
-
     /// <summary> Gets or sets the last buffer reading. </summary>
     /// <value> The last buffer reading. </value>
     public string? LastReadingCaption
     {
-        get => this._lastReadingCaption;
+        get;
         set
         {
             if ( !string.Equals( value, this.LastReadingCaption, StringComparison.Ordinal ) )
             {
-                this._lastReadingCaption = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -872,7 +843,7 @@ public abstract class BufferSubsystemBase( StatusSubsystemBase statusSubsystem )
                 }
             }
 
-            pollPeriod.Subtract( pollStopwatch.Elapsed ).AsyncWait();
+            _ = pollPeriod.Subtract( pollStopwatch.Elapsed ).AsyncWait();
             pollStopwatch.Restart();
             Pith.SessionBase.DoEventsAction?.Invoke();
             _ = triggerSubsystem.QueryTriggerState();

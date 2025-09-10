@@ -53,7 +53,7 @@ public abstract class MeasureCurrentSubsystemBase : MeasureSubsystemBase
         Stopwatch sw = Stopwatch.StartNew();
         do
         {
-            TimeSpan.FromMilliseconds( 1 ).AsyncWait();
+            _ = TimeSpan.FromMilliseconds( 1 ).AsyncWait();
             _ = this.MeasureReadingAmounts();
         }
         while ( (!this.Level.HasValue || limen > this.Level.Value) && sw.Elapsed <= timeout );
@@ -74,7 +74,7 @@ public abstract class MeasureCurrentSubsystemBase : MeasureSubsystemBase
         bool hasValue;
         do
         {
-            TimeSpan.FromMilliseconds( 1 ).AsyncWait();
+            _ = TimeSpan.FromMilliseconds( 1 ).AsyncWait();
             _ = this.MeasureReadingAmounts();
             hasValue = this.Level.HasValue && Math.Abs( targetLevel - this.Level.Value ) <= delta;
         }
@@ -82,20 +82,17 @@ public abstract class MeasureCurrentSubsystemBase : MeasureSubsystemBase
         return hasValue;
     }
 
-    /// <summary> The level. </summary>
-    private double? _level;
-
     /// <summary> Gets or sets the cached Current level. </summary>
     /// <value> The Current. </value>
     public double? Level
     {
-        get => this._level;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.Level, value ) )
             {
-                this._level = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

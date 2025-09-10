@@ -53,20 +53,17 @@ public partial class VisaSessionBase
 
     private const string DefaultElapsedTimeFormat = @"s\.ffff";
 
-    /// <summary> The elapsed time format. </summary>
-    private string _elapsedTimeFormat = @"s\.ffff";
-
     /// <summary> Gets or sets the elapsed time format. </summary>
     /// <value> The elapsed time. </value>
     public string ElapsedTimeFormat
     {
-        get => this._elapsedTimeFormat;
+        get;
         set
         {
-            if ( base.SetProperty( ref this._elapsedTimeFormat, value ?? DefaultElapsedTimeFormat ) )
+            if ( base.SetProperty( ref field, value ?? DefaultElapsedTimeFormat ) )
                 this.NotifyPropertyChanged( nameof( this.ElapsedTimeCaption ) );
         }
-    }
+    } = @"s\.ffff";
 
     /// <summary> Gets the elapsed time caption. </summary>
     /// <value> The elapsed time caption. </value>

@@ -17,8 +17,6 @@ public abstract class InstrumentSubsystemBase( StatusSubsystemBase statusSubsyst
     #region " dmm installed "
 
     /// <summary> DMM Installed. </summary>
-    private bool? _dmmInstalled;
-
     /// <summary> Gets or sets the cached DMM Installed sentinel. </summary>
     /// <value>
     /// <c>null</c> if DMM Installed is not known; <c>true</c> if output is on; otherwise,
@@ -26,13 +24,13 @@ public abstract class InstrumentSubsystemBase( StatusSubsystemBase statusSubsyst
     /// </value>
     public bool? DmmInstalled
     {
-        get => this._dmmInstalled;
+        get;
 
         protected set
         {
             if ( !Equals( this.DmmInstalled, value ) )
             {
-                this._dmmInstalled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

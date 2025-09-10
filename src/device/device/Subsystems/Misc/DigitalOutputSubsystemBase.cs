@@ -108,7 +108,6 @@ public abstract partial class DigitalOutputSubsystemBase : SubsystemBase, IDispo
     #region " auto clear enabled "
 
     /// <summary> The automatic clear enabled. </summary>
-    private bool? _autoClearEnabled;
 
     /// <summary> Gets or sets the cached Digital Outputs Auto Clear enabled sentinel. </summary>
     /// <value>
@@ -118,13 +117,13 @@ public abstract partial class DigitalOutputSubsystemBase : SubsystemBase, IDispo
     /// </value>
     public bool? AutoClearEnabled
     {
-        get => this._autoClearEnabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.AutoClearEnabled, value ) )
             {
-                this._autoClearEnabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -176,19 +175,18 @@ public abstract partial class DigitalOutputSubsystemBase : SubsystemBase, IDispo
     #region " bit size "
 
     /// <summary> Size of the bit. </summary>
-    private int? _bitSize;
 
     /// <summary> Gets or sets the cached Digital Outputs Bit Size. </summary>
     /// <value> The Digital Outputs Bit Size or none if not set or unknown. </value>
     public int? BitSize
     {
-        get => this._bitSize;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.BitSize, value ) )
             {
-                this._bitSize = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -328,19 +326,18 @@ public abstract partial class DigitalOutputSubsystemBase : SubsystemBase, IDispo
     #region " level "
 
     /// <summary> The level. </summary>
-    private int? _level;
 
     /// <summary> Gets or sets the cached Digital Outputs Level. </summary>
     /// <value> The Digital Outputs Level or none if not set or unknown. </value>
     public int? Level
     {
-        get => this._level;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.Level, value ) )
             {
-                this._level = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

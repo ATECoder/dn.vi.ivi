@@ -27,15 +27,14 @@ public partial class SessionBase
     #region " filter "
 
     /// <summary> A filter specifying the resources. </summary>
-    private string _resourcesFilter = string.Empty;
 
     /// <summary> Gets or sets the resources search pattern. </summary>
     /// <value> The resources search pattern. </value>
     public string ResourcesFilter
     {
-        get => this._resourcesFilter;
-        set => _ = base.SetProperty( ref this._resourcesFilter, value );
-    }
+        get;
+        set => _ = base.SetProperty( ref field, value );
+    } = string.Empty;
 
     #endregion
 
@@ -82,65 +81,53 @@ public partial class SessionBase
         return result;
     }
 
-    /// <summary> Name of the validated resource. </summary>
-    private string _validatedResourceName = string.Empty;
-
     /// <summary> Gets or sets the name of the validated (e.g., located) resource. </summary>
     /// <value> The name of the validated (e.g., located)  resource. </value>
     public string ValidatedResourceName
     {
-        get => this._validatedResourceName;
+        get;
         set
         {
-            if ( base.SetProperty( ref this._validatedResourceName, value ) )
+            if ( base.SetProperty( ref field, value ) )
                 this.UpdateCaptions();
         }
-    }
-
-    /// <summary> True if candidate resource name validated. </summary>
-    private bool _candidateResourceNameValidated;
+    } = string.Empty;
 
     /// <summary> Gets or sets the candidate resource name validated. </summary>
     /// <value> The candidate resource name validated. </value>
     public bool CandidateResourceNameConnected
     {
-        get => this._candidateResourceNameValidated;
+        get;
         set
         {
-            if ( base.SetProperty( ref this._candidateResourceNameValidated, value ) )
+            if ( base.SetProperty( ref field, value ) )
                 this.UpdateCaptions();
         }
     }
-
-    /// <summary> Name of the candidate resource. </summary>
-    private string _candidateResourceName = string.Empty;
 
     /// <summary> Gets or sets the name of the resource. </summary>
     /// <value> The name of the candidate resource. </value>
     public string CandidateResourceName
     {
-        get => this._candidateResourceName;
+        get;
         set
         {
-            if ( base.SetProperty( ref this._candidateResourceName, value ?? string.Empty ) )
+            if ( base.SetProperty( ref field, value ?? string.Empty ) )
                 this.UpdateCaptions();
         }
-    }
-
-    /// <summary> Name of the open resource. </summary>
-    private string _openResourceName = string.Empty;
+    } = string.Empty;
 
     /// <summary> Gets or sets the name of the open resource. </summary>
     /// <value> The name of the open resource. </value>
     public string OpenResourceName
     {
-        get => this._openResourceName;
+        get;
         set
         {
-            if ( base.SetProperty( ref this._openResourceName, value ?? string.Empty ) )
+            if ( base.SetProperty( ref field, value ?? string.Empty ) )
                 this.UpdateCaptions();
         }
-    }
+    } = string.Empty;
 
     /// <summary> Updates the captions. </summary>
     private void UpdateCaptions()
@@ -170,44 +157,38 @@ public partial class SessionBase
     #region " title "
 
     /// <summary> The candidate resource model. </summary>
-    private string _candidateResourceModel = string.Empty;
 
     /// <summary> Gets or sets the candidate resource model. </summary>
     /// <value> The candidate resource model. </value>
     public string CandidateResourceModel
     {
-        get => this._candidateResourceModel;
+        get;
         set
         {
-            if ( base.SetProperty( ref this._candidateResourceModel, value ?? string.Empty ) )
+            if ( base.SetProperty( ref field, value ?? string.Empty ) )
                 this.UpdateCaptions();
         }
-    }
-
-    private string _openResourceModel = string.Empty;
+    } = string.Empty;
 
     /// <summary> Gets or sets a short title for the device. </summary>
     /// <value> The short title of the device. </value>
     public string OpenResourceModel
     {
-        get => this._openResourceModel;
+        get;
         set
         {
-            if ( base.SetProperty( ref this._openResourceModel, value ?? string.Empty ) )
+            if ( base.SetProperty( ref field, value ?? string.Empty ) )
                 this.UpdateCaptions();
         }
-    }
-
-    /// <summary> The resource model caption. </summary>
-    private string _resourceModelCaption = string.Empty;
+    } = string.Empty;
 
     /// <summary> Gets or sets the Title caption. </summary>
     /// <value> The Title caption. </value>
     public string ResourceModelCaption
     {
-        get => this._resourceModelCaption;
-        set => _ = base.SetProperty( ref this._resourceModelCaption, value );
-    }
+        get;
+        set => _ = base.SetProperty( ref field, value );
+    } = string.Empty;
 
     #endregion
 
@@ -216,30 +197,24 @@ public partial class SessionBase
     /// <summary>   (Immutable) the unknow resource caption. </summary>
     public const string UnknowResourceCaption = "unknown";
 
-    /// <summary> The resource closed caption. </summary>
-    private string? _resourceClosedCaption;
-
     /// <summary> Gets or sets the default resource name closed caption. </summary>
     /// <value> The resource closed caption. </value>
     public string? ResourceClosedCaption
     {
-        get => this._resourceClosedCaption;
+        get;
         set
         {
-            if ( base.SetProperty( ref this._resourceClosedCaption, value ) )
+            if ( base.SetProperty( ref field, value ) )
                 this.UpdateCaptions();
         }
     }
-
-    /// <summary> The resource name caption. </summary>
-    private string? _resourceNameCaption;
 
     /// <summary> Gets or sets the resource name caption. </summary>
     /// <value> The <see cref="ResourceNameCaption"/> resource tagged as closed if not open. </value>
     public string? ResourceNameCaption
     {
-        get => this._resourceNameCaption;
-        set => _ = base.SetProperty( ref this._resourceNameCaption, value );
+        get;
+        set => _ = base.SetProperty( ref field, value );
     }
 
     /// <summary>   Gets the resource name node caption. </summary>

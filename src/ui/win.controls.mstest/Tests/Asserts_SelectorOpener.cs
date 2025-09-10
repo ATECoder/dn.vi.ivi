@@ -143,7 +143,7 @@ public sealed partial class Asserts
         selectorOpener.AssignOpenerViewModel( opener );
         _ = selector.EnumerateResources( true );
         Assert.AreEqual( selector.ResourceNames.Count, selectorOpener.ResourceNamesCount, $"Resource names count should match internal resource names count" );
-        Assert.IsTrue( selectorOpener.SelectedValueChangeCount > 0, $"Selected value count {selectorOpener.SelectedValueChangeCount} should exceed zero" );
+        Assert.IsGreaterThan( 0, selectorOpener.SelectedValueChangeCount, $"Selected value count {selectorOpener.SelectedValueChangeCount} should exceed zero" );
         Assert.IsFalse( string.IsNullOrWhiteSpace( selector.ValidatedResourceName ), "Validated resource name is not empty" );
         Assert.IsTrue( opener.OpenEnabled, $"Opener open enabled after validating the resource" );
         Std.ActionEventArgs e = new();

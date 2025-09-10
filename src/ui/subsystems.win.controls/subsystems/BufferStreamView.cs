@@ -162,24 +162,23 @@ public partial class BufferStreamView : cc.isr.WinControls.ModelViewBase
 
     #region " public members: buffer display "
 
-    private DataGridView? _dataGridViewThis;
 
     /// <summary>   Gets or sets the reference to the data grid view. </summary>
     /// <value> The reference to the data grid view. </value>
     private DataGridView? DataGridViewThis
     {
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
-        get => this._dataGridViewThis;
+        get;
 
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( this._dataGridViewThis is not null )
-                this._dataGridViewThis.DataError -= this.DataGridView_DataError;
+            if ( field is not null )
+                field.DataError -= this.DataGridView_DataError;
 
-            this._dataGridViewThis = value;
-            if ( this._dataGridViewThis is not null )
-                this._dataGridViewThis.DataError += this.DataGridView_DataError;
+            field = value;
+            if ( field is not null )
+                field.DataError += this.DataGridView_DataError;
         }
     }
 
@@ -448,6 +447,7 @@ public partial class BufferStreamView : cc.isr.WinControls.ModelViewBase
 
     /// <summary> Reads the settings. </summary>
     /// <param name="subsystem"> The subsystem. </param>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0051:Remove unused private members", Justification = "<Pending>" )]
     private static void ReadSettings( BufferSubsystemBase subsystem )
     {
         subsystem.StartElapsedStopwatch();
@@ -637,6 +637,7 @@ public partial class BufferStreamView : cc.isr.WinControls.ModelViewBase
 
     /// <summary> Reads the settings. </summary>
     /// <param name="subsystem"> The subsystem. </param>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0051:Remove unused private members", Justification = "<Pending>" )]
     private static void ReadSettings( TraceSubsystemBase subsystem )
     {
         subsystem.StartElapsedStopwatch();
@@ -775,6 +776,7 @@ public partial class BufferStreamView : cc.isr.WinControls.ModelViewBase
     }
 
     /// <summary> Initiate trigger plan. </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0051:Remove unused private members", Justification = "<Pending>" )]
     private void InitiateTriggerPlan()
     {
         if ( this.InitializingComponents || this.Device is null || this.TriggerSubsystem is null ) return;
@@ -867,6 +869,7 @@ public partial class BufferStreamView : cc.isr.WinControls.ModelViewBase
 
     /// <summary> Reads the settings. </summary>
     /// <param name="subsystem"> The subsystem. </param>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0051:Remove unused private members", Justification = "<Pending>" )]
     private static void ReadSettings( SystemSubsystemBase subsystem )
     {
         subsystem.StartElapsedStopwatch();
@@ -1692,8 +1695,7 @@ public partial class BufferStreamView : cc.isr.WinControls.ModelViewBase
     /// <param name="e">      Event information. </param>
     private void AssertBusTriggerButton_Click( object? sender, EventArgs e )
     {
-        if ( this.TraceSubsystem is not null )
-            this.TraceSubsystem.BusTriggerRequested = true;
+        _ = (this.TraceSubsystem?.BusTriggerRequested = true);
     }
 
     #endregion

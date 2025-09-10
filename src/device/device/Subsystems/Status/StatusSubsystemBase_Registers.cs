@@ -75,7 +75,6 @@ public partial class StatusSubsystemBase
     #region " enable bitmask "
 
     /// <summary> The Measurement event enable bitmask. </summary>
-    private int? _measurementEventEnableBitmask;
 
     /// <summary>
     /// Gets or sets the cached value of the Measurement register event enable bit mask.
@@ -90,13 +89,13 @@ public partial class StatusSubsystemBase
     /// <value> The mask to use for enabling the events. </value>
     public int? MeasurementEventEnableBitmask
     {
-        get => this._measurementEventEnableBitmask;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.MeasurementEventEnableBitmask, value ) )
             {
-                this._measurementEventEnableBitmask = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -166,7 +165,6 @@ public partial class StatusSubsystemBase
     #region " positive transition bitmask "
 
     /// <summary> The Measurement event Positive Transition bitmask. </summary>
-    private int? _measurementEventPositiveTransitionBitmask;
 
     /// <summary>
     /// Gets or sets the cached value of the Measurement register event Positive Transition bit mask.
@@ -181,13 +179,13 @@ public partial class StatusSubsystemBase
     /// <value> The mask to use for enabling the events. </value>
     public int? MeasurementEventPositiveTransitionBitmask
     {
-        get => this._measurementEventPositiveTransitionBitmask;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.MeasurementEventPositiveTransitionBitmask, value ) )
             {
-                this._measurementEventPositiveTransitionBitmask = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -260,7 +258,6 @@ public partial class StatusSubsystemBase
     #region " negative transition bitmask "
 
     /// <summary> The Measurement event Negative Transition bitmask. </summary>
-    private int? _measurementEventNegativeTransitionBitmask;
 
     /// <summary>
     /// Gets or sets the cached value of the Measurement register event Negative Transition bit mask.
@@ -275,13 +272,13 @@ public partial class StatusSubsystemBase
     /// <value> The mask to use for enabling the events. </value>
     public int? MeasurementEventNegativeTransitionBitmask
     {
-        get => this._measurementEventNegativeTransitionBitmask;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.MeasurementEventNegativeTransitionBitmask, value ) )
             {
-                this._measurementEventNegativeTransitionBitmask = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -347,19 +344,18 @@ public partial class StatusSubsystemBase
     #region " condition "
 
     /// <summary> The measurement event Condition. </summary>
-    private int? _measurementEventCondition;
 
     /// <summary> Gets or sets the cached Condition of the measurement register events. </summary>
     /// <value> <c>null</c> if value is not known;. </value>
     public int? MeasurementEventCondition
     {
-        get => this._measurementEventCondition;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.MeasurementEventCondition, value ) )
             {
-                this._measurementEventCondition = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -390,17 +386,16 @@ public partial class StatusSubsystemBase
     #region " status "
 
     /// <summary> The measurement event status. </summary>
-    private int? _measurementEventStatus;
 
     /// <summary> Gets or sets the cached status of the measurement register events. </summary>
     /// <value> <c>null</c> if value is not known;. </value>
     public int? MeasurementEventStatus
     {
-        get => this._measurementEventStatus;
+        get;
 
         protected set
         {
-            this._measurementEventStatus = value;
+            field = value;
             this.NotifyPropertyChanged();
         }
     }
@@ -460,7 +455,6 @@ public partial class StatusSubsystemBase
     #region " enable bitmask "
 
     /// <summary> The operation event enable bitmask. </summary>
-    private int? _operationEventEnableBitmask;
 
     /// <summary>
     /// Gets or sets the cached value of the Operation register event enable bit mask.
@@ -475,13 +469,13 @@ public partial class StatusSubsystemBase
     /// <value> The mask to use for enabling the events. </value>
     public int? OperationEventEnableBitmask
     {
-        get => this._operationEventEnableBitmask;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.OperationEventEnableBitmask, value ) )
             {
-                this._operationEventEnableBitmask = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -551,7 +545,6 @@ public partial class StatusSubsystemBase
     #region " negative transition event enable bitmask "
 
     /// <summary> The operation register negative transition events enable bitmask. </summary>
-    private int? _operationNegativeTransitionEventEnableBitmask;
 
     /// <summary> Gets or sets the operation negative transition event request. </summary>
     /// <remarks>
@@ -562,13 +555,13 @@ public partial class StatusSubsystemBase
     /// <value> The Operation Transition Events mask to use for enabling the events. </value>
     public int? OperationNegativeTransitionEventEnableBitmask
     {
-        get => this._operationNegativeTransitionEventEnableBitmask;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.OperationNegativeTransitionEventEnableBitmask, value ) )
             {
-                this._operationNegativeTransitionEventEnableBitmask = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -621,7 +614,6 @@ public partial class StatusSubsystemBase
     #region " positive transition event enable bitmask "
 
     /// <summary> The operation register Positive transition events enable bitmask. </summary>
-    private int? _operationPositiveTransitionEventEnableBitmask;
 
     /// <summary>
     /// Gets or sets the cached value of the operation Positive transition event request.
@@ -634,13 +626,13 @@ public partial class StatusSubsystemBase
     /// <value> The Operation Transition Events mask to use for enabling the events. </value>
     public int? OperationPositiveTransitionEventEnableBitmask
     {
-        get => this._operationPositiveTransitionEventEnableBitmask;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.OperationPositiveTransitionEventEnableBitmask, value ) )
             {
-                this._operationPositiveTransitionEventEnableBitmask = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -693,7 +685,6 @@ public partial class StatusSubsystemBase
     #region " condition "
 
     /// <summary> The operation event Condition. </summary>
-    private int? _operationEventCondition;
 
     /// <summary>
     /// Gets or sets the Operation event register cached condition of the instrument.
@@ -707,13 +698,13 @@ public partial class StatusSubsystemBase
     /// <value> The operation event condition. </value>
     public int? OperationEventCondition
     {
-        get => this._operationEventCondition;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.OperationEventCondition, value ) )
             {
-                this._operationEventCondition = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -747,7 +738,6 @@ public partial class StatusSubsystemBase
     #region " status "
 
     /// <summary> The operation event status. </summary>
-    private int? _operationEventStatus;
 
     /// <summary> Gets or sets the cached status of the Operation Register events. </summary>
     /// <remarks>
@@ -759,11 +749,11 @@ public partial class StatusSubsystemBase
     /// <value> <c>null</c> if value is not known;. </value>
     public int? OperationEventStatus
     {
-        get => this._operationEventStatus;
+        get;
 
         protected set
         {
-            this._operationEventStatus = value;
+            field = value;
             this.NotifyPropertyChanged();
         }
     }
@@ -917,7 +907,6 @@ public partial class StatusSubsystemBase
     #region " bitmask "
 
     /// <summary> The questionable event enable bitmask. </summary>
-    private int? _questionableEventEnableBitmask;
 
     /// <summary>
     /// Gets or sets the cached value of the Questionable register event enable bit mask.
@@ -932,13 +921,13 @@ public partial class StatusSubsystemBase
     /// <value> The mask to use for enabling the events. </value>
     public int? QuestionableEventEnableBitmask
     {
-        get => this._questionableEventEnableBitmask;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.QuestionableEventEnableBitmask, value ) )
             {
-                this._questionableEventEnableBitmask = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -985,7 +974,6 @@ public partial class StatusSubsystemBase
     #region " condition "
 
     /// <summary> The questionable event Condition. </summary>
-    private int? _questionableEventCondition;
 
     /// <summary>
     /// Gets or sets the cached value of the Questionable event register condition of the instrument.
@@ -999,13 +987,13 @@ public partial class StatusSubsystemBase
     /// <value> The questionable event condition. </value>
     public int? QuestionableEventCondition
     {
-        get => this._questionableEventCondition;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.QuestionableEventCondition, value ) )
             {
-                this._questionableEventCondition = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -1030,19 +1018,18 @@ public partial class StatusSubsystemBase
     #region " status "
 
     /// <summary> The questionable event status. </summary>
-    private int? _questionableEventStatus;
 
     /// <summary> Gets or sets the status of the Questionable register events. </summary>
     /// <value> <c>null</c> if value is not known;. </value>
     public int? QuestionableEventStatus
     {
-        get => this._questionableEventStatus;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.QuestionableEventStatus, value ) )
             {
-                this._questionableEventStatus = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

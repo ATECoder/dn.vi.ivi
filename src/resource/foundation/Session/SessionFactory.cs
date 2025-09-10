@@ -12,8 +12,8 @@ public class SessionFactory : Pith.SessionFactoryBase
     /// <summary> Initializes a new instance of the <see cref="SessionFactory" /> class. </summary>
     public SessionFactory() : base() => cc.isr.Visa.Gac.GacLoader.LoadInstalledVisaAssemblies();
 
-    /// <summary> Creates gpib interface session. </summary>
-    /// <returns> The new gpib interface session. </returns>
+    /// <summary> Creates GPIB interface session. </summary>
+    /// <returns> The new GPIB interface session. </returns>
     public override Pith.InterfaceSessionBase GpibInterfaceSession()
     {
         return new GpibInterfaceSession();

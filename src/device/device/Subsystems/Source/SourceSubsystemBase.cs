@@ -78,7 +78,6 @@ public abstract partial class SourceSubsystemBase : SubsystemBase
     #region " auto clear enabled "
 
     /// <summary> The automatic clear enabled. </summary>
-    private bool? _autoClearEnabled;
 
     /// <summary> Gets or sets the cached Auto Clear Enabled sentinel. </summary>
     /// <value>
@@ -87,13 +86,13 @@ public abstract partial class SourceSubsystemBase : SubsystemBase
     /// </value>
     public bool? AutoClearEnabled
     {
-        get => this._autoClearEnabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.AutoClearEnabled, value ) )
             {
-                this._autoClearEnabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -145,7 +144,6 @@ public abstract partial class SourceSubsystemBase : SubsystemBase
     #region " auto delay enabled "
 
     /// <summary> The automatic delay enabled. </summary>
-    private bool? _autoDelayEnabled;
 
     /// <summary> Gets or sets the cached Auto Delay Enabled sentinel. </summary>
     /// <value>
@@ -154,13 +152,13 @@ public abstract partial class SourceSubsystemBase : SubsystemBase
     /// </value>
     public bool? AutoDelayEnabled
     {
-        get => this._autoDelayEnabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.AutoDelayEnabled, value ) )
             {
-                this._autoDelayEnabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -401,20 +399,17 @@ public abstract partial class SourceSubsystemBase : SubsystemBase
         }
     }
 
-    /// <summary> The level. </summary>
-    private double? _level;
-
     /// <summary> Gets or sets the cached Source Current Level. </summary>
     /// <value> The Source Current Level. Actual current depends on the power supply mode. </value>
     public double? Level
     {
-        get => this._level;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.Level, value ) )
             {
-                this._level = value;
+                field = value;
                 this.NewAmount( this.FunctionUnit );
                 this.NotifyPropertyChanged();
             }
@@ -471,7 +466,6 @@ public abstract partial class SourceSubsystemBase : SubsystemBase
     #region " limit "
 
     /// <summary> The Limit. </summary>
-    private double? _limit;
 
     /// <summary>
     /// Gets or sets the cached source Limit for a Current Source. Set to
@@ -481,13 +475,13 @@ public abstract partial class SourceSubsystemBase : SubsystemBase
     /// <value> <c>null</c> if value is not known. </value>
     public double? Limit
     {
-        get => this._limit;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.Limit, value ) )
             {
-                this._limit = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -541,7 +535,6 @@ public abstract partial class SourceSubsystemBase : SubsystemBase
     #region " limit tripped "
 
     /// <summary> Limit Tripped. </summary>
-    private bool? _limitTripped;
 
     /// <summary> Gets or sets the cached Limit Tripped sentinel. </summary>
     /// <value>
@@ -550,13 +543,13 @@ public abstract partial class SourceSubsystemBase : SubsystemBase
     /// </value>
     public bool? LimitTripped
     {
-        get => this._limitTripped;
+        get;
 
         protected set
         {
             if ( !Equals( this.LimitTripped, value ) )
             {
-                this._limitTripped = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -582,7 +575,6 @@ public abstract partial class SourceSubsystemBase : SubsystemBase
     #region " output enabled "
 
     /// <summary> Output enabled. </summary>
-    private bool? _outputEnabled;
 
     /// <summary> Gets or sets the cached Output Enabled sentinel. </summary>
     /// <value>
@@ -591,13 +583,13 @@ public abstract partial class SourceSubsystemBase : SubsystemBase
     /// </value>
     public bool? OutputEnabled
     {
-        get => this._outputEnabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.OutputEnabled, value ) )
             {
-                this._outputEnabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -647,7 +639,6 @@ public abstract partial class SourceSubsystemBase : SubsystemBase
     #region " range "
 
     /// <summary> The Range. </summary>
-    private double? _range;
 
     /// <summary>
     /// Gets or sets the cached sense Range. Set to
@@ -657,13 +648,13 @@ public abstract partial class SourceSubsystemBase : SubsystemBase
     /// <value> <c>null</c> if value is not known. </value>
     public double? Range
     {
-        get => this._range;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.Range, value ) )
             {
-                this._range = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -709,18 +700,17 @@ public abstract partial class SourceSubsystemBase : SubsystemBase
     #region " read back enabled "
 
     /// <summary> The last read back. </summary>
-    private string? _lastReadBack;
 
     /// <summary> Gets or sets the last ReadBack. </summary>
     /// <value> The last ReadBack. </value>
     public string? LastReadBack
     {
-        get => this._lastReadBack;
+        get;
         set
         {
             if ( !string.Equals( value, this.LastReadBack, StringComparison.OrdinalIgnoreCase ) )
             {
-                this._lastReadBack = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -760,17 +750,14 @@ public abstract partial class SourceSubsystemBase : SubsystemBase
         }
     }
 
-    /// <summary> True if has read back amount, false if not. </summary>
-    private bool _hasReadBackAmount;
-
     /// <summary> Gets or sets the has read back amount. </summary>
     /// <value> The has read back amount. </value>
     public bool HasReadBackAmount
     {
-        get => this._hasReadBackAmount;
+        get;
         set
         {
-            this._hasReadBackAmount = value;
+            field = value;
             this.NotifyPropertyChanged();
         }
     }
@@ -835,7 +822,6 @@ public abstract partial class SourceSubsystemBase : SubsystemBase
     #region " read back enabled "
 
     /// <summary> The read back enabled. </summary>
-    private bool? _readBackEnabled;
 
     /// <summary> Gets or sets the cached Read Back Enabled sentinel. </summary>
     /// <value>
@@ -844,13 +830,13 @@ public abstract partial class SourceSubsystemBase : SubsystemBase
     /// </value>
     public bool? ReadBackEnabled
     {
-        get => this._readBackEnabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.ReadBackEnabled, value ) )
             {
-                this._readBackEnabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -905,19 +891,18 @@ public abstract partial class SourceSubsystemBase : SubsystemBase
     #region " sweep points "
 
     /// <summary> The sweep point. </summary>
-    private int? _sweepPoint;
 
     /// <summary> Gets or sets the cached Sweep Points. </summary>
     /// <value> The Sweep Points or none if not set or unknown. </value>
     public int? SweepPoints
     {
-        get => this._sweepPoint;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.SweepPoints, value ) )
             {
-                this._sweepPoint = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

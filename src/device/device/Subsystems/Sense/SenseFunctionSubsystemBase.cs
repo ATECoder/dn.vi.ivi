@@ -105,9 +105,6 @@ public abstract partial class SenseFunctionSubsystemBase : SubsystemBase
         }
     }
 
-    /// <summary> The Aperture. </summary>
-    private double? _aperture;
-
     /// <summary>
     /// Gets or sets the cached sense Aperture. Set to
     /// <see cref="VI.Syntax.ScpiSyntax.Infinity">infinity</see> to set to maximum or to
@@ -116,13 +113,13 @@ public abstract partial class SenseFunctionSubsystemBase : SubsystemBase
     /// <value> <c>null</c> if value is not known. </value>
     public double? Aperture
     {
-        get => this._aperture;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.Aperture, value ) )
             {
-                this._aperture = value;
+                field = value;
                 this.NotifyPropertyChanged();
                 this.PowerLineCycles = value.HasValue ? StatusSubsystemBase.ToPowerLineCycles( TimeSpan.FromTicks( ( long ) (TimeSpan.TicksPerSecond * value.Value) ) ) : new double?();
             }
@@ -177,7 +174,6 @@ public abstract partial class SenseFunctionSubsystemBase : SubsystemBase
     #region " auto range enabled "
 
     /// <summary> Auto Range enabled. </summary>
-    private bool? _autoRangeEnabled;
 
     /// <summary> Gets or sets the cached Auto Range Enabled sentinel. </summary>
     /// <value>
@@ -186,13 +182,13 @@ public abstract partial class SenseFunctionSubsystemBase : SubsystemBase
     /// </value>
     public bool? AutoRangeEnabled
     {
-        get => this._autoRangeEnabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.AutoRangeEnabled, value ) )
             {
-                this._autoRangeEnabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -244,7 +240,6 @@ public abstract partial class SenseFunctionSubsystemBase : SubsystemBase
     #region " auto zero enabled "
 
     /// <summary> Auto Zero enabled. </summary>
-    private bool? _autoZeroEnabled;
 
     /// <summary> Gets or sets the cached Auto Zero Enabled sentinel. </summary>
     /// <value>
@@ -253,13 +248,13 @@ public abstract partial class SenseFunctionSubsystemBase : SubsystemBase
     /// </value>
     public bool? AutoZeroEnabled
     {
-        get => this._autoZeroEnabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.AutoZeroEnabled, value ) )
             {
-                this._autoZeroEnabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -327,26 +322,20 @@ public abstract partial class SenseFunctionSubsystemBase : SubsystemBase
     /// <value> A Dictionary of Configuration Mode parses. </value>
     public Pith.EnumReadWriteCollection ConfigurationModeReadWrites { get; private set; }
 
-    /// <summary> The supported configuration modes. </summary>
-    private ConfigurationModes _supportedConfigurationModes;
-
     /// <summary> Gets or sets the supported Configuration Modes. </summary>
     /// <value> The supported Configuration Modes. </value>
     public ConfigurationModes SupportedConfigurationModes
     {
-        get => this._supportedConfigurationModes;
+        get;
         set
         {
             if ( !this.SupportedConfigurationModes.Equals( value ) )
             {
-                this._supportedConfigurationModes = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
     }
-
-    /// <summary> The configuration mode. </summary>
-    private ConfigurationModes? _configurationMode;
 
     /// <summary> Gets or sets the cached source ConfigurationMode. </summary>
     /// <value>
@@ -355,13 +344,13 @@ public abstract partial class SenseFunctionSubsystemBase : SubsystemBase
     /// </value>
     public ConfigurationModes? ConfigurationMode
     {
-        get => this._configurationMode;
+        get;
 
         protected set
         {
             if ( !this.ConfigurationMode.Equals( value ) )
             {
-                this._configurationMode = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -487,7 +476,6 @@ public abstract partial class SenseFunctionSubsystemBase : SubsystemBase
     #region " open lead detector enabled "
 
     /// <summary> Open Lead Detector enabled. </summary>
-    private bool? _openLeadDetectorEnabled;
 
     /// <summary> Gets or sets the cached Open Lead Detector Enabled sentinel. </summary>
     /// <value>
@@ -497,13 +485,13 @@ public abstract partial class SenseFunctionSubsystemBase : SubsystemBase
     /// </value>
     public bool? OpenLeadDetectorEnabled
     {
-        get => this._openLeadDetectorEnabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.OpenLeadDetectorEnabled, value ) )
             {
-                this._openLeadDetectorEnabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -578,9 +566,6 @@ public abstract partial class SenseFunctionSubsystemBase : SubsystemBase
         }
     }
 
-    /// <summary> The Power Line Cycles. </summary>
-    private double? _powerLineCycles;
-
     /// <summary> Gets the integration period. </summary>
     /// <value> The integration period. </value>
     public TimeSpan? IntegrationPeriod => this.PowerLineCycles.HasValue ? StatusSubsystemBase.FromPowerLineCycles( this.PowerLineCycles.Value ) : new TimeSpan?();
@@ -593,12 +578,12 @@ public abstract partial class SenseFunctionSubsystemBase : SubsystemBase
     /// <value> <c>null</c> if value is not known. </value>
     public double? PowerLineCycles
     {
-        get => this._powerLineCycles;
+        get;
 
         protected set
         {
             // force a unit change as the value needs to be updated when the subsystem is switched.
-            this._powerLineCycles = value;
+            field = value;
             this.Aperture = value.HasValue ? StatusSubsystemBase.FromPowerLineCycles( this.PowerLineCycles!.Value ).TotalSeconds : new double?();
             this.NotifyPropertyChanged();
         }
@@ -646,7 +631,6 @@ public abstract partial class SenseFunctionSubsystemBase : SubsystemBase
     #region " protection level "
 
     /// <summary> The Current Limit. </summary>
-    private double? _protectionLevel;
 
     /// <summary>
     /// Gets or sets the cached source current Limit for a voltage source. Set to
@@ -656,13 +640,13 @@ public abstract partial class SenseFunctionSubsystemBase : SubsystemBase
     /// <value> <c>null</c> if value is not known. </value>
     public double? ProtectionLevel
     {
-        get => this._protectionLevel;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.ProtectionLevel, value ) )
             {
-                this._protectionLevel = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -710,7 +694,6 @@ public abstract partial class SenseFunctionSubsystemBase : SubsystemBase
     #region " protection enabled "
 
     /// <summary> Protection enabled. </summary>
-    private bool? _protectionEnabled;
 
     /// <summary>
     /// Gets or sets a cached value indicating whether Sense Voltage protection is enabled.
@@ -728,13 +711,13 @@ public abstract partial class SenseFunctionSubsystemBase : SubsystemBase
     /// </value>
     public bool? ProtectionEnabled
     {
-        get => this._protectionEnabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.ProtectionEnabled, value ) )
             {
-                this._protectionEnabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -786,7 +769,6 @@ public abstract partial class SenseFunctionSubsystemBase : SubsystemBase
     #region " range "
 
     /// <summary> The range. </summary>
-    private double? _range;
 
     /// <summary>
     /// Gets or sets the cached range. Set to
@@ -796,12 +778,12 @@ public abstract partial class SenseFunctionSubsystemBase : SubsystemBase
     /// <value> <c>null</c> if value is not known. </value>
     public double? Range
     {
-        get => this._range;
+        get;
 
         protected set
         {
             // force a unit change as the value needs to be updated when the subsystem is switched.
-            this._range = value;
+            field = value;
             this.NotifyPropertyChanged();
         }
     }
@@ -863,20 +845,17 @@ public abstract partial class SenseFunctionSubsystemBase : SubsystemBase
         }
     }
 
-    /// <summary> The ResolutionDigits. </summary>
-    private double? _resolutionDigits;
-
     /// <summary> Gets or sets the cached ResolutionDigits. </summary>
     /// <value> <c>null</c> if value is not known. </value>
     public double? ResolutionDigits
     {
-        get => this._resolutionDigits;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.ResolutionDigits, value ) )
             {
-                this._resolutionDigits = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

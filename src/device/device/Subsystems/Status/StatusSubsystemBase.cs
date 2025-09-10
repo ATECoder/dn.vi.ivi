@@ -601,18 +601,17 @@ public abstract partial class StatusSubsystemBase : CommunityToolkit.Mvvm.Compon
     #region " serial number "
 
     /// <summary> The serial number reading. </summary>
-    private string? _serialNumberReading;
 
     /// <summary> Gets or sets the serial number reading. </summary>
     /// <value> The serial number reading. </value>
     public string? SerialNumberReading
     {
-        get => this._serialNumberReading;
+        get;
         set
         {
             if ( string.IsNullOrWhiteSpace( value ) )
                 value = string.Empty;
-            if ( this.SetProperty( ref this._serialNumberReading, value ?? string.Empty ) )
+            if ( this.SetProperty( ref field, value ?? string.Empty ) )
             {
                 this.SerialNumber = string.IsNullOrWhiteSpace( value )
                     ? new long?()
@@ -648,15 +647,12 @@ public abstract partial class StatusSubsystemBase : CommunityToolkit.Mvvm.Compon
         return this.SerialNumberReading;
     }
 
-    /// <summary> The serial number. </summary>
-    private long? _serialNumber;
-
     /// <summary> Reads and returns the instrument serial number. </summary>
     /// <value> The serial number. </value>
     public long? SerialNumber
     {
-        get => this._serialNumber;
-        set => _ = this.SetProperty( ref this._serialNumber, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
 
     #endregion
@@ -666,20 +662,19 @@ public abstract partial class StatusSubsystemBase : CommunityToolkit.Mvvm.Compon
     #region " language "
 
     /// <summary> The Language. </summary>
-    private string? _language;
 
     /// <summary> Gets or sets the device Language string (*IDN?). </summary>
     /// <value> The Language. </value>
     public string? Language
     {
-        get => this._language;
+        get;
         set
         {
             if ( string.IsNullOrWhiteSpace( value ) ) value = string.Empty;
             if ( !string.Equals( value, this.Language, StringComparison.Ordinal ) )
             {
                 value = value!.Trim();
-                this._language = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
 
@@ -719,19 +714,16 @@ public abstract partial class StatusSubsystemBase : CommunityToolkit.Mvvm.Compon
         return !string.IsNullOrWhiteSpace( this.Language ) && string.Equals( this.ExpectedLanguage, this.Language, StringComparison.Ordinal );
     }
 
-    /// <summary> True if language validated. </summary>
-    private bool _languageValidated;
-
     /// <summary> Gets or sets the sentinel indicating if the language was validated. </summary>
     /// <value> The LanguageValidated. </value>
     public bool LanguageValidated
     {
-        get => this._languageValidated;
+        get;
         set
         {
             if ( !Equals( value, this.LanguageValidated ) )
             {
-                this._languageValidated = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -820,17 +812,14 @@ public abstract partial class StatusSubsystemBase : CommunityToolkit.Mvvm.Compon
     /// <value> The station line frequency. </value>
     public static double? StationLineFrequency { get; set; } = new double?();
 
-    /// <summary> The line frequency. </summary>
-    private double? _lineFrequency;
-
     /// <summary> Gets or sets the line frequency. </summary>
     /// <value> The line frequency. </value>
     public double? LineFrequency
     {
-        get => this._lineFrequency;
+        get;
         set
         {
-            if ( this.SetProperty( ref this._lineFrequency, value ) )
+            if ( this.SetProperty( ref field, value ) )
                 StatusSubsystemBase.StationLineFrequency = value;
         }
     }

@@ -17,26 +17,20 @@ public partial class OutputSubsystemBase
     /// <value> A Dictionary of output Off Mode parses. </value>
     public Pith.EnumReadWriteCollection OutputOffModeReadWrites { get; private set; }
 
-    /// <summary> The supported output off modes. </summary>
-    private OutputOffModes _supportedOutputOffModes;
-
     /// <summary> Gets or sets the supported Off Modes. </summary>
     /// <value> The supported Off Modes. </value>
     public OutputOffModes SupportedOutputOffModes
     {
-        get => this._supportedOutputOffModes;
+        get;
         set
         {
             if ( !this.SupportedOutputOffModes.Equals( value ) )
             {
-                this._supportedOutputOffModes = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
     }
-
-    /// <summary> The output off mode. </summary>
-    private OutputOffModes? _outputOffMode;
 
     /// <summary> Gets or sets the cached output off mode. </summary>
     /// <value>
@@ -44,13 +38,13 @@ public partial class OutputSubsystemBase
     /// </value>
     public OutputOffModes? OutputOffMode
     {
-        get => this._outputOffMode;
+        get;
 
         protected set
         {
             if ( !this.OutputOffMode.Equals( value ) )
             {
-                this._outputOffMode = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -109,26 +103,20 @@ public partial class OutputSubsystemBase
     /// <value> A Dictionary of output Terminals Mode parses. </value>
     public Pith.EnumReadWriteCollection OutputTerminalsModeReadWrites { get; private set; }
 
-    /// <summary> The supported output terminals modes. </summary>
-    private OutputTerminalsModes _supportedOutputTerminalsModes;
-
     /// <summary> Gets or sets the supported Terminals Modes. </summary>
     /// <value> The supported Terminals Modes. </value>
     public OutputTerminalsModes SupportedOutputTerminalsModes
     {
-        get => this._supportedOutputTerminalsModes;
+        get;
         set
         {
             if ( !this.SupportedOutputTerminalsModes.Equals( value ) )
             {
-                this._supportedOutputTerminalsModes = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
     }
-
-    /// <summary> The output terminals mode. </summary>
-    private OutputTerminalsModes? _outputTerminalsMode;
 
     /// <summary> Gets or sets the cached output Terminals mode. </summary>
     /// <value>
@@ -136,13 +124,13 @@ public partial class OutputSubsystemBase
     /// </value>
     public OutputTerminalsModes? OutputTerminalsMode
     {
-        get => this._outputTerminalsMode;
+        get;
 
         protected set
         {
             if ( !this.OutputTerminalsMode.Equals( value ) )
             {
-                this._outputTerminalsMode = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

@@ -61,7 +61,7 @@ public class DummyGpibInterfaceSession : InterfaceSessionBase
 
     #endregion
 
-    #region " gpib interface "
+    #region " GPIB interface "
 
     /// <summary> Sends the interface clear. </summary>
     public override void SendInterfaceClear()

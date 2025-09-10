@@ -5,36 +5,31 @@ public partial class ChannelMarkerSubsystemBase
     #region " reading status "
 
     /// <summary> The last reading. </summary>
-    private string? _lastReading;
-
     /// <summary> Gets or sets the last reading. </summary>
     /// <value> The last reading. </value>
     public string? LastReading
     {
-        get => this._lastReading;
+        get;
         set
         {
             if ( !string.Equals( value, this.LastReading, StringComparison.Ordinal ) )
             {
-                this._lastReading = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
     }
 
-    /// <summary> The reading caption. </summary>
-    private string? _readingCaption;
-
     /// <summary> Gets or sets the reading caption. </summary>
     /// <value> The reading caption. </value>
     public string? ReadingCaption
     {
-        get => this._readingCaption;
+        get;
         set
         {
             if ( !string.Equals( value, this.ReadingCaption, StringComparison.Ordinal ) )
             {
-                this._readingCaption = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

@@ -460,19 +460,18 @@ public abstract partial class HarmonicsMeasureSubsystemBase : SubsystemBase
     #region " access rights mode "
 
     /// <summary>   The access rights mode. </summary>
-    private int? _accessRightsMode;
 
     /// <summary>   Gets or sets the Access Rights Mode. </summary>
     /// <value> The Access Rights Mode. </value>
     public int? AccessRightsMode
     {
-        get => this._accessRightsMode;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.AccessRightsMode, value ) )
             {
-                this._accessRightsMode = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -589,19 +588,18 @@ public abstract partial class HarmonicsMeasureSubsystemBase : SubsystemBase
     #region " bandwidth limiting enabled "
 
     /// <summary>   The bandwidth limiting enabled. </summary>
-    private bool? _bandwidthLimitingEnabled;
 
     /// <summary>   Gets or sets the bandwidth limiting enabled. </summary>
     /// <value> The bandwidth limiting enabled. </value>
     public bool? BandwidthLimitingEnabled
     {
-        get => this._bandwidthLimitingEnabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.BandwidthLimitingEnabled, value ) )
             {
-                this._bandwidthLimitingEnabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -726,37 +724,33 @@ public abstract partial class HarmonicsMeasureSubsystemBase : SubsystemBase
     #region " generator output level "
 
     /// <summary>   The Generator Output Level range. </summary>
-    private Std.Primitives.RangeR? _generatorOutputLevelRange;
 
     /// <summary>   The Generator Output Level range in seconds. </summary>
     /// <value> The Generator Output Level range. </value>
     public Std.Primitives.RangeR? GeneratorOutputLevelRange
     {
-        get => this._generatorOutputLevelRange;
+        get;
         set
         {
             if ( this.GeneratorOutputLevelRange != value )
             {
-                this._generatorOutputLevelRange = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
     }
 
-    /// <summary>   The Generator OutputLevel. </summary>
-    private double? _generatorOutputLevel;
-
     /// <summary>   Gets or sets the generator output level. </summary>
     /// <value> The generator output level. </value>
     public double? GeneratorOutputLevel
     {
-        get => this._generatorOutputLevel;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.GeneratorOutputLevel, value ) )
             {
-                this._generatorOutputLevel = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -888,26 +882,22 @@ public abstract partial class HarmonicsMeasureSubsystemBase : SubsystemBase
     #region " generator timer "
 
     /// <summary>   The Generator Timer range. </summary>
-    private Std.Primitives.RangeI? _generatorTimerRange;
 
     /// <summary>   The Generator Timer range in seconds. </summary>
     /// <value> The Generator Timer range. </value>
     public Std.Primitives.RangeI? GeneratorTimerRange
     {
-        get => this._generatorTimerRange;
-        set => _ = base.SetProperty( ref this._generatorTimerRange, value );
+        get;
+        set => _ = base.SetProperty( ref field, value );
     }
-
-    /// <summary>   The Generator Timer. </summary>
-    private int? _generatorTimer;
 
     /// <summary>   Gets or sets the Generator Timer. </summary>
     /// <value> The Generator Timer. </value>
     public int? GeneratorTimer
     {
-        get => this._generatorTimer;
+        get;
 
-        protected set => _ = base.SetProperty( ref this._generatorTimer, value );
+        protected set => _ = base.SetProperty( ref field, value );
     }
 
     /// <summary>   Writes and reads back the Generator Timer. </summary>
@@ -1164,14 +1154,13 @@ public abstract partial class HarmonicsMeasureSubsystemBase : SubsystemBase
     #region " impedance range "
 
     /// <summary>   The impedance range. </summary>
-    private Std.Primitives.RangeR? _impedanceRangeRange;
 
     /// <summary>   Gets or sets the range of Impedance Range. </summary>
     /// <value> The range Impedance Range. </value>
     public Std.Primitives.RangeR? ImpedanceRangeRange
     {
-        get => this._impedanceRangeRange;
-        set => _ = base.SetProperty( ref this._impedanceRangeRange, value );
+        get;
+        set => _ = base.SetProperty( ref field, value );
     }
 
     /// <summary>   The impedance range. </summary>
@@ -1307,19 +1296,18 @@ public abstract partial class HarmonicsMeasureSubsystemBase : SubsystemBase
     #region " measurement start mode "
 
     /// <summary>   The Measurement Start mode. </summary>
-    private int? _measurementStartMode;
 
     /// <summary>   Gets or sets the Measurement Start Mode. </summary>
     /// <value> The Measurement Start Mode. </value>
     public int? MeasurementStartMode
     {
-        get => this._measurementStartMode;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.MeasurementStartMode, value ) )
             {
-                this._measurementStartMode = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -1436,19 +1424,18 @@ public abstract partial class HarmonicsMeasureSubsystemBase : SubsystemBase
     #region " voltmeter output enabled "
 
     /// <summary>   The Voltmeter Output enabled. </summary>
-    private bool? _voltmeterOutputEnabled;
 
     /// <summary>   Gets or sets the Voltmeter Output enabled. </summary>
     /// <value> The Voltmeter Output enabled. </value>
     public bool? VoltmeterOutputEnabled
     {
-        get => this._voltmeterOutputEnabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.VoltmeterOutputEnabled, value ) )
             {
-                this._voltmeterOutputEnabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -1702,14 +1689,13 @@ public abstract partial class HarmonicsMeasureSubsystemBase : SubsystemBase
     #region " voltmeter range "
 
     /// <summary>   The range of the Voltmeter. </summary>
-    private Std.Primitives.RangeR? _voltmeterRangeRange;
 
     /// <summary>   Gets or sets the range of Voltmeter Range. </summary>
     /// <value> The range Voltmeter Range. </value>
     public Std.Primitives.RangeR? VoltmeterRangeRange
     {
-        get => this._voltmeterRangeRange;
-        set => _ = base.SetProperty( ref this._voltmeterRangeRange, value );
+        get;
+        set => _ = base.SetProperty( ref field, value );
     }
 
     /// <summary>   The Voltmeter Range. </summary>
@@ -1858,14 +1844,13 @@ public abstract partial class HarmonicsMeasureSubsystemBase : SubsystemBase
     #region " voltmeter high limit "
 
     /// <summary>   The Voltmeter High Limit range. </summary>
-    private Std.Primitives.RangeR? _voltmeterHighLimitRange;
 
     /// <summary>   The Voltmeter High Limit range in seconds. </summary>
     /// <value> The Voltmeter High Limit range. </value>
     public Std.Primitives.RangeR? VoltmeterHighLimitRange
     {
-        get => this._voltmeterHighLimitRange;
-        set => _ = base.SetProperty( ref this._voltmeterHighLimitRange, value );
+        get;
+        set => _ = base.SetProperty( ref field, value );
     }
 
     /// <summary>   QueryEnum if 'value' is out of voltmeter high limit range. </summary>
@@ -1877,16 +1862,13 @@ public abstract partial class HarmonicsMeasureSubsystemBase : SubsystemBase
         return !this.VoltmeterHighLimitRange?.Contains( value ) ?? false;
     }
 
-    /// <summary>   The Voltmeter HighLimit. </summary>
-    private double? _voltmeterHighLimit;
-
     /// <summary>   Gets or sets the Voltmeter High Limit. </summary>
     /// <value> The Voltmeter High Limit. </value>
     public double? VoltmeterHighLimit
     {
-        get => this._voltmeterHighLimit;
+        get;
 
-        protected set => _ = base.SetProperty( ref this._voltmeterHighLimit, value );
+        protected set => _ = base.SetProperty( ref field, value );
     }
 
     /// <summary>   Writes and reads back the Voltmeter High Limit. </summary>
@@ -2015,14 +1997,13 @@ public abstract partial class HarmonicsMeasureSubsystemBase : SubsystemBase
     #region " voltmeter low limit "
 
     /// <summary>   The Voltmeter Low Limit range. </summary>
-    private Std.Primitives.RangeR? _voltmeterLowLimitRange;
 
     /// <summary>   The Voltmeter Low Limit range in seconds. </summary>
     /// <value> The Voltmeter Low Limit range. </value>
     public Std.Primitives.RangeR? VoltmeterLowLimitRange
     {
-        get => this._voltmeterLowLimitRange;
-        set => _ = base.SetProperty( ref this._voltmeterLowLimitRange, value );
+        get;
+        set => _ = base.SetProperty( ref field, value );
     }
 
     /// <summary>   QueryEnum if 'value' is out of voltmeter low limit range. </summary>
@@ -2034,16 +2015,13 @@ public abstract partial class HarmonicsMeasureSubsystemBase : SubsystemBase
         return !this.VoltmeterLowLimitRange?.Contains( value ) ?? false;
     }
 
-    /// <summary>   The Voltmeter LowLimit. </summary>
-    private double? _voltmeterLowLimit;
-
     /// <summary>   Gets or sets the Voltmeter Low Limit. </summary>
     /// <value> The Voltmeter Low Limit. </value>
     public double? VoltmeterLowLimit
     {
-        get => this._voltmeterLowLimit;
+        get;
 
-        protected set => _ = base.SetProperty( ref this._voltmeterLowLimit, value );
+        protected set => _ = base.SetProperty( ref field, value );
     }
 
     /// <summary>   Writes and reads back the Voltmeter Low Limit. </summary>

@@ -40,37 +40,33 @@ public abstract class ThermalStreamSubsystemBase( StatusSubsystemBase statusSubs
     #region " cycle count "
 
     /// <summary> The cycle count range. </summary>
-    private Std.Primitives.RangeI _cycleCountRange = Std.Primitives.RangeI.FullNonnegative;
 
     /// <summary> The Range of the CycleCount. </summary>
     /// <value> The cycle count range. </value>
     public Std.Primitives.RangeI CycleCountRange
     {
-        get => this._cycleCountRange;
+        get;
         set
         {
             if ( this.CycleCountRange != value )
             {
-                this._cycleCountRange = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
-    }
-
-    /// <summary> the Cycle Count. </summary>
-    private int? _cycleCount;
+    } = Std.Primitives.RangeI.FullNonnegative;
 
     /// <summary> Gets or sets the cached CycleCount. </summary>
     /// <value> <c>null</c> if value is not known. </value>
     public int? CycleCount
     {
-        get => this._cycleCount;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.CycleCount, value ) )
             {
-                this._cycleCount = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -116,19 +112,18 @@ public abstract class ThermalStreamSubsystemBase( StatusSubsystemBase statusSubs
     #region " cycle number "
 
     /// <summary> the Cycle Number. </summary>
-    private int? _cycleNumber;
 
     /// <summary> Gets or sets the cached CycleNumber. </summary>
     /// <value> <c>null</c> if value is not known. </value>
     public int? CycleNumber
     {
-        get => this._cycleNumber;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.CycleNumber, value ) )
             {
-                this._cycleNumber = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -181,19 +176,18 @@ public abstract class ThermalStreamSubsystemBase( StatusSubsystemBase statusSubs
     #region " device error "
 
     /// <summary> The DeviceError. </summary>
-    private string? _deviceError;
 
     /// <summary> Gets or sets the cached DeviceError. </summary>
     /// <value> <c>null</c> if value is not known. </value>
     public string? DeviceError
     {
-        get => this._deviceError;
+        get;
 
         protected set
         {
             if ( !Equals( this.DeviceError, value ) )
             {
-                this._deviceError = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -216,7 +210,6 @@ public abstract class ThermalStreamSubsystemBase( StatusSubsystemBase statusSubs
     #region " device control "
 
     /// <summary> Device Control. </summary>
-    private bool? _deviceControl;
 
     /// <summary> Gets or sets the cached Device Control sentinel. </summary>
     /// <value>
@@ -225,13 +218,13 @@ public abstract class ThermalStreamSubsystemBase( StatusSubsystemBase statusSubs
     /// </value>
     public bool? DeviceControl
     {
-        get => this._deviceControl;
+        get;
 
         protected set
         {
             if ( !Equals( this.DeviceControl, value ) )
             {
-                this._deviceControl = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -283,19 +276,18 @@ public abstract class ThermalStreamSubsystemBase( StatusSubsystemBase statusSubs
     #region " device sensor type "
 
     /// <summary> the Device Sensor Type. </summary>
-    private DeviceSensorType? _deviceSensorType;
 
     /// <summary> Gets or sets the cached DeviceSensorType. </summary>
     /// <value> <c>null</c> if value is not known. </value>
     public DeviceSensorType? DeviceSensorType
     {
-        get => this._deviceSensorType;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.DeviceSensorType, value ) )
             {
-                this._deviceSensorType = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -343,37 +335,33 @@ public abstract class ThermalStreamSubsystemBase( StatusSubsystemBase statusSubs
     #region " device thermal constant "
 
     /// <summary> The device thermal constant range. </summary>
-    private Std.Primitives.RangeI _deviceThermalConstantRange = Std.Primitives.RangeI.FullNonnegative;
 
     /// <summary> The Device Thermal Constant range. </summary>
     /// <value> The device thermal constant range. </value>
     public Std.Primitives.RangeI DeviceThermalConstantRange
     {
-        get => this._deviceThermalConstantRange;
+        get;
         set
         {
             if ( this.DeviceThermalConstantRange != value )
             {
-                this._deviceThermalConstantRange = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
-    }
-
-    /// <summary> the Device Thermal Constant. </summary>
-    private int? _deviceThermalConstant;
+    } = Std.Primitives.RangeI.FullNonnegative;
 
     /// <summary> Gets or sets the cached DeviceThermalConstant. </summary>
     /// <value> <c>null</c> if value is not known. </value>
     public int? DeviceThermalConstant
     {
-        get => this._deviceThermalConstant;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.DeviceThermalConstant, value ) )
             {
-                this._deviceThermalConstant = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -421,7 +409,6 @@ public abstract class ThermalStreamSubsystemBase( StatusSubsystemBase statusSubs
     #region " head down "
 
     /// <summary> Head Down. </summary>
-    private bool? _headDown;
 
     /// <summary> Gets or sets the cached Head Down sentinel. </summary>
     /// <value>
@@ -430,13 +417,13 @@ public abstract class ThermalStreamSubsystemBase( StatusSubsystemBase statusSubs
     /// </value>
     public bool? HeadDown
     {
-        get => this._headDown;
+        get;
 
         protected set
         {
             if ( !Equals( this.HeadDown, value ) )
             {
-                this._headDown = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -525,20 +512,17 @@ public abstract class ThermalStreamSubsystemBase( StatusSubsystemBase statusSubs
     /// <value> The ramp rate unit. </value>
     public cc.isr.UnitsAmounts.Unit RampRateUnit { get; set; } = cc.isr.UnitsAmounts.StandardUnits.TemperatureUnits.DegreesCelsiusPerMinute;
 
-    /// <summary> The Ramp Rate. </summary>
-    private double? _rampRate;
-
     /// <summary> Gets or sets the cached Ramp Rate. </summary>
     /// <value> <c>null</c> if value is not known. </value>
     public double? RampRate
     {
-        get => this._rampRate;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.RampRate, value ) )
             {
-                this._rampRate = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -617,22 +601,21 @@ public abstract class ThermalStreamSubsystemBase( StatusSubsystemBase statusSubs
     #region " low ramp rate "
 
     /// <summary> The low ramp rate range. </summary>
-    private Std.Primitives.RangeR _lowRampRateRange = Std.Primitives.RangeR.FullNonnegative;
 
     /// <summary> The Low Ramp Rate range in degrees per minute. </summary>
     /// <value> The low ramp rate range. </value>
     public Std.Primitives.RangeR LowRampRateRange
     {
-        get => this._lowRampRateRange;
+        get;
         set
         {
             if ( this.LowRampRateRange != value )
             {
-                this._lowRampRateRange = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
-    }
+    } = Std.Primitives.RangeR.FullNonnegative;
 
     /// <summary> Gets or sets the Low Ramp Rate command format. </summary>
     /// <value> the Low Ramp Rate command format. </value>
@@ -643,22 +626,21 @@ public abstract class ThermalStreamSubsystemBase( StatusSubsystemBase statusSubs
     #region " high ramp rate "
 
     /// <summary> The high ramp rate range. </summary>
-    private Std.Primitives.RangeR _highRampRateRange = Std.Primitives.RangeR.FullNonnegative;
 
     /// <summary> The High Ramp Rate range in degrees per minute. </summary>
     /// <value> The high ramp rate range. </value>
     public Std.Primitives.RangeR HighRampRateRange
     {
-        get => this._highRampRateRange;
+        get;
         set
         {
             if ( this.HighRampRateRange != value )
             {
-                this._highRampRateRange = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
-    }
+    } = Std.Primitives.RangeR.FullNonnegative;
 
     /// <summary> Gets or sets the High Ramp Rate command format. </summary>
     /// <value> the High Ramp Rate command format. </value>
@@ -671,37 +653,33 @@ public abstract class ThermalStreamSubsystemBase( StatusSubsystemBase statusSubs
     #region " set point "
 
     /// <summary> The setpoint range. </summary>
-    private Std.Primitives.RangeR _setpointRange = Std.Primitives.RangeR.Full;
 
     /// <summary> The Setpoint range. </summary>
     /// <value> The setpoint range. </value>
     public Std.Primitives.RangeR SetpointRange
     {
-        get => this._setpointRange;
+        get;
         set
         {
             if ( this.SetpointRange != value )
             {
-                this._setpointRange = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
-    }
-
-    /// <summary> The Set Point. </summary>
-    private double? _setpoint;
+    } = Std.Primitives.RangeR.Full;
 
     /// <summary> Gets or sets the cached sense Setpoint. </summary>
     /// <value> <c>null</c> if value is not known. </value>
     public double? Setpoint
     {
-        get => this._setpoint;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.Setpoint, value ) )
             {
-                this._setpoint = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -747,37 +725,33 @@ public abstract class ThermalStreamSubsystemBase( StatusSubsystemBase statusSubs
     #region " set point number "
 
     /// <summary> The setpoint number range. </summary>
-    private Std.Primitives.RangeI _setpointNumberRange = Std.Primitives.RangeI.FullNonnegative;
 
     /// <summary> The Setpoint Number range. </summary>
     /// <value> The setpoint number range. </value>
     public Std.Primitives.RangeI SetpointNumberRange
     {
-        get => this._setpointNumberRange;
+        get;
         set
         {
             if ( this.SetpointNumberRange != value )
             {
-                this._setpointNumberRange = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
-    }
-
-    /// <summary> The Set Point Number. </summary>
-    private int? _setpointNumber;
+    } = Std.Primitives.RangeI.FullNonnegative;
 
     /// <summary> Gets or sets the cached SetpointNumber. </summary>
     /// <value> <c>null</c> if value is not known. </value>
     public int? SetpointNumber
     {
-        get => this._setpointNumber;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.SetpointNumber, value ) )
             {
-                this._setpointNumber = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -844,37 +818,33 @@ public abstract class ThermalStreamSubsystemBase( StatusSubsystemBase statusSubs
     #region " set point window "
 
     /// <summary> The setpoint window range. </summary>
-    private Std.Primitives.RangeR _setpointWindowRange = Std.Primitives.RangeR.FullNonnegative;
 
     /// <summary> The Setpoint Window range in degrees centigrade. </summary>
     /// <value> The setpoint window range. </value>
     public Std.Primitives.RangeR SetpointWindowRange
     {
-        get => this._setpointWindowRange;
+        get;
         set
         {
             if ( this.SetpointWindowRange != value )
             {
-                this._setpointWindowRange = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
-    }
-
-    /// <summary> the Set Point Window. </summary>
-    private double? _setpointWindow;
+    } = Std.Primitives.RangeR.FullNonnegative;
 
     /// <summary> Gets or sets the cached SetpointWindow. </summary>
     /// <value> <c>null</c> if value is not known. </value>
     public double? SetpointWindow
     {
-        get => this._setpointWindow;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.SetpointWindow, value ) )
             {
-                this._setpointWindow = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -922,37 +892,33 @@ public abstract class ThermalStreamSubsystemBase( StatusSubsystemBase statusSubs
     #region " soak time "
 
     /// <summary> The soak time range. </summary>
-    private Std.Primitives.RangeI _soakTimeRange = Std.Primitives.RangeI.FullNonnegative;
 
     /// <summary> The Soak Time range in seconds. </summary>
     /// <value> The soak time range. </value>
     public Std.Primitives.RangeI SoakTimeRange
     {
-        get => this._soakTimeRange;
+        get;
         set
         {
             if ( this.SoakTimeRange != value )
             {
-                this._soakTimeRange = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
-    }
-
-    /// <summary> The Soak Time. </summary>
-    private double? _soakTime;
+    } = Std.Primitives.RangeI.FullNonnegative;
 
     /// <summary> Gets or sets the cached Soak Time. </summary>
     /// <value> <c>null</c> if value is not known. </value>
     public double? SoakTime
     {
-        get => this._soakTime;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.SoakTime, value ) )
             {
-                this._soakTime = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -998,19 +964,18 @@ public abstract class ThermalStreamSubsystemBase( StatusSubsystemBase statusSubs
     #region " temperature "
 
     /// <summary> The Temperature. </summary>
-    private double? _temperature;
 
     /// <summary> Gets or sets the cached Temperature. </summary>
     /// <value> <c>null</c> if value is not known. </value>
     public double? Temperature
     {
-        get => this._temperature;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.Temperature, value ) )
             {
-                this._temperature = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -1033,37 +998,33 @@ public abstract class ThermalStreamSubsystemBase( StatusSubsystemBase statusSubs
     #region " maximum test time "
 
     /// <summary> The maximum test time range. </summary>
-    private Std.Primitives.RangeI _maximumTestTimeRange = Std.Primitives.RangeI.FullNonnegative;
 
     /// <summary> The maximum Test Time range in seconds. </summary>
     /// <value> The maximum test time range. </value>
     public Std.Primitives.RangeI MaximumTestTimeRange
     {
-        get => this._maximumTestTimeRange;
+        get;
         set
         {
             if ( this.MaximumTestTimeRange != value )
             {
-                this._maximumTestTimeRange = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
-    }
-
-    /// <summary> The Maximum Test Time. </summary>
-    private double? _maximumTestTime;
+    } = Std.Primitives.RangeI.FullNonnegative;
 
     /// <summary> Gets or sets the cached Maximum Test Time. </summary>
     /// <value> <c>null</c> if value is not known. </value>
     public double? MaximumTestTime
     {
-        get => this._maximumTestTime;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.MaximumTestTime, value ) )
             {
-                this._maximumTestTime = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -1111,19 +1072,18 @@ public abstract class ThermalStreamSubsystemBase( StatusSubsystemBase statusSubs
     #region " system screen "
 
     /// <summary> The System Screen. </summary>
-    private int? _systemScreen;
 
     /// <summary> Gets or sets the cached System Screen. </summary>
     /// <value> <c>null</c> if value is not known. </value>
     public int? SystemScreen
     {
-        get => this._systemScreen;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.SystemScreen, value ) )
             {
-                this._systemScreen = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -1150,7 +1110,6 @@ public abstract class ThermalStreamSubsystemBase( StatusSubsystemBase statusSubs
     #region " bit mask"
 
     /// <summary> The Temperature event enable bitmask. </summary>
-    private int? _temperatureEventEnableBitmask;
 
     /// <summary>
     /// Gets or sets the cached value of the Temperature register event enable bit mask.
@@ -1165,13 +1124,13 @@ public abstract class ThermalStreamSubsystemBase( StatusSubsystemBase statusSubs
     /// <value> The mask to use for enabling the events. </value>
     public int? TemperatureEventEnableBitmask
     {
-        get => this._temperatureEventEnableBitmask;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.TemperatureEventEnableBitmask, value ) )
             {
-                this._temperatureEventEnableBitmask = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -1229,19 +1188,18 @@ public abstract class ThermalStreamSubsystemBase( StatusSubsystemBase statusSubs
     #region " condition "
 
     /// <summary> The Temperature event Condition. </summary>
-    private int? _temperatureEventCondition;
 
     /// <summary> Gets or sets the cached Condition of the Temperature register events. </summary>
     /// <value> <c>null</c> if value is not known;. </value>
     public int? TemperatureEventCondition
     {
-        get => this._temperatureEventCondition;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.TemperatureEventCondition, value ) )
             {
-                this._temperatureEventCondition = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

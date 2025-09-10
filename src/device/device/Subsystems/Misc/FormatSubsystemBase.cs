@@ -59,21 +59,16 @@ public abstract class FormatSubsystemBase( StatusSubsystemBase statusSubsystem )
         }
     }
 
-    /// <summary> The supported elements. </summary>
-    private ReadingElementTypes _supportedElements;
-
     /// <summary> Gets or sets the supported elements. </summary>
     /// <value> The supported elements. </value>
     public ReadingElementTypes SupportedElements
     {
-        get =>
-            // supported elements for the 2002 are: Reading channel, reading number, units, timestamp and status.
-            this._supportedElements;
+        get;
         set
         {
             if ( value != this.SupportedElements )
             {
-                this._supportedElements = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -138,20 +133,17 @@ public abstract class FormatSubsystemBase( StatusSubsystemBase statusSubsystem )
         return parsed;
     }
 
-    /// <summary> Reading Elements. </summary>
-    private ReadingElementTypes _elements;
-
     /// <summary> Gets or sets the cached Elements. </summary>
     /// <value> A List of scans. </value>
     public ReadingElementTypes Elements
     {
-        get => this._elements;
+        get;
 
         protected set
         {
             if ( !this.Elements.Equals( value ) )
             {
-                this._elements = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

@@ -68,19 +68,16 @@ public class RealValuePayload : Pith.PayloadBase
     /// <value> The analog input read. </value>
     public cc.isr.UnitsAmounts.Amount Amount { get; set; }
 
-    /// <summary> The real value. </summary>
-    private double _realValue;
-
     /// <summary> Gets or sets the value. </summary>
     /// <value> The real value. </value>
     public double RealValue
     {
-        get => this._realValue;
+        get;
         set
         {
             if ( value != this.RealValue )
             {
-                this._realValue = value;
+                field = value;
                 this.Amount = new cc.isr.UnitsAmounts.Amount( value, this.Unit );
             }
         }

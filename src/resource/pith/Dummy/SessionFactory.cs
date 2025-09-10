@@ -9,8 +9,8 @@ namespace cc.isr.VI.Pith;
 [CLSCompliant( false )]
 public class DummySessionFactory : SessionFactoryBase
 {
-    /// <summary> Creates gpib interface session. </summary>
-    /// <returns> The new gpib interface session. </returns>
+    /// <summary> Creates GPIB interface session. </summary>
+    /// <returns> The new GPIB interface session. </returns>
     public override InterfaceSessionBase GpibInterfaceSession()
     {
         return new DummyGpibInterfaceSession();

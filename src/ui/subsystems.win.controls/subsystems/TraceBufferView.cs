@@ -93,7 +93,6 @@ public partial class TraceBufferView : cc.isr.WinControls.ModelViewBase
     #region " public members "
 
     /// <summary> Name of the buffer. </summary>
-    private string _bufferName = string.Empty;
 
     /// <summary> Gets or sets the name of the buffer. </summary>
     /// <value> The name of the buffer. </value>
@@ -101,16 +100,16 @@ public partial class TraceBufferView : cc.isr.WinControls.ModelViewBase
     [Browsable( false )]
     public string BufferName
     {
-        get => this._bufferName;
+        get;
         set
         {
             if ( !string.Equals( value, this.BufferName, StringComparison.Ordinal ) )
             {
-                this._bufferName = value;
+                field = value;
                 this._bufferNameLabel.Text = value;
             }
         }
-    }
+    } = string.Empty;
 
     /// <summary> Gets or sets the size of the buffer. </summary>
     /// <value> The size of the buffer. </value>

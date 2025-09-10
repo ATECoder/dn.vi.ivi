@@ -192,18 +192,17 @@ public class BinningInfo : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
     #region " failure bits "
 
     /// <summary> The Failure Bits. </summary>
-    private int _failureBits;
 
     /// <summary> Gets or sets the Output fail bit pattern (15). </summary>
     /// <value> The Failure Bits or none if not set or unknown. </value>
     public int FailureBits
     {
-        get => this._failureBits;
+        get;
         set
         {
             if ( this.FailureBits != value )
             {
-                this._failureBits = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

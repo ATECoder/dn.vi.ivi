@@ -75,8 +75,8 @@ public abstract class SessionBaseTests
         Assert.IsNotNull( this.TestSiteSettings );
         Assert.IsTrue( this.TestSiteSettings.Exists );
         double expectedUpperLimit = 12d;
-        Assert.IsTrue( Math.Abs( this.TestSiteSettings.TimeZoneOffset() ) < expectedUpperLimit,
-                       $"{nameof( this.TestSiteSettings.TimeZoneOffset )} should be lower than {expectedUpperLimit}" );
+        Assert.IsLessThan( expectedUpperLimit,
+Math.Abs( this.TestSiteSettings.TimeZoneOffset() ), $"{nameof( this.TestSiteSettings.TimeZoneOffset )} should be lower than {expectedUpperLimit}" );
 
         if ( Logger is not null )
         {

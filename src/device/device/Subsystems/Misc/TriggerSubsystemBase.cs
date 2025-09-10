@@ -151,7 +151,6 @@ public abstract partial class TriggerSubsystemBase : SubsystemBase
     #region " auto delay enabled "
 
     /// <summary> The automatic delay enabled. </summary>
-    private bool? _autoDelayEnabled;
 
     /// <summary> Gets or sets the cached Auto Delay Enabled sentinel. </summary>
     /// <value>
@@ -160,13 +159,13 @@ public abstract partial class TriggerSubsystemBase : SubsystemBase
     /// </value>
     public bool? AutoDelayEnabled
     {
-        get => this._autoDelayEnabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.AutoDelayEnabled, value ) )
             {
-                this._autoDelayEnabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -218,7 +217,6 @@ public abstract partial class TriggerSubsystemBase : SubsystemBase
     #region " averaging enabled "
 
     /// <summary> The averaging enabled. </summary>
-    private bool? _averagingEnabled;
 
     /// <summary> Gets or sets the cached Averaging Enabled sentinel. </summary>
     /// <value>
@@ -227,13 +225,13 @@ public abstract partial class TriggerSubsystemBase : SubsystemBase
     /// </value>
     public bool? AveragingEnabled
     {
-        get => this._averagingEnabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.AveragingEnabled, value ) )
             {
-                this._averagingEnabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -285,7 +283,6 @@ public abstract partial class TriggerSubsystemBase : SubsystemBase
     #region " continuous enabled "
 
     /// <summary> The continuous enabled. </summary>
-    private bool? _continuousEnabled;
 
     /// <summary> Gets or sets the cached Continuous Enabled sentinel. </summary>
     /// <value>
@@ -294,13 +291,13 @@ public abstract partial class TriggerSubsystemBase : SubsystemBase
     /// </value>
     public bool? ContinuousEnabled
     {
-        get => this._continuousEnabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.ContinuousEnabled, value ) )
             {
-                this._continuousEnabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -352,7 +349,6 @@ public abstract partial class TriggerSubsystemBase : SubsystemBase
     #region " trigger count "
 
     /// <summary> Number of maximum triggers. </summary>
-    private int _maximumTriggerCount;
 
     /// <summary> Gets or sets the cached Maximum Trigger Count. </summary>
     /// <remarks>
@@ -362,13 +358,13 @@ public abstract partial class TriggerSubsystemBase : SubsystemBase
     /// <value> The Trigger MaximumTriggerCount or none if not set or unknown. </value>
     public int MaximumTriggerCount
     {
-        get => this._maximumTriggerCount;
+        get;
 
         protected set
         {
             if ( !Equals( this.MaximumTriggerCount, value ) )
             {
-                this._maximumTriggerCount = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -378,9 +374,6 @@ public abstract partial class TriggerSubsystemBase : SubsystemBase
     /// <value> The number of is infinite triggers. </value>
     public bool? IsTriggerCountInfinite => this.TriggerCount.HasValue ? this.TriggerCount >= int.MaxValue : new bool?();
 
-    /// <summary> Number of triggers. </summary>
-    private int? _triggerCount;
-
     /// <summary> Gets or sets the cached Trigger Count. </summary>
     /// <remarks>
     /// Specifies how many times an operation is performed in the specified layer of the trigger
@@ -389,13 +382,13 @@ public abstract partial class TriggerSubsystemBase : SubsystemBase
     /// <value> The trigger count or none if not set or unknown. </value>
     public int? TriggerCount
     {
-        get => this._triggerCount;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.TriggerCount, value ) )
             {
-                this._triggerCount = value;
+                field = value;
                 this.NotifyPropertyChanged();
                 this.NotifyPropertyChanged( nameof( this.IsTriggerCountInfinite ) );
             }
@@ -544,19 +537,18 @@ public abstract partial class TriggerSubsystemBase : SubsystemBase
     #region " input line number "
 
     /// <summary> The input line number. </summary>
-    private int? _inputLineNumber;
 
     /// <summary> Gets or sets the cached Trigger Input Line Number. </summary>
     /// <value> The Trigger InputLineNumber or none if not set or unknown. </value>
     public int? InputLineNumber
     {
-        get => this._inputLineNumber;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.InputLineNumber, value ) )
             {
-                this._inputLineNumber = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -611,19 +603,18 @@ public abstract partial class TriggerSubsystemBase : SubsystemBase
     #region " output line number "
 
     /// <summary> The output line number. </summary>
-    private int? _outputLineNumber;
 
     /// <summary> Gets or sets the cached Trigger Output Line Number. </summary>
     /// <value> The Trigger OutputLineNumber or none if not set or unknown. </value>
     public int? OutputLineNumber
     {
-        get => this._outputLineNumber;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.OutputLineNumber, value ) )
             {
-                this._outputLineNumber = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -796,30 +787,24 @@ public abstract partial class TriggerSubsystemBase : SubsystemBase
     /// <value> The trigger state caption. </value>
     public string TriggerStateCaption => this.TriggerState.HasValue ? this.TriggerState.ToString() : string.Empty;
 
-    /// <summary> State of the trigger. </summary>
-    private TriggerState? _triggerState;
-
     /// <summary> Gets or sets the cached State TriggerState. </summary>
     /// <value>
     /// The <see cref="TriggerState">State Trigger State</see> or none if not set or unknown.
     /// </value>
     public TriggerState? TriggerState
     {
-        get => this._triggerState;
+        get;
 
         protected set
         {
             if ( !this.TriggerState.Equals( value ) )
             {
-                this._triggerState = value;
+                field = value;
                 this.NotifyPropertyChanged();
                 this.NotifyPropertyChanged( nameof( this.TriggerStateCaption ) );
             }
         }
     }
-
-    /// <summary> State of the trigger block. </summary>
-    private TriggerState? _triggerBlockState;
 
     /// <summary> Gets or sets the cached trigger block <see cref="TriggerState"/>. </summary>
     /// <value>
@@ -827,32 +812,29 @@ public abstract partial class TriggerSubsystemBase : SubsystemBase
     /// </value>
     public TriggerState? TriggerBlockState
     {
-        get => this._triggerBlockState;
+        get;
 
         protected set
         {
             if ( !this.TriggerBlockState.Equals( value ) )
             {
-                this._triggerBlockState = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
     }
 
-    /// <summary> The trigger state block number. </summary>
-    private int? _triggerStateBlockNumber;
-
     /// <summary> Gets or sets the cached trigger state block number. </summary>
     /// <value> The block number of the trigger state. </value>
     public int? TriggerStateBlockNumber
     {
-        get => this._triggerStateBlockNumber;
+        get;
 
         protected set
         {
             if ( !this.TriggerStateBlockNumber.Equals( value ) )
             {
-                this._triggerStateBlockNumber = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

@@ -38,30 +38,26 @@ public class FirmwareFileInfo : CommunityToolkit.Mvvm.ComponentModel.ObservableO
         set => _ = this.SetProperty( ref this._firmwareDirectoryInfo, value );
     }
 
-    private string _fileName = string.Empty;
-
     /// <summary>   Gets or sets the name of the firmware file. </summary>
     /// <value> The filename of the firmware file. </value>
     public string FileName
     {
-        get => this._fileName;
+        get;
         set
         {
-            if ( this.SetProperty( ref this._fileName, value )
+            if ( this.SetProperty( ref field, value )
                 && !string.IsNullOrEmpty( value ) && !string.IsNullOrWhiteSpace( this.FirmwareDirectoryInfo.FilesFolderPath ) )
-                this.FilePath = System.IO.Path.Combine( this.FirmwareDirectoryInfo.FilesFolderPath, this._fileName );
+                this.FilePath = System.IO.Path.Combine( this.FirmwareDirectoryInfo.FilesFolderPath, field );
         }
-    }
-
-    private string _filePath = string.Empty;
+    } = string.Empty;
 
     /// <summary>   Gets the full path of the firmware file. </summary>
     /// <value> The full path of the firmware file. </value>
     public string FilePath
     {
-        get => this._filePath;
-        private set => _ = this.SetProperty( ref this._filePath, value );
-    }
+        get;
+        private set => _ = this.SetProperty( ref field, value );
+    } = string.Empty;
 
     /// <summary>   Opens a firmware file as a <see cref="System.IO.StreamReader"/>. </summary>
     /// <remarks>   2024-09-10. </remarks>

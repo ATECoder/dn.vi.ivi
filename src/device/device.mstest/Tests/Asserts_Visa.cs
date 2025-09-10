@@ -21,10 +21,10 @@ public sealed partial class Asserts
         string[]? resources;
         using ( cc.isr.VI.Pith.ResourcesProviderBase rm = SessionFactory.Instance.Factory.ResourcesProvider() )
         {
-            resources = rm.FindResources( resourcesFilter ).ToArray();
+            resources = [.. rm.FindResources( resourcesFilter )];
         }
         Assert.IsNotNull( resources );
-        Assert.IsTrue( resources.Length > 0, $"VISA Resources {(resources?.Length > 0 ? string.Empty : "not")} found among {resourcesFilter}" );
+        Assert.IsGreaterThan( 0, resources.Length, $"VISA Resources {(resources?.Length > 0 ? string.Empty : "not")} found among {resourcesFilter}" );
         Assert.IsTrue( resources!.Contains( resourceSettings.ResourceName ), $"Resource {resourceSettings.ResourceName} not found among {resourcesFilter}" );
     }
 

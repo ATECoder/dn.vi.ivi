@@ -14,8 +14,8 @@ public abstract class SessionFactoryBase
     {
     }
 
-    /// <summary> Creates Gpib interface SessionBase. </summary>
-    /// <returns> The new Gpib interface SessionBase. </returns>
+    /// <summary> Creates GPIB interface SessionBase. </summary>
+    /// <returns> The new GPIB interface SessionBase. </returns>
     public abstract InterfaceSessionBase GpibInterfaceSession();
 
     /// <summary>   Creates resources manager. </summary>

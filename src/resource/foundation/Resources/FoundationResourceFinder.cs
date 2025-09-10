@@ -38,7 +38,9 @@ public class FoundationResourceFinder : Pith.ResourceFinderBase
     [CLSCompliant( false )]
     public static Ivi.Visa.HardwareInterfaceType ConvertInterfaceType( Pith.HardwareInterfaceType value )
     {
-        return Enum.IsDefined( typeof( Ivi.Visa.HardwareInterfaceType ), ( int ) value ) ? ( Ivi.Visa.HardwareInterfaceType ) ( int ) value : Ivi.Visa.HardwareInterfaceType.Gpib;
+        return Enum.IsDefined( typeof( Ivi.Visa.HardwareInterfaceType ), ( int ) value )
+            ? ( Ivi.Visa.HardwareInterfaceType ) ( int ) value
+            : Ivi.Visa.HardwareInterfaceType.Gpib;
     }
 
     /// <summary> Convert parse result. </summary>

@@ -76,7 +76,6 @@ public partial class EmptyView : cc.isr.WinControls.ModelViewBase
     #region " public members "
 
     /// <summary> Name of the subsystem. </summary>
-    private string? _subsystemName;
 
     /// <summary> Gets or sets the name of the subsystem. </summary>
     /// <value> The name of the subsystem. </value>
@@ -84,12 +83,12 @@ public partial class EmptyView : cc.isr.WinControls.ModelViewBase
     [Browsable( false )]
     public string? SubsystemName
     {
-        get => this._subsystemName;
+        get;
         set
         {
             if ( !string.Equals( value, this.SubsystemName, StringComparison.Ordinal ) )
             {
-                this._subsystemName = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

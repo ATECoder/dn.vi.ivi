@@ -9,8 +9,6 @@ public class CommandsSettings() : CommunityToolkit.Mvvm.ComponentModel.Observabl
 {
     #region " exists "
 
-    private bool _exists;
-
     /// <summary>
     /// Gets or sets a value indicating whether this settings section exists and the values were thus
     /// fetched from the settings file.
@@ -19,8 +17,8 @@ public class CommandsSettings() : CommunityToolkit.Mvvm.ComponentModel.Observabl
     [Description( "True if this settings section exists and was read from the JSon settings file." )]
     public bool Exists
     {
-        get => this._exists;
-        set => _ = this.SetProperty( ref this._exists, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
 
     #endregion
@@ -109,71 +107,59 @@ public class CommandsSettings() : CommunityToolkit.Mvvm.ComponentModel.Observabl
         set => _ = this.SetProperty( ref this._operationCompletedReplyMessage, value );
     }
 
-    private string _resetKnownStateCommand = "*RST";
-
     /// <summary>   Gets or sets the 'reset known state' command. </summary>
     /// <value> The 'reset known state' command. </value>
     [Description( "The command to reset the instrument to its 'known' state [*RST]" )]
     public string ResetKnownStateCommand
     {
-        get => this._resetKnownStateCommand;
-        set => _ = this.SetProperty( ref this._resetKnownStateCommand, value );
-    }
-
-    private string _serviceRequestEnableCommandFormat = "*SRE {0}";
+        get;
+        set => _ = this.SetProperty( ref field, value );
+    } = "*RST";
 
     /// <summary> Gets or sets the service request enable command format. </summary>
     /// <value> The service request enable command format. </value>
     [Description( "The service request enable command format [*SRE {0}]" )]
     public string ServiceRequestEnableCommandFormat
     {
-        get => this._serviceRequestEnableCommandFormat;
-        set => _ = this.SetProperty( ref this._serviceRequestEnableCommandFormat, value );
-    }
-
-    private string _serviceRequestEnableQueryCommand = "*SRE?";
+        get;
+        set => _ = this.SetProperty( ref field, value );
+    } = "*SRE {0}";
 
     /// <summary> Gets or sets the service request enable query command. </summary>
     /// <value> The service request enable query command. </value>
     [Description( "The service request enable query command [*SRE?]" )]
     public string ServiceRequestEnableQueryCommand
     {
-        get => this._serviceRequestEnableQueryCommand;
-        set => _ = this.SetProperty( ref this._serviceRequestEnableQueryCommand, value );
-    }
-
-    private string _standardEventEnableCommandFormat = "*ESE {0}";
+        get;
+        set => _ = this.SetProperty( ref field, value );
+    } = "*SRE?";
 
     /// <summary> Gets or sets the Standard Event enable query command. </summary>
     /// <value> The Standard Event enable query command. </value>
     [Description( "The Standard Event enable command format [*ESE {0}]" )]
     public string StandardEventEnableCommandFormat
     {
-        get => this._standardEventEnableCommandFormat;
-        set => _ = this.SetProperty( ref this._standardEventEnableCommandFormat, value );
-    }
-
-    private string _standardEventEnableQueryCommand = "*ESE?";
+        get;
+        set => _ = this.SetProperty( ref field, value );
+    } = "*ESE {0}";
 
     /// <summary> Gets or sets the Standard Event enable query command. </summary>
     /// <value> The Standard Event enable query command. </value>
     [Description( "The Standard Event enable query command [*ESE?]" )]
     public string StandardEventEnableQueryCommand
     {
-        get => this._standardEventEnableQueryCommand;
-        set => _ = this.SetProperty( ref this._standardEventEnableQueryCommand, value );
-    }
-
-    private string _standardEventStatusQueryCommand = "*ESR?";
+        get;
+        set => _ = this.SetProperty( ref field, value );
+    } = "*ESE?";
 
     /// <summary> Gets or sets the Standard Event status query command. </summary>
     /// <value> The Standard Event query command. </value>
     [Description( "The Standard Event status query command [*ESR?]" )]
     public string StandardEventStatusQueryCommand
     {
-        get => this._standardEventStatusQueryCommand;
-        set => _ = this.SetProperty( ref this._standardEventStatusQueryCommand, value );
-    }
+        get;
+        set => _ = this.SetProperty( ref field, value );
+    } = "*ESR?";
 
     private string _statusByteQueryCommand = "*STB?";
 
@@ -186,16 +172,14 @@ public class CommandsSettings() : CommunityToolkit.Mvvm.ComponentModel.Observabl
         set => _ = this.SetProperty( ref this._statusByteQueryCommand, value );
     }
 
-    private string _waitToContinueCommand = "*WAI";
-
     /// <summary>   Gets or sets the wait to continue command. </summary>
     /// <value> The wait to continue. </value>
     [Description( "The wait to continue command [*WAI]" )]
     public string WaitToContinueCommand
     {
-        get => this._waitToContinueCommand;
-        set => _ = this.SetProperty( ref this._waitToContinueCommand, value );
-    }
+        get;
+        set => _ = this.SetProperty( ref field, value );
+    } = "*WAI";
 
     #endregion
 }

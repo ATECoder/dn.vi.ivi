@@ -17,9 +17,6 @@ public partial class DigitalOutputSubsystemBase
     /// <value> A Dictionary of Output mode parses. </value>
     public Pith.EnumReadWriteCollection OutputModeReadWrites { get; private set; }
 
-    /// <summary> The supported output modes. </summary>
-    private OutputModes _supportedOutputModes;
-
     /// <summary>
     /// Gets or sets the supported Function Mode. This is a subset of the functions supported by the
     /// instrument.
@@ -27,31 +24,28 @@ public partial class DigitalOutputSubsystemBase
     /// <value> The supported Output modes. </value>
     public OutputModes SupportedOutputModes
     {
-        get => this._supportedOutputModes;
+        get;
         set
         {
             if ( !this.SupportedOutputModes.Equals( value ) )
             {
-                this._supportedOutputModes = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
     }
 
-    /// <summary> The output mode. </summary>
-    private OutputModes? _outputMode;
-
     /// <summary> Gets or sets the cached Output mode. </summary>
     /// <value> The <see cref="OutputMode">Output mode</see> or none if not set or unknown. </value>
     public OutputModes? OutputMode
     {
-        get => this._outputMode;
+        get;
 
         protected set
         {
             if ( !this.OutputMode.Equals( value ) )
             {
-                this._outputMode = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -108,9 +102,6 @@ public partial class DigitalOutputSubsystemBase
     /// <value> A Dictionary of digital active level parses. </value>
     public Pith.EnumReadWriteCollection DigitalActiveLevelReadWrites { get; private set; }
 
-    /// <summary> The supported digital active levels. </summary>
-    private DigitalActiveLevels _supportedDigitalActiveLevels;
-
     /// <summary>
     /// Gets or sets the supported digital active levels. This is a subset of the functions supported by the
     /// instrument.
@@ -118,19 +109,16 @@ public partial class DigitalOutputSubsystemBase
     /// <value> The supported digital active levels. </value>
     public DigitalActiveLevels SupportedDigitalActiveLevels
     {
-        get => this._supportedDigitalActiveLevels;
+        get;
         set
         {
             if ( !this.SupportedDigitalActiveLevels.Equals( value ) )
             {
-                this._supportedDigitalActiveLevels = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
     }
-
-    /// <summary> The current digital active level. </summary>
-    private DigitalActiveLevels? _currentDigitalActiveLevel;
 
     /// <summary> Gets or sets the current digital active level common to all digital lines. </summary>
     /// <value>
@@ -139,13 +127,13 @@ public partial class DigitalOutputSubsystemBase
     /// </value>
     public DigitalActiveLevels? CurrentDigitalActiveLevel
     {
-        get => this._currentDigitalActiveLevel;
+        get;
 
         protected set
         {
             if ( !this.CurrentDigitalActiveLevel.Equals( value ) )
             {
-                this._currentDigitalActiveLevel = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -256,9 +244,6 @@ public partial class DigitalOutputSubsystemBase
         return this.CurrentDigitalActiveLevel;
     }
 
-    /// <summary> The common digital active level. </summary>
-    private DigitalActiveLevels? _commonDigitalActiveLevel;
-
     /// <summary> Gets or sets the cached digital active level of all lines. </summary>
     /// <value>
     /// The <see cref="CommonDigitalActiveLevel">digital active level</see> or none if not set or not
@@ -266,13 +251,13 @@ public partial class DigitalOutputSubsystemBase
     /// </value>
     public DigitalActiveLevels? CommonDigitalActiveLevel
     {
-        get => this._commonDigitalActiveLevel;
+        get;
 
         protected set
         {
             if ( !this.CommonDigitalActiveLevel.Equals( value ) )
             {
-                this._commonDigitalActiveLevel = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

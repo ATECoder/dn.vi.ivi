@@ -45,7 +45,6 @@ public abstract partial class OutputSubsystemBase : SubsystemBase
     #region " on/off state "
 
     /// <summary> State of the output on. </summary>
-    private bool? _outputOnState;
 
     /// <summary> Gets or sets the cached output on/off state. </summary>
     /// <value>
@@ -54,13 +53,13 @@ public abstract partial class OutputSubsystemBase : SubsystemBase
     /// </value>
     public bool? OutputOnState
     {
-        get => this._outputOnState;
+        get;
 
         protected set
         {
             if ( !Equals( this.OutputOnState, value ) )
             {
-                this._outputOnState = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

@@ -26,8 +26,8 @@ public static partial class ComboBoxExtensionsMethods
 
         listControl.DataSource = null;
         listControl.DataSource = typeof( ArmSources ).EnumValues().IncludeFilter( ( long ) supportedArmSources ).ValueDescriptionPairs().ToList();
-        listControl.DisplayMember = nameof( KeyValuePair<Enum, string>.Value );
-        listControl.ValueMember = nameof( KeyValuePair<Enum, string>.Key );
+        listControl.DisplayMember = nameof( KeyValuePair<,>.Value );
+        listControl.ValueMember = nameof( KeyValuePair<,>.Key );
     }
 
     /// <summary> Lists the arm sources. </summary>
@@ -46,8 +46,8 @@ public static partial class ComboBoxExtensionsMethods
         listControl.DataSource = null;
         listControl.Items.Clear();
         listControl.DataSource = typeof( ArmSources ).EnumValues().IncludeFilter( ( long ) supportedArmSources ).ValueDescriptionPairs().ToList();
-        listControl.DisplayMember = nameof( KeyValuePair<Enum, string>.Value );
-        listControl.ValueMember = nameof( KeyValuePair<Enum, string>.Key );
+        listControl.DisplayMember = nameof( KeyValuePair<,>.Value );
+        listControl.ValueMember = nameof( KeyValuePair<,>.Key );
         if ( listControl.Items.Count > 0 )
         {
             listControl.SelectedIndex = Math.Min( listControl.Items.Count - 1, Math.Max( selectedIndex, 0 ) );
@@ -72,8 +72,8 @@ public static partial class ComboBoxExtensionsMethods
         int selectedIndex = comboBox.SelectedIndex;
         comboBox.DataSource = null;
         comboBox.DataSource = typeof( AdapterTypes ).EnumValues().IncludeFilter( ( long ) supportedAdapterTypes ).ValueDescriptionPairs().ToList();
-        comboBox.DisplayMember = nameof( KeyValuePair<Enum, string>.Value );
-        comboBox.ValueMember = nameof( KeyValuePair<Enum, string>.Key );
+        comboBox.DisplayMember = nameof( KeyValuePair<,>.Value );
+        comboBox.ValueMember = nameof( KeyValuePair<,>.Key );
         if ( comboBox.Items.Count > 0 )
             comboBox.SelectedIndex = Math.Max( selectedIndex, 0 );
     }
@@ -157,8 +157,8 @@ public static partial class ComboBoxExtensionsMethods
 
         listControl.DataSource = null;
         listControl.DataSource = typeof( DigitalActiveLevels ).EnumValues().IncludeFilter( ( long ) supportedListDigitalActiveLevels ).ValueDescriptionPairs().ToList();
-        listControl.DisplayMember = nameof( KeyValuePair<Enum, string>.Value );
-        listControl.ValueMember = nameof( KeyValuePair<Enum, string>.Key );
+        listControl.DisplayMember = nameof( KeyValuePair<,>.Value );
+        listControl.ValueMember = nameof( KeyValuePair<,>.Key );
     }
 
     /// <summary> List digital active levels. </summary>
@@ -177,8 +177,8 @@ public static partial class ComboBoxExtensionsMethods
         listControl.DataSource = null;
         listControl.Items.Clear();
         listControl.DataSource = typeof( DigitalActiveLevels ).EnumValues().IncludeFilter( ( long ) supportedListDigitalActiveLevels ).ValueDescriptionPairs().ToList();
-        listControl.DisplayMember = nameof( KeyValuePair<Enum, string>.Value );
-        listControl.ValueMember = nameof( KeyValuePair<Enum, string>.Key );
+        listControl.DisplayMember = nameof( KeyValuePair<,>.Value );
+        listControl.ValueMember = nameof( KeyValuePair<,>.Key );
     }
 
     #endregion
@@ -199,8 +199,8 @@ public static partial class ComboBoxExtensionsMethods
 
         listControl.DataSource = null;
         listControl.DataSource = typeof( FeedControls ).EnumValues().IncludeFilter( ( long ) supportedFeedControls ).ValueDescriptionPairs().ToList();
-        listControl.DisplayMember = nameof( KeyValuePair<Enum, string>.Value );
-        listControl.ValueMember = nameof( KeyValuePair<Enum, string>.Key );
+        listControl.DisplayMember = nameof( KeyValuePair<,>.Value );
+        listControl.ValueMember = nameof( KeyValuePair<,>.Key );
     }
 
     /// <summary> Lists the Feed Controls. </summary>
@@ -218,8 +218,8 @@ public static partial class ComboBoxExtensionsMethods
         listControl.DataSource = null;
         listControl.Items.Clear();
         listControl.DataSource = typeof( FeedControls ).EnumValues().IncludeFilter( ( long ) supportedFeedControls ).ValueDescriptionPairs().ToList();
-        listControl.DisplayMember = nameof( KeyValuePair<Enum, string>.Value );
-        listControl.ValueMember = nameof( KeyValuePair<Enum, string>.Key );
+        listControl.DisplayMember = nameof( KeyValuePair<,>.Value );
+        listControl.ValueMember = nameof( KeyValuePair<,>.Key );
     }
 
     #endregion
@@ -240,8 +240,8 @@ public static partial class ComboBoxExtensionsMethods
 
         listControl.DataSource = null;
         listControl.DataSource = typeof( FeedSources ).EnumValues().IncludeFilter( ( long ) supportedFeedSources ).ValueDescriptionPairs().ToList();
-        listControl.DisplayMember = nameof( KeyValuePair<Enum, string>.Value );
-        listControl.ValueMember = nameof( KeyValuePair<Enum, string>.Key );
+        listControl.DisplayMember = nameof( KeyValuePair<,>.Value );
+        listControl.ValueMember = nameof( KeyValuePair<,>.Key );
     }
 
     /// <summary> Lists the Feed sources. </summary>
@@ -259,8 +259,8 @@ public static partial class ComboBoxExtensionsMethods
         listControl.DataSource = null;
         listControl.Items.Clear();
         listControl.DataSource = typeof( FeedSources ).EnumValues().IncludeFilter( ( long ) supportedFeedSources ).ValueDescriptionPairs().ToList();
-        listControl.DisplayMember = nameof( KeyValuePair<Enum, string>.Value );
-        listControl.ValueMember = nameof( KeyValuePair<Enum, string>.Key );
+        listControl.DisplayMember = nameof( KeyValuePair<,>.Value );
+        listControl.ValueMember = nameof( KeyValuePair<,>.Key );
     }
 
     #endregion
@@ -281,8 +281,8 @@ public static partial class ComboBoxExtensionsMethods
         int selectedIndex = comboBox.SelectedIndex;
         comboBox.DataSource = null;
         comboBox.DataSource = typeof( MultimeterFunctionModes ).ValueDescriptionPairs().ToList();
-        comboBox.DisplayMember = nameof( KeyValuePair<Enum, string>.Value );
-        comboBox.ValueMember = nameof( KeyValuePair<Enum, string>.Key );
+        comboBox.DisplayMember = nameof( KeyValuePair<,>.Value );
+        comboBox.ValueMember = nameof( KeyValuePair<,>.Key );
         if ( comboBox.Items.Count > 0 )
             comboBox.SelectedIndex = Math.Max( selectedIndex, 0 );
     }
@@ -375,8 +375,8 @@ public static partial class ComboBoxExtensionsMethods
         int selectedIndex = comboBox.SelectedIndex;
         comboBox.DataSource = null;
         comboBox.DataSource = typeof( ReadingElementTypes ).EnumValues().IncludeFilter( ( long ) supportedReadingElementTypes ).ValueDescriptionPairs().ToList();
-        comboBox.DisplayMember = nameof( KeyValuePair<Enum, string>.Value );
-        comboBox.ValueMember = nameof( KeyValuePair<Enum, string>.Key );
+        comboBox.DisplayMember = nameof( KeyValuePair<,>.Value );
+        comboBox.ValueMember = nameof( KeyValuePair<,>.Key );
         if ( comboBox.Items.Count > 0 )
             comboBox.SelectedIndex = Math.Max( selectedIndex, 0 );
     }
@@ -462,10 +462,10 @@ public static partial class ComboBoxExtensionsMethods
         if ( excludedIndexes is null ) throw new ArgumentNullException( nameof( excludedIndexes ) );
 #endif
 
-        ResistanceRangeCurrentCollection clonedValues = new( resistanceRangeCurrents );
+        ResistanceRangeCurrentCollection clonedValues = [.. resistanceRangeCurrents];
         if ( excludedIndexes?.Any() == true )
         {
-            List<int> l = new( excludedIndexes );
+            List<int> l = [.. excludedIndexes];
             l.Sort();
             l.Reverse();
             foreach ( int i in l )
@@ -600,8 +600,8 @@ public static partial class ComboBoxExtensionsMethods
         int selectedIndex = comboBox.SelectedIndex;
         comboBox.DataSource = null;
         comboBox.DataSource = typeof( SenseFunctionModes ).EnumValues().IncludeFilter( ( long ) supportedFunctionModes ).ValueDescriptionPairs().ToList();
-        comboBox.DisplayMember = nameof( KeyValuePair<Enum, string>.Value );
-        comboBox.ValueMember = nameof( KeyValuePair<Enum, string>.Key );
+        comboBox.DisplayMember = nameof( KeyValuePair<,>.Value );
+        comboBox.ValueMember = nameof( KeyValuePair<,>.Key );
         if ( comboBox.Items.Count > 0 )
             comboBox.SelectedIndex = Math.Max( selectedIndex, 0 );
     }
@@ -685,8 +685,8 @@ public static partial class ComboBoxExtensionsMethods
         int selectedIndex = comboBox.SelectedIndex;
         comboBox.DataSource = null;
         comboBox.DataSource = typeof( SourceFunctionModes ).EnumValues().IncludeFilter( ( long ) supportedSourceFunctionModes ).ValueDescriptionPairs().ToList();
-        comboBox.DisplayMember = nameof( KeyValuePair<Enum, string>.Value );
-        comboBox.ValueMember = nameof( KeyValuePair<Enum, string>.Key );
+        comboBox.DisplayMember = nameof( KeyValuePair<,>.Value );
+        comboBox.ValueMember = nameof( KeyValuePair<,>.Key );
         if ( comboBox.Items.Count > 0 )
             comboBox.SelectedIndex = Math.Max( selectedIndex, 0 );
     }
@@ -770,8 +770,8 @@ public static partial class ComboBoxExtensionsMethods
         int selectedIndex = comboBox.SelectedIndex;
         comboBox.DataSource = null;
         comboBox.DataSource = typeof( TriggerEvents ).EnumValues().IncludeFilter( ( long ) supportedTriggerEvents ).ValueDescriptionPairs().ToList();
-        comboBox.DisplayMember = nameof( KeyValuePair<Enum, string>.Value );
-        comboBox.ValueMember = nameof( KeyValuePair<Enum, string>.Key );
+        comboBox.DisplayMember = nameof( KeyValuePair<,>.Value );
+        comboBox.ValueMember = nameof( KeyValuePair<,>.Key );
         if ( comboBox.Items.Count > 0 )
             comboBox.SelectedIndex = Math.Max( selectedIndex, 0 );
     }
@@ -855,8 +855,8 @@ public static partial class ComboBoxExtensionsMethods
         int selectedIndex = comboBox.SelectedIndex;
         comboBox.DataSource = null;
         comboBox.DataSource = typeof( TriggerSources ).EnumValues().IncludeFilter( ( long ) supportedTriggerSources ).ValueDescriptionPairs().ToList();
-        comboBox.DisplayMember = nameof( KeyValuePair<Enum, string>.Value );
-        comboBox.ValueMember = nameof( KeyValuePair<Enum, string>.Key );
+        comboBox.DisplayMember = nameof( KeyValuePair<,>.Value );
+        comboBox.ValueMember = nameof( KeyValuePair<,>.Key );
         if ( comboBox.Items.Count > 0 )
             comboBox.SelectedIndex = Math.Min( comboBox.Items.Count - 1, Math.Max( selectedIndex, 0 ) );
     }
@@ -958,8 +958,8 @@ public static partial class ComboBoxExtensionsMethods
         int selectedIndex = comboBox.SelectedIndex;
         comboBox.DataSource = null;
         comboBox.DataSource = typeof( TraceParameters ).EnumValues().IncludeFilter( ( long ) supportedTraceParameters ).ValueDescriptionPairs().ToList();
-        comboBox.DisplayMember = nameof( KeyValuePair<Enum, string>.Value );
-        comboBox.ValueMember = nameof( KeyValuePair<Enum, string>.Key );
+        comboBox.DisplayMember = nameof( KeyValuePair<,>.Value );
+        comboBox.ValueMember = nameof( KeyValuePair<,>.Key );
         if ( comboBox.Items.Count > 0 )
             comboBox.SelectedIndex = Math.Max( selectedIndex, 0 );
     }
@@ -1042,8 +1042,8 @@ public static partial class ComboBoxExtensionsMethods
 
         listControl.DataSource = null;
         listControl.DataSource = typeof( Syntax.Tsp.EventLogModes ).EnumValues().IncludeFilter( ( long ) supportedEventLogModes ).ValueDescriptionPairs().ToList();
-        listControl.DisplayMember = nameof( KeyValuePair<Enum, string>.Value );
-        listControl.ValueMember = nameof( KeyValuePair<Enum, string>.Key );
+        listControl.DisplayMember = nameof( KeyValuePair<,>.Value );
+        listControl.ValueMember = nameof( KeyValuePair<,>.Key );
     }
 
     /// <summary> Selected event log modes. </summary>

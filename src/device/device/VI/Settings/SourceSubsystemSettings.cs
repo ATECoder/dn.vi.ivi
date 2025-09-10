@@ -102,7 +102,6 @@ public class SourceSubsystemSettings() : System.ComponentModel.INotifyPropertyCh
 
     #region " exists "
 
-    private bool _exists;
 
     /// <summary>
     /// Gets or sets a value indicating whether this settings section exists and the values were thus
@@ -112,8 +111,8 @@ public class SourceSubsystemSettings() : System.ComponentModel.INotifyPropertyCh
     [Description( "True if this settings section exists and was read from the JSon settings file." )]
     public bool Exists
     {
-        get => this._exists;
-        set => _ = this.SetProperty( ref this._exists, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
 
     #endregion
@@ -164,7 +163,6 @@ public class SourceSubsystemSettings() : System.ComponentModel.INotifyPropertyCh
 
     #region " source subsystem information "
 
-    private bool _sourceReadBackEnabled = true;
 
     /// <summary>
     /// Gets or sets a value indicating whether the source read back is enabled.
@@ -172,29 +170,25 @@ public class SourceSubsystemSettings() : System.ComponentModel.INotifyPropertyCh
     /// <value> True if source read back enabled, false if not. </value>
     public bool SourceReadBackEnabled
     {
-        get => this._sourceReadBackEnabled;
-        set => this.SetProperty( ref this._sourceReadBackEnabled, value );
-    }
-
-    private bool _frontTerminalsSelected = true;
+        get;
+        set => this.SetProperty( ref field, value );
+    } = true;
 
     /// <summary>   Gets or sets a value indicating whether the front terminals selected. </summary>
     /// <value> True if front terminals selected, false if not. </value>
     public bool FrontTerminalsSelected
     {
-        get => this._frontTerminalsSelected;
-        set => this.SetProperty( ref this._frontTerminalsSelected, value );
-    }
-
-    private double _sourceLevel = 0.02;
+        get;
+        set => this.SetProperty( ref field, value );
+    } = true;
 
     /// <summary>   Gets or sets source level. </summary>
     /// <value> The source level. </value>
     public double SourceLevel
     {
-        get => this._sourceLevel;
-        set => this.SetProperty( ref this._sourceLevel, value );
-    }
+        get;
+        set => this.SetProperty( ref field, value );
+    } = 0.02;
 
     #endregion
 

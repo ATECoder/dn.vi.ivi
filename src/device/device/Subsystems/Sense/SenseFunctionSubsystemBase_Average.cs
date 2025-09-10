@@ -22,9 +22,6 @@ public partial class SenseFunctionSubsystemBase
         }
     }
 
-    /// <summary> The average count. </summary>
-    private int? _averageCount;
-
     /// <summary>
     /// Gets or sets the cached average count. Set to
     /// <see cref="VI.Syntax.ScpiSyntax.Infinity">infinity</see> to set to maximum or to
@@ -33,13 +30,13 @@ public partial class SenseFunctionSubsystemBase
     /// <value> <c>null</c> if value is not known. </value>
     public int? AverageCount
     {
-        get => this._averageCount;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.AverageCount, value ) )
             {
-                this._averageCount = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -85,7 +82,6 @@ public partial class SenseFunctionSubsystemBase
     #region " average enabled "
 
     /// <summary> Average enabled. </summary>
-    private bool? _averageEnabled;
 
     /// <summary> Gets or sets the cached Average Enabled sentinel. </summary>
     /// <value>
@@ -94,13 +90,13 @@ public partial class SenseFunctionSubsystemBase
     /// </value>
     public bool? AverageEnabled
     {
-        get => this._averageEnabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.AverageEnabled, value ) )
             {
-                this._averageEnabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -164,26 +160,20 @@ public partial class SenseFunctionSubsystemBase
     /// <value> A Dictionary of Average Filter Type parses. </value>
     public Pith.EnumReadWriteCollection AverageFilterTypesReadWrites { get; private set; }
 
-    /// <summary> List of types of the supported average filters. </summary>
-    private AverageFilterTypes _supportedAverageFilterTypes;
-
     /// <summary> Gets or sets the supported Average Filter Types. </summary>
     /// <value> The supported Average Filter Types. </value>
     public AverageFilterTypes SupportedAverageFilterTypes
     {
-        get => this._supportedAverageFilterTypes;
+        get;
         set
         {
             if ( !this.SupportedAverageFilterTypes.Equals( value ) )
             {
-                this._supportedAverageFilterTypes = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
     }
-
-    /// <summary> Type of the average filter. </summary>
-    private AverageFilterTypes? _averageFilterType;
 
     /// <summary> Gets or sets the cached source AverageFilterType. </summary>
     /// <value>
@@ -192,13 +182,13 @@ public partial class SenseFunctionSubsystemBase
     /// </value>
     public AverageFilterTypes? AverageFilterType
     {
-        get => this._averageFilterType;
+        get;
 
         protected set
         {
             if ( !this.AverageFilterType.Equals( value ) )
             {
-                this._averageFilterType = value;
+                field = value;
                 this.NotifyPropertyChanged();
                 this.MovingAverageFilterEnabled = Nullable.Equals( value, AverageFilterTypes.Moving );
             }
@@ -255,7 +245,6 @@ public partial class SenseFunctionSubsystemBase
     #region " average moving filter enabled "
 
     /// <summary> Moving Average Filter enabled. </summary>
-    private bool? _movingAverageFilterEnabled;
 
     /// <summary> Gets or sets the cached Moving Average Filter Enabled sentinel. </summary>
     /// <value>
@@ -265,13 +254,13 @@ public partial class SenseFunctionSubsystemBase
     /// </value>
     public bool? MovingAverageFilterEnabled
     {
-        get => this._movingAverageFilterEnabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.MovingAverageFilterEnabled, value ) )
             {
-                this._movingAverageFilterEnabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -330,9 +319,6 @@ public partial class SenseFunctionSubsystemBase
         }
     }
 
-    /// <summary> The Average Percent Window. </summary>
-    private double? _averagePercentWindow;
-
     /// <summary>
     /// Gets or sets the cached Average Percent Window. Set to
     /// <see cref="VI.Syntax.ScpiSyntax.Infinity">infinity</see> to set to maximum or to
@@ -341,13 +327,13 @@ public partial class SenseFunctionSubsystemBase
     /// <value> <c>null</c> if value is not known. </value>
     public double? AveragePercentWindow
     {
-        get => this._averagePercentWindow;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.AveragePercentWindow, value ) )
             {
-                this._averagePercentWindow = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

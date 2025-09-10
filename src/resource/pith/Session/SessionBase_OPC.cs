@@ -97,25 +97,21 @@ public partial class SessionBase
         return reply;
     }
 
-    private StandardEvents _standardEventEnableOperationCompleteBitmask = StandardEvents.All & ~StandardEvents.RequestControl;
-
     /// <summary> Gets or sets the bitmask to enable standard event operation complete events. </summary>
     /// <value> The bitmask to enable standard event operation complete events [253, 0xFD]. </value>
     public StandardEvents StandardEventEnableOperationCompleteBitmask
     {
-        get => this._standardEventEnableOperationCompleteBitmask;
-        set => _ = base.SetProperty( ref this._standardEventEnableOperationCompleteBitmask, value );
-    }
-
-    private ServiceRequests _serviceRequestEnableOperationCompleteBitmask = ServiceRequests.All & ~ServiceRequests.RequestingService & ~ServiceRequests.MessageAvailable;
+        get;
+        set => _ = base.SetProperty( ref field, value );
+    } = StandardEvents.All & ~StandardEvents.RequestControl;
 
     /// <summary>   Gets or sets the service request operation complete enable bitmask. </summary>
     /// <value> The service request operation complete enable bitmask. </value>
     public ServiceRequests ServiceRequestEnableOperationCompleteBitmask
     {
-        get => this._serviceRequestEnableOperationCompleteBitmask;
-        set => _ = this.SetProperty( ref this._serviceRequestEnableOperationCompleteBitmask, value );
-    }
+        get;
+        set => _ = this.SetProperty( ref field, value );
+    } = ServiceRequests.All & ~ServiceRequests.RequestingService & ~ServiceRequests.MessageAvailable;
 
     /// <summary> Gets the operation completed command. </summary>
     /// <remarks>

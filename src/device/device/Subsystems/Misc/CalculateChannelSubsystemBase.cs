@@ -25,19 +25,18 @@ public abstract class CalculateChannelSubsystemBase( int channelNumber, StatusSu
     #region " trace count "
 
     /// <summary> Number of traces. </summary>
-    private int? _traceCount;
 
     /// <summary> Gets or sets the cached Trace Count. </summary>
     /// <value> The Trace Count or none if not set or unknown. </value>
     public int? TraceCount
     {
-        get => this._traceCount;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.TraceCount, value ) )
             {
-                this._traceCount = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -126,19 +125,18 @@ public abstract class CalculateChannelSubsystemBase( int channelNumber, StatusSu
     #region " average count "
 
     /// <summary> Number of averages. </summary>
-    private int? _averageCount;
 
     /// <summary> Gets or sets the cached Average Count. </summary>
     /// <value> The Average Count or none if not set or unknown. </value>
     public int? AverageCount
     {
-        get => this._averageCount;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.AverageCount, value ) )
             {
-                this._averageCount = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -196,7 +194,6 @@ public abstract class CalculateChannelSubsystemBase( int channelNumber, StatusSu
     #region " averaging enabled "
 
     /// <summary> The averaging enabled. </summary>
-    private bool? _averagingEnabled;
 
     /// <summary> Gets or sets the cached Averaging Enabled sentinel. </summary>
     /// <value>
@@ -205,13 +202,13 @@ public abstract class CalculateChannelSubsystemBase( int channelNumber, StatusSu
     /// </value>
     public bool? AveragingEnabled
     {
-        get => this._averagingEnabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.AveragingEnabled, value ) )
             {
-                this._averagingEnabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

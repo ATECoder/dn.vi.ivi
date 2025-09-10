@@ -446,10 +446,7 @@ public partial class TreePanel : SplitContainer
         {
             if ( this.NodeControls.TryGetValue( e.Node?.Name ?? string.Empty, out Control? activeControl ) )
             {
-                if ( activeControl is not null )
-                {
-                    activeControl.Visible = false;
-                }
+                _ = (activeControl?.Visible = false);
 
                 this.Navigating = true;
             }
@@ -472,10 +469,7 @@ public partial class TreePanel : SplitContainer
         try
         {
             activity = $"{this.Name} handling navigator after select event";
-            if ( this.LastNodeSelected is not null )
-            {
-                this.LastNodeSelected.BackColor = this.navigatorTreeView.BackColor;
-            }
+            _ = (this.LastNodeSelected?.BackColor = this.navigatorTreeView.BackColor);
 
             if ( (e.Node?.IsSelected).GetValueOrDefault( false ) )
             {

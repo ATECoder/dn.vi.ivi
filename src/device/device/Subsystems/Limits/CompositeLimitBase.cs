@@ -52,7 +52,6 @@ public abstract class CompositeLimitBase( StatusSubsystemBase statusSubsystem ) 
     #region " auto clear enabled "
 
     /// <summary> The automatic clear enabled. </summary>
-    private bool? _autoClearEnabled;
 
     /// <summary> Gets or sets the cached Composite Limits Auto Clear enabled sentinel. </summary>
     /// <value>
@@ -62,13 +61,13 @@ public abstract class CompositeLimitBase( StatusSubsystemBase statusSubsystem ) 
     /// </value>
     public bool? AutoClearEnabled
     {
-        get => this._autoClearEnabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.AutoClearEnabled, value ) )
             {
-                this._autoClearEnabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -120,19 +119,18 @@ public abstract class CompositeLimitBase( StatusSubsystemBase statusSubsystem ) 
     #region " failure bits "
 
     /// <summary> The failure bits. </summary>
-    private int? _failureBits;
 
     /// <summary> Gets or sets the cached Composite Limits Failure Bits. </summary>
     /// <value> The Composite Limits Failure Bits or none if not set or unknown. </value>
     public int? FailureBits
     {
-        get => this._failureBits;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.FailureBits, value ) )
             {
-                this._failureBits = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -181,19 +179,18 @@ public abstract class CompositeLimitBase( StatusSubsystemBase statusSubsystem ) 
     #region " limits pass bits "
 
     /// <summary> The pass bits. </summary>
-    private int? _passBits;
 
     /// <summary> Gets or sets the cached Composite Limits Pass Bits. </summary>
     /// <value> The Composite Limits Pass Bits or none if not set or unknown. </value>
     public int? PassBits
     {
-        get => this._passBits;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.PassBits, value ) )
             {
-                this._passBits = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -242,7 +239,6 @@ public abstract class CompositeLimitBase( StatusSubsystemBase statusSubsystem ) 
     #region " binning control "
 
     /// <summary> The Binning Control. </summary>
-    private BinningControl? _binningControl;
 
     /// <summary> Gets or sets the cached Binning Control. </summary>
     /// <value>
@@ -250,13 +246,13 @@ public abstract class CompositeLimitBase( StatusSubsystemBase statusSubsystem ) 
     /// </value>
     public BinningControl? BinningControl
     {
-        get => this._binningControl;
+        get;
 
         protected set
         {
             if ( !this.BinningControl.Equals( value ) )
             {
-                this._binningControl = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -305,19 +301,18 @@ public abstract class CompositeLimitBase( StatusSubsystemBase statusSubsystem ) 
     #region " limit mode "
 
     /// <summary> The Limit Mode. </summary>
-    private LimitMode? _limitMode;
 
     /// <summary> Gets or sets the cached Limit Mode. </summary>
     /// <value> The <see cref="LimitMode">Limit Mode</see> or none if not set or unknown. </value>
     public LimitMode? LimitMode
     {
-        get => this._limitMode;
+        get;
 
         protected set
         {
             if ( !this.LimitMode.Equals( value ) )
             {
-                this._limitMode = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

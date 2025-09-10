@@ -10,10 +10,16 @@ public class TspDeviceError : Pith.DeviceError
 {
     #region " construction "
 
+    /// <summary>   Default constructor. </summary>
+    /// <remarks>   2025-09-09. </remarks>
+    public TspDeviceError() : base( Syntax.Tsp.EventLog.NoErrorCompoundMessage )
+    {
+    }
+
     /// <summary>
     /// Initializes a new instance of the <see cref="TspDeviceError" /> class specifying no error.
     /// </summary>
-    public TspDeviceError( string noErrorCompoundMessage ) : base( Syntax.Tsp.EventLog.NoErrorCompoundMessage )
+    public TspDeviceError( string noErrorCompoundMessage ) : base( noErrorCompoundMessage )
     {
     }
 

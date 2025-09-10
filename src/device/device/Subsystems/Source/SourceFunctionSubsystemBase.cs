@@ -76,7 +76,6 @@ public abstract partial class SourceFunctionSubsystemBase : SubsystemBase
     #region " auto clear enabled "
 
     /// <summary> The automatic clear enabled. </summary>
-    private bool? _autoClearEnabled;
 
     /// <summary> Gets or sets the cached Auto Clear Enabled sentinel. </summary>
     /// <value>
@@ -85,13 +84,13 @@ public abstract partial class SourceFunctionSubsystemBase : SubsystemBase
     /// </value>
     public bool? AutoClearEnabled
     {
-        get => this._autoClearEnabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.AutoClearEnabled, value ) )
             {
-                this._autoClearEnabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -143,7 +142,6 @@ public abstract partial class SourceFunctionSubsystemBase : SubsystemBase
     #region " auto delay enabled "
 
     /// <summary> The automatic delay enabled. </summary>
-    private bool? _autoDelayEnabled;
 
     /// <summary> Gets or sets the cached Auto Delay Enabled sentinel. </summary>
     /// <value>
@@ -152,13 +150,13 @@ public abstract partial class SourceFunctionSubsystemBase : SubsystemBase
     /// </value>
     public bool? AutoDelayEnabled
     {
-        get => this._autoDelayEnabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.AutoDelayEnabled, value ) )
             {
-                this._autoDelayEnabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -210,7 +208,6 @@ public abstract partial class SourceFunctionSubsystemBase : SubsystemBase
     #region " auto range enabled "
 
     /// <summary> Auto Range enabled. </summary>
-    private bool? _autoRangeEnabled;
 
     /// <summary> Gets or sets the cached Auto Range Enabled sentinel. </summary>
     /// <value>
@@ -219,13 +216,13 @@ public abstract partial class SourceFunctionSubsystemBase : SubsystemBase
     /// </value>
     public bool? AutoRangeEnabled
     {
-        get => this._autoRangeEnabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.AutoRangeEnabled, value ) )
             {
-                this._autoRangeEnabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -399,20 +396,17 @@ public abstract partial class SourceFunctionSubsystemBase : SubsystemBase
         }
     }
 
-    /// <summary> The level. </summary>
-    private double? _level;
-
     /// <summary> Gets or sets the cached Source Current Level. </summary>
     /// <value> The Source Current Level. Actual current depends on the power supply mode. </value>
     public double? Level
     {
-        get => this._level;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.Level, value ) )
             {
-                this._level = value;
+                field = value;
                 this.NewAmount( this.FunctionUnit );
                 this.NotifyPropertyChanged();
             }
@@ -469,7 +463,6 @@ public abstract partial class SourceFunctionSubsystemBase : SubsystemBase
     #region " protection level "
 
     /// <summary> The protection level. </summary>
-    private double? _protectionLevel;
 
     /// <summary> Gets or sets the cached Over Voltage Protection Level. </summary>
     /// <remarks>
@@ -480,13 +473,13 @@ public abstract partial class SourceFunctionSubsystemBase : SubsystemBase
     /// <value> <c>null</c> if value is not known. </value>
     public double? ProtectionLevel
     {
-        get => this._protectionLevel;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.ProtectionLevel, value ) )
             {
-                this._protectionLevel = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -534,7 +527,6 @@ public abstract partial class SourceFunctionSubsystemBase : SubsystemBase
     #region " range "
 
     /// <summary> The range. </summary>
-    private double? _range;
 
     /// <summary>
     /// Gets or sets the cached range. Set to
@@ -544,13 +536,13 @@ public abstract partial class SourceFunctionSubsystemBase : SubsystemBase
     /// <value> <c>null</c> if value is not known. </value>
     public double? Range
     {
-        get => this._range;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.Range, value ) )
             {
-                this._range = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -596,7 +588,6 @@ public abstract partial class SourceFunctionSubsystemBase : SubsystemBase
     #region " sweep start level "
 
     /// <summary> The Sweep Start Level. </summary>
-    private double? _sweepStartLevel;
 
     /// <summary>
     /// Gets or sets the cached Sweep Start Level. Set to
@@ -606,13 +597,13 @@ public abstract partial class SourceFunctionSubsystemBase : SubsystemBase
     /// <value> <c>null</c> if value is not known. </value>
     public double? SweepStartLevel
     {
-        get => this._sweepStartLevel;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.SweepStartLevel, value ) )
             {
-                this._sweepStartLevel = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -660,7 +651,6 @@ public abstract partial class SourceFunctionSubsystemBase : SubsystemBase
     #region " sweep stop level "
 
     /// <summary> The Sweep Stop Level. </summary>
-    private double? _sweepStopLevel;
 
     /// <summary>
     /// Gets or sets the cached Sweep Stop Level. Set to
@@ -670,13 +660,13 @@ public abstract partial class SourceFunctionSubsystemBase : SubsystemBase
     /// <value> <c>null</c> if value is not known. </value>
     public double? SweepStopLevel
     {
-        get => this._sweepStopLevel;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.SweepStopLevel, value ) )
             {
-                this._sweepStopLevel = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -724,19 +714,18 @@ public abstract partial class SourceFunctionSubsystemBase : SubsystemBase
     #region " sweep mode  "
 
     /// <summary> The Sweep Mode. </summary>
-    private SweepMode _sweepMode;
 
     /// <summary> Gets or sets the cached Sweep Mode. </summary>
     /// <value> <c>null</c> if value is not known. </value>
     public SweepMode SweepMode
     {
-        get => this._sweepMode;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.SweepMode, value ) )
             {
-                this._sweepMode = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -782,19 +771,18 @@ public abstract partial class SourceFunctionSubsystemBase : SubsystemBase
     #region " sweep points "
 
     /// <summary> The sweep point. </summary>
-    private int? _sweepPoint;
 
     /// <summary> Gets or sets the cached Sweep Points. </summary>
     /// <value> The Sweep Points or none if not set or unknown. </value>
     public int? SweepPoints
     {
-        get => this._sweepPoint;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.SweepPoints, value ) )
             {
-                this._sweepPoint = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

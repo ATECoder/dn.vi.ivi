@@ -148,9 +148,6 @@ public partial class SourceFunctionSubsystemBase
     /// <value> A Dictionary of Source function mode parses. </value>
     public Pith.EnumReadWriteCollection FunctionModeReadWrites { get; private set; }
 
-    /// <summary> The supported function modes. </summary>
-    private SourceFunctionModes _supportedFunctionModes;
-
     /// <summary>
     /// Gets or sets the supported Function Modes. This is a subset of the functions supported by the
     /// instrument.
@@ -158,12 +155,12 @@ public partial class SourceFunctionSubsystemBase
     /// <value> The supported Source function modes. </value>
     public SourceFunctionModes SupportedFunctionModes
     {
-        get => this._supportedFunctionModes;
+        get;
         set
         {
             if ( !this.SupportedFunctionModes.Equals( value ) )
             {
-                this._supportedFunctionModes = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

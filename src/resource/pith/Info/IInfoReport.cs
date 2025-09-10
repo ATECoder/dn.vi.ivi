@@ -6,5 +6,5 @@ public interface IInfoReport
 {
     /// <summary>   Builds information report. </summary>
     /// <returns>   A <see cref="string" />. </returns>
-    string BuildInfoReport();
+    public string BuildInfoReport();
 }

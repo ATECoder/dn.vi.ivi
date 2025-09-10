@@ -85,7 +85,6 @@ public abstract class BinningSubsystemBase : SubsystemBase
     #region " digital i/o: forced digital output pattern enabled "
 
     /// <summary> The forced digital output pattern enabled. </summary>
-    private bool? _forcedDigitalOutputPatternEnabled;
 
     /// <summary> Gets or sets the cached Forced Digital Output Pattern Enabled sentinel. </summary>
     /// <value>
@@ -95,13 +94,13 @@ public abstract class BinningSubsystemBase : SubsystemBase
     /// </value>
     public bool? ForcedDigitalOutputPatternEnabled
     {
-        get => this._forcedDigitalOutputPatternEnabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.ForcedDigitalOutputPatternEnabled, value ) )
             {
-                this._forcedDigitalOutputPatternEnabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -154,19 +153,18 @@ public abstract class BinningSubsystemBase : SubsystemBase
     #region " digital i/o: forced digital output pattern "
 
     /// <summary> A pattern specifying the forced digital output. </summary>
-    private int? _forcedDigitalOutputPattern;
 
     /// <summary> Gets or sets the cached Forced Digital Output Pattern. </summary>
     /// <value> The Forced Digital Output Pattern or none if not set or unknown. </value>
     public int? ForcedDigitalOutputPattern
     {
-        get => this._forcedDigitalOutputPattern;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.ForcedDigitalOutputPattern, value ) )
             {
-                this._forcedDigitalOutputPattern = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -232,9 +230,6 @@ public abstract class BinningSubsystemBase : SubsystemBase
         }
     }
 
-    /// <summary> Binning Strobe Enabled status. </summary>
-    private bool? _binningStrobeEnabled;
-
     /// <summary> Gets or sets the cached status of outputting a Binning strobe. </summary>
     /// <value>
     /// <c>null</c> if a Binning Strobe Enabled is not known; <c>true</c> if output is on; otherwise,
@@ -242,13 +237,13 @@ public abstract class BinningSubsystemBase : SubsystemBase
     /// </value>
     public bool? BinningStrobeEnabled
     {
-        get => this._binningStrobeEnabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.BinningStrobeEnabled, value ) )
             {
-                this._binningStrobeEnabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -312,26 +307,20 @@ public abstract class BinningSubsystemBase : SubsystemBase
     /// <value> A Dictionary of Feed source parses. </value>
     public Pith.EnumReadWriteCollection FeedSourceReadWrites { get; private set; }
 
-    /// <summary> The supported feed sources. </summary>
-    private FeedSources _supportedFeedSources;
-
     /// <summary> Gets or sets the supported Feed sources. </summary>
     /// <value> The supported Feed sources. </value>
     public FeedSources SupportedFeedSources
     {
-        get => this._supportedFeedSources;
+        get;
         set
         {
             if ( !this.SupportedFeedSources.Equals( value ) )
             {
-                this._supportedFeedSources = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
     }
-
-    /// <summary> The feed source. </summary>
-    private FeedSources? _feedSource;
 
     /// <summary> Gets or sets the cached source FeedSource. </summary>
     /// <value>
@@ -339,13 +328,13 @@ public abstract class BinningSubsystemBase : SubsystemBase
     /// </value>
     public FeedSources? FeedSource
     {
-        get => this._feedSource;
+        get;
 
         protected set
         {
             if ( !this.FeedSource.Equals( value ) )
             {
-                this._feedSource = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -392,7 +381,6 @@ public abstract class BinningSubsystemBase : SubsystemBase
     #region " limits failed "
 
     /// <summary> Limits Failed. </summary>
-    private bool? _limitsFailed;
 
     /// <summary> Gets or sets the cached Limits Failed sentinel. </summary>
     /// <value>
@@ -401,13 +389,13 @@ public abstract class BinningSubsystemBase : SubsystemBase
     /// </value>
     public bool? LimitsFailed
     {
-        get => this._limitsFailed;
+        get;
 
         protected set
         {
             if ( !Equals( this.LimitsFailed, value ) )
             {
-                this._limitsFailed = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -434,19 +422,18 @@ public abstract class BinningSubsystemBase : SubsystemBase
     #region " pass source "
 
     /// <summary> The Pass Source. </summary>
-    private int? _passSource;
 
     /// <summary> Gets or sets the cached Pass Source. </summary>
     /// <value> <c>null</c> if value is not known. </value>
     public int? PassSource
     {
-        get => this._passSource;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.PassSource, value ) )
             {
-                this._passSource = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -494,7 +481,6 @@ public abstract class BinningSubsystemBase : SubsystemBase
     #region " limit1 enabled "
 
     /// <summary> Limit1 enabled. </summary>
-    private bool? _limit1Enabled;
 
     /// <summary> Gets or sets the cached Limit1 Enabled sentinel. </summary>
     /// <value>
@@ -503,13 +489,13 @@ public abstract class BinningSubsystemBase : SubsystemBase
     /// </value>
     public bool? Limit1Enabled
     {
-        get => this._limit1Enabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.Limit1Enabled, value ) )
             {
-                this._limit1Enabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -561,7 +547,6 @@ public abstract class BinningSubsystemBase : SubsystemBase
     #region " limit1 failed "
 
     /// <summary> Limit1 Failed. </summary>
-    private bool? _limit1Failed;
 
     /// <summary> Gets or sets the cached Limit1 Failed sentinel. </summary>
     /// <value>
@@ -570,13 +555,13 @@ public abstract class BinningSubsystemBase : SubsystemBase
     /// </value>
     public bool? Limit1Failed
     {
-        get => this._limit1Failed;
+        get;
 
         protected set
         {
             if ( !Equals( this.Limit1Failed, value ) )
             {
-                this._limit1Failed = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -603,7 +588,6 @@ public abstract class BinningSubsystemBase : SubsystemBase
     #region " limit1 lower level "
 
     /// <summary> The Limit1 Lower Level. </summary>
-    private double? _limit1LowerLevel;
 
     /// <summary>
     /// Gets or sets the cached Limit1 Lower Level. Set to
@@ -613,13 +597,13 @@ public abstract class BinningSubsystemBase : SubsystemBase
     /// <value> <c>null</c> if value is not known. </value>
     public double? Limit1LowerLevel
     {
-        get => this._limit1LowerLevel;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.Limit1LowerLevel, value ) )
             {
-                this._limit1LowerLevel = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -667,7 +651,6 @@ public abstract class BinningSubsystemBase : SubsystemBase
     #region " limit1 upper level "
 
     /// <summary> The Limit1 Upper Level. </summary>
-    private double? _limit1UpperLevel;
 
     /// <summary>
     /// Gets or sets the cached Limit1 Upper Level. Set to
@@ -677,13 +660,13 @@ public abstract class BinningSubsystemBase : SubsystemBase
     /// <value> <c>null</c> if value is not known. </value>
     public double? Limit1UpperLevel
     {
-        get => this._limit1UpperLevel;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.Limit1UpperLevel, value ) )
             {
-                this._limit1UpperLevel = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -731,7 +714,6 @@ public abstract class BinningSubsystemBase : SubsystemBase
     #region " limit1 auto clear "
 
     /// <summary> Limit1 Auto Clear. </summary>
-    private bool? _limit1AutoClear;
 
     /// <summary> Gets or sets the cached Limit1 Auto Clear sentinel. </summary>
     /// <value>
@@ -740,13 +722,13 @@ public abstract class BinningSubsystemBase : SubsystemBase
     /// </value>
     public bool? Limit1AutoClear
     {
-        get => this._limit1AutoClear;
+        get;
 
         protected set
         {
             if ( !Equals( this.Limit1AutoClear, value ) )
             {
-                this._limit1AutoClear = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -798,19 +780,18 @@ public abstract class BinningSubsystemBase : SubsystemBase
     #region " limit1 lower source "
 
     /// <summary> The Limit1 Lower Source. </summary>
-    private int? _limit1LowerSource;
 
     /// <summary> Gets or sets the cached Limit1 Lower Source. </summary>
     /// <value> <c>null</c> if value is not known. </value>
     public int? Limit1LowerSource
     {
-        get => this._limit1LowerSource;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.Limit1LowerSource, value ) )
             {
-                this._limit1LowerSource = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -858,19 +839,18 @@ public abstract class BinningSubsystemBase : SubsystemBase
     #region " limit1 upper source "
 
     /// <summary> The Limit1 Upper Source. </summary>
-    private int? _limit1UpperSource;
 
     /// <summary> Gets or sets the cached Limit1 Upper Source. </summary>
     /// <value> <c>null</c> if value is not known. </value>
     public int? Limit1UpperSource
     {
-        get => this._limit1UpperSource;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.Limit1UpperSource, value ) )
             {
-                this._limit1UpperSource = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -922,7 +902,6 @@ public abstract class BinningSubsystemBase : SubsystemBase
     #region " limit2 enabled "
 
     /// <summary> Limit2 enabled. </summary>
-    private bool? _limit2Enabled;
 
     /// <summary> Gets or sets the cached Limit2 Enabled sentinel. </summary>
     /// <value>
@@ -931,13 +910,13 @@ public abstract class BinningSubsystemBase : SubsystemBase
     /// </value>
     public bool? Limit2Enabled
     {
-        get => this._limit2Enabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.Limit2Enabled, value ) )
             {
-                this._limit2Enabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -989,7 +968,6 @@ public abstract class BinningSubsystemBase : SubsystemBase
     #region " limit2 failed "
 
     /// <summary> Limit2 Failed. </summary>
-    private bool? _limit2Failed;
 
     /// <summary> Gets or sets the cached Limit2 Failed sentinel. </summary>
     /// <value>
@@ -998,13 +976,13 @@ public abstract class BinningSubsystemBase : SubsystemBase
     /// </value>
     public bool? Limit2Failed
     {
-        get => this._limit2Failed;
+        get;
 
         protected set
         {
             if ( !Equals( this.Limit2Failed, value ) )
             {
-                this._limit2Failed = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -1031,7 +1009,6 @@ public abstract class BinningSubsystemBase : SubsystemBase
     #region " limit2 lower level "
 
     /// <summary> The Limit2 Lower Level. </summary>
-    private double? _limit2LowerLevel;
 
     /// <summary>
     /// Gets or sets the cached Limit2 Lower Level. Set to
@@ -1041,13 +1018,13 @@ public abstract class BinningSubsystemBase : SubsystemBase
     /// <value> <c>null</c> if value is not known. </value>
     public double? Limit2LowerLevel
     {
-        get => this._limit2LowerLevel;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.Limit2LowerLevel, value ) )
             {
-                this._limit2LowerLevel = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -1095,7 +1072,6 @@ public abstract class BinningSubsystemBase : SubsystemBase
     #region " limit2 upper level "
 
     /// <summary> The Limit2 Upper Level. </summary>
-    private double? _limit2UpperLevel;
 
     /// <summary>
     /// Gets or sets the cached Limit2 Upper Level. Set to
@@ -1105,13 +1081,13 @@ public abstract class BinningSubsystemBase : SubsystemBase
     /// <value> <c>null</c> if value is not known. </value>
     public double? Limit2UpperLevel
     {
-        get => this._limit2UpperLevel;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.Limit2UpperLevel, value ) )
             {
-                this._limit2UpperLevel = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -1159,7 +1135,6 @@ public abstract class BinningSubsystemBase : SubsystemBase
     #region " limit2 auto clear "
 
     /// <summary> Limit2 Auto Clear. </summary>
-    private bool? _limit2AutoClear;
 
     /// <summary> Gets or sets the cached Limit2 Auto Clear sentinel. </summary>
     /// <value>
@@ -1168,13 +1143,13 @@ public abstract class BinningSubsystemBase : SubsystemBase
     /// </value>
     public bool? Limit2AutoClear
     {
-        get => this._limit2AutoClear;
+        get;
 
         protected set
         {
             if ( !Equals( this.Limit2AutoClear, value ) )
             {
-                this._limit2AutoClear = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -1226,19 +1201,18 @@ public abstract class BinningSubsystemBase : SubsystemBase
     #region " limit2 lower source "
 
     /// <summary> The Limit2 Lower Source. </summary>
-    private int? _limit2LowerSource;
 
     /// <summary> Gets or sets the cached Limit2 Lower Source. </summary>
     /// <value> <c>null</c> if value is not known. </value>
     public int? Limit2LowerSource
     {
-        get => this._limit2LowerSource;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.Limit2LowerSource, value ) )
             {
-                this._limit2LowerSource = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -1286,19 +1260,18 @@ public abstract class BinningSubsystemBase : SubsystemBase
     #region " limit2 upper source "
 
     /// <summary> The Limit2 Upper Source. </summary>
-    private int? _limit2UpperSource;
 
     /// <summary> Gets or sets the cached Limit2 Upper Source. </summary>
     /// <value> <c>null</c> if value is not known. </value>
     public int? Limit2UpperSource
     {
-        get => this._limit2UpperSource;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.Limit2UpperSource, value ) )
             {
-                this._limit2UpperSource = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

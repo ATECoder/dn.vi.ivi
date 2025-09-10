@@ -1,8 +1,6 @@
 namespace cc.isr.VI.Pith;
 public abstract partial class SessionBase
 {
-    private ServiceRequests _operationServiceRequestEnableBitmask;
-
     /// <summary> Gets or sets the default Operation service request enable bitmask. </summary>
     /// <remarks>
     /// Exclude message available to prevent handling a service request on messages.
@@ -10,11 +8,9 @@ public abstract partial class SessionBase
     /// <statusByte> The default Operation service request enable bitmask. </statusByte>
     public ServiceRequests OperationServiceRequestEnableBitmask
     {
-        get => this._operationServiceRequestEnableBitmask;
-        set => _ = base.SetProperty( ref this._operationServiceRequestEnableBitmask, value );
+        get;
+        set => _ = base.SetProperty( ref field, value );
     }
-
-    private string? _standardServiceEnableCommand;
 
     /// <summary> Gets or sets the standard service enable command. </summary>
     /// <remarks>
@@ -26,8 +22,8 @@ public abstract partial class SessionBase
     /// <statusByte> The standard service enable command. </statusByte>
     public string? StandardServiceEnableCommand
     {
-        get => this._standardServiceEnableCommand;
-        set => _ = base.SetProperty( ref this._standardServiceEnableCommand, value );
+        get;
+        set => _ = base.SetProperty( ref field, value );
     }
 
     /// <summary> Gets or sets the standard service enable command format. </summary>

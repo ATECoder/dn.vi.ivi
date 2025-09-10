@@ -210,7 +210,7 @@ public abstract class VersionInfoBase
     /// <returns> The numbers. </returns>
     private static string GetNumbers( string input )
     {
-        return new string( input.Where( char.IsDigit ).ToArray() );
+        return new string( [.. input.Where( char.IsDigit )] );
     }
 
     /// <summary> Gets not numbers. </summary>
@@ -218,7 +218,7 @@ public abstract class VersionInfoBase
     /// <returns> The not numbers. </returns>
     private static string GetNotNumbers( string input )
     {
-        return new string( input.Where( c => !char.IsDigit( c ) ).ToArray() );
+        return new string( [.. input.Where( c => !char.IsDigit( c ) )] );
     }
 
     #endregion

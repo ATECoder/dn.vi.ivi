@@ -159,7 +159,7 @@ public class DigitalLine : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( !string.IsNullOrWhiteSpace( commandFormat ) )
-            session.WriteLine( commandFormat );
+            _ = session.WriteLine( commandFormat );
 
         this.DigitalLineMode = VI.DigitalLineMode.DigitalInput;
     }
@@ -169,7 +169,6 @@ public class DigitalLine : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
     #region " digital line state "
 
     /// <summary> True to enable, false to disable the digital line read write. </summary>
-    private bool _digitalLineReadWriteEnabled;
 
     /// <summary> Gets or sets the digital line read write enabled. </summary>
     /// <value>
@@ -178,32 +177,29 @@ public class DigitalLine : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
     /// </value>
     public bool DigitalLineReadWriteEnabled
     {
-        get => this._digitalLineReadWriteEnabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.DigitalLineReadWriteEnabled, value ) )
             {
-                this._digitalLineReadWriteEnabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
     }
 
-    /// <summary> lineState of the digital line. </summary>
-    private DigitalLineState? _digitalLineState;
-
     /// <summary> Gets or sets the digital line lineState. </summary>
     /// <value> The digital line lineState. </value>
     public DigitalLineState? DigitalLineState
     {
-        get => this._digitalLineState;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.DigitalLineState, value ) )
             {
-                this._digitalLineState = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

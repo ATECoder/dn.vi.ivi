@@ -1,14 +1,13 @@
 using System.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace cc.isr.VI.Pith.Settings;
 
 /// <summary>   The visa session IO settings. </summary>
 /// <remarks>   David, 2021-02-01. </remarks>
 [CLSCompliant( false )]
-public class IOSettings() : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
+public partial class IOSettings() : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
 {
-    private bool _exists;
-
     /// <summary>
     /// Gets or sets a value indicating whether this settings section exists and the values were thus
     /// fetched from the settings file.
@@ -17,22 +16,18 @@ public class IOSettings() : CommunityToolkit.Mvvm.ComponentModel.ObservableObjec
     [Description( "True if this settings were found and read from the settings file." )]
     public bool Exists
     {
-        get => this._exists;
-        set => _ = this.SetProperty( ref this._exists, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
-
-    private byte _readTerminationCharacter = Std.EscapeSequencesExtensions.EscapeSequencesExtensionMethods.NEW_LINE_VALUE;
 
     /// <summary> Gets the ASCII character used to end reading. </summary>
     /// <value> The read termination character. </value>
     [Description( "The ASCII character used to end reading [10]" )]
     public byte ReadTerminationCharacter
     {
-        get => this._readTerminationCharacter;
-        set => _ = this.SetProperty( ref this._readTerminationCharacter, value );
-    }
-
-    private bool _readTerminationEnabled = true;
+        get;
+        set => _ = this.SetProperty( ref field, value );
+    } = Std.EscapeSequencesExtensions.EscapeSequencesExtensionMethods.NEW_LINE_VALUE;
 
     /// <summary>
     /// Gets the value indicating whether the read operation ends when a termination character is received.
@@ -41,18 +36,13 @@ public class IOSettings() : CommunityToolkit.Mvvm.ComponentModel.ObservableObjec
     [Description( "The value indicating whether the read operation ends when a termination character is received [true]" )]
     public bool ReadTerminationEnabled
     {
-        get => this._readTerminationEnabled;
-        set => _ = this.SetProperty( ref this._readTerminationEnabled, value );
-    }
-
-    private MessageNotificationModes _sessionMessageNotificationModes = MessageNotificationModes.None;
+        get;
+        set => _ = this.SetProperty( ref field, value );
+    } = true;
 
     /// <summary>   Gets or sets the session message notification modes. </summary>
     /// <value> The session message notification modes. </value>
+    [ObservableProperty]
     [Description( "Specifies the modes of session notification, e.g., none or message received, sent or both [None; 0]" )]
-    public MessageNotificationModes SessionMessageNotificationModes
-    {
-        get => this._sessionMessageNotificationModes;
-        set => this.SetProperty( ref this._sessionMessageNotificationModes, value );
-    }
+    public partial MessageNotificationModes SessionMessageNotificationModes { get; set; } = MessageNotificationModes.None;
 }

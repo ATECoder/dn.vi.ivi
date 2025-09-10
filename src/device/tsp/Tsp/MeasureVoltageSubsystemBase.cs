@@ -31,7 +31,6 @@ public class MeasureVoltageSubsystemBase( Tsp.StatusSubsystemBase statusSubsyste
     #region " auto range voltage enabled "
 
     /// <summary> Auto Range Voltage enabled. </summary>
-    private bool? _autoRangeVoltageEnabled;
 
     /// <summary> Gets or sets the cached Auto Range Voltage Enabled sentinel. </summary>
     /// <value>
@@ -41,8 +40,8 @@ public class MeasureVoltageSubsystemBase( Tsp.StatusSubsystemBase statusSubsyste
     /// </value>
     public bool? AutoRangeVoltageEnabled
     {
-        get => this._autoRangeVoltageEnabled;
-        protected set => _ = this.SetProperty( ref this._autoRangeVoltageEnabled, value );
+        get;
+        protected set => _ = this.SetProperty( ref field, value );
     }
 
     /// <summary>
@@ -125,7 +124,6 @@ public class MeasureVoltageSubsystemBase( Tsp.StatusSubsystemBase statusSubsyste
     #region " reading "
 
     /// <summary> The reading. </summary>
-    private string? _reading;
 
     /// <summary>
     /// Gets or sets  or sets (protected) the reading.  When set, the value is converted to
@@ -134,8 +132,8 @@ public class MeasureVoltageSubsystemBase( Tsp.StatusSubsystemBase statusSubsyste
     /// <value> The reading. </value>
     public string? Reading
     {
-        get => this._reading;
-        protected set => _ = this.SetProperty( ref this._reading, value );
+        get;
+        protected set => _ = this.SetProperty( ref field, value );
     }
 
     #endregion
@@ -143,14 +141,13 @@ public class MeasureVoltageSubsystemBase( Tsp.StatusSubsystemBase statusSubsyste
     #region " voltage "
 
     /// <summary> The voltage. </summary>
-    private double? _voltage;
 
     /// <summary> Gets or sets (protected) the measured resistance. </summary>
     /// <value> The resistance. </value>
     public double? Voltage
     {
-        get => this._voltage;
-        protected set => _ = this.SetProperty( ref this._voltage, value );
+        get;
+        protected set => _ = this.SetProperty( ref field, value );
     }
 
     /// <summary> Turns on the source and measures. </summary>

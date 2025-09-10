@@ -38,7 +38,6 @@ public class ContactSubsystemBase( Tsp.StatusSubsystemBase statusSubsystem ) : S
     #region " contact check speed mode "
 
     /// <summary> The Contact Check Speed Mode. </summary>
-    private ContactCheckSpeedMode? _contactCheckSpeedMode;
 
     /// <summary> Gets or sets the cached Contact Check Speed Mode. </summary>
     /// <value>
@@ -47,8 +46,8 @@ public class ContactSubsystemBase( Tsp.StatusSubsystemBase statusSubsystem ) : S
     /// </value>
     public ContactCheckSpeedMode? ContactCheckSpeedMode
     {
-        get => this._contactCheckSpeedMode;
-        protected set => _ = this.SetProperty( ref this._contactCheckSpeedMode, value );
+        get;
+        protected set => _ = this.SetProperty( ref field, value );
     }
 
     /// <summary> Writes and reads back the Contact Check Speed Mode. </summary>
@@ -115,14 +114,13 @@ public class ContactSubsystemBase( Tsp.StatusSubsystemBase statusSubsystem ) : S
     #region " threshold "
 
     /// <summary> The contact check threshold. </summary>
-    private int? _contactCheckThreshold;
 
     /// <summary> Gets or sets (Protected) the contact check threshold. </summary>
     /// <value> The contact check threshold. </value>
     public int? ContactCheckThreshold
     {
-        get => this._contactCheckThreshold;
-        protected set => _ = this.SetProperty( ref this._contactCheckThreshold, value );
+        get;
+        protected set => _ = this.SetProperty( ref field, value );
     }
 
     /// <summary> Programs and reads back the Contact Check Threshold Level. </summary>
@@ -166,14 +164,13 @@ public class ContactSubsystemBase( Tsp.StatusSubsystemBase statusSubsystem ) : S
     #region " resistances "
 
     /// <summary> The contact resistances. </summary>
-    private string? _contactResistances;
 
     /// <summary> Gets or sets (Protected) the contact resistances. </summary>
     /// <value> The contact resistances. </value>
     public string? ContactResistances
     {
-        get => this._contactResistances;
-        protected set => _ = this.SetProperty( ref this._contactResistances, value );
+        get;
+        protected set => _ = this.SetProperty( ref field, value );
     }
 
     /// <summary> Reads the Contact Resistances. </summary>
@@ -205,7 +202,6 @@ public class ContactSubsystemBase( Tsp.StatusSubsystemBase statusSubsystem ) : S
     #region " contact check okay "
 
     /// <summary> ContactCheckOkay. </summary>
-    private bool? _contactCheckOkay;
 
     /// <summary> Gets or sets the cached Contact Check Okay sentinel. </summary>
     /// <value>
@@ -214,8 +210,8 @@ public class ContactSubsystemBase( Tsp.StatusSubsystemBase statusSubsystem ) : S
     /// </value>
     public bool? ContactCheckOkay
     {
-        get => this._contactCheckOkay;
-        protected set => _ = this.SetProperty( ref this._contactCheckOkay, value );
+        get;
+        protected set => _ = this.SetProperty( ref field, value );
     }
 
     /// <summary>
@@ -266,7 +262,7 @@ public class ContactSubsystemBase( Tsp.StatusSubsystemBase statusSubsystem ) : S
             this.Session.SetLastAction( "reading contact check resistance" );
             _ = this.QueryContactResistances();
             this.Session.ThrowDeviceExceptionIfError();
-            _ = string.IsNullOrWhiteSpace( this._contactResistances )
+            _ = string.IsNullOrWhiteSpace( this.ContactResistances )
                 ? cc.isr.VI.SessionLogger.Instance.LogError( $"Contact check failed;. Failed fetching contact resistances using  '{this.Session.LastMessageSent}'" )
                 : cc.isr.VI.SessionLogger.Instance.LogWarning( $"Contact check failed;. Contact resistance {this.ContactResistances} exceeded the limit {this.ContactCheckThreshold}" );
         }

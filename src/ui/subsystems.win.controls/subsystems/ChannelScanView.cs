@@ -89,11 +89,7 @@ public partial class ChannelScanView : cc.isr.WinControls.ModelViewBase
     [DesignerSerializationVisibility( DesignerSerializationVisibility.Hidden )]
     public string ScanListFunction
     {
-        get => this.ScanView?.ScanListFunction ?? string.Empty;
-        set
-        {
-            if ( this.ScanView is not null ) this.ScanView.ScanListFunction = value;
-        }
+        get => this.ScanView?.ScanListFunction ?? string.Empty; set => this.ScanView?.ScanListFunction = value;
     }
 
     /// <summary> Gets or sets the scan list of closed channels. </summary>
@@ -101,12 +97,7 @@ public partial class ChannelScanView : cc.isr.WinControls.ModelViewBase
     [DesignerSerializationVisibility( DesignerSerializationVisibility.Hidden )]
     public string InternalScanList
     {
-        get => this.ScanView?.InternalScanList ?? string.Empty;
-        set
-        {
-            if ( this.ScanView is not null )
-                this.ScanView.InternalScanList = value;
-        }
+        get => this.ScanView?.InternalScanList ?? string.Empty; set => this.ScanView?.InternalScanList = value;
     }
 
     #endregion

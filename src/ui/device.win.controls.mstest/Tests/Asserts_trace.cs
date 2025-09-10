@@ -74,8 +74,8 @@ public sealed partial class Asserts
         if ( string.IsNullOrWhiteSpace( traceMessage ) )
             Assert.Fail( $"{payload} failed to trace message {fetchNumber}" );
 
-        Assert.AreEqual( 1, traceMessages.Count, $"{payload} expected on warning message." );
-        Assert.IsTrue( traceMessage.Contains( payload ), $"'{payload}' should be contained in the trace message {traceMessage}" );
+        Assert.HasCount( 1, traceMessages, $"{payload} expected on warning message." );
+        Assert.Contains( payload, traceMessage, $"'{payload}' should be contained in the trace message {traceMessage}" );
     }
 
 }

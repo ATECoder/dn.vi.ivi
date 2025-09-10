@@ -16,9 +16,6 @@ public partial class ChannelTraceSubsystemBase
     /// <value> A Dictionary of Trace Parameter parses. </value>
     public Pith.EnumReadWriteCollection TraceParameterReadWrites { get; private set; }
 
-    /// <summary> Options for controlling the supported. </summary>
-    private TraceParameters _supportedParameters;
-
     /// <summary>
     /// Gets or sets the supported Trace Parameter. This is a subset of the functions supported by
     /// the instrument.
@@ -26,19 +23,16 @@ public partial class ChannelTraceSubsystemBase
     /// <value> Options that control the supported. </value>
     public TraceParameters SupportedParameters
     {
-        get => this._supportedParameters;
+        get;
         set
         {
             if ( !this.SupportedParameters.Equals( value ) )
             {
-                this._supportedParameters = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
     }
-
-    /// <summary> The Trace Parameter. </summary>
-    private TraceParameters? _parameter;
 
     /// <summary> Gets or sets the cached source Parameter. </summary>
     /// <value>
@@ -46,13 +40,13 @@ public partial class ChannelTraceSubsystemBase
     /// </value>
     public TraceParameters? Parameter
     {
-        get => this._parameter;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.Parameter, value ) )
             {
-                this._parameter = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

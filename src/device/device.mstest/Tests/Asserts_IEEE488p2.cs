@@ -227,7 +227,7 @@ public sealed partial class Asserts
 
         int expectedStandardEventEnableBitmask = standardEventEnableBitmask;
         propertyName = nameof( cc.isr.VI.Pith.SessionBase.StandardEventEnableOperationCompleteBitmask ).SplitWords();
-        Assert.IsTrue( expectedStandardEventEnableBitmask > 0, $"{propertyName} 0x{expectedStandardEventEnableBitmask:X2} should be positive" );
+        Assert.IsGreaterThan( 0, expectedStandardEventEnableBitmask, $"{propertyName} 0x{expectedStandardEventEnableBitmask:X2} should be positive" );
 
         session.EnableServiceRequestOnOperationCompletion( standardEventEnableBitmask, serviceRequestEnableBitmask, true );
         actualStandardEventEnableBitmask = ( int ) session.QueryStandardEventEnableBitmask()!;
@@ -266,7 +266,7 @@ public sealed partial class Asserts
 
         cc.isr.VI.Pith.StandardEvents expectedStandardEventEnableBitmask = session.StandardEventEnableOperationCompleteBitmask;
         propertyName = nameof( cc.isr.VI.Pith.SessionBase.StandardEventEnableOperationCompleteBitmask ).SplitWords();
-        Assert.IsTrue( ( int ) expectedStandardEventEnableBitmask > 0, $"{propertyName} 0x{( int ) expectedStandardEventEnableBitmask:X2} should be positive" );
+        Assert.IsGreaterThan( 0, ( int ) expectedStandardEventEnableBitmask, $"{propertyName} 0x{( int ) expectedStandardEventEnableBitmask:X2} should be positive" );
         session.EnableServiceRequestOnOperationCompletion( true );
         actualStandardEventEnableBitmask = ( cc.isr.VI.Pith.StandardEvents ) ( int ) session.QueryStandardEventEnableBitmask()!;
         propertyName = nameof( cc.isr.VI.Pith.SessionBase.StandardEventEnableOperationCompleteBitmask ).SplitWords();

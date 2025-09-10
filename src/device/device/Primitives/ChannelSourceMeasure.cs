@@ -67,7 +67,7 @@ public class ChannelSourceMeasure
     private static string ToSortedList( string list, char delimiter )
     {
         System.Text.StringBuilder result = new();
-        List<string> l = new( list.Split( delimiter ) );
+        List<string> l = [.. list.Split( delimiter )];
         l.Sort();
         foreach ( string s in l )
         {

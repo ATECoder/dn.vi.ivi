@@ -101,6 +101,9 @@ public partial class MainForm : System.Windows.Forms.Form
             case HardwareInterfaceType.Gpib:
                 _ = this._gpibTreeNode.Nodes.Add( new TreeNode( resourceName ) );
                 break;
+            case HardwareInterfaceType.GpibVxi:
+                _ = this._gpibTreeNode.Nodes.Add( new TreeNode( resourceName ) );
+                break;
             case HardwareInterfaceType.Vxi:
                 _ = this._vxiTreeNode.Nodes.Add( new TreeNode( resourceName ) );
                 break;

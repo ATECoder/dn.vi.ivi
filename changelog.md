@@ -2,9 +2,12 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9382]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9383]: https://www.github.com/atecoder/dn.vi.ivi
 
-Current IVI Visa Compatibility: 8.0.1.9371
+Current IVI Visa Compatibility: 8.0.1.9383
+
+## [8.1.9383] - 2025-09-09
+- Implement code analysis recommendations.
 
 ## [8.1.9382] - 2025-09-08
 - Use language preview in windows and net standard projects so as to enable auto properties.

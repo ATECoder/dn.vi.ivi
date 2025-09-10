@@ -219,9 +219,6 @@ public abstract partial class MeasureSubsystemBase : SubsystemBase
         }
     }
 
-    /// <summary> The Aperture. </summary>
-    private double? _aperture;
-
     /// <summary>
     /// Gets or sets the cached sense Aperture. Set to
     /// <see cref="VI.Syntax.ScpiSyntax.Infinity">infinity</see> to set to maximum or to
@@ -244,13 +241,13 @@ public abstract partial class MeasureSubsystemBase : SubsystemBase
     /// <value> <c>null</c> if value is not known. </value>
     public double? Aperture
     {
-        get => this._aperture;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.Aperture, value ) )
             {
-                this._aperture = value;
+                field = value;
                 this.PowerLineCycles = value.HasValue ? this.Aperture!.Value * this.StatusSubsystem.LineFrequency : new double?();
                 this.NotifyPropertyChanged();
             }
@@ -376,7 +373,6 @@ public abstract partial class MeasureSubsystemBase : SubsystemBase
     #region " auto zero enabled "
 
     /// <summary> Auto Zero enabled. </summary>
-    private bool? _autoZeroEnabled;
 
     /// <summary> Gets or sets the cached Auto Zero Enabled sentinel. </summary>
     /// <value>
@@ -385,13 +381,13 @@ public abstract partial class MeasureSubsystemBase : SubsystemBase
     /// </value>
     public bool? AutoZeroEnabled
     {
-        get => this._autoZeroEnabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.AutoZeroEnabled, value ) )
             {
-                this._autoZeroEnabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -476,9 +472,6 @@ public abstract partial class MeasureSubsystemBase : SubsystemBase
         }
     }
 
-    /// <summary> The FilterCount. </summary>
-    private int? _filterCount;
-
     /// <summary>
     /// Gets or sets the cached sense Filter Count. Set to
     /// <see cref="VI.Syntax.ScpiSyntax.Infinity">infinity</see> to set to maximum or to
@@ -487,13 +480,13 @@ public abstract partial class MeasureSubsystemBase : SubsystemBase
     /// <value> <c>null</c> if value is not known. </value>
     public int? FilterCount
     {
-        get => this._filterCount;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.FilterCount, value ) )
             {
-                this._filterCount = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -539,7 +532,6 @@ public abstract partial class MeasureSubsystemBase : SubsystemBase
     #region " filter enabled "
 
     /// <summary> Filter enabled. </summary>
-    private bool? _filterEnabled;
 
     /// <summary> Gets or sets the cached Filter Enabled sentinel. </summary>
     /// <value>
@@ -548,13 +540,13 @@ public abstract partial class MeasureSubsystemBase : SubsystemBase
     /// </value>
     public bool? FilterEnabled
     {
-        get => this._filterEnabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.FilterEnabled, value ) )
             {
-                this._filterEnabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -606,7 +598,6 @@ public abstract partial class MeasureSubsystemBase : SubsystemBase
     #region " moving average filter enabled "
 
     /// <summary> Moving Average Filter enabled. </summary>
-    private bool? _movingAverageFilterEnabled;
 
     /// <summary> Gets or sets the cached Moving Average Filter Enabled sentinel. </summary>
     /// <value>
@@ -616,13 +607,13 @@ public abstract partial class MeasureSubsystemBase : SubsystemBase
     /// </value>
     public bool? MovingAverageFilterEnabled
     {
-        get => this._movingAverageFilterEnabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.MovingAverageFilterEnabled, value ) )
             {
-                this._movingAverageFilterEnabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -691,9 +682,6 @@ public abstract partial class MeasureSubsystemBase : SubsystemBase
         }
     }
 
-    /// <summary> The FilterWindow. </summary>
-    private double? _filterWindow;
-
     /// <summary>
     /// Gets or sets the cached sense Filter Window. Set to
     /// <see cref="VI.Syntax.ScpiSyntax.Infinity">infinity</see> to set to maximum or to
@@ -702,13 +690,13 @@ public abstract partial class MeasureSubsystemBase : SubsystemBase
     /// <value> <c>null</c> if value is not known. </value>
     public double? FilterWindow
     {
-        get => this._filterWindow;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.FilterWindow, value ) )
             {
-                this._filterWindow = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -778,9 +766,6 @@ public abstract partial class MeasureSubsystemBase : SubsystemBase
     /// </value>
     public bool SupportsFrontTerminalsSelectionQuery => !string.IsNullOrWhiteSpace( this.FrontTerminalsSelectedQueryCommand );
 
-    /// <summary> Front Terminals Selected. </summary>
-    private bool? _frontTerminalsSelected;
-
     /// <summary> Gets or sets the cached Front Terminals Selected sentinel. </summary>
     /// <value>
     /// <c>null</c> if Front Terminals Selected is not known; <c>true</c> if output is on; otherwise,
@@ -788,13 +773,13 @@ public abstract partial class MeasureSubsystemBase : SubsystemBase
     /// </value>
     public bool? FrontTerminalsSelected
     {
-        get => this._frontTerminalsSelected;
+        get;
 
         protected set
         {
             if ( !Equals( this.FrontTerminalsSelected, value ) )
             {
-                this._frontTerminalsSelected = value;
+                field = value;
                 this.NotifyPropertyChanged();
                 this.NotifyPropertyChanged( nameof( MultimeterSubsystemBase.TerminalsCaption ) );
             }
@@ -847,7 +832,6 @@ public abstract partial class MeasureSubsystemBase : SubsystemBase
     #region " limit1 auto clear "
 
     /// <summary> Limit1 Auto Clear. </summary>
-    private bool? _limit1AutoClear;
 
     /// <summary> Gets or sets the cached Limit1 Auto Clear sentinel. </summary>
     /// <remarks>
@@ -865,13 +849,13 @@ public abstract partial class MeasureSubsystemBase : SubsystemBase
     /// </value>
     public bool? Limit1AutoClear
     {
-        get => this._limit1AutoClear;
+        get;
 
         protected set
         {
             if ( !Equals( this.Limit1AutoClear, value ) )
             {
-                this._limit1AutoClear = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -923,7 +907,6 @@ public abstract partial class MeasureSubsystemBase : SubsystemBase
     #region " limit1 enabled "
 
     /// <summary> Limit1 enabled. </summary>
-    private bool? _limit1Enabled;
 
     /// <summary> Gets or sets the cached Limit1 Enabled sentinel. </summary>
     /// <remarks>
@@ -938,13 +921,13 @@ public abstract partial class MeasureSubsystemBase : SubsystemBase
     /// </value>
     public bool? Limit1Enabled
     {
-        get => this._limit1Enabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.Limit1Enabled, value ) )
             {
-                this._limit1Enabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -996,7 +979,6 @@ public abstract partial class MeasureSubsystemBase : SubsystemBase
     #region " limit1 lower level "
 
     /// <summary> The Limit1 Lower Level. </summary>
-    private double? _limit1LowerLevel;
 
     /// <summary>
     /// Gets or sets the cached Limit1 Lower Level. Set to
@@ -1012,13 +994,13 @@ public abstract partial class MeasureSubsystemBase : SubsystemBase
     /// <value> <c>null</c> if value is not known. </value>
     public double? Limit1LowerLevel
     {
-        get => this._limit1LowerLevel;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.Limit1LowerLevel, value ) )
             {
-                this._limit1LowerLevel = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -1066,7 +1048,6 @@ public abstract partial class MeasureSubsystemBase : SubsystemBase
     #region " limit1 upper level "
 
     /// <summary> The Limit1 Upper Level. </summary>
-    private double? _limit1UpperLevel;
 
     /// <summary>
     /// Gets or sets the cached Limit1 Upper Level. Set to
@@ -1083,13 +1064,13 @@ public abstract partial class MeasureSubsystemBase : SubsystemBase
     /// <value> <c>null</c> if value is not known. </value>
     public double? Limit1UpperLevel
     {
-        get => this._limit1UpperLevel;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.Limit1UpperLevel, value ) )
             {
-                this._limit1UpperLevel = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -1141,7 +1122,6 @@ public abstract partial class MeasureSubsystemBase : SubsystemBase
     #region " limit2 auto clear "
 
     /// <summary> Limit2 Auto Clear. </summary>
-    private bool? _limit2AutoClear;
 
     /// <summary> Gets or sets the cached Limit2 Auto Clear sentinel. </summary>
     /// <remarks>
@@ -1159,13 +1139,13 @@ public abstract partial class MeasureSubsystemBase : SubsystemBase
     /// </value>
     public bool? Limit2AutoClear
     {
-        get => this._limit2AutoClear;
+        get;
 
         protected set
         {
             if ( !Equals( this.Limit2AutoClear, value ) )
             {
-                this._limit2AutoClear = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -1217,7 +1197,6 @@ public abstract partial class MeasureSubsystemBase : SubsystemBase
     #region " limit2 enabled "
 
     /// <summary> Limit2 enabled. </summary>
-    private bool? _limit2Enabled;
 
     /// <summary> Gets or sets the cached Limit2 Enabled sentinel. </summary>
     /// <remarks>
@@ -1232,13 +1211,13 @@ public abstract partial class MeasureSubsystemBase : SubsystemBase
     /// </value>
     public bool? Limit2Enabled
     {
-        get => this._limit2Enabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.Limit2Enabled, value ) )
             {
-                this._limit2Enabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -1290,7 +1269,6 @@ public abstract partial class MeasureSubsystemBase : SubsystemBase
     #region " limit2 lower level "
 
     /// <summary> The Limit2 Lower Level. </summary>
-    private double? _limit2LowerLevel;
 
     /// <summary>
     /// Gets or sets the cached Limit2 Lower Level. Set to
@@ -1306,13 +1284,13 @@ public abstract partial class MeasureSubsystemBase : SubsystemBase
     /// <value> <c>null</c> if value is not known. </value>
     public double? Limit2LowerLevel
     {
-        get => this._limit2LowerLevel;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.Limit2LowerLevel, value ) )
             {
-                this._limit2LowerLevel = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -1360,7 +1338,6 @@ public abstract partial class MeasureSubsystemBase : SubsystemBase
     #region " limit2 upper level "
 
     /// <summary> The Limit2 Upper Level. </summary>
-    private double? _limit2UpperLevel;
 
     /// <summary>
     /// Gets or sets the cached Limit2 Upper Level. Set to
@@ -1378,13 +1355,13 @@ public abstract partial class MeasureSubsystemBase : SubsystemBase
     /// <value> <c>null</c> if value is not known. </value>
     public double? Limit2UpperLevel
     {
-        get => this._limit2UpperLevel;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.Limit2UpperLevel, value ) )
             {
-                this._limit2UpperLevel = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -1460,9 +1437,6 @@ public abstract partial class MeasureSubsystemBase : SubsystemBase
     /// <value> The open detector known states. </value>
     public BooleanDictionary OpenDetectorKnownStates { get; private set; }
 
-    /// <summary> Open Detector enabled. </summary>
-    private bool? _openDetectorEnabled;
-
     /// <summary> Gets or sets the cached Open Detector Enabled sentinel. </summary>
     /// <value>
     /// <c>null</c> if Open Detector Enabled is not known; <c>true</c> if output is on; otherwise,
@@ -1470,13 +1444,13 @@ public abstract partial class MeasureSubsystemBase : SubsystemBase
     /// </value>
     public bool? OpenDetectorEnabled
     {
-        get => this._openDetectorEnabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.OpenDetectorEnabled, value ) )
             {
-                this._openDetectorEnabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -1549,9 +1523,6 @@ public abstract partial class MeasureSubsystemBase : SubsystemBase
         }
     }
 
-    /// <summary> The Power Line Cycles. </summary>
-    private double? _powerLineCycles;
-
     /// <summary>
     /// Gets or sets the cached sense PowerLineCycles. Set to
     /// <see cref="VI.Syntax.ScpiSyntax.Infinity">infinity</see> to set to maximum or to
@@ -1560,14 +1531,14 @@ public abstract partial class MeasureSubsystemBase : SubsystemBase
     /// <value> <c>null</c> if value is not known. </value>
     public double? PowerLineCycles
     {
-        get => this._powerLineCycles;
+        get;
 
         protected set
         {
             if ( value is not null && !Nullable.Equals( this.PowerLineCycles, value ) )
             {
-                this._powerLineCycles = value;
-                this.Aperture = StatusSubsystemBase.FromPowerLineCycles( this._powerLineCycles.Value ).TotalSeconds;
+                field = value;
+                this.Aperture = StatusSubsystemBase.FromPowerLineCycles( field.Value ).TotalSeconds;
                 this.NotifyPropertyChanged();
             }
         }
@@ -1615,7 +1586,6 @@ public abstract partial class MeasureSubsystemBase : SubsystemBase
     #region " range "
 
     /// <summary> The Range. </summary>
-    private double? _range;
 
     /// <summary>
     /// Gets or sets the cached sense Range. Set to
@@ -1625,13 +1595,13 @@ public abstract partial class MeasureSubsystemBase : SubsystemBase
     /// <value> <c>null</c> if value is not known. </value>
     public double? Range
     {
-        get => this._range;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.Range, value ) )
             {
-                this._range = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -1677,7 +1647,6 @@ public abstract partial class MeasureSubsystemBase : SubsystemBase
     #region " remote sense selected "
 
     /// <summary> Remote Sense Selected. </summary>
-    private bool? _remoteSenseSelected;
 
     /// <summary> Gets or sets the cached Remote Sense Selected sentinel. </summary>
     /// <value>
@@ -1686,13 +1655,13 @@ public abstract partial class MeasureSubsystemBase : SubsystemBase
     /// </value>
     public bool? RemoteSenseSelected
     {
-        get => this._remoteSenseSelected;
+        get;
 
         protected set
         {
             if ( !Equals( this.RemoteSenseSelected, value ) )
             {
-                this._remoteSenseSelected = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

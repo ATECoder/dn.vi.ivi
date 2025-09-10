@@ -98,19 +98,18 @@ public partial class TriggerLayerView : cc.isr.WinControls.ModelViewBase
 
     #region " public members "
 
-    private int _layerNumber;
 
     /// <summary> Gets or sets the layer number. </summary>
     /// <value> The layer number. </value>
     [DesignerSerializationVisibility( DesignerSerializationVisibility.Hidden )]
     public int LayerNumber
     {
-        get => this._layerNumber;
+        get;
         set
         {
             if ( value != this.LayerNumber )
             {
-                this._layerNumber = value;
+                field = value;
                 this._subsystemSplitButton.Text = $"Trig{value}";
             }
         }

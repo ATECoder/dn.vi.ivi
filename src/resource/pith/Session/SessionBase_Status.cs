@@ -59,7 +59,6 @@ public partial class SessionBase
 
     #region " service request register events: measurement "
 
-    private ServiceRequests _measurementEventBitmask;
 
     /// <summary>
     /// Gets or sets the bit that would be set when an enabled measurement event has occurred.
@@ -68,7 +67,7 @@ public partial class SessionBase
     /// <value> The Measurement event bit value. </value>
     public ServiceRequests MeasurementEventBitmask
     {
-        get => this._measurementEventBitmask;
+        get;
         set
         {
             if ( !value.Equals( this.MeasurementEventBitmask ) )
@@ -77,7 +76,7 @@ public partial class SessionBase
                 {
                     throw new InvalidOperationException( $"Measurement Event Status bit cannot be set to a value={value} having more than one bit" );
                 }
-                this._measurementEventBitmask = value;
+                field = value;
                 base.OnPropertyChanged( new System.ComponentModel.PropertyChangedEventArgs( nameof( this.MeasurementEventBitmask ) ) );
             }
         }
@@ -103,7 +102,6 @@ public partial class SessionBase
     #region " service request register events: system event "
 
     /// <summary> The system event bit. </summary>
-    private ServiceRequests _systemEventBitmask;
 
     /// <summary>
     /// Gets or sets the bit that would be set for detecting if a System Event has occurred.
@@ -112,7 +110,7 @@ public partial class SessionBase
     /// <value> The System Event bit value. </value>
     public ServiceRequests SystemEventBitmask
     {
-        get => this._systemEventBitmask;
+        get;
         set
         {
             if ( !value.Equals( this.SystemEventBitmask ) )
@@ -122,7 +120,7 @@ public partial class SessionBase
                     throw new InvalidOperationException( $"System Event Status bit cannot be set to a value={value} having more than one bit" );
                 }
 
-                this._systemEventBitmask = value;
+                field = value;
                 base.OnPropertyChanged( new System.ComponentModel.PropertyChangedEventArgs( nameof( this.SystemEventBitmask ) ) );
             }
         }
@@ -145,17 +143,16 @@ public partial class SessionBase
 
     #region " service request register events: error "
 
-    private ServiceRequests _errorAvailableBitmask;
 
     /// <summary> Gets or sets the bit that would be set if an error event has occurred. </summary>
     /// <exception cref="InvalidOperationException"> Thrown when the requested operation is invalid. </exception>
     /// <value> The error event bit. </value>
     public ServiceRequests ErrorAvailableBitmask
     {
-        get => this._errorAvailableBitmask;
+        get;
         set => _ = SessionBase.CountSetBits( ( int ) value ) > 1
                 ? throw new InvalidOperationException( $"Error Available Status Bit cannot be set to {value} because it has {SessionBase.CountSetBits( ( int ) value )} bits" )
-                : this.SetProperty( ref this._errorAvailableBitmask, value );
+                : this.SetProperty( ref field, value );
     }
 
     /// <summary>
@@ -230,7 +227,6 @@ public partial class SessionBase
     #region " service request register events: questionable "
 
     /// <summary> The questionable event bit. </summary>
-    private ServiceRequests _questionableEventBitmask;
 
     /// <summary>
     /// Gets or sets the bit that would be set if a Questionable event has occurred.
@@ -239,7 +235,7 @@ public partial class SessionBase
     /// <value> The Questionable event bit. </value>
     public ServiceRequests QuestionableEventBitmask
     {
-        get => this._questionableEventBitmask;
+        get;
         set
         {
             if ( !value.Equals( this.QuestionableEventBitmask ) )
@@ -249,7 +245,7 @@ public partial class SessionBase
                     throw new InvalidOperationException( $"Questionable Event Status bit cannot be set to a value={value} having more than one bit" );
                 }
 
-                this._questionableEventBitmask = value;
+                field = value;
                 base.OnPropertyChanged( new System.ComponentModel.PropertyChangedEventArgs( nameof( this.QuestionableEventBitmask ) ) );
             }
         }
@@ -273,14 +269,13 @@ public partial class SessionBase
     #region " service request register events: message "
 
     /// <summary> The message available bit. </summary>
-    private ServiceRequests _messageAvailableBitmask;
 
     /// <summary> Gets or sets the bit that would be set if a message is available. </summary>
     /// <exception cref="InvalidOperationException"> Thrown when the requested operation is invalid. </exception>
     /// <value> The Message available bit. </value>
     public ServiceRequests MessageAvailableBitmask
     {
-        get => this._messageAvailableBitmask;
+        get;
         set
         {
             if ( !value.Equals( this.MessageAvailableBitmask ) )
@@ -290,7 +285,7 @@ public partial class SessionBase
                     throw new InvalidOperationException( $"Message Available Status Bit cannot be set to a value={value} having more than one bit" );
                 }
 
-                this._messageAvailableBitmask = value;
+                field = value;
                 base.OnPropertyChanged( new System.ComponentModel.PropertyChangedEventArgs( nameof( this.MessageAvailableBitmask ) ) );
             }
         }
@@ -387,7 +382,6 @@ public partial class SessionBase
 
     #region " service request register events: standard event "
 
-    private ServiceRequests _standardEventSummaryBitmask;
 
     /// <summary>
     /// Gets or sets the bitmask that would be set if an enabled standard event has occurred.
@@ -396,7 +390,7 @@ public partial class SessionBase
     /// <value> The Standard Event bit. </value>
     public ServiceRequests StandardEventSummaryBitmask
     {
-        get => this._standardEventSummaryBitmask;
+        get;
         set
         {
             if ( !value.Equals( this.StandardEventSummaryBitmask ) )
@@ -406,7 +400,7 @@ public partial class SessionBase
                     throw new InvalidOperationException( $"Standard Event Status bit cannot be set to a value={value} having more than one bit" );
                 }
 
-                this._standardEventSummaryBitmask = value;
+                field = value;
                 base.OnPropertyChanged( new System.ComponentModel.PropertyChangedEventArgs( nameof( this.StandardEventSummaryBitmask ) ) );
             }
         }
@@ -431,7 +425,6 @@ public partial class SessionBase
 
     #region " service request register events: service event (srq) "
 
-    private ServiceRequests _requestingServiceBitmask = ServiceRequests.RequestingService;
 
     /// <summary>
     /// Gets or sets bit that would be set if a requested service or Main Summary Bit (MSB) event has
@@ -441,7 +434,7 @@ public partial class SessionBase
     /// <value> The requested service or Main Summary Status Byte Bit. </value>
     public ServiceRequests RequestingServiceBitmask
     {
-        get => this._requestingServiceBitmask;
+        get;
         set
         {
             if ( !value.Equals( this.RequestingServiceBitmask ) )
@@ -451,11 +444,11 @@ public partial class SessionBase
                     throw new InvalidOperationException( $"Requesting Service Status Bit cannot be set to a value={value} having more than one bit" );
                 }
 
-                this._requestingServiceBitmask = value;
+                field = value;
                 base.OnPropertyChanged( new System.ComponentModel.PropertyChangedEventArgs( nameof( this.RequestingServiceBitmask ) ) );
             }
         }
-    }
+    } = ServiceRequests.RequestingService;
 
     /// <summary> Gets a value indicating if the device has requested service. </summary>
     /// <value> <c>true</c> if the device has requested service; otherwise, <c>false</c>. </value>
@@ -474,14 +467,13 @@ public partial class SessionBase
 
     #region " service request register events: operation "
 
-    private ServiceRequests _operationEventSummaryBitmask;
 
     /// <summary> Gets or sets the bit that would be set if an operation event has occurred. </summary>
     /// <exception cref="InvalidOperationException"> Thrown when the requested operation is invalid. </exception>
     /// <value> The Operation event bit. </value>
     public ServiceRequests OperationEventSummaryBitmask
     {
-        get => this._operationEventSummaryBitmask;
+        get;
         set
         {
             if ( !value.Equals( this.OperationEventSummaryBitmask ) )
@@ -491,7 +483,7 @@ public partial class SessionBase
                     throw new InvalidOperationException( $"Operation Event Status bit cannot be set to a value={value} having more than one bit" );
                 }
 
-                this._operationEventSummaryBitmask = value;
+                field = value;
                 base.OnPropertyChanged( new System.ComponentModel.PropertyChangedEventArgs( nameof( this.OperationEventSummaryBitmask ) ) );
             }
         }
@@ -578,14 +570,13 @@ public partial class SessionBase
 
     #region " query data and query results bitmasks "
 
-    private int _statusBusyBitmask;
 
     /// <summary>   Gets or sets the status busy bitmask. </summary>
     /// <value> The status busy bitmask. </value>
     public int StatusBusyBitmask
     {
-        get => this._statusBusyBitmask;
-        set => _ = this.SetProperty( ref this._statusBusyBitmask, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
 
     /// <summary>
@@ -608,14 +599,12 @@ public partial class SessionBase
         return (this.IsStatusBusy( statusByte ), statusByte);
     }
 
-    private int _statusDataReadyBitmask;
-
     /// <summary>   Gets or sets the status data ready bitmask. </summary>
     /// <value> The status data ready bitmask. </value>
     public int StatusDataReadyBitmask
     {
-        get => this._statusDataReadyBitmask;
-        set => _ = this.SetProperty( ref this._statusDataReadyBitmask, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
 
     /// <summary>   Query if the <paramref name="statusByte"/> status indicates that the instrument data is ready
@@ -628,14 +617,12 @@ public partial class SessionBase
         return this.StatusDataReadyBitmask == (statusByte & this.StatusDataReadyBitmask);
     }
 
-    private int _statusQueryResultReadyBitmask;
-
     /// <summary>   Gets or sets the status query result ready. </summary>
     /// <value> The status query result ready. </value>
     public int StatusQueryResultReadyBitmask
     {
-        get => this._statusQueryResultReadyBitmask;
-        set => _ = this.SetProperty( ref this._statusQueryResultReadyBitmask, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
 
     /// <summary>   Query if the <paramref name="statusByte"/> status indicates that the query as a ready

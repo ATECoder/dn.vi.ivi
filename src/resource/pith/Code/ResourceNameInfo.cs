@@ -123,8 +123,8 @@ public class ResourceNameInfo
     /// <value> The resource address. </value>
     public string? ResourceAddress { get; set; }
 
-    /// <summary> Gets the gpib address. </summary>
-    /// <value> The gpib address. </value>
+    /// <summary> Gets the GPIB address. </summary>
+    /// <value> The GPIB address. </value>
     public int GpibAddress { get; set; }
 
     /// <summary> Gets the sentinel indicating if the resource uses a LAN controller. </summary>
@@ -334,9 +334,9 @@ public class ResourceNameInfoCollection : System.Collections.ObjectModel.KeyedCo
     public IList<ResourceNameInfo> FindResourceNamesInfo( string? pattern )
     {
         if ( string.IsNullOrWhiteSpace( pattern ) ) throw new ArgumentNullException( nameof( pattern ) );
-        return (from v in this
+        return [.. from v in this
                 where (v is not null) && !string.IsNullOrWhiteSpace( v.ResourceName ) && cc.isr.VI.Pith.LikeOperator.IsLike( v.ResourceName!, pattern! )
-                select v).ToList();
+                select v];
     }
 
     #endregion

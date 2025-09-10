@@ -105,7 +105,6 @@ public abstract class DisplaySubsystemBase( StatusSubsystemBase statusSubsystem 
     #region " enabled "
 
     /// <summary> Enabled. </summary>
-    private bool? _enabled;
 
     /// <summary> Gets or sets the cached Enabled sentinel. </summary>
     /// <value>
@@ -114,13 +113,13 @@ public abstract class DisplaySubsystemBase( StatusSubsystemBase statusSubsystem 
     /// </value>
     public bool? Enabled
     {
-        get => this._enabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.Enabled, value ) )
             {
-                this._enabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -177,7 +176,6 @@ public abstract class DisplaySubsystemBase( StatusSubsystemBase statusSubsystem 
     #region " exists "
 
     /// <summary> The exists. </summary>
-    private bool? _exists;
 
     /// <summary> Gets or sets the cached Exists sentinel. </summary>
     /// <value>
@@ -186,13 +184,13 @@ public abstract class DisplaySubsystemBase( StatusSubsystemBase statusSubsystem 
     /// </value>
     public bool? Exists
     {
-        get => this._exists;
+        get;
 
         protected set
         {
             if ( !Equals( this.Exists, value ) )
             {
-                this._exists = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -221,19 +219,18 @@ public abstract class DisplaySubsystemBase( StatusSubsystemBase statusSubsystem 
     #region " display screen  "
 
     /// <summary> The Display Screen. </summary>
-    private DisplayScreens? _displayScreen;
 
     /// <summary> Gets or sets the cached Display Screen. </summary>
     /// <value> <c>null</c> if value is not known. </value>
     public DisplayScreens? DisplayScreen
     {
-        get => this._displayScreen;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.DisplayScreen, value ) )
             {
-                this._displayScreen = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

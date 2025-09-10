@@ -33,7 +33,6 @@ public abstract class SenseSubsystemBase( Tsp.StatusSubsystemBase statusSubsyste
     #region " sense mode "
 
     /// <summary> The Sense Action. </summary>
-    private SenseActionMode? _senseMode;
 
     /// <summary> Gets or sets the cached Sense Action. </summary>
     /// <value>
@@ -41,8 +40,8 @@ public abstract class SenseSubsystemBase( Tsp.StatusSubsystemBase statusSubsyste
     /// </value>
     public SenseActionMode? SenseMode
     {
-        get => this._senseMode;
-        protected set => _ = this.SetProperty( ref this._senseMode, value );
+        get;
+        protected set => _ = this.SetProperty( ref field, value );
     }
 
     /// <summary> Writes and reads back the Sense Action. </summary>

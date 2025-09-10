@@ -10,9 +10,6 @@ public partial class RouteSubsystemBase
             this.TerminalsModeReadWrites.Add( enumValue );
     }
 
-    /// <summary> The front terminals selected. </summary>
-    private bool? _frontTerminalsSelected;
-
     /// <summary>
     /// Gets or sets a cached value indicating whether Front terminals are selected.
     /// </summary>
@@ -21,13 +18,13 @@ public partial class RouteSubsystemBase
     /// </value>
     public bool? FrontTerminalsSelected
     {
-        get => this._frontTerminalsSelected;
+        get;
 
         protected set
         {
             if ( !Equals( this.FrontTerminalsSelected, value ) )
             {
-                this._frontTerminalsSelected = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -37,38 +34,32 @@ public partial class RouteSubsystemBase
     /// <value> A Dictionary of output Terminals Mode parses. </value>
     public Pith.EnumReadWriteCollection TerminalsModeReadWrites { get; private set; }
 
-    /// <summary> The supported terminals modes. </summary>
-    private RouteTerminalsModes _supportedTerminalsModes;
-
     /// <summary> Gets or sets the supported Terminals Modes. </summary>
     /// <value> The supported Terminals Modes. </value>
     public RouteTerminalsModes SupportedTerminalsModes
     {
-        get => this._supportedTerminalsModes;
+        get;
         set
         {
             if ( !this.SupportedTerminalsModes.Equals( value ) )
             {
-                this._supportedTerminalsModes = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
     }
 
-    /// <summary> The Route Terminals mode. </summary>
-    private RouteTerminalsModes? _terminalsMode;
-
     /// <summary> Gets or sets the cached Route Terminals mode. </summary>
     /// <value> The Route Terminals mode or null if unknown. </value>
     public RouteTerminalsModes? TerminalsMode
     {
-        get => this._terminalsMode;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.TerminalsMode, value ) )
             {
-                this._terminalsMode = value;
+                field = value;
                 this.NotifyPropertyChanged();
                 this.FrontTerminalsSelected = RouteTerminalsModes.Front == value.GetValueOrDefault( RouteTerminalsModes.None );
             }

@@ -186,7 +186,6 @@ public static partial class FirmwareManager
     ///                                             null. </exception>
     /// <param name="session">              The session. </param>
     /// <param name="scriptsCollection">    Collection of scripts. </param>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0306:Simplify collection initialization", Justification = "<Pending>" )]
     public static void DeleteUserScripts( this Pith.SessionBase session, ICollection<ScriptEntityCollection> scriptsCollection )
     {
         if ( scriptsCollection is null ) throw new ArgumentNullException( nameof( scriptsCollection ) );

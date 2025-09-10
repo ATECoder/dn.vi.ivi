@@ -18,9 +18,6 @@ public partial class CompensateChannelSubsystemBase
     /// <value> The compensation type read writes. </value>
     public Pith.EnumReadWriteCollection CompensationTypeReadWrites { get; private set; } = [];
 
-    /// <summary> List of types of the supported compensations. </summary>
-    private CompensationTypes _supportedCompensationTypes;
-
     /// <summary>
     /// Gets or sets the supported Compensation Type. This is a subset of the functions supported by
     /// the instrument.
@@ -28,12 +25,12 @@ public partial class CompensateChannelSubsystemBase
     /// <value> A list of types of the supported compensations. </value>
     public CompensationTypes SupportedCompensationTypes
     {
-        get => this._supportedCompensationTypes;
+        get;
         set
         {
             if ( !this.SupportedCompensationTypes.Equals( value ) )
             {
-                this._supportedCompensationTypes = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

@@ -109,8 +109,7 @@ public partial class VisaView : cc.isr.WinControls.ModelViewBase, IVisaView
     {
         try
         {
-            if ( this.TextBoxTextWriter != null )
-                this.TextBoxTextWriter.ContainerPanel = this._messagesTabPage;
+            _ = (this.TextBoxTextWriter?.ContainerPanel = this._messagesTabPage);
         }
         finally
         {
@@ -431,11 +430,7 @@ public partial class VisaView : cc.isr.WinControls.ModelViewBase, IVisaView
     [Browsable( false )]
     public TraceEventType MessageDisplayLevel
     {
-        get => this.TextBoxTextWriter is null ? TraceEventType.Verbose : this.TextBoxTextWriter.TraceLevel;
-        set
-        {
-            if ( this.TextBoxTextWriter is not null ) this.TextBoxTextWriter.TraceLevel = value;
-        }
+        get => this.TextBoxTextWriter is null ? TraceEventType.Verbose : this.TextBoxTextWriter.TraceLevel; set => this.TextBoxTextWriter?.TraceLevel = value;
     }
 
     #endregion

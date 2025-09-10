@@ -34,7 +34,6 @@ public class CurrentSourceSubsystemBase( Tsp.StatusSubsystemBase statusSubsystem
     #region " auto range enabled "
 
     /// <summary> Auto Range enabled. </summary>
-    private bool? _autoRangeEnabled;
 
     /// <summary> Gets or sets the cached Auto Range Enabled sentinel. </summary>
     /// <value>
@@ -43,8 +42,8 @@ public class CurrentSourceSubsystemBase( Tsp.StatusSubsystemBase statusSubsystem
     /// </value>
     public bool? AutoRangeEnabled
     {
-        get => this._autoRangeEnabled;
-        protected set => _ = this.SetProperty( ref this._autoRangeEnabled, value );
+        get;
+        protected set => _ = this.SetProperty( ref field, value );
     }
 
     /// <summary>
@@ -107,14 +106,13 @@ public class CurrentSourceSubsystemBase( Tsp.StatusSubsystemBase statusSubsystem
     #region " level "
 
     /// <summary> The level. </summary>
-    private double? _level;
 
     /// <summary> Gets or sets the cached Source Current Level. </summary>
     /// <value> The Source Current Level. Actual current depends on the power supply mode. </value>
     public double? Level
     {
-        get => this._level;
-        protected set => _ = this.SetProperty( ref this._level, value );
+        get;
+        protected set => _ = this.SetProperty( ref field, value );
     }
 
     /// <summary> Writes and reads back the source current level. </summary>
@@ -161,7 +159,6 @@ public class CurrentSourceSubsystemBase( Tsp.StatusSubsystemBase statusSubsystem
     #region " range "
 
     /// <summary> The Current Range. </summary>
-    private double? _range;
 
     /// <summary>
     /// Gets or sets the cached Source current range. Set to
@@ -171,8 +168,8 @@ public class CurrentSourceSubsystemBase( Tsp.StatusSubsystemBase statusSubsystem
     /// <value> <c>null</c> if value is not known. </value>
     public double? Range
     {
-        get => this._range;
-        protected set => _ = this.SetProperty( ref this._range, value );
+        get;
+        protected set => _ = this.SetProperty( ref field, value );
     }
 
     /// <summary> Writes and reads back the Source current Range. </summary>
@@ -232,7 +229,6 @@ public class CurrentSourceSubsystemBase( Tsp.StatusSubsystemBase statusSubsystem
     #region " voltage limit "
 
     /// <summary> The Voltage Limit. </summary>
-    private double? _voltageLimit;
 
     /// <summary>
     /// Gets or sets the cached source Voltage Limit for a Current Source. Set to
@@ -242,8 +238,8 @@ public class CurrentSourceSubsystemBase( Tsp.StatusSubsystemBase statusSubsystem
     /// <value> <c>null</c> if value is not known. </value>
     public double? VoltageLimit
     {
-        get => this._voltageLimit;
-        protected set => _ = this.SetProperty( ref this._voltageLimit, value );
+        get;
+        protected set => _ = this.SetProperty( ref field, value );
     }
 
     /// <summary> Writes and reads back the source Voltage Limit. </summary>

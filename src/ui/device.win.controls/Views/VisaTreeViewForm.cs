@@ -150,8 +150,7 @@ public class VisaTreeViewForm : WinForms.ModelViewForm.ModelViewForm
         finally
         {
             this.Cursor = Cursors.Default;
-            if ( this.VisaTreeView is not null )
-                this.VisaTreeView.Cursor = Cursors.Default;
+            _ = (this.VisaTreeView?.Cursor = Cursors.Default);
         }
     }
 

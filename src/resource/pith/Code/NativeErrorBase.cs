@@ -57,7 +57,6 @@ public class NativeErrorBase
     #region " static "
 
     /// <summary> The success. </summary>
-    private static NativeErrorBase? _success;
 
     /// <summary> Gets the success. </summary>
     /// <value> The success. </value>
@@ -65,9 +64,9 @@ public class NativeErrorBase
     {
         get
         {
-            _success ??= new NativeErrorBase( 0 );
+            field ??= new NativeErrorBase( 0 );
 
-            return _success;
+            return field;
         }
     }
 

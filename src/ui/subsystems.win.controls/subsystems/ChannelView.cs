@@ -101,25 +101,22 @@ public partial class ChannelView : cc.isr.WinControls.ModelViewBase
         }
     }
 
-    /// <summary> The closed channels. </summary>
-    private string _closedChannels = string.Empty;
-
     /// <summary> Gets or sets the closed channels. </summary>
     /// <value> The closed channels. </value>
     [DesignerSerializationVisibility( DesignerSerializationVisibility.Hidden )]
     [Browsable( false )]
     public string ClosedChannels
     {
-        get => this._closedChannels;
+        get;
         set
         {
             if ( !string.Equals( value, this.ClosedChannels, StringComparison.Ordinal ) )
             {
-                this._closedChannels = value;
+                field = value;
                 this._closedChannelLabel.Text = $"Closed: {(string.IsNullOrEmpty( value ) ? "?" : value)}";
             }
         }
-    }
+    } = string.Empty;
 
     /// <summary> Closes the channel. </summary>
     public void CloseChannel()

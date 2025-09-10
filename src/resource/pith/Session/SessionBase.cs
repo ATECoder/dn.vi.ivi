@@ -136,14 +136,12 @@ public abstract partial class SessionBase : CommunityToolkit.Mvvm.ComponentModel
         this.CommandLanguage = commandLanguage;
     }
 
-    private cc.isr.VI.Syntax.CommandLanguage _commandLanguage;
-
     /// <summary>   Gets or sets the command language. </summary>
     /// <value> The command language. </value>
     public cc.isr.VI.Syntax.CommandLanguage CommandLanguage
     {
-        get => this._commandLanguage;
-        private set => _ = this.SetProperty( ref this._commandLanguage, value );
+        get;
+        private set => _ = this.SetProperty( ref field, value );
     }
 
 
@@ -430,9 +428,6 @@ public abstract partial class SessionBase : CommunityToolkit.Mvvm.ComponentModel
     /// <value> The is session open. </value>
     public abstract bool IsSessionOpen { get; }
 
-    /// <summary> True if device is open, false if not. </summary>
-    private bool _isDeviceOpen;
-
     /// <summary>
     /// Gets or sets the Device Open sentinel. When open, the device is capable of addressing real
     /// hardware if the session is open. See also <see cref="IsSessionOpen"/>.
@@ -440,11 +435,11 @@ public abstract partial class SessionBase : CommunityToolkit.Mvvm.ComponentModel
     /// <value> The is device open. </value>
     public bool IsDeviceOpen
     {
-        get => this._isDeviceOpen;
+        get;
 
         protected set
         {
-            if ( _ = base.SetProperty( ref this._isDeviceOpen, value ) )
+            if ( _ = base.SetProperty( ref field, value ) )
                 this.UpdateCaptions();
         }
     }
@@ -668,15 +663,13 @@ public abstract partial class SessionBase : CommunityToolkit.Mvvm.ComponentModel
         this.LastAction = $"{this.ResourceNameNodeCaption} {message} at [{sourcePath}].{memberName}.Line#{sourceLineNumber}";
     }
 
-    private string _lastAction = string.Empty;
-
     /// <summary> Gets or sets the last action. </summary>
     /// <value> The last action. </value>
     public string LastAction
     {
-        get => this._lastAction;
-        set => _ = base.SetProperty( ref this._lastAction, value );
-    }
+        get;
+        set => _ = base.SetProperty( ref field, value );
+    } = string.Empty;
 
     /// <summary>   Trace last action. </summary>
     /// <remarks>   2025-04-11. </remarks>
@@ -707,15 +700,13 @@ public abstract partial class SessionBase : CommunityToolkit.Mvvm.ComponentModel
         this.LastActionDetails = $"{this.ResourceNameNodeCaption} {message} at [{sourcePath}].{memberName}.Line#{sourceLineNumber}";
     }
 
-    private string _lastActionDetails = string.Empty;
-
     /// <summary> Gets or sets the last Action detailed message. </summary>
     /// <value> The last action detailed message. </value>
     public string LastActionDetails
     {
-        get => this._lastActionDetails;
-        set => _ = base.SetProperty( ref this._lastActionDetails, value );
-    }
+        get;
+        set => _ = base.SetProperty( ref field, value );
+    } = string.Empty;
 
     /// <summary>   Trace last action details. </summary>
     /// <remarks>   2025-04-11. </remarks>
@@ -736,15 +727,12 @@ public abstract partial class SessionBase : CommunityToolkit.Mvvm.ComponentModel
     /// <value> The node number caption. </value>
     public string LastNodeNumberCaption => this.LastNodeNumber.HasValue ? $".Node# {this.LastNodeNumber:00}" : string.Empty;
 
-    /// <summary> The last node number. </summary>
-    private int? _lastNodeNumber;
-
     /// <summary> Gets or sets the last node. </summary>
     /// <value> The last node. </value>
     public int? LastNodeNumber
     {
-        get => this._lastNodeNumber;
-        set => _ = base.SetProperty( ref this._lastNodeNumber, value );
+        get;
+        set => _ = base.SetProperty( ref field, value );
     }
 
     /// <summary>
@@ -772,7 +760,6 @@ public abstract partial class SessionBase : CommunityToolkit.Mvvm.ComponentModel
 
     #region " message events "
 
-    private BindingList<KeyValuePair<MessageNotificationModes, string>>? _messageNotificationModeKeyValuePairs;
 
     /// <summary>   Gets the message notification modes as a key value pairs binding list. </summary>
     /// <value> The message notification modes. </value>
@@ -780,15 +767,15 @@ public abstract partial class SessionBase : CommunityToolkit.Mvvm.ComponentModel
     {
         get
         {
-            if ( this._messageNotificationModeKeyValuePairs is null || !this._messageNotificationModeKeyValuePairs.Any() )
+            if ( field is null || !field.Any() )
             {
-                this._messageNotificationModeKeyValuePairs = [];
+                field = [];
                 foreach ( KeyValuePair<Enum, string> item in cc.isr.Enums.EnumExtensions.ValueNamePairs( typeof( MessageNotificationModes ) ) )
                 {
-                    this._messageNotificationModeKeyValuePairs.Add( new KeyValuePair<MessageNotificationModes, string>( ( MessageNotificationModes ) item.Key, item.Value ) );
+                    field.Add( new KeyValuePair<MessageNotificationModes, string>( ( MessageNotificationModes ) item.Key, item.Value ) );
                 }
             }
-            return this._messageNotificationModeKeyValuePairs;
+            return field;
         }
     }
 
@@ -824,21 +811,19 @@ public abstract partial class SessionBase : CommunityToolkit.Mvvm.ComponentModel
         }
     }
 
-    private MessageNotificationModes _messageNotificationModes = MessageNotificationModes.None;
-
     /// <summary>   Gets or sets the message notification modes. </summary>
     /// <value> The message notification modes. </value>
     public MessageNotificationModes MessageNotificationModes
     {
-        get => this._messageNotificationModes;
+        get;
         set
         {
-            if ( _ = base.SetProperty( ref this._messageNotificationModes, value ) )
+            if ( _ = base.SetProperty( ref field, value ) )
             {
                 this.MessageNotificationModeKeyValuePair = ToMessageNotificationModes( value );
             }
         }
-    }
+    } = MessageNotificationModes.None;
 
     /// <summary> Converts a value to a Message Notification Modes. </summary>
     /// <param name="value"> The value. </param>
@@ -1342,16 +1327,15 @@ public abstract partial class SessionBase : CommunityToolkit.Mvvm.ComponentModel
     #region " termination "
 
     /// <summary> The termination sequence. </summary>
-    private string? _terminationSequence;
 
     /// <summary> Gets or sets the termination sequence. </summary>
     /// <value> The termination sequence. </value>
     public string? TerminationSequence
     {
-        get => this._terminationSequence;
+        get;
         set
         {
-            if ( base.SetProperty( ref this._terminationSequence, value ) )
+            if ( base.SetProperty( ref field, value ) )
                 _ = this.DefineTermination( (value ?? "").ReplaceCommonEscapeSequences().ToCharArray() );
         }
     }
@@ -1594,15 +1578,13 @@ public abstract partial class SessionBase : CommunityToolkit.Mvvm.ComponentModel
         return this.WriteLine( string.Format( System.Globalization.CultureInfo.InvariantCulture, format, args ) );
     }
 
-    private bool _splitCommonCommands;
-
     /// <summary>   Gets or sets a value indicating whether to split common commands when writing to the instrument. </summary>
     /// <remarks> TSP instruments do not accept common command separate by semicolon. This commands need to be split and executed as separate commands. </remarks>
     /// <value> True to split common commands when writing to the instrument, false if not. </value>
     public bool SplitCommonCommands
     {
-        get => this._splitCommonCommands;
-        set => _ = base.SetProperty( ref this._splitCommonCommands, value );
+        get;
+        set => _ = base.SetProperty( ref field, value );
     }
 
     /// <summary>
@@ -1628,9 +1610,7 @@ public abstract partial class SessionBase : CommunityToolkit.Mvvm.ComponentModel
 
         if ( this.SplitCommonCommands && dataToWrite.Contains( compound_Commands_Separator ) )
         {
-#pragma warning disable IDE0306 // Simplify collection initialization
             Queue<string> q = new( dataToWrite.Split( compound_Commands_Separator ) );
-#pragma warning restore IDE0306 // Simplify collection initialization
             while ( q.Any() )
             {
                 string command = q.Dequeue().Trim();
@@ -2469,14 +2449,13 @@ public abstract partial class SessionBase : CommunityToolkit.Mvvm.ComponentModel
     #region " status prompt "
 
     /// <summary> The status prompt. </summary>
-    private string? _statusPrompt;
 
     /// <summary> Gets or sets a prompt describing the Status. </summary>
     /// <value> A prompt describing the Status. </value>
     public string? StatusPrompt
     {
-        get => this._statusPrompt;
-        set => _ = base.SetProperty( ref this._statusPrompt, value );
+        get;
+        set => _ = base.SetProperty( ref field, value );
     }
 
     #endregion

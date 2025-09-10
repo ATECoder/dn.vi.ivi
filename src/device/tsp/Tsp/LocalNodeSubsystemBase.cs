@@ -37,17 +37,15 @@ public abstract class LocalNodeSubsystemBase( Tsp.StatusSubsystemBase statusSubs
         this.ExecutionState = TspExecutionState.IdleReady;
     }
 
-    private bool _readExecutionStateOnClear = false;
-
     /// <summary>
     /// Gets or sets a value indicating whether the execution state on clear should be read.
     /// </summary>
     /// <value> True if read execution state on clear, false if not. </value>
     public bool ReadExecutionStateOnClear
     {
-        get => this._readExecutionStateOnClear;
-        set => _ = this.SetProperty( ref this._readExecutionStateOnClear, value );
-    }
+        get;
+        set => _ = this.SetProperty( ref field, value );
+    } = false;
 
     /// <summary>
     /// Defines the clear execution state (CLS) by setting system properties to the their Clear
@@ -206,7 +204,6 @@ public abstract class LocalNodeSubsystemBase( Tsp.StatusSubsystemBase statusSubs
 
     #region " execution state "
 
-    private bool _processExecutionStateEnabled;
 
     /// <summary> Gets or sets the process execution state enabled. </summary>
     /// <remarks> Processing execution state is a bit counter intuitive.
@@ -214,12 +211,9 @@ public abstract class LocalNodeSubsystemBase( Tsp.StatusSubsystemBase statusSubs
     /// <value> The process execution state enabled. </value>
     public bool ProcessExecutionStateEnabled
     {
-        get => this._processExecutionStateEnabled;
-        set => _ = this.SetProperty( ref this._processExecutionStateEnabled, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
-
-    /// <summary> State of the execution. </summary>
-    private TspExecutionState? _executionState;
 
     /// <summary>
     /// Gets or sets the last TSP execution state. Setting the last state is useful when closing the
@@ -228,8 +222,8 @@ public abstract class LocalNodeSubsystemBase( Tsp.StatusSubsystemBase statusSubs
     /// <value> The last state. </value>
     public TspExecutionState? ExecutionState
     {
-        get => this._executionState;
-        set => _ = this.SetProperty( ref this._executionState, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
 
     /// <summary> Gets the instrument Execution State caption. </summary>
@@ -325,19 +319,15 @@ public abstract class LocalNodeSubsystemBase( Tsp.StatusSubsystemBase statusSubs
 
     #region " show errors "
 
-    private bool _showsErrorsOnResetKnownState = false;
     /// <summary>
     /// Gets or sets a value indicating whether the instrument turns on the automatic display of errors upon restart or on reset to known state.
     /// </summary>
     /// <value> True if the instrument turns on the automatic display of errors upon restart or on reset to known state, false if not. </value>
     public bool ShowsErrorsOnResetKnownState
     {
-        get => this._showsErrorsOnResetKnownState;
-        set => _ = this.SetProperty( ref this._showsErrorsOnResetKnownState, value );
-    }
-
-    /// <summary> The show errors. </summary>
-    private bool? _showErrors;
+        get;
+        set => _ = this.SetProperty( ref field, value );
+    } = false;
 
     /// <summary> Gets or sets the Show Errors sentinel. </summary>
     /// <remarks>
@@ -350,8 +340,8 @@ public abstract class LocalNodeSubsystemBase( Tsp.StatusSubsystemBase statusSubs
     /// <value> <c>true</c> to show errors; otherwise <c>false</c>. </value>
     public bool? ShowErrors
     {
-        get => this._showErrors;
-        set => _ = this.SetProperty( ref this._showErrors, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
 
     /// <summary>   Gets a value indicating whether the <see cref="ShowErrors"/> is enabled. </summary>
@@ -460,19 +450,15 @@ public abstract class LocalNodeSubsystemBase( Tsp.StatusSubsystemBase statusSubs
 
     #region " show prompts "
 
-    private bool _showsPromptsOnResetKnownState = false;
     /// <summary>
     /// Gets or sets a value indicating whether the instrument turns on the automatic display of Prompts upon restart or on reset to known state.
     /// </summary>
     /// <value> True if the instrument turns on the automatic display of Prompts upon restart or on reset to known state, false if not. </value>
     public bool ShowsPromptsOnResetKnownState
     {
-        get => this._showsPromptsOnResetKnownState;
-        set => _ = this.SetProperty( ref this._showsPromptsOnResetKnownState, value );
-    }
-
-    /// <summary> The show prompts. </summary>
-    private bool? _showPrompts;
+        get;
+        set => _ = this.SetProperty( ref field, value );
+    } = false;
 
     /// <summary> Gets or sets the Show Prompts sentinel. </summary>
     /// <remarks>
@@ -495,8 +481,8 @@ public abstract class LocalNodeSubsystemBase( Tsp.StatusSubsystemBase statusSubs
     /// <value> The show prompts. </value>
     public bool? ShowPrompts
     {
-        get => this._showPrompts;
-        set => _ = this.SetProperty( ref this._showPrompts, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
 
     /// <summary>   Gets a value indicating whether the <see cref="ShowPrompts"/> is enabled. </summary>

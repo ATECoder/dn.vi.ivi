@@ -77,23 +77,22 @@ public partial class DigitalOutputLineView : cc.isr.WinControls.ModelViewBase
 
     #region " public members "
 
-    private string _lineIdentity = string.Empty;
 
     /// <summary> Gets or sets the line identity. </summary>
     /// <value> The line identity. </value>
     [DesignerSerializationVisibility( DesignerSerializationVisibility.Hidden )]
     public string LineIdentity
     {
-        get => this._lineIdentity;
+        get;
         set
         {
             if ( !string.Equals( value, this.LineIdentity, StringComparison.Ordinal ) )
             {
-                this._lineIdentity = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
-    }
+    } = string.Empty;
 
     /// <summary> Gets or sets the name of the line. </summary>
     /// <value> The name of the line. </value>
@@ -533,6 +532,7 @@ public partial class DigitalOutputLineView : cc.isr.WinControls.ModelViewBase
 
     /// <summary> Reads the settings from the instrument. </summary>
     /// <param name="subsystem"> The subsystem. </param>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0051:Remove unused private members", Justification = "<Pending>" )]
     private static void ReadSettings( DigitalOutputSubsystemBase subsystem )
     {
         subsystem.StartElapsedStopwatch();

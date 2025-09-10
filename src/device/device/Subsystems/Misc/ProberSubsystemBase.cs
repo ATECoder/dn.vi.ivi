@@ -45,16 +45,15 @@ public abstract class ProberSubsystemBase( StatusSubsystemBase statusSubsystem )
     #region " error read "
 
     /// <summary> True to error read. </summary>
-    private bool _errorRead;
 
     /// <summary> Gets or sets the Error Read sentinel. </summary>
     /// <value> The Error Read. </value>
     public bool ErrorRead
     {
-        get => this._errorRead;
+        get;
         set
         {
-            this._errorRead = value;
+            field = value;
             this.NotifyPropertyChanged();
             Pith.SessionBase.DoEventsAction?.Invoke();
         }
@@ -65,16 +64,15 @@ public abstract class ProberSubsystemBase( StatusSubsystemBase statusSubsystem )
     #region " identity read "
 
     /// <summary> True to identity read. </summary>
-    private bool _identityRead;
 
     /// <summary> Gets or sets the Identity Read sentinel. </summary>
     /// <value> The Identity Read. </value>
     public bool IdentityRead
     {
-        get => this._identityRead;
+        get;
         set
         {
-            this._identityRead = value;
+            field = value;
             this.NotifyPropertyChanged();
             Pith.SessionBase.DoEventsAction?.Invoke();
         }
@@ -85,16 +83,15 @@ public abstract class ProberSubsystemBase( StatusSubsystemBase statusSubsystem )
     #region " message failed "
 
     /// <summary> True if message failed. </summary>
-    private bool _messageFailed;
 
     /// <summary> Gets or sets the message failed. </summary>
     /// <value> The message failed. </value>
     public bool MessageFailed
     {
-        get => this._messageFailed;
+        get;
         set
         {
-            this._messageFailed = value;
+            field = value;
             this.NotifyPropertyChanged();
             Pith.SessionBase.DoEventsAction?.Invoke();
         }
@@ -105,16 +102,15 @@ public abstract class ProberSubsystemBase( StatusSubsystemBase statusSubsystem )
     #region " message completed "
 
     /// <summary> True if message completed. </summary>
-    private bool _messageCompleted;
 
     /// <summary> Gets or sets the message Completed. </summary>
     /// <value> The message Completed. </value>
     public bool MessageCompleted
     {
-        get => this._messageCompleted;
+        get;
         set
         {
-            this._messageCompleted = value;
+            field = value;
             this.NotifyPropertyChanged();
             Pith.SessionBase.DoEventsAction?.Invoke();
         }
@@ -125,7 +121,6 @@ public abstract class ProberSubsystemBase( StatusSubsystemBase statusSubsystem )
     #region " pattern complete "
 
     /// <summary> A sentinel indicating that the Pattern Complete message was received. </summary>
-    private bool? _patternCompleteReceived;
 
     /// <summary> Gets or sets the cached Pattern Complete message sentinel. </summary>
     /// <value>
@@ -134,11 +129,11 @@ public abstract class ProberSubsystemBase( StatusSubsystemBase statusSubsystem )
     /// </value>
     public bool? PatternCompleteReceived
     {
-        get => this._patternCompleteReceived;
+        get;
 
         protected set
         {
-            this._patternCompleteReceived = value;
+            field = value;
             this.NotifyPropertyChanged();
             Pith.SessionBase.DoEventsAction?.Invoke();
             if ( value.GetValueOrDefault( false ) )
@@ -157,7 +152,6 @@ public abstract class ProberSubsystemBase( StatusSubsystemBase statusSubsystem )
     #region " set mode sent "
 
     /// <summary> A sentinel indicating that the Set Mode message was Sent. </summary>
-    private bool _setModeSent;
 
     /// <summary> Gets or sets the cached Set Mode message sentinel. </summary>
     /// <value>
@@ -166,11 +160,11 @@ public abstract class ProberSubsystemBase( StatusSubsystemBase statusSubsystem )
     /// </value>
     public bool SetModeSent
     {
-        get => this._setModeSent;
+        get;
 
         protected set
         {
-            this._setModeSent = value;
+            field = value;
             this.NotifyPropertyChanged();
             Pith.SessionBase.DoEventsAction?.Invoke();
         }
@@ -181,7 +175,6 @@ public abstract class ProberSubsystemBase( StatusSubsystemBase statusSubsystem )
     #region " test complete sent "
 
     /// <summary> A sentinel indicating that the Test Complete message was Sent. </summary>
-    private bool? _testCompleteSent;
 
     /// <summary> Gets or sets the cached Test Complete message sentinel. </summary>
     /// <value>
@@ -190,10 +183,10 @@ public abstract class ProberSubsystemBase( StatusSubsystemBase statusSubsystem )
     /// </value>
     public bool? TestCompleteSent
     {
-        get => this._testCompleteSent;
+        get;
         set
         {
-            this._testCompleteSent = value;
+            field = value;
             if ( value.GetValueOrDefault( false ) )
             {
                 // if pattern completed, turn off all other flags.
@@ -211,7 +204,6 @@ public abstract class ProberSubsystemBase( StatusSubsystemBase statusSubsystem )
     #region " test start "
 
     /// <summary> A sentinel indicating that the test start message was received. </summary>
-    private bool? _testStartReceived;
 
     /// <summary> Gets or sets the cached test start message sentinel. </summary>
     /// <value>
@@ -220,11 +212,11 @@ public abstract class ProberSubsystemBase( StatusSubsystemBase statusSubsystem )
     /// </value>
     public bool? TestStartReceived
     {
-        get => this._testStartReceived;
+        get;
 
         protected set
         {
-            this._testStartReceived = value;
+            field = value;
             if ( value.GetValueOrDefault( false ) )
             {
                 // turn off relevant sentinels.
@@ -238,9 +230,6 @@ public abstract class ProberSubsystemBase( StatusSubsystemBase statusSubsystem )
         }
     }
 
-    /// <summary> A sentinel indicating that the retest is requested. </summary>
-    private bool? _retestRequested;
-
     /// <summary> Gets or sets the cached retest requested sentinel. </summary>
     /// <value>
     /// <c>null</c> if state is not known; <c>true</c> if retest is request; otherwise,
@@ -248,18 +237,15 @@ public abstract class ProberSubsystemBase( StatusSubsystemBase statusSubsystem )
     /// </value>
     public bool? RetestRequested
     {
-        get => this._retestRequested;
+        get;
 
         protected set
         {
-            this._retestRequested = value;
+            field = value;
             this.NotifyPropertyChanged();
             Pith.SessionBase.DoEventsAction?.Invoke();
         }
     }
-
-    /// <summary> A sentinel indicating that the Test Again is requested. </summary>
-    private bool? _testAgainRequested;
 
     /// <summary> Gets or sets the cached Test Again requested sentinel. </summary>
     /// <value>
@@ -268,11 +254,11 @@ public abstract class ProberSubsystemBase( StatusSubsystemBase statusSubsystem )
     /// </value>
     public bool? TestAgainRequested
     {
-        get => this._testAgainRequested;
+        get;
 
         protected set
         {
-            this._testAgainRequested = value;
+            field = value;
             this.NotifyPropertyChanged();
             Pith.SessionBase.DoEventsAction?.Invoke();
         }
@@ -283,7 +269,6 @@ public abstract class ProberSubsystemBase( StatusSubsystemBase statusSubsystem )
     #region " first test start "
 
     /// <summary> A sentinel indicating that the test start message was received. </summary>
-    private bool? _isFirstTestStart;
 
     /// <summary> Gets or sets the cached first test start message sentinel. </summary>
     /// <value>
@@ -292,11 +277,11 @@ public abstract class ProberSubsystemBase( StatusSubsystemBase statusSubsystem )
     /// </value>
     public bool? IsFirstTestStart
     {
-        get => this._isFirstTestStart;
+        get;
 
         protected set
         {
-            this._isFirstTestStart = value;
+            field = value;
             this.NotifyPropertyChanged();
             Pith.SessionBase.DoEventsAction?.Invoke();
         }
@@ -307,7 +292,6 @@ public abstract class ProberSubsystemBase( StatusSubsystemBase statusSubsystem )
     #region " wafer start "
 
     /// <summary> A sentinel indicating that the Wafer start message was received. </summary>
-    private bool? _waferStartReceived;
 
     /// <summary> Gets or sets the cached Wafer start message sentinel. </summary>
     /// <value>
@@ -316,11 +300,11 @@ public abstract class ProberSubsystemBase( StatusSubsystemBase statusSubsystem )
     /// </value>
     public bool? WaferStartReceived
     {
-        get => this._waferStartReceived;
+        get;
 
         protected set
         {
-            this._waferStartReceived = value;
+            field = value;
             if ( value.GetValueOrDefault( false ) )
             {
                 // turn off relevant sentinels.
@@ -340,7 +324,6 @@ public abstract class ProberSubsystemBase( StatusSubsystemBase statusSubsystem )
     #region " unhandled message received "
 
     /// <summary> A sentinel indicating that the Unhandled Message was received. </summary>
-    private bool? _unhandledMessageReceived;
 
     /// <summary> Gets or sets the cached Unhandled Message sentinel. </summary>
     /// <value>
@@ -349,11 +332,11 @@ public abstract class ProberSubsystemBase( StatusSubsystemBase statusSubsystem )
     /// </value>
     public bool? UnhandledMessageReceived
     {
-        get => this._unhandledMessageReceived;
+        get;
 
         protected set
         {
-            this._unhandledMessageReceived = value;
+            field = value;
             this.NotifyPropertyChanged();
             Pith.SessionBase.DoEventsAction?.Invoke();
         }
@@ -364,7 +347,6 @@ public abstract class ProberSubsystemBase( StatusSubsystemBase statusSubsystem )
     #region " unhandled message sent "
 
     /// <summary> A sentinel indicating that the Unhandled Message was Sent. </summary>
-    private bool? _unhandledMessageSent;
 
     /// <summary> Gets or sets the cached Unhandled Message sentinel. </summary>
     /// <value>
@@ -373,11 +355,11 @@ public abstract class ProberSubsystemBase( StatusSubsystemBase statusSubsystem )
     /// </value>
     public bool? UnhandledMessageSent
     {
-        get => this._unhandledMessageSent;
+        get;
 
         protected set
         {
-            this._unhandledMessageSent = value;
+            field = value;
             this.NotifyPropertyChanged();
             Pith.SessionBase.DoEventsAction?.Invoke();
         }
@@ -388,13 +370,12 @@ public abstract class ProberSubsystemBase( StatusSubsystemBase statusSubsystem )
     #region " fetch "
 
     /// <summary> The last reading. </summary>
-    private string? _lastReading;
 
     /// <summary> Gets or sets the last reading. </summary>
     /// <value> The last reading. </value>
     public string? LastReading
     {
-        get => this._lastReading;
+        get;
         set
         {
             if ( string.IsNullOrWhiteSpace( this.LastReading ) )
@@ -405,13 +386,13 @@ public abstract class ProberSubsystemBase( StatusSubsystemBase statusSubsystem )
                 }
                 else
                 {
-                    this._lastReading = string.Empty;
+                    field = string.Empty;
                 }
             }
 
             if ( string.IsNullOrWhiteSpace( value ) )
                 value = string.Empty;
-            this._lastReading = value;
+            field = value;
             this.NotifyPropertyChanged();
             Pith.SessionBase.DoEventsAction?.Invoke();
         }

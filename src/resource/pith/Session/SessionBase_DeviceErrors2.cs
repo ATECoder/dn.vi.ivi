@@ -83,14 +83,13 @@ public abstract partial class SessionBase
 
     #region " error queue count "
 
-    private int? _errorQueueCount;
 
     /// <summary> Gets or sets the cached error queue count. </summary>
     /// <value> <c>null</c> if value is not known. </value>
     public int? ErrorQueueCount
     {
-        get => this._errorQueueCount;
-        protected set => _ = this.SetProperty( ref this._errorQueueCount, value );
+        get;
+        protected set => _ = this.SetProperty( ref field, value );
     }
 
     /// <summary> Gets or sets The ErrorQueueCount query command. </summary>
@@ -117,17 +116,15 @@ public abstract partial class SessionBase
     /// <value> A message describing the no error compound. </value>
     public string NoErrorCompoundMessage { get; set; }
 
-    private bool _readingDeviceErrors;
-
     /// <summary> Gets or sets the reading device errors. </summary>
     /// <value> The reading device errors. </value>
     public bool ReadingDeviceErrors
     {
-        get => this._readingDeviceErrors;
+        get;
 
         protected set
         {
-            if ( this.SetProperty( ref this._readingDeviceErrors, value ) )
+            if ( this.SetProperty( ref field, value ) )
                 if ( value ) _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"{this.ResourceNameCaption} Reading device errors;. " );
         }
     }

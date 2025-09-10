@@ -202,13 +202,8 @@ public partial class StatusView : cc.isr.WinControls.ModelViewBase
         if ( add )
         {
             this._sessionNotificationLevelComboBox.ComboBox.DataSource = viewModel.MessageNotificationModeKeyValuePairs;
-#if NET9_0_OR_GREATER
             this._sessionNotificationLevelComboBox.ComboBox.ValueMember = nameof( KeyValuePair<,>.Key );
             this._sessionNotificationLevelComboBox.ComboBox.DisplayMember = nameof( KeyValuePair<,>.Value );
-#else
-            this._sessionNotificationLevelComboBox.ComboBox.ValueMember = nameof( KeyValuePair<Enum, string>.Key );
-            this._sessionNotificationLevelComboBox.ComboBox.DisplayMember = nameof( KeyValuePair<Enum, string>.Value );
-#endif
             this._sessionNotificationLevelComboBox.ComboBox.BindingContext = this.BindingContext;
             // this is necessary because the combo box binding does not set the data source value on it item change event
             this._sessionNotificationLevelComboBox.ComboBox.SelectedValueChanged += this.HandleNotificationLevelComboBoxValueChanged;
@@ -832,13 +827,8 @@ public partial class StatusView : cc.isr.WinControls.ModelViewBase
         if ( add )
         {
             this._traceShowLevelComboBox.ComboBox.DataSource = new List<KeyValuePair<Enum, string>>( TraceEventType.Error.ValueDescriptionPairs() );
-#if NET9_0_OR_GREATER
             this._traceShowLevelComboBox.ComboBox.ValueMember = nameof( KeyValuePair<,>.Key );
             this._traceShowLevelComboBox.ComboBox.DisplayMember = nameof( KeyValuePair<,>.Value );
-#else
-            this._traceShowLevelComboBox.ComboBox.ValueMember = nameof( KeyValuePair<Enum, string>.Key );
-            this._traceShowLevelComboBox.ComboBox.DisplayMember = nameof( KeyValuePair<Enum, string>.Value );
-#endif
             this._traceShowLevelComboBox.ComboBox.BindingContext = this.BindingContext;
             // this is necessary because the combo box binding does not set the data source value on it item change event
             this._traceShowLevelComboBox.ComboBox.SelectedValueChanged += this.HandleTraceShowLevelComboBoxValueChanged;
@@ -859,13 +849,8 @@ public partial class StatusView : cc.isr.WinControls.ModelViewBase
         if ( add )
         {
             this._traceLogLevelComboBox.ComboBox.DataSource = new List<KeyValuePair<Enum, string>>( TraceEventType.Error.ValueDescriptionPairs() );
-#if NET9_0_OR_GREATER
             this._traceLogLevelComboBox.ComboBox.ValueMember = nameof( KeyValuePair<,>.Key );
             this._traceLogLevelComboBox.ComboBox.DisplayMember = nameof( KeyValuePair<,>.Value );
-#else
-            this._traceLogLevelComboBox.ComboBox.ValueMember = nameof( KeyValuePair<Enum, string>.Key );
-            this._traceLogLevelComboBox.ComboBox.DisplayMember = nameof( KeyValuePair<Enum, string>.Value );
-#endif
             this._traceLogLevelComboBox.ComboBox.BindingContext = this.BindingContext;
             // this is necessary because the combo box binding does not set the data source value on it item change event
             this._traceLogLevelComboBox.ComboBox.SelectedValueChanged += this.HandleTraceLogLevelComboBoxValueChanged;
@@ -1628,5 +1613,4 @@ public partial class StatusView : cc.isr.WinControls.ModelViewBase
     }
 
     #endregion
-
 }

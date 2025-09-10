@@ -74,7 +74,7 @@ public abstract class ExceptionBase : Exception
         this.ThreadIdentityName = info.GetString( nameof( this.ThreadIdentityName ) );
         this.UserName = info.GetString( nameof( this.UserName ) );
         this.OSVersion = info.GetString( nameof( this.OSVersion ) );
-        this._additionalInformation = ( System.Collections.Specialized.NameValueCollection ) info.GetValue( nameof( this.AdditionalInformation ), typeof( System.Collections.Specialized.NameValueCollection ) );
+        this.AdditionalInformation = ( System.Collections.Specialized.NameValueCollection ) info.GetValue( nameof( this.AdditionalInformation ), typeof( System.Collections.Specialized.NameValueCollection ) );
     }
 
     /// <summary>
@@ -113,7 +113,6 @@ public abstract class ExceptionBase : Exception
     #region " additional information "
 
     /// <summary> Information describing the additional. </summary>
-    private System.Collections.Specialized.NameValueCollection? _additionalInformation;
 
     /// <summary> Collection allowing additional information to be added to the exception. </summary>
     /// <value> The additional information. </value>
@@ -121,9 +120,9 @@ public abstract class ExceptionBase : Exception
     {
         get
         {
-            this._additionalInformation ??= [];
+            field ??= [];
 
-            return this._additionalInformation;
+            return field;
         }
     }
 

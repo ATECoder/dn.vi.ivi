@@ -347,15 +347,12 @@ public abstract class LinkSubsystemBase( LinkStatusSubsystem statusSubsystem ) :
     /// <value> The controller node model. </value>
     public string ControllerNodeModel => this.ControllerNode is null ? string.Empty : this.ControllerNode.ModelNumber;
 
-    /// <summary> The controller node. </summary>
-    private NodeEntityBase? _controllerNode;
-
     /// <summary> Gets or sets reference to the controller node. </summary>
     /// <value> The controller node. </value>
     public NodeEntityBase? ControllerNode
     {
-        get => this._controllerNode;
-        set => _ = this.SetProperty( ref this._controllerNode, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
 
     /// <summary> Gets or sets the is controller node. </summary>
@@ -386,14 +383,13 @@ public abstract class LinkSubsystemBase( LinkStatusSubsystem statusSubsystem ) :
     #region " controller node number "
 
     /// <summary> The controller node number. </summary>
-    private int? _controllerNodeNumber;
 
     /// <summary> Gets or sets the Controller (local) node number. </summary>
     /// <value> The Controller (local) node number. </value>
     public int? ControllerNodeNumber
     {
-        get => this._controllerNodeNumber;
-        set => _ = this.SetProperty( ref this._controllerNodeNumber, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
 
     /// <summary> Reads the Controller node number. </summary>
@@ -518,7 +514,6 @@ public abstract class LinkSubsystemBase( LinkStatusSubsystem statusSubsystem ) :
     #region " tsp link "
 
     /// <summary> True to using tsp link. </summary>
-    private bool _usingTspLink;
 
     /// <summary>
     /// Gets or sets the condition for using TSP Link. Must be affirmative otherwise TSP link reset
@@ -527,8 +522,8 @@ public abstract class LinkSubsystemBase( LinkStatusSubsystem statusSubsystem ) :
     /// <value> The using tsp link. </value>
     public bool UsingTspLink
     {
-        get => this._usingTspLink;
-        set => _ = this.SetProperty( ref this._usingTspLink, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
 
     #endregion
@@ -536,7 +531,6 @@ public abstract class LinkSubsystemBase( LinkStatusSubsystem statusSubsystem ) :
     #region " tsp link online state "
 
     /// <summary> The is tsp link online. </summary>
-    private bool? _isTspLinkOnline;
 
     /// <summary> gets or sets the sentinel indicating if the TSP Link System is ready. </summary>
     /// <value>
@@ -544,8 +538,8 @@ public abstract class LinkSubsystemBase( LinkStatusSubsystem statusSubsystem ) :
     /// </value>
     public bool? IsTspLinkOnline
     {
-        get => this._isTspLinkOnline;
-        set => _ = this.SetProperty( ref this._isTspLinkOnline, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
 
     /// <summary> Gets or sets the tsp link on-line state query command. </summary>
@@ -572,7 +566,6 @@ public abstract class LinkSubsystemBase( LinkStatusSubsystem statusSubsystem ) :
     #region " tsp link offline state "
 
     /// <summary> The is tsp link offline. </summary>
-    private bool? _isTspLinkOffline;
 
     /// <summary> gets or sets the sentinel indicating if the TSP Link System is ready. </summary>
     /// <value>
@@ -580,8 +573,8 @@ public abstract class LinkSubsystemBase( LinkStatusSubsystem statusSubsystem ) :
     /// </value>
     public bool? IsTspLinkOffline
     {
-        get => this._isTspLinkOffline;
-        set => _ = this.SetProperty( ref this._isTspLinkOffline, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
 
     /// <summary> Gets or sets the tsp link Off line state query command. </summary>
@@ -695,19 +688,16 @@ public abstract class LinkSubsystemBase( LinkStatusSubsystem statusSubsystem ) :
     /// <summary> State of the online. </summary>
     private const string Online_State = "online";
 
-    /// <summary> State of the tsp link. </summary>
-    private string? _tspLinkState;
-
     /// <summary> Gets or sets the state of the tsp link. </summary>
     /// <value> The tsp state. </value>
     public string? TspLinkState
     {
-        get => this._tspLinkState;
+        get;
         set
         {
-            if ( this.SetProperty( ref this._tspLinkState, value ) && this._tspLinkState is not null )
+            if ( this.SetProperty( ref field, value ) && field is not null )
             {
-                this.IsTspLinkOnline = this._tspLinkState.Equals( Online_State, StringComparison.OrdinalIgnoreCase );
+                this.IsTspLinkOnline = field.Equals( Online_State, StringComparison.OrdinalIgnoreCase );
                 this.IsTspLinkOffline = !this.IsTspLinkOnline.Value;
             }
         }

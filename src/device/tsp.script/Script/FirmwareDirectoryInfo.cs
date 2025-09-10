@@ -1,11 +1,12 @@
 using System.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace cc.isr.VI.Tsp.Script;
 
 /// <summary>   Information about the firmware folders. </summary>
 /// <remarks>   2024-09-09. </remarks>
 [CLSCompliant( false )]
-public class FirmwareDirectoryInfo : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
+public partial class FirmwareDirectoryInfo : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
 {
     #region " construction and cleanup "
 
@@ -57,7 +58,6 @@ public class FirmwareDirectoryInfo : CommunityToolkit.Mvvm.ComponentModel.Observ
 
     #endregion
 
-    private string _parentFolderPath = string.Empty;
 
     /// <summary>
     /// Gets or sets the path of parent folder of the folder holding the firmware files. Empty if using the application
@@ -67,42 +67,35 @@ public class FirmwareDirectoryInfo : CommunityToolkit.Mvvm.ComponentModel.Observ
     [Description( "The path of parent folder of the folder holding the firmware files. May be empty if using the application folder." )]
     public string ParentFolderPath
     {
-        get => this._parentFolderPath;
+        get;
         set
         {
             if ( value is null || string.IsNullOrWhiteSpace( value ) )
                 // use the execution path if the value empty or null.
                 value = System.IO.Path.GetFullPath( AppDomain.CurrentDomain.BaseDirectory );
 
-            if ( this.SetProperty( ref this._parentFolderPath, value )
+            if ( this.SetProperty( ref field, value )
                 && !string.IsNullOrEmpty( value ) && !string.IsNullOrWhiteSpace( this.FilesFolderName ) )
                 this.FilesFolderPath = System.IO.Path.Combine( this.ParentFolderPath, this.FilesFolderName );
         }
-    }
-
-    private string _filesFolderName = string.Empty;
+    } = string.Empty;
 
     /// <summary>   Gets or sets the name of folder hosting the firmware files. </summary>
     /// <value> The name of the folder hosting the firmware files. </value>
     [Description( "The name of the folder hosting the firmware files." )]
     public string FilesFolderName
     {
-        get => this._filesFolderName;
+        get;
         set
         {
-            if ( this.SetProperty( ref this._filesFolderName, value )
+            if ( this.SetProperty( ref field, value )
                 && !string.IsNullOrEmpty( value ) && !string.IsNullOrWhiteSpace( this.ParentFolderPath ) )
                 this.FilesFolderPath = System.IO.Path.Combine( this.ParentFolderPath, this.FilesFolderName );
         }
-    }
-
-    private string _filesFolderPath = string.Empty;
+    } = string.Empty;
 
     /// <summary>   Gets the full path name of the folder hosting the firmware files. </summary>
     /// <value> The full path name of the folder hosting the firmware files. </value>
-    public string FilesFolderPath
-    {
-        get => this._filesFolderPath;
-        private set => this.SetProperty( ref this._filesFolderPath, value );
-    }
+    [ObservableProperty]
+    public partial string FilesFolderPath { get; private set; } = string.Empty;
 }

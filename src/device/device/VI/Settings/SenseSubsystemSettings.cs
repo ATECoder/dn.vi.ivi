@@ -102,7 +102,6 @@ public class SenseSubsystemSettings() : System.ComponentModel.INotifyPropertyCha
 
     #region " exists "
 
-    private bool _exists;
 
     /// <summary>
     /// Gets or sets a value indicating whether this settings section exists and the values were thus
@@ -112,8 +111,8 @@ public class SenseSubsystemSettings() : System.ComponentModel.INotifyPropertyCha
     [Description( "True if this settings section exists and was read from the JSon settings file." )]
     public bool Exists
     {
-        get => this._exists;
-        set => _ = this.SetProperty( ref this._exists, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
 
     #endregion
@@ -257,17 +256,14 @@ public class SenseSubsystemSettings() : System.ComponentModel.INotifyPropertyCha
 
     #region " measure Settings "
 
-    private bool _autoZeroEnabled = true;
 
     /// <summary>   Gets or sets a value indicating whether the automatic zero is enabled. </summary>
     /// <value> True if automatic zero enabled, false if not. </value>
     public bool AutoZeroEnabled
     {
-        get => this._autoZeroEnabled;
-        set => this.SetProperty( ref this._autoZeroEnabled, value );
-    }
-
-    private bool _autoRangeEnabled = true;
+        get;
+        set => this.SetProperty( ref field, value );
+    } = true;
 
     /// <summary>
     /// Gets or sets a value indicating whether the automatic range is enabled.
@@ -275,39 +271,33 @@ public class SenseSubsystemSettings() : System.ComponentModel.INotifyPropertyCha
     /// <value> True if automatic range enabled, false if not. </value>
     public bool AutoRangeEnabled
     {
-        get => this._autoRangeEnabled;
-        set => this.SetProperty( ref this._autoRangeEnabled, value );
-    }
-
-    private SenseFunctionModes _senseFunction = SenseFunctionModes.ResistanceFourWire;
+        get;
+        set => this.SetProperty( ref field, value );
+    } = true;
 
     /// <summary>   Gets or sets the sense function. </summary>
     /// <value> The sense function. </value>
     public SenseFunctionModes SenseFunction
     {
-        get => this._senseFunction;
-        set => this.SetProperty( ref this._senseFunction, value );
-    }
-
-    private double _powerLineCycles = 1;
+        get;
+        set => this.SetProperty( ref field, value );
+    } = SenseFunctionModes.ResistanceFourWire;
 
     /// <summary>   Gets or sets the power line cycles. </summary>
     /// <value> The power line cycles. </value>
     public double PowerLineCycles
     {
-        get => this._powerLineCycles;
-        set => this.SetProperty( ref this._powerLineCycles, value );
-    }
-
-    private bool _remoteSenseSelected = true;
+        get;
+        set => this.SetProperty( ref field, value );
+    } = 1;
 
     /// <summary>   Gets or sets a value indicating whether the remote sense selected. </summary>
     /// <value> True if remote sense selected, false if not. </value>
     public bool RemoteSenseSelected
     {
-        get => this._remoteSenseSelected;
-        set => this.SetProperty( ref this._remoteSenseSelected, value );
-    }
+        get;
+        set => this.SetProperty( ref field, value );
+    } = true;
 
     #endregion
 }

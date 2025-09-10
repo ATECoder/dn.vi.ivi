@@ -101,7 +101,6 @@ public partial class LimitView : cc.isr.WinControls.ModelViewBase
     #region " public members "
 
     /// <summary> The limit number. </summary>
-    private int _limitNumber;
 
     /// <summary> Gets or sets the limit number. </summary>
     /// <value> The limit number. </value>
@@ -109,12 +108,12 @@ public partial class LimitView : cc.isr.WinControls.ModelViewBase
     [Browsable( false )]
     public int LimitNumber
     {
-        get => this._limitNumber;
+        get;
         set
         {
             if ( value != this.LimitNumber )
             {
-                this._limitNumber = value;
+                field = value;
                 this._subsystemSplitButton.Text = $"Limit{value}";
             }
         }
@@ -638,10 +637,7 @@ public partial class LimitView : cc.isr.WinControls.ModelViewBase
     /// <param name="e">      Event information. </param>
     private void UpperLimitDecimalsNumeric_ValueChanged( object? sender, EventArgs e )
     {
-        if ( this._upperLimitNumeric is not null )
-        {
-            this._upperLimitNumeric.NumericUpDown.DecimalPlaces = ( int ) this._upperLimitDecimalsNumeric.Value;
-        }
+        _ = (this._upperLimitNumeric?.NumericUpDown.DecimalPlaces = ( int ) this._upperLimitDecimalsNumeric.Value);
     }
 
     /// <summary> Lower limit decimals numeric value changed. </summary>
@@ -649,10 +645,7 @@ public partial class LimitView : cc.isr.WinControls.ModelViewBase
     /// <param name="e">      Event information. </param>
     private void LowerLimitDecimalsNumeric_ValueChanged( object? sender, EventArgs e )
     {
-        if ( this._lowerLimitNumeric is not null )
-        {
-            this._lowerLimitNumeric.NumericUpDown.DecimalPlaces = ( int ) this._lowerLimitDecimalsNumeric.Value;
-        }
+        _ = (this._lowerLimitNumeric?.NumericUpDown.DecimalPlaces = ( int ) this._lowerLimitDecimalsNumeric.Value);
     }
 
     /// <summary> Applies the settings menu item click. </summary>

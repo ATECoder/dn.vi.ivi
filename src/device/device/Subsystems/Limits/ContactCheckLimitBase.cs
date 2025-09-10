@@ -48,19 +48,18 @@ public abstract class ContactCheckLimitBase : NumericLimitBase
     #region " failure bits "
 
     /// <summary> The failure bits. </summary>
-    private int? _failureBits;
 
     /// <summary> Gets or sets the cached Failure Bits. </summary>
     /// <value> The Failure Bits or none if not set or unknown. </value>
     public int? FailureBits
     {
-        get => this._failureBits;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.FailureBits, value ) )
             {
-                this._failureBits = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

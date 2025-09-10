@@ -52,9 +52,6 @@ public partial class SessionBase
         return builder.ToString();
     }
 
-    /// <summary> The standard event status. </summary>
-    private StandardEvents? _standardEventStatus;
-
     /// <summary> Gets or sets the cached Standard Event enable bit mask. </summary>
     /// <remarks> This property always handles the property changed event because the
     ///           standard register reflects the actual instrument state </remarks>
@@ -64,10 +61,10 @@ public partial class SessionBase
     /// </value>
     public StandardEvents? StandardEventStatus
     {
-        get => this._standardEventStatus;
+        get;
         set
         {
-            if ( this.SetProperty( ref this._standardEventStatus, value ) )
+            if ( this.SetProperty( ref field, value ) )
             {
                 this.StandardRegisterCaption = value.HasValue
                     ? string.Format( RegisterValueFormat, ( int ) value.Value )
@@ -98,27 +95,21 @@ public partial class SessionBase
         return this.StandardEventStatus;
     }
 
-    private string? _standardRegisterCaption = "0x..";
-
     /// <summary> Gets or sets the Standard register caption. </summary>
     /// <value> The Standard register caption. </value>
     public string? StandardRegisterCaption
     {
-        get => this._standardRegisterCaption;
-        set => _ = base.SetProperty( ref this._standardRegisterCaption, value ?? string.Empty );
-    }
-
-    private StandardEvents _standardEventEnableEventsBitmask = StandardEvents.All & ~StandardEvents.RequestControl;
+        get;
+        set => _ = base.SetProperty( ref field, value ?? string.Empty );
+    } = "0x..";
 
     /// <summary> Gets or sets the bitmask to enable standard event register events. </summary>
     /// <value> The bitmask to enable standard event register events [253, 0xFD]. </value>
     public StandardEvents StandardEventEnableEventsBitmask
     {
-        get => this._standardEventEnableEventsBitmask;
-        set => _ = base.SetProperty( ref this._standardEventEnableEventsBitmask, value );
-    }
-
-    private StandardEvents? _standardEventEnableBitmask;
+        get;
+        set => _ = base.SetProperty( ref field, value );
+    } = StandardEvents.All & ~StandardEvents.RequestControl;
 
     /// <summary> Gets or sets the cached Standard Event enable bit mask. </summary>
     /// <value>
@@ -127,8 +118,8 @@ public partial class SessionBase
     /// </value>
     public StandardEvents? StandardEventEnableBitmask
     {
-        get => this._standardEventEnableBitmask;
-        protected set => _ = base.SetProperty( ref this._standardEventEnableBitmask, value );
+        get;
+        protected set => _ = base.SetProperty( ref field, value );
     }
 
     /// <summary>

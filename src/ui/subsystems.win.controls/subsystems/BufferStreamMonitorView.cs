@@ -373,6 +373,7 @@ public partial class BufferStreamMonitorView : cc.isr.WinControls.ModelViewBase
 
     /// <summary> Reads the settings. </summary>
     /// <param name="subsystem"> The subsystem. </param>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0051:Remove unused private members", Justification = "<Pending>" )]
     private static void ReadSettings( BufferSubsystemBase subsystem )
     {
         subsystem.StartElapsedStopwatch();
@@ -474,6 +475,7 @@ public partial class BufferStreamMonitorView : cc.isr.WinControls.ModelViewBase
 
     /// <summary> Reads the settings. </summary>
     /// <param name="subsystem"> The subsystem. </param>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0051:Remove unused private members", Justification = "<Pending>" )]
     private static void ReadSettings( TraceSubsystemBase subsystem )
     {
         subsystem.StartElapsedStopwatch();
@@ -546,6 +548,7 @@ public partial class BufferStreamMonitorView : cc.isr.WinControls.ModelViewBase
 
     /// <summary> Bind Trigger subsystem. </summary>
     /// <param name="subsystem"> The subsystem. </param>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0051:Remove unused private members", Justification = "<Pending>" )]
     private void BindTriggerSubsystem( TriggerSubsystemBase? subsystem )
     {
         if ( this.TriggerSubsystem is not null )
@@ -644,6 +647,7 @@ public partial class BufferStreamMonitorView : cc.isr.WinControls.ModelViewBase
     }
 
     /// <summary> Initiate trigger plan. </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0051:Remove unused private members", Justification = "<Pending>" )]
     private void InitiateTriggerPlan()
     {
         if ( this.InitializingComponents || this.Device is null || this.TriggerSubsystem is null ) return;
@@ -782,8 +786,7 @@ public partial class BufferStreamMonitorView : cc.isr.WinControls.ModelViewBase
         }
         catch ( Exception ex )
         {
-            if ( this.Device.Session is not null )
-                this.Device.Session.StatusPrompt = $"failed {activity}";
+            _ = (this.Device.Session?.StatusPrompt = $"failed {activity}");
             activity = cc.isr.VI.SessionLogger.Instance.LogException( ex, activity );
             _ = this.InfoProvider?.Annunciate( this._subsystemToolStrip, cc.isr.WinControls.InfoProviderLevel.Error, activity );
         }
@@ -937,6 +940,7 @@ public partial class BufferStreamMonitorView : cc.isr.WinControls.ModelViewBase
     }
 
     /// <summary> Try restart trigger plan. </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0051:Remove unused private members", Justification = "<Pending>" )]
     private void TryRestartTriggerPlan()
     {
         string activity = $"{this.Device?.ResourceNameCaption} Initiating trigger plan and monitor";
@@ -1079,8 +1083,7 @@ public partial class BufferStreamMonitorView : cc.isr.WinControls.ModelViewBase
         }
         catch ( Exception ex )
         {
-            if ( this.Device.Session is not null )
-                this.Device.Session.StatusPrompt = $"failed {activity}";
+            _ = (this.Device.Session?.StatusPrompt = $"failed {activity}");
             activity = cc.isr.VI.SessionLogger.Instance.LogException( ex, activity );
             _ = this.InfoProvider?.Annunciate( this._subsystemToolStrip, cc.isr.WinControls.InfoProviderLevel.Error, activity );
         }

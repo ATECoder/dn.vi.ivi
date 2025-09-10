@@ -151,8 +151,7 @@ public class VisaViewForm : WinForms.ModelViewForm.ModelViewForm
         finally
         {
             this.Cursor = Cursors.Default;
-            if ( this.VisaView is not null )
-                this.VisaView.Cursor = Cursors.Default;
+            _ = (this.VisaView?.Cursor = Cursors.Default);
         }
     }
 

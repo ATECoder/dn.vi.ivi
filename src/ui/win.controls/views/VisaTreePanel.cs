@@ -205,7 +205,6 @@ public partial class VisaTreePanel : cc.isr.WinControls.ModelViewBase
     #region " session factory "
 
     /// <summary> Name of the resource. </summary>
-    private string? _resourceName;
 
     /// <summary> Gets or sets the name of the resource. </summary>
     /// <value> The name of the resource. </value>
@@ -213,20 +212,17 @@ public partial class VisaTreePanel : cc.isr.WinControls.ModelViewBase
     [Browsable( false )]
     public string? ResourceName
     {
-        get => this._resourceName;
+        get;
         set
         {
             if ( value is null || string.IsNullOrWhiteSpace( value ) ) value = string.Empty;
-            if ( this.SetProperty( ref this._resourceName, value ) )
+            if ( this.SetProperty( ref field, value ) )
             {
-                if ( this.VisaSessionBase is not null )
-                    this.VisaSessionBase.CandidateResourceName = value;
+                _ = (this.VisaSessionBase?.CandidateResourceName = value);
             }
 
         }
     }
-
-    private string? _resourceFilter;
 
     /// <summary> Gets or sets the Search Pattern of the resource. </summary>
     /// <value> The Search Pattern of the resource. </value>
@@ -234,14 +230,13 @@ public partial class VisaTreePanel : cc.isr.WinControls.ModelViewBase
     [Browsable( false )]
     public string? ResourceFilter
     {
-        get => this._resourceFilter;
+        get;
         set
         {
             if ( value is null || string.IsNullOrWhiteSpace( value ) ) value = string.Empty;
-            if ( this.SetProperty( ref this._resourceFilter, value ) )
+            if ( this.SetProperty( ref field, value ) )
             {
-                if ( this.VisaSessionBase is not null )
-                    this.VisaSessionBase.ResourcesFilter = value;
+                _ = (this.VisaSessionBase?.ResourcesFilter = value);
             }
 
         }

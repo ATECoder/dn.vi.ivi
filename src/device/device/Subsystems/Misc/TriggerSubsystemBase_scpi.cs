@@ -17,9 +17,6 @@ public partial class TriggerSubsystemBase
     /// <value> A Dictionary of trigger layer bypass mode parses. </value>
     public Pith.EnumReadWriteCollection TriggerLayerBypassModeReadWrites { get; private set; } = [];
 
-    /// <summary> The supported trigger layer bypass modes. </summary>
-    private TriggerLayerBypassModes _supportedTriggerLayerBypassModes;
-
     /// <summary>
     /// Gets or sets the supported Function Mode. This is a subset of the functions supported by the
     /// instrument.
@@ -27,12 +24,12 @@ public partial class TriggerSubsystemBase
     /// <value> The supported trigger layer bypass modes. </value>
     public TriggerLayerBypassModes SupportedTriggerLayerBypassModes
     {
-        get => this._supportedTriggerLayerBypassModes;
+        get;
         set
         {
             if ( !this.SupportedTriggerLayerBypassModes.Equals( value ) )
             {
-                this._supportedTriggerLayerBypassModes = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -45,9 +42,6 @@ public partial class TriggerSubsystemBase
     /// <value> True if trigger layer is bypassed. </value>
     public bool IsTriggerLayerBypass => this.TriggerLayerBypassMode == TriggerLayerBypassModes.Acceptor;
 
-    /// <summary> The trigger layer bypass mode. </summary>
-    private TriggerLayerBypassModes? _triggerLayerBypassMode = TriggerLayerBypassModes.None;
-
     /// <summary> Gets or sets the cached trigger layer bypass mode. </summary>
     /// <value>
     /// The <see cref="TriggerLayerBypassMode">trigger layer bypass mode</see> or none if not set or
@@ -55,18 +49,18 @@ public partial class TriggerSubsystemBase
     /// </value>
     public TriggerLayerBypassModes? TriggerLayerBypassMode
     {
-        get => this._triggerLayerBypassMode;
+        get;
 
         protected set
         {
             if ( !this.TriggerLayerBypassMode.Equals( value ) )
             {
-                this._triggerLayerBypassMode = value;
+                field = value;
                 this.NotifyPropertyChanged();
                 this.NotifyPropertyChanged( nameof( this.IsTriggerLayerBypass ) );
             }
         }
-    }
+    } = TriggerLayerBypassModes.None;
 
     /// <summary> Writes and reads back the trigger layer bypass mode. </summary>
     /// <param name="value"> The  trigger layer bypass mode. </param>
@@ -129,26 +123,20 @@ public partial class TriggerSubsystemBase
     /// <value> A Dictionary of trigger source parses. </value>
     public Pith.EnumReadWriteCollection TriggerSourceReadWrites { get; private set; }
 
-    /// <summary> The supported trigger sources. </summary>
-    private TriggerSources _supportedTriggerSources;
-
     /// <summary> Gets or sets the supported trigger sources. </summary>
     /// <value> The supported trigger sources. </value>
     public TriggerSources SupportedTriggerSources
     {
-        get => this._supportedTriggerSources;
+        get;
         set
         {
             if ( !this.SupportedTriggerSources.Equals( value ) )
             {
-                this._supportedTriggerSources = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
     }
-
-    /// <summary> The trigger source. </summary>
-    private TriggerSources? _triggerSource;
 
     /// <summary> Gets or sets the cached source TriggerSource. </summary>
     /// <value>
@@ -156,13 +144,13 @@ public partial class TriggerSubsystemBase
     /// </value>
     public TriggerSources? TriggerSource
     {
-        get => this._triggerSource;
+        get;
 
         protected set
         {
             if ( !this.TriggerSource.Equals( value ) )
             {
-                this._triggerSource = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -224,26 +212,20 @@ public partial class TriggerSubsystemBase
     /// <value> A Dictionary of trigger Event parses. </value>
     public Pith.EnumReadWriteCollection TriggerEventReadWrites { get; private set; }
 
-    /// <summary> The supported trigger events. </summary>
-    private TriggerEvents _supportedTriggerEvents;
-
     /// <summary> Gets or sets the supported trigger Events. </summary>
     /// <value> The supported trigger Events. </value>
     public TriggerEvents SupportedTriggerEvents
     {
-        get => this._supportedTriggerEvents;
+        get;
         set
         {
             if ( !this.SupportedTriggerEvents.Equals( value ) )
             {
-                this._supportedTriggerEvents = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
     }
-
-    /// <summary> The trigger event. </summary>
-    private TriggerEvents? _triggerEvent;
 
     /// <summary> Gets or sets the cached Event TriggerEvent. </summary>
     /// <value>
@@ -251,13 +233,13 @@ public partial class TriggerSubsystemBase
     /// </value>
     public TriggerEvents? TriggerEvent
     {
-        get => this._triggerEvent;
+        get;
 
         protected set
         {
             if ( !this.TriggerEvent.Equals( value ) )
             {
-                this._triggerEvent = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

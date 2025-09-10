@@ -102,7 +102,6 @@ public class ScannerSubsystemSettings() : System.ComponentModel.INotifyPropertyC
 
     #region " exists "
 
-    private bool _exists;
 
     /// <summary>
     /// Gets or sets a value indicating whether this settings section exists and the values were thus
@@ -112,8 +111,8 @@ public class ScannerSubsystemSettings() : System.ComponentModel.INotifyPropertyC
     [Description( "True if this settings section exists and was read from the JSon settings file." )]
     public bool Exists
     {
-        get => this._exists;
-        set => _ = this.SetProperty( ref this._exists, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
 
     #endregion

@@ -52,19 +52,18 @@ public abstract class UpperLowerLimitBase : NumericLimitBase
     #region " pass bits "
 
     /// <summary> The pass bits. </summary>
-    private int? _passBits;
 
     /// <summary> Gets or sets the cached Pass Bits. </summary>
     /// <value> The Pass Bits or none if not set or unknown. </value>
     public int? PassBits
     {
-        get => this._passBits;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.PassBits, value ) )
             {
-                this._passBits = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -120,19 +119,18 @@ public abstract class UpperLowerLimitBase : NumericLimitBase
     #region " lower limit "
 
     /// <summary> The lower limit. </summary>
-    private double? _lowerLimit;
 
     /// <summary> Gets or sets the cached Lower Limit. </summary>
     /// <value> The Lower Limit or none if not set or unknown. </value>
     public double? LowerLimit
     {
-        get => this._lowerLimit;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.LowerLimit, value ) )
             {
-                this._lowerLimit = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -179,19 +177,18 @@ public abstract class UpperLowerLimitBase : NumericLimitBase
     #region " lower limit failure bits "
 
     /// <summary> The lower limit failure bits. </summary>
-    private int? _lowerLimitFailureBits;
 
     /// <summary> Gets or sets the cached Lower Limit Failure Bits. </summary>
     /// <value> The Lower Limit Failure Bits or none if not set or unknown. </value>
     public int? LowerLimitFailureBits
     {
-        get => this._lowerLimitFailureBits;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.LowerLimitFailureBits, value ) )
             {
-                this._lowerLimitFailureBits = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -240,19 +237,18 @@ public abstract class UpperLowerLimitBase : NumericLimitBase
     #region " upper limit "
 
     /// <summary> The upper limit. </summary>
-    private double? _upperLimit;
 
     /// <summary> Gets or sets the cached Upper Limit. </summary>
     /// <value> The Upper Limit or none if not set or unknown. </value>
     public double? UpperLimit
     {
-        get => this._upperLimit;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.UpperLimit, value ) )
             {
-                this._upperLimit = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -299,19 +295,18 @@ public abstract class UpperLowerLimitBase : NumericLimitBase
     #region " upper limit failure bits "
 
     /// <summary> The upper limit failure bits. </summary>
-    private int? _upperLimitFailureBits;
 
     /// <summary> Gets or sets the cached Upper Limit Failure Bits. </summary>
     /// <value> The Upper Limit Failure Bits or none if not set or unknown. </value>
     public int? UpperLimitFailureBits
     {
-        get => this._upperLimitFailureBits;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.UpperLimitFailureBits, value ) )
             {
-                this._upperLimitFailureBits = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

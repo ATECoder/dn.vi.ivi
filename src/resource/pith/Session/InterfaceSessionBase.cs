@@ -85,29 +85,23 @@ public abstract class InterfaceSessionBase : CommunityToolkit.Mvvm.ComponentMode
     /// <value> The dummy sentinel. </value>
     public abstract bool IsDummy { get; }
 
-    /// <summary> True if is open, false if not. </summary>
-    private bool _isOpen;
-
     /// <summary> Gets or sets the is open. </summary>
     /// <value> The is open. </value>
     public bool IsOpen
     {
-        get => this._isOpen;
-        protected set => _ = base.SetProperty( ref this._isOpen, value );
+        get;
+        protected set => _ = base.SetProperty( ref field, value );
     }
-
-    /// <summary> State of the resource open. </summary>
-    private ResourceOpenState _resourceOpenState;
 
     /// <summary> Gets or sets the state of the resource open. </summary>
     /// <value> The resource open state. </value>
     public ResourceOpenState ResourceOpenState
     {
-        get => this._resourceOpenState;
+        get;
 
         protected set
         {
-            this._resourceOpenState = value;
+            field = value;
             this.IsOpen = value != ResourceOpenState.Unknown;
         }
     }

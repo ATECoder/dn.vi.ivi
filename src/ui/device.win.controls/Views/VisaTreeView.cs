@@ -477,11 +477,7 @@ public partial class VisaTreeView : cc.isr.WinControls.ModelViewLoggerBase, IVis
     [Browsable( false )]
     public TraceEventType MessageDisplayLevel
     {
-        get => this.TextBoxTextWriter is null ? TraceEventType.Verbose : this.TextBoxTextWriter.TraceLevel;
-        set
-        {
-            if ( this.TextBoxTextWriter is not null ) this.TextBoxTextWriter.TraceLevel = value;
-        }
+        get => this.TextBoxTextWriter is null ? TraceEventType.Verbose : this.TextBoxTextWriter.TraceLevel; set => this.TextBoxTextWriter?.TraceLevel = value;
     }
 
     #endregion

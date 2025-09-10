@@ -46,7 +46,6 @@ public abstract class NumericLimitBase( int limitNumber, StatusSubsystemBase sta
     #region " limit failed "
 
     /// <summary> The failed. </summary>
-    private bool? _failed;
 
     /// <summary> Gets or sets the cached In Limit Failed Condition sentinel. </summary>
     /// <value>
@@ -55,13 +54,13 @@ public abstract class NumericLimitBase( int limitNumber, StatusSubsystemBase sta
     /// </value>
     public bool? Failed
     {
-        get => this._failed;
+        get;
 
         protected set
         {
             if ( !Equals( this.Failed, value ) )
             {
-                this._failed = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -88,7 +87,6 @@ public abstract class NumericLimitBase( int limitNumber, StatusSubsystemBase sta
     #region " limit enabled "
 
     /// <summary> The enabled. </summary>
-    private bool? _enabled;
 
     /// <summary> Gets or sets the cached Limit Enabled sentinel. </summary>
     /// <value>
@@ -97,13 +95,13 @@ public abstract class NumericLimitBase( int limitNumber, StatusSubsystemBase sta
     /// </value>
     public bool? Enabled
     {
-        get => this._enabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.Enabled, value ) )
             {
-                this._enabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

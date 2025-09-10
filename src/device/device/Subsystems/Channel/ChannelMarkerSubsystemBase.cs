@@ -56,7 +56,6 @@ public abstract partial class ChannelMarkerSubsystemBase( int markerNumber, int 
     #region " abscissa "
 
     /// <summary> The abscissa. </summary>
-    private double? _abscissa;
 
     /// <summary> Gets or sets the cached Trigger Abscissa. </summary>
     /// <remarks>
@@ -67,13 +66,13 @@ public abstract partial class ChannelMarkerSubsystemBase( int markerNumber, int 
     /// <value> The Trigger Abscissa or none if not set or unknown. </value>
     public double? Abscissa
     {
-        get => this._abscissa;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.Abscissa, value ) )
             {
-                this._abscissa = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -123,7 +122,6 @@ public abstract partial class ChannelMarkerSubsystemBase( int markerNumber, int 
     #region " enabled "
 
     /// <summary> The enabled. </summary>
-    private bool? _enabled;
 
     /// <summary> Gets or sets the cached Enabled sentinel. </summary>
     /// <value>
@@ -132,13 +130,13 @@ public abstract partial class ChannelMarkerSubsystemBase( int markerNumber, int 
     /// </value>
     public bool? Enabled
     {
-        get => this._enabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.Enabled, value ) )
             {
-                this._enabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

@@ -47,7 +47,6 @@ public partial class SessionFactory : cc.isr.Std.Notifiers.SelectResourceBase
     #region " resoure manager "
 
     /// <summary> A filter specifying the resources. </summary>
-    private string? _resourcesFilter;
 
     /// <summary> Gets or sets the resources search pattern. </summary>
     /// <value> The resources search pattern. </value>
@@ -55,17 +54,14 @@ public partial class SessionFactory : cc.isr.Std.Notifiers.SelectResourceBase
     {
         get
         {
-            if ( string.IsNullOrWhiteSpace( this._resourcesFilter ) )
-                this._resourcesFilter = SessionFactory.ResourceFinder.BuildMinimalResourcesFilter();
+            if ( string.IsNullOrWhiteSpace( field ) )
+                field = SessionFactory.ResourceFinder.BuildMinimalResourcesFilter();
 
-            return this._resourcesFilter!;
+            return field!;
         }
 
-        set => _ = base.SetProperty( ref this._resourcesFilter, value ?? string.Empty );
+        set => _ = base.SetProperty( ref field, value ?? string.Empty );
     }
-
-    /// <summary> True to enable, false to disable the ping filter. </summary>
-    private bool _pingFilterEnabled;
 
     /// <summary>
     /// Gets or sets the Ping Filter enabled sentinel. When enabled, Tcp/IP resources are added only
@@ -74,12 +70,12 @@ public partial class SessionFactory : cc.isr.Std.Notifiers.SelectResourceBase
     /// <value> The ping filter enabled. </value>
     public bool PingFilterEnabled
     {
-        get => this._pingFilterEnabled;
+        get;
         set
         {
             if ( value != this.PingFilterEnabled )
             {
-                this._pingFilterEnabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

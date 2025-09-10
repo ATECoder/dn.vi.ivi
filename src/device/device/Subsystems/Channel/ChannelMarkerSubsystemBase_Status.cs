@@ -2,23 +2,20 @@ namespace cc.isr.VI;
 
 public partial class ChannelMarkerSubsystemBase
 {
-    /// <summary> Information describing the failure short. </summary>
-    private string _failureShortDescription = string.Empty;
-
     /// <summary> Gets or sets the failure Short Description. </summary>
     /// <value> The failure Short Description. </value>
     public string FailureShortDescription
     {
-        get => this._failureShortDescription;
+        get;
         set
         {
             if ( !string.Equals( value, this.FailureShortDescription, StringComparison.Ordinal ) )
             {
-                this._failureShortDescription = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
-    }
+    } = string.Empty;
 
     /// <summary> The failure color. </summary>
     private System.Drawing.Color _failureColor;
@@ -38,41 +35,35 @@ public partial class ChannelMarkerSubsystemBase
         }
     }
 
-    /// <summary> The failure code. </summary>
-    private string _failureCode = string.Empty;
-
     /// <summary> Gets or sets the failure Code. </summary>
     /// <value> The failure Code. </value>
     public string FailureCode
     {
-        get => this._failureCode;
+        get;
         set
         {
             if ( !string.Equals( value, this.FailureCode, StringComparison.Ordinal ) )
             {
-                this._failureCode = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
-    }
-
-    /// <summary> Information describing the failure long. </summary>
-    private string _failureLongDescription = string.Empty;
+    } = string.Empty;
 
     /// <summary> Gets or sets the failure long description. </summary>
     /// <value> The failure long description. </value>
     public string FailureLongDescription
     {
-        get => this._failureLongDescription;
+        get;
         set
         {
             if ( !string.Equals( value, this.FailureLongDescription, StringComparison.Ordinal ) )
             {
-                this._failureLongDescription = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
-    }
+    } = string.Empty;
 
     /// <summary> Notifies of failure information. </summary>
     public void NotifyFailureInfo()

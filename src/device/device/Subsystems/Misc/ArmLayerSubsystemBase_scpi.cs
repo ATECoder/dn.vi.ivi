@@ -24,27 +24,24 @@ public partial class ArmLayerSubsystemBase
     /// <value> True if Arm layer is bypassed. </value>
     public bool IsArmLayerBypass => this.ArmLayerBypassMode == TriggerLayerBypassModes.Acceptor;
 
-    /// <summary> The arm layer bypass mode. </summary>
-    private TriggerLayerBypassModes _armLayerBypassMode = TriggerLayerBypassModes.None;
-
     /// <summary> Gets or sets the cached arm layer bypass mode. </summary>
     /// <value>
     /// The <see cref="ArmLayerBypassMode">Arm Layer Bypass Mode</see> or none if not set or unknown.
     /// </value>
     public TriggerLayerBypassModes ArmLayerBypassMode
     {
-        get => this._armLayerBypassMode;
+        get;
 
         protected set
         {
             if ( !this.ArmLayerBypassMode.Equals( value ) )
             {
-                this._armLayerBypassMode = value;
+                field = value;
                 this.NotifyPropertyChanged();
                 this.NotifyPropertyChanged( nameof( this.IsArmLayerBypass ) );
             }
         }
-    }
+    } = TriggerLayerBypassModes.None;
 
     /// <summary> Writes and reads back the Arm Layer Bypass Mode. </summary>
     /// <param name="value"> The Arm Layer Bypass Mode. </param>
@@ -140,26 +137,20 @@ public partial class ArmLayerSubsystemBase
     /// <value> A Dictionary of Arm source parses. </value>
     public Pith.EnumReadWriteCollection ArmSourceReadWrites { get; private set; }
 
-    /// <summary> The supported arm sources. </summary>
-    private ArmSources _supportedArmSources;
-
     /// <summary> Gets or sets the supported Arm sources. </summary>
     /// <value> The supported Arm sources. </value>
     public ArmSources SupportedArmSources
     {
-        get => this._supportedArmSources;
+        get;
         set
         {
             if ( !this.SupportedArmSources.Equals( value ) )
             {
-                this._supportedArmSources = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
     }
-
-    /// <summary> The arm source. </summary>
-    private ArmSources? _armSource;
 
     /// <summary> Gets or sets the cached source ArmSource. </summary>
     /// <value>
@@ -167,13 +158,13 @@ public partial class ArmLayerSubsystemBase
     /// </value>
     public ArmSources? ArmSource
     {
-        get => this._armSource;
+        get;
 
         protected set
         {
             if ( !this.ArmSource.Equals( value ) )
             {
-                this._armSource = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

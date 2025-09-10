@@ -836,7 +836,6 @@ public sealed class LikeOperator
         // StringPatternStart, StringPatternEnd - there are the indices into the original source string
         // and are NOT indices into StringPattern.
 #if DEBUG
-        private int _stringPatternStart;
 
         /// <summary>
         /// For PatternType.[STRING]. Indices into the original source string; NOT indices into
@@ -848,17 +847,15 @@ public sealed class LikeOperator
             readonly get
             {
                 Debug.Assert( this.PatType == PatternType.STRING, "Unexpected pattern group type" );
-                return this._stringPatternStart;
+                return field;
             }
 
             set
             {
                 Debug.Assert( this.PatType == PatternType.STRING, "Unexpected pattern group type" );
-                this._stringPatternStart = value;
+                field = value;
             }
         }
-
-        private int _stringPatternEnd;
 
         /// <summary>
         /// For PatternType.[STRING]. Indices into the original source string; NOT indices into
@@ -870,13 +867,13 @@ public sealed class LikeOperator
             readonly get
             {
                 Debug.Assert( this.PatType == PatternType.STRING, "Unexpected pattern group type" );
-                return this._stringPatternEnd;
+                return field;
             }
 
             set
             {
                 Debug.Assert( this.PatType == PatternType.STRING, "Unexpected pattern group type" );
-                this._stringPatternEnd = value;
+                field = value;
             }
         }
 #else
@@ -885,20 +882,19 @@ public sealed class LikeOperator
 #endif
 
 #if DEBUG
-        private int _minSourceIndex;
 
         internal int MinSourceIndex
         {
             readonly get
             {
                 Debug.Assert( this.PatType is PatternType.STAR or PatternType.NONE, "Unexpected pattern group type" );
-                return this._minSourceIndex;
+                return field;
             }
 
             set
             {
                 Debug.Assert( this.PatType is PatternType.STAR or PatternType.NONE, "Unexpected pattern group type" );
-                this._minSourceIndex = value;
+                field = value;
             }
         }
 #else
@@ -906,37 +902,34 @@ public sealed class LikeOperator
 #endif
 
 #if DEBUG
-        private string[] _rangeStarts;
 
         public string[] RangeStarts
         {
             readonly get
             {
                 Debug.Assert( this.PatType is PatternType.EXCLIST or PatternType.INCLIST, "Unexpected pattern group type" );
-                return this._rangeStarts;
+                return field;
             }
 
             set
             {
                 Debug.Assert( this.PatType is PatternType.EXCLIST or PatternType.INCLIST, "Unexpected pattern group type" );
-                this._rangeStarts = value;
+                field = value;
             }
         }
-
-        private List<Range> _rangeList;
 
         public List<Range> RangeList
         {
             readonly get
             {
                 Debug.Assert( this.PatType is PatternType.EXCLIST or PatternType.INCLIST, "Unexpected pattern group type" );
-                return this._rangeList;
+                return field;
             }
 
             set
             {
                 Debug.Assert( this.PatType is PatternType.EXCLIST or PatternType.INCLIST, "Unexpected pattern group type" );
-                this._rangeList = value;
+                field = value;
             }
         }
 #else

@@ -192,7 +192,6 @@ public abstract partial class CompensateChannelSubsystemBase( int channelNumber,
     #region " enabled "
 
     /// <summary> The enabled. </summary>
-    private bool? _enabled;
 
     /// <summary> Gets or sets the cached Enabled sentinel. </summary>
     /// <value>
@@ -201,13 +200,13 @@ public abstract partial class CompensateChannelSubsystemBase( int channelNumber,
     /// </value>
     public bool? Enabled
     {
-        get => this._enabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.Enabled, value ) )
             {
-                this._enabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -258,7 +257,6 @@ public abstract partial class CompensateChannelSubsystemBase( int channelNumber,
     #region " frequency stimulus points "
 
     /// <summary> The Frequency Stimulus Points. </summary>
-    private int? _frequencyStimulusPoints;
 
     /// <summary>
     /// Gets or sets the cached Frequency Stimulus Points. Set to
@@ -268,13 +266,13 @@ public abstract partial class CompensateChannelSubsystemBase( int channelNumber,
     /// <value> <c>null</c> if value is not known. </value>
     public int? FrequencyStimulusPoints
     {
-        get => this._frequencyStimulusPoints;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.FrequencyStimulusPoints, value ) )
             {
-                this._frequencyStimulusPoints = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -302,28 +300,22 @@ public abstract partial class CompensateChannelSubsystemBase( int channelNumber,
     /// <value> The has complete compensation values. </value>
     public bool HasCompleteCompensationValues => !(string.IsNullOrWhiteSpace( this.FrequencyArrayReading ) | string.IsNullOrWhiteSpace( this.ImpedanceArrayReading ));
 
-    /// <summary> The frequency array reading. </summary>
-    private string? _frequencyArrayReading;
-
     /// <summary> Gets or sets the frequency array reading. </summary>
     /// <value> The frequency array reading. </value>
     public string? FrequencyArrayReading
     {
-        get => this._frequencyArrayReading;
+        get;
 
         protected set
         {
             if ( !string.Equals( value, this.FrequencyArrayReading, StringComparison.Ordinal ) )
             {
-                this._frequencyArrayReading = value;
+                field = value;
                 this.NotifyPropertyChanged();
                 this.NotifyPropertyChanged( nameof( this.HasCompleteCompensationValues ) );
             }
         }
     }
-
-    /// <summary> The Frequency Array. </summary>
-    private IList<double>? _frequencyArray;
 
     /// <summary>
     /// Gets or sets the cached Frequency Array. Set to
@@ -333,13 +325,13 @@ public abstract partial class CompensateChannelSubsystemBase( int channelNumber,
     /// <value> <c>null</c> if value is not known. </value>
     public IList<double>? FrequencyArray
     {
-        get => this._frequencyArray;
+        get;
 
         protected set
         {
             if ( !Equals( this.FrequencyArray, value ) )
             {
-                this._frequencyArray = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -366,7 +358,7 @@ public abstract partial class CompensateChannelSubsystemBase( int channelNumber,
         this.FrequencyArrayReading = this.Session.QueryTrimEnd( string.Empty, string.Format( this.FrequencyArrayQueryCommand, this.ChannelNumber, this.CompensationTypeCode ) );
         if ( this.FrequencyArrayReading is not null )
         {
-            this.FrequencyArray = Parse( this._frequencyArrayReading! );
+            this.FrequencyArray = Parse( this.FrequencyArrayReading! );
         }
         else
             this.FrequencyArray = [];
@@ -388,7 +380,7 @@ public abstract partial class CompensateChannelSubsystemBase( int channelNumber,
         if ( values is not null )
         {
             this.FrequencyArrayReading = Build( values );
-            _ = this.Session.WriteLine( this.FrequencyArrayCommandFormat, this._frequencyArrayReading! );
+            _ = this.Session.WriteLine( this.FrequencyArrayCommandFormat, this.FrequencyArrayReading! );
             this.FrequencyArray = [.. values!];
         }
         return this.FrequencyArray;
@@ -399,27 +391,23 @@ public abstract partial class CompensateChannelSubsystemBase( int channelNumber,
     #region " impedance array "
 
     /// <summary> The impedance array reading. </summary>
-    private string? _impedanceArrayReading;
 
     /// <summary> Gets or sets the impedance array reading. </summary>
     /// <value> The impedance array reading. </value>
     public string? ImpedanceArrayReading
     {
-        get => this._impedanceArrayReading;
+        get;
 
         protected set
         {
             if ( !string.Equals( value, this.ImpedanceArrayReading, StringComparison.Ordinal ) )
             {
-                this._impedanceArrayReading = value;
+                field = value;
                 this.NotifyPropertyChanged();
                 this.NotifyPropertyChanged( nameof( this.HasCompleteCompensationValues ) );
             }
         }
     }
-
-    /// <summary> The Impedance Array. </summary>
-    private IList<double>? _impedanceArray;
 
     /// <summary>
     /// Gets or sets the cached Impedance Array. Set to
@@ -429,13 +417,13 @@ public abstract partial class CompensateChannelSubsystemBase( int channelNumber,
     /// <value> <c>null</c> if value is not known. </value>
     public IList<double>? ImpedanceArray
     {
-        get => this._impedanceArray;
+        get;
 
         protected set
         {
             if ( !Equals( this.ImpedanceArray, value ) )
             {
-                this._impedanceArray = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -469,8 +457,8 @@ public abstract partial class CompensateChannelSubsystemBase( int channelNumber,
     public IList<double>? QueryImpedanceArray()
     {
         this.ImpedanceArrayReading = this.Session.QueryTrimEnd( "", string.Format( this.ImpedanceArrayQueryCommand, this.ChannelNumber, this.CompensationTypeCode ) );
-        if ( this._impedanceArrayReading is not null )
-            this.ImpedanceArray = Parse( this._impedanceArrayReading );
+        if ( this.ImpedanceArrayReading is not null )
+            this.ImpedanceArray = Parse( this.ImpedanceArrayReading );
         return this.ImpedanceArray;
     }
 
@@ -487,7 +475,7 @@ public abstract partial class CompensateChannelSubsystemBase( int channelNumber,
     {
         if ( string.IsNullOrWhiteSpace( reading ) ) throw new ArgumentNullException( nameof( reading ) );
         this.ImpedanceArrayReading = reading;
-        _ = this.Session.WriteLine( this.ImpedanceArrayCommandFormat, this.ChannelNumber, this.CompensationTypeCode, this._impedanceArrayReading! );
+        _ = this.Session.WriteLine( this.ImpedanceArrayCommandFormat, this.ChannelNumber, this.CompensationTypeCode, this.ImpedanceArrayReading! );
         this.ImpedanceArray = Parse( reading );
         return this.ImpedanceArray;
     }
@@ -517,7 +505,6 @@ public abstract partial class CompensateChannelSubsystemBase( int channelNumber,
     #region " model resistance "
 
     /// <summary> The Model Resistance. </summary>
-    private double? _modelResistance;
 
     /// <summary>
     /// Gets or sets the cached Model Resistance. Set to
@@ -527,13 +514,13 @@ public abstract partial class CompensateChannelSubsystemBase( int channelNumber,
     /// <value> <c>null</c> if value is not known. </value>
     public double? ModelResistance
     {
-        get => this._modelResistance;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.ModelResistance, value ) )
             {
-                this._modelResistance = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -583,7 +570,6 @@ public abstract partial class CompensateChannelSubsystemBase( int channelNumber,
     #region " model capacitance "
 
     /// <summary> The Model Capacitance. </summary>
-    private double? _modelCapacitance;
 
     /// <summary>
     /// Gets or sets the cached Model Capacitance. Set to
@@ -593,13 +579,13 @@ public abstract partial class CompensateChannelSubsystemBase( int channelNumber,
     /// <value> <c>null</c> if value is not known. </value>
     public double? ModelCapacitance
     {
-        get => this._modelCapacitance;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.ModelCapacitance, value ) )
             {
-                this._modelCapacitance = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -649,7 +635,6 @@ public abstract partial class CompensateChannelSubsystemBase( int channelNumber,
     #region " model conductance "
 
     /// <summary> The Model Conductance. </summary>
-    private double? _modelConductance;
 
     /// <summary>
     /// Gets or sets the cached Model Conductance. Set to
@@ -659,13 +644,13 @@ public abstract partial class CompensateChannelSubsystemBase( int channelNumber,
     /// <value> <c>null</c> if value is not known. </value>
     public double? ModelConductance
     {
-        get => this._modelConductance;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.ModelConductance, value ) )
             {
-                this._modelConductance = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -715,7 +700,6 @@ public abstract partial class CompensateChannelSubsystemBase( int channelNumber,
     #region " model inductance "
 
     /// <summary> The Model Inductance. </summary>
-    private double? _modelInductance;
 
     /// <summary>
     /// Gets or sets the cached Model Inductance. Set to
@@ -725,13 +709,13 @@ public abstract partial class CompensateChannelSubsystemBase( int channelNumber,
     /// <value> <c>null</c> if value is not known. </value>
     public double? ModelInductance
     {
-        get => this._modelInductance;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.ModelInductance, value ) )
             {
-                this._modelInductance = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

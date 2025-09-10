@@ -19,8 +19,6 @@ public abstract class SystemSubsystemBase( StatusSubsystemBase statusSubsystem )
     #region " auto zero enabled "
 
     /// <summary> The automatic zero enabled. </summary>
-    private bool? _autoZeroEnabled;
-
     /// <summary> Gets or sets the cached Auto Zero enabled sentinel. </summary>
     /// <value>
     /// <c>null</c> if Auto Zero enabled is not known; <c>true</c> if output is on; otherwise,
@@ -28,13 +26,13 @@ public abstract class SystemSubsystemBase( StatusSubsystemBase statusSubsystem )
     /// </value>
     public bool? AutoZeroEnabled
     {
-        get => this._autoZeroEnabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.AutoZeroEnabled, value ) )
             {
-                this._autoZeroEnabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -86,7 +84,6 @@ public abstract class SystemSubsystemBase( StatusSubsystemBase statusSubsystem )
     #region " beeper enabled + immediate "
 
     /// <summary> The beeper enabled. </summary>
-    private bool? _beeperEnabled;
 
     /// <summary> Gets or sets the cached Beeper enabled sentinel. </summary>
     /// <value>
@@ -95,13 +92,13 @@ public abstract class SystemSubsystemBase( StatusSubsystemBase statusSubsystem )
     /// </value>
     public bool? BeeperEnabled
     {
-        get => this._beeperEnabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.BeeperEnabled, value ) )
             {
-                this._beeperEnabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -169,7 +166,6 @@ public abstract class SystemSubsystemBase( StatusSubsystemBase statusSubsystem )
     #region " contact check enabled "
 
     /// <summary> The contact check enabled. </summary>
-    private bool? _contactCheckEnabled;
 
     /// <summary> Gets or sets the cached Contact Check enabled sentinel. </summary>
     /// <value>
@@ -178,13 +174,13 @@ public abstract class SystemSubsystemBase( StatusSubsystemBase statusSubsystem )
     /// </value>
     public bool? ContactCheckEnabled
     {
-        get => this._contactCheckEnabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.ContactCheckEnabled, value ) )
             {
-                this._contactCheckEnabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -236,19 +232,18 @@ public abstract class SystemSubsystemBase( StatusSubsystemBase statusSubsystem )
     #region " contact check resistance "
 
     /// <summary> The Contact Check Resistance. </summary>
-    private double? _contactCheckResistance;
 
     /// <summary> Gets or sets the cached source Contact Check Resistance. </summary>
     /// <value> <c>null</c> if value is not known. </value>
     public double? ContactCheckResistance
     {
-        get => this._contactCheckResistance;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.ContactCheckResistance, value ) )
             {
-                this._contactCheckResistance = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -298,19 +293,18 @@ public abstract class SystemSubsystemBase( StatusSubsystemBase statusSubsystem )
     #region " contact check supported "
 
     /// <summary> The contact check supported. </summary>
-    private bool? _contactCheckSupported;
 
     /// <summary> Gets or sets the contact check supported. </summary>
     /// <value> The contact check supported. </value>
     public bool? ContactCheckSupported
     {
-        get => this._contactCheckSupported;
+        get;
 
         protected set
         {
             if ( !Equals( this.ContactCheckSupported, value ) )
             {
-                this._contactCheckSupported = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -341,19 +335,18 @@ public abstract class SystemSubsystemBase( StatusSubsystemBase statusSubsystem )
     #region " fan level "
 
     /// <summary> The Fan Level. </summary>
-    private FanLevel? _fanLevel;
 
     /// <summary> Gets or sets the cached Fan Level. </summary>
     /// <value> The Fan Level or null if unknown. </value>
     public FanLevel? FanLevel
     {
-        get => this._fanLevel;
+        get;
 
         protected set
         {
             if ( !Nullable.Equals( this.FanLevel, value ) )
             {
-                this._fanLevel = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -419,7 +412,6 @@ public abstract class SystemSubsystemBase( StatusSubsystemBase statusSubsystem )
     #region " four wire sense enabled "
 
     /// <summary> The four wire sense enabled. </summary>
-    private bool? _fourWireSenseEnabled;
 
     /// <summary> Gets or sets the cached Four Wire Sense enabled sentinel. </summary>
     /// <value>
@@ -428,13 +420,13 @@ public abstract class SystemSubsystemBase( StatusSubsystemBase statusSubsystem )
     /// </value>
     public bool? FourWireSenseEnabled
     {
-        get => this._fourWireSenseEnabled;
+        get;
 
         protected set
         {
             if ( !Equals( this.FourWireSenseEnabled, value ) )
             {
-                this._fourWireSenseEnabled = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -507,9 +499,6 @@ public abstract class SystemSubsystemBase( StatusSubsystemBase statusSubsystem )
     /// </value>
     public bool SupportsFrontTerminalsSelectionQuery => !string.IsNullOrWhiteSpace( this.FrontTerminalsSelectedQueryCommand );
 
-    /// <summary> The front terminals selected. </summary>
-    private bool? _frontTerminalsSelected;
-
     /// <summary> Gets or sets the cached Front Terminals Selected sentinel. </summary>
     /// <value>
     /// <c>null</c> if Front Terminals Selected is not known; <c>true</c> if output is on; otherwise,
@@ -517,13 +506,13 @@ public abstract class SystemSubsystemBase( StatusSubsystemBase statusSubsystem )
     /// </value>
     public bool? FrontTerminalsSelected
     {
-        get => this._frontTerminalsSelected;
+        get;
 
         protected set
         {
             if ( !Equals( this.FrontTerminalsSelected, value ) )
             {
-                this._frontTerminalsSelected = value;
+                field = value;
                 this.NotifyPropertyChanged();
                 this.NotifyPropertyChanged( nameof( MultimeterSubsystemBase.TerminalsCaption ) );
             }
@@ -600,23 +589,20 @@ public abstract class SystemSubsystemBase( StatusSubsystemBase statusSubsystem )
     /// <value> The option query command. </value>
     protected virtual string OptionQueryCommand { get; set; } = string.Empty;
 
-    /// <summary> Options for controlling the operation. </summary>
-    private string _options = string.Empty;
-
     /// <summary> Gets or sets options for controlling the operation. </summary>
     /// <value> The options. </value>
     public string Options
     {
-        get => this._options;
+        get;
         set
         {
             if ( !string.Equals( value, this.Options, StringComparison.Ordinal ) )
             {
-                this._options = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
-    }
+    } = string.Empty;
 
     /// <summary> Queries the options. </summary>
     /// <returns> The options. </returns>
@@ -634,19 +620,18 @@ public abstract class SystemSubsystemBase( StatusSubsystemBase statusSubsystem )
     #region " memory option "
 
     /// <summary> The memory option. </summary>
-    private int? _memoryOption;
 
     /// <summary> Gets or sets the memory Option. </summary>
     /// <value> The memory Option. </value>
     public int? MemoryOption
     {
-        get => this._memoryOption;
+        get;
 
         protected set
         {
             if ( !Equals( this.MemoryOption, value ) )
             {
-                this._memoryOption = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

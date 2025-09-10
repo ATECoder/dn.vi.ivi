@@ -176,9 +176,6 @@ public abstract partial class SenseFunctionSubsystemBase
     /// <value> A Dictionary of Sense function mode parses. </value>
     public Pith.EnumReadWriteCollection FunctionModeReadWrites { get; private set; }
 
-    /// <summary> The supported function modes. </summary>
-    private SenseFunctionModes _supportedFunctionModes;
-
     /// <summary>
     /// Gets or sets the supported Function Modes. This is a subset of the functions supported by the
     /// instrument.
@@ -186,19 +183,16 @@ public abstract partial class SenseFunctionSubsystemBase
     /// <value> The supported Sense function modes. </value>
     public SenseFunctionModes SupportedFunctionModes
     {
-        get => this._supportedFunctionModes;
+        get;
         set
         {
             if ( !this.SupportedFunctionModes.Equals( value ) )
             {
-                this._supportedFunctionModes = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
     }
-
-    /// <summary> The function mode. </summary>
-    private SenseFunctionModes? _functionMode;
 
     /// <summary> Gets or sets the cached Sense function mode. </summary>
     /// <value>
@@ -206,13 +200,13 @@ public abstract partial class SenseFunctionSubsystemBase
     /// </value>
     public SenseFunctionModes? FunctionMode
     {
-        get => this._functionMode;
+        get;
 
         protected set
         {
             if ( !this.FunctionMode.Equals( value ) )
             {
-                this._functionMode = value;
+                field = value;
                 if ( value.HasValue )
                 {
                     this.FunctionRange = this.ToRange( ( int ) value.Value );

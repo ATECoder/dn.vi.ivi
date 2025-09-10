@@ -41,15 +41,12 @@ public abstract partial class HarmonicsMeasureSubsystemBase
         return this.MeasureModeRanges[measureMode];
     }
 
-    /// <summary> The function range. </summary>
-    private Std.Primitives.RangeR? _functionRange;
-
     /// <summary> The Range of the range. </summary>
     /// <value> The function range. </value>
     public Std.Primitives.RangeR? FunctionRange
     {
-        get => this._functionRange;
-        set => _ = base.SetProperty( ref this._functionRange, value );
+        get;
+        set => _ = base.SetProperty( ref field, value );
     }
 
     #endregion
@@ -91,19 +88,16 @@ public abstract partial class HarmonicsMeasureSubsystemBase
         return this.MeasureModeDecimalPlaces[measureMode];
     }
 
-    /// <summary> The function range decimal places. </summary>
-    private int _functionRangeDecimalPlaces;
-
     /// <summary> Gets or sets the function range decimal places. </summary>
     /// <value> The function range decimal places. </value>
     public int FunctionRangeDecimalPlaces
     {
-        get => this._functionRangeDecimalPlaces;
+        get;
         set
         {
             if ( this.FunctionRangeDecimalPlaces != value )
             {
-                this._functionRangeDecimalPlaces = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -224,9 +218,6 @@ public abstract partial class HarmonicsMeasureSubsystemBase
     /// <value> A Dictionary of Harmonics Measure Mode parses. </value>
     public Pith.EnumReadWriteCollection MeasureModeReadWrites { get; private set; }
 
-    /// <summary> The supported Measure Modes. </summary>
-    private HarmonicsMeasureMode _supportedMeasureModes;
-
     /// <summary>
     /// Gets or sets the supported Measure Modes. This is a subset of the functions supported by the
     /// instrument.
@@ -234,19 +225,16 @@ public abstract partial class HarmonicsMeasureSubsystemBase
     /// <value> The supported Harmonics Measure Mode. </value>
     public HarmonicsMeasureMode SupportedMeasureModes
     {
-        get => this._supportedMeasureModes;
+        get;
         set
         {
             if ( !this.SupportedMeasureModes.Equals( value ) )
             {
-                this._supportedMeasureModes = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
     }
-
-    /// <summary> The Measure Mode. </summary>
-    private HarmonicsMeasureMode? _measureMode;
 
     /// <summary> Gets or sets the cached Harmonics Measure Mode. </summary>
     /// <value>
@@ -254,12 +242,12 @@ public abstract partial class HarmonicsMeasureSubsystemBase
     /// </value>
     public HarmonicsMeasureMode? MeasureMode
     {
-        get => this._measureMode;
+        get;
         set
         {
             if ( !this.MeasureMode.Equals( value ) )
             {
-                this._measureMode = value;
+                field = value;
                 if ( value.HasValue )
                 {
                     this.FunctionRange = this.ToRange( ( int ) value.Value );

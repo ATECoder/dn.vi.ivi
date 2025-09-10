@@ -1,3 +1,4 @@
+using CommunityToolkit.Mvvm.ComponentModel;
 using DescriptionAttribute = System.ComponentModel.DescriptionAttribute;
 
 namespace cc.isr.VI.Pith.Settings;
@@ -8,11 +9,9 @@ namespace cc.isr.VI.Pith.Settings;
 /// David, 2018-02-12 </para>
 /// </remarks>
 [CLSCompliant( false )]
-public class ResourceSettings() : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
+public partial class ResourceSettings() : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
 {
     #region " exists "
-
-    private bool _exists;
 
     /// <summary>
     /// Gets or sets a value indicating whether this settings section exists and the values were thus
@@ -22,31 +21,30 @@ public class ResourceSettings() : CommunityToolkit.Mvvm.ComponentModel.Observabl
     [Description( "True if this settings section exists and was read from the JSon settings file." )]
     public bool Exists
     {
-        get => this._exists;
-        set => _ = this.SetProperty( ref this._exists, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
 
     #endregion
 
     #region " resource name and title "
 
-    private string _resourceName = "TCPIP0::192.168.0.50::INST0::INSTR";
 
     /// <summary>   Gets or sets the name of the resource. </summary>
     /// <value> The name of the resource. </value>
     [Description( "The instrument VISA resource name" )]
     public string ResourceName
     {
-        get => this._resourceName;
+        get;
         set
         {
-            if ( this.SetProperty( ref this._resourceName, value ) )
+            if ( this.SetProperty( ref field, value ) )
             {
                 this._isTcpIpResource = null;
                 this._resourcePinged = null;
             }
         }
-    }
+    } = "TCPIP0::192.168.0.50::INST0::INSTR";
 
     private string _resourceModel = "2601A";
 
@@ -59,16 +57,11 @@ public class ResourceSettings() : CommunityToolkit.Mvvm.ComponentModel.Observabl
         set => _ = this.SetProperty( ref this._resourceModel, value );
     }
 
-    private string _closedCaption = "closed";
-
     /// <summary>   Gets or sets the closed caption. </summary>
     /// <value> The closed caption. </value>
+    [ObservableProperty]
     [Description( "The caption to display when the resource is closed" )]
-    public string ClosedCaption
-    {
-        get => this._closedCaption;
-        set => this.SetProperty( ref this._closedCaption, value );
-    }
+    public partial string ClosedCaption { get; set; } = "closed";
 
     private TimeSpan _resourceNameSelectionTimeout = TimeSpan.FromSeconds( 10 );
 
@@ -122,16 +115,11 @@ public class ResourceSettings() : CommunityToolkit.Mvvm.ComponentModel.Observabl
         set => this.SetProperty( ref this._pingTimeout, value );
     }
 
-    private int _pingHops = 1;
-
     /// <summary>   Gets or sets the PingHops. </summary>
     /// <value> The PingHops. </value>
+    [ObservableProperty]
     [Description( "The number of hops to set when pinging an instrument [1]" )]
-    public int PingHops
-    {
-        get => this._pingHops;
-        set => this.SetProperty( ref this._pingHops, value );
-    }
+    public partial int PingHops { get; set; } = 1;
 
     private bool? _isTcpIpResource;
 

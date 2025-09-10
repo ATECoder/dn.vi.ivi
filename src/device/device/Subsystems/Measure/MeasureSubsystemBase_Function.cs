@@ -72,19 +72,16 @@ public abstract partial class MeasureSubsystemBase
         return this.FunctionModeDecimalPlaces[functionMode];
     }
 
-    /// <summary> The function range decimal places. </summary>
-    private int _functionRangeDecimalPlaces;
-
     /// <summary> Gets or sets the function range decimal places. </summary>
     /// <value> The function range decimal places. </value>
     public int FunctionRangeDecimalPlaces
     {
-        get => this._functionRangeDecimalPlaces;
+        get;
         set
         {
             if ( this.FunctionRangeDecimalPlaces != value )
             {
-                this._functionRangeDecimalPlaces = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -176,9 +173,6 @@ public abstract partial class MeasureSubsystemBase
     /// <value> A Dictionary of Sense function mode parses. </value>
     public Pith.EnumReadWriteCollection FunctionModeReadWrites { get; private set; }
 
-    /// <summary> The supported function modes. </summary>
-    private SenseFunctionModes _supportedFunctionModes;
-
     /// <summary>
     /// Gets or sets the supported Function Modes. This is a subset of the functions supported by the
     /// instrument.
@@ -186,19 +180,16 @@ public abstract partial class MeasureSubsystemBase
     /// <value> The supported Sense function modes. </value>
     public SenseFunctionModes SupportedFunctionModes
     {
-        get => this._supportedFunctionModes;
+        get;
         set
         {
             if ( !this.SupportedFunctionModes.Equals( value ) )
             {
-                this._supportedFunctionModes = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
     }
-
-    /// <summary> The function mode. </summary>
-    private SenseFunctionModes? _functionMode;
 
     /// <summary> Gets or sets the cached Sense function mode. </summary>
     /// <value>
@@ -206,12 +197,12 @@ public abstract partial class MeasureSubsystemBase
     /// </value>
     public SenseFunctionModes? FunctionMode
     {
-        get => this._functionMode;
+        get;
         set
         {
             if ( !this.FunctionMode.Equals( value ) )
             {
-                this._functionMode = value;
+                field = value;
                 if ( value.HasValue )
                 {
                     this.FunctionRange = this.ToRange( ( int ) value.Value );

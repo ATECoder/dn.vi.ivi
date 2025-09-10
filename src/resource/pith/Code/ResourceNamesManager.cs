@@ -23,11 +23,11 @@ public sealed class ResourceNamesManager
 
     #region " search patterns "
 
-    /// <summary> Name of the gpib resource base. </summary>
+    /// <summary> Name of the GPIB resource base. </summary>
     public const string GpibResourceBaseName = "GPIB";
 
-    /// <summary> Name of the gpib vxi resource base. </summary>
-    public const string GpibVxiResourceBaseName = "GPIBVxi";
+    /// <summary> Name of the GPIB vxi resource base. </summary>
+    public const string GpibVxiResourceBaseName = "GpibVxi";
 
     /// <summary> Name of the serial resource base. </summary>
     public const string SerialResourceBaseName = "ASRL";
@@ -99,7 +99,7 @@ public sealed class ResourceNamesManager
         return address;
     }
 
-    /// <summary> Parse gpib address. </summary>
+    /// <summary> Parse GPIB address. </summary>
     /// <param name="resourceName"> The name of the resource. </param>
     /// <returns> An Integer. </returns>
     public static int ParseGpibAddress( string resourceName )
@@ -390,10 +390,10 @@ public sealed class ResourceNamesManager
 
     #region " resource names "
 
-    /// <summary> The Gpib instrument resource format. </summary>
+    /// <summary> The GPIB instrument resource format. </summary>
     private const string Gpib_Instrument_Resource_Format = "GPIB{0}::{1}::INSTR";
 
-    /// <summary> Builds Gpib instrument resource. </summary>
+    /// <summary> Builds GPIB instrument resource. </summary>
     /// <param name="boardNumber"> The board number. </param>
     /// <param name="address">     The address. </param>
     /// <returns> The resource name. </returns>
@@ -402,7 +402,7 @@ public sealed class ResourceNamesManager
         return string.Format( System.Globalization.CultureInfo.CurrentCulture, Gpib_Instrument_Resource_Format, boardNumber, address );
     }
 
-    /// <summary> Builds Gpib instrument resource. </summary>
+    /// <summary> Builds GPIB instrument resource. </summary>
     /// <param name="boardNumber"> The board number. </param>
     /// <param name="address">     The address. </param>
     /// <returns> The resource name. </returns>
@@ -414,7 +414,7 @@ public sealed class ResourceNamesManager
     /// <summary> The USB instrument resource format. </summary>
     private const string Usb_Instrument_Resource_Format = "USB{0}::0x{1:X}::0x{2:X}::{3}::INSTR";
 
-    /// <summary> Builds Gpib instrument resource. </summary>
+    /// <summary> Builds GPIB instrument resource. </summary>
     /// <param name="boardNumber">    The board number. </param>
     /// <param name="manufacturerId"> Identifier for the manufacturer. </param>
     /// <param name="modelNumber">    The model number. </param>
@@ -559,7 +559,7 @@ public enum HardwareInterfaceType
     [Description( "Custom" )]
     Custom = 0,
 
-    /// <summary> An enum constant representing the gpib interface. </summary>
+    /// <summary> An enum constant representing the GPIB interface. </summary>
     [Description( "GPIB" )]
     Gpib = 1,
 
@@ -567,7 +567,7 @@ public enum HardwareInterfaceType
     [Description( "VXI" )]
     Vxi = 2,
 
-    /// <summary> An enum constant representing the gpib vxi option. </summary>
+    /// <summary> An enum constant representing the GPIB vxi option. </summary>
     [Description( "GPIB VXI" )]
     GpibVxi = 3,
 

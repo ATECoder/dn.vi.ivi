@@ -561,11 +561,7 @@ public abstract partial class VisaSessionBase : IDisposable
     /// <value> <c>true</c> if hardware device is enabled; <c>false</c> otherwise. </value>
     public virtual bool Enabled
     {
-        get => this.Session?.Enabled ?? false;
-        set
-        {
-            if ( this.Session is not null ) this.Session.Enabled = value;
-        }
+        get => this.Session?.Enabled ?? false; set => this.Session?.Enabled = value;
     }
 
     #endregion
@@ -582,17 +578,14 @@ public abstract partial class VisaSessionBase : IDisposable
     /// <value> <c>true</c> if session service request event is enabled. </value>
     public bool ServiceRequestEventEnabled => this.IsSessionOpen && this.Session!.ServiceRequestEventEnabled;
 
-    /// <summary> True if service request handler assigned. </summary>
-    private bool _serviceRequestHandlerAssigned;
-
     /// <summary>
     /// Gets or sets an indication if an handler was assigned to the service request event.
     /// </summary>
     /// <value> <c>true</c> if a handler was assigned to the service request event. </value>
     public bool ServiceRequestHandlerAssigned
     {
-        get => this._serviceRequestHandlerAssigned;
-        protected set => _ = this.SetProperty( ref this._serviceRequestHandlerAssigned, value );
+        get;
+        protected set => _ = this.SetProperty( ref field, value );
     }
 
     /// <summary> Registers the device service request handler. </summary>

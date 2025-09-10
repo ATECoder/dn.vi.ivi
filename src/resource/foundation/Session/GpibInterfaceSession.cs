@@ -2,7 +2,7 @@ using System.Diagnostics;
 
 namespace cc.isr.VI.Foundation;
 
-/// <summary> A gpib interface session. </summary>
+/// <summary> A GPIB interface session. </summary>
 /// <remarks>
 /// (c) 2015 Integrated Scientific Resources, Inc. All rights reserved.<para>
 /// Licensed under The MIT License.</para><para>
@@ -59,8 +59,8 @@ public class GpibInterfaceSession : Pith.InterfaceSessionBase
     /// <value> The dummy sentinel. </value>
     public override bool IsDummy { get; } = false;
 
-    /// <summary> Gets the gpib interface. </summary>
-    /// <value> The gpib interface. </value>
+    /// <summary> Gets the GPIB interface. </summary>
+    /// <value> The GPIB interface. </value>
     private Ivi.Visa.IGpibInterfaceSession? GpibInterface { get; set; }
 
     /// <summary> Opens a session. </summary>
@@ -112,7 +112,7 @@ public class GpibInterfaceSession : Pith.InterfaceSessionBase
 
     #endregion
 
-    #region " gpib interface "
+    #region " GPIB interface "
 
     /// <summary> Sends the interface clear. </summary>
     public override void SendInterfaceClear()

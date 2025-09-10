@@ -6,7 +6,7 @@ namespace cc.isr.VI.Foundation;
 /// David, 2005-01-21, 1.0.1847.x. </para></remarks>
 internal static class GpibInterfaceExtensions
 {
-    #region " gpib interface "
+    #region " GPIB interface "
 
     /// <summary> Returns all instruments to some default state. </summary>
     /// <exception cref="ArgumentNullException"> Thrown when one or more required arguments are null. </exception>
@@ -18,7 +18,7 @@ internal static class GpibInterfaceExtensions
             throw new ArgumentNullException( nameof( value ) );
         }
         // Transmit the DCL command to the interface.
-        _ = value.SendCommand( Syntax.Ieee488Syntax.BuildDeviceClear().ToArray() );
+        _ = value.SendCommand( [.. Syntax.Ieee488Syntax.BuildDeviceClear()] );
     }
 
     /// <summary> Clears the specified device. </summary>
@@ -28,7 +28,7 @@ internal static class GpibInterfaceExtensions
     public static void SelectiveDeviceClear( this Ivi.Visa.IGpibInterfaceSession value, int gpibAddress )
     {
         if ( value is null ) throw new ArgumentNullException( nameof( value ) );
-        _ = value.SendCommand( Syntax.Ieee488Syntax.BuildSelectiveDeviceClear( ( byte ) gpibAddress ).ToArray() );
+        _ = value.SendCommand( [.. Syntax.Ieee488Syntax.BuildSelectiveDeviceClear( ( byte ) gpibAddress )] );
     }
 
     /// <summary> Clears the specified device. </summary>
