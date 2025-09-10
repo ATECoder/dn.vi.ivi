@@ -1,4 +1,4 @@
-<Project Sdk="MSTest.Sdk">
+﻿<Project Sdk="MSTest.Sdk">
   
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
@@ -32,7 +32,7 @@
   <!-- Assembly attributes -->
   <ItemGroup>
     <AssemblyAttribute Include="System.CLSCompliantAttribute">
-      <_Parameter1>true</_Parameter1>
+      <_Parameter1>false</_Parameter1>
     </AssemblyAttribute>
     <AssemblyAttribute Include="System.Runtime.InteropServices.ComVisibleAttribute">
       <_Parameter1>false</_Parameter1>
@@ -71,6 +71,7 @@
 
   <ItemGroup>
     <Compile Include="..\..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
+    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting"/>
   </ItemGroup>
 
   <ItemGroup>
@@ -91,8 +92,6 @@
     </Content>
   </ItemGroup>
 
-  <Import Project="..\legacy\version.build.props" />
-  
   <ItemGroup>
     <!-- Suppress warning about newton soft 9.0.1 which is part of the .net fx testing extensions code coverage.
       <NuGetAuditSuppress Include="https://github.com/advisories/GHSA-5crp-9r3c-p9vr" />
@@ -102,7 +101,7 @@
       <PackageReference Update="Microsoft.Testing.Extensions.CodeCoverage" />
     -->
   </ItemGroup>
-  
 
+  <Import Project="..\legacy\version.build.props" />
 
 </Project>

@@ -13,6 +13,7 @@ public class ColdResistanceConfig : IColdResistanceConfig
     /// <remarks>   2024-11-07. </remarks>
     /// <param name="initialResistance">    The initial resistance. </param>
     /// <param name="finalResistance">      The final resistance. </param>
+    [CLSCompliant( false )]
     public ColdResistanceConfig( cc.isr.VI.Tsp.K2600.Ttm.ColdResistance initialResistance, cc.isr.VI.Tsp.K2600.Ttm.ColdResistance finalResistance )
     {
         this._initialResistance = initialResistance;

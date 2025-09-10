@@ -77,6 +77,7 @@ public partial class ShuntView : cc.isr.WinControls.ModelViewBase
     /// <value> The device. </value>
     [DesignerSerializationVisibility( DesignerSerializationVisibility.Hidden )]
     [Browsable( false )]
+    [CLSCompliant( false )]
     public K2600Device? Device { get; private set; }
 
     /// <summary> Assigns the device and binds the relevant subsystem values. </summary>

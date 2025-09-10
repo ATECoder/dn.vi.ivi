@@ -17,6 +17,7 @@ public class ColdResistance( string entityName ) : object(), IColdResistance
 
     /// <summary> Clones an existing measurement. </summary>
     /// <param name="value"> The value. </param>
+    [CLSCompliant( false )]
     public ColdResistance( IColdResistance value ) : this( value.EntityName )
     {
         if ( value is not null )
@@ -103,6 +104,7 @@ public class ColdResistance( string entityName ) : object(), IColdResistance
     /// <remarks>   2024-11-07. </remarks>
     /// <param name="session">  The session. </param>
     /// <returns>   A Tuple. </returns>
+    [CLSCompliant( false )]
     public void Read( Pith.SessionBase session )
     {
         this.Reading = session.QueryPrintTrimEnd( $"{this.EntityName}.resistance" ) ?? string.Empty;
@@ -114,6 +116,7 @@ public class ColdResistance( string entityName ) : object(), IColdResistance
     /// <summary>   Reads the limits. </summary>
     /// <remarks>   2025-02-13. </remarks>
     /// <param name="session">  The session. </param>
+    [CLSCompliant( false )]
     public void ReadLimits( Pith.SessionBase session )
     {
         this.LowLimit = ( float ) session.QueryNullableDoubleThrowIfError( $"print({this.EntityName}.lowLimit) ",

@@ -175,6 +175,7 @@ public partial class LegacyDevice : CommunityToolkit.Mvvm.ComponentModel.Observa
 
     /// <summary>   (Immutable) the meter. </summary>
     /// <value> The meter. </value>
+    [CLSCompliant( false )]
     public Meter Meter { get; }
 
     /// <summary>   Gets or sets source channel. </summary>

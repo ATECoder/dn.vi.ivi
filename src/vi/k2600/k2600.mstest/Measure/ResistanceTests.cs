@@ -1,5 +1,6 @@
 using System;
 
+
 namespace cc.isr.VI.Tsp.K2600.MSTest.Measure;
 
 /// <summary> K2600 Resistance Measurement unit tests. </summary>

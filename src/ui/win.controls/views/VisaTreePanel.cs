@@ -631,12 +631,10 @@ public partial class VisaTreePanel : cc.isr.WinControls.ModelViewBase
 
     /// <summary>   Gets or sets the trace alert container. </summary>
     /// <value> The trace alert container. </value>
-    [CLSCompliant( false )]
     protected cc.isr.Tracing.WinForms.TraceAlertContainer? TraceAlertContainer { get; set; }
 
     /// <summary>   Gets or sets the text box text writer. </summary>
     /// <value> The text box text writer. </value>
-    [CLSCompliant( false )]
     protected cc.isr.Tracing.WinForms.TextBoxTraceEventWriter TextBoxTextWriter { get; set; }
 
     /// <summary> Gets the trace messages box. </summary>

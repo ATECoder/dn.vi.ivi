@@ -98,6 +98,7 @@ public class AllSettings
     /// <summary>   Gets or sets the <see cref="AppSettingsScribe">settings reader and writer</see>. </summary>
     /// <value> The scribe. </value>
     [JsonIgnore]
+    [CLSCompliant( false )]
     public AppSettingsScribe? Scribe { get; private set; }
 
     /// <summary>   Gets the full path name of the settings file. </summary>

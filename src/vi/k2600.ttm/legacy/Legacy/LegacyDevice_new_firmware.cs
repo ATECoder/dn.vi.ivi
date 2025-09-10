@@ -15,6 +15,7 @@ public partial class LegacyDevice : CommunityToolkit.Mvvm.ComponentModel.Observa
 
     /// <summary>   Gets or sets source output. </summary>
     /// <value> The source output. </value>
+    [CLSCompliant( false )]
     public SourceOutputOption? SourceOutput { get; private set; }
 
     /// <summary>   Cold resistance source output setter. </summary>

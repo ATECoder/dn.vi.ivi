@@ -24,6 +24,7 @@ public class ThermalTransient : IThermalTransient
 
     /// <summary> Clones an existing measurement. </summary>
     /// <param name="value"> The value. </param>
+    [CLSCompliant( false )]
     public ThermalTransient( IThermalTransient value ) : this()
     {
         if ( value is not null )
@@ -113,6 +114,7 @@ public class ThermalTransient : IThermalTransient
     /// <remarks>   2024-11-07. </remarks>
     /// <param name="session">  The session. </param>
     /// <returns>   A Tuple. </returns>
+    [CLSCompliant( false )]
     public void Read( Pith.SessionBase session )
     {
         this.Reading = session.QueryPrintTrimEnd( $"{this.EntityName}.voltageChange" ) ?? string.Empty;
@@ -124,6 +126,7 @@ public class ThermalTransient : IThermalTransient
     /// <summary>   Reads the limits. </summary>
     /// <remarks>   2025-02-13. </remarks>
     /// <param name="session">  The session. </param>
+    [CLSCompliant( false )]
     public void ReadLimits( Pith.SessionBase session )
     {
         this.LowLimit = ( float ) session.QueryNullableDoubleThrowIfError( $"print({this.EntityName}.lowLimit) ",

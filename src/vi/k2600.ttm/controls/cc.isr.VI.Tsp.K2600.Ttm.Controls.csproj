@@ -63,7 +63,7 @@
   <!-- Assembly attributes -->
   <ItemGroup>
     <AssemblyAttribute Include="System.CLSCompliantAttribute">
-      <_Parameter1>true</_Parameter1>
+      <_Parameter1>false</_Parameter1>
     </AssemblyAttribute>
     <AssemblyAttribute Include="System.Runtime.InteropServices.ComVisibleAttribute">
       <_Parameter1>false</_Parameter1>
@@ -82,9 +82,7 @@
     <When Condition="$(DefineConstants.Contains(';PROJREF;')) OR $(DefineConstants.Contains(';MYPROJREF;'))">
       <ItemGroup>
         <ProjectReference Include="..\..\..\..\..\..\core\logging\src\tracelog\tracelog.win.forms\cc.isr.Logging.TraceLog.WinForms.csproj" />
-        <ProjectReference Include="..\..\..\..\..\..\core\tracing\src\win.forms\tracing.win.forms\cc.isr.tracing.WinForms.csproj" />
         <ProjectReference Include="..\..\..\..\..\..\core\win.controls\src\model.view\model.view\cc.isr.WinControls.ModelView.csproj" />
-        <ProjectReference Include="..\..\..\..\..\..\core\win.controls\src\selectors\selectors\cc.isr.WinControls.Selectors.csproj" />
       </ItemGroup>
     </When>
     <Otherwise>
@@ -106,6 +104,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\..\core\tracing\src\win.forms\tracing.win.forms\cc.isr.Tracing.WinForms.csproj" />
+    <ProjectReference Include="..\..\..\..\..\..\core\win.controls\src\selectors\selectors\cc.isr.WinControls.Selectors.csproj" />
     <ProjectReference Include="..\..\..\..\..\..\visual\charting\src\mixed\win.controls\ChartWin.csproj" />
     <ProjectReference Include="..\ttm\cc.isr.VI.Tsp.K2600.Ttm.csproj" />
   </ItemGroup>

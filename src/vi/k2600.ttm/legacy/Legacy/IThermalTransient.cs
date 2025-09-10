@@ -7,6 +7,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Legacy;
 /// David, 2013-12-12, 3.0.3053.x. </para>
 /// </remarks>
 
+[CLSCompliant( false )]
 public interface IThermalTransient : ICloneable
 {
     /// <summary> Initializes known state. </summary>

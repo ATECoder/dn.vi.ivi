@@ -13,6 +13,7 @@ public class ThermalTransientConfig : IThermalTransientConfig
     /// <summary>   Default constructor. </summary>
     /// <remarks>   2024-11-07. </remarks>
     /// <param name="thermalTransient"> The thermal transient. </param>
+    [CLSCompliant( false )]
     public ThermalTransientConfig( cc.isr.VI.Tsp.K2600.Ttm.ThermalTransient thermalTransient )
     {
         this._thermalTransient = thermalTransient;

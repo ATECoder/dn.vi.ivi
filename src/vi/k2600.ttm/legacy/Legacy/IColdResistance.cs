@@ -6,6 +6,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Legacy;
 /// Licensed under The MIT License. </para><para>
 /// David, 2009-02-02, 2.1.3320.x. </para>
 /// </remarks>
+[CLSCompliant( false )]
 public interface IColdResistance : ICloneable
 {
     /// <summary> Initializes known state. </summary>
