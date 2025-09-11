@@ -541,8 +541,8 @@ internal static partial class Asserts
             {
                 // if leads are not open okay should be true and low and high should be zero
                 Assert.AreEqual( ( int ) LeadsStatusBits.Okay, leadsStatus, $"{nameof( leadsStatus )} value should not be {leadsStatus} if contact check did not fail if outcome has no value." );
-                Assert.IsTrue( lowR.Value < limit.Value, $"{nameof( lowR )} ({lowR}) contact value should be lower than the contact check threshold {limit}." );
-                Assert.IsTrue( highR.Value < limit.Value, $"{nameof( highR )} ({highR}) contact value should be lower than the contact check threshold {limit}." );
+                Assert.IsLessThan( limit.Value, lowR.Value, $"{nameof( lowR )} ({lowR}) contact value should be lower than the contact check threshold {limit}." );
+                Assert.IsLessThan( limit.Value, highR.Value, $"{nameof( highR )} ({highR}) contact value should be lower than the contact check threshold {limit}." );
             }
         }
     }

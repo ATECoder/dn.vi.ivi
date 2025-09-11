@@ -124,6 +124,36 @@ public class ScriptInfo
         return $"{title}{ext}";
     }
 
+    /// <summary>   Query if 'value' includes any of the characters. </summary>
+    /// <remarks>   2024-09-05. </remarks>
+    /// <param name="value">        The value. </param>
+    /// <param name="characters">   The characters. </param>
+    /// <returns>   <c>true</c> if it succeeds; otherwise <c>false</c> </returns>
+    private static bool IncludesAny( string value, string characters )
+    {
+        // 2954: changed to [characters] from ^[characters]+$
+        System.Text.RegularExpressions.Regex r = new( $"[{characters}]", System.Text.RegularExpressions.RegexOptions.IgnoreCase );
+        return r.IsMatch( value );
+    }
+
+    /// <summary>   Query if 'value' is valid script name. </summary>
+    /// <remarks>   2024-09-05. </remarks>
+    /// <param name="value">    The value. </param>
+    /// <returns>   <c>true</c> if valid script name; otherwise <c>false</c> </returns>
+    public static bool IsValidScriptName( string value )
+    {
+        return !string.IsNullOrWhiteSpace( value ) && !IncludesAny( value, Syntax.Tsp.Constants.IllegalScriptNameCharacters );
+    }
+
+    /// <summary>   Query if 'value' is valid script file name. </summary>
+    /// <remarks>   2024-09-05. </remarks>
+    /// <param name="value">    The value. </param>
+    /// <returns>   <c>true</c> if valid script name; otherwise <c>false</c> </returns>
+    public static bool IsValidScriptFileName( string value )
+    {
+        return !string.IsNullOrWhiteSpace( value ) && !IncludesAny( value, Syntax.Tsp.Constants.IllegalFileCharacters );
+    }
+
     #endregion
 
     #region " Implementation "

@@ -105,7 +105,7 @@ internal static partial class Asserts
             Assert.IsTrue( success, $"The {modality} getter should succeed." );
             current = legacyDevice.ColdResistanceVoltageLimit;
         }
-        Assert.IsTrue( current > 0, $"The {modality} must be positive." );
+        Assert.IsGreaterThan( 0, current, $"The {modality} must be positive." );
         return current;
     }
 
@@ -142,7 +142,7 @@ internal static partial class Asserts
             Assert.IsTrue( success, $"The {modality} getter should succeed." );
             voltage = legacyDevice.ColdResistanceCurrentLevel;
         }
-        Assert.IsTrue( voltage > 0, $"The {modality} must be positive." );
+        Assert.IsGreaterThan( 0, voltage, $"The {modality} must be positive." );
         return voltage;
     }
 
@@ -280,7 +280,7 @@ internal static partial class Asserts
         bool success = legacyDevice.ColdResistanceHighLimitGetter();
         Assert.IsTrue( success, "The cold resistance high limit getter should succeed." );
         double actualHighLimit = legacyDevice.ColdResistanceHighLimit;
-        Assert.IsTrue( actualHighLimit > 0, $"{nameof( actualHighLimit )} must be positive." );
+        Assert.IsGreaterThan( 0, actualHighLimit, $"{nameof( actualHighLimit )} must be positive." );
 
         // alter the actual value
         expectedValue = 0.9 * actualHighLimit;
@@ -314,7 +314,7 @@ internal static partial class Asserts
         success = legacyDevice.ColdResistanceLowLimitGetter();
         Assert.IsTrue( success, "The cold resistance low limit getter should succeed." );
         double actualLowLimit = legacyDevice.ColdResistanceLowLimit;
-        Assert.IsTrue( actualLowLimit > 0, $"{nameof( actualLowLimit )} must be positive." );
+        Assert.IsGreaterThan( 0, actualLowLimit, $"{nameof( actualLowLimit )} must be positive." );
 
         // alter the actual value
         expectedValue = 0.9 * actualLowLimit;
@@ -348,7 +348,7 @@ internal static partial class Asserts
         success = legacyDevice.PostTransientDelayGetter();
         Assert.IsTrue( success, "The Post Transient Delay getter should succeed." );
         double actualPostTransientDelay = legacyDevice.PostTransientDelay;
-        Assert.IsTrue( actualPostTransientDelay > 0, $"{nameof( actualPostTransientDelay )} must be positive." );
+        Assert.IsGreaterThan( 0, actualPostTransientDelay, $"{nameof( actualPostTransientDelay )} must be positive." );
 
         // alter the actual value
         expectedValue = 0.9 * actualPostTransientDelay;
@@ -382,7 +382,7 @@ internal static partial class Asserts
         success = legacyDevice.ThermalTransientCurrentLevelGetter();
         Assert.IsTrue( success, "The thermal transient current level getter should succeed." );
         double actualCurrentLevel = legacyDevice.ThermalTransientCurrentLevel;
-        Assert.IsTrue( actualCurrentLevel > 0, $"{nameof( actualCurrentLevel )} must be positive." );
+        Assert.IsGreaterThan( 0, actualCurrentLevel, $"{nameof( actualCurrentLevel )} must be positive." );
 
         // alter the actual value
         expectedValue = 0.9 * actualCurrentLevel;
@@ -416,7 +416,7 @@ internal static partial class Asserts
         success = legacyDevice.ThermalTransientVoltageChangeGetter();
         Assert.IsTrue( success, "The thermal transient voltage change getter should succeed." );
         double actualAllowedVoltageChange = legacyDevice.ThermalTransientVoltageChange;
-        Assert.IsTrue( actualAllowedVoltageChange > 0, $"{nameof( actualAllowedVoltageChange )} must be positive." );
+        Assert.IsGreaterThan( 0, actualAllowedVoltageChange, $"{nameof( actualAllowedVoltageChange )} must be positive." );
 
         // alter the actual value
         expectedValue = 0.9 * actualAllowedVoltageChange;
@@ -450,7 +450,7 @@ internal static partial class Asserts
         success = legacyDevice.ThermalTransientHighLimitGetter();
         Assert.IsTrue( success, "The cold resistance High limit getter should succeed." );
         actualHighLimit = legacyDevice.ThermalTransientHighLimit;
-        Assert.IsTrue( actualHighLimit > 0, $"{nameof( actualHighLimit )} must be positive." );
+        Assert.IsGreaterThan( 0, actualHighLimit, $"{nameof( actualHighLimit )} must be positive." );
 
         // alter the actual value
         expectedValue = 0.9 * actualHighLimit;
@@ -484,7 +484,7 @@ internal static partial class Asserts
         success = legacyDevice.ThermalTransientLowLimitGetter();
         Assert.IsTrue( success, "The cold resistance low limit getter should succeed." );
         actualLowLimit = legacyDevice.ThermalTransientLowLimit;
-        Assert.IsTrue( actualLowLimit > 0, $"{nameof( actualLowLimit )} must be positive." );
+        Assert.IsGreaterThan( 0, actualLowLimit, $"{nameof( actualLowLimit )} must be positive." );
 
         // alter the actual value
         expectedValue = 0.9 * actualLowLimit;
@@ -621,8 +621,8 @@ internal static partial class Asserts
         else
         {
             resistance.ReadLimits( session );
-            Assert.IsTrue( resistance.LowLimit > 0, $"{nameof( ColdResistance.LowLimit )} should be positive." );
-            Assert.IsTrue( resistance.HighLimit > 0, $"{nameof( ColdResistance.HighLimit )} should be positive." );
+            Assert.IsGreaterThan( 0, resistance.LowLimit, $"{nameof( ColdResistance.LowLimit )} should be positive." );
+            Assert.IsGreaterThan( 0, resistance.HighLimit, $"{nameof( ColdResistance.HighLimit )} should be positive." );
 
             Assert.IsTrue( resistance.OutcomeReading.TryParseNullableInteger( out int? outcomeValue ) );
             Assert.IsNotNull( outcomeValue, $"{nameof( ColdResistance.OutcomeReading )} should be not not be null if measurement was made." );

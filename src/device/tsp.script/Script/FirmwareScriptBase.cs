@@ -44,121 +44,6 @@ public abstract class FirmwareScriptBase
 
     #region " script naming "
 
-    /// <summary>   (Immutable) the script file extension. </summary>
-    public const string ScriptFileExtension = ".tsp";
-
-    /// <summary>   (Immutable) the script binary compressed file extension. </summary>
-    public const string ScriptCompressedFileExtension = ".tspc";
-
-    /// <summary>   (Immutable) the script binary file extension. </summary>
-    public const string ScriptBinaryFileExtension = ".tspb";
-
-    /// <summary>   (Immutable) the script binary compressed file extension. </summary>
-    public const string ScriptBinaryCompressedFileExtension = ".tspbc";
-
-    /// <summary>   Select script file extension. </summary>
-    /// <remarks>   2025-04-05. </remarks>
-    /// <param name="fileFormat">           The file format. </param>
-    /// <returns>   A string. </returns>
-    public static string SelectScriptFileExtension( ScriptFileFormats fileFormat )
-    {
-        return (ScriptFileFormats.ByteCode == (fileFormat & ScriptFileFormats.ByteCode))
-            ? (ScriptFileFormats.Compressed == (fileFormat & ScriptFileFormats.Compressed))
-              ? FirmwareScriptBase.ScriptBinaryCompressedFileExtension
-              : FirmwareScriptBase.ScriptBinaryFileExtension
-            : (ScriptFileFormats.Compressed == (fileFormat & ScriptFileFormats.Compressed))
-              ? FirmwareScriptBase.ScriptCompressedFileExtension
-              : FirmwareScriptBase.ScriptFileExtension;
-
-    }
-
-    /// <summary>   Builds script file title. </summary>
-    /// <remarks>   2025-04-05. </remarks>
-    /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
-    ///                                                 are null. </exception>
-    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
-    ///                                                 invalid. </exception>
-    /// <exception cref="FileNotFoundException">        Thrown when the requested file is not
-    ///                                                 present. </exception>
-    /// <param name="baseTitle">            The base title. </param>
-    /// <param name="fileFormat">           (Optional) [<see cref="ScriptFileFormats.None"/>] The
-    ///                                     file format. </param>
-    /// <param name="scriptVersion">        (Optional) [empty] The release version. Specify the
-    ///                                     version only with build files. </param>
-    /// <param name="baseModel">            (Optional) [empty] The base model. </param>
-    /// <param name="modelMajorVersion">    (Optional) [empty] The model major version. </param>
-    /// <returns>   A string. </returns>
-    public static string BuildScriptFileTitle( string baseTitle, ScriptFileFormats fileFormat = ScriptFileFormats.None,
-        string scriptVersion = "", string baseModel = "", string modelMajorVersion = "" )
-    {
-        if ( string.IsNullOrWhiteSpace( baseTitle ) )
-            throw new ArgumentNullException( nameof( baseTitle ) );
-
-        string title = baseTitle;
-
-        if ( string.IsNullOrWhiteSpace( scriptVersion ) )
-            title = $"{title}.{scriptVersion}";
-
-
-        if ( ScriptFileFormats.ByteCode == (fileFormat & ScriptFileFormats.ByteCode) )
-        {
-            // binary files are always deployed or loaded from a deployed file.
-            if ( string.IsNullOrWhiteSpace( baseModel ) )
-                throw new ArgumentNullException( nameof( baseModel ) );
-            if ( string.IsNullOrWhiteSpace( modelMajorVersion ) )
-                throw new ArgumentNullException( nameof( modelMajorVersion ) );
-            title = $"{title}.{baseModel}.{modelMajorVersion}";
-        }
-        return title;
-    }
-
-    /// <summary>   Builds script file name. </summary>
-    /// <remarks>   2025-04-05. </remarks>
-    /// <param name="baseTitle">            The base title. </param>
-    /// <param name="fileFormat">           (Optional) [<see cref="ScriptFileFormats.None"/>] The file format. </param>
-    /// <param name="scriptVersion">        (Optional) [empty] The release version. Specify the
-    ///                                     version only with build files. </param>
-    /// <param name="baseModel">            (Optional) [empty] The base model. </param>
-    /// <param name="modelMajorVersion">    (Optional) [empty] The model major version. </param>
-    /// <returns>   A string. </returns>
-    public static string BuildScriptFileName( string baseTitle, ScriptFileFormats fileFormat = ScriptFileFormats.None,
-        string scriptVersion = "", string baseModel = "", string modelMajorVersion = "" )
-    {
-        string title = FirmwareScriptBase.BuildScriptFileTitle( baseTitle, fileFormat, scriptVersion, baseModel, modelMajorVersion );
-        string ext = FirmwareScriptBase.SelectScriptFileExtension( fileFormat );
-        return $"{title}{ext}";
-    }
-
-    /// <summary>   Query if 'value' includes any of the characters. </summary>
-    /// <remarks>   2024-09-05. </remarks>
-    /// <param name="value">        The value. </param>
-    /// <param name="characters">   The characters. </param>
-    /// <returns>   <c>true</c> if it succeeds; otherwise <c>false</c> </returns>
-    public static bool IncludesAny( string value, string characters )
-    {
-        // 2954: changed to [characters] from ^[characters]+$
-        System.Text.RegularExpressions.Regex r = new( $"[{characters}]", System.Text.RegularExpressions.RegexOptions.IgnoreCase );
-        return r.IsMatch( value );
-    }
-
-    /// <summary>   Query if 'value' is valid script name. </summary>
-    /// <remarks>   2024-09-05. </remarks>
-    /// <param name="value">    The value. </param>
-    /// <returns>   <c>true</c> if valid script name; otherwise <c>false</c> </returns>
-    public static bool IsValidScriptName( string value )
-    {
-        return !string.IsNullOrWhiteSpace( value ) && !IncludesAny( value, Syntax.Tsp.Constants.IllegalScriptNameCharacters );
-    }
-
-    /// <summary>   Query if 'value' is valid script file name. </summary>
-    /// <remarks>   2024-09-05. </remarks>
-    /// <param name="value">    The value. </param>
-    /// <returns>   <c>true</c> if valid script name; otherwise <c>false</c> </returns>
-    public static bool IsValidScriptFileName( string value )
-    {
-        return !string.IsNullOrWhiteSpace( value ) && !IncludesAny( value, Syntax.Tsp.Constants.IllegalFileCharacters );
-    }
-
     /// <summary>   Returns the file size. </summary>
     /// <remarks>   2024-09-05. </remarks>
     /// <param name="path"> The path. </param>
@@ -324,11 +209,11 @@ public abstract class FirmwareScriptBase
     /// <summary>   Gets or sets the filename of the build file. </summary>
     /// <remarks> Currently the build file includes the file title and script version. </remarks>
     /// <value> The filename of the build file. </value>
-    public string BuildFileName => $"{this.FileTitle}.{this.FirmwareVersion}{FirmwareScriptBase.ScriptFileExtension}";
+    public string BuildFileName => $"{this.FileTitle}.{this.FirmwareVersion}{cc.isr.VI.Tsp.Script.ScriptInfo.ScriptFileExtension}";
 
     /// <summary>   Gets the filename of the trimmed file. </summary>
     /// <value> The filename of the trimmed file. </value>
-    public string TrimmedFileName => $"{this.FileTitle}.{this.FirmwareVersion}{FirmwareScriptBase.ScriptFileExtension}";
+    public string TrimmedFileName => $"{this.FileTitle}.{this.FirmwareVersion}{cc.isr.VI.Tsp.Script.ScriptInfo.ScriptFileExtension}";
 
     /// <summary>   Gets the filename of the deploy file. </summary>
     /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
@@ -348,7 +233,7 @@ public abstract class FirmwareScriptBase
                     throw new InvalidOperationException( $"The {nameof( this.ModelVersion )} is not specified." );
                 title = $"{title}.{this.ModelMask}.{new Version( this.ModelVersion ).Major}";
             }
-            string ext = FirmwareScriptBase.SelectScriptFileExtension( this.DeployFileFormat );
+            string ext = cc.isr.VI.Tsp.Script.ScriptInfo.SelectScriptFileExtension( this.DeployFileFormat );
             return $"{title}{ext}";
         }
     }

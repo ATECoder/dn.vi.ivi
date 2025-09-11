@@ -452,7 +452,7 @@ K2600 Tests:
 - Tsp.Script.ResourceManager
   - Tighten code reading a resource file and an embedded resource file.
   - Add methods to copy or create text file for testing the copy or creation of linked resources.
-  - Use FirmwareScriptBase.ScriptFileExtension and FirmwareScriptBase.ScriptBinaryFileExtension.
+  - Use cc.isr.VI.Tsp.Script.ScriptInfo.ScriptFileExtension and FirmwareScriptBase.ScriptBinaryFileExtension.
 - implement changes to work around the discontinues support for loading binary scripts.
 - obsolete converting scripts to binary.
 - compress scripts upon saving to file.

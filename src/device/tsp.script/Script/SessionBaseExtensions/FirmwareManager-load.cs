@@ -218,8 +218,8 @@ public static partial class FirmwareManager
             if ( tspFile is null )
                 throw new System.IO.FileNotFoundException( "Failed opening TSP Script file", resourceFilePath );
 
-            string trimmedFileSuffix = $".trimmed{FirmwareScriptBase.ScriptFileExtension}";
-            string trimmedFilePath = resourceFilePath.Replace( FirmwareScriptBase.ScriptFileExtension, trimmedFileSuffix );
+            string trimmedFileSuffix = $".trimmed{cc.isr.VI.Tsp.Script.ScriptInfo.ScriptFileExtension}";
+            string trimmedFilePath = resourceFilePath.Replace( cc.isr.VI.Tsp.Script.ScriptInfo.ScriptFileExtension, trimmedFileSuffix );
             if ( string.Equals( trimmedFilePath, resourceFilePath ) )
                 trimmedFilePath = resourceFilePath + trimmedFileSuffix;
 

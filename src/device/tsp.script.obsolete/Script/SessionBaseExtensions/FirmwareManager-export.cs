@@ -33,12 +33,12 @@ public static partial class FirmwareManager
 
             bool isBinary = session.IsBinaryScript( scriptSource );
             ScriptFileFormats fileFormat = FirmwareScriptBase.BuildScriptFileFormat( isBinary, compress );
-            string fileTitle = FirmwareScriptBase.BuildScriptFileTitle( script.FirmwareScript.Name, fileFormat,
+            string fileTitle = cc.isr.VI.Tsp.Script.ScriptInfo.BuildScriptFileTitle( script.FirmwareScript.Name, fileFormat,
                  script.FirmwareScript.FirmwareVersion, script.FirmwareScript.ModelMask, script.FirmwareScript.ModelMajorVersion );
             if ( !script.Node.IsController )
                 fileTitle = $"{fileTitle}.node{script.Node.Number}";
 
-            string fileExtension = FirmwareScriptBase.SelectScriptFileExtension( fileFormat );
+            string fileExtension = cc.isr.VI.Tsp.Script.ScriptInfo.SelectScriptFileExtension( fileFormat );
             string fileName = $"{fileTitle}{fileExtension}";
             string filePath = Path.Combine( folderPath, $"{fileName}{fileExtension}" );
 

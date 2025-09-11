@@ -110,14 +110,14 @@ public class TspSessionScriptTests : Device.Tests.Base.ScriptTests
 
             // write the source to file.
             string fileTitle = $"{scriptName}_code";
-            string filePath = Path.Combine( folderPath, $"{fileTitle}.tsp" );
+            string filePath = Path.Combine( folderPath, $"{fileTitle}{cc.isr.VI.Tsp.Script.ScriptInfo.ScriptFileExtension}" );
             scriptSource.ToString().ExportScript( filePath, overWrite: true );
 
             this.Device.Session.DeleteScript( scriptName );
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
 
-            string toFilePath = Path.Combine( folderPath, $"{fileTitle}_trimmed.tsp" );
+            string toFilePath = Path.Combine( folderPath, $"{fileTitle}_trimmed{cc.isr.VI.Tsp.Script.ScriptInfo.ScriptFileExtension}" );
             TestBase.ConsoleOutputMemberMessage( $"Trimming script file to '{toFilePath}'" );
             filePath.TrimScript( toFilePath, true );
 
@@ -180,7 +180,7 @@ public class TspSessionScriptTests : Device.Tests.Base.ScriptTests
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
 
-            filePath = Path.Combine( folderPath, $"{fileTitle}_exported.tspb" );
+            filePath = Path.Combine( folderPath, $"{fileTitle}_exported{cc.isr.VI.Tsp.Script.ScriptInfo.ScriptByteCodeFileExtension}" );
             TestBase.ConsoleOutputMemberMessage( $"Exporting binary script to '{filePath}' file." );
             this.Device.Session.ExportScript( scriptName, filePath, true );
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
@@ -226,20 +226,20 @@ public class TspSessionScriptTests : Device.Tests.Base.ScriptTests
             string folderPath = "C:\\my\\lib\\tsp\\tsp.1\\core\\tests";
             string fileTitle = "timeDisplayClear";
             string timerElapsedFunctionName = "timerElapsed";
-            string scriptSource = System.IO.File.ReadAllText( System.IO.Path.Combine( folderPath, fileTitle + ".tsp" ) );
+            string scriptSource = System.IO.File.ReadAllText( System.IO.Path.Combine( folderPath, fileTitle + cc.isr.VI.Tsp.Script.ScriptInfo.ScriptFileExtension ) );
 
             cc.isr.VI.Device.Tests.Asserts.AssertDeviceShouldOpenWithoutDeviceErrors( this.Device, this.ResourceSettings );
 
             // write the source to file.
             fileTitle = $"{fileTitle}_file";
-            string filePath = Path.Combine( folderPath, $"{fileTitle}.tsp" );
+            string filePath = Path.Combine( folderPath, $"{fileTitle}{cc.isr.VI.Tsp.Script.ScriptInfo.ScriptFileExtension}" );
             scriptSource.ToString().ExportScript( filePath, overWrite: true );
 
             this.Device.Session.DeleteScript( scriptName );
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
 
-            string toFilePath = Path.Combine( folderPath, $"{fileTitle}_trimmed.tsp" );
+            string toFilePath = Path.Combine( folderPath, $"{fileTitle}_trimmed{cc.isr.VI.Tsp.Script.ScriptInfo.ScriptFileExtension}" );
             TestBase.ConsoleOutputMemberMessage( $"Trimming script file to '{toFilePath}'" );
             filePath.TrimScript( toFilePath, true );
 
@@ -260,7 +260,7 @@ public class TspSessionScriptTests : Device.Tests.Base.ScriptTests
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
 
-            filePath = Path.Combine( folderPath, $"{fileTitle}_exported.tsp" );
+            filePath = Path.Combine( folderPath, $"{fileTitle}_exported{cc.isr.VI.Tsp.Script.ScriptInfo.ScriptFileExtension}" );
 
             this.Device.Session.ExportScript( scriptName, filePath, true );
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
@@ -293,7 +293,7 @@ public class TspSessionScriptTests : Device.Tests.Base.ScriptTests
             else
                 Assert.Fail( $"The model family {this.Device.StatusSubsystemBase.VersionInfoBase.ModelFamily} is not supported." );
 
-            filePath = Path.Combine( folderPath, $"{fileTitle}_exported.tspb" );
+            filePath = Path.Combine( folderPath, $"{fileTitle}_exported{cc.isr.VI.Tsp.Script.ScriptInfo.ScriptByteCodeFileExtension}" );
 
             this.Device.Session.ExportScript( scriptName, filePath, true );
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
@@ -348,12 +348,12 @@ public class TspSessionScriptTests : Device.Tests.Base.ScriptTests
             else
                 Assert.Fail( $"The model family {this.Device.StatusSubsystemBase.VersionInfoBase.ModelFamily} is not supported." );
 
-            string scriptSource = System.IO.File.ReadAllText( System.IO.Path.Combine( folderPath, fileTitle + ".tspb" ) );
+            string scriptSource = System.IO.File.ReadAllText( System.IO.Path.Combine( folderPath, fileTitle + cc.isr.VI.Tsp.Script.ScriptInfo.ScriptByteCodeFileExtension ) );
 
             // tag the file as imported as binary
             // write the source to file.
             fileTitle += "_binary";
-            string filePath = Path.Combine( folderPath, $"{fileTitle}.tspb" );
+            string filePath = Path.Combine( folderPath, $"{fileTitle}{cc.isr.VI.Tsp.Script.ScriptInfo.ScriptByteCodeFileExtension}" );
             scriptSource.ToString().ExportScript( filePath, overWrite: true );
 
             this.Device.Session.DeleteScript( scriptName );
@@ -377,7 +377,7 @@ public class TspSessionScriptTests : Device.Tests.Base.ScriptTests
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
 
-            filePath = Path.Combine( folderPath, $"{fileTitle}_exported.tspb" );
+            filePath = Path.Combine( folderPath, $"{fileTitle}_exported{cc.isr.VI.Tsp.Script.ScriptInfo.ScriptByteCodeFileExtension}" );
 
             TestBase.ConsoleOutputMemberMessage( $"Exporting to binary '{filePath}' file" );
             this.Device.Session.ExportScript( scriptName, filePath, true );

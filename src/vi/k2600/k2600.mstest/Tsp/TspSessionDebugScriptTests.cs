@@ -131,7 +131,7 @@ public class TspSessionDebugScriptTests : Device.Tests.Base.ScriptTests
             string fileTitle = "isr_certify.9181";
             string scriptFunctionName = "isr.version";
             string functionExpectedValue = "2.4.9181";
-            string filePath = System.IO.Path.Combine( folderPath, fileTitle + ".tsp" );
+            string filePath = System.IO.Path.Combine( folderPath, fileTitle + cc.isr.VI.Tsp.Script.ScriptInfo.ScriptFileExtension );
             TspSessionDebugScriptTests.AssertScriptShouldImportAndRun( this.Device.Session, scriptName, filePath, scriptFunctionName, functionExpectedValue );
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
@@ -175,7 +175,7 @@ public class TspSessionDebugScriptTests : Device.Tests.Base.ScriptTests
             else
                 Assert.Fail( $"The model family {this.Device.StatusSubsystemBase.VersionInfoBase.ModelFamily} is not supported." );
 
-            string filePath = System.IO.Path.Combine( folderPath, fileTitle + ".tsp" );
+            string filePath = System.IO.Path.Combine( folderPath, fileTitle + cc.isr.VI.Tsp.Script.ScriptInfo.ScriptFileExtension );
             TspSessionDebugScriptTests.AssertScriptShouldImportAndRun( this.Device.Session, scriptName, filePath, scriptFunctionName, functionExpectedValue );
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );

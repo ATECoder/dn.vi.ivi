@@ -145,10 +145,10 @@ public class TspScriptTests
 
         // write the source to file.
         string fileTitle = $"{scriptName}_code";
-        string filePath = Path.Combine( folderPath, $"{fileTitle}.tsp" );
+        string filePath = Path.Combine( folderPath, $"{fileTitle}{cc.isr.VI.Tsp.Script.ScriptInfo.ScriptFileExtension}" );
         scriptSource.ToString().ExportScript( filePath, overWrite: true );
 
-        string toFilePath = Path.Combine( folderPath, $"{fileTitle}_trimmed.tsp" );
+        string toFilePath = Path.Combine( folderPath, $"{fileTitle}_trimmed{cc.isr.VI.Tsp.Script.ScriptInfo.ScriptFileExtension}" );
         TestBase.ConsoleOutputMemberMessage( $"Trimming script file to '{toFilePath}'" );
         filePath.TrimScript( toFilePath, true );
 

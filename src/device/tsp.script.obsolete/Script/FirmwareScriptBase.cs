@@ -65,11 +65,11 @@ public abstract class FirmwareScriptBase
     {
         return (ScriptFileFormats.Binary == (fileFormat & ScriptFileFormats.Binary))
             ? (ScriptFileFormats.Compressed == (fileFormat & ScriptFileFormats.Compressed))
-              ? FirmwareScriptBase.ScriptBinaryCompressedFileExtension
-              : FirmwareScriptBase.ScriptBinaryFileExtension
+              ? cc.isr.VI.Tsp.Script.ScriptInfo.ScriptByteCodeCompressedFileExtension
+              : cc.isr.VI.Tsp.Script.ScriptInfo.ScriptByteCodeFileExtension
             : (ScriptFileFormats.Compressed == (fileFormat & ScriptFileFormats.Compressed))
-              ? FirmwareScriptBase.ScriptCompressedFileExtension
-              : FirmwareScriptBase.ScriptFileExtension;
+              ? cc.isr.VI.Tsp.Script.ScriptInfo.ScriptCompressedFileExtension
+              : cc.isr.VI.Tsp.Script.ScriptInfo.ScriptFileExtension;
 
     }
 
@@ -125,8 +125,8 @@ public abstract class FirmwareScriptBase
     public static string BuildScriptFileName( string baseTitle, ScriptFileFormats fileFormat = ScriptFileFormats.None,
         string scriptVersion = "", string baseModel = "", string modelMajorVersion = "" )
     {
-        string title = FirmwareScriptBase.BuildScriptFileTitle( baseTitle, fileFormat, scriptVersion, baseModel, modelMajorVersion );
-        string ext = FirmwareScriptBase.SelectScriptFileExtension( fileFormat );
+        string title = cc.isr.VI.Tsp.Script.ScriptInfo.BuildScriptFileTitle( baseTitle, fileFormat, scriptVersion, baseModel, modelMajorVersion );
+        string ext = cc.isr.VI.Tsp.Script.ScriptInfo.SelectScriptFileExtension( fileFormat );
         return $"{title}{ext}";
     }
 
@@ -435,11 +435,11 @@ public abstract class FirmwareScriptBase
     /// <summary>   Gets or sets the filename of the build file. </summary>
     /// <remarks> Currently the build file includes the file title and script version. </remarks>
     /// <value> The filename of the build file. </value>
-    public string BuildFileName => $"{this.FileTitle}.{this.FirmwareVersion}{FirmwareScriptBase.ScriptFileExtension}";
+    public string BuildFileName => $"{this.FileTitle}.{this.FirmwareVersion}{cc.isr.VI.Tsp.Script.ScriptInfo.ScriptFileExtension}";
 
     /// <summary>   Gets the filename of the trimmed file. </summary>
     /// <value> The filename of the trimmed file. </value>
-    public string TrimmedFileName => $"{this.FileTitle}.{this.FirmwareVersion}{FirmwareScriptBase.ScriptFileExtension}";
+    public string TrimmedFileName => $"{this.FileTitle}.{this.FirmwareVersion}{cc.isr.VI.Tsp.Script.ScriptInfo.ScriptFileExtension}";
 
     /// <summary>   Gets the filename of the deploy file. </summary>
     /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
@@ -459,7 +459,7 @@ public abstract class FirmwareScriptBase
                     throw new InvalidOperationException( $"The {nameof( this.ModelVersion )} is not specified." );
                 title = $"{title}.{this.ModelMask}.{new Version( this.ModelVersion ).Major}";
             }
-            string ext = FirmwareScriptBase.SelectScriptFileExtension( this.DeployFileFormat );
+            string ext = cc.isr.VI.Tsp.Script.ScriptInfo.SelectScriptFileExtension( this.DeployFileFormat );
             return $"{title}{ext}";
         }
     }
