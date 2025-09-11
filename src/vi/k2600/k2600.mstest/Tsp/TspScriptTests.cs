@@ -1,6 +1,4 @@
-using System;
 using System.Diagnostics;
-using System.IO;
 using System.Text;
 using Microsoft.Extensions.Logging;
 using cc.isr.Std.Tests;
@@ -32,15 +30,15 @@ public class TspScriptTests
         try
         {
             // initialize the logger.
-            _ = Logger?.BeginScope( methodFullName );
+            _ = TspScriptTests.Logger?.BeginScope( methodFullName );
         }
         catch ( Exception ex )
         {
-            if ( Logger is null )
+            if ( TspScriptTests.Logger is null )
                 Trace.WriteLine( $"Failed initializing the test class: {ex}", methodFullName );
             else
             {
-                Logger.LogExceptionMultiLineMessage( "Failed initializing the test class:", ex );
+                TspScriptTests.Logger.LogExceptionMultiLineMessage( "Failed initializing the test class:", ex );
             }
 
             // cleanup to meet strong guarantees
@@ -72,13 +70,13 @@ public class TspScriptTests
         Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {TimeZoneInfo.Local}" );
         Console.WriteLine( $"\tTesting {typeof( cc.isr.VI.Tsp.Script.ScriptCompressor ).Assembly.FullName}" );
 
-        // create an instance of the Serilog logger.
+        // create an instance of the session logger.
         SessionLogger.Instance.CreateLogger( typeof( TspScriptTests ) );
 
-        if ( Logger is not null )
+        if ( TspScriptTests.Logger is not null )
         {
             this._loggerScope = Logger.BeginScope( this.TestContext?.TestName ?? string.Empty );
-            this.TraceListener = new LoggerTraceListener<TspScriptTests>( Logger );
+            this.TraceListener = new LoggerTraceListener<TspScriptTests>( TspScriptTests.Logger );
             _ = Trace.Listeners.Add( this.TraceListener );
         }
     }

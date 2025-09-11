@@ -1,5 +1,3 @@
-using System;
-
 namespace cc.isr.VI.Tsp.K2600.MSTest.Visa;
 
 /// <summary> K2600 Device Session Base unit tests. </summary>
@@ -43,7 +41,7 @@ public class SessionBaseTests : Device.Tests.Base.SessionBaseTests
         Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
         Console.WriteLine( $"\tTesting {typeof( cc.isr.VI.Tsp.K2600.K2600Device ).Assembly.FullName}" );
 
-        // create an instance of the Serilog logger.
+        // create an instance of the session logger.
         SessionLogger.Instance.CreateLogger( typeof( DeviceTests ) );
 
         this.TestSiteSettings = Settings.AllSettings.Instance.TestSiteSettings;

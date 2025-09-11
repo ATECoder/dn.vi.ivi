@@ -3,7 +3,7 @@
     <TargetFrameworks>net472;net48;net9.0</TargetFrameworks>
     <LangVersion>preview</LangVersion>
 
-    <ImplicitUsings>disable</ImplicitUsings>
+    <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -48,6 +48,9 @@
         <ProjectReference Include="..\..\..\device\device.mstest\cc.isr.VI.Device.MSTest.csproj">
           <TreatAsUsed>true</TreatAsUsed>
         </ProjectReference>
+        <ProjectReference Include="..\..\..\device\tsp.mstest\cc.isr.VI.Device.Tsp.MSTest.csproj">
+          <TreatAsUsed>true</TreatAsUsed>
+        </ProjectReference>
         <ProjectReference Include="..\k2600\cc.isr.VI.Tsp.K2600.csproj" />
       </ItemGroup>
     </When>
@@ -82,7 +85,6 @@
 
   <ItemGroup>
     <Compile Include="..\..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
-    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting"/>
     <Compile Remove="standard\*.cs" Condition="'$(TargetFramework)' == 'net9.0'" />
   </ItemGroup>
 
@@ -95,6 +97,7 @@
     <Content Include="CandidateResources.json">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
+
     <Content Include="cc.isr.VI.Tsp.K2600.MSTest.Serilog.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

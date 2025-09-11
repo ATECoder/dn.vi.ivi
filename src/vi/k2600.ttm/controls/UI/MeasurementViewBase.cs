@@ -609,24 +609,24 @@ public partial class MeasurementViewBase : cc.isr.WinControls.ModelViewBase
     #region " sequenced measurements "
 
 #if NET9_0_OR_GREATER
-    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0032:Use auto property", Justification = "preview; not preferred time." )]
-#endif
-    private MeasureSequencer? _measureSequencerInternal;
 
+#endif
+
+    [field: System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0032:Use auto property", Justification = "preview; not preferred time." )]
     private MeasureSequencer? MeasureSequencerInternal
     {
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
-        get => this._measureSequencerInternal;
+        get;
 
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( this._measureSequencerInternal is not null )
-                this._measureSequencerInternal.PropertyChanged -= this.MeasureSequencer_PropertyChanged;
+            if ( field is not null )
+                field.PropertyChanged -= this.MeasureSequencer_PropertyChanged;
 
-            this._measureSequencerInternal = value;
-            if ( this._measureSequencerInternal is not null )
-                this._measureSequencerInternal.PropertyChanged += this.MeasureSequencer_PropertyChanged;
+            field = value;
+            if ( field is not null )
+                field.PropertyChanged += this.MeasureSequencer_PropertyChanged;
         }
     }
 
@@ -824,26 +824,26 @@ public partial class MeasurementViewBase : cc.isr.WinControls.ModelViewBase
     }
 
 #if NET9_0_OR_GREATER
-    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0032:Use auto property", Justification = "preview; not preferred time." )]
+
 #endif
-    private TriggerSequencer? _triggerSequencerInternal;
 
     /// <summary>   Gets or sets the trigger sequencer internal. </summary>
     /// <value> The trigger sequencer internal. </value>
+    [field: System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0032:Use auto property", Justification = "preview; not preferred time." )]
     private TriggerSequencer? TriggerSequencerInternal
     {
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
-        get => this._triggerSequencerInternal;
+        get;
 
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( this._triggerSequencerInternal is not null )
-                this._triggerSequencerInternal.PropertyChanged -= this.TriggerSequencer_PropertyChanged;
+            if ( field is not null )
+                field.PropertyChanged -= this.TriggerSequencer_PropertyChanged;
 
-            this._triggerSequencerInternal = value;
-            if ( this._triggerSequencerInternal is not null )
-                this._triggerSequencerInternal.PropertyChanged += this.TriggerSequencer_PropertyChanged;
+            field = value;
+            if ( field is not null )
+                field.PropertyChanged += this.TriggerSequencer_PropertyChanged;
         }
     }
 
@@ -1020,20 +1020,20 @@ public partial class MeasurementViewBase : cc.isr.WinControls.ModelViewBase
     #region " Tsp Device (K2600) "
 
 #if NET9_0_OR_GREATER
-    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0032:Use auto property", Justification = "preview; not preferred time." )]
+
 #endif
-    private K2600Device? _tspDevice;
 
     /// <summary> Gets or sets the Tsp Device. </summary>
     /// <value> The Tsp Device. </value>
+    [field: System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0032:Use auto property", Justification = "preview; not preferred time." )]
     [Browsable( false )]
     [DesignerSerializationVisibility( DesignerSerializationVisibility.Hidden )]
     public K2600Device? TspDevice
     {
-        get => this._tspDevice;
+        get;
         set
         {
-            this._tspDevice = value;
+            field = value;
             if ( value is null )
                 this.DisableTraceLevelControls();
             else

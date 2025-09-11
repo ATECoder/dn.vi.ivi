@@ -152,37 +152,36 @@ public partial class Meter : CommunityToolkit.Mvvm.ComponentModel.ObservableObje
 
     #region " Tsp Device "
 
-    private K2600Device? _tspDeviceInternal;
 
     private K2600Device? TspDeviceInternal
     {
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
-        get => this._tspDeviceInternal;
+        get;
 
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( this._tspDeviceInternal is not null )
+            if ( field is not null )
             {
-                this._tspDeviceInternal.Closing -= this.TspDevice_Closing;
-                this._tspDeviceInternal.Closed -= this.TspDevice_Closed;
-                this._tspDeviceInternal.Opening -= this.TspDevice_Opening;
-                this._tspDeviceInternal.Opened -= this.TspDevice_Opened;
-                this._tspDeviceInternal.Initializing -= this.TspDevice_Initializing;
-                this._tspDeviceInternal.Initialized -= this.TspDevice_Initialized;
-                this._tspDeviceInternal.PropertyChanged -= this.TspDevice_PropertyChanged;
+                field.Closing -= this.TspDevice_Closing;
+                field.Closed -= this.TspDevice_Closed;
+                field.Opening -= this.TspDevice_Opening;
+                field.Opened -= this.TspDevice_Opened;
+                field.Initializing -= this.TspDevice_Initializing;
+                field.Initialized -= this.TspDevice_Initialized;
+                field.PropertyChanged -= this.TspDevice_PropertyChanged;
             }
 
-            this._tspDeviceInternal = value;
-            if ( this._tspDeviceInternal is not null )
+            field = value;
+            if ( field is not null )
             {
-                this._tspDeviceInternal.Closing += this.TspDevice_Closing;
-                this._tspDeviceInternal.Closed += this.TspDevice_Closed;
-                this._tspDeviceInternal.Opening += this.TspDevice_Opening;
-                this._tspDeviceInternal.Opened += this.TspDevice_Opened;
-                this._tspDeviceInternal.Initializing += this.TspDevice_Initializing;
-                this._tspDeviceInternal.Initialized += this.TspDevice_Initialized;
-                this._tspDeviceInternal.PropertyChanged += this.TspDevice_PropertyChanged;
+                field.Closing += this.TspDevice_Closing;
+                field.Closed += this.TspDevice_Closed;
+                field.Opening += this.TspDevice_Opening;
+                field.Opened += this.TspDevice_Opened;
+                field.Initializing += this.TspDevice_Initializing;
+                field.Initialized += this.TspDevice_Initialized;
+                field.PropertyChanged += this.TspDevice_PropertyChanged;
             }
         }
     }
@@ -894,13 +893,12 @@ public partial class Meter : CommunityToolkit.Mvvm.ComponentModel.ObservableObje
     #region " ttm framework: source channel "
 
     /// <summary> Source measure unit. </summary>
-    private string _sourceMeasureUnit = Syntax.ThermalTransient.DefaultSourceMeterName;
 
     /// <summary> Gets or sets (protected) the source measure unit "smua" or "smub". </summary>
     /// <value> The source measure unit. </value>
     public string SourceMeasureUnit
     {
-        get => this._sourceMeasureUnit;
+        get;
 
         protected set
         {
@@ -908,11 +906,11 @@ public partial class Meter : CommunityToolkit.Mvvm.ComponentModel.ObservableObje
                 value = string.Empty;
             if ( !value.Equals( this.SourceMeasureUnit ) )
             {
-                this._sourceMeasureUnit = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
-    }
+    } = Syntax.ThermalTransient.DefaultSourceMeterName;
 
     /// <summary> Programs the Source Measure Unit. Does not read back from the instrument. </summary>
     /// <remarks> David, 2020-10-12. </remarks>
@@ -957,19 +955,16 @@ public partial class Meter : CommunityToolkit.Mvvm.ComponentModel.ObservableObje
             && !this.TspDevice.Session.IsNil( Syntax.ThermalTransient.VersionQueryCommand.TrimEnd( "()".ToCharArray() ) );
     }
 
-    /// <summary> The firmware released version. </summary>
-    private string _firmwareReleasedVersion = string.Empty;
-
     /// <summary> Gets or sets the version of the current firmware release. </summary>
     /// <value> The firmware released version. </value>
     public string FirmwareReleasedVersion
     {
         get
         {
-            if ( string.IsNullOrWhiteSpace( this._firmwareReleasedVersion ) )
+            if ( string.IsNullOrWhiteSpace( field ) )
                 _ = this.QueryFirmwareVersion();
 
-            return this._firmwareReleasedVersion;
+            return field;
         }
 
         protected set
@@ -978,11 +973,11 @@ public partial class Meter : CommunityToolkit.Mvvm.ComponentModel.ObservableObje
                 value = string.Empty;
             if ( !value.Equals( this.FirmwareReleasedVersion ) )
             {
-                this._firmwareReleasedVersion = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
-    }
+    } = string.Empty;
 
     /// <summary>
     /// Queries the embedded firmware version from a remote node and saves it to
@@ -1253,19 +1248,16 @@ public partial class Meter : CommunityToolkit.Mvvm.ComponentModel.ObservableObje
         _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay + session.StatusReadDelay );
     }
 
-    /// <summary> True if measurement completed. </summary>
-    private bool _measurementCompleted;
-
     /// <summary> Gets or sets the measurement completed. </summary>
     /// <value> The measurement completed. </value>
     public bool MeasurementCompleted
     {
-        get => this._measurementCompleted;
+        get;
         set
         {
             if ( !value.Equals( this.MeasurementCompleted ) )
             {
-                this._measurementCompleted = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -1465,22 +1457,21 @@ public partial class Meter : CommunityToolkit.Mvvm.ComponentModel.ObservableObje
 
     #region " sequenced measurements "
 
-    private MeasureSequencer? _measureSequencerInternal;
 
     private MeasureSequencer? MeasureSequencerInternal
     {
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
-        get => this._measureSequencerInternal;
+        get;
 
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( this._measureSequencerInternal is not null )
-                this._measureSequencerInternal.PropertyChanged -= this.MeasureSequencer_PropertyChanged;
+            if ( field is not null )
+                field.PropertyChanged -= this.MeasureSequencer_PropertyChanged;
 
-            this._measureSequencerInternal = value;
-            if ( this._measureSequencerInternal is not null )
-                this._measureSequencerInternal.PropertyChanged += this.MeasureSequencer_PropertyChanged;
+            field = value;
+            if ( field is not null )
+                field.PropertyChanged += this.MeasureSequencer_PropertyChanged;
         }
     }
 
@@ -1677,22 +1668,21 @@ public partial class Meter : CommunityToolkit.Mvvm.ComponentModel.ObservableObje
 
     #region " trigger sequence "
 
-    private TriggerSequencer? _triggerSequencerInternal;
 
     private TriggerSequencer? TriggerSequencerInternal
     {
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
-        get => this._triggerSequencerInternal;
+        get;
 
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( this._triggerSequencerInternal is not null )
-                this._triggerSequencerInternal.PropertyChanged -= this.TriggerSequencer_PropertyChanged;
+            if ( field is not null )
+                field.PropertyChanged -= this.TriggerSequencer_PropertyChanged;
 
-            this._triggerSequencerInternal = value;
-            if ( this._triggerSequencerInternal is not null )
-                this._triggerSequencerInternal.PropertyChanged += this.TriggerSequencer_PropertyChanged;
+            field = value;
+            if ( field is not null )
+                field.PropertyChanged += this.TriggerSequencer_PropertyChanged;
         }
     }
 

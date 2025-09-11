@@ -61,18 +61,17 @@ public partial class ThermalTransient : ThermalTransientBase, ICloneable
     #region " model values "
 
     /// <summary> The time constant. </summary>
-    private double? _timeConstant;
 
     /// <summary> Gets or sets the time constant. </summary>
     /// <value> The time constant. </value>
     public double? TimeConstant
     {
-        get => this._timeConstant;
+        get;
         set
         {
             if ( this.TimeConstant.Differs( value, 0.000000001d ) )
             {
-                this._timeConstant = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -82,19 +81,16 @@ public partial class ThermalTransient : ThermalTransientBase, ICloneable
     /// <value> The time constant caption. </value>
     public string TimeConstantCaption => this.TimeConstant.HasValue ? (1000d * this.TimeConstant.Value).ToString( "G4" ) : string.Empty;
 
-    /// <summary> The asymptote. </summary>
-    private double? _asymptote;
-
     /// <summary> Gets or sets the asymptote. </summary>
     /// <value> The asymptote. </value>
     public double? Asymptote
     {
-        get => this._asymptote;
+        get;
         set
         {
             if ( this.Asymptote.Differs( value, 0.000000001d ) )
             {
-                this._asymptote = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -104,19 +100,16 @@ public partial class ThermalTransient : ThermalTransientBase, ICloneable
     /// <value> The asymptote caption. </value>
     public string AsymptoteCaption => this.Asymptote.HasValue ? (1000d * this.Asymptote.Value).ToString( "G4" ) : string.Empty;
 
-    /// <summary> The estimated voltage. </summary>
-    private double? _estimatedVoltage;
-
     /// <summary> Gets or sets the estimated voltage. </summary>
     /// <value> The estimated voltage. </value>
     public double? EstimatedVoltage
     {
-        get => this._estimatedVoltage;
+        get;
         set
         {
             if ( this.EstimatedVoltage.Differs( value, 0.000000001d ) )
             {
-                this._estimatedVoltage = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -126,19 +119,16 @@ public partial class ThermalTransient : ThermalTransientBase, ICloneable
     /// <value> The estimated voltage caption. </value>
     public string EstimatedVoltageCaption => this.EstimatedVoltage.HasValue ? (1000d * this.EstimatedVoltage.Value).ToString( "G4" ) : string.Empty;
 
-    /// <summary> The correlation coefficient. </summary>
-    private double? _correlationCoefficient;
-
     /// <summary> Gets or sets the correlation coefficient. </summary>
     /// <value> The correlation coefficient. </value>
     public double? CorrelationCoefficient
     {
-        get => this._correlationCoefficient;
+        get;
         set
         {
             if ( this.CorrelationCoefficient.Differs( value, 0.000001d ) )
             {
-                this._correlationCoefficient = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -148,19 +138,16 @@ public partial class ThermalTransient : ThermalTransientBase, ICloneable
     /// <value> The correlation coefficient caption. </value>
     public string CorrelationCoefficientCaption => this.CorrelationCoefficient.HasValue ? this.CorrelationCoefficient.Value.ToString( "G4" ) : string.Empty;
 
-    /// <summary> The standard error. </summary>
-    private double? _standardError;
-
     /// <summary> Gets or sets the standard error. </summary>
     /// <value> The standard error. </value>
     public double? StandardError
     {
-        get => this._standardError;
+        get;
         set
         {
             if ( this.StandardError.Differs( value, 0.000001d ) )
             {
-                this._standardError = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -170,19 +157,16 @@ public partial class ThermalTransient : ThermalTransientBase, ICloneable
     /// <value> The standard error caption. </value>
     public string StandardErrorCaption => this.StandardError.HasValue ? (1000d * this.StandardError.Value).ToString( "G4" ) : string.Empty;
 
-    /// <summary> The iterations. </summary>
-    private int? _iterations;
-
     /// <summary> Gets or sets the iterations. </summary>
     /// <value> The iterations. </value>
     public int? Iterations
     {
-        get => this._iterations;
+        get;
         set
         {
             if ( !Nullable.Equals( value, this.Iterations ) )
             {
-                this._iterations = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -192,19 +176,16 @@ public partial class ThermalTransient : ThermalTransientBase, ICloneable
     /// <value> The iterations caption. </value>
     public string IterationsCaption => this.Iterations.HasValue ? this.Iterations.Value.ToString() : string.Empty;
 
-    /// <summary> The optimization outcome. </summary>
-    private OptimizationOutcome? _optimizationOutcome;
-
     /// <summary> Gets or sets the optimization outcome. </summary>
     /// <value> The optimization outcome. </value>
     public OptimizationOutcome? OptimizationOutcome
     {
-        get => this._optimizationOutcome;
+        get;
         set
         {
             if ( !Nullable.Equals( value, this.OptimizationOutcome ) )
             {
-                this._optimizationOutcome = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

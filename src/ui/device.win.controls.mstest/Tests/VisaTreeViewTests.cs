@@ -43,7 +43,7 @@ public class VisaTreeViewTests : cc.isr.VI.DeviceWinControls.Tests.Base.IVisaVie
         Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
         Console.WriteLine( $"\tTesting {typeof( cc.isr.VI.DeviceWinControls.VisaTreeView ).Assembly.FullName}" );
 
-        // create an instance of the Serilog logger.
+        // create an instance of the session logger.
         SessionLogger.Instance.CreateLogger( typeof( VisaTreeViewTests ) );
         // _ = SessionLogger.Instance.LogCallerMessage( LogLevel.Information, $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
         // Console.WriteLine( $"\tLogging to {cc.isr.Logging.Orlog.HeaderWriter.FullFileName}" );

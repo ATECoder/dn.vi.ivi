@@ -102,7 +102,6 @@ public class SenseSubsystemSettings() : System.ComponentModel.INotifyPropertyCha
 
     #region " exists "
 
-
     /// <summary>
     /// Gets or sets a value indicating whether this settings section exists and the values were thus
     /// fetched from the settings file.
@@ -255,7 +254,6 @@ public class SenseSubsystemSettings() : System.ComponentModel.INotifyPropertyCha
     #endregion
 
     #region " measure Settings "
-
 
     /// <summary>   Gets or sets a value indicating whether the automatic zero is enabled. </summary>
     /// <value> True if automatic zero enabled, false if not. </value>

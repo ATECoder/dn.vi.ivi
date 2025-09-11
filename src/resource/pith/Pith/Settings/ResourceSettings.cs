@@ -29,7 +29,6 @@ public partial class ResourceSettings() : CommunityToolkit.Mvvm.ComponentModel.O
 
     #region " resource name and title "
 
-
     /// <summary>   Gets or sets the name of the resource. </summary>
     /// <value> The name of the resource. </value>
     [Description( "The instrument VISA resource name" )]

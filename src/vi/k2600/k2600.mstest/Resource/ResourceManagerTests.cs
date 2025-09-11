@@ -1,5 +1,3 @@
-using System;
-
 namespace cc.isr.VI.Tsp.K2600.MSTest.Resource;
 
 /// <summary> K2600 resource manager unit tests. </summary>

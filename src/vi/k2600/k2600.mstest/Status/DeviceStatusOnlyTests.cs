@@ -1,5 +1,3 @@
-using System;
-
 namespace cc.isr.VI.Tsp.K2600.MSTest.Status;
 
 /// <summary>   K2600 Device status subsystem only unit tests. </summary>
@@ -43,7 +41,7 @@ public class DeviceStatusOnlyTests : Device.Tests.Base.DeviceStatusOnlyTests
         Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
         Console.WriteLine( $"\tTesting {typeof( cc.isr.VI.VisaSessionBase ).Assembly.FullName}" );
 
-        // create an instance of the Serilog logger.
+        // create an instance of the session logger.
         SessionLogger.Instance.CreateLogger( typeof( DeviceStatusOnlyTests ) );
 
         this.TestSiteSettings = Settings.AllSettings.Instance.TestSiteSettings;

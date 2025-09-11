@@ -1,4 +1,3 @@
-using System;
 using System.Diagnostics;
 
 namespace cc.isr.VI.Tsp.K2600.MSTest.Contacts;
@@ -44,7 +43,7 @@ public class ContactCheckTests : Device.Tests.Base.ContactCheckTests
         Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
         Console.WriteLine( $"\tTesting {typeof( MeasureResistanceSubsystem ).Assembly.FullName}" );
 
-        // create an instance of the Serilog logger.
+        // create an instance of the session logger.
         SessionLogger.Instance.CreateLogger( typeof( ContactCheckTests ) );
 
         this.TestSiteSettings = Settings.AllSettings.Instance.TestSiteSettings;

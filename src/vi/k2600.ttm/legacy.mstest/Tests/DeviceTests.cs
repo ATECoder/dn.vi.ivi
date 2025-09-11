@@ -1,4 +1,3 @@
-using System;
 using System.Diagnostics;
 
 namespace cc.isr.VI.Tsp.K2600.Ttm.Legacy.Tests;
@@ -69,7 +68,7 @@ public class DeviceTests
             Console.WriteLine( $"\t{cc.isr.Visa.Gac.GacLoader.LoadedImplementation?.Location}." );
         Console.WriteLine( $"\tTesting {typeof( LegacyDevice ).Assembly.FullName}" );
 
-        // create an instance of the Serilog logger.
+        // create an instance of the session logger.
         SessionLogger.Instance.CreateLogger( typeof( DeviceTests ) );
 
         // read the TTM Driver settings

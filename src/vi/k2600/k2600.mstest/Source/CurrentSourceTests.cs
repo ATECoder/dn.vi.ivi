@@ -1,13 +1,10 @@
-using System;
-
 namespace cc.isr.VI.Tsp.K2600.MSTest.Source;
 
 /// <summary>   K2600 Current Source unit tests. </summary>
 /// <remarks>   David, 2017-10-10. </remarks>
 [TestClass]
-[Ignore( "Pending implementation" )]
 [TestCategory( "k2600" )]
-public class CurrentSourceTests : Device.Tests.Base.TestBase
+public class CurrentSourceTests : Device.Tsp.Tests.Base.TestBase
 {
     #region " construction and cleanup "
 
@@ -21,7 +18,7 @@ public class CurrentSourceTests : Device.Tests.Base.TestBase
     [ClassInitialize()]
     public static void InitializeTestClass( TestContext testContext )
     {
-        VI.Device.Tests.Base.TestBase.InitializeBaseTestClass( testContext );
+        VI.Device.Tsp.Tests.Base.TestBase.InitializeBaseTestClass( testContext );
     }
 
     /// <summary> Cleans up the test class after all tests in the class have run. </summary>
@@ -29,7 +26,7 @@ public class CurrentSourceTests : Device.Tests.Base.TestBase
     [ClassCleanup( ClassCleanupBehavior.EndOfClass )]
     public static void CleanupTestClass()
     {
-        VI.Device.Tests.Base.TestBase.CleanupBaseTestClass();
+        VI.Device.Tsp.Tests.Base.TestBase.CleanupBaseTestClass();
     }
 
     /// <summary>   Gets or sets the reference to the K2600 Device. </summary>
@@ -44,7 +41,7 @@ public class CurrentSourceTests : Device.Tests.Base.TestBase
         Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
         Console.WriteLine( $"\tTesting {typeof( cc.isr.VI.Tsp.K2600.CurrentSourceSubsystem ).Assembly.FullName}" );
 
-        // create an instance of the Serilog logger.
+        // create an instance of the session logger.
         SessionLogger.Instance.CreateLogger( typeof( CurrentSourceTests ) );
 
         this.TestSiteSettings = Settings.AllSettings.Instance.TestSiteSettings;
@@ -72,32 +69,21 @@ public class CurrentSourceTests : Device.Tests.Base.TestBase
 
     #region " source current measure voltage "
 
-    /// <summary> Assert that the source function <see cref="Settings.AllSettings.CurrentSourceSettings.SourceFunction"/>,
-    ///           e.g., <see cref="SourceFunctionMode.CurrentDC"/>, should apply. </summary>
-    /// <remarks> David, 2020-10-12. </remarks>
-    /// <param name="device"> The device. </param>
-    private static void AssertSourceFunctionShouldApply( K2600Device? device )
-    {
-        Assert.IsNotNull( device );
-        Assert.IsNotNull( device.SourceSubsystem );
-        SourceFunctionMode expectedFunctionMode = Settings.AllSettings.Instance.SourceCurrentSettings.SourceFunction;
-        SourceFunctionMode? sourceFunction = device.SourceSubsystem.ApplySourceFunction( expectedFunctionMode ).GetValueOrDefault( SourceFunctionMode.None );
-        Assert.IsNotNull( sourceFunction );
-        Assert.AreEqual( expectedFunctionMode, sourceFunction,
-            $"{typeof( SourceSubsystemBase )}.{nameof( SourceSubsystemBase.SourceFunction )} is {sourceFunction} ; expected {expectedFunctionMode}" );
-    }
-
-    /// <summary> (Unit Test Method) source current measure voltage should pass. </summary>
-    /// <remarks> David, 2020-10-12. </remarks>
-    [TestMethod( "01. Source current measure voltage should read voltage" )]
-    public void SourceCurrentMeasureVoltageShouldReadVoltage()
+    /// <summary>
+    /// (Unit Test Method) the source function <see cref="Settings.AllSettings.SourceCurrentSettings.SourceFunction"/>
+    /// e.g., <see cref="SourceFunctionMode.CurrentDC"/>, should apply.
+    /// </summary>
+    /// <remarks>   David, 2020-10-12. </remarks>
+    [TestMethod( "01. Source function should apply" )]
+    public void SourceFunctionShouldApply()
     {
         try
         {
-            cc.isr.VI.Device.Tests.Asserts.AssertDeviceShouldOpenWithoutDeviceErrors( this.Device, this.ResourceSettings );
+            VI.Device.Tsp.Tests.Asserts.AssertDeviceShouldOpenWithoutDeviceErrors( this.Device, this.ResourceSettings );
             try
             {
-                AssertSourceFunctionShouldApply( this.Device );
+                VI.Device.Tsp.Tests.Asserts.AssertSourceFunctionShouldApply( this.Device?.SourceSubsystem, Settings.AllSettings.Instance.SourceCurrentSettings.SourceFunction );
+                // TO_DO: implement measurement: toggle output. Set source level, read voltage, compare to range value, toggle output off.
             }
             catch
             {
@@ -105,9 +91,6 @@ public class CurrentSourceTests : Device.Tests.Base.TestBase
             }
             finally
             {
-                // TODO: change source subsystem to inherit from vi.source subsystem base have the SMU pass the session to this class with the
-                // and use a builder to build the commands adding the SMU prefix.
-                // cc.isr.VI.Device.MSTest.Asserts.ToggleOutput(device.SourceSubsystem, False)
             }
         }
         catch
@@ -116,7 +99,7 @@ public class CurrentSourceTests : Device.Tests.Base.TestBase
         }
         finally
         {
-            cc.isr.VI.Device.Tests.Asserts.AssertDeviceShouldCloseWithoutErrors( this.Device );
+            VI.Device.Tsp.Tests.Asserts.AssertDeviceShouldCloseWithoutErrors( this.Device );
         }
     }
 

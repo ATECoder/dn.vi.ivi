@@ -5,50 +5,45 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Legacy;
 
 public partial class LegacyDevice : CommunityToolkit.Mvvm.ComponentModel.ObservableObject, IDevice
 {
-    private string _lastReading = string.Empty;
     /// <summary> Returns the last reading. </summary>
     /// <value> The last reading. </value>
     public string LastReading
     {
-        get => this._lastReading;
-        set => _ = this.SetProperty( ref this._lastReading, value );
-    }
+        get;
+        set => _ = this.SetProperty( ref field, value );
+    } = string.Empty;
 
-    private string _lastOutcomeReading = string.Empty;
     /// <summary> Returns the last outcome reading. </summary>
     /// <value> The last outcome reading. </value>
     public string LastOutcomeReading
     {
-        get => this._lastOutcomeReading;
-        set => _ = this.SetProperty( ref this._lastOutcomeReading, value );
-    }
+        get;
+        set => _ = this.SetProperty( ref field, value );
+    } = string.Empty;
 
-    private string _lastStatusReading = string.Empty;
     /// <summary> Returns the last status reading. </summary>
     /// <value> The last status reading. </value>
     public string LastStatusReading
     {
-        get => this._lastStatusReading;
-        set => _ = this.SetProperty( ref this._lastStatusReading, value );
-    }
+        get;
+        set => _ = this.SetProperty( ref field, value );
+    } = string.Empty;
 
-    private string _lastOkayReading = string.Empty;
     /// <summary> Returns the last okay reading. </summary>
     /// <value> The last okay reading. </value>
     public string LastOkayReading
     {
-        get => this._lastOkayReading;
-        set => _ = this.SetProperty( ref this._lastOkayReading, value );
-    }
+        get;
+        set => _ = this.SetProperty( ref field, value );
+    } = string.Empty;
 
-    private string _lastOrphanMessages = string.Empty;
     /// <summary>   Gets or sets the last read orphan messages. </summary>
     /// <value> The last read orphan messages. </value>
     public string LastOrphanMessages
     {
-        get => this._lastOrphanMessages;
-        set => _ = this.SetProperty( ref this._lastOrphanMessages, value );
-    }
+        get;
+        set => _ = this.SetProperty( ref field, value );
+    } = string.Empty;
 
     /// <summary> Reads the Final resistance and returns True if OK. Sets the last
     /// <see cref="LastReading">reading</see>,

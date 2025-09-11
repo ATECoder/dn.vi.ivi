@@ -1,4 +1,3 @@
-using System;
 using DescriptionAttribute = System.ComponentModel.DescriptionAttribute;
 
 namespace cc.isr.VI.Device.Tests.Settings;

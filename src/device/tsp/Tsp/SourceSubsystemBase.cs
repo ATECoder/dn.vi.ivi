@@ -63,20 +63,36 @@ public class SourceSubsystemBase( Tsp.StatusSubsystemBase statusSubsystem ) : So
     /// </returns>
     public SourceFunctionMode? QuerySourceFunction()
     {
-        string currentValue = this.SourceFunction.ToString();
-        this.Session.MakeEmulatedReplyIfEmpty( currentValue );
-        currentValue = this.Session.QueryTrimEnd( $"_G.print({this.SourceMeasureUnitReference}.source.func)" );
-        if ( string.IsNullOrWhiteSpace( currentValue ) )
+        string reply = this.SourceFunction.ToString();
+        string query = $"{this.SourceMeasureUnitReference}.source.func";
+        this.Session.MakeEmulatedReplyIfEmpty( reply );
+        reply = this.Session.QueryTrimEnd( $"_G.print({query})" );
+        if ( string.IsNullOrWhiteSpace( reply ) )
         {
-            string message = "Failed fetching Source Function";
+            string message = $"Failed fetching {query}";
             Debug.Assert( !Debugger.IsAttached, message );
             this.SourceFunction = new SourceFunctionMode?();
+        }
+        else if ( int.TryParse( reply, System.Globalization.NumberStyles.AllowExponent
+            | System.Globalization.NumberStyles.AllowLeadingSign | System.Globalization.NumberStyles.AllowDecimalPoint,
+            System.Globalization.CultureInfo.InvariantCulture, out int intValue ) )
+        {
+            if ( Enum.IsDefined( typeof( SourceFunctionMode ), intValue ) )
+            {
+                this.SourceFunction = ( SourceFunctionMode ) intValue;
+            }
+            else
+            {
+                string message = $"Failed parsing {query} from number {intValue}";
+                Debug.Assert( !Debugger.IsAttached, message );
+                this.SourceFunction = new SourceFunctionMode?();
+            }
         }
         else
         {
             // var se = new StringEnumerator<SourceFunctionMode>();
             // this.SourceFunction = se.ParseContained( currentValue.BuildDelimitedValue() );
-            this.SourceFunction = SessionBase.ParseContained<SourceFunctionMode>( currentValue.BuildDelimitedValue() );
+            this.SourceFunction = SessionBase.ParseContained<SourceFunctionMode>( reply.BuildDelimitedValue() );
         }
 
         return this.SourceFunction;
@@ -101,13 +117,13 @@ public enum SourceFunctionMode
 {
     /// <summary> An enum constant representing the none option. </summary>
     [Description( "None" )]
-    None,
+    None = -1,
 
-    /// <summary> An enum constant representing the voltage Device-context option. </summary>
-    [Description( "DC Voltage (OUTPUT_DCVOLTS)" )]
-    VoltageDC,
-
-    /// <summary> An enum constant representing the current Device-context option. </summary>
+    /// <summary> An enum constant representing the current source option. </summary>
     [Description( "DC Current (OUTPUT_DCAMPS)" )]
-    CurrentDC
+    CurrentDC = 0,
+
+    /// <summary> An enum constant representing the voltage source option. </summary>
+    [Description( "DC Voltage (OUTPUT_DCVOLTS)" )]
+    VoltageDC = 1
 }

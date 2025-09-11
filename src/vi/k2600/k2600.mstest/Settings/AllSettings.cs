@@ -1,4 +1,3 @@
-using System;
 using cc.isr.VI.Pith.Settings;
 using cc.isr.VI.Tsp.K2600.MSTest.Measure;
 using cc.isr.VI.Tsp.K2600.MSTest.Source;

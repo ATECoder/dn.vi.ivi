@@ -1,4 +1,3 @@
-using System.Linq;
 using cc.isr.Std.SplitExtensions;
 
 namespace cc.isr.VI.Device.Tests;

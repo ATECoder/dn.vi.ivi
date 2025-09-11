@@ -1,4 +1,3 @@
-using System;
 using cc.isr.Std.Tests;
 using cc.isr.Std.Tests.Extensions;
 using cc.isr.VI.Pith;
@@ -79,10 +78,10 @@ Math.Abs( this.TestSiteSettings.TimeZoneOffset() ), $"{nameof( this.TestSiteSett
         Assert.IsTrue( this.VisaSessionBase.Session.TimingSettings.Exists, $"{nameof( TimingSettings )} should exist." );
         Assert.IsTrue( this.VisaSessionBase.Session.RegistersBitmasksSettings.Exists, $"{nameof( RegistersBitmasksSettings )} should exist." );
 
-        if ( Logger is not null )
+        if ( TestBase.Logger is not null )
         {
             this._loggerScope = Logger.BeginScope( this.TestContext?.TestName ?? string.Empty );
-            this.TraceListener = new LoggerTraceListener<TestBase>( Logger! );
+            this.TraceListener = new LoggerTraceListener<TestBase>( TestBase.Logger );
             _ = Trace.Listeners.Add( this.TraceListener );
         }
 

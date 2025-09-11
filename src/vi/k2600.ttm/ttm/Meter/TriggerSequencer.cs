@@ -222,20 +222,17 @@ public class TriggerSequencer : CommunityToolkit.Mvvm.ComponentModel.ObservableO
         return message;
     }
 
-    /// <summary> State of the trigger sequence. </summary>
-    private TriggerSequenceState _triggerSequenceState;
-
     /// <summary> Gets or sets the state of the measurement. </summary>
     /// <value> The measurement state. </value>
     public TriggerSequenceState TriggerSequenceState
     {
-        get => this._triggerSequenceState;
+        get;
 
         protected set
         {
             if ( TriggerSequenceState.WaitingForTrigger == value || !value.Equals( this.TriggerSequenceState ) )
             {
-                this._triggerSequenceState = value;
+                field = value;
                 this.NotifyPropertyChanged();
                 cc.isr.VI.Pith.SessionBase.DoEventsAction?.Invoke();
             }
@@ -300,23 +297,20 @@ public class TriggerSequencer : CommunityToolkit.Mvvm.ComponentModel.ObservableO
         this.SequencerTimer.Enabled = true;
     }
 
-    /// <summary> Gets or sets the timer. </summary>
-    private System.Timers.Timer? _sequencerTimer;
-
     private System.Timers.Timer? SequencerTimer
     {
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
-        get => this._sequencerTimer;
+        get;
 
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( this._sequencerTimer is not null )
-                this._sequencerTimer.Elapsed -= this.SequencerTimer_Elapsed;
+            if ( field is not null )
+                field.Elapsed -= this.SequencerTimer_Elapsed;
 
-            this._sequencerTimer = value;
-            if ( this._sequencerTimer is not null )
-                this._sequencerTimer.Elapsed += this.SequencerTimer_Elapsed;
+            field = value;
+            if ( field is not null )
+                field.Elapsed += this.SequencerTimer_Elapsed;
         }
     }
 

@@ -1,4 +1,3 @@
-using System;
 using System.Diagnostics;
 using cc.isr.VI.Device.Tests.Base;
 
@@ -70,7 +69,7 @@ public class ContactTests
             Console.WriteLine( $"\t{cc.isr.Visa.Gac.GacLoader.LoadedImplementation?.Location}." );
         Console.WriteLine( $"\tTesting {typeof( LegacyDevice ).Assembly.FullName}" );
 
-        // create an instance of the Serilog logger.
+        // create an instance of the session logger.
         SessionLogger.Instance.CreateLogger( typeof( ContactTests ) );
 
         // read the TTM Driver settings

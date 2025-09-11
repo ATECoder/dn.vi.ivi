@@ -1,5 +1,3 @@
-using System;
-
 namespace cc.isr.VI.Device.Tests;
 
 public sealed partial class Asserts

@@ -98,7 +98,6 @@ public partial class TriggerLayerView : cc.isr.WinControls.ModelViewBase
 
     #region " public members "
 
-
     /// <summary> Gets or sets the layer number. </summary>
     /// <value> The layer number. </value>
     [DesignerSerializationVisibility( DesignerSerializationVisibility.Hidden )]

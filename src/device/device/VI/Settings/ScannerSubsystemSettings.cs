@@ -102,7 +102,6 @@ public class ScannerSubsystemSettings() : System.ComponentModel.INotifyPropertyC
 
     #region " exists "
 
-
     /// <summary>
     /// Gets or sets a value indicating whether this settings section exists and the values were thus
     /// fetched from the settings file.

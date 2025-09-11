@@ -1,4 +1,3 @@
-using System;
 using cc.isr.Std.Tests;
 using cc.isr.Std.Tests.Extensions;
 using cc.isr.VI.Device.Tests.Settings;

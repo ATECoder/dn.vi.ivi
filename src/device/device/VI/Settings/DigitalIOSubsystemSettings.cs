@@ -102,7 +102,6 @@ public class DigitalIOSubsystemSettings() : System.ComponentModel.INotifyPropert
 
     #region " exists "
 
-
     /// <summary>
     /// Gets or sets a value indicating whether this settings section exists and the values were thus
     /// fetched from the settings file.

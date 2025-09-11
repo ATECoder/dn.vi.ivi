@@ -760,7 +760,6 @@ public abstract partial class SessionBase : CommunityToolkit.Mvvm.ComponentModel
 
     #region " message events "
 
-
     /// <summary>   Gets the message notification modes as a key value pairs binding list. </summary>
     /// <value> The message notification modes. </value>
     public BindingList<KeyValuePair<MessageNotificationModes, string>>? MessageNotificationModeKeyValuePairs

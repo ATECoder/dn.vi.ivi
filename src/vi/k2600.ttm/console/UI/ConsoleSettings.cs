@@ -1,13 +1,12 @@
 using cc.isr.VI.Pith;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System.ComponentModel;
 
 namespace cc.isr.VI.Tsp.K2600.Ttm.Console.UI;
-public class ConsoleSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
+public partial class ConsoleSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
 {
 
     #region " exists "
-
-    private bool _exists;
 
     /// <summary>
     /// Gets or sets a value indicating whether this settings section exists and the values were thus
@@ -17,86 +16,52 @@ public class ConsoleSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableOb
     [Description( "True if this settings section exists and was read from the JSon settings file." )]
     public bool Exists
     {
-        get => this._exists;
-        set => _ = this.SetProperty( ref this._exists, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
 
     #endregion
 
-    private string _k2600ResourceName = "TCPIP0::192.168.0.50::inst0::INSTR";
 
     /// <summary>   Gets or sets the name of the resource. </summary>
     /// <value> The name of the resource. </value>
-    public string K2600ResourceName
-    {
-        get => this._k2600ResourceName;
-        set => this.SetProperty( ref this._k2600ResourceName, value );
-    }
-
-    private string _k2600ResourceModel = "TTM 2024";
+    [ObservableProperty]
+    public partial string K2600ResourceName { get; set; } = "TCPIP0::192.168.0.50::inst0::INSTR";
 
     /// <summary>   Gets or sets the 2600 resource model. </summary>
     /// <value> The k 2600 resource model. </value>
-    public string K2600ResourceModel
-    {
-        get => this._k2600ResourceModel;
-        set => this.SetProperty( ref this._k2600ResourceModel, value );
-    }
-
-    private TimeSpan _resourceNameSelectionTimeout = TimeSpan.FromSeconds( 5 );
+    [ObservableProperty]
+    public partial string K2600ResourceModel { get; set; } = "TTM 2024";
 
     /// <summary>   Gets or sets the resource name selection timeout. </summary>
     /// <value> The resource name selection timeout. </value>
-    public TimeSpan ResourceNameSelectionTimeout
-    {
-        get => this._resourceNameSelectionTimeout;
-        set => this.SetProperty( ref this._resourceNameSelectionTimeout, value );
-    }
-
-    private Microsoft.Extensions.Logging.LogLevel _traceLevel = Microsoft.Extensions.Logging.LogLevel.Trace;
+    [ObservableProperty]
+    public partial TimeSpan ResourceNameSelectionTimeout { get; set; } = TimeSpan.FromSeconds( 5 );
 
     /// <summary>   Gets or sets the trace level. </summary>
     /// <value> The trace level. </value>
-    public Microsoft.Extensions.Logging.LogLevel TraceLevel
-    {
-        get => this._traceLevel;
-        set => this.SetProperty( ref this._traceLevel, value );
-    }
-
-    private string _closedCaption = "closed";
+    [ObservableProperty]
+    public partial Microsoft.Extensions.Logging.LogLevel TraceLevel { get; set; } = Microsoft.Extensions.Logging.LogLevel.Trace;
 
     /// <summary>   Gets or sets the closed caption. </summary>
     /// <value> The closed caption. </value>
+    [ObservableProperty]
     [Description( "The caption to display when the resource is closed" )]
-    public string ClosedCaption
-    {
-        get => this._closedCaption;
-        set => this.SetProperty( ref this._closedCaption, value );
-    }
+    public partial string ClosedCaption { get; set; } = "closed";
 
     #region " ping "
 
-    private TimeSpan _pingTimeout = TimeSpan.FromMilliseconds( 5 );
-
     /// <summary>   Gets or sets the ping timeout. </summary>
     /// <value> The ping timeout. </value>
+    [ObservableProperty]
     [Description( "The time to allow for ping results to come back [sms]" )]
-    public TimeSpan PingTimeout
-    {
-        get => this._pingTimeout;
-        set => this.SetProperty( ref this._pingTimeout, value );
-    }
-
-    private int _pingHops = 1;
+    public partial TimeSpan PingTimeout { get; set; } = TimeSpan.FromMilliseconds( 5 );
 
     /// <summary>   Gets or sets the PingHops. </summary>
     /// <value> The PingHops. </value>
+    [ObservableProperty]
     [Description( "The number of hops to set when pinging an instrument [1]" )]
-    public int PingHops
-    {
-        get => this._pingHops;
-        set => this.SetProperty( ref this._pingHops, value );
-    }
+    public partial int PingHops { get; set; } = 1;
 
     private bool? _isTcpIpResource;
 

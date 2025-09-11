@@ -1,4 +1,3 @@
-using System;
 using cc.isr.VI.Device.Tests.Base;
 
 namespace cc.isr.VI.Device.Tests;

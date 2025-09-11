@@ -1,4 +1,3 @@
-using System;
 using System.Diagnostics;
 using cc.isr.VI.Tsp.SessionBaseExtensions;
 using cc.isr.VI.Tsp.K2600.Ttm.Syntax;

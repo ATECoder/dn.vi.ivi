@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using System;
 using cc.isr.VI.Tsp.SessionBaseExtensions;
 using cc.isr.VI.Tsp.ParseStringExtensions;
 using cc.isr.VI.Pith;

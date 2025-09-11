@@ -207,7 +207,6 @@ public class Settings : System.ComponentModel.INotifyPropertyChanged
 
     #region " exists "
 
-
     /// <summary>
     /// Gets or sets a value indicating whether this settings section exists and the values were thus
     /// fetched from the settings file.
@@ -223,7 +222,6 @@ public class Settings : System.ComponentModel.INotifyPropertyChanged
     #endregion
 
     #region " configuration information "
-
 
     /// <summary>   Gets or sets the trace level. </summary>
     /// <remarks>
@@ -261,7 +259,6 @@ public class Settings : System.ComponentModel.INotifyPropertyChanged
     #endregion
 
     #region " log and message levels "
-
 
     /// <summary>   Gets or sets the application log level. </summary>
     /// <remarks>
@@ -306,7 +303,6 @@ public class Settings : System.ComponentModel.INotifyPropertyChanged
     #endregion
 
     #region " custom settings "
-
 
     /// <summary>   Gets or sets a value indicating whether the multi session is enabled. </summary>
     /// <value> True if multi session enabled, false if not. </value>

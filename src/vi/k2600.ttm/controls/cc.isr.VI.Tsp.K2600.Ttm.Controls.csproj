@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <EnablePreviewFeatures>true</EnablePreviewFeatures>
@@ -83,6 +83,10 @@
       <ItemGroup>
         <ProjectReference Include="..\..\..\..\..\..\core\logging\src\tracelog\tracelog.win.forms\cc.isr.Logging.TraceLog.WinForms.csproj" />
         <ProjectReference Include="..\..\..\..\..\..\core\win.controls\src\model.view\model.view\cc.isr.WinControls.ModelView.csproj" />
+        <ProjectReference Include="..\..\..\..\..\..\core\tracing\src\win.forms\tracing.win.forms\cc.isr.Tracing.WinForms.csproj" />
+        <ProjectReference Include="..\..\..\..\..\..\core\win.controls\src\selectors\selectors\cc.isr.WinControls.Selectors.csproj" />
+        <ProjectReference Include="..\..\..\..\..\..\visual\charting\src\mixed\win.controls\ChartWin.csproj" />
+        <ProjectReference Include="..\ttm\cc.isr.VI.Tsp.K2600.Ttm.csproj" />
       </ItemGroup>
     </When>
     <Otherwise>
@@ -101,13 +105,6 @@
 
   <ItemGroup>
     <Compile Include="..\..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\..\core\tracing\src\win.forms\tracing.win.forms\cc.isr.Tracing.WinForms.csproj" />
-    <ProjectReference Include="..\..\..\..\..\..\core\win.controls\src\selectors\selectors\cc.isr.WinControls.Selectors.csproj" />
-    <ProjectReference Include="..\..\..\..\..\..\visual\charting\src\mixed\win.controls\ChartWin.csproj" />
-    <ProjectReference Include="..\ttm\cc.isr.VI.Tsp.K2600.Ttm.csproj" />
   </ItemGroup>
 
   <ItemGroup>

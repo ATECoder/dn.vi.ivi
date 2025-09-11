@@ -81,18 +81,17 @@ public abstract class MeasureSubsystemBase( VI.StatusSubsystemBase statusSubsyst
     #region " entity "
 
     /// <summary> The meter entity. </summary>
-    private ThermalTransientMeterEntity _meterEntity;
 
     /// <summary> Gets or sets the meter entity. </summary>
     /// <sourceMeasureUnitName> The meter entity. </sourceMeasureUnitName>
     public ThermalTransientMeterEntity MeterEntity
     {
-        get => this._meterEntity;
+        get;
         set
         {
             if ( !value.Equals( this.MeterEntity ) )
             {
-                this._meterEntity = value;
+                field = value;
                 this.NotifyPropertyChanged();
 
                 this.EntityName = Syntax.ThermalTransient.SelectEntityName( value );
@@ -103,35 +102,28 @@ public abstract class MeasureSubsystemBase( VI.StatusSubsystemBase statusSubsyst
         }
     }
 
-    /// <summary> Name of the defaults. </summary>
-    private string _defaultsName = string.Empty;
-
     /// <summary> Gets or sets the Defaults name. </summary>
     /// <sourceMeasureUnitName> The Source Measure Unit. </sourceMeasureUnitName>
     public string DefaultsName
     {
-        get => this._defaultsName;
-        protected set => _ = this.SetProperty( ref this._defaultsName, value );
-    }
-
-    private string _entityName = Syntax.ThermalTransient.InitialEntityName;
+        get;
+        protected set => _ = this.SetProperty( ref field, value );
+    } = string.Empty;
 
     /// <summary> Gets or sets the entity name. </summary>
     /// <sourceMeasureUnitName> The Source Measure Unit. </sourceMeasureUnitName>
     public string EntityName
     {
-        get => this._entityName;
-        protected set => _ = this.SetProperty( ref this._entityName, value );
-    }
-
-    private string? _baseEntityName;
+        get;
+        protected set => _ = this.SetProperty( ref field, value );
+    } = Syntax.ThermalTransient.InitialEntityName;
 
     /// <summary> Gets or sets the Base Entity name. </summary>
     /// <sourceMeasureUnitName> The Meter entity. </sourceMeasureUnitName>
     public string? BaseEntityName
     {
-        get => this._baseEntityName;
-        protected set => _ = this.SetProperty( ref this._baseEntityName, value );
+        get;
+        protected set => _ = this.SetProperty( ref field, value );
     }
 
     #endregion
@@ -688,79 +680,65 @@ public abstract class MeasureSubsystemBase( VI.StatusSubsystemBase statusSubsyst
 
     #region " read "
 
-    private string? _firmwareReading;
-
     /// <summary> Gets or sets (protected) the firmware reading. </summary>
     /// <sourceMeasureUnitName> The last reading. </sourceMeasureUnitName>
     public string? FirmwareReading
     {
-        get => this._firmwareReading;
+        get;
 
-        protected set => _ = this.SetProperty( ref this._firmwareReading, value );
+        protected set => _ = this.SetProperty( ref field, value );
     }
-
-    private string? _firmwareOutcomeReading;
 
     /// <summary> Gets or sets (protected) the firmware outcome reading. </summary>
     /// <sourceMeasureUnitName> The outcome reading. </sourceMeasureUnitName>
     public string? FirmwareOutcomeReading
     {
-        get => this._firmwareOutcomeReading;
+        get;
 
-        protected set => _ = this.SetProperty( ref this._firmwareOutcomeReading, value );
+        protected set => _ = this.SetProperty( ref field, value );
     }
-
-    private string? _firmwareOkayReading;
 
     /// <summary> Gets or sets (protected) the firmware okay reading. </summary>
     /// <sourceMeasureUnitName> The firmware okay Reading. </sourceMeasureUnitName>
     public string? FirmwareOkayReading
     {
-        get => this._firmwareOkayReading;
+        get;
 
-        protected set => _ = this.SetProperty( ref this._firmwareOkayReading, value );
+        protected set => _ = this.SetProperty( ref field, value );
     }
-
-    private string? _firmwareStatusReading;
 
     /// <summary> Gets or sets (protected) the firmware status reading. </summary>
     /// <sourceMeasureUnitName> The firmware status reading. </sourceMeasureUnitName>
     public string? FirmwareStatusReading
     {
-        get => this._firmwareStatusReading;
+        get;
 
-        protected set => _ = this.SetProperty( ref this._firmwareStatusReading, value );
+        protected set => _ = this.SetProperty( ref field, value );
     }
-
-    /// <summary> True if measurement available. </summary>
-    private bool _measurementAvailable;
 
     /// <summary> Gets or sets (protected) the measurement available. </summary>
     /// <sourceMeasureUnitName> The measurement available. </sourceMeasureUnitName>
     public bool MeasurementAvailable
     {
-        get => this._measurementAvailable;
+        get;
         set
         {
-            this._measurementAvailable = value;
+            field = value;
             this.NotifyPropertyChanged();
         }
     }
-
-    /// <summary> The measurement event Condition. </summary>
-    private int _measurementEventCondition;
 
     /// <summary> Gets or sets the cached Condition of the measurement register events. </summary>
     /// <sourceMeasureUnitName> <c>null</c> if sourceMeasureUnitName is not known;. </sourceMeasureUnitName>
     public int MeasurementEventCondition
     {
-        get => this._measurementEventCondition;
+        get;
 
         protected set
         {
             if ( !this.MeasurementEventCondition.Equals( value ) )
             {
-                this._measurementEventCondition = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

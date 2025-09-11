@@ -60,18 +60,16 @@ public class ThermalTransientEstimator : MeterSubsystemBase
 
     #region " thermal coefficient "
 
-    private double? _thermalCoefficient;
-
     /// <summary> Gets or sets the cached Thermal Coefficient. </summary>
     /// <value> The Thermal Coefficient. </value>
     public double? ThermalCoefficient
     {
-        get => this._thermalCoefficient;
+        get;
         protected set
         {
             value ??= Properties.Settings.Instance.TtmEstimatorSettings.ThermalCoefficient;
             this.Estimator.ThermalCoefficient = value.Value;
-            _ = this.SetProperty( ref this._thermalCoefficient, value );
+            _ = this.SetProperty( ref field, value );
         }
     }
 

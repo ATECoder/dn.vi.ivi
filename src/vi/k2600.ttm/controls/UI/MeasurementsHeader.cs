@@ -65,24 +65,24 @@ public partial class MeasurementsHeader : cc.isr.WinControls.ModelViewBase
     #region " dut "
 
 #if NET9_0_OR_GREATER
-    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0032:Use auto property", Justification = "preview; not preferred time." )]
-#endif
-    private DeviceUnderTest? _deviceUnderTestInternal;
 
+#endif
+
+    [field: System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0032:Use auto property", Justification = "preview; not preferred time." )]
     private DeviceUnderTest? DeviceUnderTestInternal
     {
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
-        get => this._deviceUnderTestInternal;
+        get;
 
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( this._deviceUnderTestInternal is not null )
-                this._deviceUnderTestInternal.PropertyChanged -= this.DeviceUnderTest_PropertyChanged;
+            if ( field is not null )
+                field.PropertyChanged -= this.DeviceUnderTest_PropertyChanged;
 
-            this._deviceUnderTestInternal = value;
-            if ( this._deviceUnderTestInternal is not null )
-                this._deviceUnderTestInternal.PropertyChanged += this.DeviceUnderTest_PropertyChanged;
+            field = value;
+            if ( field is not null )
+                field.PropertyChanged += this.DeviceUnderTest_PropertyChanged;
         }
     }
 
@@ -152,20 +152,20 @@ public partial class MeasurementsHeader : cc.isr.WinControls.ModelViewBase
     }
 
 #if NET9_0_OR_GREATER
-    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0032:Use auto property", Justification = "preview; not preferred time." )]
+
 #endif
-    private string? _measurementMessage;
 
     /// <summary> Gets or sets a message describing the measurement. </summary>
     /// <value> A message describing the measurement. </value>
+    [field: System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0032:Use auto property", Justification = "preview; not preferred time." )]
     [Browsable( false )]
     [DesignerSerializationVisibility( DesignerSerializationVisibility.Hidden )]
     public string? MeasurementMessage
     {
-        get => this._measurementMessage;
+        get;
         set
         {
-            if ( this.SetProperty( ref this._measurementMessage, value ) )
+            if ( this.SetProperty( ref field, value ) )
                 this._outcomeTextBox.Text = value;
         }
     }
@@ -394,25 +394,25 @@ public partial class MeasurementsHeader : cc.isr.WinControls.ModelViewBase
     #region " part: initial resistance "
 
 #if NET9_0_OR_GREATER
-    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0032:Use auto property", Justification = "preview; not preferred time." )]
-#endif
-    private ColdResistance? _initialResistanceInternal;
 
+#endif
+
+    [field: System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0032:Use auto property", Justification = "preview; not preferred time." )]
     [System.Diagnostics.CodeAnalysis.SuppressMessage( "CodeQuality", "IDE0052:Remove unread private members", Justification = "<Pending>" )]
     private ColdResistance? InitialResistanceInternal
     {
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
-        get => this._initialResistanceInternal;
+        get;
 
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( this._initialResistanceInternal is not null )
-                this._initialResistanceInternal.PropertyChanged -= this.InitialResistance_PropertyChanged;
+            if ( field is not null )
+                field.PropertyChanged -= this.InitialResistance_PropertyChanged;
 
-            this._initialResistanceInternal = value;
-            if ( this._initialResistanceInternal is not null )
-                this._initialResistanceInternal.PropertyChanged += this.InitialResistance_PropertyChanged;
+            field = value;
+            if ( field is not null )
+                field.PropertyChanged += this.InitialResistance_PropertyChanged;
         }
     }
 
@@ -469,25 +469,25 @@ public partial class MeasurementsHeader : cc.isr.WinControls.ModelViewBase
     #region " part: final resistance "
 
 #if NET9_0_OR_GREATER
-    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0032:Use auto property", Justification = "preview; not preferred time." )]
-#endif
-    private ColdResistance? _finalResistanceInternal;
 
+#endif
+
+    [field: System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0032:Use auto property", Justification = "preview; not preferred time." )]
     [System.Diagnostics.CodeAnalysis.SuppressMessage( "CodeQuality", "IDE0052:Remove unread private members", Justification = "<Pending>" )]
     private ColdResistance? FinalResistanceInternal
     {
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
-        get => this._finalResistanceInternal;
+        get;
 
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( this._finalResistanceInternal is not null )
-                this._finalResistanceInternal.PropertyChanged -= this.FinalResistance_PropertyChanged;
+            if ( field is not null )
+                field.PropertyChanged -= this.FinalResistance_PropertyChanged;
 
-            this._finalResistanceInternal = value;
-            if ( this._finalResistanceInternal is not null )
-                this._finalResistanceInternal.PropertyChanged += this.FinalResistance_PropertyChanged;
+            field = value;
+            if ( field is not null )
+                field.PropertyChanged += this.FinalResistance_PropertyChanged;
         }
     }
 
@@ -544,26 +544,26 @@ public partial class MeasurementsHeader : cc.isr.WinControls.ModelViewBase
     #region " part: thermal transient "
 
 #if NET9_0_OR_GREATER
-    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0032:Use auto property", Justification = "preview; not preferred time." )]
+
 #endif
-    private ThermalTransient? _thermalTransientInternal;
 
     /// <summary> The Part Thermal Transient. </summary>
+    [field: System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0032:Use auto property", Justification = "preview; not preferred time." )]
     [System.Diagnostics.CodeAnalysis.SuppressMessage( "CodeQuality", "IDE0052:Remove unread private members", Justification = "<Pending>" )]
     private ThermalTransient? ThermalTransientInternal
     {
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
-        get => this._thermalTransientInternal;
+        get;
 
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( this._thermalTransientInternal is not null )
-                this._thermalTransientInternal.PropertyChanged -= this.ThermalTransient_PropertyChanged;
+            if ( field is not null )
+                field.PropertyChanged -= this.ThermalTransient_PropertyChanged;
 
-            this._thermalTransientInternal = value;
-            if ( this._thermalTransientInternal is not null )
-                this._thermalTransientInternal.PropertyChanged += this.ThermalTransient_PropertyChanged;
+            field = value;
+            if ( field is not null )
+                field.PropertyChanged += this.ThermalTransient_PropertyChanged;
         }
     }
 

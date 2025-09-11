@@ -102,7 +102,6 @@ public class SourceSubsystemSettings() : System.ComponentModel.INotifyPropertyCh
 
     #region " exists "
 
-
     /// <summary>
     /// Gets or sets a value indicating whether this settings section exists and the values were thus
     /// fetched from the settings file.
@@ -119,50 +118,41 @@ public class SourceSubsystemSettings() : System.ComponentModel.INotifyPropertyCh
 
     #region " initial values "
 
-    private SourceFunctionModes _initialSourceFunction = SourceFunctionModes.VoltageDC;
-
     /// <summary> Gets or sets the initial source function mode. </summary>
     /// <value> The initial source function mode. </value>
-    public virtual SourceFunctionModes InitialSourceFunction
+    public SourceFunctionModes InitialSourceFunction
     {
-        get => this._initialSourceFunction;
-        set => _ = this.SetProperty( ref this._initialSourceFunction, value );
-    }
-
-    private double _initialSourceLevel;
+        get;
+        set => _ = this.SetProperty( ref field, value );
+    } = SourceFunctionModes.VoltageDC;
 
     /// <summary> Gets or sets the initial source level. </summary>
     /// <value> The initial source level. </value>
-    public virtual double InitialSourceLevel
+    public double InitialSourceLevel
     {
-        get => this._initialSourceLevel;
-        set => _ = this.SetProperty( ref this._initialSourceLevel, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
-
-    private double _initialSourceLimit = 0.000105;
 
     /// <summary> Gets or sets the initial source limit. </summary>
     /// <value> The initial source limit. </value>
-    public virtual double InitialSourceLimit
+    public double InitialSourceLimit
     {
-        get => this._initialSourceLimit;
-        set => _ = this.SetProperty( ref this._initialSourceLimit, value );
-    }
-
-    private double _maximumOutputPower;
+        get;
+        set => _ = this.SetProperty( ref field, value );
+    } = 0.000105;
 
     /// <summary> Gets or sets the maximum output power of the instrument. </summary>
     /// <value> The maximum output power . </value>
-    public virtual double MaximumOutputPower
+    public double MaximumOutputPower
     {
-        get => this._maximumOutputPower;
-        set => _ = this.SetProperty( ref this._maximumOutputPower, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
 
     #endregion
 
     #region " source subsystem information "
-
 
     /// <summary>
     /// Gets or sets a value indicating whether the source read back is enabled.
@@ -191,7 +181,5 @@ public class SourceSubsystemSettings() : System.ComponentModel.INotifyPropertyCh
     } = 0.02;
 
     #endregion
-
-
 }
 

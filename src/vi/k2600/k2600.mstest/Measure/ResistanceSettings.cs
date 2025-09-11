@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using System.ComponentModel;
-using System;
 
 namespace cc.isr.VI.Tsp.K2600.MSTest.Measure;
 
@@ -113,8 +111,6 @@ public class ResistanceSettings() : System.ComponentModel.INotifyPropertyChanged
 
     #region " exists "
 
-    private bool _exists;
-
     /// <summary>
     /// Gets or sets a value indicating whether this settings section exists and the values were thus
     /// fetched from the settings file.
@@ -123,33 +119,29 @@ public class ResistanceSettings() : System.ComponentModel.INotifyPropertyChanged
     [System.ComponentModel.Description( "True if this settings section exists and was read from the JSon settings file." )]
     public bool Exists
     {
-        get => this._exists;
-        set => _ = this.SetProperty( ref this._exists, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
 
     #endregion
 
     #region " resistance information "
 
-    private double _expectedResistance = 100;
-
     /// <summary>   Gets or sets the expected resistance. </summary>
     /// <value> The expected resistance. </value>
     public double ExpectedResistance
     {
-        get => this._expectedResistance;
-        set => this.SetProperty( ref this._expectedResistance, value );
-    }
-
-    private double _resistanceTolerance = 0.01;
+        get;
+        set => this.SetProperty( ref field, value );
+    } = 100;
 
     /// <summary>   Gets or sets the resistance tolerance. </summary>
     /// <value> The resistance tolerance. </value>
     public double ResistanceTolerance
     {
-        get => this._resistanceTolerance;
-        set => this.SetProperty( ref this._resistanceTolerance, value );
-    }
+        get;
+        set => this.SetProperty( ref field, value );
+    } = 0.01;
 
     #endregion
 }

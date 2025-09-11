@@ -210,58 +210,48 @@ public abstract partial class MeasureBase : DeviceUnderTestElementBase
         set => _ = this.SetProperty( ref this._displayFormat, value );
     }
 
-    private string? _voltageDisplayFormat;
-
     /// <summary> Gets or sets the display format for Voltage. </summary>
     /// <value> The display format. </value>
     public string? VoltageDisplayFormat
     {
-        get => this._voltageDisplayFormat;
-        set => _ = this.SetProperty( ref this._voltageDisplayFormat, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
 
     #endregion
 
     #region " parser "
 
-    private string? _firmwareReading;
-
     /// <summary> Gets or sets the firmware reading. </summary>
     /// <value> The firmware outcome reading. </value>
     public string? FirmwareReading
     {
-        get => this._firmwareReading;
-        set => _ = this.SetProperty( ref this._firmwareReading, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
-
-    private string? _firmwareOutcomeReading;
 
     /// <summary> Gets or sets the firmware outcome reading. </summary>
     /// <value> The firmware outcome reading. </value>
     public string? FirmwareOutcomeReading
     {
-        get => this._firmwareOutcomeReading;
-        set => _ = this.SetProperty( ref this._firmwareOutcomeReading, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
-
-    private string? _firmwareStatusReading;
 
     /// <summary> Gets or sets the firmware status reading. </summary>
     /// <value> The firmware status reading. </value>
     public string? FirmwareStatusReading
     {
-        get => this._firmwareStatusReading;
-        set => _ = this.SetProperty( ref this._firmwareStatusReading, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
-
-    private string? _firmwareOkayReading;
 
     /// <summary> Gets or sets the firmware okay reading. </summary>
     /// <value> The firmware okay reading. </value>
     public string? FirmwareOkayReading
     {
-        get => this._firmwareOkayReading;
-        set => _ = this.SetProperty( ref this._firmwareOkayReading, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
 
     /// <summary> Sets the reading and outcome. </summary>
@@ -304,24 +294,20 @@ public abstract partial class MeasureBase : DeviceUnderTestElementBase
 
     #region " measurement properties "
 
-    private bool _measurementAvailable;
-
     /// <summary> Gets or sets (protected) the measurement available. </summary>
     /// <value> The measurement available. </value>
     public bool MeasurementAvailable
     {
-        get => this._measurementAvailable;
-        set => _ = this.SetProperty( ref this._measurementAvailable, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
-
-    private Syntax.FirmwareOutcomes? _firmwareOutcome;
 
     /// <summary> Gets or sets the firmware outcome. </summary>
     /// <value> The outcome. </value>
     public Syntax.FirmwareOutcomes? FirmwareOutcome
     {
-        get => this._firmwareOutcome;
-        set => _ = this.SetProperty( ref this._firmwareOutcome, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
 
     private MeasurementOutcomes? _measurementOutcome;

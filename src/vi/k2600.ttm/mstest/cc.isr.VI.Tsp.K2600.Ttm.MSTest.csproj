@@ -6,7 +6,7 @@
     <TargetFrameworks>net9.0</TargetFrameworks>
     <LangVersion>preview</LangVersion>
 
-    <ImplicitUsings>disable</ImplicitUsings>
+    <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -76,7 +76,6 @@
 
   <ItemGroup>
     <Compile Include="..\..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
-    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting"/>
   </ItemGroup>
 
   <ItemGroup>
@@ -89,6 +88,7 @@
     <Content Include="cc.isr.VI.Tsp.K2600.Ttm.MSTest.Driver.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+
     <Content Include="cc.isr.VI.Tsp.K2600.Ttm.MSTest.Serilog.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

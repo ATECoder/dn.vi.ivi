@@ -67,24 +67,23 @@ public partial class ConfigurationViewBase : cc.isr.WinControls.ModelViewBase
 
     #region " part "
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0032:Use auto property", Justification = "preview; not preferred time." )]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage( "CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "<Pending>" )]
-    private DeviceUnderTest? _partInternal;
 
+    [field: System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0032:Use auto property", Justification = "preview; not preferred time." )]
+    [field: System.Diagnostics.CodeAnalysis.SuppressMessage( "CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "<Pending>" )]
     private DeviceUnderTest? PartInternal
     {
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
-        get => this._partInternal;
+        get;
 
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( this._partInternal is not null )
-                this._partInternal.PropertyChanged -= this.Part_PropertyChanged;
+            if ( field is not null )
+                field.PropertyChanged -= this.Part_PropertyChanged;
 
-            this._partInternal = value;
-            if ( this._partInternal is not null )
-                this._partInternal.PropertyChanged += this.Part_PropertyChanged;
+            field = value;
+            if ( field is not null )
+                field.PropertyChanged += this.Part_PropertyChanged;
         }
     }
 
@@ -347,21 +346,21 @@ public partial class ConfigurationViewBase : cc.isr.WinControls.ModelViewBase
     }
 
 #if NET9_0_OR_GREATER
-    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0032:Use auto property", Justification = "preview; not preferred time." )]
+
 #endif
-    private bool _isNewConfigurationSettingAvailable;
 
     /// <summary> Gets or sets the is new configuration setting available. </summary>
     /// <value> The is new configuration setting available. </value>
+    [field: System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0032:Use auto property", Justification = "preview; not preferred time." )]
     [DesignerSerializationVisibility( DesignerSerializationVisibility.Hidden )]
     public bool IsNewConfigurationSettingAvailable
     {
-        get => this._isNewConfigurationSettingAvailable;
+        get;
         set
         {
             if ( !value.Equals( this.IsNewConfigurationSettingAvailable ) )
             {
-                this._isNewConfigurationSettingAvailable = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }

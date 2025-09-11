@@ -89,7 +89,6 @@ public class BufferStreamViewSettings : CommunityToolkit.Mvvm.ComponentModel.Obs
 
     #region " exists "
 
-
     /// <summary>
     /// Gets or sets a value indicating whether this settings section exists and the values were thus
     /// fetched from the settings file.
@@ -105,7 +104,6 @@ public class BufferStreamViewSettings : CommunityToolkit.Mvvm.ComponentModel.Obs
     #endregion
 
     #region " settings "
-
 
     /// <summary>   Gets or sets the stream buffer sense function mode. </summary>
     /// <value> The stream buffer sense function mode. </value>

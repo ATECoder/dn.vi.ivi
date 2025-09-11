@@ -162,7 +162,6 @@ public partial class BufferStreamView : cc.isr.WinControls.ModelViewBase
 
     #region " public members: buffer display "
 
-
     /// <summary>   Gets or sets the reference to the data grid view. </summary>
     /// <value> The reference to the data grid view. </value>
     private DataGridView? DataGridViewThis

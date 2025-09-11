@@ -1,4 +1,3 @@
-using System;
 using cc.isr.VI.Device.Tests.Base;
 using cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
@@ -45,7 +44,7 @@ public class TspSessionDebugScriptTests : Device.Tests.Base.ScriptTests
         Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
         Console.WriteLine( $"\tTesting {typeof( cc.isr.VI.Tsp.Script.ScriptCompressor ).Assembly.FullName}" );
 
-        // create an instance of the Serilog logger.
+        // create an instance of the session logger.
         SessionLogger.Instance.CreateLogger( typeof( TspSessionDebugScriptTests ) );
 
         this.TestSiteSettings = Settings.AllSettings.Instance.TestSiteSettings;

@@ -2,9 +2,23 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9383]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9385]: https://www.github.com/atecoder/dn.vi.ivi
 
 Current IVI Visa Compatibility: 8.0.1.9383
+
+## [8.1.9385] - 2025-09-11
+- MSTest: Enable implicit using.
+- Add device TSP MS Test project.
+- Add ni.rohde solution.
+- Remove ni rohde projects from other solutions.
+- 2600.Ttm.sln:
+  - Remove unused and framework MS Test and Demo projects.
+- cc.isr.VI.Device:
+  - SourceSubsystemBase: 
+    - Set source function none to -1, current to 0 and voltage to 1.
+    - Parse source function query from a numeric reply.
+- K2600 MS Test
+  - Implement source function application tests.
 
 ## [8.1.9383] - 2025-09-09
 - Implement code analysis recommendations.

@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using System.ComponentModel;
-using System;
 
 namespace cc.isr.VI.Tsp.K2600.MSTest.Source;
 
@@ -112,8 +110,6 @@ public class CurrentSourceMeasureSettings() : System.ComponentModel.INotifyPrope
 
     #region " exists "
 
-    private bool _exists;
-
     /// <summary>
     /// Gets or sets a value indicating whether this settings section exists and the values were thus
     /// fetched from the settings file.
@@ -122,33 +118,29 @@ public class CurrentSourceMeasureSettings() : System.ComponentModel.INotifyPrope
     [System.ComponentModel.Description( "True if this settings were found and read from the settings file." )]
     public bool Exists
     {
-        get => this._exists;
-        set => _ = this.SetProperty( ref this._exists, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
 
     #endregion
 
     #region " resistance information "
 
-    private double _loadResistance = 100;
-
     /// <summary>   Gets or sets the load resistance. </summary>
     /// <value> The load resistance. </value>
     public double LoadResistance
     {
-        get => this._loadResistance;
-        set => this.SetProperty( ref this._loadResistance, value );
-    }
-
-    private double _measurementTolerance = 0.01;
+        get;
+        set => this.SetProperty( ref field, value );
+    } = 100;
 
     /// <summary>   Gets or sets the measurement tolerance. </summary>
     /// <value> The measurement tolerance. </value>
     public double MeasurementTolerance
     {
-        get => this._measurementTolerance;
-        set => this.SetProperty( ref this._measurementTolerance, value );
-    }
+        get;
+        set => this.SetProperty( ref field, value );
+    } = 0.01;
 
     #endregion
 }

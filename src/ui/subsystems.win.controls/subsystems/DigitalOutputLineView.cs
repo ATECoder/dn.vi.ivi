@@ -77,7 +77,6 @@ public partial class DigitalOutputLineView : cc.isr.WinControls.ModelViewBase
 
     #region " public members "
 
-
     /// <summary> Gets or sets the line identity. </summary>
     /// <value> The line identity. </value>
     [DesignerSerializationVisibility( DesignerSerializationVisibility.Hidden )]

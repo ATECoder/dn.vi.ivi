@@ -5,7 +5,7 @@
     <TargetFrameworks>net472;net48;net9.0</TargetFrameworks>
     <LangVersion>preview</LangVersion>
 
-    <ImplicitUsings>disable</ImplicitUsings>
+    <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -68,7 +68,6 @@
 
   <ItemGroup>
     <Compile Include="..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
-    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting"/>
   </ItemGroup>
 
   <ItemGroup>
@@ -81,6 +80,7 @@
     <None Update="version.build.tt">
       <LastGenOutput>version.build.props</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
+
     </None>
     <!-- Suppress warning about newton soft 9.0.1 which is part of the .net fx testing extensions code coverage.
       <NuGetAuditSuppress Include="https://github.com/advisories/GHSA-5crp-9r3c-p9vr" />

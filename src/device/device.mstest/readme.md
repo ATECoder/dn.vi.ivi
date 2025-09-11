@@ -1,6 +1,6 @@
 # VI Device Tests
 
-The [cc.isr.VI.Device.MSTest] includes tests for the [cc.isr.VI.Pith] classes, which provide the base classes for this VISA implementation. Also included is a Device Manager class, which supports tests of a large number of device subsystems and is to be called from test projects designed to unit test the subsystem of specific devices such as the Keithley 2450 source meter or the 2002 multimeter.
+The [cc.isr.VI.Device.MSTest] includes tests for the [cc.isr.VI.Pith] class, which provide the base classes for this VISA implementation, and [cc.isr.VI.Device] classes, which provide the base classes for device subsystems. Also included is an Assert class, which supports tests of a large number of device subsystems to be called from test projects designed to unit test the subsystem of specific devices such as the Keithley 2450 source meter or the 2002 multimeter.
 
 ## [cc.isr.VI.Pith] Tests
 
@@ -18,3 +18,4 @@ Bug reports and contributions are welcome at the [VI Repository].
 [VI Repository]: https://www.github.com/atecoder/ds.vi.ivi
 [cc.isr.VI.Device.MSTest]: https://github.com/atecoder/dn.vi.ivi/src/device/device.mstest/
 [cc.isr.VI.Pith]: https://github.com/atecoder/dn.vi.ivi/src/resource/pith/
+[cc.isr.VI.Device]: https://github.com/atecoder/dn.vi.ivi/src/device/device/

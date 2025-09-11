@@ -20,15 +20,13 @@ public class SourceResistanceSettings() : VI.Settings.SourceSubsystemSettings
 
     #region " TSP Settings "
 
-    private SourceFunctionMode _sourceFunction = SourceFunctionMode.CurrentDC;
-
     /// <summary>   Gets or sets source function. </summary>
     /// <value> The source function. </value>
     public SourceFunctionMode SourceFunction
     {
-        get => this._sourceFunction;
-        set => this.SetProperty( ref this._sourceFunction, value );
-    }
+        get;
+        set => this.SetProperty( ref field, value );
+    } = SourceFunctionMode.CurrentDC;
 
     #endregion
 }

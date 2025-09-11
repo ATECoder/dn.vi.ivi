@@ -278,18 +278,16 @@ public class MeterSubsystem : MeterSubsystemBase
 
     #region " legacy driver "
 
-    private int? _legacyDriver;
-
     /// <summary> Gets or sets the cached legacy driver flag. </summary>
     public int? LegacyDriver
     {
-        get => this._legacyDriver;
+        get;
 
         protected set
         {
             value ??= Properties.Settings.Instance.TtmMeterSettings.LegacyDriver;
             this.MeterMain.LegacyDriver = value.Value;
-            _ = this.SetProperty( ref this._legacyDriver, value );
+            _ = this.SetProperty( ref field, value );
         }
     }
 
@@ -336,18 +334,16 @@ public class MeterSubsystem : MeterSubsystemBase
 
     #region " Contact Limit "
 
-    private int? _contactLimit;
-
     /// <summary> Gets or sets the cached Contact Limit flag. </summary>
     public int? ContactLimit
     {
-        get => this._contactLimit;
+        get;
 
         protected set
         {
             value ??= Properties.Settings.Instance.TtmMeterSettings.ContactCheckThreshold;
             this.MeterMain.ContactLimit = value.Value;
-            _ = this.SetProperty( ref this._contactLimit, value );
+            _ = this.SetProperty( ref field, value );
         }
     }
 
@@ -394,18 +390,16 @@ public class MeterSubsystem : MeterSubsystemBase
 
     #region " Contact Check Option "
 
-    private Syntax.ContactCheckOptions? _contactCheckOptions;
-
     /// <summary> Gets or sets the cached Contact Check Option flag. </summary>
     public Syntax.ContactCheckOptions? ContactCheckOptions
     {
-        get => this._contactCheckOptions;
+        get;
 
         protected set
         {
             value ??= Properties.Settings.Instance.TtmMeterSettings.ContactCheckOptions;
             this.MeterMain.ContactCheckOptions = value.Value;
-            _ = this.SetProperty( ref this._contactCheckOptions, value );
+            _ = this.SetProperty( ref field, value );
         }
     }
 
@@ -454,21 +448,19 @@ public class MeterSubsystem : MeterSubsystemBase
 
     #region " post transient delay "
 
-    private double? _postTransientDelay;
-
     /// <summary> Gets or sets the cached Source Post Transient Delay. </summary>
     /// <value>
     /// The Source Post Transient Delay.
     /// </value>
     public double? PostTransientDelay
     {
-        get => this._postTransientDelay;
+        get;
 
         protected set
         {
             value ??= Properties.Settings.Instance.TtmMeterSettings.PostTransientDelay;
             this.MeterMain.PostTransientDelay = value.Value;
-            _ = this.SetProperty( ref this._postTransientDelay, value );
+            _ = this.SetProperty( ref field, value );
         }
     }
 

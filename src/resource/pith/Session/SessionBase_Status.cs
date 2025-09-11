@@ -59,7 +59,6 @@ public partial class SessionBase
 
     #region " service request register events: measurement "
 
-
     /// <summary>
     /// Gets or sets the bit that would be set when an enabled measurement event has occurred.
     /// </summary>
@@ -142,7 +141,6 @@ public partial class SessionBase
     #endregion
 
     #region " service request register events: error "
-
 
     /// <summary> Gets or sets the bit that would be set if an error event has occurred. </summary>
     /// <exception cref="InvalidOperationException"> Thrown when the requested operation is invalid. </exception>
@@ -382,7 +380,6 @@ public partial class SessionBase
 
     #region " service request register events: standard event "
 
-
     /// <summary>
     /// Gets or sets the bitmask that would be set if an enabled standard event has occurred.
     /// </summary>
@@ -425,7 +422,6 @@ public partial class SessionBase
 
     #region " service request register events: service event (srq) "
 
-
     /// <summary>
     /// Gets or sets bit that would be set if a requested service or Main Summary Bit (MSB) event has
     /// occurred.
@@ -466,7 +462,6 @@ public partial class SessionBase
     #endregion
 
     #region " service request register events: operation "
-
 
     /// <summary> Gets or sets the bit that would be set if an operation event has occurred. </summary>
     /// <exception cref="InvalidOperationException"> Thrown when the requested operation is invalid. </exception>
@@ -569,7 +564,6 @@ public partial class SessionBase
     #endregion
 
     #region " query data and query results bitmasks "
-
 
     /// <summary>   Gets or sets the status busy bitmask. </summary>
     /// <value> The status busy bitmask. </value>

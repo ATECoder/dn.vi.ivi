@@ -1,5 +1,3 @@
-using System;
-using System.Linq;
 using cc.isr.Std.Tests;
 using cc.isr.VI.Pith;
 using cc.isr.Std.Tests.Extensions;
@@ -139,10 +137,10 @@ Math.Abs( this.TestSiteSettings.TimeZoneOffset() ), $"{nameof( this.TestSiteSett
 
     #region " visa resource test "
 
-    /// <summary>   (Unit Test Method) Assert that visa implementations exit. </summary>
+    /// <summary>   (Unit Test Method) Assert that visa implementations exist. </summary>
     /// <remarks>   2024-07-09. </remarks>
-    [TestMethod( "02. Visa implementations should exit" )]
-    public void VisaImplementationsShouldExit()
+    [TestMethod( "02. Visa implementations should exist" )]
+    public void VisaImplementationsShouldExist()
     {
         Version expectedVersion = new( Visa.Gac.Vendor.IVI_VISA_IMPLEMENTATION_VERSION );
         Version? actualVersion = Visa.Gac.GacLoader.VerifyVisaImplementationPresence();

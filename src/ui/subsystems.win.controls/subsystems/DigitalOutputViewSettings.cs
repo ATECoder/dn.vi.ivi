@@ -90,7 +90,6 @@ public partial class DigitalOutputViewSettings : CommunityToolkit.Mvvm.Component
 
     #region " exists "
 
-
     /// <summary>
     /// Gets or sets a value indicating whether this settings section exists and the values were thus
     /// fetched from the settings file.
@@ -106,7 +105,6 @@ public partial class DigitalOutputViewSettings : CommunityToolkit.Mvvm.Component
     #endregion
 
     #region " values "
-
 
     /// <summary>   Gets or sets the strobe line number. </summary>
     /// <value> The strobe line number. </value>

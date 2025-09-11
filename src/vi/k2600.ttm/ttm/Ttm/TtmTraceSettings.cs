@@ -1,10 +1,11 @@
 using System.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace cc.isr.VI.Tsp.K2600.Ttm;
 
 /// <summary>   The TTM Trace Settings. </summary>
 /// <remarks>   David, 2021-02-01. </remarks>
-public class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
+public partial class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
 {
     #region " construction "
 
@@ -16,8 +17,6 @@ public class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
 
     #region " exists "
 
-    private bool _exists;
-
     /// <summary>
     /// Gets or sets a value indicating whether this settings section exists and the values were thus
     /// fetched from the settings file.
@@ -26,432 +25,242 @@ public class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableO
     [Description( "True if this settings section exists and was read from the JSon settings file." )]
     public bool Exists
     {
-        get => this._exists;
-        set => _ = this.SetProperty( ref this._exists, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
 
     #endregion
 
     #region " thermal transient properties "
 
-    private double _aperture = 0.004;
-
     /// <summary>   Gets or sets the Thermal Transient aperture. </summary>
     /// <value> The Thermal Transient aperture. </value>
+    [ObservableProperty]
     [Description( "Thermal Transient Aperture {0.004)." )]
-    public double Aperture
-    {
-        get => this._aperture;
-        set => this.SetProperty( ref this._aperture, value );
-    }
-
-    private double _apertureDefault = 0.004;
+    public partial double Aperture { get; set; } = 0.004;
 
     /// <summary>   Gets or sets the Thermal Transient aperture default. </summary>
     /// <value> The Thermal Transient aperture default. </value>
+    [ObservableProperty]
     [Description( "Thermal Transient Default Aperture {0.004)." )]
-    public double ApertureDefault
-    {
-        get => this._apertureDefault;
-        set => this.SetProperty( ref this._apertureDefault, value );
-    }
-
-    private double _apertureMaximum = 0.01;
+    public partial double ApertureDefault { get; set; } = 0.004;
 
     /// <summary>   Gets or sets the Thermal Transient aperture Maximum. </summary>
     /// <value> The Thermal Transient aperture Maximum. </value>
+    [ObservableProperty]
     [Description( "Thermal Transient Maximum Aperture {0.01)." )]
-    public double ApertureMaximum
-    {
-        get => this._apertureMaximum;
-        set => this.SetProperty( ref this._apertureMaximum, value );
-    }
-
-    private double _apertureMinimum = 0.001;
+    public partial double ApertureMaximum { get; set; } = 0.01;
 
     /// <summary>   Gets or sets the Thermal Transient aperture minimum. </summary>
     /// <value> The Thermal Transient aperture minimum. </value>
+    [ObservableProperty]
     [Description( "Thermal Transient Minimum Aperture {0.001)." )]
-    public double ApertureMinimum
-    {
-        get => this._apertureMinimum;
-        set => this.SetProperty( ref this._apertureMinimum, value );
-    }
-
-    private double _currentLevel = 0.27;
+    public partial double ApertureMinimum { get; set; } = 0.001;
 
     /// <summary>   Gets or sets the Thermal Transient current level. </summary>
     /// <value> The Thermal Transient current level. </value>
+    [ObservableProperty]
     [Description( "Thermal Transient Current Level {0.27)." )]
-    public double CurrentLevel
-    {
-        get => this._currentLevel;
-        set => this.SetProperty( ref this._currentLevel, value );
-    }
-
-    private double _currentLevelDefault = 0.27;
+    public partial double CurrentLevel { get; set; } = 0.27;
 
     /// <summary>   Gets or sets the Thermal Transient current level default. </summary>
     /// <value> The Thermal Transient current level default. </value>
+    [ObservableProperty]
     [Description( "Thermal Transient Default Current Level {0.27)." )]
-    public double CurrentLevelDefault
-    {
-        get => this._currentLevelDefault;
-        set => this.SetProperty( ref this._currentLevelDefault, value );
-    }
-
-    private double _currentMaximum = 0.999;
+    public partial double CurrentLevelDefault { get; set; } = 0.27;
 
     /// <summary>   Gets or sets the Thermal Transient current Maximum. </summary>
     /// <value> The Thermal Transient current Maximum. </value>
+    [ObservableProperty]
     [Description( "Thermal Transient Maximum Current {0.999)." )]
-    public double CurrentMaximum
-    {
-        get => this._currentMaximum;
-        set => this.SetProperty( ref this._currentMaximum, value );
-    }
-
-    private double _currentMinimum = 0.01;
+    public partial double CurrentMaximum { get; set; } = 0.999;
 
     /// <summary>   Gets or sets the Thermal Transient current minimum. </summary>
     /// <value> The Thermal Transient current minimum. </value>
+    [ObservableProperty]
     [Description( "Thermal Transient Minimum Current {0.01)." )]
-    public double CurrentMinimum
-    {
-        get => this._currentMinimum;
-        set => this.SetProperty( ref this._currentMinimum, value );
-    }
-
-    private double _duration = 0.01;
+    public partial double CurrentMinimum { get; set; } = 0.01;
 
     /// <summary>   Gets or sets the Thermal Transient Duration. </summary>
     /// <value> The Thermal Transient Duration. </value>
+    [ObservableProperty]
     [Description( "Thermal Transient Duration {0.01)." )]
-    public double Duration
-    {
-        get => this._duration;
-        set => this.SetProperty( ref this._duration, value );
-    }
-
-    private double _durationDefault = 0.01;
+    public partial double Duration { get; set; } = 0.01;
 
     /// <summary>   Gets or sets the Thermal Transient Duration default. </summary>
     /// <value> The Thermal Transient Duration default. </value>
+    [ObservableProperty]
     [Description( "Thermal Transient Default Duration {0.01)." )]
-    public double DurationDefault
-    {
-        get => this._durationDefault;
-        set => this.SetProperty( ref this._durationDefault, value );
-    }
-
-    private double _durationMaximum = 0.1;
+    public partial double DurationDefault { get; set; } = 0.01;
 
     /// <summary>   Gets or sets the Thermal Transient Duration Maximum. </summary>
     /// <value> The Thermal Transient Duration Maximum. </value>
+    [ObservableProperty]
     [Description( "Thermal Transient Duration Maximum Value {0.01)." )]
-    public double DurationMaximum
-    {
-        get => this._durationMaximum;
-        set => this.SetProperty( ref this._durationMaximum, value );
-    }
-
-    private double _durationMinimum = 0.01;
+    public partial double DurationMaximum { get; set; } = 0.1;
 
     /// <summary>   Gets or sets the Thermal Transient Duration minimum. </summary>
     /// <value> The Thermal Transient Duration minimum. </value>
+    [ObservableProperty]
     [Description( "Thermal Transient Duration Minimum Value {0.01)." )]
-    public double DurationMinimum
-    {
-        get => this._durationMinimum;
-        set => this.SetProperty( ref this._durationMinimum, value );
-    }
-
-    private double _highLimit = 0.017;
+    public partial double DurationMinimum { get; set; } = 0.01;
 
     /// <summary>   Gets or sets the Thermal Transient voltage change high limit . </summary>
     /// <value> The Thermal Transient voltage change high limit . </value>
+    [ObservableProperty]
     [Description( "Thermal Transient Voltage Change High Limit {0.017)." )]
-    public double HighLimit
-    {
-        get => this._highLimit;
-        set => this.SetProperty( ref this._highLimit, value );
-    }
-
-    private double _highLimitDefault = 0.017;
+    public partial double HighLimit { get; set; } = 0.017;
 
     /// <summary>   Gets or sets the Thermal Transient High limit default. </summary>
     /// <value> The Thermal Transient High limit default. </value>
+    [ObservableProperty]
     [Description( "Thermal Transient Default Voltage Change High Limit {0.017)." )]
-    public double HighLimitDefault
-    {
-        get => this._highLimitDefault;
-        set => this.SetProperty( ref this._highLimitDefault, value );
-    }
-
-    private double _latency = 0.00035;
+    public partial double HighLimitDefault { get; set; } = 0.017;
 
     /// <summary>   Gets or sets the Thermal Transient Latency. </summary>
     /// <remarks> This is the estimated time from the onset of the current pulse to the onset of data acquisition. </remarks>
     /// <value> The Thermal Transient Latency. </value>
+    [ObservableProperty]
     [Description( "Thermal Transient Latency {0.00035)." )]
-    public double Latency
-    {
-        get => this._latency;
-        set => this.SetProperty( ref this._latency, value );
-    }
-
-    private double _latencyDefault = 0.00035;
+    public partial double Latency { get; set; } = 0.00035;
 
     /// <summary>   Gets or sets the Thermal Transient Latency default. </summary>
     /// <value> The Thermal Transient Latency default. </value>
+    [ObservableProperty]
     [Description( "Thermal Transient Default Latency {0.00035)." )]
-    public double LatencyDefault
-    {
-        get => this._latencyDefault;
-        set => this.SetProperty( ref this._latencyDefault, value );
-    }
-
-    private double _lowLimit = 0.006;
+    public partial double LatencyDefault { get; set; } = 0.00035;
 
     /// <summary>   Gets or sets the Thermal Transient low limit . </summary>
     /// <value> The Thermal Transient low limit . </value>
+    [ObservableProperty]
     [Description( "Thermal Voltage Change Default Low Limit {0.006)." )]
-    public double LowLimit
-    {
-        get => this._lowLimit;
-        set => this.SetProperty( ref this._lowLimit, value );
-    }
-
-    private double _lowLimitDefault = 0.006;
+    public partial double LowLimit { get; set; } = 0.006;
 
     /// <summary>   Gets or sets the Thermal Transient low limit default. </summary>
     /// <value> The Thermal Transient low limit default. </value>
+    [ObservableProperty]
     [Description( "Thermal Transient Voltage Change Default Low Limit {0.006)." )]
-    public double LowLimitDefault
-    {
-        get => this._lowLimitDefault;
-        set => this.SetProperty( ref this._lowLimitDefault, value );
-    }
-
-    private int _medianFilterLength = 3;
+    public partial double LowLimitDefault { get; set; } = 0.006;
 
     /// <summary>   Gets or sets the Thermal Transient Median Filter Length. </summary>
     /// <value> The Thermal Transient Median Filter Length. </value>
+    [ObservableProperty]
     [Description( "Thermal Transient Median Filter Length {3)." )]
-    public int MedianFilterLength
-    {
-        get => this._medianFilterLength;
-        set => this.SetProperty( ref this._medianFilterLength, value );
-    }
-
-    private int _medianFilterLengthDefault = 3;
+    public partial int MedianFilterLength { get; set; } = 3;
 
     /// <summary>   Gets or sets the Thermal Transient Trace Median Filter Length default. </summary>
     /// <value> The Thermal Transient Median Filter Length default. </value>
+    [ObservableProperty]
     [Description( "Thermal Transient Default Median Filter Length {3)." )]
-    public int MedianFilterLengthDefault
-    {
-        get => this._medianFilterLengthDefault;
-        set => this.SetProperty( ref this._medianFilterLengthDefault, value );
-    }
-
-    private int _medianFilterLengthMaximum = 9;
+    public partial int MedianFilterLengthDefault { get; set; } = 3;
 
     /// <summary>   Gets or sets the Thermal Transient Median Filter Length Maximum. </summary>
     /// <value> The Thermal Transient Median Filter Length Maximum. </value>
+    [ObservableProperty]
     [Description( "Thermal Transient Maximum Median Filter Length {9)." )]
-    public int MedianFilterLengthMaximum
-    {
-        get => this._medianFilterLengthMaximum;
-        set => this.SetProperty( ref this._medianFilterLengthMaximum, value );
-    }
-
-    private int _medianFilterLengthMinimum = 3;
+    public partial int MedianFilterLengthMaximum { get; set; } = 9;
 
     /// <summary>   Gets or sets the Thermal Transient Median Filter Length minimum. </summary>
     /// <value> The Thermal Transient Median Filter Length minimum. </value>
+    [ObservableProperty]
     [Description( "Thermal Transient Minimum Median Filter Length {3)." )]
-    public int MedianFilterLengthMinimum
-    {
-        get => this._medianFilterLengthMinimum;
-        set => this.SetProperty( ref this._medianFilterLengthMinimum, value );
-    }
-
-    private double _samplingInterval = 0.0001;
+    public partial int MedianFilterLengthMinimum { get; set; } = 3;
 
     /// <summary>   Gets or sets the Thermal Transient Sampling Interval. </summary>
     /// <value> The Thermal Transient Sampling Interval. </value>
+    [ObservableProperty]
     [Description( "Thermal Transient Maximum Sampling Interval {0.0001)." )]
-    public double SamplingInterval
-    {
-        get => this._samplingInterval;
-        set => this.SetProperty( ref this._samplingInterval, value );
-    }
-
-    private double _samplingIntervalDefault = 0.0001;
+    public partial double SamplingInterval { get; set; } = 0.0001;
 
     /// <summary>   Gets or sets the Thermal Transient Sampling Interval default. </summary>
     /// <value> The Thermal Transient Sampling Interval default. </value>
+    [ObservableProperty]
     [Description( "Thermal Transient Default Sampling Interval {0.0001)." )]
-    public double SamplingIntervalDefault
-    {
-        get => this._samplingIntervalDefault;
-        set => this.SetProperty( ref this._samplingIntervalDefault, value );
-    }
-
-    private double _samplingIntervalMaximum = 0.001;
+    public partial double SamplingIntervalDefault { get; set; } = 0.0001;
 
     /// <summary>   Gets or sets the Thermal Transient Sampling Interval Maximum. </summary>
     /// <value> The Thermal Transient Sampling Interval Maximum. </value>
+    [ObservableProperty]
     [Description( "Thermal Transient Maximum Sampling Interval {0.001)." )]
-    public double SamplingIntervalMaximum
-    {
-        get => this._samplingIntervalMaximum;
-        set => this.SetProperty( ref this._samplingIntervalMaximum, value );
-    }
-
-    private double _samplingIntervalMinimum = 0.00008;
+    public partial double SamplingIntervalMaximum { get; set; } = 0.001;
 
     /// <summary>   Gets or sets the Thermal Transient SamplingInterval minimum. </summary>
     /// <value> The Thermal Transient SamplingInterval minimum. </value>
+    [ObservableProperty]
     [Description( "Thermal Transient Minimum Sampling Interval {0.00008)." )]
-    public double SamplingIntervalMinimum
-    {
-        get => this._samplingIntervalMinimum;
-        set => this.SetProperty( ref this._samplingIntervalMinimum, value );
-    }
-
-    private int _tracePoints = 100;
+    public partial double SamplingIntervalMinimum { get; set; } = 0.00008;
 
     /// <summary>   Gets or sets the Thermal Transient Trace Points. </summary>
     /// <value> The Thermal Transient Trace Points. </value>
+    [ObservableProperty]
     [Description( "Thermal Transient Trace Points {100)." )]
-    public int TracePoints
-    {
-        get => this._tracePoints;
-        set => this.SetProperty( ref this._tracePoints, value );
-    }
-
-    private int _tracePointsDefault = 100;
+    public partial int TracePoints { get; set; } = 100;
 
     /// <summary>   Gets or sets the Thermal Transient Trace Points default. </summary>
     /// <value> The Thermal Transient Trace Points default. </value>
+    [ObservableProperty]
     [Description( "Thermal Transient Default Trace Points {100)." )]
-    public int TracePointsDefault
-    {
-        get => this._tracePointsDefault;
-        set => this.SetProperty( ref this._tracePointsDefault, value );
-    }
-
-    private int _tracePointsMaximum = 10000;
+    public partial int TracePointsDefault { get; set; } = 100;
 
     /// <summary>   Gets or sets the Thermal Transient Median Filter Length Maximum. </summary>
     /// <value> The Thermal Transient Trace Points Maximum. </value>
+    [ObservableProperty]
     [Description( "Thermal Transient Maximum Trace Points {10000)." )]
-    public int TracePointsMaximum
-    {
-        get => this._tracePointsMaximum;
-        set => this.SetProperty( ref this._tracePointsMaximum, value );
-    }
-
-    private int _tracePointsMinimum = 10;
+    public partial int TracePointsMaximum { get; set; } = 10000;
 
     /// <summary>   Gets or sets the Thermal Transient Trace Points minimum. </summary>
     /// <value> The Thermal Transient Trace Points minimum. </value>
+    [ObservableProperty]
     [Description( "Thermal Transient Minimum Trace Points {10)." )]
-    public int TracePointsMinimum
-    {
-        get => this._tracePointsMinimum;
-        set => this.SetProperty( ref this._tracePointsMinimum, value );
-    }
-
-    private double _voltageChange = 0.099;
+    public partial int TracePointsMinimum { get; set; } = 10;
 
     /// <summary>   Gets or sets the Thermal Transient voltage Change . </summary>
     /// <value> The Thermal Transient voltage Change . </value>
+    [ObservableProperty]
     [Description( "Thermal Transient Voltage Change {0.099)." )]
-    public double VoltageChange
-    {
-        get => this._voltageChange;
-        set => this.SetProperty( ref this._voltageChange, value );
-    }
-
-    private double _voltageChangeDefault = 0.099;
+    public partial double VoltageChange { get; set; } = 0.099;
 
     /// <summary>   Gets or sets the Thermal Transient voltage Change default. </summary>
     /// <value> The Thermal Transient voltage Change default. </value>
+    [ObservableProperty]
     [Description( "Thermal Transient Default Voltage Change {0.099)." )]
-    public double VoltageChangeDefault
-    {
-        get => this._voltageChangeDefault;
-        set => this.SetProperty( ref this._voltageChangeDefault, value );
-    }
-
-    private double _voltageChangeMaximum = 0.099;
+    public partial double VoltageChangeDefault { get; set; } = 0.099;
 
     /// <summary>   Gets or sets the Thermal Transient voltage Change Maximum. </summary>
     /// <value> The Thermal Transient voltage Change Maximum. </value>
+    [ObservableProperty]
     [Description( "Thermal Transient Maximum Voltage Change {0.099)." )]
-    public double VoltageChangeMaximum
-    {
-        get => this._voltageChangeMaximum;
-        set => this.SetProperty( ref this._voltageChangeMaximum, value );
-    }
-
-    private double _voltageChangeMinimum = 0.001;
+    public partial double VoltageChangeMaximum { get; set; } = 0.099;
 
     /// <summary>   Gets or sets the Thermal Transient voltage Change Minimum. </summary>
     /// <value> The Thermal Transient voltage Change Minimum. </value>
+    [ObservableProperty]
     [Description( "Thermal Transient Minimum Voltage Change {0.001)." )]
-    public double VoltageChangeMinimum
-    {
-        get => this._voltageChangeMinimum;
-        set => this.SetProperty( ref this._voltageChangeMinimum, value );
-    }
-
-    private double _voltageLimit = 0.99;
+    public partial double VoltageChangeMinimum { get; set; } = 0.001;
 
     /// <summary>   Gets or sets the Thermal Transient voltage limit . </summary>
     /// <value> The Thermal Transient voltage limit . </value>
+    [ObservableProperty]
     [Description( "Thermal Transient Voltage Limit {0.99)." )]
-    public double VoltageLimit
-    {
-        get => this._voltageLimit;
-        set => this.SetProperty( ref this._voltageLimit, value );
-    }
-
-    private double _voltageLimitDefault = 0.99;
+    public partial double VoltageLimit { get; set; } = 0.99;
 
     /// <summary>   Gets or sets the Thermal Transient voltage limit default. </summary>
     /// <value> The Thermal Transient voltage limit default. </value>
+    [ObservableProperty]
     [Description( "Thermal Transient Default Voltage Limit {0.99)." )]
-    public double VoltageLimitDefault
-    {
-        get => this._voltageLimitDefault;
-        set => this.SetProperty( ref this._voltageLimitDefault, value );
-    }
-
-    private double _voltageMaximum = 9.99;
+    public partial double VoltageLimitDefault { get; set; } = 0.99;
 
     /// <summary>   Gets or sets the Thermal Transient voltage maximum. </summary>
     /// <value> The Thermal Transient voltage maximum. </value>
+    [ObservableProperty]
     [Description( "Thermal Transient Maximum Voltage {9.99)." )]
-    public double VoltageMaximum
-    {
-        get => this._voltageMaximum;
-        set => this.SetProperty( ref this._voltageMaximum, value );
-    }
-
-    private double _voltageMinimum = 0.01;
+    public partial double VoltageMaximum { get; set; } = 9.99;
 
     /// <summary>   Gets or sets the Thermal Transient voltage Minimum. </summary>
     /// <value> The Thermal Transient voltage Minimum. </value>
+    [ObservableProperty]
     [Description( "Thermal Transient Minimum Voltage {0.01)." )]
-    public double VoltageMinimum
-    {
-        get => this._voltageMinimum;
-        set => this.SetProperty( ref this._voltageMinimum, value );
-    }
+    public partial double VoltageMinimum { get; set; } = 0.01;
 
     #endregion
 

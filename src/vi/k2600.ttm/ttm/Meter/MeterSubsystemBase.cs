@@ -75,18 +75,17 @@ public abstract class MeterSubsystemBase( VI.StatusSubsystemBase statusSubsystem
     #region " entity "
 
     /// <summary> The meter entity. </summary>
-    private ThermalTransientMeterEntity _meterEntity;
 
     /// <summary> Gets or sets the meter entity. </summary>
     /// <sourceMeasureUnitName> The meter entity. </sourceMeasureUnitName>
     public ThermalTransientMeterEntity MeterEntity
     {
-        get => this._meterEntity;
+        get;
         set
         {
             if ( !value.Equals( this.MeterEntity ) )
             {
-                this._meterEntity = value;
+                field = value;
                 this.NotifyPropertyChanged();
 
                 this.EntityName = Syntax.ThermalTransient.SelectEntityName( value );
@@ -96,34 +95,28 @@ public abstract class MeterSubsystemBase( VI.StatusSubsystemBase statusSubsystem
         }
     }
 
-    private string _defaultsName = string.Empty;
-
     /// <summary> Gets or sets the name of the default element of this script. </summary>
     /// <sourceMeasureUnitName> The name of the default name element. </sourceMeasureUnitName>
     public string DefaultsName
     {
-        get => this._defaultsName;
-        protected set => _ = this.SetProperty( ref this._defaultsName, value );
-    }
-
-    private string _entityName = Syntax.ThermalTransient.InitialEntityName;
+        get;
+        protected set => _ = this.SetProperty( ref field, value );
+    } = string.Empty;
 
     /// <summary> Gets or sets the entity name. </summary>
     /// <sourceMeasureUnitName> The entity name. </sourceMeasureUnitName>
     public string EntityName
     {
-        get => this._entityName;
-        protected set => _ = this.SetProperty( ref this._entityName, value );
-    }
-
-    private string? _baseEntityName;
+        get;
+        protected set => _ = this.SetProperty( ref field, value );
+    } = Syntax.ThermalTransient.InitialEntityName;
 
     /// <summary> Gets or sets the Base Entity name. </summary>
     /// <sourceMeasureUnitName> The Meter entity. </sourceMeasureUnitName>
     public string? BaseEntityName
     {
-        get => this._baseEntityName;
-        protected set => _ = this.SetProperty( ref this._baseEntityName, value );
+        get;
+        protected set => _ = this.SetProperty( ref field, value );
     }
 
     #endregion
@@ -293,49 +286,42 @@ public abstract class MeterSubsystemBase( VI.StatusSubsystemBase statusSubsystem
     #region " read "
 
     /// <summary> The last reading. </summary>
-    private string? _lastReading;
 
     /// <summary> Gets or sets (protected) the last reading. </summary>
     /// <sourceMeasureUnitName> The last reading. </sourceMeasureUnitName>
     public string? LastReading
     {
-        get => this._lastReading;
+        get;
 
         protected set
         {
-            this._lastReading = value;
+            field = value;
             this.NotifyPropertyChanged();
         }
     }
-
-    /// <summary> The last outcome. </summary>
-    private string? _lastOutcome;
 
     /// <summary> Gets or sets (protected) the last outcome. </summary>
     /// <sourceMeasureUnitName> The last outcome. </sourceMeasureUnitName>
     public string? LastOutcome
     {
-        get => this._lastOutcome;
+        get;
 
         protected set
         {
-            this._lastOutcome = value;
+            field = value;
             this.NotifyPropertyChanged();
         }
     }
-
-    /// <summary> The last measurement status. </summary>
-    private string? _lastMeasurementStatus;
 
     /// <summary> Gets or sets (protected) the last measurement status. </summary>
     /// <sourceMeasureUnitName> The last measurement status. </sourceMeasureUnitName>
     public string? LastMeasurementStatus
     {
-        get => this._lastMeasurementStatus;
+        get;
 
         protected set
         {
-            this._lastMeasurementStatus = value;
+            field = value;
             this.NotifyPropertyChanged();
         }
     }

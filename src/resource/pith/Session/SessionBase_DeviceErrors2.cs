@@ -83,7 +83,6 @@ public abstract partial class SessionBase
 
     #region " error queue count "
 
-
     /// <summary> Gets or sets the cached error queue count. </summary>
     /// <value> <c>null</c> if value is not known. </value>
     public int? ErrorQueueCount

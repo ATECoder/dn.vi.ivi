@@ -4,7 +4,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <LangVersion>preview</LangVersion>
 
-    <ImplicitUsings>disable</ImplicitUsings>
+    <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -71,7 +71,6 @@
 
   <ItemGroup>
     <Compile Include="..\..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
-    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting"/>
   </ItemGroup>
 
   <ItemGroup>
@@ -84,6 +83,7 @@
     <Content Include="cc.isr.VI.Tsp.K2600.Ttm.Legacy.MSTest.Serilog.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+
     <Content Include="cc.isr.VI.Tsp.K2600.Ttm.Legacy.MSTest.Session.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

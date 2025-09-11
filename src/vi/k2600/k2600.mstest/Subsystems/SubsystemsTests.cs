@@ -1,4 +1,3 @@
-using System;
 using cc.isr.VI.Tsp.K2600.MSTest.Settings;
 
 namespace cc.isr.VI.Tsp.K2600.MSTest.Subsystems;
@@ -44,7 +43,7 @@ public class SubsystemsTests : Device.Tests.Base.SubsystemsTests
         Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
         Console.WriteLine( $"\tTesting {typeof( cc.isr.VI.Tsp.K2600.MeasureResistanceSubsystem ).Assembly.FullName}" );
 
-        // create an instance of the Serilog logger.
+        // create an instance of the session logger.
         SessionLogger.Instance.CreateLogger( typeof( SubsystemsTests ) );
 
         this.TestSiteSettings = Settings.AllSettings.Instance.TestSiteSettings;

@@ -142,20 +142,17 @@ public class MeasureSequencer : CommunityToolkit.Mvvm.ComponentModel.ObservableO
         return PercentProgress( this.MeasurementSequenceState );
     }
 
-    /// <summary> State of the measurement sequence. </summary>
-    private MeasurementSequenceState _measurementSequenceState;
-
     /// <summary> Gets or sets the state of the measurement. </summary>
     /// <value> The measurement state. </value>
     public MeasurementSequenceState MeasurementSequenceState
     {
-        get => this._measurementSequenceState;
+        get;
 
         protected set
         {
             if ( !value.Equals( this.MeasurementSequenceState ) )
             {
-                this._measurementSequenceState = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -218,23 +215,20 @@ public class MeasureSequencer : CommunityToolkit.Mvvm.ComponentModel.ObservableO
         this.SequencerTimer.Enabled = true;
     }
 
-    /// <summary> Gets or sets the timer. </summary>
-    private System.Timers.Timer? _sequencerTimer;
-
     private System.Timers.Timer? SequencerTimer
     {
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
-        get => this._sequencerTimer;
+        get;
 
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( this._sequencerTimer is not null )
-                this._sequencerTimer.Elapsed -= this.SequencerTimer_Elapsed;
+            if ( field is not null )
+                field.Elapsed -= this.SequencerTimer_Elapsed;
 
-            this._sequencerTimer = value;
-            if ( this._sequencerTimer is not null )
-                this._sequencerTimer.Elapsed += this.SequencerTimer_Elapsed;
+            field = value;
+            if ( field is not null )
+                field.Elapsed += this.SequencerTimer_Elapsed;
         }
     }
 

@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace cc.isr.VI.Device.Tests;
 
 public sealed partial class Asserts

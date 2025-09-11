@@ -250,30 +250,24 @@ public class DeviceUnderTest : CommunityToolkit.Mvvm.ComponentModel.ObservableOb
         return string.Format( System.Globalization.CultureInfo.CurrentCulture, "{0}.{1}", partNumber, sampleNumber );
     }
 
-    /// <summary> The sample number. </summary>
-    private int _sampleNumber;
-
     /// <summary> Gets or sets the sample number. </summary>
     /// <value> The sample number. </value>
     public int SampleNumber
     {
-        get => this._sampleNumber;
+        get;
         set
         {
-            if ( this.SetProperty( ref this._sampleNumber, value ) )
+            if ( this.SetProperty( ref field, value ) )
                 this.UniqueKey = BuildUniqueKey( this.PartNumber, this.SampleNumber );
         }
     }
-
-    /// <summary> The unique key. </summary>
-    private string? _uniqueKey;
 
     /// <summary> Gets or sets (protected) the unique key. </summary>
     /// <value> The unique key. </value>
     public string? UniqueKey
     {
-        get => this._uniqueKey;
-        protected set => _ = this.SetProperty( ref this._uniqueKey, value );
+        get;
+        protected set => _ = this.SetProperty( ref field, value );
     }
 
     #endregion
@@ -317,51 +311,40 @@ public class DeviceUnderTest : CommunityToolkit.Mvvm.ComponentModel.ObservableOb
             && this.ContactCheckThreshold.Equals( other.ContactCheckThreshold );
     }
 
-    /// <summary> The part number. </summary>
-    private string? _partNumber;
-
     /// <summary> Gets or sets the part number. </summary>
     /// <value> The part number. </value>
     public string? PartNumber
     {
-        get => this._partNumber;
+        get;
         set
         {
-            if ( this.SetProperty( ref this._partNumber, value ) )
+            if ( this.SetProperty( ref field, value ) )
                 this.UniqueKey = BuildUniqueKey( this.PartNumber, this.SampleNumber );
         }
     }
-
-    private string? _lotId;
 
     /// <summary> Gets or sets or Sets the Lot ID. </summary>
     /// <value> The identifier of the lot. </value>
     public string? LotId
     {
-        get => this._lotId;
-        set => _ = this.SetProperty( ref this._lotId, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
-
-    /// <summary> Identifier for the operator. </summary>
-    private string? _operatorId;
 
     /// <summary> Gets or sets or Sets the Operator ID. </summary>
     /// <value> The identifier of the operator. </value>
     public string? OperatorId
     {
-        get => this._operatorId;
-        set => _ = this.SetProperty( ref this._operatorId, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
-
-    /// <summary> The serial number. </summary>
-    private int _serialNumber;
 
     /// <summary> Gets or sets the part serial number. </summary>
     /// <value> The serial number. </value>
     public int SerialNumber
     {
-        get => this._serialNumber;
-        set => _ = this.SetProperty( ref this._serialNumber, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
 
     #endregion
@@ -449,22 +432,20 @@ public class DeviceUnderTest : CommunityToolkit.Mvvm.ComponentModel.ObservableOb
         this.NotifyPropertyChanged( nameof( this.Estimator ) );
     }
 
-    private Estimator? _estimatorInternal;
-
     private Estimator? EstimatorInternal
     {
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
-        get => this._estimatorInternal;
+        get;
 
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( this._estimatorInternal is not null )
-                this._estimatorInternal.PropertyChanged -= this.Estimator_PropertyChanged;
+            if ( field is not null )
+                field.PropertyChanged -= this.Estimator_PropertyChanged;
 
-            this._estimatorInternal = value;
-            if ( this._estimatorInternal is not null )
-                this._estimatorInternal.PropertyChanged += this.Estimator_PropertyChanged;
+            field = value;
+            if ( field is not null )
+                field.PropertyChanged += this.Estimator_PropertyChanged;
         }
     }
 
@@ -490,22 +471,20 @@ public class DeviceUnderTest : CommunityToolkit.Mvvm.ComponentModel.ObservableOb
         this.NotifyPropertyChanged( nameof( this.MeterMain ) );
     }
 
-    private MeterMain? _meterMainInternal;
-
     private MeterMain? MeterMainInternal
     {
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
-        get => this._meterMainInternal;
+        get;
 
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( this._meterMainInternal is not null )
-                this._meterMainInternal.PropertyChanged -= this.MeterMain_PropertyChanged;
+            if ( field is not null )
+                field.PropertyChanged -= this.MeterMain_PropertyChanged;
 
-            this._meterMainInternal = value;
-            if ( this._meterMainInternal is not null )
-                this._meterMainInternal.PropertyChanged += this.MeterMain_PropertyChanged;
+            field = value;
+            if ( field is not null )
+                field.PropertyChanged += this.MeterMain_PropertyChanged;
         }
     }
 
@@ -544,22 +523,20 @@ public class DeviceUnderTest : CommunityToolkit.Mvvm.ComponentModel.ObservableOb
         }
     }
 
-    private ColdResistance? _initialResistanceInternal;
-
     private ColdResistance? InitialResistanceInternal
     {
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
-        get => this._initialResistanceInternal;
+        get;
 
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( this._initialResistanceInternal is not null )
-                this._initialResistanceInternal.PropertyChanged -= this.InitialResistance_PropertyChanged;
+            if ( field is not null )
+                field.PropertyChanged -= this.InitialResistance_PropertyChanged;
 
-            this._initialResistanceInternal = value;
-            if ( this._initialResistanceInternal is not null )
-                this._initialResistanceInternal.PropertyChanged += this.InitialResistance_PropertyChanged;
+            field = value;
+            if ( field is not null )
+                field.PropertyChanged += this.InitialResistance_PropertyChanged;
         }
     }
 
@@ -598,25 +575,23 @@ public class DeviceUnderTest : CommunityToolkit.Mvvm.ComponentModel.ObservableOb
         }
     }
 
-    private ColdResistance? _finalResistanceInternal;
-
     private ColdResistance? FinalResistanceInternal
     {
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
-        get => this._finalResistanceInternal;
+        get;
 
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( this._finalResistanceInternal is not null )
+            if ( field is not null )
             {
-                this._finalResistanceInternal.PropertyChanged -= this.FinalResistance_PropertyChanged;
+                field.PropertyChanged -= this.FinalResistance_PropertyChanged;
             }
 
-            this._finalResistanceInternal = value;
-            if ( this._finalResistanceInternal is not null )
+            field = value;
+            if ( field is not null )
             {
-                this._finalResistanceInternal.PropertyChanged += this.FinalResistance_PropertyChanged;
+                field.PropertyChanged += this.FinalResistance_PropertyChanged;
             }
         }
     }
@@ -644,22 +619,20 @@ public class DeviceUnderTest : CommunityToolkit.Mvvm.ComponentModel.ObservableOb
         this.NotifyPropertyChanged( nameof( this.ShuntResistance ) );
     }
 
-    private ShuntResistance? _shuntResistanceInternal;
-
     private ShuntResistance? ShuntResistanceInternal
     {
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
-        get => this._shuntResistanceInternal;
+        get;
 
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( this._shuntResistanceInternal is not null )
-                this._shuntResistanceInternal.PropertyChanged -= this.ShuntResistance_PropertyChanged;
+            if ( field is not null )
+                field.PropertyChanged -= this.ShuntResistance_PropertyChanged;
 
-            this._shuntResistanceInternal = value;
-            if ( this._shuntResistanceInternal is not null )
-                this._shuntResistanceInternal.PropertyChanged += this.ShuntResistance_PropertyChanged;
+            field = value;
+            if ( field is not null )
+                field.PropertyChanged += this.ShuntResistance_PropertyChanged;
         }
     }
 
@@ -698,22 +671,20 @@ public class DeviceUnderTest : CommunityToolkit.Mvvm.ComponentModel.ObservableOb
         }
     }
 
-    private ThermalTransient? _thermalTransientInternal;
-
     private ThermalTransient? ThermalTransientInternal
     {
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
-        get => this._thermalTransientInternal;
+        get;
 
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( this._thermalTransientInternal is not null )
-                this._thermalTransientInternal.PropertyChanged -= this.ThermalTransient_PropertyChanged;
+            if ( field is not null )
+                field.PropertyChanged -= this.ThermalTransient_PropertyChanged;
 
-            this._thermalTransientInternal = value;
-            if ( this._thermalTransientInternal is not null )
-                this._thermalTransientInternal.PropertyChanged += this.ThermalTransient_PropertyChanged;
+            field = value;
+            if ( field is not null )
+                field.PropertyChanged += this.ThermalTransient_PropertyChanged;
         }
     }
 
@@ -889,17 +860,14 @@ public class DeviceUnderTest : CommunityToolkit.Mvvm.ComponentModel.ObservableOb
             || this.FinalResistance?.MeasurementOutcome != MeasurementOutcomes.None;
     }
 
-    /// <summary> True if any measurement available. </summary>
-    private bool _anyMeasurementAvailable;
-
     /// <summary> Gets or sets the sentinel indicating if Any measurements is available. </summary>
     /// <value> The measurement available. </value>
     public bool AnyMeasurementsAvailable
     {
-        get => this._anyMeasurementAvailable;
+        get;
         set
         {
-            this._anyMeasurementAvailable = value;
+            field = value;
             this.NotifyPropertyChanged();
         }
     }
@@ -918,17 +886,14 @@ public class DeviceUnderTest : CommunityToolkit.Mvvm.ComponentModel.ObservableOb
             && this.FinalResistance?.MeasurementOutcome != MeasurementOutcomes.None;
     }
 
-    /// <summary> True if all measurement available. </summary>
-    private bool _allMeasurementAvailable;
-
     /// <summary> Gets or sets the sentinel indicating if all measurements are available. </summary>
     /// <value> The measurement available. </value>
     public bool AllMeasurementsAvailable
     {
-        get => this._allMeasurementAvailable;
+        get;
         set
         {
-            this._allMeasurementAvailable = value;
+            field = value;
             this.NotifyPropertyChanged();
         }
     }

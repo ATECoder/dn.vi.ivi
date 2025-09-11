@@ -204,7 +204,6 @@ public abstract class LocalNodeSubsystemBase( Tsp.StatusSubsystemBase statusSubs
 
     #region " execution state "
 
-
     /// <summary> Gets or sets the process execution state enabled. </summary>
     /// <remarks> Processing execution state is a bit counter intuitive.
     ///           When enabled execution state is not read when checking prompts or errors. </remarks>

@@ -1,5 +1,3 @@
-using System;
-
 namespace cc.isr.VI.Tsp.K2600.Ttm.Tests.Settings;
 
 /// <summary>   A settings. </summary>

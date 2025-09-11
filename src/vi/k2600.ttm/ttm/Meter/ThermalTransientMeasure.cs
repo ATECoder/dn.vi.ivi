@@ -245,19 +245,18 @@ public class ThermalTransientMeasure : MeasureSubsystemBase
     #region " median filter size "
 
     /// <summary> The Median Filter Size. </summary>
-    private int? _medianFilterSize;
 
     /// <summary> Gets or sets the cached Median Filter Size. </summary>
     /// <value> The Median Filter Size. </value>
     public int? MedianFilterSize
     {
-        get => this._medianFilterSize;
+        get;
 
         protected set
         {
             value ??= Properties.Settings.Instance.TtmTraceSettings.MedianFilterLength;
             this.ThermalTransient.MedianFilterSize = value.Value;
-            _ = this.SetProperty( ref this._medianFilterSize, value );
+            _ = this.SetProperty( ref field, value );
         }
     }
 
@@ -311,13 +310,12 @@ public class ThermalTransientMeasure : MeasureSubsystemBase
     #region " sampling interval "
 
     /// <summary> The Sampling Interval. </summary>
-    private double? _samplingInterval;
 
     /// <summary> Gets or sets the cached Sampling Interval. </summary>
     /// <value> The Sampling Interval. </value>
     public double? SamplingInterval
     {
-        get => this._samplingInterval;
+        get;
 
         protected set
         {
@@ -325,7 +323,7 @@ public class ThermalTransientMeasure : MeasureSubsystemBase
             this.ThermalTransient.SamplingInterval = value.Value;
             if ( this.SamplingInterval.Differs( value, 0.000001d ) )
             {
-                this._samplingInterval = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -382,19 +380,18 @@ public class ThermalTransientMeasure : MeasureSubsystemBase
     #region " trace points "
 
     /// <summary> The Trace Points. </summary>
-    private int? _tracePoints;
 
     /// <summary> Gets or sets the cached Trace Points. </summary>
     /// <value> The Trace Points. </value>
     public int? TracePoints
     {
-        get => this._tracePoints;
+        get;
 
         protected set
         {
             value ??= Properties.Settings.Instance.TtmTraceSettings.TracePoints;
             this.ThermalTransient.TracePoints = value.Value;
-            _ = this.SetProperty( ref this._tracePoints, value );
+            _ = this.SetProperty( ref field, value );
         }
     }
 
@@ -446,17 +443,16 @@ public class ThermalTransientMeasure : MeasureSubsystemBase
     #region " time series "
 
     /// <summary> The last trace. </summary>
-    private string? _lastTrace;
 
     /// <summary> Gets or sets (protected) the last trace. </summary>
     /// <value> The last trace. </value>
     public string? LastTrace
     {
-        get => this._lastTrace;
+        get;
 
         protected set
         {
-            this._lastTrace = value;
+            field = value;
             this.NotifyPropertyChanged();
         }
     }
@@ -470,13 +466,12 @@ public class ThermalTransientMeasure : MeasureSubsystemBase
     #region " voltage change "
 
     /// <summary> The Voltage Change. </summary>
-    private double? _voltageChange;
 
     /// <summary> Gets or sets the cached Voltage Change. </summary>
     /// <value> The Voltage Change. </value>
     public double? VoltageChange
     {
-        get => this._voltageChange;
+        get;
 
         protected set
         {
@@ -484,7 +479,7 @@ public class ThermalTransientMeasure : MeasureSubsystemBase
             this.ThermalTransient.AllowedVoltageChange = value.Value;
             if ( this.VoltageChange.Differs( value, 0.000001d ) )
             {
-                this._voltageChange = value;
+                field = value;
                 this.NotifyPropertyChanged();
             }
         }
