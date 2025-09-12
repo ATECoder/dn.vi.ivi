@@ -56,4 +56,7 @@ public static class Display
 
     /// <summary>   (Immutable) the delete an existing load menu item command format. </summary>
     public const string DeleteExistingLoadMenuItemCommandFormat = "_G.display.loadmenu.delete( '{0}' )";
+
+    /// <summary>   (Immutable) the add load menu item command format. </summary>
+    public const string AddLoadMenuItemCommandFormat = "_G.display.loadmenu.add( '{0}', '{1}', 0 )";
 }

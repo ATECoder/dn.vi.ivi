@@ -33,8 +33,7 @@ public static partial class SessionBaseMethods
     /// <remarks>   2025-04-16. </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
     ///                                                 are null. </exception>
-    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
-    ///                                                 invalid. </exception>
+    /// <exception cref="InvalidOperationException">    Thrown if the load menu was not removed. </exception>
     /// <param name="session">  The session. </param>
     /// <param name="itemName"> Name of the item. </param>
     public static void DeleteLoadMenuItem( this SessionBase session, string itemName )
@@ -58,6 +57,38 @@ public static partial class SessionBaseMethods
 
             if ( session.LoadMenuItemExists( itemName ) )
                 throw new InvalidOperationException( $"The load menu item {itemName} was not deleted." );
+        }
+    }
+
+    /// <summary>   A SessionBase extension method that adds a load menu item. </summary>
+    /// <remarks>   2025-09-11. </remarks>
+    /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
+    ///                                                 are null. </exception>
+    /// <exception cref="InvalidOperationException">    Thrown if the load menu was not added. </exception>
+    /// <param name="session">      The session. </param>
+    /// <param name="itemName">     Name of the item. </param>
+    /// <param name="itemMethod">   The item method. </param>
+    public static void AddLoadMenuItem( this SessionBase session, string itemName, string itemMethod )
+    {
+        if ( session == null ) throw new ArgumentNullException( nameof( session ) );
+        if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
+        if ( string.IsNullOrWhiteSpace( itemName ) ) throw new ArgumentNullException( nameof( itemName ) );
+
+        if ( !session.LoadMenuItemExists( itemName ) )
+        {
+            session.TraceLastAction( $"\r\n\tadding the '{itemName}' load menu {itemMethod};. " );
+            string command = string.Format( Syntax.Tsp.Display.AddLoadMenuItemCommandFormat, itemName, itemMethod );
+            command += " " + Syntax.Tsp.Lua.OperationCompletedQueryCommand;
+            _ = session.WriteLine( command );
+
+            // read query reply and throw if reply is not 1.
+            session.ReadAndThrowIfOperationIncomplete();
+
+            // throw if device errors
+            session.ThrowDeviceExceptionIfError();
+
+            if ( !session.LoadMenuItemExists( itemName ) )
+                throw new InvalidOperationException( $"The load menu item {itemName} was not added." );
         }
     }
 

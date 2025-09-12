@@ -4,7 +4,6 @@ namespace cc.isr.VI.Tsp.SessionBaseExtensions;
 
 /// <summary>   A session base methods. </summary>
 /// <remarks>   2024-09-11. </remarks>
-[CLSCompliant( false )]
 public static partial class SessionBaseMethods
 {
     /// <summary>   Loads a function. </summary>

@@ -2,9 +2,17 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9385]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9386]: https://www.github.com/atecoder/dn.vi.ivi
 
 Current IVI Visa Compatibility: 8.0.1.9383
+
+## [8.1.9386] - 2025-09-12
+- Resource:
+  - Add 'Add Load Menu Item Command format.
+- Device
+  - Move Tsp Session Base Extensions to the Device Tsp project.
+- Device Tsp
+  - Add method to add a load item.
 
 ## [8.1.9385] - 2025-09-11
 - MSTest: Enable implicit using.
