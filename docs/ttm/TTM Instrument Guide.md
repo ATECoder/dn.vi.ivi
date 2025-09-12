@@ -15,8 +15,11 @@
 	  - [Leads Menu](#leads_menu)
 	  - [Contacts Checks Menu](#contacts_check_menu)
 	  - [Open Source Lead Limit Menu](#open_source_lead_limit_menu)
-        - [Contact Check Algorithm](#Contact_Check_Algorithm)
+        - [Contact Check Function](#Contact_Check_Function)
+        - [The Keithley Contact Check Implementation](#Contact_Check_Implementation)
+        - [TTM Contact Check Implementation](#TTM_Contact_Check_Implementation)
         - [Contact Check DUT Voltage](#Contact_Check_DUT_Voltage)
+        - [Source-Sense Shunts](#Source_Sense_Shunts)
 	  - [Shunt Menu](#Meter_Shunt_Menu)
 	- [Resistance Menu](#Resistance_menu)
 	  - [Source Menu](#Source_menu)
@@ -75,7 +78,7 @@ The device under test must be connected to the TTM Instrument using a [Four-Term
 
 ![Kelvin Diagram](KelvinDiagram.jpg)
 
-Fig 1. Four Wire Sensing Ciruit.
+Fig. 1. Four Wire Sensing Ciruit.
 
 <a name="Remote_Local"></a>
 ### Taking the instrument from Remote to Local Mode
@@ -226,7 +229,7 @@ To enable and set the maximum allowed leads resistance:
 
 Selecting _Leads_ from the [Meter Menu](#meter_menu) displays the [Leads Menu](#leads_menu) displaying the maximum resistance beyond which the leads are taken as open. The resistance is in Ohms between 10 and 999:
 
-- Title: __100 Ω__
+- Title: __100 &#937;__
 - Description: _Max Leads Resistance_
 
 The range is: 10 - 999.
@@ -261,17 +264,29 @@ Selecting _Limit_ from the [Meter Menu](#meter_menu) displays the [Open Source L
 
 To set the maximum allowed DUT resistance:
 
-- Title: __100.000E+1 Ω__.
+- Title: __100.000E+1 &#937;__.
 - Description: _Max DUT R_.
 
 The range is: 10 - 999999.
 
 Moving the cursor over the digits, the digit blinks. Pressing the _Wheel_ or `ENTER` and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or `ENTER` selects the new value.
 
-<a name="Contact_Check_Algorithm"></a>
-##### Contact Check Algorithm
+<a name="Contact_Check_Function"></a>
+##### Contact Check Function
 
-The contact check function prevents measurements that may be in error due to excessive resistance in the force or sense leads when making remotely sensed (Kelvin) measurements. Potential sources for this resistance include a poor contact at the device under test (DUT), a failing relay contacts on a switching card or wires that are too long or thin. The contact check function also detects an open circuit that may occur when a four-point probe is misplaced or misaligned. This relationship is shown schematically in the figure below, where R~C~ is the resistance of the mechanical contact at the DUT, and R~S~ is the series resistance of cables and any series relays.
+A contact check function is designed to prevents measurements that may be in error due to excessive resistance in the source or sense leads when making remotely sensed (Kelvin) measurements. Potential sources for this resistance include a poor contact at the device under test (DUT), a failing relay contacts on a switching card or wires that are too long or thin. The contact check measurement could also detect an open circuit that may occur when a four-point probe is misplaced or misaligned. This relationship is shown schematically in Fig. 2 above, where R~C~ is the resistance of the mechanical contact at the DUT, and R~S~ is the series resistance of cables and any series relays.
+
+<a name="Contact_Check_Implementation"></a>
+##### The Keithley Contact Check Implementation
+
+The Keithley 2600 instrument checks for contacts by forcing a small 300µA current into each sense lead in turn, amplifying the voltage drop across the source-sense terminals via a high impedance amplifier and reading this voltage by the instrument voltmeter. The instrument contact check function then calculates the contact resistance thus measured and compares it to a set limit that must be higher than 20&#937;. The instrument contact check capability has the following features:
+- An open contact is detected if __either__ sense lead (`S-Lo` or `S-Hi`) between the instrument and the DUT is open.
+- Both low and high leads are flagged as open if __both__ source leads (`Lo` and `Hi`) are open.
+- When either source lead (`Lo` or `Hi`) is open, the instrument contact check function effectively reads the DUT resistance. Consequently, 
+  - If a single source lead is open, the contact check algorithm reports an open lead only if the DUT resistance is higher than the contact check limit, which minimum is 20&#937;.
+
+<a name="TTM_Contact_Check_Implementation"></a>
+##### The TTM Contact Check Implementation
 
 The leads contacts are checked if the maximum leads resistance (see below) is set to a non-zero positive value. Contacts are measured before taking the initial resistance measurement. The measurement is aborted and the lead resistances are displayed if the measured lead resistances exceeds the maximum limit. 
 
@@ -306,13 +321,13 @@ For instance the following values where measured:
 |Open  | Wired      | Wired     | Wired      | Wired       | 0.3       | -0.64     |
 |Open  | Wired      | Open      | Wired      | Wired       | 0.32      | -0.22     |
 |Open  | Open       | Wired     | Wired      | Wired       | 2.81      | -5.39     |
-|3.3KΩ | Open       | Wired     | Wired      | Wired       | 1.07      | -1.15     |
+|3.3K&#937; | Open       | Wired     | Wired      | Wired       | 1.07      | -1.15     |
 |Open  | Wired      | Open      | Open       | Wired       | 0.12      | -0.16     |
 |Open  | Open       | Wired     | Wired      | Open        | 1.29      | -2.73     |
-|3.3KΩ | Open       | Wired     | Wired      | Open        | 1.09      | -1.33     |
-|~2Ω   | any        | any       | any        | any         | < 50mv    | < 50mv    |
+|3.3K&#937; | Open       | Wired     | Wired      | Open        | 1.09      | -1.33     |
+|~2&#937;   | any        | any       | any        | any         | < 50mv    | < 50mv    |
 
-Apparently, the contact check circuit current runs through the device under test causing a significant voltage drop if the DUT resistance is high or open. This voltage drop can be limited to about 1 volt (resistance time 300µA) by placing a shunt resistor of 3.3KΩ across the sense terminals.
+Apparently, the contact check circuit current runs through the device under test causing a significant voltage drop if the DUT resistance is high or open. This voltage drop can be limited to about 1 volt (resistance time 300µA) by placing a shunt resistor of 3.3K&#937; across the sense terminals.
 
 ![Voltage Limiting Shunt](VoltageLimitShuntDiagram.png)
 
@@ -320,15 +335,25 @@ Fig. 3. Voltage limiting shunt diagram.
 
 A sense shunt is sufficient. Placing a shunt across the source terminals adversely affects the measurements.
 
+<a name="Source_Sense_Shunts"></a>
+##### Source-Sense Shunts
+
+To further limit the potential for spurious spikes during the contact check measurements, Keithley recommended adding 100&#937; resistors across the low and high source-sense terminals as shown below.
+
+![Voltage Limiting and Source-Sense Shunts](VoltageLimitShuntDiagram2.png)
+
+Fig. 4. Voltage limiting shunt diagram with source-sense shunts.
+
+
 <a name="Meter_Shunt_Menu"></a>
 ### Shunt Menu
 
 Selecting _Shunt_ from the [Meter Menu](#meter_menu) displays the resistance of the shunt resistance across the sense terminals of the instrument. This menu sets the resistance of the shunt resistor that is connected across the Sense terminals of the instrument:
 
-- Title: __03300 Ω__.
+- Title: __03300 &#937;__.
 - Description: _Sense shunt or 0 if none_
 
-The range is: 0 - 999999 Ω.
+The range is: 0 - 999999 &#937;.
 
 Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or `ENTER` and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or `ENTER` selects the new value.
 
@@ -458,10 +483,10 @@ If the initial resistance measurement fails, the measured value is displayed alo
 
 Selecting _Low_ from the [Limits Menu](#Limits_menu) displays the [Low Limit Menu](#Low-Limit_menu). This menu sets the low limit of the measurement in Ohms. The front panel displays:
 
-- Title: __01.920 Ω__.
+- Title: __01.920 &#937;__.
 - Description: _Low Limit_.
 
-The range is: 0.1 - 10 Ω.
+The range is: 0.1 - 10 &#937;.
 
 Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or `ENTER` and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or `ENTER` selects the new value.
 
@@ -470,10 +495,10 @@ Moving the cursor over the digits, the digit blinks and changes with the rotatio
 
 Selecting _High_ from the [Limits Menu](#Limits_menu) displays the [High Limit Menu](#High-Limit_menu). This menu sets the High limit of the measurement in Ohms. The front panel displays:
 
-- Title: __02.160 Ω__.
+- Title: __02.160 &#937;__.
 - Description: _High Limit_.
 
-The range is: 0.1 - 10 Ω.
+The range is: 0.1 - 10 &#937;.
 
 Moving the cursor over the digits, the digit blinks and changes with the rotation of the _Navigation Wheel_ the number blinks. Pressing the _Wheel_ or `ENTER` and turning the _Wheel_ changes the digit between 0 and 9. Pressing the _Wheel_ or `ENTER` selects the new value.
 
@@ -714,7 +739,7 @@ Digital I/O Interface:
 
 ![Trigger Diagram](TriggerDiagram.png)
 
-Fig. 4. Digital input triggering diagram.
+Fig. 5. Digital input triggering diagram.
 
 <a name="Triggering"></a>
 ## Triggering
@@ -795,8 +820,8 @@ The following Special readings might be output (SCPI-Standard Commands for Progr
 Upon the completion of a measurement, the instrument displays the following typical screen:
 
 ```
-R: 2.576Ω δ: 65mV
-r: 2.587Ω <TRIG MENU RUN>
+R: 2.576&#937; δ: 65mV
+r: 2.587&#937; <TRIG MENU RUN>
 ```
 
 Where 'R' points to the initial resistance, 'δ:' to the thermal transient voltage and 'r:' to the final resistance.
@@ -813,7 +838,7 @@ S: r: 2.1E+6 hi,lo:
 ```
 Where 'S:' indicates when the failed contact check was done. This could be either 'S:' before starting the measurement sequence, 'I:' before taking the initial resistance measurement, 'T:' before taking the thermal transient measurement or 'F:' before taking the final resistance measurement, 
 
-'r:' signifies the measurement resistance, which exceeds the maximum DUT resistance (e.g., 1000 Ω) these is set for these measurements. 
+'r:' signifies the measurement resistance, which exceeds the maximum DUT resistance (e.g., 1000 &#937;) these is set for these measurements. 
 
 The bottom row displays the high and low leads resistances as measured by the instrument.
 

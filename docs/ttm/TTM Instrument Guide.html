@@ -35,8 +35,11 @@ td, h1, h2, h3, h4, h5, p, ul, ol, li {
 <li><a href="#contacts_check_menu">Contacts Checks Menu</a></li>
 <li><a href="#open_source_lead_limit_menu">Open Source Lead Limit Menu</a>
 <ul>
-<li><a href="#Contact_Check_Algorithm">Contact Check Algorithm</a></li>
+<li><a href="#Contact_Check_Function">Contact Check Function</a></li>
+<li><a href="#Contact_Check_Implementation">The Keithley Contact Check Implementation</a></li>
+<li><a href="#TTM_Contact_Check_Implementation">TTM Contact Check Implementation</a></li>
 <li><a href="#Contact_Check_DUT_Voltage">Contact Check DUT Voltage</a></li>
+<li><a href="#Source_Sense_Shunts">Source-Sense Shunts</a></li>
 </ul>
 </li>
 <li><a href="#Meter_Shunt_Menu">Shunt Menu</a></li>
@@ -123,7 +126,7 @@ td, h1, h2, h3, h4, h5, p, ul, ol, li {
 <h3 id="wiring-the-device-under-test">Wiring the Device Under Test</h3>
 <p>The device under test must be connected to the TTM Instrument using a <a href="https://en.wikipedia.org/wiki/Four-terminal_sensing">Four-Terminal Sensing</a> circuit:</p>
 <p><img src="KelvinDiagram.jpg" alt="Kelvin Diagram" /></p>
-<p>Fig 1. Four Wire Sensing Ciruit.</p>
+<p>Fig. 1. Four Wire Sensing Ciruit.</p>
 <p><a name="Remote_Local"></a></p>
 <h3 id="taking-the-instrument-from-remote-to-local-mode">Taking the instrument from Remote to Local Mode</h3>
 <p>When controlling the instrument from an application program the instrument goes into Remote mode.</p>
@@ -351,9 +354,23 @@ SrcA:+000.0000mV LimA:1.00000 A
 </ul>
 <p>The range is: 10 - 999999.</p>
 <p>Moving the cursor over the digits, the digit blinks. Pressing the <em>Wheel</em> or <code>ENTER</code> and turning the <em>Wheel</em> changes the digit between 0 and 9. Pressing the <em>Wheel</em> or <code>ENTER</code> selects the new value.</p>
-<p><a name="Contact_Check_Algorithm"></a></p>
-<h5 id="contact-check-algorithm">Contact Check Algorithm</h5>
-<p>The contact check function prevents measurements that may be in error due to excessive resistance in the force or sense leads when making remotely sensed (Kelvin) measurements. Potential sources for this resistance include a poor contact at the device under test (DUT), a failing relay contacts on a switching card or wires that are too long or thin. The contact check function also detects an open circuit that may occur when a four-point probe is misplaced or misaligned. This relationship is shown schematically in the figure below, where R<sub>C</sub> is the resistance of the mechanical contact at the DUT, and R<sub>S</sub> is the series resistance of cables and any series relays.</p>
+<p><a name="Contact_Check_Function"></a></p>
+<h5 id="contact-check-function">Contact Check Function</h5>
+<p>A contact check function is designed to prevents measurements that may be in error due to excessive resistance in the source or sense leads when making remotely sensed (Kelvin) measurements. Potential sources for this resistance include a poor contact at the device under test (DUT), a failing relay contacts on a switching card or wires that are too long or thin. The contact check measurement could also detect an open circuit that may occur when a four-point probe is misplaced or misaligned. This relationship is shown schematically in Fig. 2 above, where R<sub>C</sub> is the resistance of the mechanical contact at the DUT, and R<sub>S</sub> is the series resistance of cables and any series relays.</p>
+<p><a name="Contact_Check_Implementation"></a></p>
+<h5 id="the-keithley-contact-check-implementation">The Keithley Contact Check Implementation</h5>
+<p>The Keithley 2600 instrument checks for contacts by forcing a small 300µA current into each sense lead in turn, amplifying the voltage drop across the source-sense terminals via a high impedance amplifier and reading this voltage by the instrument voltmeter. The instrument contact check function then calculates the contact resistance thus measured and compares it to a set limit that must be higher than 20Ω. The instrument contact check capability has the following features:</p>
+<ul>
+<li>An open contact is detected if <strong>either</strong> sense lead (<code>S-Lo</code> or <code>S-Hi</code>) between the instrument and the DUT is open.</li>
+<li>Both low and high leads are flagged as open if <strong>both</strong> source leads (<code>Lo</code> and <code>Hi</code>) are open.</li>
+<li>When either source lead (<code>Lo</code> or <code>Hi</code>) is open, the instrument contact check function effectively reads the DUT resistance. Consequently,
+<ul>
+<li>If a single source lead is open, the contact check algorithm reports an open lead only if the DUT resistance is higher than the contact check limit, which minimum is 20Ω.</li>
+</ul>
+</li>
+</ul>
+<p><a name="TTM_Contact_Check_Implementation"></a></p>
+<h5 id="the-ttm-contact-check-implementation">The TTM Contact Check Implementation</h5>
 <p>The leads contacts are checked if the maximum leads resistance (see below) is set to a non-zero positive value. Contacts are measured before taking the initial resistance measurement. The measurement is aborted and the lead resistances are displayed if the measured lead resistances exceeds the maximum limit.</p>
 <p>A custom contact check algorithm is implemented in the TTM firmware as a workaround for the instrument failure to detect an open lead if either the low or high source lead is open.</p>
 <p>The custom algorithm measured the DUT resistance measurement after conducting the standard contact check if this check did find open contacts. This measurement yields a high resistance if a source lead is open or if the DUT leads are open. Thus, this measurement can be used to detect an open source lead.</p>
@@ -467,6 +484,11 @@ lower than the high leads resistance.</li>
 <p><img src="VoltageLimitShuntDiagram.png" alt="Voltage Limiting Shunt" /></p>
 <p>Fig. 3. Voltage limiting shunt diagram.</p>
 <p>A sense shunt is sufficient. Placing a shunt across the source terminals adversely affects the measurements.</p>
+<p><a name="Source_Sense_Shunts"></a></p>
+<h5 id="source-sense-shunts">Source-Sense Shunts</h5>
+<p>To further limit the potential for spurious spikes during the contact check measurements, Keithley recommended adding 100Ω resistors across the low and high source-sense terminals as shown below.</p>
+<p><img src="VoltageLimitShuntDiagram2.png" alt="Voltage Limiting and Source-Sense Shunts" /></p>
+<p>Fig. 4. Voltage limiting shunt diagram with source-sense shunts.</p>
 <p><a name="Meter_Shunt_Menu"></a></p>
 <h3 id="shunt-menu">Shunt Menu</h3>
 <p>Selecting <em>Shunt</em> from the <a href="#meter_menu">Meter Menu</a> displays the resistance of the shunt resistance across the sense terminals of the instrument. This menu sets the resistance of the shunt resistor that is connected across the Sense terminals of the instrument:</p>
@@ -910,7 +932,7 @@ lower than the high leads resistance.</li>
 <li>Maximum Sink Current: -5.0mA @ 0.7V</li>
 </ul>
 <p><img src="TriggerDiagram.png" alt="Trigger Diagram" /></p>
-<p>Fig. 4. Digital input triggering diagram.</p>
+<p>Fig. 5. Digital input triggering diagram.</p>
 <p><a name="Triggering"></a></p>
 <h2 id="triggering">Triggering</h2>
 <p>The instrument provides full hand shake for controlling the measurement by way of the <a href="#F186A3EE9ED4B6DB25D2650896E4DA3333AE075B">Digital I/O</a> port:</p>
@@ -1026,8 +1048,8 @@ The outcome status bit is set if the contact check failed.</p>
 <p><a name="Measurements_Display"></a></p>
 <h3 id="measurements-display">Measurements Display</h3>
 <p>Upon the completion of a measurement, the instrument displays the following typical screen:</p>
-<pre><code>R: 2.576Ω δ: 65mV
-r: 2.587Ω &lt;TRIG MENU RUN&gt;
+<pre><code>R: 2.576&amp;#937; δ: 65mV
+r: 2.587&amp;#937; &lt;TRIG MENU RUN&gt;
 </code></pre>
 <p>Where 'R' points to the initial resistance, 'δ:' to the thermal transient voltage and 'r:' to the final resistance.</p>
 <p><a name="Contact_Check_Display"></a></p>

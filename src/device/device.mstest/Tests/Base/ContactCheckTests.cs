@@ -145,16 +145,21 @@ Math.Abs( this.TestSiteSettings.TimeZoneOffset() ), $"{nameof( this.TestSiteSett
 
     /// <summary>   Assert check contacts. </summary>
     /// <remarks>   2025-01-23. </remarks>
-    /// <param name="highOkay"> True to high okay. </param>
-    /// <param name="lowOkay">  True to low okay. </param>
-    protected abstract void AssertCheckContacts( bool highOkay, bool lowOkay );
+    /// <param name="highOkay">         True to high okay. </param>
+    /// <param name="lowOkay">          True to low okay. </param>
+    /// <param name="contactThreshold"> The contact threshold. </param>
+    protected abstract void AssertCheckContacts( bool highOkay, bool lowOkay, int contactThreshold );
+
+    /// <summary>   Gets or sets the contact check threshold. </summary>
+    /// <value> The contact check threshold. </value>
+    public int ContactCheckThreshold { get; set; } = 50;
 
     /// <summary>   (Unit Test Method) contact check should pass. </summary>
     /// <remarks>   2025-01-23. </remarks>
     [TestMethod( "01. Contact check should pass" )]
     public void ContactCheckShouldPass()
     {
-        this.AssertCheckContacts( true, true );
+        this.AssertCheckContacts( true, true, this.ContactCheckThreshold );
     }
 
     /// <summary>   (Unit Test Method) contact check should detect open sense low. </summary>
@@ -162,7 +167,7 @@ Math.Abs( this.TestSiteSettings.TimeZoneOffset() ), $"{nameof( this.TestSiteSett
     [TestMethod( "02. Contact check detect open low sense terminal" )]
     public void ContactCheckShouldDetectOpenSenseLow()
     {
-        this.AssertCheckContacts( true, false );
+        this.AssertCheckContacts( true, false, this.ContactCheckThreshold );
     }
 
     /// <summary>   (Unit Test Method) contact check should detect open source low. </summary>
@@ -172,7 +177,15 @@ Math.Abs( this.TestSiteSettings.TimeZoneOffset() ), $"{nameof( this.TestSiteSett
     [TestMethod( "03. Contact check detect open low source terminal" )]
     public void ContactCheckShouldDetectOpenSourceLow()
     {
-        this.AssertCheckContacts( true, true );
+        this.AssertCheckContacts( true, true, this.ContactCheckThreshold );
+    }
+
+    /// <summary>   (Unit Test Method) contact check should detect open leads. </summary>
+    /// <remarks>   2025-09-12. </remarks>
+    [TestMethod( "04. Contact check detect open leads (>50 ohms)" )]
+    public void ContactCheckShouldDetectOpenLeads()
+    {
+        this.AssertCheckContacts( false, false, this.ContactCheckThreshold );
     }
 
     #endregion

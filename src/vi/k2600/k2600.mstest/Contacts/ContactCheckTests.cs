@@ -46,6 +46,7 @@ public class ContactCheckTests : Device.Tests.Base.ContactCheckTests
         // create an instance of the session logger.
         SessionLogger.Instance.CreateLogger( typeof( ContactCheckTests ) );
 
+        base.ContactCheckThreshold = 50;
         this.TestSiteSettings = Settings.AllSettings.Instance.TestSiteSettings;
         this.ResourceSettings = Settings.AllSettings.Instance.ResourceSettings;
         this.DeviceErrorsSettings = Settings.AllSettings.Instance.DeviceErrorsSettings;
@@ -75,17 +76,17 @@ public class ContactCheckTests : Device.Tests.Base.ContactCheckTests
 
     /// <summary>   Assert contact subsystem should check contacts. </summary>
     /// <remarks>   2025-01-23. </remarks>
-    /// <param name="device">   The reference to the K2600 Device. </param>
-    /// <param name="highOkay"> True to high okay. </param>
-    /// <param name="lowOkay">  True to low okay. </param>
-    private static void AssertContactSubsystemShouldCheckContacts( K2600Device? device, bool highOkay, bool lowOkay )
+    /// <param name="device">           The reference to the K2600 Device. </param>
+    /// <param name="highOkay">         True to high okay. </param>
+    /// <param name="lowOkay">          True to low okay. </param>
+    /// <param name="contactThreshold"> The contact threshold. </param>
+    private static void AssertContactSubsystemShouldCheckContacts( K2600Device? device, bool highOkay, bool lowOkay, int contactThreshold )
     {
         Assert.IsNotNull( device, $"{nameof( device )} should not be null." );
         Assert.IsNotNull( device.Session, $"{nameof( device )}.{nameof( device.Session )} should not be null." );
         Assert.IsTrue( device.IsDeviceOpen, $"{device.ResourceNameCaption} session should be open." );
         Assert.IsNotNull( device.ContactSubsystem, $"{nameof( device )}.{nameof( device.ContactSubsystem )} should not be null." );
 
-        int contactThreshold = 100;
         ContactSubsystem contactSubsystem = device.ContactSubsystem;
         ContactCheckSpeedMode? speedMode = contactSubsystem.ApplyContactCheckSpeedMode( ContactCheckSpeedMode.Fast );
         Console.WriteLine( $"Contact check speed: {speedMode}" );
@@ -113,19 +114,21 @@ public class ContactCheckTests : Device.Tests.Base.ContactCheckTests
 
     /// <summary>   Assert check contacts. </summary>
     /// <remarks>   2025-01-23. </remarks>
-    /// <param name="highOkay"> True if high contacts are okay. </param>
-    /// <param name="lowOkay">  True if low contacts are okay. </param>
-    protected override void AssertCheckContacts( bool highOkay, bool lowOkay )
+    /// <param name="highOkay">         True if high contacts are okay. </param>
+    /// <param name="lowOkay">          True if low contacts are okay. </param>
+    /// <param name="contactThreshold"> The contact threshold. </param>
+    protected override void AssertCheckContacts( bool highOkay, bool lowOkay, int contactThreshold )
     {
         Assert.IsNotNull( this.Device );
         Assert.IsNotNull( this.Device.Session );
         Assert.IsNotNull( this.Device.StatusSubsystemBase );
         Assert.IsNotNull( this.Device.StatusSubsystem );
+        base.ContactCheckThreshold = contactThreshold;
         try
         {
             VI.Device.Tests.Asserts.AssertSessionInitialValuesShouldMatch( this.Device.Session, this.ResourceSettings );
             VI.Device.Tests.Asserts.AssertDeviceShouldOpenWithoutDeviceErrors( this.Device, this.ResourceSettings );
-            AssertContactSubsystemShouldCheckContacts( this.Device, highOkay, lowOkay );
+            ContactCheckTests.AssertContactSubsystemShouldCheckContacts( this.Device, highOkay, lowOkay, contactThreshold );
         }
         catch
         {
