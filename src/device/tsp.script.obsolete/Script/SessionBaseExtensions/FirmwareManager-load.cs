@@ -457,7 +457,7 @@ public static partial class FirmwareManager
 
     /// <summary>   A Pith.SessionBase extension method that loads script source. </summary>
     /// <remarks>
-    /// 2024-10-11. If the script source is binary, the script is loaded using
+    /// 2024-10-11. If the script source is byte code, the script is loaded using
     /// <see cref="LoadScript(SessionBase?, string, string[])"/> otherwise, the script is loaded using
     /// <see cref="ParseAndLoadScriptSource"/>
     /// </remarks>
@@ -468,9 +468,9 @@ public static partial class FirmwareManager
     public static (bool TimedOut, ServiceRequests Status, TimeSpan Elapsed) LoadScriptSource( this Pith.SessionBase session, string scriptName,
         string scriptSource )
     {
-        if ( FirmwareScriptBase.IsBinarySource( scriptSource ) )
+        if ( FirmwareScriptBase.isByteCodeSource( scriptSource ) )
         {
-            throw new InvalidOperationException( $"The script source '{scriptSource}' is binary. Binary scripts cannot be loaded to the 2600B instruments." );
+            throw new InvalidOperationException( $"The script source '{scriptSource}' is binary. byte code scripts cannot be loaded to the 2600B instruments." );
 #if false
             Stopwatch sw = Stopwatch.StartNew();
             session.LoadScript( scriptName, scriptSource );

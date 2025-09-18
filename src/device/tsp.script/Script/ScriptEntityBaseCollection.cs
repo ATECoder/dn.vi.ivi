@@ -265,8 +265,8 @@ public class ScriptEntityBaseCollection<TItem>( NodeEntityBase node ) : System.C
                 _ = builder.AppendLine( $"\tReleased version: {script.FirmwareScript.FirmwareVersion}." );
                 if ( script.Loaded )
                 {
-                    if ( script.LoadedAsBinary )
-                        _ = builder.AppendLine( $"\tLoaded as binary." );
+                    if ( script.LoadedAsByteCode )
+                        _ = builder.AppendLine( $"\tLoaded as byte code." );
                     else
                         _ = builder.AppendLine( $"\tLoaded." );
 
@@ -779,19 +779,19 @@ public class ScriptEntityBaseCollection<TItem>( NodeEntityBase node ) : System.C
     /// <param name="session">                  The session. </param>
     /// <param name="scriptName">               Specifies the script to save. </param>
     /// <param name="saveToNonVolatileMemory">  True to save to non volatile memory. </param>
-    /// <param name="convertToBinary">          Specifies the condition requesting saving the source
-    ///                                         as binary. </param>
+    /// <param name="convertToByteCode">          Specifies the condition requesting saving the source
+    ///                                         as byte code. </param>
     /// <param name="isBootScript">             Specifies the condition indicating if this is a boot
     ///                                         script. </param>
     /// <returns>   <c>true</c> if save required; otherwise, <c>false</c>. </returns>
-    public bool IsSaveRequired( Pith.SessionBase session, string scriptName, bool saveToNonVolatileMemory, bool convertToBinary, bool isBootScript )
+    public bool IsSaveRequired( Pith.SessionBase session, string scriptName, bool saveToNonVolatileMemory, bool convertToByteCode, bool isBootScript )
     {
         return string.IsNullOrWhiteSpace( scriptName )
             ? throw new ArgumentNullException( nameof( scriptName ) )
             : this.Node is null
                 ? throw new ArgumentNullException( nameof( this.Node ) )
                 : saveToNonVolatileMemory &&
-                    ((convertToBinary && !session.IsBinaryScript( scriptName, this.Node ).GetValueOrDefault( false ))
+                    ((convertToByteCode && !session.isByteCodeScript( scriptName, this.Node ).GetValueOrDefault( false ))
                     || !this.SavedScriptExists( session, scriptName, false )
                     || (isBootScript && this.Node.BootScriptSaveRequired));
     }
@@ -807,7 +807,7 @@ public class ScriptEntityBaseCollection<TItem>( NodeEntityBase node ) : System.C
     /// <returns>   <c>true</c> if save required; otherwise, <c>false</c>. </returns>
     public bool IsSaveRequired( Pith.SessionBase session, ScriptEntityBase script )
     {
-        return this.IsSaveRequired( session, script.Name, script.FirmwareScript.SaveToNonVolatileMemory, script.FirmwareScript.ConvertToBinary, script.FirmwareScript.IsAutoexecScript );
+        return this.IsSaveRequired( session, script.Name, script.FirmwareScript.SaveToNonVolatileMemory, script.FirmwareScript.ConvertToByteCode, script.FirmwareScript.IsAutoexecScript );
     }
 
     #endregion

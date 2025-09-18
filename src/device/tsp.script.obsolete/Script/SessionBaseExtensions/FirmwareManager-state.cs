@@ -2,12 +2,12 @@ namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
 public static partial class FirmwareManager
 {
-    /// <summary>   Checks if the script is Binary. </summary>
+    /// <summary>   Checks if the script is byte code. </summary>
     /// <remarks>   2024-09-24. </remarks>
     /// <param name="session">      The session. </param>
     /// <param name="scriptName">   Specifies the script name. </param>
-    /// <returns>   <c>true</c> if the script is a binary script; otherwise, <c>false</c>. </returns>
-    public static bool IsBinaryScript( this Pith.SessionBase session, string scriptName )
+    /// <returns>   <c>true</c> if the script is a byte code script; otherwise, <c>false</c>. </returns>
+    public static bool isByteCodeScript( this Pith.SessionBase session, string scriptName )
     {
         return !session.IsNil( $"_G.string.find( _G.string.sub( {scriptName}.source , 1 , 50 ), 'loadstring(table.concat(' , 1 , true )" );
     }
@@ -69,18 +69,18 @@ public static partial class FirmwareManager
         script.HasFirmwareVersionGetter = false;
         script.Loaded = false;
         script.Saved = false;
-        script.LoadedAsBinary = false;
+        script.LoadedAsByteCode = false;
 
         script.Loaded = !session.IsNil( script.Node.IsController, script.Node.Number, script.Name );
 
         if ( script.Loaded )
         {
-            // note that the scripts are loaded as binary first on the local node and then copied to the remote node.
+            // note that the scripts are loaded as byte code first on the local node and then copied to the remote node.
             script.Activated = !session.IsNil( script.Node.IsController, script.Node.Number, script.FirmwareScript.Namespaces );
 
             script.Saved = !string.IsNullOrWhiteSpace( savedScripts )
                 && (savedScripts!.IndexOf( script.Name + ",", 0, StringComparison.OrdinalIgnoreCase ) >= 0);
-            script.LoadedAsBinary = session.IsBinaryScript( script.Name );
+            script.LoadedAsByteCode = session.isByteCodeScript( script.Name );
         }
 
         if ( script.Activated )

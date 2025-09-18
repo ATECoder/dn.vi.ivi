@@ -42,14 +42,26 @@ public class ScriptInfo
     /// <summary>   (Immutable) the script file extension. </summary>
     public const string ScriptFileExtension = ".tsp";
 
+    /// <summary>   (Immutable) the script encrypted file extension. </summary>
+    public const string ScriptEncryptedFileExtension = ".tspe";
+
     /// <summary>   (Immutable) the script compressed file extension. </summary>
     public const string ScriptCompressedFileExtension = ".tspc";
+
+    /// <summary>   (Immutable) the script compressed and encrypted file extension. </summary>
+    public const string ScriptCompressedEncryptedFileExtension = ".tspce";
 
     /// <summary>   (Immutable) the script byte code file extension. </summary>
     public const string ScriptByteCodeFileExtension = ".tspb";
 
+    /// <summary>   (Immutable) the script byte code and encrypted file extension. </summary>
+    public const string ScriptByteCodeEncryptedFileExtension = ".tspbe";
+
     /// <summary>   (Immutable) the script byte code compressed file extension. </summary>
     public const string ScriptByteCodeCompressedFileExtension = ".tspbc";
+
+    /// <summary>   (Immutable) the script byte code compressed and encrypted file extension. </summary>
+    public const string ScriptByteCodeCompressedEncryptedFileExtension = ".tspbce";
 
     /// <summary>   Select script file extension. </summary>
     /// <remarks>   2025-04-05. </remarks>
@@ -59,12 +71,19 @@ public class ScriptInfo
     {
         return (ScriptFileFormats.ByteCode == (fileFormat & ScriptFileFormats.ByteCode))
             ? (ScriptFileFormats.Compressed == (fileFormat & ScriptFileFormats.Compressed))
-              ? ScriptInfo.ScriptByteCodeCompressedFileExtension
-              : ScriptInfo.ScriptByteCodeFileExtension
+              ? (ScriptFileFormats.Encrypted == (fileFormat & ScriptFileFormats.Encrypted))
+                 ? ScriptInfo.ScriptByteCodeCompressedEncryptedFileExtension
+                 : ScriptInfo.ScriptByteCodeCompressedFileExtension
+              : (ScriptFileFormats.Encrypted == (fileFormat & ScriptFileFormats.Encrypted))
+                 ? ScriptInfo.ScriptByteCodeEncryptedFileExtension
+                 : ScriptInfo.ScriptByteCodeFileExtension
             : (ScriptFileFormats.Compressed == (fileFormat & ScriptFileFormats.Compressed))
-              ? ScriptInfo.ScriptCompressedFileExtension
-              : ScriptInfo.ScriptFileExtension;
-
+              ? (ScriptFileFormats.Encrypted == (fileFormat & ScriptFileFormats.Encrypted))
+                 ? ScriptInfo.ScriptCompressedEncryptedFileExtension
+                 : ScriptInfo.ScriptCompressedFileExtension
+              : (ScriptFileFormats.Encrypted == (fileFormat & ScriptFileFormats.Encrypted))
+                 ? ScriptInfo.ScriptEncryptedFileExtension
+                 : ScriptInfo.ScriptFileExtension;
     }
 
     /// <summary>   Builds script file title. </summary>
@@ -202,7 +221,7 @@ public class ScriptInfo
     [Description( "The version of the embedded script as read from the instrument" )]
     public virtual string ActualVersion { get; set; } = string.Empty;
 
-    /// <summary>   The built file name [isr_ttm_autoexec.9243.tsp]. </summary>
+    /// <summary>   The built file name [isr_ttm_autoexec.xxxx.tsp]. </summary>
     /// <value> The filename of the build file. </value>
     [Description( "The build file name []" )]
     public virtual string BuiltFileName { get; set; } = string.Empty;

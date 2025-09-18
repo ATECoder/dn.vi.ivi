@@ -1,5 +1,3 @@
-using System;
-
 namespace cc.isr.Visa.Tests;
 
 /// <summary>   (Unit Test Class) for the Keithley 2450 instrument using the ICS-9065 interface. </summary>
@@ -39,7 +37,7 @@ public class K2600Tests : InstrumentTests
     public override void InitializeBeforeEachTest()
     {
         Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
-        Console.WriteLine( $"\tTesting {cc.isr.Visa.Gac.GacLoader.LoadedImplementation?.Location}." );
+        Console.WriteLine( $"\tTesting {string.Join( ",", cc.isr.Visa.Gac.GacLoader.LoadedImplementationFriendlyNames )}." );
 
         // inst0 must be lower case
         // this.ResourceName = "TCPIP0::192.168.0.150::inst0::INSTR";

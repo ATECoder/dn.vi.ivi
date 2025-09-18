@@ -216,9 +216,9 @@ public abstract class ScriptEntityBase( FirmwareScriptBase firmwareScript, NodeE
     /// <value> True if the script is loaded, false if not. </value>
     public bool Loaded { get; set; }
 
-    /// <summary>   Gets or sets a value indicating whether the script was loaded as a binary script. </summary>
-    /// <value> True if the script is loaded as a binary script, false if not. </value>
-    public bool LoadedAsBinary { get; set; }
+    /// <summary>   Gets or sets a value indicating whether the script was loaded as a byte code script. </summary>
+    /// <value> True if the script is loaded as a byte code script, false if not. </value>
+    public bool LoadedAsByteCode { get; set; }
 
     /// <summary>   Gets or sets a value indicating whether the script was activated by running this script. </summary>
     /// <value> True if the script was activated by running this script, false if not. </value>
@@ -270,7 +270,7 @@ public abstract class ScriptEntityBase( FirmwareScriptBase firmwareScript, NodeE
     /// <returns>   True if save required, false if not. </returns>
     public bool IsSaveRequired()
     {
-        return !this.Saved || (this.FirmwareScript.SaveToNonVolatileMemory && this.LoadedAsBinary);
+        return !this.Saved || (this.FirmwareScript.SaveToNonVolatileMemory && this.LoadedAsByteCode);
     }
 
     #endregion

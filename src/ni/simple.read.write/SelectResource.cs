@@ -40,7 +40,8 @@ public partial class SelectResource : Form
         // This example uses an instance of the NationalInstruments.Visa.ResourceManager class to find resources on the system.
         // Alternatively, static methods provided by the Ivi.Visa.ResourceManager class may be used when an application
         // requires additional VISA .NET implementations.
-        IEnumerable<string> resources = GlobalResourceManager.Find( "(ASRL|GPIB|TCPIP|USB)?*" );
+        string searchPattern = "(ASRL|GPIB|TCPIP|USB)?*";
+        IEnumerable<string> resources = GlobalResourceManager.Find( searchPattern );
         foreach ( string s in resources )
             _ = this.AvailableResourcesListBox.Items.Add( s );
     }

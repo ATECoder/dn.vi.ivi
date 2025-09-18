@@ -1,6 +1,7 @@
+using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.Versioning;
-using System;
 using System.Windows.Forms;
 using cc.isr.Visa.ResourceExplorer;
 
@@ -33,8 +34,23 @@ catch ( System.IO.IOException ex )
 }
 
 // preload the VISA assemblies.
-cc.isr.Visa.Gac.GacLoader.LoadInstalledVisaAssemblies();
-Console.WriteLine( $"Loaded VISA implementation: {cc.isr.Visa.Gac.GacLoader.LoadedImplementation?.Location}." );
+if ( cc.isr.Visa.Gac.GacLoader.TryLoadInstalledVisaAssemblies( out string details ) is IList<Assembly> installedAssemblies && installedAssemblies.Count > 0 )
+{
+    int count = installedAssemblies.Count;
+    if ( count > 1 )
+        Console.WriteLine( $"\nLoaded multiple ({count}) VISA .NET implementation assemblies:\n\t{details}" );
+    else
+        Console.WriteLine( $"\nLoaded VISA .NET implementation assembly:\n\t{details}" );
+    // foreach ( Assembly assembly in assemblies )
+    // {
+    //     Console.WriteLine( $"\t{assembly.FullName}, {System.Diagnostics.FileVersionInfo.GetVersionInfo( assembly.Location ).FileVersion}" );
+    // }
+}
+else
+{
+    Console.WriteLine( $"\nNo VISA .NET implementation assemblies loaded:\n\t{details}" );
+    return;
+}
 
 // open the explorer form.
 Application.Run( new ExplorerForm() );

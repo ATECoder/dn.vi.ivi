@@ -112,7 +112,7 @@ public static class TspScriptParser
             return TspChunkLineContentType.LoadStringBlockEnd;
         }
 
-        // check if binary script block
+        // check if byte code script block
         else if ( trimmedLine.Contains( Syntax.Tsp.Script.StartOfBinaryScript, StringComparison.OrdinalIgnoreCase ) )
         {
             return TspChunkLineContentType.BinaryScriptBlockStart;
@@ -190,17 +190,17 @@ public enum TspChunkLineContentType
     [System.ComponentModel.Description( "Load String End Block" )]
     LoadStringBlockEnd,
 
-    /// <summary>   An enum constant representing the binary script start block option. </summary>
-    [System.ComponentModel.Description( "Binary Script Start Block" )]
+    /// <summary>   An enum constant representing the byte code script start block option. </summary>
+    [System.ComponentModel.Description( "byte code script Start Block" )]
     BinaryScriptBlockStart,
 
-    /// <summary>   An enum constant representing the binary script block ending option. </summary>
+    /// <summary>   An enum constant representing the byte code script block ending option. </summary>
     /// <remarks> The block ends if the next line includes a closing braces. </remarks>
-    [System.ComponentModel.Description( "Binary Script Block Ending" )]
+    [System.ComponentModel.Description( "byte code script Block Ending" )]
     BinaryScriptBlockEnding,
 
-    /// <summary>   An enum constant representing the binary script end block option. </summary>
-    [System.ComponentModel.Description( "Binary Script End Block" )]
+    /// <summary>   An enum constant representing the byte code script end block option. </summary>
+    [System.ComponentModel.Description( "byte code script End Block" )]
     BinaryScriptBlockEnd,
 
     /// <summary> An enum constant representing the syntax option. </summary>

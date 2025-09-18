@@ -24,16 +24,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "visa", "visa", "{76EDB5EA-3
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cc.isr.Visa.WinControls", "visa\visa.win.controls\cc.isr.Visa.WinControls.csproj", "{8E586690-CAEF-4D68-A679-A7B6F8A9A727}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "kelary", "kelary", "{D77B2BC9-AA9C-4624-9AB9-6904E9061EDA}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ivi", "ivi", "{D77B2BC9-AA9C-4624-9AB9-6904E9061EDA}"
 	ProjectSection(SolutionItems) = preProject
-		kelary\IviVisaCompatibility.changelog.md = kelary\IviVisaCompatibility.changelog.md
+		ivi\IviVisaCompatibility.changelog.md = ivi\IviVisaCompatibility.changelog.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IviVisaNetSample", "Kelary\IviVisaNetSample\IviVisaNetSample.csproj", "{6218EF05-586D-4466-B8CC-3457C4089E7B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IviVisaNetSample", "ivi\IviVisaNetSample\IviVisaNetSample.csproj", "{6218EF05-586D-4466-B8CC-3457C4089E7B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IviVisaCompatibility", "Kelary\IviVisaCompatibility\IviVisaCompatibility.csproj", "{FA6A8B2F-406E-4584-8618-C7498D203C3B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IviVisaCompatibility", "ivi\IviVisaCompatibility\IviVisaCompatibility.csproj", "{FA6A8B2F-406E-4584-8618-C7498D203C3B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IviVisaCompatibilityDemo", "Kelary\IviVisaCompatibilityDemo\IviVisaCompatibilityDemo.csproj", "{50FD24FD-3F7E-4D98-ACEE-928A460272C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IviVisaCompatibilityDemo", "ivi\IviVisaCompatibilityDemo\IviVisaCompatibilityDemo.csproj", "{50FD24FD-3F7E-4D98-ACEE-928A460272C3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cc.isr.Visa.WinControls.Demo", "visa\visa.win.controls.demo\cc.isr.Visa.WinControls.Demo.csproj", "{A1327A24-6683-4EA4-A708-F9ABD1181BEF}"
 EndProject
@@ -63,7 +63,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cc.isr.Json.AppSettings.Vie
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cc.isr.Json.AppSettings.WinForms", "..\..\..\core\json\src\app.settings\app.settings.win.forms\cc.isr.Json.AppSettings.WinForms.csproj", "{AC3F3E9D-6F99-428E-A536-4A8A5DA4520E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IviVisaCompatibilityTester", "kelary\IviVisaCompatibiityTester\IviVisaCompatibilityTester.csproj", "{B8D3A47C-0DE1-A63A-F204-524B40814D8C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IviVisaCompatibilityTester", "ivi\IviVisaCompatibiityTester\IviVisaCompatibilityTester.csproj", "{B8D3A47C-0DE1-A63A-F204-524B40814D8C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cc.isr.Visa.Console", "visa\visa.console\cc.isr.Visa.Console.csproj", "{580FD653-64E2-62DB-1BF2-EDB88968E374}"
 EndProject

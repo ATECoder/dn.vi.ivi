@@ -34,7 +34,7 @@ public static partial class FirmwareManager
         session.LastNodeNumber = script.Node.Number;
         session.SetLastAction( $"loading script '{script.Name}'" );
         bool affirmative = true;
-        if ( script.FirmwareScript.IsBinaryScript || (!session.IsNil( script.Name ) && session.IsBinaryScript( script ).GetValueOrDefault( false )) )
+        if ( script.FirmwareScript.isByteCodeScript || (!session.IsNil( script.Name ) && session.isByteCodeScript( script ).GetValueOrDefault( false )) )
         {
             script.Loaded = false;
             script.Saved = false;
@@ -168,7 +168,7 @@ public static partial class FirmwareManager
     /// remote node. Does not require having the ISR Support script on the controller node.
     /// </summary>
     /// <remarks>
-    /// For binary scripts, the controller and remote nodes must be binary compatible.
+    /// For byte code scripts, the controller and remote nodes must be binary compatible.
     /// </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>

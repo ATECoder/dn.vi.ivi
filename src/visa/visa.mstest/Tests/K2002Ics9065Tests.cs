@@ -1,5 +1,3 @@
-using System;
-
 namespace cc.isr.Visa.Tests;
 
 /// <summary>   (Unit Test Class) for the Keithley 2002 using the ICR-9065 Ethernet interface. </summary>

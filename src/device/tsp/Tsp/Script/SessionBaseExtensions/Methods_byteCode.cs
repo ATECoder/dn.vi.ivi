@@ -22,10 +22,10 @@ public static partial class SessionBaseExtensionMethods
     /// <returns>   <c>true</c> if the script is a byte code script; otherwise, <c>false</c>. </returns>
     public static bool IsByteCodeScript( this Pith.SessionBase session, string scriptName, bool usingSupportScript = false )
     {
-        string commandObject = "_G.isr.script.isBinary";
+        string commandObject = "_G.isr.script.isByteCode";
         usingSupportScript = usingSupportScript && !session.IsNil( commandObject );
         return usingSupportScript
-            ? session.IsStatementTrue( "_G.isr.script.isBinary({0})", scriptName )
+            ? session.IsStatementTrue( "_G.isr.script.isByteCode({0})", scriptName )
             : !session.IsNil( $"_G.string.find( _G.string.sub( {scriptName}.source , 1 , 50 ), 'loadstring(table.concat(' , 1 , true )" );
     }
 
@@ -44,11 +44,11 @@ public static partial class SessionBaseExtensionMethods
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( !session.IsDeviceOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
-        string commandObject = "_G.isr.script.isBinary";
+        string commandObject = "_G.isr.script.isByteCode";
         usingSupportScript = usingSupportScript && !session.IsNil( commandObject );
         return session.IsControllerNode( nodeNumber )
                 ? session.IsByteCodeScript( scriptName, usingSupportScript )
-                : session.IsStatementTrue( "_G.isr.script.isBinary({0},{1})", scriptName, nodeNumber );
+                : session.IsStatementTrue( "_G.isr.script.isByteCode({0},{1})", scriptName, nodeNumber );
     }
 
     /// <summary>   Checks if the script is byte code. </summary>

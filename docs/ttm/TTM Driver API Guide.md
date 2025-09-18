@@ -1,4 +1,5 @@
 # Thermal Transient Meter&trade; Driver API Guide
+# Thermal Transient Meter&trade; Driver API Guide
 
 Application programming interface for the Thermal Transient Meter&trade;
 
@@ -92,7 +93,8 @@ Both the [Legacy Driver](#Legacy_Deriver) and [Meter Driver](#Meter_Deriver) as 
 
 The new legacy driver `cc.isr.VI.Tsp.K2600.Ttm.Legacy` implementation entails the following changes:
 - Targets the [Microsoft .NET Standard] 2.0.
-- Targets [IVI VISA] 8.0.1 thus requiring the installations compatible editions of the [Keysight IO Suite] (e.g., version 21.1.209) or [NI Visa].
+- Targets [IVI VISA] 8.0.2 thus requiring the installations compatible editions of the [Keysight IO Suite] (e.g., version 21.2.207).
+- If is not clear at this time if [NI Visa] can be used because, starting with [Keysight IO Suite] 21.1.209, the application no longer compiles against a naked IVI Visa DLL.
 - Uses a Message-Based session rather than a GPIB session to access the instrument. Thus, the driver can access a GPIB device by way of a USB-GPIB or TCP/IP-GPIB adapters.
 - Uses a `cc` prefix to precede the `isr` namespace such as `cc.isr.Ttm.Device` instead of `isr.Ttm.Device`, which is commensurate with the registered `isr.cc` domain of Integrated Scientific Resources, Inc.
 - Targets either the legacy TTM Firmware version 2.3.4009 or the Firmware version 2.4.9111 and above.
@@ -106,7 +108,8 @@ The new legacy driver `cc.isr.VI.Tsp.K2600.Ttm.Legacy` implementation entails th
 
 The new meter driver `cc.isr.VI.Tsp.K2600.Ttm` implementation entails the following changes:
 - Targets the [Microsoft .NET Standard] 2.0.
-- Targets [IVI VISA] 8.0.1 thus requiring the installations compatible editions of the [Keysight IO Suite] (e.g., version 21.1.209) or [NI Visa].
+- Targets [IVI VISA] 8.0.2 thus requiring the installations compatible editions of the [Keysight IO Suite] (e.g., version 21.2.207).
+- If is not clear at this time if [NI Visa] can be used because, starting with [Keysight IO Suite] 21.1.209, the application no longer compiles against a naked IVI Visa DLL.
 - Uses a Message-Based session rather than a GPIB session to access the instrument. Thus, the driver can access a GPIB device by way of a USB-GPIB or TCP/IP-GPIB adapters.
 - Uses a `cc` prefix to precede the `isr` namespace such as `cc.isr.Ttm.Device` instead of `isr.Ttm.Device`, which is commensurate with the registered `isr.cc` domain of Integrated Scientific Resources, Inc.
 - Targets the new TTM Firmware version 2.4.9111 and above.
@@ -858,7 +861,7 @@ Source code is hosted on [GitHub]
 [.NET Framework]: https://dotnet.microsoft.com/en-us/learn/dotnet/what-is-dotnet-framework
 [Microsoft .NET Standard]: https://learn.microsoft.com/en-us/dotnet/standard/net-standard?tabs=net-standard-1-0
 [IVI VISA]: https://www.ivi.org
-[Keysight IO Suite]: https://www.keysight.com/us/en/lib/software-detail/computer-software/io-libraries-suite-downloads-2175637.html
+[Keysight IO Suite]: https://www.keysight.com/en/pd-1985909/io-libraries-suite
 [NI Visa]: http://ftp.ni.com/support/softlib/visa/VISA%20Run-Time%20Engine
 [TTM Framework Guide]: https://github.com/ATECoder/dn.vi.ivi.git/docs/ttm/TTM%20Framework%20Guide.html
 [TTM Firmware API Guide]: https://github.com/ATECoder/dn.vi.ivi.git/docs/ttm/TTM%20Firmware%20API%20Guide.html

@@ -59,18 +59,18 @@ public static partial class FirmwareManager
         script.HasFirmwareVersionGetter = false;
         script.Loaded = false;
         script.Saved = false;
-        script.LoadedAsBinary = false;
+        script.LoadedAsByteCode = false;
 
         script.Loaded = !session.IsNil( script.Node.IsController, script.Node.Number, script.Name );
 
         if ( script.Loaded )
         {
-            // note that the scripts are loaded as binary first on the local node and then copied to the remote node.
+            // note that the scripts are loaded as byte code first on the local node and then copied to the remote node.
             script.Activated = !session.IsNil( script.Node.IsController, script.Node.Number, script.FirmwareVersionGetter.TrimEnd( ['(', ')'] ) );
 
             script.Saved = !string.IsNullOrWhiteSpace( savedScripts )
                 && (savedScripts!.IndexOf( script.Name + ",", 0, StringComparison.OrdinalIgnoreCase ) >= 0);
-            script.LoadedAsBinary = session.IsByteCodeScript( script.Name );
+            script.LoadedAsByteCode = session.IsByteCodeScript( script.Name );
         }
 
         if ( script.Activated )

@@ -62,19 +62,28 @@ public abstract class SessionBaseTests
     /// <summary> Initializes the test class instance before each test runs. </summary>
     public virtual void InitializeBeforeEachTest()
     {
-        Console.WriteLine( $"\t{cc.isr.Visa.Gac.GacLoader.LoadedImplementation?.Location}." );
-        Console.WriteLine( $"\t{typeof( Ivi.Visa.IMessageBasedSession ).Assembly.FullName}" );
-        Console.WriteLine( $"\t{typeof( cc.isr.Visa.Gac.Vendor ).Assembly.FullName}" );
-        // handled in the sub class.
-        // Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {TimeZoneInfo.Local}" );
-        // Console.WriteLine( $"\tTesting {typeof( Pith.SessionBase ).Assembly.FullName}" );
+        if ( typeof( Ivi.Visa.IMessageBasedSession ).Assembly is System.Reflection.Assembly iviVisaAssembly )
+        {
+            Console.WriteLine( $"\t{iviVisaAssembly.FullName}." );
+            Console.WriteLine( $"\t{iviVisaAssembly.Location}." );
+        }
+        else
+            Assert.Fail( $"{nameof( Ivi.Visa.IMessageBasedSession )} assembly not found." );
+
+        if ( typeof( cc.isr.Visa.Gac.Vendor ).Assembly is System.Reflection.Assembly vendorVisaAssembly )
+        {
+            Console.WriteLine( $"\t{vendorVisaAssembly.FullName}." );
+            Console.WriteLine( $"\t{vendorVisaAssembly.Location}." );
+        }
+        else
+            Assert.Fail( $"{nameof( cc.isr.Visa.Gac.Vendor )} VISA assembly not found." );
 
         // assert reading of test settings from the configuration file
         Assert.IsNotNull( this.TestSiteSettings );
         Assert.IsTrue( this.TestSiteSettings.Exists );
         double expectedUpperLimit = 12d;
         Assert.IsLessThan( expectedUpperLimit,
-Math.Abs( this.TestSiteSettings.TimeZoneOffset() ), $"{nameof( this.TestSiteSettings.TimeZoneOffset )} should be lower than {expectedUpperLimit}" );
+            Math.Abs( this.TestSiteSettings.TimeZoneOffset() ), $"{nameof( this.TestSiteSettings.TimeZoneOffset )} should be lower than {expectedUpperLimit}" );
 
         if ( Logger is not null )
         {

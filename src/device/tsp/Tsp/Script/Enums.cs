@@ -16,6 +16,10 @@ public enum ScriptFileFormats
     /// <summary> An enum constant representing the byte code option. </summary>
     [System.ComponentModel.Description( "Byte Code format" )]
     ByteCode = 2,
+
+    /// <summary> An enum constant representing the encrypted option. </summary>
+    [System.ComponentModel.Description( "Encrypted format" )]
+    Encrypted = 4,
 }
 
 /// <summary>   A bit-field of flags for specifying script statuses. </summary>

@@ -1,5 +1,3 @@
-using System;
-
 namespace cc.isr.Visa.Tests;
 
 /// <summary>   (Unit Test Class) for the Keithley 2450 instrument using the ICS-9065 interface. </summary>

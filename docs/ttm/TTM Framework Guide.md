@@ -77,12 +77,12 @@ The TTM Framework [Microsoft .NET] API uses the Virtual Instruments (VISA) frame
 
 The TTM Framework has undergone a few revisions since it's inception in 2005. The following table attempts to provide the relationships between the various components and revisions that have been actively employed.
 
-| Component | 2011 | 2025 |
-|--------|-------------|-------------|
-| Firmware | 2.3.4009 | 2.4.9111 |
-| Loader | isr.Ttm.Loader 2.3.4049 | cc.isr.VI.Tsp.K2600.Ttmware.Loader 8.1.9210 |
-| Driver | isr.Ttm.Driver 2.3.4077 | TBA |
-| VISA | NI-VISA NS 8.1.20 | IVI-VISA 8.0.1 |
+| Component | 2011                    | 2025                                        |
+|-----------|-------------------------|---------------------------------------------|
+| Firmware  | 2.3.4009                | 2.4.9387                                    |
+| Loader    | isr.Ttm.Loader 2.3.4049 | cc.isr.VI.Tsp.K2600.Ttmware.Loader 8.1.9387 |
+| Driver    | isr.Ttm.Driver 2.3.4077 | TBA                                         |
+| VISA      | NI-VISA NS 8.1.20       | IVI-VISA 8.0.2                              |
 
 <a name="Terminology"></a>
 ## Terminology
@@ -142,7 +142,9 @@ The TTM applications are based on the Microsoft [.NET Framework] 9.0 and [Micros
 
 The TTM Framework [Microsoft .NET] API uses the Virtual Instruments (VISA) framework from the [IVI Foundation] for communicating with the TTM instrument. [IVI VISA] is installed by members of the [IVI Foundation] such as Keysight, Rohde-Schwartz and NI (former National Instruments). Implementations such as the [Keysight IO Suite] or [NI Visa] must be installed for running applications based on [IVI VISA].
 
-The current TTM software was developed based on version 8.0.1 of [IVI VISA]. Any VISA implementation, such as [Keysight IO Suite] version 21.1.209 is compatible with the ISR TTM API.
+The current TTM software was developed based on version 8.0.2 of [IVI VISA] and [Keysight IO Suite] 21.2.207.
+
+If is not clear at this time if [NI Visa] can be used because, starting with [Keysight IO Suite] 21.1.209, the application no longer compile against a naked IVI Visa DLL.
 
 <a name="Attributions"></a>
 ## Attributions
@@ -164,7 +166,7 @@ Source code is hosted on [GitHub]
 [GitHub]: https://www.github.com/ATECoder
 [IVI VISA]: https://www.ivi.org
 [IVI FOUNDATION]: https://www.ivi.org
-[Keysight IO Suite]: https://www.keysight.com/us/en/lib/software-detail/computer-software/io-libraries-suite-downloads-2175637.html
+[Keysight IO Suite]: https://www.keysight.com/en/pd-1985909/io-libraries-suite
 [NI Visa]: http://ftp.ni.com/support/softlib/visa/VISA%20Run-Time%20Engine
 [.NET Framework]: https://dotnet.microsoft.com/en-us/download/dotnet/9.0
 [ISR FTP Site]: http://bit.ly/aJgNDP

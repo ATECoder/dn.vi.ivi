@@ -18,11 +18,11 @@ public static partial class FirmwareManager
     ///                                 subsystem</see>. </param>
     /// <param name="scriptName">       Specifies the script to save. </param>
     /// <param name="node">             Specifies the node. </param>
-    /// <param name="saveAsBinary">     Specifies the condition requesting saving the user scripts
-    ///                                 source as binary. </param>
+    /// <param name="saveAsByteCode">     Specifies the condition requesting saving the user scripts
+    ///                                 source as byte code. </param>
     /// <param name="autoRun">          Specifies the condition indicating if this script is to automatically run upon instrument start. </param>
     public static void SaveUserScript( this DisplaySubsystemBase? displaySubsystem, string scriptName, NodeEntityBase node,
-        bool saveAsBinary, bool autoRun )
+        bool saveAsByteCode, bool autoRun )
     {
         if ( scriptName is null ) throw new ArgumentNullException( nameof( scriptName ) );
         if ( string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
@@ -47,10 +47,10 @@ public static partial class FirmwareManager
         // save validation is done after all scripts are saved.
         // this throws an error on device errors
 
-        if ( saveAsBinary )
+        if ( saveAsByteCode )
         {
             displaySubsystem.DisplayLine( 2, $"{node.Number}:{scriptName} 2 binary" );
-            session.ConvertToBinary( scriptName, node, displaySubsystem.StatusSubsystem.VersionInfoBase );
+            session.ConvertToByteCode( scriptName, node, displaySubsystem.StatusSubsystem.VersionInfoBase );
         }
 
         // save the script.
@@ -81,11 +81,11 @@ public static partial class FirmwareManager
 
         Pith.SessionBase session = displaySubsystem.Session;
 
-        if ( script.FirmwareScript.ConvertToBinary )
+        if ( script.FirmwareScript.ConvertToByteCode )
         {
             if ( script.Node.InstrumentModelFamily is InstrumentModelFamily.K2600 or InstrumentModelFamily.K2600A or InstrumentModelFamily.K3700 )
             {
-                // these instruments convert script to binary by setting the script to nil.
+                // these instruments convert script to byte code by setting the script to nil.
             }
             else
             {
@@ -95,7 +95,7 @@ public static partial class FirmwareManager
                     displaySubsystem.StatusSubsystem.VersionInfoBase,
                     script.Node );
 
-                // check if we need to load the binary scripts
+                // check if we need to load the byte code scripts
                 session.SetLastAction( $"checking if {functionName} is nil" );
 
                 if ( session.IsNil( script.Node.Number, functionName ) )
@@ -117,14 +117,14 @@ public static partial class FirmwareManager
                         else
                         {
                             throw new InvalidOperationException(
-                                $"{session.ResourceNameNodeCaption} failed loading binary script conversion function. The function resource {ResourceManager.BinaryScriptEntity!.FirmwareScript.DeployFileName} was not found;. " );
+                                $"{session.ResourceNameNodeCaption} failed loading byte code script conversion function. The function resource {ResourceManager.BinaryScriptEntity!.FirmwareScript.DeployFileName} was not found;. " );
                         }
                     }
                 }
             }
         }
 
-        displaySubsystem.SaveUserScript( script.Name, script.Node, script.FirmwareScript.ConvertToBinary, script.FirmwareScript.IsBootScript );
+        displaySubsystem.SaveUserScript( script.Name, script.Node, script.FirmwareScript.ConvertToByteCode, script.FirmwareScript.IsBootScript );
 
     }
 

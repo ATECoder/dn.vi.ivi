@@ -163,7 +163,7 @@ public class TspSessionScriptTests : Device.Tests.Base.ScriptTests
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
 
-            TestBase.ConsoleOutputMemberMessage( $"Converting loaded script to binary format" );
+            TestBase.ConsoleOutputMemberMessage( $"Converting loaded script to byte code format" );
             this.Device.Session.ConvertToByteCode( scriptName );
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
@@ -181,7 +181,7 @@ public class TspSessionScriptTests : Device.Tests.Base.ScriptTests
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
 
             filePath = Path.Combine( folderPath, $"{fileTitle}_exported{cc.isr.VI.Tsp.Script.ScriptInfo.ScriptByteCodeFileExtension}" );
-            TestBase.ConsoleOutputMemberMessage( $"Exporting binary script to '{filePath}' file." );
+            TestBase.ConsoleOutputMemberMessage( $"Exporting byte code script to '{filePath}' file." );
             this.Device.Session.ExportScript( scriptName, filePath, true );
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
@@ -323,9 +323,9 @@ public class TspSessionScriptTests : Device.Tests.Base.ScriptTests
         }
     }
 
-    /// <summary>   (Unit Test Method) binary script should load and run from file. </summary>
+    /// <summary>   (Unit Test Method) byte code script should load and run from file. </summary>
     /// <remarks>   2025-04-10. </remarks>
-    [TestMethod( "03. Binary script should load and run from file" )]
+    [TestMethod( "03. byte code script should load and run from file" )]
     public void BinaryScriptShouldLoadAndRunFromFile()
     {
         Assert.IsNotNull( this.Device );
@@ -350,7 +350,7 @@ public class TspSessionScriptTests : Device.Tests.Base.ScriptTests
 
             string scriptSource = System.IO.File.ReadAllText( System.IO.Path.Combine( folderPath, fileTitle + cc.isr.VI.Tsp.Script.ScriptInfo.ScriptByteCodeFileExtension ) );
 
-            // tag the file as imported as binary
+            // tag the file as imported as byte code
             // write the source to file.
             fileTitle += "_binary";
             string filePath = Path.Combine( folderPath, $"{fileTitle}{cc.isr.VI.Tsp.Script.ScriptInfo.ScriptByteCodeFileExtension}" );
@@ -379,7 +379,7 @@ public class TspSessionScriptTests : Device.Tests.Base.ScriptTests
 
             filePath = Path.Combine( folderPath, $"{fileTitle}_exported{cc.isr.VI.Tsp.Script.ScriptInfo.ScriptByteCodeFileExtension}" );
 
-            TestBase.ConsoleOutputMemberMessage( $"Exporting to binary '{filePath}' file" );
+            TestBase.ConsoleOutputMemberMessage( $"Exporting to byte code '{filePath}' file" );
             this.Device.Session.ExportScript( scriptName, filePath, true );
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );

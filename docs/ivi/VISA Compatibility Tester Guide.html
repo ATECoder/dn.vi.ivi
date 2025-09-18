@@ -1,0 +1,160 @@
+<!DOCTYPE html []>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="author" content="MarkdownViewer++" />
+    <title>VISA Compatibility Tester Guide.md</title>
+    <style type="text/css">
+            
+/* Avoid page breaks inside the most common attributes, especially for exports (i.e. PDF) */
+td, h1, h2, h3, h4, h5, p, ul, ol, li {
+    page-break-inside: avoid; 
+}
+
+        </style>
+  </head>
+  <body>
+    <h1 id="visa-compatibility-tester-guide">VISA Compatibility Tester Guide</h1>
+    <h2 id="table-of-contents">Table of Contents</h2>
+    <ul>
+      <li>
+        <a href="#About">About</a>
+      </li>
+      <li>
+        <a href="#VISA-Runtime">VISA Runtime</a>
+      </li>
+      <li>
+        <a href="#Command-Line">Command Line</a>
+        <ul>
+          <li>
+            <a href="#Find-Implementation">Find Implementation</a>
+          </li>
+          <li>
+            <a href="#Identify">Identify</a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a href="#Attributions">Attributions</a>
+      </li>
+    </ul>
+    <p>
+      <a name="About"></a>
+    </p>
+    <h2 id="about">About</h2>
+    <p>This guide describes how to use the <code>cc.isr.Visa.Compatibility.Tester</code> application to lookup and check the compatibility of the current instance of the <a href="https://www,ivi.org">IVI VISA</a> implementation.</p>
+    <p>
+      <a name="Command-Line"></a>
+    </p>
+    <h2 id="command-line">Command Line</h2>
+    <p>The <code>cc.isr.Visa.Compatibility.Tester</code> is run from the Windows Command Line.</p>
+    <p>
+      <a name="Find-Implementation"></a>
+    </p>
+    <h3 id="find-implementation">Find Implementation</h3>
+    <p>Enter the following command:</p>
+    <pre>
+      <code>cc.isr.Visa.Compatibility.Tester
+</code>
+    </pre>
+    <p>or</p>
+    <pre>
+      <code>.\cmds\check.bat
+</code>
+    </pre>
+    <p>The following outcome:</p>
+    <pre>
+      <code>Checking IVI VISA Compatibility
+
+Checking IVI VISA Compatibility
+
+IviVisaCompatibilityTester, Version=8.0.1.9356, Culture=neutral, PublicKeyToken=456c916a0c4a68ef
+        Running under .NETCoreApp,Version=v9.0 runtime .NET 9.0.8
+
+VISA.NET Shared Components Ivi.Visa, Version=8.0.0.0, Culture=neutral, PublicKeyToken=a128c98f1d7717c1.
+        Version: 8.0.7511.0.
+        visaConfMgr version 8.0.7331.0 detected.
+Loaded Keysight.Visa, Version=18.5.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73, 18.5.73.0
+</code>
+    </pre>
+    <p>Shows that the program found a compatible implementation.</p>
+    <p>The following outcome:</p>
+    <pre>
+      <code>TBD
+</code>
+    </pre>
+    <p>Shows that the program failed to find a compatible implementation</p>
+    <p>
+      <a name="Identify"></a>
+    </p>
+    <h3 id="identify">Identify</h3>
+    <p>Enter the following command:</p>
+    <pre>
+      <code>cc.isr.Visa.Compatibility.Tester TCPIP::192.168.0.150:inst0:INSTR
+</code>
+    </pre>
+    <p>or</p>
+    <pre>
+      <code>.\cmds\identify.bat
+</code>
+    </pre>
+    <p>The following outcome:</p>
+    <pre>
+      <code>Checking IVI VISA Compatibility
+Command: TCPIP0::192.168.0.150::inst0::INSTR;
+
+Make sure that the instrument at TCPIP0::192.168.0.150::inst0::INSTR is turned on.
+
+IviVisaCompatibilityTester, Version=8.0.1.9356, Culture=neutral, PublicKeyToken=456c916a0c4a68ef
+        Running under .NETCoreApp,Version=v9.0 runtime .NET 9.0.8
+
+VISA.NET Shared Components Ivi.Visa, Version=8.0.0.0, Culture=neutral, PublicKeyToken=a128c98f1d7717c1.
+        Version: 8.0.7511.0.
+        visaConfMgr version 8.0.7331.0 detected.
+Loaded Keysight.Visa, Version=18.5.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73, 18.5.73.0
+Opening a VISA session to 'TCPIP0::192.168.0.150::inst0::INSTR'...
+        Reading instrument identification string...
+ID: Keithley Instruments Inc., Model 2612A, 1214466, 2.2.6
+</code>
+    </pre>
+    <p>Shows that the program found the instrument with the specified resources name.</p>
+    <p>Enter the following command:</p>
+    <pre>
+      <code>cc.isr.Visa.Compatibility.Tester TCPIP::192.168.1.150:inst0:INSTR
+</code>
+    </pre>
+    <p>The following outcome:</p>
+    <pre>
+      <code>Checking IVI VISA Compatibility
+Command: tcpip0::192.168.1.150::inst0::instr;
+
+Make sure that the instrument at tcpip0::192.168.1.150::inst0::instr is turned on.
+
+IviVisaCompatibilityTester, Version=8.0.1.9352, Culture=neutral, PublicKeyToken=456c916a0c4a68ef
+Running under .NETCoreApp,Version=v9.0.
+VISA.NET Shared Components version 8.0.0.0.
+VISA Shared Components version 8.0.7331.0 detected.
+Loaded Keysight.Visa, Version=18.5.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73.
+Attempt Ping instrument at '192.168.1.150' failed.
+</code>
+    </pre>
+    <p>Shows that the program could not find the instrument with the specified resources name.</p>
+    <p>
+      <a name="VISA_Runtime"></a>
+    </p>
+    <h2 id="visa-runtime">VISA Runtime</h2>
+    <p>The Visa Compatibility API uses the Virtual Instruments (VISA) framework from the <a href="https://www,ivi.org">IVI Foundation</a> for communicating with the TTM instrument. <a href="https://www,ivi.org">IVI VISA</a> is installed by members of the <a href="https://www,ivi.org">IVI Foundation</a> such as Keysight, Rohde-Schwartz and NI (former National Instruments). Implementations such as the <a href="https://www.keysight.com/en/pd-1985909/io-libraries-suite">IO Suite</a> from Keysight or <a href="http://ftp.ni.com/support/softlib/visa/VISA%20Run-Time%20Engine">NI Visa</a> from NI must be installed for running applications based on <a href="https://www,ivi.org">IVI VISA</a>.</p>
+    <p>The current TTM software was developed based on version 8.0.2 of <a href="https://www,ivi.org">IVI VISA</a> with Keysight VISA version 18.6.6.</p>
+    <p>Because the Keysight I/O Suite starting with version 21.1.209 requires also the Keysight.VISA DLL, the tester may not work with other VISA implementations.</p>
+    <p>
+      <a name="Attributions"></a>
+    </p>
+    <h2 id="attributions">Attributions</h2>
+    <p>Last Updated 2025-09-16</p>
+    <p>© 2011 by Integrated Scientific Resources, Inc.</p>
+    <p>This information is provided "AS IS" WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.</p>
+    <p>Licensed under <a href="http://opensource.org/licenses/MIT">MIT</a> License.</p>
+    <p>Unless required by applicable law or agreed to in writing, this software is provided "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</p>
+    <p>Source code is hosted on <a href="https://www.github.com/ATECoder">GitHub</a></p>
+  </body>
+</html>

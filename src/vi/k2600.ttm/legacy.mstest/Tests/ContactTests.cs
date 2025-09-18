@@ -63,10 +63,23 @@ public class ContactTests
     public void InitializeBeforeEachTest()
     {
         Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
-        Console.WriteLine( $"\t{typeof( cc.isr.Visa.Gac.Vendor ).Assembly.FullName}" );
-        if ( cc.isr.Visa.Gac.GacLoader.LoadedImplementation is not null )
-            // the implementation is loaded after the device opens and then stays loaded. 
-            Console.WriteLine( $"\t{cc.isr.Visa.Gac.GacLoader.LoadedImplementation?.Location}." );
+
+        if ( typeof( Ivi.Visa.IMessageBasedSession ).Assembly is System.Reflection.Assembly iviVisaAssembly )
+        {
+            Console.WriteLine( $"\t{iviVisaAssembly.FullName}." );
+            Console.WriteLine( $"\t{iviVisaAssembly.Location}." );
+        }
+        else
+            Assert.Fail( $"{nameof( Ivi.Visa.IMessageBasedSession )} assembly not found." );
+
+        if ( typeof( cc.isr.Visa.Gac.Vendor ).Assembly is System.Reflection.Assembly vendorVisaAssembly )
+        {
+            Console.WriteLine( $"\t{vendorVisaAssembly.FullName}." );
+            Console.WriteLine( $"\t{vendorVisaAssembly.Location}." );
+        }
+        else
+            Assert.Fail( $"{nameof( cc.isr.Visa.Gac.Vendor )} VISA assembly not found." );
+
         Console.WriteLine( $"\tTesting {typeof( LegacyDevice ).Assembly.FullName}" );
 
         // create an instance of the session logger.

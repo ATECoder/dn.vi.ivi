@@ -149,9 +149,9 @@ public class TspSessionDebugScriptTests : Device.Tests.Base.ScriptTests
         }
     }
 
-    /// <summary>   (Unit Test Method) binary script should import and run. </summary>
+    /// <summary>   (Unit Test Method) byte code script should import and run. </summary>
     /// <remarks>   2025-04-20. </remarks>
-    [TestMethod( "02. Binary script should import and run" )]
+    [TestMethod( "02. byte code script should import and run" )]
     public void BinaryScriptShouldImportAndRun()
     {
         Assert.IsNotNull( this.Device );

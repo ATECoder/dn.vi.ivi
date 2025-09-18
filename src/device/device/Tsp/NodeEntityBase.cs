@@ -71,7 +71,7 @@ public abstract class NodeEntityBase( int number, NodeEntityBase? controllerNode
 
     /// <summary>
     /// Gets the condition to indicate that the boot script must be re-saved because a script
-    /// reference changes as would happened if a new binary script was created with a table reference
+    /// reference changes as would happened if a new byte code script was created with a table reference
     /// that differs from the table reference of the previous script that was used in the previous
     /// boot script.
     /// </summary>

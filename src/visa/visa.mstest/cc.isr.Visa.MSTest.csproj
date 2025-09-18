@@ -72,16 +72,6 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="9.0.9" />
-    <None Update="version.build.props">
-      <DependentUpon>version.build.tt</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </None>
-    <None Update="version.build.tt">
-      <LastGenOutput>version.build.props</LastGenOutput>
-      <Generator>TextTemplatingFileGenerator</Generator>
-
-    </None>
     <!-- Suppress warning about newton soft 9.0.1 which is part of the .net fx testing extensions code coverage.
       <NuGetAuditSuppress Include="https://github.com/advisories/GHSA-5crp-9r3c-p9vr" />
     -->

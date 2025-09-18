@@ -65,7 +65,7 @@ public static partial class FirmwareManager
         // skip if function already exists.
         if ( !session.IsNil( validationObjectName ) ) return;
 
-        // load the binary script function from the embedded resource.
+        // load the byte code script function from the embedded resource.
         FirmwareManager.LoadEmbeddedResource( session, resourceName, resourceFolderName );
 
         // check that the function was created

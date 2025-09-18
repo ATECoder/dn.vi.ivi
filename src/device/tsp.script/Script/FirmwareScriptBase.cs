@@ -91,7 +91,7 @@ public abstract class FirmwareScriptBase
 
     #region " TSP Script Loading Syntax "
 
-    /// <summary>   Decorate a binary script with the Load String syntax. </summary>
+    /// <summary>   Decorate a byte code script with the Load String syntax. </summary>
     /// <remarks>   2024-12-05. </remarks>
     /// <param name="source">   Contains the script code line by line. </param>
     /// <returns>   A string. </returns>
@@ -268,14 +268,14 @@ public abstract class FirmwareScriptBase
     /// <summary>
     /// Gets or sets a value indicating whether the user script source should be saved to non-
     /// volatile catalog of user scripts. The Deploy format tells us if the script should be
-    /// converted to binary before saving.
+    /// converted to byte code before saving.
     /// </summary>
     /// <value> True if this user script is to be saved as a binary user script, false if not. </value>
     public bool SaveToNonVolatileMemory { get; set; }
 
-    /// <summary>   Gets a value indicating whether the convert to binary. </summary>
-    /// <value> True if convert to binary, false if not. </value>
-    public bool ConvertToBinary => ScriptFileFormats.ByteCode == (this.DeployFileFormat & ScriptFileFormats.ByteCode);
+    /// <summary>   Gets a value indicating whether the convert to byte code. </summary>
+    /// <value> True if convert to byte code, false if not. </value>
+    public bool ConvertToByteCode => ScriptFileFormats.ByteCode == (this.DeployFileFormat & ScriptFileFormats.ByteCode);
 
     #endregion
 
@@ -294,7 +294,7 @@ public abstract class FirmwareScriptBase
 
     /// <summary>   Specifies the instrument firmware version for this script. </summary>
     /// <remarks>
-    /// this is required if deploying a binary script, which might be specific to an instrument model
+    /// this is required if deploying a byte code script, which might be specific to an instrument model
     /// firmware version.
     /// </remarks>
     /// <value> The model version. </value>
@@ -387,11 +387,11 @@ public abstract class FirmwareScriptBase
     #region " script specifications "
 
     /// <summary>
-    /// Gets the sentinel indicating if this is a binary script. This is determined when setting the
+    /// Gets the sentinel indicating if this script is saved as byte code. This is determined when setting the
     /// source.
     /// </summary>
-    /// <value> <c>true</c> if this is a binary script; otherwise, <c>false</c>. </value>
-    public bool IsBinaryScript { get; private set; }
+    /// <value> <c>true</c> if this script is saved as byte code; otherwise, <c>false</c>. </value>
+    public bool isByteCodeScript { get; private set; }
 
     /// <summary>   Gets or sets the sentinel indicating if this script needs to be auto executed. </summary>
     /// <value> <c>true</c> if this script automatically executes; otherwise, <c>false</c>. </value>
@@ -419,7 +419,7 @@ public abstract class FirmwareScriptBase
     private ScriptFileFormats ParseSource( string value )
     {
         ScriptFileFormats sourceFormat = ScriptFileFormats.None;
-        bool isBinaryScript = false;
+        bool isByteCodeScript = false;
         string source = string.Empty;
         if ( !this.RequiresReadParseWrite )
         {
@@ -433,17 +433,17 @@ public abstract class FirmwareScriptBase
 
             if ( !string.IsNullOrWhiteSpace( this.Source ) )
             {
-                isBinaryScript = source.IsByteCodeScript();
+                isByteCodeScript = source.IsByteCodeScript();
             }
 
             if ( !source.EndsWith( " ", true, System.Globalization.CultureInfo.CurrentCulture ) )
                 source = source.Insert( source.Length, " " );
 
-            if ( isBinaryScript )
+            if ( isByteCodeScript )
                 sourceFormat |= ScriptFileFormats.ByteCode;
         }
         this._source = source;
-        this.IsBinaryScript = isBinaryScript;
+        this.isByteCodeScript = isByteCodeScript;
 
         // tag file as saved if source format and file format match.
         this.SavedToFile = sourceFormat == this.DeployFileFormat;
@@ -464,7 +464,7 @@ public abstract class FirmwareScriptBase
             if ( string.IsNullOrWhiteSpace( value ) )
             {
                 this._source = value;
-                this.IsBinaryScript = false;
+                this.isByteCodeScript = false;
                 this.SavedToFile = true;
             }
             else
@@ -485,7 +485,7 @@ public abstract class FirmwareScriptBase
     {
         string prefix = $"{cc.isr.VI.Syntax.Tsp.Lua.LoadStringCommand}(table.concat(";
         string suffix = "))()";
-        bool binaryDecorationRequire = this.IsBinaryScript && !this.Source.Contains( prefix );
+        bool binaryDecorationRequire = this.isByteCodeScript && !this.Source.Contains( prefix );
         System.Text.StringBuilder loadCommands = new( this.Source.Length + 512 );
         _ = loadCommands.Append( $"{cc.isr.VI.Syntax.Tsp.Script.LoadAndRunScriptCommand} {loadingScriptName}" );
         _ = loadCommands.AppendLine();

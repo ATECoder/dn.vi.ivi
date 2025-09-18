@@ -18,11 +18,11 @@ public static partial class FirmwareManager
     ///                                 subsystem</see>. </param>
     /// <param name="scriptName">       Specifies the script to save. </param>
     /// <param name="node">             Specifies the node. </param>
-    /// <param name="saveAsBinary">     Specifies the condition requesting saving the user scripts
-    ///                                 source as binary. </param>
+    /// <param name="saveAsByteCode">     Specifies the condition requesting saving the user scripts
+    ///                                 source as byte code. </param>
     /// <param name="autoRun">          Specifies the condition indicating if this script is to automatically run upon instrument start. </param>
     public static void SaveUserScript( this DisplaySubsystemBase? displaySubsystem, string scriptName, NodeEntityBase node,
-        bool saveAsBinary, bool autoRun )
+        bool saveAsByteCode, bool autoRun )
     {
         if ( scriptName is null ) throw new ArgumentNullException( nameof( scriptName ) );
         if ( string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
@@ -47,14 +47,14 @@ public static partial class FirmwareManager
         // save validation is done after all scripts are saved.
         // this throws an error on device errors
 
-        if ( saveAsBinary )
+        if ( saveAsByteCode )
         {
             displaySubsystem.DisplayLine( 2, $"{node.Number}:{scriptName} 2 binary" );
             if ( node.IsController )
                 session.ConvertToByteCode( scriptName );
             else
                 // displaySubsystem.ConvertBinaryScript( binaryScriptName, node, timeoutInfo );
-                throw new InvalidOperationException( "loading binary scripts to a remote node is not supported at this time." );
+                throw new InvalidOperationException( "loading byte code scripts to a remote node is not supported at this time." );
         }
 
         // save the script.
@@ -83,7 +83,7 @@ public static partial class FirmwareManager
         if ( displaySubsystem.Session is null ) throw new ArgumentNullException( nameof( displaySubsystem.Session ) );
         if ( displaySubsystem.StatusSubsystem is null ) throw new ArgumentNullException( nameof( displaySubsystem.StatusSubsystem ) );
 
-        displaySubsystem.SaveUserScript( script.Name, script.Node, script.FirmwareScript.ConvertToBinary, script.FirmwareScript.IsAutoexecScript );
+        displaySubsystem.SaveUserScript( script.Name, script.Node, script.FirmwareScript.ConvertToByteCode, script.FirmwareScript.IsAutoexecScript );
 
     }
 

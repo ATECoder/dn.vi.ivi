@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 
 namespace cc.isr.Visa.Tests;
 
@@ -24,7 +21,7 @@ public abstract partial class InstrumentTests
         string methodFullName = $"{testContext.FullyQualifiedTestClassName}.{System.Reflection.MethodBase.GetCurrentMethod()?.Name}";
         try
         {
-            Gac.GacLoader.LoadInstalledVisaAssemblies();
+            _ = Gac.GacLoader.TryLoadInstalledVisaAssemblies( out _ );
         }
         catch ( Exception ex )
         {
@@ -52,7 +49,8 @@ public abstract partial class InstrumentTests
     public virtual void InitializeBeforeEachTest()
     {
         Console.WriteLine( $"\t{typeof( Gac.Vendor ).Assembly.FullName}" );
-        Console.WriteLine( $"\t{cc.isr.Visa.Gac.GacLoader.LoadedImplementation?.Location}." );
+        Console.WriteLine( $"\t{string.Join( ",", cc.isr.Visa.Gac.GacLoader.LoadedImplementationFriendlyNames )}." );
+        Console.WriteLine( $"\t{string.Join( Environment.NewLine, cc.isr.Visa.Gac.GacLoader.LoadedImplementationFileNames )}." );
     }
 
     /// <summary> Cleans up the test class instance after each test has run. </summary>

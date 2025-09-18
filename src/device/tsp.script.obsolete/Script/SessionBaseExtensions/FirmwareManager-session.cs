@@ -13,7 +13,7 @@ public static partial class FirmwareManager
 
     /// <summary>   Copies a script source. </summary>
     /// <remarks>
-    /// For binary scripts, the controller and remote nodes must be binary compatible.
+    /// For byte code scripts, the controller and remote nodes must be binary compatible.
     /// </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>
@@ -28,7 +28,7 @@ public static partial class FirmwareManager
 
     /// <summary>   Copies a script from the controller node to a remote node. </summary>
     /// <remarks>
-    /// For binary scripts, the controller and remote nodes must be binary compatible.
+    /// For byte code scripts, the controller and remote nodes must be binary compatible.
     /// </remarks>
     /// <param name="session">          The session. </param>
     /// <param name="nodeNumber">       . </param>
@@ -47,7 +47,7 @@ public static partial class FirmwareManager
 
     /// <summary>   Copies script source from one script to another. </summary>
     /// <remarks>
-    /// For binary scripts, the controller and remote nodes must be binary compatible.
+    /// For byte code scripts, the controller and remote nodes must be binary compatible.
     /// </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>
@@ -84,35 +84,35 @@ public static partial class FirmwareManager
 
     #region " misc queries "
 
-    /// <summary>   Checks if the script is Binary. </summary>
+    /// <summary>   Checks if the script is byte code. </summary>
     /// <remarks>   2024-09-05. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>
     /// <param name="session">      The session. </param>
     /// <param name="scriptName">   Specifies the name of the script. </param>
     /// <param name="node">         Specifies the node entity. </param>
-    /// <returns>   <c>true</c> if the script is a binary script; otherwise, <c>false</c>. </returns>
-    public static bool? IsBinaryScript( this Pith.SessionBase session, string scriptName, NodeEntityBase? node )
+    /// <returns>   <c>true</c> if the script is a byte code script; otherwise, <c>false</c>. </returns>
+    public static bool? isByteCodeScript( this Pith.SessionBase session, string scriptName, NodeEntityBase? node )
     {
         if ( node is not null )
             session.SetLastAction( $"checking if loaded script '{scriptName}' is binary on node {node.Number}" );
         return node is null
             ? throw new ArgumentNullException( nameof( node ) )
             : node.IsController
-                ? session.IsStatementTrue( "_G.isr.script.isBinary({0})", scriptName )
-                : session.IsStatementTrue( "_G.isr.script.isBinary({0},{1})", scriptName, node.Number );
+                ? session.IsStatementTrue( "_G.isr.script.isByteCode({0})", scriptName )
+                : session.IsStatementTrue( "_G.isr.script.isByteCode({0},{1})", scriptName, node.Number );
     }
 
-    /// <summary>   Checks if the script is Binary. </summary>
+    /// <summary>   Checks if the script is byte code. </summary>
     /// <remarks>   2024-09-09. </remarks>
     /// <param name="session">  The session. </param>
     /// <param name="script">   The script. </param>
-    /// <returns>   <c>true</c> if the script is a binary script; otherwise, <c>false</c>. </returns>
-    public static bool? IsBinaryScript( this Pith.SessionBase session, ScriptEntityBase script )
+    /// <returns>   <c>true</c> if the script is a byte code script; otherwise, <c>false</c>. </returns>
+    public static bool? isByteCodeScript( this Pith.SessionBase session, ScriptEntityBase script )
     {
         return script.Node.IsController
-                ? session.IsStatementTrue( "_G.isr.script.isBinary({0})", script.Name )
-                : session.IsStatementTrue( "_G.isr.script.isBinary({0},{1})", script.Name, script.Node.Number );
+                ? session.IsStatementTrue( "_G.isr.script.isByteCode({0})", script.Name )
+                : session.IsStatementTrue( "_G.isr.script.isByteCode({0},{1})", script.Name, script.Node.Number );
     }
 
     /// <summary>   A Pith.SessionBase extension method that query if 'script' name is nil. </summary>

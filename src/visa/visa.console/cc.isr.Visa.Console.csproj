@@ -8,7 +8,7 @@
 
     <StartupObject>cc.isr.Visa.Console.Program</StartupObject>
 
-    <ImplicitUsings>disable</ImplicitUsings>
+    <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -84,6 +84,9 @@
       <DependentUpon>isr.Visa.Console.SerilogSettings.tt</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Update="cc.isr.Visa.Console.Serilog.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="cc.isr.Visa.Console.SerilogSettings.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>isr.Visa.Console.Serilog.json</LastGenOutput>

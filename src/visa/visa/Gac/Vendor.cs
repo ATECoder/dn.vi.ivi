@@ -206,8 +206,8 @@ public static partial class Vendor
     public static bool IsLoadedKeysightImplementation()
     {
         return GacLoader.HasDotNetImplementations.GetValueOrDefault( false )
-            && GacLoader.LoadedImplementation is not null
-            && string.Equals( Vendor.KEYSIGHT_VISA_FRIENDLY_NAME, GacLoader.LoadedImplementation.FriendlyName, StringComparison.OrdinalIgnoreCase );
+            && GacLoader.LoadedImplementationFriendlyNames is not null
+            && GacLoader.LoadedImplementationFriendlyNames.Contains( Vendor.KEYSIGHT_VISA_FRIENDLY_NAME );
     }
 
     /// <summary>   Has NI visa implementation. </summary>
@@ -246,8 +246,8 @@ public static partial class Vendor
     public static bool IsLoadedNImplementation()
     {
         return GacLoader.HasDotNetImplementations.GetValueOrDefault( false )
-            && GacLoader.LoadedImplementation is not null
-            && string.Equals( Vendor.NI_VISA_FRIENDLY_NAME, GacLoader.LoadedImplementation.FriendlyName, StringComparison.OrdinalIgnoreCase );
+            && GacLoader.LoadedImplementationFriendlyNames is not null
+            && GacLoader.LoadedImplementationFriendlyNames.Contains( Vendor.NI_VISA_FRIENDLY_NAME );
     }
 }
 

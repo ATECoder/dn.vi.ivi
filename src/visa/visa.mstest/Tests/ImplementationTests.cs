@@ -1,6 +1,4 @@
-using System;
 using System.Diagnostics;
-using System.Linq;
 
 namespace cc.isr.Visa.Tests;
 
@@ -79,7 +77,7 @@ public class ImplementationTests
     [TestMethod( "01. .NET Visa implementation(s) should exist" )]
     public void DotNetVisaImplementationsShouldExist()
     {
-        Gac.GacLoader.LoadInstalledVisaAssemblies();
+        _ = Gac.GacLoader.TryLoadInstalledVisaAssemblies( out _ );
         Assert.IsTrue( Gac.GacLoader.HasDotNetImplementations, "No .NET Visa implementations where found." );
     }
 
