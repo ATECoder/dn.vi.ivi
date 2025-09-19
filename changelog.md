@@ -2,10 +2,16 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9392]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9393]: https://www.github.com/atecoder/dn.vi.ivi
 
 Current IVI Visa Compatibility: 8.0.1.9391
 
+## [8.1.9393] - 2025-09-19
+- MS Tests:
+  - Remove duplicate check of loaded VISA implementation
+  - Add Assert method for checking the loaded visa implementation.
+  - Use Assert method to check the loaded visa implementation.
+  
 ## [8.1.9392] - 2025-09-18
 - Requires Keysight IO Suite 21.2.207.
 - Uses KeySight Technologies VISA 18.6.6 package.

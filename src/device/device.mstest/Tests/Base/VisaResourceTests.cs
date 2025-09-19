@@ -64,22 +64,6 @@ public abstract class VisaResourceTests
     /// <summary> Initializes the test class instance before each test runs. </summary>
     public virtual void InitializeBeforeEachTest()
     {
-        if ( typeof( Ivi.Visa.IMessageBasedSession ).Assembly is System.Reflection.Assembly iviVisaAssembly )
-        {
-            Console.WriteLine( $"\t{iviVisaAssembly.FullName}." );
-            Console.WriteLine( $"\t{iviVisaAssembly.Location}." );
-        }
-        else
-            Assert.Fail( $"{nameof( Ivi.Visa.IMessageBasedSession )} assembly not found." );
-
-        if ( typeof( cc.isr.Visa.Gac.Vendor ).Assembly is System.Reflection.Assembly vendorVisaAssembly )
-        {
-            Console.WriteLine( $"\t{vendorVisaAssembly.FullName}." );
-            Console.WriteLine( $"\t{vendorVisaAssembly.Location}." );
-        }
-        else
-            Assert.Fail( $"{nameof( cc.isr.Visa.Gac.Vendor )} VISA assembly not found." );
-
         // assert reading of test settings from the configuration file.
         Assert.IsNotNull( this.TestSiteSettings );
         Assert.IsTrue( this.TestSiteSettings.Exists );
@@ -146,10 +130,10 @@ public abstract class VisaResourceTests
 
     #region " visa resource test "
 
-    /// <summary>   (Unit Test Method) Assert that visa implementations exist. </summary>
+    /// <summary>   (Unit Test Method) Assert that visa implementations version should exist. </summary>
     /// <remarks>   2024-07-09. </remarks>
-    [TestMethod( "02. Visa implementations should exist" )]
-    public void VisaImplementationsShouldExist()
+    [TestMethod( "02. Visa implementation version should exist" )]
+    public void VisaImplementationVersionShouldExist()
     {
         Version expectedVersion = new( Visa.Gac.Vendor.IVI_VISA_IMPLEMENTATION_VERSION );
         Version? actualVersion = Visa.Gac.GacLoader.VerifyVisaImplementationPresence();
@@ -157,26 +141,8 @@ public abstract class VisaResourceTests
         Assert.IsNotNull( actualVersion, "No Visa implementations were found." );
         Assert.AreEqual( expectedVersion, actualVersion );
 
-        Visa.Gac.GacLoader.LoadInstalledVisaAssemblies();
-        if ( typeof( Ivi.Visa.IMessageBasedSession ).Assembly is System.Reflection.Assembly iviVisaAssembly )
-        {
-            Console.WriteLine( $"\t{iviVisaAssembly.FullName}." );
-            Console.WriteLine( $"\t{iviVisaAssembly.Location}." );
-        }
-        else
-            Assert.Fail( $"{nameof( Ivi.Visa.IMessageBasedSession )} assembly not found." );
-
-        if ( typeof( cc.isr.Visa.Gac.Vendor ).Assembly is System.Reflection.Assembly vendorVisaAssembly )
-        {
-            Console.WriteLine( $"\t{vendorVisaAssembly.FullName}." );
-            Console.WriteLine( $"\t{vendorVisaAssembly.Location}." );
-        }
-        else
-            Assert.Fail( $"{nameof( cc.isr.Visa.Gac.Vendor )} VISA assembly not found." );
-
         (bool success, string details) = Foundation.VisaVersionValidator.ValidateFunctionalVisaVersions();
         Assert.IsTrue( success, details );
-
     }
 
     /// <summary> (Unit Test Method) Assert that visa resources can be located for some filters. </summary>

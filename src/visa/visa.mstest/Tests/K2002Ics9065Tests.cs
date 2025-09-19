@@ -37,6 +37,7 @@ public class K2002Ics9065Tests : InstrumentTests
     public override void InitializeBeforeEachTest()
     {
         Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
+        cc.isr.VI.Device.Tests.Asserts.AssertVisaImplementationShouldBeLoaded();
         Console.WriteLine( $"\tTesting {typeof( Ivi.Visa.IMessageBasedSession ).Assembly.FullName}" );
 
         this.ResourceName = "TCPIP0::192.168.0.254::gpib0,22::INSTR";

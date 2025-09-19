@@ -39,6 +39,7 @@ public class DeviceTests : Device.Tests.Base.DeviceTests
     public override void InitializeBeforeEachTest()
     {
         Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
+        cc.isr.VI.Device.Tests.Asserts.AssertVisaImplementationShouldBeLoaded();
         Console.WriteLine( $"\tTesting {typeof( cc.isr.VI.Tsp.K2600.K2600Device ).Assembly.FullName}" );
 
         // create an instance of the session logger.

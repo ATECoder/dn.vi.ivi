@@ -39,6 +39,7 @@ public class ResourceManagerTests : Device.Tests.Base.ResourceManagerTests
     public override void InitializeBeforeEachTest()
     {
         Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
+        cc.isr.VI.Device.Tests.Asserts.AssertVisaImplementationShouldBeLoaded();
         Console.WriteLine( $"\tTesting {typeof( cc.isr.VI.Pith.ResourceNamesManager ).Assembly.FullName}" );
 
         SessionLogger.Instance.CreateLogger( typeof( ResourceManagerTests ) );

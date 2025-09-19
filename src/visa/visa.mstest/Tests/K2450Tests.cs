@@ -37,6 +37,7 @@ public class K2450Tests : InstrumentTests
     public override void InitializeBeforeEachTest()
     {
         Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
+        cc.isr.VI.Device.Tests.Asserts.AssertVisaImplementationShouldBeLoaded();
         Console.WriteLine( $"\tTesting {typeof( Ivi.Visa.IMessageBasedSession ).Assembly.FullName}" );
 
         // inst0 must be lower case

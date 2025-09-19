@@ -62,22 +62,6 @@ public abstract class SessionBaseTests
     /// <summary> Initializes the test class instance before each test runs. </summary>
     public virtual void InitializeBeforeEachTest()
     {
-        if ( typeof( Ivi.Visa.IMessageBasedSession ).Assembly is System.Reflection.Assembly iviVisaAssembly )
-        {
-            Console.WriteLine( $"\t{iviVisaAssembly.FullName}." );
-            Console.WriteLine( $"\t{iviVisaAssembly.Location}." );
-        }
-        else
-            Assert.Fail( $"{nameof( Ivi.Visa.IMessageBasedSession )} assembly not found." );
-
-        if ( typeof( cc.isr.Visa.Gac.Vendor ).Assembly is System.Reflection.Assembly vendorVisaAssembly )
-        {
-            Console.WriteLine( $"\t{vendorVisaAssembly.FullName}." );
-            Console.WriteLine( $"\t{vendorVisaAssembly.Location}." );
-        }
-        else
-            Assert.Fail( $"{nameof( cc.isr.Visa.Gac.Vendor )} VISA assembly not found." );
-
         // assert reading of test settings from the configuration file
         Assert.IsNotNull( this.TestSiteSettings );
         Assert.IsTrue( this.TestSiteSettings.Exists );

@@ -62,23 +62,7 @@ public class FirmwareTests
     {
         // reported in the base class
         Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
-
-        if ( typeof( Ivi.Visa.IMessageBasedSession ).Assembly is System.Reflection.Assembly iviVisaAssembly )
-        {
-            Console.WriteLine( $"\t{iviVisaAssembly.FullName}." );
-            Console.WriteLine( $"\t{iviVisaAssembly.Location}." );
-        }
-        else
-            Assert.Fail( $"{nameof( Ivi.Visa.IMessageBasedSession )} assembly not found." );
-
-        if ( typeof( cc.isr.Visa.Gac.Vendor ).Assembly is System.Reflection.Assembly vendorVisaAssembly )
-        {
-            Console.WriteLine( $"\t{vendorVisaAssembly.FullName}." );
-            Console.WriteLine( $"\t{vendorVisaAssembly.Location}." );
-        }
-        else
-            Assert.Fail( $"{nameof( cc.isr.Visa.Gac.Vendor )} VISA assembly not found." );
-
+        cc.isr.VI.Device.Tests.Asserts.AssertVisaImplementationShouldBeLoaded();
         Console.WriteLine( $"\tTesting {typeof( cc.isr.VI.Tsp.K2600.Ttm.Meter ).Assembly.FullName}" );
 
         // create an instance of the session logger.

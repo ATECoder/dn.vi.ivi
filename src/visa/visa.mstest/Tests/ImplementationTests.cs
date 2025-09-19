@@ -60,9 +60,8 @@ public class ImplementationTests
     public virtual void InitializeBeforeEachTest()
     {
         Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {TimeZoneInfo.Local}" );
-        Console.WriteLine( $"\t{typeof( Ivi.Visa.IMessageBasedSession ).Assembly.FullName}" );
-        Console.WriteLine( $"\tTesting {typeof( Gac.Vendor ).Assembly.FullName}" );
-        // Console.WriteLine( $"\t{cc.isr.Visa.Gac.GacLoader.LoadedImplementation?.Location}." );
+        cc.isr.VI.Device.Tests.Asserts.AssertVisaImplementationShouldBeLoaded();
+        Console.WriteLine( $"\tTesting {typeof( cc.isr.Visa.Gac.GacLoader ).Assembly.FullName}" );
     }
 
     /// <summary> Cleans up the test class instance after each test has run. </summary>
