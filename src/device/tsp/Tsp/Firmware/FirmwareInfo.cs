@@ -21,17 +21,17 @@ public class FirmwareInfo
     /// <value> The firmware installed status. </value>
     public string StatusDetails { get; set; } = string.Empty;
 
-    /// <summary>   Gets or sets the firmware actually installed version. </summary>
-    /// <value> The firmware actually installed version. </value>
-    public string? InstalledVersion { get; set; }
+    /// <summary>   Gets or sets the version of the firmware actually installed (embedded) in the instrument. </summary>
+    /// <value> The version of the firmware actually installed (embedded) in the instrument. </value>
+    public string? EmbeddedVersion { get; set; }
 
-    /// <summary>   Gets or sets the firmware latest version. </summary>
-    /// <value> The firmware latest version. </value>
-    public string? LatestVersion { get; set; }
+    /// <summary>   Gets or sets the version of the new firmware slated to be installed. </summary>
+    /// <value> The version of the new firmware slated to be installed. </value>
+    public string? NextVersion { get; set; }
 
-    /// <summary>   Gets or sets the firmware released version. </summary>
-    /// <value> The firmware released version. </value>
-    public string? ReleasedVersion { get; set; }
+    /// <summary>   Gets or sets the version of the firmware that was previously release and might be installed in the instrument. </summary>
+    /// <value> The version of the firmware that was previously release and might be installed in the instrument. </value>
+    public string? PriorVersion { get; set; }
 
     /// <summary>
     /// Gets or sets a value indicating whether scripts exit on the instrument and thus may be
@@ -83,9 +83,9 @@ public class FirmwareInfo
         Pith.SessionBase session = accessSubsystem.Session;
         Tsp.StatusSubsystemBase statusSubsystem = ( Tsp.StatusSubsystemBase ) accessSubsystem.StatusSubsystem;
         System.Text.StringBuilder statusBuilder = new();
-        string? installedVersion = null;
-        string? releasedVersion = null;
-        string? latestVersion = null;
+        string? embeddedVersion = null;
+        string? priorVersion = null;
+        string? nextVersion = null;
         bool mayDelete = false;
         bool mustLoad = false;
         bool mustSave = false;
@@ -180,26 +180,26 @@ public class FirmwareInfo
                     }
                     else
                     {
-                        installedVersion = autoExecScript.ActualVersion;
-                        releasedVersion = autoExecScript.ReleaseVersion;
-                        latestVersion = autoExecScript.LatestVersion;
+                        embeddedVersion = autoExecScript.EmbeddedVersion;
+                        priorVersion = autoExecScript.PriorVersion;
+                        nextVersion = autoExecScript.NextVersion;
 
                         // check if we have the most current firmware
-                        int compareStatus = string.Compare( installedVersion, new Version( latestVersion ).ToString( 3 ), StringComparison.Ordinal );
+                        int compareStatus = string.Compare( embeddedVersion, new Version( nextVersion ).ToString( 3 ), StringComparison.Ordinal );
                         if ( compareStatus == 0 )
                         {
                             firmwareStatus = FirmwareStatus.Current;
-                            _ = statusBuilder.AppendLine( $"The installed firmware version {installedVersion} is up to date. No actions required." );
+                            _ = statusBuilder.AppendLine( $"The installed (embedded) firmware version {embeddedVersion} is up to date. No actions required." );
                         }
                         else if ( compareStatus < 0 )
                         {
                             firmwareStatus = FirmwareStatus.UpdateRequired;
-                            _ = statusBuilder.AppendLine( $"The installed firmware version {installedVersion} needs updating. Load new firmware." );
+                            _ = statusBuilder.AppendLine( $"The installed (embedded) firmware version {embeddedVersion} needs updating. Load new firmware." );
                         }
                         else if ( compareStatus > 0 )
                         {
                             firmwareStatus = FirmwareStatus.NewVersionAvailable;
-                            _ = statusBuilder.AppendLine( $"The installed firmware version {installedVersion} is newer than the version you are trying to install; Contact the Vendor for the latest release" );
+                            _ = statusBuilder.AppendLine( $"The installed (embedded) firmware version {embeddedVersion} is newer than the version you are trying to install; Contact the Vendor for the latest release" );
                         }
                     }
                 }
@@ -229,9 +229,9 @@ public class FirmwareInfo
             Registered = registered,
             Certified = certified,
             FirmwareStatus = firmwareStatus,
-            InstalledVersion = installedVersion,
-            ReleasedVersion = releasedVersion,
-            LatestVersion = latestVersion
+            EmbeddedVersion = embeddedVersion,
+            PriorVersion = priorVersion,
+            NextVersion = nextVersion
         };
 
     }
@@ -247,9 +247,9 @@ public class FirmwareInfo
         if ( !string.IsNullOrEmpty( this.StatusDetails ) )
             _ = sb.AppendLine( $"Status Details: {this.StatusDetails}" );
         _ = sb.AppendLine( $"Versions:" );
-        _ = sb.AppendLine( $"     Latest: {this.LatestVersion ?? "Unknown"}." );
-        _ = sb.AppendLine( $"   Released: {this.ReleasedVersion ?? "Unknown"}." );
-        _ = sb.AppendLine( $"  Installed: {this.InstalledVersion ?? "Unknown"}." );
+        _ = sb.AppendLine( $"     Next: {this.NextVersion ?? "Unknown"}." );
+        _ = sb.AppendLine( $"    Prior: {this.PriorVersion ?? "Unknown"}." );
+        _ = sb.AppendLine( $" Embedded: {this.EmbeddedVersion ?? "Unknown"}." );
         _ = sb.AppendLine( $"May delete, i.e., any script is loaded: {this.MayDelete}." );
         _ = sb.AppendLine( $" Must load, i.e., not all scripts loaded: {this.MustLoad}." );
         _ = sb.AppendLine( $" Must save, i.e., not all loaded scripts were saved: {this.MustSave}." );

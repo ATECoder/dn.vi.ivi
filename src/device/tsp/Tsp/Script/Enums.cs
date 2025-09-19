@@ -32,7 +32,7 @@ public enum ScriptStatuses
     None = 0,
 
     /// <summary>   A bit constant representing the unknown flag. </summary>
-    [System.ComponentModel.Description( "Unknow" )]
+    [System.ComponentModel.Description( "Unknown" )]
     Unknown = 1,
 
     /// <summary>   A bit constant representing the loaded flag. </summary>
@@ -62,27 +62,28 @@ public enum FirmwareVersionStatus
     None = 0,
 
     /// <summary> Firmware is older than expected (released) indicating that the firmware needs to be updated. </summary>
-    [System.ComponentModel.Description( "Version as older than expected" )]
+    [System.ComponentModel.Description( "Version is older than expected" )]
     Older = 1,
 
     /// <summary> Firmware is current.  </summary>
     [System.ComponentModel.Description( "Version is current" )]
     Current = 2,
 
-    /// <summary> Embedded firmware is newer than expected indicating that the distributed program is out of date. </summary>
-    [System.ComponentModel.Description( "Version as new than expected" )]
+    /// <summary> The embedded firmware is newer than expected indicating that the distributed program is out of date. </summary>
+    [System.ComponentModel.Description( "The embedded version is newer than expected" )]
     Newer = 3,
 
-    /// <summary> Embedded firmware version was not set because the script was not loaded or saved. </summary>
-    [System.ComponentModel.Description( "Embedded version not known (empty)" )]
+    /// <summary> The embedded version is not known (empty). 
+    ///           The embedded firmware version was not set because the script was not loaded or saved. </summary>
+    [System.ComponentModel.Description( "The embedded version is not known (empty)" )]
     Unknown = 4,
 
-    /// <summary> Latest firmware version was not set. </summary>
-    [System.ComponentModel.Description( "latest firmware version was not specified (empty)" )]
-    LatestVersionNotSet = 5,
+    /// <summary> The next version of the firmware was not specified (empty). </summary>
+    [System.ComponentModel.Description( "The next version of the firmware was not specified (empty)" )]
+    NextVersionNotSet = 5,
 
-    /// <summary> Version command function does not exist. </summary>
-    [System.ComponentModel.Description( "Version command is missing -- version is nil" )]
+    /// <summary> The version query command is missing -- version is nil. </summary>
+    [System.ComponentModel.Description( "The version query command is missing -- version is nil" )]
     Missing = 6
 }
 

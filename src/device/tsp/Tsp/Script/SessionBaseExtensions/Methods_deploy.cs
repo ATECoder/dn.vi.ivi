@@ -121,7 +121,7 @@ public static partial class SessionBaseExtensionMethods
         if ( scripts is null ) throw new ArgumentNullException( nameof( scripts ) );
 
         foreach ( ScriptInfo script in scripts )
-            script.ActualVersion = session.QueryFirmwareVersion( script );
+            script.EmbeddedVersion = session.QueryFirmwareVersion( script );
     }
 
     /// <summary>
@@ -133,18 +133,18 @@ public static partial class SessionBaseExtensionMethods
     /// <returns>   The <see cref="FirmwareVersionStatus"/>. </returns>
     public static FirmwareVersionStatus ParseFirmwareVersionStatis( this ScriptInfo script )
     {
-        if ( string.IsNullOrWhiteSpace( script.LatestVersion ) )
-            return FirmwareVersionStatus.LatestVersionNotSet;
+        if ( string.IsNullOrWhiteSpace( script.NextVersion ) )
+            return FirmwareVersionStatus.NextVersionNotSet;
 
-        else if ( string.IsNullOrWhiteSpace( script.ActualVersion ) )
+        else if ( string.IsNullOrWhiteSpace( script.EmbeddedVersion ) )
             return FirmwareVersionStatus.Unknown;
 
-        else if ( (script.ActualVersion ?? "") == Syntax.Tsp.Lua.NilValue )
+        else if ( (script.EmbeddedVersion ?? "") == Syntax.Tsp.Lua.NilValue )
             return FirmwareVersionStatus.Missing;
 
         else
         {
-            switch ( new Version( script.ActualVersion ).CompareTo( new Version( script.LatestVersion ) ) )
+            switch ( new Version( script.EmbeddedVersion ).CompareTo( new Version( script.NextVersion ) ) )
             {
                 case var @case when @case > 0:
                     {
@@ -179,7 +179,7 @@ public static partial class SessionBaseExtensionMethods
         {
             // clear the script state
             ScriptStatus = ScriptStatuses.Unknown,
-            ActualVersion = string.Empty
+            EmbeddedVersion = string.Empty
         };
 
         if ( !session.IsNil( embeddedScript.Title ) )
@@ -197,7 +197,7 @@ public static partial class SessionBaseExtensionMethods
             else
             {
                 embeddedScript.ScriptStatus |= ScriptStatuses.Activated;
-                embeddedScript.ActualVersion = session.QueryFirmwareVersion( script );
+                embeddedScript.EmbeddedVersion = session.QueryFirmwareVersion( script );
                 if ( session.IsByteCodeScript( script.Title ) )
                     embeddedScript.ScriptStatus |= ScriptStatuses.ByteCode;
             }

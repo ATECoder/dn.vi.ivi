@@ -9,20 +9,22 @@ public class ScriptInfo
 {
     #region " construction "
 
-    /// <summary>   Default constructor. </summary>
-    /// <remarks>   2025-04-25. </remarks>
-    public ScriptInfo() { }
+    /// <summary>   Constructor. </summary>
+    /// <remarks>   2025-09-19. </remarks>
+    /// <param name="encryptor">    The encryptor. </param>
+    public ScriptInfo( IScriptEncryptor encryptor ) => this.Encryptor = encryptor;
 
     /// <summary>   Copy constructor. </summary>
     /// <remarks>   2025-04-25. </remarks>
     /// <param name="script">   The script. </param>
     public ScriptInfo( ScriptInfo script )
     {
+        this.Encryptor = script.Encryptor;
         this.IsAutoexec = script.IsAutoexec;
         this.Title = script.Title;
-        this.ReleaseVersion = script.ReleaseVersion;
-        this.LatestVersion = script.LatestVersion;
-        this.ActualVersion = script.ActualVersion;
+        this.PriorVersion = script.PriorVersion;
+        this.NextVersion = script.NextVersion;
+        this.EmbeddedVersion = script.EmbeddedVersion;
         this.BuiltFileName = script.BuiltFileName;
         this.TrimmedFileName = script.TrimmedFileName;
         this.DeployFileTitle = script.DeployFileTitle;
@@ -177,6 +179,11 @@ public class ScriptInfo
 
     #region " Implementation "
 
+    /// <summary>   Gets the encryption engine. </summary>
+    /// <value> The encryptor. </value>
+    [Description( "Implements encryption" )]
+    public virtual IScriptEncryptor Encryptor { get; }
+
     /// <summary>
     /// Gets or sets a value indicating whether this script automatically executes.
     /// </summary>
@@ -204,22 +211,30 @@ public class ScriptInfo
     [Description( "The name and the file title of the script []" )]
     public virtual string Title { get; set; } = string.Empty;
 
-    /// <summary>   Gets or sets the released version of the script. </summary>
-    /// <value> The released version of the script. </value>
-    [Description( "The released version the script []" )]
-    public virtual string ReleaseVersion { get; set; } = string.Empty;
+    /// <summary>   Gets or sets the prior version of the script. </summary>
+    /// <remarks>
+    /// This version might be the same as the <see cref="EmbeddedVersion"/> that is currently
+    /// installed in the instrument.
+    /// </remarks>
+    /// <value> The prior version of the script. </value>
+    [Description( "The prior version of the script []" )]
+    public virtual string PriorVersion { get; set; } = string.Empty;
 
     /// <summary>
-    /// The latest version of the script that might be installed to replace this script.
+    /// The next version of the script that might be installed to replace the prior script.
     /// </summary>
-    /// <value> The latest version. </value>
-    [Description( "The latest version of the script that might be installed to replace this script" )]
-    public virtual string LatestVersion { get; set; } = string.Empty;
+    /// <remarks>
+    /// This the version of the new script to be installed. Thus, this is the version of the built
+    /// script.
+    /// </remarks>
+    /// <value> The next version of the script. </value>
+    [Description( "The next version of the script that might be installed to replace this script" )]
+    public virtual string NextVersion { get; set; } = string.Empty;
 
-    /// <summary>   Gets or sets the version embedded script as read from the instrument. </summary>
-    /// <value> The version embedded script as read from the instrument. </value>
+    /// <summary>   Gets or sets the version of the embedded script as read from the instrument. </summary>
+    /// <value> The version of the embedded script as read from the instrument. </value>
     [Description( "The version of the embedded script as read from the instrument" )]
-    public virtual string ActualVersion { get; set; } = string.Empty;
+    public virtual string EmbeddedVersion { get; set; } = string.Empty;
 
     /// <summary>   The built file name [isr_ttm_autoexec.xxxx.tsp]. </summary>
     /// <value> The filename of the build file. </value>
@@ -334,10 +349,10 @@ public class ScriptInfo
 
         _ = builder.AppendLine( $"Info for script '{this.Title}':" );
         _ = builder.AppendLine( $"\tVersions:" );
-        _ = builder.AppendLine( $"\t\t   Latest: {(string.IsNullOrEmpty( this.LatestVersion ) ? "unknown" : this.LatestVersion)}." );
-        _ = builder.AppendLine( $"\t\t Released: {(string.IsNullOrEmpty( this.ReleaseVersion ) ? "unknown" : this.ReleaseVersion)}." );
-        _ = builder.AppendLine( $"\t\tInstalled: {(string.IsNullOrEmpty( this.ActualVersion ) ? "unknown" : this.ActualVersion)}." );
-        if ( string.IsNullOrWhiteSpace( this.ActualVersion ) )
+        _ = builder.AppendLine( $"\t\t     New: {(string.IsNullOrEmpty( this.NextVersion ) ? "unknown" : this.NextVersion)}." );
+        _ = builder.AppendLine( $"\t\t   Prior: {(string.IsNullOrEmpty( this.PriorVersion ) ? "unknown" : this.PriorVersion)}." );
+        _ = builder.AppendLine( $"\t\tEmbedded: {(string.IsNullOrEmpty( this.EmbeddedVersion ) ? "unknown" : this.EmbeddedVersion)}." );
+        if ( string.IsNullOrWhiteSpace( this.EmbeddedVersion ) )
             _ = builder.AppendLine( $"\t{(string.IsNullOrWhiteSpace( this.VersionGetterElement ) ? "has a" : "does not have a")} firmware version getter." );
 
         if ( ScriptStatuses.Loaded == (this.ScriptStatus & ScriptStatuses.Loaded) )
@@ -378,17 +393,17 @@ public class ScriptInfo
 
             case FirmwareVersionStatus.Newer:
                 {
-                    _ = builder.AppendLine( $"\tOutdated Program: The embedded firmware {this.ActualVersion} is newer than the latest firmware {this.LatestVersion}. A newer version of this program is available." );
+                    _ = builder.AppendLine( $"\tOutdated Program: The embedded firmware {this.EmbeddedVersion} is newer than the version the candidate firmware {this.NextVersion}. A newer version of this program is available." );
                     break;
                 }
 
             case FirmwareVersionStatus.Older:
                 {
-                    _ = builder.AppendLine( $"\tOutdated Firmware: The embedded firmware {this.ActualVersion} is older than the latest firmware {this.LatestVersion}." );
+                    _ = builder.AppendLine( $"\tOutdated Firmware: The embedded firmware {this.EmbeddedVersion} is older than the candidate firmware version {this.NextVersion}." );
                     break;
                 }
 
-            case FirmwareVersionStatus.LatestVersionNotSet:
+            case FirmwareVersionStatus.NextVersionNotSet:
                 {
                     _ = builder.AppendLine( $"\tThe latest firmware version is not specified." );
                     break;

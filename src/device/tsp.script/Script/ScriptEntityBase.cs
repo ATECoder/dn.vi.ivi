@@ -177,7 +177,7 @@ public abstract class ScriptEntityBase( FirmwareScriptBase firmwareScript, NodeE
     public FirmwareVersionStatus ValidateFirmware()
     {
         if ( string.IsNullOrWhiteSpace( this.FirmwareScript.FirmwareVersion ) )
-            return FirmwareVersionStatus.LatestVersionNotSet;
+            return FirmwareVersionStatus.NextVersionNotSet;
 
         else if ( string.IsNullOrWhiteSpace( this.EmbeddedFirmwareVersion ) )
             return FirmwareVersionStatus.Unknown;

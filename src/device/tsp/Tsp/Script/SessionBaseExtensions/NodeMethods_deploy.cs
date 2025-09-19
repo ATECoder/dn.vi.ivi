@@ -104,7 +104,7 @@ public static partial class NodeMethods
         if ( scripts is null ) throw new ArgumentNullException( nameof( scripts ) );
 
         foreach ( ScriptInfo script in scripts )
-            script.ActualVersion = session.QueryFirmwareVersion( nodeNumber, script );
+            script.EmbeddedVersion = session.QueryFirmwareVersion( nodeNumber, script );
     }
 
     /// <summary>
@@ -151,7 +151,7 @@ public static partial class NodeMethods
         {
             // clear the script state
             ScriptStatus = ScriptStatuses.Unknown,
-            ActualVersion = string.Empty
+            EmbeddedVersion = string.Empty
         };
 
         if ( !session.IsNil( nodeNumber, embeddedScript.Title ) )
@@ -164,7 +164,7 @@ public static partial class NodeMethods
             else
             {
                 embeddedScript.ScriptStatus |= ScriptStatuses.Activated;
-                embeddedScript.ActualVersion = session.QueryFirmwareVersion( nodeNumber, script );
+                embeddedScript.EmbeddedVersion = session.QueryFirmwareVersion( nodeNumber, script );
                 if ( session.IsByteCodeScript( nodeNumber, script ) )
                     embeddedScript.ScriptStatus |= ScriptStatuses.ByteCode;
             }

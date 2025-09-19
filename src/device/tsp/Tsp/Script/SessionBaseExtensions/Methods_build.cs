@@ -55,30 +55,28 @@ public static partial class SessionBaseExtensionMethods
     }
 
     /// <summary>
-    /// A <see cref="Pith.SessionBase"/> extension method that trims, loads, optionally converts to
-    /// byte code, and compresses the script to the deploy file.
+    /// A <see cref="cc.isr.VI.Tsp.Script.ScriptInfo"/> extension method that trims and user script. The method compresses the
+    /// file if the <see cref="ScriptInfo"/>.<see cref="ScriptInfo.DeployFileFormat"/> is <see cref="ScriptFileFormats.Compressed"/>
+    /// and not <see cref="ScriptFileFormats.ByteCode"/> in which case the script might also be encrypted to a deployable file.
     /// </summary>
-    /// <remarks>   2025-04-15. </remarks>
+    /// <remarks>   2025-09-19. </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
     ///                                                 are null. </exception>
     /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
     ///                                                 invalid. </exception>
     /// <exception cref="FileNotFoundException">        Thrown when the requested file is not
     ///                                                 present. </exception>
-    /// <param name="session">      The session. </param>
     /// <param name="scriptInfo">   Information describing the script. </param>
     /// <param name="buildFolder">  Pathname of the build folder. </param>
     /// <param name="deployFolder"> Pathname of the deploy folder. </param>
     /// <param name="consoleOut">   (Optional) True to console out. </param>
-    public static void TrimCompressLoadConvertExport( this Pith.SessionBase session, ScriptInfo scriptInfo, string buildFolder, string deployFolder, bool consoleOut = false )
+    public static void TrimUserScript( this ScriptInfo scriptInfo, string buildFolder, string deployFolder, bool consoleOut = false )
     {
-        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( scriptInfo is null ) throw new ArgumentNullException( nameof( scriptInfo ) );
-
-        if ( !session.IsDeviceOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
 
         string builtFilePath = Path.Combine( buildFolder, scriptInfo.BuiltFileName );
         string trimmedFilePath = Path.Combine( buildFolder, scriptInfo.TrimmedFileName );
+        string compressedFilePath = Path.Combine( deployFolder, $"{scriptInfo.Title}{ScriptInfo.ScriptCompressedFileExtension}" );
         string deployFilePath = Path.Combine( deployFolder, scriptInfo.DeployFileName );
         string message;
         if ( System.IO.File.Exists( builtFilePath ) )
@@ -93,16 +91,54 @@ public static partial class SessionBaseExtensionMethods
             if ( scriptInfo.DeployFileFormat.HasFlag( ScriptFileFormats.Compressed )
                 && !scriptInfo.DeployFileFormat.HasFlag( ScriptFileFormats.ByteCode ) )
             {
-                message = $"Compressing '{trimmedFilePath}'\r\n\t\tto '{deployFilePath}'";
+                string filePath = scriptInfo.DeployFileFormat.HasFlag( ScriptFileFormats.Encrypted )
+                    ? compressedFilePath
+                    : deployFilePath;
+
+                message = $"Compressing '{trimmedFilePath}'\r\n\t\tto '{filePath}'";
                 if ( consoleOut )
                     SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
                 else
                     SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
-                System.IO.File.WriteAllText( deployFilePath, ScriptCompressor.Compress( System.IO.File.ReadAllText( trimmedFilePath ) ), System.Text.Encoding.Default );
+                System.IO.File.WriteAllText( filePath, ScriptCompressor.Compress( System.IO.File.ReadAllText( trimmedFilePath ) ), System.Text.Encoding.Default );
+
+                if ( scriptInfo.DeployFileFormat.HasFlag( ScriptFileFormats.Encrypted ) )
+                    scriptInfo.Encryptor.EncryptBinaryFile( filePath, deployFilePath );
             }
         }
         else
             throw new FileNotFoundException( builtFilePath );
+    }
+
+    /// <summary>
+    /// A <see cref="Pith.SessionBase"/> extension method that compiles a trimmed user script to a
+    /// deployable file if the <see cref="ScriptInfo"/>.<see cref="ScriptInfo.DeployFileFormat"/> if <see cref="ScriptFileFormats.ByteCode"/>.
+    /// </summary>
+    /// <remarks>   2025-09-19. </remarks>
+    /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
+    ///                                                 are null. </exception>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <exception cref="FileNotFoundException">        Thrown when the requested file is not
+    ///                                                 present. </exception>
+    /// <param name="session">      The session. </param>
+    /// <param name="scriptInfo">   Information describing the script. </param>
+    /// <param name="buildFolder">  Pathname of the build folder. </param>
+    /// <param name="deployFolder"> Pathname of the deploy folder. </param>
+    /// <param name="consoleOut">   (Optional) True to console out. </param>
+    public static void CompileTrimmedUserScript( this Pith.SessionBase session, ScriptInfo scriptInfo, string buildFolder, string deployFolder, bool consoleOut = false )
+    {
+        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
+        if ( scriptInfo is null ) throw new ArgumentNullException( nameof( scriptInfo ) );
+
+        if ( !session.IsDeviceOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
+
+        if ( !scriptInfo.DeployFileFormat.HasFlag( ScriptFileFormats.ByteCode ) )
+            throw new InvalidOperationException( $"{nameof( scriptInfo )}.{nameof( scriptInfo.DeployFileFormat )} does include {nameof( ScriptFileFormats.ByteCode )}." );
+
+        string trimmedFilePath = Path.Combine( buildFolder, scriptInfo.TrimmedFileName );
+        string deployFilePath = Path.Combine( deployFolder, scriptInfo.DeployFileName );
+        string message;
 
         // delete the script if it exists.
         session.DeleteScript( scriptInfo.Title );
@@ -123,30 +159,62 @@ public static partial class SessionBaseExtensionMethods
         // run the script to ensure the code works.
         session.RunScript( scriptInfo.Title, scriptInfo.VersionGetterElement );
 
-        if ( scriptInfo.DeployFileFormat.HasFlag( ScriptFileFormats.ByteCode ) )
+        if ( scriptInfo.DeployFileFormat.HasFlag( ScriptFileFormats.Compressed ) )
         {
-            if ( scriptInfo.DeployFileFormat.HasFlag( ScriptFileFormats.Compressed ) )
-            {
-                // export and compress the script.
-                message = $"compressing byte code to '{deployFilePath}'";
-                if ( consoleOut )
-                    SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
-                else
-                    SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
-                session.CompressScript( scriptInfo.Title, deployFilePath, true );
-            }
+            // export and compress the script.
+            message = $"compressing byte code to '{deployFilePath}'";
+            if ( consoleOut )
+                SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
             else
-            {
-                // if naked byte code, export to the deploy file name.
-                SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tFetching byte code to '{deployFilePath}'" );
-                session.ExportScript( scriptInfo.Title, deployFilePath, true );
-            }
+                SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
+            session.CompressScript( scriptInfo.Title, deployFilePath, true );
+        }
+        else
+        {
+            // if naked byte code, export to the deploy file name.
+            SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tFetching byte code to '{deployFilePath}'" );
+            session.ExportScript( scriptInfo.Title, deployFilePath, true );
         }
     }
 
+
     /// <summary>
-    /// A <see cref="Pith.SessionBase"/> extension method that trims, loads, optionally converts to
-    /// byte code, and compresses all scripts the deploy files.
+    /// A <see cref="Pith.SessionBase"/> extension method that trims and compiles the user script to
+    /// match the <see cref="ScriptInfo"/>.<see cref="ScriptInfo.DeployFileFormat"/> including
+    /// optionally loading and exporting the script to byte code before compressing and encrypting.,
+    /// optionally converts to the script to a deployable file.
+    /// </summary>
+    /// <remarks>   2025-04-15. </remarks>
+    /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
+    ///                                                 are null. </exception>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <exception cref="FileNotFoundException">        Thrown when the requested file is not
+    ///                                                 present. </exception>
+    /// <param name="session">      The session. </param>
+    /// <param name="scriptInfo">   Information describing the script. </param>
+    /// <param name="buildFolder">  Pathname of the build folder. </param>
+    /// <param name="deployFolder"> Pathname of the deploy folder. </param>
+    /// <param name="consoleOut">   (Optional) True to console out. </param>
+    public static void TrimCompileUserScript( this Pith.SessionBase session, ScriptInfo scriptInfo, string buildFolder, string deployFolder, bool consoleOut = false )
+    {
+        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
+        if ( scriptInfo is null ) throw new ArgumentNullException( nameof( scriptInfo ) );
+
+        if ( !session.IsDeviceOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
+
+        // trim and optionally compress and encrypt the script to the deploy file name.
+        scriptInfo.TrimUserScript( buildFolder, deployFolder, consoleOut );
+
+        if ( scriptInfo.DeployFileFormat.HasFlag( ScriptFileFormats.ByteCode ) )
+            session.CompileTrimmedUserScript( scriptInfo, buildFolder, deployFolder, consoleOut );
+    }
+
+    /// <summary>
+    /// A <see cref="Pith.SessionBase"/> extension method that trims and compiles all user scripts to
+    /// match the <see cref="ScriptInfo"/>.<see cref="ScriptInfo.DeployFileFormat"/> including
+    /// optionally loading and exporting the script to byte code before compressing and encrypting.,
+    /// optionally converts to the script to a deployable file.
     /// </summary>
     /// <remarks>   2025-04-22. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
@@ -157,7 +225,7 @@ public static partial class SessionBaseExtensionMethods
     /// <param name="buildFolder">  Pathname of the build folder. </param>
     /// <param name="deployFolder"> Pathname of the deploy folder. </param>
     /// <param name="consoleOut">   (Optional) True to console out. </param>
-    public static void BuildUserScripts( this Pith.SessionBase session, VersionInfoBase versionInfo, ScriptInfoCollection scripts,
+    public static void TrimCompileUserScripts( this Pith.SessionBase session, VersionInfoBase versionInfo, ScriptInfoCollection scripts,
         string buildFolder, string deployFolder, bool consoleOut = false )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
@@ -178,7 +246,7 @@ public static partial class SessionBaseExtensionMethods
                 _ = scriptInfo.BuildDeployFileName( versionInfo );
 
                 session.DisplayLine( $"Building {scriptInfo.Title} ...", 2, 1 );
-                session.TrimCompressLoadConvertExport( scriptInfo, buildFolder, deployFolder, consoleOut );
+                session.TrimCompileUserScript( scriptInfo, buildFolder, deployFolder, consoleOut );
             }
         }
         catch ( Exception )

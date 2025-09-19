@@ -11,6 +11,13 @@ Current IVI Visa Compatibility: 8.0.1.9391
   - Remove duplicate check of loaded VISA implementation
   - Add Assert method for checking the loaded visa implementation.
   - Use Assert method to check the loaded visa implementation.
+- Device.Tsp:
+  - Add script encryptor interface.
+  - Add encryption option to the build.
+  - Script Info: 
+    - Rename Released Version to Prior version.
+    - Rename Latest Version to Next version.
+    - Rename Actual Version to Embedded version.
   
 ## [8.1.9392] - 2025-09-18
 - Requires Keysight IO Suite 21.2.207.
