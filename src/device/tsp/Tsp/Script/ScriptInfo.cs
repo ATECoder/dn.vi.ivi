@@ -11,17 +11,26 @@ public class ScriptInfo
 
     /// <summary>   Constructor. </summary>
     /// <remarks>   2025-09-19. </remarks>
+    /// <param name="compressor">   The compressor. </param>
     /// <param name="encryptor">    The encryptor. </param>
-    public ScriptInfo( IScriptEncryptor encryptor ) => this.Encryptor = encryptor;
+    public ScriptInfo( IScriptCompressor compressor, IScriptEncryptor encryptor )
+    {
+        this.Encryptor = encryptor;
+        this.Compressor = compressor;
+    }
 
     /// <summary>   Copy constructor. </summary>
     /// <remarks>   2025-04-25. </remarks>
     /// <param name="script">   The script. </param>
     public ScriptInfo( ScriptInfo script )
     {
-        this.Encryptor = script.Encryptor;
-        this.IsAutoexec = script.IsAutoexec;
         this.Title = script.Title;
+        this.Encryptor = script.Encryptor;
+        this.Compressor = script.Compressor;
+        this.IsAutoexec = script.IsAutoexec;
+        this.IsEncrypted = script.IsEncrypted;
+        this.IsPrimary = script.IsPrimary;
+        this.IsSupport = script.IsSupport;
         this.PriorVersion = script.PriorVersion;
         this.NextVersion = script.NextVersion;
         this.EmbeddedVersion = script.EmbeddedVersion;
@@ -183,6 +192,11 @@ public class ScriptInfo
     /// <value> The encryptor. </value>
     [Description( "Implements encryption" )]
     public virtual IScriptEncryptor Encryptor { get; }
+
+    /// <summary>   Implements compression. </summary>
+    /// <value> The compressor. </value>
+    [Description( "Implements compression" )]
+    public virtual IScriptCompressor Compressor { get; }
 
     /// <summary>
     /// Gets or sets a value indicating whether this script automatically executes.

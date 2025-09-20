@@ -50,10 +50,11 @@ public static partial class SessionBaseExtensionMethods
     /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
     ///                                                 invalid. </exception>
     /// <param name="session">      The session to act on. </param>
+    /// <param name="compressor">   The compressor. </param>
     /// <param name="scriptName">   Name of the script. </param>
     /// <param name="filePath">     Full pathname of the destination file. </param>
     /// <param name="overWrite">    (Optional) [false] True to over write. </param>
-    public static void CompressScript( this SessionBase session, string scriptName, string filePath, bool overWrite = false )
+    public static void CompressScript( this SessionBase session, IScriptCompressor compressor, string scriptName, string filePath, bool overWrite = false )
     {
         if ( session == null ) throw new ArgumentNullException( nameof( session ) );
         if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
@@ -73,24 +74,28 @@ public static partial class SessionBaseExtensionMethods
             throw new InvalidOperationException( $"The script {scriptName} cannot be exported because it is empty." );
 
         // compress and export the source to the file as is.
-        File.WriteAllText( filePath, ScriptCompressor.Compress( scriptSource ), System.Text.Encoding.Default );
+        File.WriteAllText( filePath, compressor.CompressToBase64( scriptSource ), System.Text.Encoding.Default );
     }
 
-    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that export saved scripts. </summary>
+    /// <summary>
+    /// A <see cref="Pith.SessionBase"/> extension method that export saved scripts.
+    /// </summary>
     /// <remarks>   2025-05-08. </remarks>
     /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
     ///                                                 invalid. </exception>
     /// <param name="session">                  The session to act on. </param>
+    /// <param name="compressor">               The compressor. </param>
+    /// <param name="encryptor">                The encryptor. </param>
     /// <param name="versionInfo">              Information describing the version. </param>
     /// <param name="frameworkScripts">         The framework scripts. </param>
     /// <param name="frameworkVersionGetters">  The version getters. </param>
     /// <param name="topPath">                  Full pathname of the top file. </param>
-    /// <param name="compress">                 True to compress. </param>
+    /// <param name="fileFormat">               The file format. </param>
     /// <param name="consoleOut">               (Optional) True to console out. </param>
     /// <param name="validate">                 (Optional) True to validate. </param>
-    public static void ExportSavedScripts( this Pith.SessionBase session, VersionInfoBase versionInfo,
-        List<string[]> frameworkScripts, List<string[]> frameworkVersionGetters,
-        string topPath, bool compress, bool consoleOut = false, bool validate = true )
+    public static void ExportSavedScripts( this Pith.SessionBase session, IScriptCompressor compressor, IScriptEncryptor encryptor,
+        VersionInfoBase versionInfo, List<string[]> frameworkScripts, List<string[]> frameworkVersionGetters,
+        string topPath, ScriptFileFormats fileFormat, bool consoleOut = false, bool validate = true )
     {
         if ( session is null ) throw new InvalidOperationException( $"{nameof( session )} is null" );
         if ( !session.IsDeviceOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open" );
@@ -160,17 +165,10 @@ public static partial class SessionBaseExtensionMethods
                     ? "0.0.9999"
                     : actualVersion;
 
-                // check if the script is imported as TSP byte code.
-                bool isByteCodeScript = scriptSource.IsByteCodeScript();
-
                 // Correcting the assignment to use the appropriate method to select the file extension
-                ScriptFileFormats fileFormat = compress && isByteCodeScript
-                    ? ScriptFileFormats.Compressed | ScriptFileFormats.ByteCode
-                    : compress
-                        ? ScriptFileFormats.Compressed
-                        : isByteCodeScript
-                            ? ScriptFileFormats.ByteCode
-                            : ScriptFileFormats.None;
+                fileFormat |= scriptSource.IsByteCodeScript()
+                        ? ScriptFileFormats.ByteCode
+                        : fileFormat;
 
                 string fileExtension = Tsp.Script.ScriptInfo.SelectScriptFileExtension( fileFormat );
 
@@ -185,7 +183,7 @@ public static partial class SessionBaseExtensionMethods
                 else
                     _ = SessionLogger.Instance.LogDebug( message );
 
-                if ( compress )
+                if ( fileFormat.HasFlag( ScriptFileFormats.Compressed ) )
                 {
                     message = $"Compressing '{scriptTitle}'";
                     if ( consoleOut )
@@ -196,22 +194,42 @@ public static partial class SessionBaseExtensionMethods
                     if ( validate )
                     {
                         // validate the compression
-                        if ( !Tsp.Script.ScriptCompressor.ValidateCompression( scriptSource ) )
+                        string decompressed = compressor.DecompressFromBase64( compressor.CompressToBase64( scriptSource ) );
+                        if ( !string.Equals( scriptSource, decompressed, StringComparison.Ordinal ) )
                             throw new InvalidOperationException( $"Failed validating the compression of the script {scriptTitle} source;. " );
                     }
 
-                    Tsp.Script.ScriptCompressor.Compress( scriptSource ).ExportScript( filePath );
+                    scriptSource = compressor.CompressToBase64( scriptSource );
                 }
-                else
+
+                if ( fileFormat.HasFlag( ScriptFileFormats.Encrypted ) )
                 {
-                    scriptSource.ExportScript( filePath );
+                    message = $"Encrypting '{scriptTitle}'";
+                    if ( consoleOut )
+                        SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
+                    else
+                        _ = SessionLogger.Instance.LogDebug( message );
+
+                    if ( validate )
+                    {
+                        // validate the encryption
+                        string decrypted = encryptor.DecryptFromBase64( encryptor.EncryptToBase64( scriptSource ) );
+                        if ( !string.Equals( scriptSource, decrypted, StringComparison.Ordinal ) )
+                            throw new InvalidOperationException( $"Failed validating the encryption of the script {scriptTitle} source;. " );
+                    }
+
+                    scriptSource = encryptor.EncryptToBase64( scriptSource );
                 }
+
+                scriptSource.ExportScript( filePath );
 
                 if ( validate )
                 {
                     string importedContents = System.IO.File.ReadAllText( filePath );
-                    if ( compress )
-                        importedContents = ScriptCompressor.Decompress( importedContents );
+                    if ( fileFormat.HasFlag( ScriptFileFormats.Encrypted ) )
+                        importedContents = encryptor.DecryptFromBase64( importedContents );
+                    if ( fileFormat.HasFlag( ScriptFileFormats.Compressed ) )
+                        importedContents = compressor.DecompressFromBase64( importedContents );
                     if ( !string.Equals( scriptSource, importedContents, StringComparison.Ordinal ) )
                         throw new InvalidOperationException( $"Failed validating the the exported script {scriptTitle} source;. " );
                 }

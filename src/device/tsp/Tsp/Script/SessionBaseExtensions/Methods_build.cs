@@ -23,7 +23,7 @@ public static partial class SessionBaseExtensionMethods
         cc.isr.VI.Syntax.Tsp.TspScriptParser.TrimTspSourceCode( fromFilePath, toFilePath, retainOutline );
     }
 
-    /// <summary>   A ScriptInfoBase extension method that trim compress. </summary>
+    /// <summary>   A <see cref="ScriptInfo"/> extension method that trims and compressed. </summary>
     /// <remarks>   2025-04-16. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>
@@ -47,7 +47,7 @@ public static partial class SessionBaseExtensionMethods
             fromFilePath.TrimScript( trimmedFilePath, true );
 
             SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tCompressing '{trimmedFilePath}'\r\n\t\tto '{compressedFilePath}'" );
-            System.IO.File.WriteAllText( compressedFilePath, ScriptCompressor.Compress( System.IO.File.ReadAllText( trimmedFilePath ) ), System.Text.Encoding.Default );
+            System.IO.File.WriteAllText( compressedFilePath, scriptInfo.Compressor.CompressToBase64( System.IO.File.ReadAllText( trimmedFilePath ) ), System.Text.Encoding.Default );
 
         }
         else
@@ -100,10 +100,11 @@ public static partial class SessionBaseExtensionMethods
                     SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
                 else
                     SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
-                System.IO.File.WriteAllText( filePath, ScriptCompressor.Compress( System.IO.File.ReadAllText( trimmedFilePath ) ), System.Text.Encoding.Default );
+
+                System.IO.File.WriteAllText( filePath, scriptInfo.Compressor.CompressToBase64( System.IO.File.ReadAllText( trimmedFilePath ) ), System.Text.Encoding.Default );
 
                 if ( scriptInfo.DeployFileFormat.HasFlag( ScriptFileFormats.Encrypted ) )
-                    scriptInfo.Encryptor.EncryptBinaryFile( filePath, deployFilePath );
+                    System.IO.File.WriteAllText( deployFilePath, scriptInfo.Encryptor.EncryptToBase64( System.IO.File.ReadAllText( filePath ) ), System.Text.Encoding.Default );
             }
         }
         else
@@ -148,6 +149,8 @@ public static partial class SessionBaseExtensionMethods
             SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
         else
             SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
+
+
         session.ImportScript( scriptInfo.Title, trimmedFilePath, TimeSpan.Zero );
 
         // run the script to ensure the code works.
@@ -159,24 +162,40 @@ public static partial class SessionBaseExtensionMethods
         // run the script to ensure the code works.
         session.RunScript( scriptInfo.Title, scriptInfo.VersionGetterElement );
 
+        // fetch the script to ensure it is not empty.
+        string scriptSource = session.FetchScript( scriptInfo.Title );
+        if ( string.IsNullOrWhiteSpace( scriptSource ) )
+            throw new InvalidOperationException( $"The script {scriptInfo.Title} cannot be exported because it is empty." );
+
         if ( scriptInfo.DeployFileFormat.HasFlag( ScriptFileFormats.Compressed ) )
         {
-            // export and compress the script.
-            message = $"compressing byte code to '{deployFilePath}'";
+            message = $"compressing '{scriptInfo.Title}'";
             if ( consoleOut )
                 SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
             else
                 SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
-            session.CompressScript( scriptInfo.Title, deployFilePath, true );
+            scriptSource = scriptInfo.Compressor.CompressToBase64( scriptSource );
         }
-        else
-        {
-            // if naked byte code, export to the deploy file name.
-            SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tFetching byte code to '{deployFilePath}'" );
-            session.ExportScript( scriptInfo.Title, deployFilePath, true );
-        }
-    }
 
+        if ( scriptInfo.DeployFileFormat.HasFlag( ScriptFileFormats.Encrypted ) )
+        {
+            message = $"encrypting '{scriptInfo.Title}'";
+            if ( consoleOut )
+                SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
+            else
+                SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
+            scriptSource = scriptInfo.Encryptor.EncryptToBase64( scriptSource );
+        }
+
+        message = $"exporting '{scriptInfo.Title}' to '{deployFilePath}'";
+        if ( consoleOut )
+            SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
+        else
+            SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
+
+        // write the source to file.
+        System.IO.File.WriteAllText( deployFilePath, scriptSource, System.Text.Encoding.Default );
+    }
 
     /// <summary>
     /// A <see cref="Pith.SessionBase"/> extension method that trims and compiles the user script to

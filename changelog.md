@@ -2,9 +2,20 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9393]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9394]: https://www.github.com/atecoder/dn.vi.ivi
 
 Current IVI Visa Compatibility: 8.0.1.9391
+
+## [8.1.9394] - 2025-09-20
+- Device.Tsp:
+  - Add script encryptor interface.
+  - Add encryption option to the build.
+  - Script Info: 
+    - Set the Is Encrypted value.
+	- Add I Compressor
+- Encryptor Interface
+  - Remove code leaving only conversion to Base 64.
+- Implement I Encryptor.
 
 ## [8.1.9393] - 2025-09-19
 - MS Tests:

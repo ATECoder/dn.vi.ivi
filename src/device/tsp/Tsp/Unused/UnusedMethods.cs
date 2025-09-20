@@ -50,12 +50,11 @@ internal static class UnusedMethods
     ///                                                 are null. </exception>
     /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
     ///                                                 invalid. </exception>
-    /// <exception cref="FileNotFoundException">        Thrown when the requested file is not
-    ///                                                 present. </exception>
     /// <param name="fromFilePath"> The source file path. </param>
     /// <param name="toFilePath">   the destination file path. </param>
+    /// <param name="compressor">   The compressor. </param>
     /// <param name="overWrite">    (Optional) [false] True to over write. </param>
-    public static void CompressScriptFile( this string fromFilePath, string toFilePath, bool overWrite = false )
+    public static void CompressScriptFile( this string fromFilePath, string toFilePath, IScriptCompressor compressor, bool overWrite = false )
     {
         if ( string.IsNullOrWhiteSpace( fromFilePath ) )
             throw new ArgumentNullException( nameof( fromFilePath ) );
@@ -66,6 +65,6 @@ internal static class UnusedMethods
             throw new InvalidOperationException( $"The script source cannot be exported because the file '{toFilePath}' exists." );
 
         // compress and export the source to the file as is.
-        System.IO.File.WriteAllText( toFilePath, ScriptCompressor.Compress( System.IO.File.ReadAllText( fromFilePath ) ), System.Text.Encoding.Default );
+        System.IO.File.WriteAllText( toFilePath, compressor.CompressToBase64( System.IO.File.ReadAllText( fromFilePath ) ), System.Text.Encoding.Default );
     }
 }
