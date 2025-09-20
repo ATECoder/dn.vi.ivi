@@ -34,7 +34,7 @@ public static partial class FirmwareManager
         session.LastNodeNumber = script.Node.Number;
         session.SetLastAction( $"loading script '{script.Name}'" );
         bool affirmative = true;
-        if ( script.FirmwareScript.isByteCodeScript || (!session.IsNil( script.Name ) && session.isByteCodeScript( script ).GetValueOrDefault( false )) )
+        if ( script.FirmwareScript.IsByteCodeScript || (!session.IsNil( script.Name ) && session.isByteCodeScript( script ).GetValueOrDefault( false )) )
         {
             script.Loaded = false;
             script.Saved = false;

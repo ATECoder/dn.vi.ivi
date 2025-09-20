@@ -13,9 +13,14 @@ Current IVI Visa Compatibility: 8.0.1.9391
   - Script Info: 
     - Set the Is Encrypted value.
 	- Add I Compressor
+    - Rename Script File Format to Script Format.
+  - Add Script Info extension methods.
 - Encryptor Interface
   - Remove code leaving only conversion to Base 64.
 - Implement I Encryptor.
+- K2600 MS Test
+  - Remove script tests, which are already in the Firmware project.
+  - Remove compression tests from script tests.
 
 ## [8.1.9393] - 2025-09-19
 - MS Tests:

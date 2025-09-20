@@ -95,7 +95,7 @@ public static partial class SessionBaseExtensionMethods
     /// <param name="validate">                 (Optional) True to validate. </param>
     public static void ExportSavedScripts( this Pith.SessionBase session, IScriptCompressor compressor, IScriptEncryptor encryptor,
         VersionInfoBase versionInfo, List<string[]> frameworkScripts, List<string[]> frameworkVersionGetters,
-        string topPath, ScriptFileFormats fileFormat, bool consoleOut = false, bool validate = true )
+        string topPath, ScriptFormats fileFormat, bool consoleOut = false, bool validate = true )
     {
         if ( session is null ) throw new InvalidOperationException( $"{nameof( session )} is null" );
         if ( !session.IsDeviceOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open" );
@@ -167,7 +167,7 @@ public static partial class SessionBaseExtensionMethods
 
                 // Correcting the assignment to use the appropriate method to select the file extension
                 fileFormat |= scriptSource.IsByteCodeScript()
-                        ? ScriptFileFormats.ByteCode
+                        ? ScriptFormats.ByteCode
                         : fileFormat;
 
                 string fileExtension = Tsp.Script.ScriptInfo.SelectScriptFileExtension( fileFormat );
@@ -183,7 +183,7 @@ public static partial class SessionBaseExtensionMethods
                 else
                     _ = SessionLogger.Instance.LogDebug( message );
 
-                if ( fileFormat.HasFlag( ScriptFileFormats.Compressed ) )
+                if ( fileFormat.HasFlag( ScriptFormats.Compressed ) )
                 {
                     message = $"Compressing '{scriptTitle}'";
                     if ( consoleOut )
@@ -202,7 +202,7 @@ public static partial class SessionBaseExtensionMethods
                     scriptSource = compressor.CompressToBase64( scriptSource );
                 }
 
-                if ( fileFormat.HasFlag( ScriptFileFormats.Encrypted ) )
+                if ( fileFormat.HasFlag( ScriptFormats.Encrypted ) )
                 {
                     message = $"Encrypting '{scriptTitle}'";
                     if ( consoleOut )
@@ -226,9 +226,9 @@ public static partial class SessionBaseExtensionMethods
                 if ( validate )
                 {
                     string importedContents = System.IO.File.ReadAllText( filePath );
-                    if ( fileFormat.HasFlag( ScriptFileFormats.Encrypted ) )
+                    if ( fileFormat.HasFlag( ScriptFormats.Encrypted ) )
                         importedContents = encryptor.DecryptFromBase64( importedContents );
-                    if ( fileFormat.HasFlag( ScriptFileFormats.Compressed ) )
+                    if ( fileFormat.HasFlag( ScriptFormats.Compressed ) )
                         importedContents = compressor.DecompressFromBase64( importedContents );
                     if ( !string.Equals( scriptSource, importedContents, StringComparison.Ordinal ) )
                         throw new InvalidOperationException( $"Failed validating the the exported script {scriptTitle} source;. " );

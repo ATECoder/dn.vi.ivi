@@ -76,23 +76,23 @@ public class ScriptInfo
 
     /// <summary>   Select script file extension. </summary>
     /// <remarks>   2025-04-05. </remarks>
-    /// <param name="fileFormat">           The file format. </param>
+    /// <param name="fileFormat">   The script file format. </param>
     /// <returns>   A string. </returns>
-    public static string SelectScriptFileExtension( ScriptFileFormats fileFormat )
+    public static string SelectScriptFileExtension( ScriptFormats fileFormat )
     {
-        return (ScriptFileFormats.ByteCode == (fileFormat & ScriptFileFormats.ByteCode))
-            ? (ScriptFileFormats.Compressed == (fileFormat & ScriptFileFormats.Compressed))
-              ? (ScriptFileFormats.Encrypted == (fileFormat & ScriptFileFormats.Encrypted))
+        return (ScriptFormats.ByteCode == (fileFormat & ScriptFormats.ByteCode))
+            ? (ScriptFormats.Compressed == (fileFormat & ScriptFormats.Compressed))
+              ? (ScriptFormats.Encrypted == (fileFormat & ScriptFormats.Encrypted))
                  ? ScriptInfo.ScriptByteCodeCompressedEncryptedFileExtension
                  : ScriptInfo.ScriptByteCodeCompressedFileExtension
-              : (ScriptFileFormats.Encrypted == (fileFormat & ScriptFileFormats.Encrypted))
+              : (ScriptFormats.Encrypted == (fileFormat & ScriptFormats.Encrypted))
                  ? ScriptInfo.ScriptByteCodeEncryptedFileExtension
                  : ScriptInfo.ScriptByteCodeFileExtension
-            : (ScriptFileFormats.Compressed == (fileFormat & ScriptFileFormats.Compressed))
-              ? (ScriptFileFormats.Encrypted == (fileFormat & ScriptFileFormats.Encrypted))
+            : (ScriptFormats.Compressed == (fileFormat & ScriptFormats.Compressed))
+              ? (ScriptFormats.Encrypted == (fileFormat & ScriptFormats.Encrypted))
                  ? ScriptInfo.ScriptCompressedEncryptedFileExtension
                  : ScriptInfo.ScriptCompressedFileExtension
-              : (ScriptFileFormats.Encrypted == (fileFormat & ScriptFileFormats.Encrypted))
+              : (ScriptFormats.Encrypted == (fileFormat & ScriptFormats.Encrypted))
                  ? ScriptInfo.ScriptEncryptedFileExtension
                  : ScriptInfo.ScriptFileExtension;
     }
@@ -106,14 +106,14 @@ public class ScriptInfo
     /// <exception cref="FileNotFoundException">        Thrown when the requested file is not
     ///                                                 present. </exception>
     /// <param name="baseTitle">            The base title. </param>
-    /// <param name="fileFormat">           (Optional) [<see cref="ScriptFileFormats.None"/>] The
-    ///                                     file format. </param>
+    /// <param name="fileFormat">           (Optional) [<see cref="ScriptFormats.None"/>] The
+    ///                                     script file format. </param>
     /// <param name="scriptVersion">        (Optional) [empty] The release version. Specify the
     ///                                     version only with build files. </param>
     /// <param name="baseModel">            (Optional) [empty] The base model. </param>
     /// <param name="modelMajorVersion">    (Optional) [empty] The model major version. </param>
     /// <returns>   A string. </returns>
-    public static string BuildScriptFileTitle( string baseTitle, ScriptFileFormats fileFormat = ScriptFileFormats.None,
+    public static string BuildScriptFileTitle( string baseTitle, ScriptFormats fileFormat = ScriptFormats.None,
         string scriptVersion = "", string baseModel = "", string modelMajorVersion = "" )
     {
         if ( string.IsNullOrWhiteSpace( baseTitle ) )
@@ -125,7 +125,7 @@ public class ScriptInfo
             title = $"{title}.{scriptVersion}";
 
 
-        if ( ScriptFileFormats.ByteCode == (fileFormat & ScriptFileFormats.ByteCode) )
+        if ( ScriptFormats.ByteCode == (fileFormat & ScriptFormats.ByteCode) )
         {
             // byte code files are always deployed or loaded from a deployed file.
             if ( string.IsNullOrWhiteSpace( baseModel ) )
@@ -140,13 +140,14 @@ public class ScriptInfo
     /// <summary>   Builds script file name. </summary>
     /// <remarks>   2025-04-05. </remarks>
     /// <param name="baseTitle">            The base title. </param>
-    /// <param name="fileFormat">           (Optional) [<see cref="ScriptFileFormats.None"/>] The file format. </param>
+    /// <param name="fileFormat">           (Optional) [<see cref="ScriptFormats.None"/>] The script
+    ///                                     file format. </param>
     /// <param name="scriptVersion">        (Optional) [empty] The release version. Specify the
     ///                                     version only with build files. </param>
     /// <param name="baseModel">            (Optional) [empty] The base model. </param>
     /// <param name="modelMajorVersion">    (Optional) [empty] The model major version. </param>
     /// <returns>   A string. </returns>
-    public static string BuildScriptFileName( string baseTitle, ScriptFileFormats fileFormat = ScriptFileFormats.None,
+    public static string BuildScriptFileName( string baseTitle, ScriptFormats fileFormat = ScriptFormats.None,
         string scriptVersion = "", string baseModel = "", string modelMajorVersion = "" )
     {
         string title = ScriptInfo.BuildScriptFileTitle( baseTitle, fileFormat, scriptVersion, baseModel, modelMajorVersion );
@@ -270,7 +271,7 @@ public class ScriptInfo
 
     /// <summary>   Gets or sets the deploy file format. </summary>
     /// <value> The deploy file format. </value>
-    public virtual ScriptFileFormats DeployFileFormat { get; set; } = ScriptFileFormats.None;
+    public virtual ScriptFormats DeployFileFormat { get; set; } = ScriptFormats.None;
 
     /// <summary>   Builds the deploy file title. </summary>
     /// <remarks>   2025-04-15. </remarks>
@@ -279,7 +280,7 @@ public class ScriptInfo
     /// <returns>   The deploy file title. </returns>
     public virtual string BuildDeployFileTitle( string modelFamily, string modelMajorVersion )
     {
-        this.DeployFileTitle = ScriptFileFormats.ByteCode == (this.DeployFileFormat & ScriptFileFormats.ByteCode)
+        this.DeployFileTitle = ScriptFormats.ByteCode == (this.DeployFileFormat & ScriptFormats.ByteCode)
             ? $"{this.Title}.{modelFamily}.{modelMajorVersion}"
             : this.Title;
         return this.DeployFileTitle;

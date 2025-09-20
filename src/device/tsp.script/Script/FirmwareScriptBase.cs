@@ -224,7 +224,7 @@ public abstract class FirmwareScriptBase
         get
         {
             string title = this.FileTitle;
-            if ( ScriptFileFormats.ByteCode == (this.DeployFileFormat & ScriptFileFormats.ByteCode) )
+            if ( ScriptFormats.ByteCode == (this.DeployFileFormat & ScriptFormats.ByteCode) )
             {
                 // binary files are always deployed or loaded from a deployed file.
                 if ( string.IsNullOrWhiteSpace( this.ModelMask ) )
@@ -239,21 +239,21 @@ public abstract class FirmwareScriptBase
     }
 
     /// <summary>
-    /// Gets or sets the <see cref="ScriptFileFormats"/> of the deploy file. Defaults to uncompressed format.
+    /// Gets or sets the <see cref="ScriptFormats"/> of the deploy file. Defaults to uncompressed format.
     /// </summary>
-    /// <value> The <see cref="ScriptFileFormats"/> of the resource file. </value>
-    public ScriptFileFormats DeployFileFormat { get; set; }
+    /// <value> The <see cref="ScriptFormats"/> of the resource file. </value>
+    public ScriptFormats DeployFileFormat { get; set; }
 
-    /// <summary>   Builds the <see cref="ScriptFileFormats"/> of a deployed script. </summary>
+    /// <summary>   Builds the <see cref="ScriptFormats"/> of a deployed script. </summary>
     /// <remarks>   2024-08-20. </remarks>
     /// <param name="binaryScript">     True if the file is binary. </param>
     /// <param name="compressedScript"> True if the file is compressed. </param>
     /// <returns>   The ScriptFileFormats. </returns>
-    public static ScriptFileFormats BuildScriptFileFormat( bool binaryScript, bool compressedScript )
+    public static ScriptFormats BuildScriptFileFormat( bool binaryScript, bool compressedScript )
     {
-        ScriptFileFormats scriptFileFormats = ScriptFileFormats.None;
-        if ( binaryScript ) scriptFileFormats |= ScriptFileFormats.ByteCode;
-        if ( compressedScript ) scriptFileFormats |= ScriptFileFormats.Compressed;
+        ScriptFormats scriptFileFormats = ScriptFormats.None;
+        if ( binaryScript ) scriptFileFormats |= ScriptFormats.ByteCode;
+        if ( compressedScript ) scriptFileFormats |= ScriptFormats.Compressed;
         return scriptFileFormats;
     }
 
@@ -275,7 +275,7 @@ public abstract class FirmwareScriptBase
 
     /// <summary>   Gets a value indicating whether the convert to byte code. </summary>
     /// <value> True if convert to byte code, false if not. </value>
-    public bool ConvertToByteCode => ScriptFileFormats.ByteCode == (this.DeployFileFormat & ScriptFileFormats.ByteCode);
+    public bool ConvertToByteCode => ScriptFormats.ByteCode == (this.DeployFileFormat & ScriptFormats.ByteCode);
 
     #endregion
 
@@ -391,7 +391,7 @@ public abstract class FirmwareScriptBase
     /// source.
     /// </summary>
     /// <value> <c>true</c> if this script is saved as byte code; otherwise, <c>false</c>. </value>
-    public bool isByteCodeScript { get; private set; }
+    public bool IsByteCodeScript { get; private set; }
 
     /// <summary>   Gets or sets the sentinel indicating if this script needs to be auto executed. </summary>
     /// <value> <c>true</c> if this script automatically executes; otherwise, <c>false</c>. </value>
@@ -416,9 +416,9 @@ public abstract class FirmwareScriptBase
     /// <remarks>   2024-09-23. </remarks>
     /// <param name="value">    The string being chopped. </param>
     /// <returns>   The ScriptFileFormats. </returns>
-    private ScriptFileFormats ParseSource( string value )
+    private ScriptFormats ParseSource( string value )
     {
-        ScriptFileFormats sourceFormat = ScriptFileFormats.None;
+        ScriptFormats sourceFormat = ScriptFormats.None;
         bool isByteCodeScript = false;
         string source = string.Empty;
         if ( !this.RequiresReadParseWrite )
@@ -426,7 +426,7 @@ public abstract class FirmwareScriptBase
             if ( value.StartsWith( Tsp.Script.ScriptCompressor.CompressedPrefix, false, System.Globalization.CultureInfo.CurrentCulture ) )
             {
                 source = Tsp.Script.ScriptCompressor.Decompress( source );
-                sourceFormat |= ScriptFileFormats.Compressed;
+                sourceFormat |= ScriptFormats.Compressed;
             }
             else
                 source = value;
@@ -440,10 +440,10 @@ public abstract class FirmwareScriptBase
                 source = source.Insert( source.Length, " " );
 
             if ( isByteCodeScript )
-                sourceFormat |= ScriptFileFormats.ByteCode;
+                sourceFormat |= ScriptFormats.ByteCode;
         }
         this._source = source;
-        this.isByteCodeScript = isByteCodeScript;
+        this.IsByteCodeScript = isByteCodeScript;
 
         // tag file as saved if source format and file format match.
         this.SavedToFile = sourceFormat == this.DeployFileFormat;
@@ -464,7 +464,7 @@ public abstract class FirmwareScriptBase
             if ( string.IsNullOrWhiteSpace( value ) )
             {
                 this._source = value;
-                this.isByteCodeScript = false;
+                this.IsByteCodeScript = false;
                 this.SavedToFile = true;
             }
             else
@@ -485,7 +485,7 @@ public abstract class FirmwareScriptBase
     {
         string prefix = $"{cc.isr.VI.Syntax.Tsp.Lua.LoadStringCommand}(table.concat(";
         string suffix = "))()";
-        bool binaryDecorationRequire = this.isByteCodeScript && !this.Source.Contains( prefix );
+        bool binaryDecorationRequire = this.IsByteCodeScript && !this.Source.Contains( prefix );
         System.Text.StringBuilder loadCommands = new( this.Source.Length + 512 );
         _ = loadCommands.Append( $"{cc.isr.VI.Syntax.Tsp.Script.LoadAndRunScriptCommand} {loadingScriptName}" );
         _ = loadCommands.AppendLine();

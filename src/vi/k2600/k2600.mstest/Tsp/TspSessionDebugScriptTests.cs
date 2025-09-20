@@ -43,7 +43,7 @@ public class TspSessionDebugScriptTests : Device.Tests.Base.ScriptTests
     {
         Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
         cc.isr.VI.Device.Tests.Asserts.AssertVisaImplementationShouldBeLoaded();
-        Console.WriteLine( $"\tTesting {typeof( cc.isr.VI.Tsp.Script.ScriptCompressor ).Assembly.FullName}" );
+        Console.WriteLine( $"\tTesting {typeof( cc.isr.VI.Tsp.Script.ScriptInfo ).Assembly.FullName}" );
 
         // create an instance of the session logger.
         SessionLogger.Instance.CreateLogger( typeof( TspSessionDebugScriptTests ) );

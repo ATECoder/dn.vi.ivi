@@ -1,12 +1,12 @@
 namespace cc.isr.VI.Tsp.Script;
 
-/// <summary>   Enumerates the script file formats. </summary>
+/// <summary>   Enumerates the script formats. </summary>
 /// <remarks>   David, 2020-10-12. </remarks>
 [Flags()]
-public enum ScriptFileFormats
+public enum ScriptFormats
 {
     /// <summary> An enum constant representing the uncompressed human readable option. </summary>
-    [System.ComponentModel.Description( "Uncompressed Human Readable" )]
+    [System.ComponentModel.Description( "Uncompressed human readable" )]
     None = 0,
 
     /// <summary> An enum constant representing the compressed option. </summary>
@@ -14,7 +14,7 @@ public enum ScriptFileFormats
     Compressed = 1,
 
     /// <summary> An enum constant representing the byte code option. </summary>
-    [System.ComponentModel.Description( "Byte Code format" )]
+    [System.ComponentModel.Description( "Byte code format" )]
     ByteCode = 2,
 
     /// <summary> An enum constant representing the encrypted option. </summary>

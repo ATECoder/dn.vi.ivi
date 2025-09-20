@@ -27,7 +27,7 @@ public static partial class FirmwareManager
             if ( !(string.IsNullOrWhiteSpace( script.FirmwareScript.Name ) || script.FirmwareScript.SavedToFile) )
             {
                 displaySubsystem.DisplayLine( 2, "Writing {0}:{1}", script.Node.ModelNumber, script.Name );
-                if ( displaySubsystem.Session.FetchScriptSaveToFile( folderPath, script, (script.FirmwareScript.DeployFileFormat & ScriptFileFormats.Compressed) != 0 ) )
+                if ( displaySubsystem.Session.FetchScriptSaveToFile( folderPath, script, (script.FirmwareScript.DeployFileFormat & ScriptFormats.Compressed) != 0 ) )
                 {
                     script.FirmwareScript.SavedToFile = true;
                     success = success && true;
