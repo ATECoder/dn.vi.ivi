@@ -117,12 +117,12 @@ public class TspSessionScriptTests : Device.Tests.Base.ScriptTests
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
 
-            string toFilePath = Path.Combine( folderPath, $"{fileTitle}_trimmed{cc.isr.VI.Tsp.Script.ScriptInfo.ScriptFileExtension}" );
-            TestBase.ConsoleOutputMemberMessage( $"Trimming script file to '{toFilePath}'" );
-            filePath.TrimScript( toFilePath, true );
+            string outFilePath = Path.Combine( folderPath, $"{fileTitle}_trimmed{cc.isr.VI.Tsp.Script.ScriptInfo.ScriptFileExtension}" );
+            TestBase.ConsoleOutputMemberMessage( $"Trimming script file to '{outFilePath}'" );
+            filePath.TrimScript( outFilePath, true );
 
-            TestBase.ConsoleOutputMemberMessage( $"Importing script from trimmed '{toFilePath}' file" );
-            this.Device.Session.ImportScript( scriptName, toFilePath, TimeSpan.Zero );
+            TestBase.ConsoleOutputMemberMessage( $"Importing script from trimmed '{outFilePath}' file" );
+            this.Device.Session.ImportScript( scriptName, outFilePath, TimeSpan.Zero );
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
 
@@ -210,12 +210,12 @@ public class TspSessionScriptTests : Device.Tests.Base.ScriptTests
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
 
-            string toFilePath = Path.Combine( folderPath, $"{fileTitle}_trimmed{cc.isr.VI.Tsp.Script.ScriptInfo.ScriptFileExtension}" );
-            TestBase.ConsoleOutputMemberMessage( $"Trimming script file to '{toFilePath}'" );
-            filePath.TrimScript( toFilePath, true );
+            string outputFilePath = Path.Combine( folderPath, $"{fileTitle}_trimmed{cc.isr.VI.Tsp.Script.ScriptInfo.ScriptFileExtension}" );
+            TestBase.ConsoleOutputMemberMessage( $"Trimming script file to '{outputFilePath}'" );
+            filePath.TrimScript( outputFilePath, true );
 
-            TestBase.ConsoleOutputMemberMessage( $"Importing script from trimmed '{toFilePath}' file" );
-            this.Device.Session.ImportScript( scriptName, toFilePath, TimeSpan.Zero );
+            TestBase.ConsoleOutputMemberMessage( $"Importing script from trimmed '{outputFilePath}' file" );
+            this.Device.Session.ImportScript( scriptName, outputFilePath, TimeSpan.Zero );
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
 

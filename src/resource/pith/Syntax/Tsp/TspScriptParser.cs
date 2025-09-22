@@ -11,19 +11,20 @@ public static class TspScriptParser
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>
     /// <exception cref="FileNotFoundException">    Thrown when the requested file is not present. </exception>
-    /// <param name="fromFilePath">     Full pathname of the source from file. </param>
-    /// <param name="toFilePath">       Full pathname of the destination file. </param>
+    /// <param name="inputFilePath">    Full pathname of the input file. </param>
+    /// <param name="outputFilePath">   Full pathname of the output file. </param>
     /// <param name="retainOutline">    Specifies if the code outline is retained or trimmed. </param>
-    /// <returns>   Parsed script. </returns>
-    public static void TrimTspSourceCode( string fromFilePath, string toFilePath, bool retainOutline )
+    ///
+    /// ### <returns>   Parsed script. </returns>
+    public static void TrimTspSourceCode( string inputFilePath, string outputFilePath, bool retainOutline )
     {
-        if ( fromFilePath is null ) throw new ArgumentNullException( nameof( fromFilePath ) );
-        if ( toFilePath is null ) throw new ArgumentNullException( nameof( toFilePath ) );
+        if ( inputFilePath is null ) throw new ArgumentNullException( nameof( inputFilePath ) );
+        if ( outputFilePath is null ) throw new ArgumentNullException( nameof( outputFilePath ) );
 
-        using StreamReader? reader = new System.IO.StreamReader( fromFilePath )
+        using StreamReader? reader = new System.IO.StreamReader( inputFilePath )
             ?? throw new System.IO.FileNotFoundException( $"Failed creating a reader from the source file path" );
 
-        using StreamWriter? writer = new System.IO.StreamWriter( toFilePath )
+        using StreamWriter? writer = new System.IO.StreamWriter( outputFilePath )
             ?? throw new System.IO.FileNotFoundException( $"Failed creating a reader for the destination file path" );
 
         TspParserState parseState = new( retainOutline );

@@ -2,9 +2,14 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9394]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9396]: https://www.github.com/atecoder/dn.vi.ivi
 
 Current IVI Visa Compatibility: 8.0.1.9391
+
+## [8.1.9396] - 2025-09-22
+- Rename source and destination file arguments to input and output file arguments.
+- Device TSP
+   - update implementation of compression and encryption of script files.
 
 ## [8.1.9394] - 2025-09-20
 - Device.Tsp:

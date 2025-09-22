@@ -111,47 +111,51 @@ public static partial class ScriptInfoExtensionsMethods
         return result;
     }
 
-    /// <summary>   A string extension method that encrypts and compresses script file. </summary>
+    /// <summary>  A <see cref="ScriptInfo"/> extension method that encrypts and compresses script file. </summary>
     /// <remarks>   2025-09-19. </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
     ///                                                 are null. </exception>
     /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
     ///                                                 invalid. </exception>
-    /// <param name="scriptInfo">   The scriptInfo to act on. </param>
-    /// <param name="fromFilePath"> The source file path. </param>
-    /// <param name="toFilePath">   the destination file path. </param>
-    /// <param name="fileFormat">   The file format. </param>
-    /// <param name="overWrite">    (Optional) [false] True to over write. </param>
-    /// <param name="validate">     (Optional) True to validate. </param>
-    public static void CompressScriptFile( this ScriptInfo scriptInfo, string fromFilePath, string toFilePath, ScriptFormats fileFormat, bool overWrite = false, bool validate = true )
+    /// <param name="scriptInfo">       The scriptInfo to act on. </param>
+    /// <param name="inputFilePath">    Full pathname of the input file. </param>
+    /// <param name="outputFilePath">   Full pathname of the output file. </param>
+    /// <param name="fileFormat">       The file format. </param>
+    /// <param name="overWrite">        (Optional) [false] True to over write. </param>
+    /// <param name="validate">         (Optional) True to validate. </param>
+    public static void CompressScriptFile( this ScriptInfo scriptInfo, string inputFilePath, string outputFilePath,
+        ScriptFormats fileFormat, bool overWrite = false, bool validate = true )
     {
         if ( scriptInfo is null ) throw new ArgumentNullException( nameof( scriptInfo ) );
-        if ( string.IsNullOrWhiteSpace( fromFilePath ) ) throw new ArgumentNullException( nameof( fromFilePath ) );
-        if ( string.IsNullOrWhiteSpace( toFilePath ) ) throw new ArgumentNullException( nameof( toFilePath ) );
+        if ( string.IsNullOrWhiteSpace( inputFilePath ) ) throw new ArgumentNullException( nameof( inputFilePath ) );
+        if ( string.IsNullOrWhiteSpace( outputFilePath ) ) throw new ArgumentNullException( nameof( outputFilePath ) );
 
-        if ( !overWrite && System.IO.File.Exists( toFilePath ) )
-            throw new InvalidOperationException( $"The script source cannot be exported because the file '{toFilePath}' exists." );
+        if ( !overWrite && System.IO.File.Exists( outputFilePath ) )
+            throw new InvalidOperationException( $"The script source cannot be exported because the file '{outputFilePath}' exists." );
 
-        fromFilePath.CompressScriptFile( toFilePath, fileFormat, scriptInfo.Compressor, scriptInfo.Encryptor, overWrite, validate );
+        inputFilePath.CompressScriptFile( outputFilePath, fileFormat, scriptInfo.Compressor, scriptInfo.Encryptor, overWrite, validate );
     }
 
-    /// <summary>   A string extension method that decrypts and decompresses the script file. </summary>
+    /// <summary>
+    /// A <see cref="ScriptInfo"/> extension method that decrypts and decompresses the script file.
+    /// </summary>
     /// <remarks>   2025-05-01. </remarks>
-    /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
-    ///                                                 are null. </exception>
-    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
-    ///                                                 invalid. </exception>
-    /// <param name="scriptInfo">   The scriptInfo to act on. </param>
-    /// <param name="fromFilePath"> The source file path. </param>
-    /// <param name="toFilePath">   the destination file path. </param>
-    /// <param name="overWrite">    (Optional) [false] True to over write. </param>
-    /// <param name="validate">     (Optional) True to validate. </param>
-    public static void DecompressScriptFile( this ScriptInfo scriptInfo, string fromFilePath, string toFilePath, bool overWrite = false, bool validate = true )
+    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
+    ///                                             null. </exception>
+    /// <param name="scriptInfo">       The scriptInfo to act on. </param>
+    /// <param name="inputFilePath">    Full pathname of the input file. </param>
+    /// <param name="outputFilePath">   Full pathname of the output file. </param>
+    /// <param name="overWrite">        (Optional) [false] True to over write. </param>
+    /// <param name="validate">         (Optional) True to validate. </param>
+    ///
+    /// ### <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                     invalid. </exception>
+    public static void DecompressScriptFile( this ScriptInfo scriptInfo, string inputFilePath, string outputFilePath, bool overWrite = false, bool validate = true )
     {
         if ( scriptInfo is null ) throw new ArgumentNullException( nameof( scriptInfo ) );
-        if ( string.IsNullOrWhiteSpace( fromFilePath ) ) throw new ArgumentNullException( nameof( fromFilePath ) );
-        if ( string.IsNullOrWhiteSpace( toFilePath ) ) throw new ArgumentNullException( nameof( toFilePath ) );
+        if ( string.IsNullOrWhiteSpace( inputFilePath ) ) throw new ArgumentNullException( nameof( inputFilePath ) );
+        if ( string.IsNullOrWhiteSpace( outputFilePath ) ) throw new ArgumentNullException( nameof( outputFilePath ) );
 
-        fromFilePath.DecompressScriptFile( toFilePath, scriptInfo.Compressor, scriptInfo.Encryptor, overWrite, validate );
+        inputFilePath.DecompressScriptFile( outputFilePath, scriptInfo.Compressor, scriptInfo.Encryptor, overWrite, validate );
     }
 }

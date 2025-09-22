@@ -1,4 +1,6 @@
 using System.Text;
+using cc.isr.VI.Tsp.Script.ExportExtensions;
+using cc.isr.VI.Tsp.Script.ScriptInfoExtensions;
 using cc.isr.VI.Tsp.SessionBaseExtensions;
 
 namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
@@ -7,20 +9,16 @@ public static partial class SessionBaseExtensionMethods
 {
     /// <summary>   A <see cref="string"/> extension method that import script. </summary>
     /// <remarks>   2024-09-05. </remarks>
-    /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
-    ///                                                 are null. </exception>
-    /// <exception cref="FileNotFoundException">        Thrown when the requested file is not
-    ///                                                 present. </exception>
-    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
-    ///                                                 invalid. </exception>
-    /// <param name="fromFilePath">     The file path. </param>
-    /// <param name="toFilePath">       True to delete an existing script if it exists. </param>
+    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
+    ///                                             null. </exception>
+    /// <param name="inputFilePath">    Full path name of the input file to act on. </param>
+    /// <param name="outputFilePath">   Full pathname of the output file. </param>
     /// <param name="retainOutline">    True to retain outline. </param>
-    public static void TrimScript( this string fromFilePath, string toFilePath, bool retainOutline )
+    public static void TrimScript( this string inputFilePath, string outputFilePath, bool retainOutline )
     {
-        if ( fromFilePath is null || string.IsNullOrWhiteSpace( fromFilePath ) ) throw new ArgumentNullException( nameof( fromFilePath ) );
-        if ( toFilePath is null || string.IsNullOrWhiteSpace( toFilePath ) ) throw new ArgumentNullException( nameof( toFilePath ) );
-        cc.isr.VI.Syntax.Tsp.TspScriptParser.TrimTspSourceCode( fromFilePath, toFilePath, retainOutline );
+        if ( inputFilePath is null || string.IsNullOrWhiteSpace( inputFilePath ) ) throw new ArgumentNullException( nameof( inputFilePath ) );
+        if ( outputFilePath is null || string.IsNullOrWhiteSpace( outputFilePath ) ) throw new ArgumentNullException( nameof( outputFilePath ) );
+        cc.isr.VI.Syntax.Tsp.TspScriptParser.TrimTspSourceCode( inputFilePath, outputFilePath, retainOutline );
     }
 
     /// <summary>   A <see cref="ScriptInfo"/> extension method that trims and compressed. </summary>
@@ -30,28 +28,36 @@ public static partial class SessionBaseExtensionMethods
     /// <exception cref="FileNotFoundException">    Thrown when the requested file is not present. </exception>
     /// <param name="scriptInfo">           Information describing the script. </param>
     /// <param name="sourceFolder">         Full pathname of the folder file. </param>
-    /// <param name="destinationFolder">    (Optional) [empty] Path of the destination folder. If
-    ///                                     empty, the destination folder is set to the source folder. </param>
-    public static void TrimCompress( this ScriptInfo scriptInfo, string sourceFolder, string destinationFolder = "" )
+    /// <param name="destinationFolder">    Path of the destination folder. </param>
+    /// <param name="scriptFileFormat">     The script file format. </param>
+    /// <param name="overWrite">            (Optional) True to over write. </param>
+    /// <param name="validate">             (Optional) True to validate. </param>
+    public static void TrimCompress( this ScriptInfo scriptInfo, string sourceFolder,
+        string destinationFolder, ScriptFormats scriptFileFormat, bool overWrite = true, bool validate = true )
     {
         if ( scriptInfo is null ) throw new ArgumentNullException( nameof( scriptInfo ) );
 
-        string fromFilePath = Path.Combine( sourceFolder, scriptInfo.BuiltFileName );
+        string inputFilePath = Path.Combine( sourceFolder, scriptInfo.BuiltFileName );
         if ( string.IsNullOrWhiteSpace( destinationFolder ) )
             destinationFolder = sourceFolder;
-        string trimmedFilePath = Path.Combine( destinationFolder, scriptInfo.TrimmedFileName );
-        string compressedFilePath = trimmedFilePath + "c";
-        if ( System.IO.File.Exists( fromFilePath ) )
+        string outFilePath = Path.Combine( destinationFolder, scriptInfo.TrimmedFileName );
+        if ( System.IO.File.Exists( inputFilePath ) )
         {
-            SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tTrimming script file '{fromFilePath}'\r\n\t\tto '{trimmedFilePath}'" );
-            fromFilePath.TrimScript( trimmedFilePath, true );
+            SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tTrimming script file '{inputFilePath}'\r\n\t\tto '{outFilePath}'" );
+            inputFilePath.TrimScript( outFilePath, true );
 
-            SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tCompressing '{trimmedFilePath}'\r\n\t\tto '{compressedFilePath}'" );
-            System.IO.File.WriteAllText( compressedFilePath, scriptInfo.Compressor.CompressToBase64( System.IO.File.ReadAllText( trimmedFilePath ) ), System.Text.Encoding.Default );
+            inputFilePath = outFilePath;
 
+            outFilePath = Path.Combine( destinationFolder, scriptInfo.Title, ScriptInfo.SelectScriptFileExtension( scriptFileFormat ) );
+            if ( scriptFileFormat.HasFlag( ScriptFormats.Compressed ) || scriptFileFormat.HasFlag( ScriptFormats.Encrypted ) )
+            {
+                string action = scriptFileFormat.HasFlag( ScriptFormats.Encrypted ) ? "Compressing and encrypting" : "Compressing";
+                SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{action} '{inputFilePath}'\r\n\t\tto '{outFilePath}'" );
+                inputFilePath.CompressScriptFile( outFilePath, scriptFileFormat, scriptInfo.Compressor, scriptInfo.Encryptor, overWrite, validate );
+            }
         }
         else
-            throw new FileNotFoundException( fromFilePath );
+            throw new FileNotFoundException( inputFilePath );
     }
 
     /// <summary>

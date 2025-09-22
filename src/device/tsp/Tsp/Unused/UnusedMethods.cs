@@ -50,21 +50,21 @@ internal static class UnusedMethods
     ///                                                 are null. </exception>
     /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
     ///                                                 invalid. </exception>
-    /// <param name="fromFilePath"> The source file path. </param>
-    /// <param name="toFilePath">   the destination file path. </param>
-    /// <param name="compressor">   The compressor. </param>
-    /// <param name="overWrite">    (Optional) [false] True to over write. </param>
-    public static void CompressScriptFile( this string fromFilePath, string toFilePath, IScriptCompressor compressor, bool overWrite = false )
+    /// <param name="inputFilePath">    The full path name of the input file to act on. </param>
+    /// <param name="outputFilePath">   Full pathname of the output file. </param>
+    /// <param name="compressor">       The compressor. </param>
+    /// <param name="overWrite">        (Optional) [false] True to over write. </param>
+    public static void CompressScriptFile( this string inputFilePath, string outputFilePath, IScriptCompressor compressor, bool overWrite = false )
     {
-        if ( string.IsNullOrWhiteSpace( fromFilePath ) )
-            throw new ArgumentNullException( nameof( fromFilePath ) );
-        if ( string.IsNullOrWhiteSpace( toFilePath ) )
-            throw new ArgumentNullException( nameof( toFilePath ) );
+        if ( string.IsNullOrWhiteSpace( inputFilePath ) )
+            throw new ArgumentNullException( nameof( inputFilePath ) );
+        if ( string.IsNullOrWhiteSpace( outputFilePath ) )
+            throw new ArgumentNullException( nameof( outputFilePath ) );
 
-        if ( !overWrite && System.IO.File.Exists( toFilePath ) )
-            throw new InvalidOperationException( $"The script source cannot be exported because the file '{toFilePath}' exists." );
+        if ( !overWrite && System.IO.File.Exists( outputFilePath ) )
+            throw new InvalidOperationException( $"The script source cannot be exported because the file '{outputFilePath}' exists." );
 
         // compress and export the source to the file as is.
-        System.IO.File.WriteAllText( toFilePath, compressor.CompressToBase64( System.IO.File.ReadAllText( fromFilePath ) ), System.Text.Encoding.Default );
+        System.IO.File.WriteAllText( outputFilePath, compressor.CompressToBase64( System.IO.File.ReadAllText( inputFilePath ) ), System.Text.Encoding.Default );
     }
 }
