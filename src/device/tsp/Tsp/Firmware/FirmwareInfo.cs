@@ -199,7 +199,7 @@ public class FirmwareInfo
                         else if ( compareStatus > 0 )
                         {
                             firmwareStatus = FirmwareStatus.NewVersionAvailable;
-                            _ = statusBuilder.AppendLine( $"The installed (embedded) firmware version {embeddedVersion} is newer than the version you are trying to install; Contact the Vendor for the latest release" );
+                            _ = statusBuilder.AppendLine( $"The installed (embedded) firmware version {embeddedVersion} is newer than the version you are trying to install; Contact the Vendor for the present release" );
                         }
                     }
                 }

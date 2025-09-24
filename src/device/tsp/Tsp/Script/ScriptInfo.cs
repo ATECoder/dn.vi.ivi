@@ -408,30 +408,30 @@ public class ScriptInfo
 
             case FirmwareVersionStatus.Newer:
                 {
-                    _ = builder.AppendLine( $"\tOutdated Program: The embedded firmware {this.EmbeddedVersion} is newer than the version the candidate firmware {this.NextVersion}. A newer version of this program is available." );
+                    _ = builder.AppendLine( $"\tOutdated Program: The embedded firmware {this.EmbeddedVersion} is newer than the candidate version of the firmware ({this.NextVersion}). A newer version of this program is available." );
                     break;
                 }
 
             case FirmwareVersionStatus.Older:
                 {
-                    _ = builder.AppendLine( $"\tOutdated Firmware: The embedded firmware {this.EmbeddedVersion} is older than the candidate firmware version {this.NextVersion}." );
+                    _ = builder.AppendLine( $"\tOutdated Firmware: The embedded firmware {this.EmbeddedVersion} is older than the candidate version of the firmware ({this.NextVersion})." );
                     break;
                 }
 
             case FirmwareVersionStatus.NextVersionNotSet:
                 {
-                    _ = builder.AppendLine( $"\tThe latest firmware version is not specified." );
+                    _ = builder.AppendLine( $"\tThe version of the next firmware is not specified." );
                     break;
                 }
 
             case FirmwareVersionStatus.Unknown:
                 {
-                    _ = builder.AppendLine( $"\tThe embedded firmware version is not known." );
+                    _ = builder.AppendLine( $"\tThe version of the embedded firmware is not known." );
                     break;
                 }
 
             case FirmwareVersionStatus.None:
-                _ = builder.AppendLine( $"\tThe version status was not set." );
+                _ = builder.AppendLine( $"\tThe status of the firmware version was not set." );
                 break;
 
             default:

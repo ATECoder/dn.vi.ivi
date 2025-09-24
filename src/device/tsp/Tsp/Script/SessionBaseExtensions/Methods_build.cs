@@ -48,7 +48,7 @@ public static partial class SessionBaseExtensionMethods
 
             inputFilePath = outFilePath;
 
-            outFilePath = Path.Combine( destinationFolder, scriptInfo.Title, ScriptInfo.SelectScriptFileExtension( scriptFileFormat ) );
+            outFilePath = Path.Combine( destinationFolder, scriptInfo.Title + ScriptInfo.SelectScriptFileExtension( scriptFileFormat ) );
             if ( scriptFileFormat.HasFlag( ScriptFormats.Compressed ) || scriptFileFormat.HasFlag( ScriptFormats.Encrypted ) )
             {
                 string action = scriptFileFormat.HasFlag( ScriptFormats.Encrypted ) ? "Compressing and encrypting" : "Compressing";

@@ -317,7 +317,7 @@ public partial class Meter : CommunityToolkit.Mvvm.ComponentModel.ObservableObje
 
             // read the firmware version to determine if using hte legacy software.
             MeterSubsystem.LegacyFirmware = !this.TspDevice.Session.IsNil( Syntax.ThermalTransient.LegacyVersionGetter.TrimEnd( "()".ToCharArray() ) )
-                || (!this.TspDevice.Session.IsNil( Syntax.ThermalTransient.LatestVersionGetter.TrimEnd( "()".ToCharArray() ) )
+                || (!this.TspDevice.Session.IsNil( Syntax.ThermalTransient.PresentVersionGetter.TrimEnd( "()".ToCharArray() ) )
                   ? false
                   : throw new InvalidOperationException( "" ));
 

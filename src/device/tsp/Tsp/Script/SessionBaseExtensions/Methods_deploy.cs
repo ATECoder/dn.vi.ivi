@@ -126,7 +126,7 @@ public static partial class SessionBaseExtensionMethods
 
     /// <summary>
     /// A <see cref="ScriptInfo"/> extension method that parses the firmware version based on the
-    /// script actually embedded version and latest release version.
+    /// script actually embedded version and next version.
     /// </summary>
     /// <remarks>   2025-04-25. </remarks>
     /// <param name="script">   The script. </param>

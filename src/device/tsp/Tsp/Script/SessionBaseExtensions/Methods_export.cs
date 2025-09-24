@@ -5,6 +5,21 @@ namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
 public static partial class SessionBaseExtensionMethods
 {
+    #region " support methods "
+
+    /// <summary>   Gets temporary path. </summary>
+    /// <remarks>   2025-06-03. </remarks>
+    /// <param name="subFolderName">    (optional) [RegisterTests] Pathname of the sub folder. </param>
+    /// <returns>   The temporary path. </returns>
+    public static string GetTempPath( string subFolderName = "SessionBaseExtensions" )
+    {
+        string tempPath = Path.Combine( Path.GetTempPath(), "~cc.isr", subFolderName );
+        _ = System.IO.Directory.CreateDirectory( tempPath );
+        return tempPath;
+    }
+
+    #endregion
+
     /// <summary>
     /// A <see cref="Pith.SessionBase"/> extension method that fetches and exports a script to file.
     /// </summary>

@@ -6,6 +6,21 @@ namespace cc.isr.VI.Tsp.Script.ExportExtensions;
 /// <remarks>   2025-05-02. </remarks>
 public static partial class ExportExtensionsMethods
 {
+    #region " support methods "
+
+    /// <summary>   Gets temporary path. </summary>
+    /// <remarks>   2025-06-03. </remarks>
+    /// <param name="subFolderName">    (optional) [RegisterTests] Pathname of the sub folder. </param>
+    /// <returns>   The temporary path. </returns>
+    public static string GetTempPath( string subFolderName = "ExportExtensions" )
+    {
+        string tempPath = Path.Combine( Path.GetTempPath(), "~cc.isr", subFolderName );
+        _ = System.IO.Directory.CreateDirectory( tempPath );
+        return tempPath;
+    }
+
+    #endregion
+
     /// <summary>   Query if 'source' is byte code. </summary>
     /// <remarks>   2024-10-11. </remarks>
     /// <param name="source">   specifies the source code for the script. </param>
@@ -309,7 +324,51 @@ public static partial class ExportExtensionsMethods
         }
     }
 
-    /// <summary>   A <see cref="string"/> extension method that compressed file equals to. </summary>
+    /// <summary>
+    /// A <see cref="string"/> extension method to compare files ignoring any difference in the file
+    /// ending because compression removes new lines from the end of the file.
+    /// </summary>
+    /// <remarks>   2025-09-24. </remarks>
+    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
+    ///                                             null. </exception>
+    /// <param name="filePath1">    The filePath1 to act on. </param>
+    /// <param name="filePath2">    The second file path. </param>
+    /// <param name="details">      [out] The details. </param>
+    /// <returns>   True if it succeeds, false if it fails. </returns>
+    public static bool CompareFilesIgnoreEnding( this string filePath1, string filePath2, out string details )
+    {
+        if ( string.IsNullOrWhiteSpace( filePath1 ) ) throw new ArgumentNullException( nameof( filePath1 ) );
+        if ( string.IsNullOrWhiteSpace( filePath2 ) ) throw new ArgumentNullException( nameof( filePath2 ) );
+        if ( !File.Exists( filePath1 ) )
+        {
+            details = $"The '{filePath1}' file does not exist.";
+            return false;
+        }
+        if ( !File.Exists( filePath2 ) )
+        {
+            details = $"The '{filePath2}' file does not exist.";
+            return false;
+        }
+
+        string contents1 = File.ReadAllText( filePath1 ).TrimEnd( Environment.NewLine.ToCharArray() );
+        string contents2 = File.ReadAllText( filePath1 ).TrimEnd( Environment.NewLine.ToCharArray() );
+
+        if ( contents1.Equals( contents2, StringComparison.Ordinal ) )
+        {
+            details = $"'{filePath1}' equals {filePath2}";
+            return true;
+        }
+        else
+        {
+            details = $"The '{filePath1}' file is not equal to the '{filePath2}'.";
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// A <see cref="string"/> extension method that compressed files ignoring any differences in the
+    /// file endings because the compression process removed excess new lines from the end of the file.
+    /// </summary>
     /// <remarks>   2025-09-22. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>
@@ -319,7 +378,7 @@ public static partial class ExportExtensionsMethods
     /// <param name="encryptor">    The encryptor. </param>
     /// <param name="details">      [out] The details. </param>
     /// <returns>   True if it succeeds, false if it fails. </returns>
-    public static bool CompressedFileEqualsTo( this string filePath1, string filePath2, IScriptCompressor compressor,
+    public static bool CompressedFileEqualsIgnoreEnding( this string filePath1, string filePath2, IScriptCompressor compressor,
         IScriptEncryptor encryptor, out string details )
     {
         if ( compressor is null ) throw new ArgumentNullException( nameof( compressor ) );
@@ -327,15 +386,13 @@ public static partial class ExportExtensionsMethods
         if ( string.IsNullOrWhiteSpace( filePath1 ) ) throw new ArgumentNullException( nameof( filePath1 ) );
         if ( string.IsNullOrWhiteSpace( filePath2 ) ) throw new ArgumentNullException( nameof( filePath2 ) );
 
-        string outPath = Path.Combine( Path.GetTempPath(), nameof( ExportExtensionsMethods ) );
-        if ( !Directory.Exists( outPath ) )
-            _ = Directory.CreateDirectory( outPath );
+        string outPath = ExportExtensionsMethods.GetTempPath();
 
         string decompressedFile1 = Path.Combine( outPath, Path.GetFileName( filePath1 ) );
         string decompressedFile2 = Path.Combine( outPath, Path.GetFileName( filePath2 ) );
         filePath1.DecompressScriptFile( decompressedFile1, compressor, encryptor, true, false );
         filePath2.DecompressScriptFile( decompressedFile2, compressor, encryptor, true, false );
-        if ( decompressedFile1.FileEqualsTo( decompressedFile2, out details ) )
+        if ( decompressedFile1.CompareFilesIgnoreEnding( decompressedFile2, out details ) )
             return true;
         else
         {
