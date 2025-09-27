@@ -2,21 +2,49 @@
 
 [cc.isr.VI.Tsp.K2600.Ttm.MSTest] unit tests the Keithley 2600 source meter TTM functionality.
 
-# How to Use
+While tests can be run an any order, the sections below are listed by the order in which to run tests might be ran after making significant changes thus challenging changes commensurate with the hierarchical order of the software elements from the lowest to the highst level of abstraction.
 
-## Preeparing for testing
+# Contents
+
+- [Preparing the instrument for testing](#preparing_the_instrument_for_testing)
+  - [Meter Tests](#meter_tests)
+  - [Firmware Tests](#firmware_tests)
+
+<a name="preparing_the_instrument_for_testing"></a>
+# Preparing the instrument for testing
 
 1. Turn on the instrument;
 1. Validate the instrument settings resource name against the actual instrument IP address;
 1. Ping the instrument;
-    1. If has been observer, at least on a VM, that the instrument is found by the VISA resource manager only after the instrument is pinged once.
+    1. It has been observed, at least on a VM, that the instrument is found by the VISA resource manager only after the instrument is pinged successfully.
 
-## Running Tests
+<a name="meter_tests"></a>
+# Meter Tests
 
-When doing exploratory testing, for example, after new vendor implementation is installed, test must be best run in the following order:
+| Test Set    | Test Name               | Notes |
+|-------------|-------------------------|-------|
+| Meter Tests | 01. Session should open |       |
 
-1. Command Tests;
-1. Script Tests;
+
+<a name="contact_tests"></a>
+# Contact Tess
+
+| Test Set       | Test Name                                            | Notes |
+|----------------|------------------------------------------------------|-------|
+| Firmware Tests | 01. Session should open                              |       |
+|                | 02. Current should measure                          |       |
+|                | 03. Current should be measured multiple times        |       |
+|                | 04. TSP syntax should not fail                       |       |
+|                | 05. Meter value should reset                         |       |
+|                | 06. Cold resistance defaults should equal settings   |       |
+|                | 07. Initial resistance should reset                  |       |
+|                | 08. Final resistance should reset                    |       |
+|                | 09. Estimator should reset                           |       |
+|                | 10. Thermal transient defaults should equal settings |       |
+|                | 11. Thermal transient should reset                   |       |
+|                | 12. Framework should clear known state               |       |
+|                | 13. Measurement should be triggered                  |       |
+
 
 # Key Features
 

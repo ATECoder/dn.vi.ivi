@@ -101,10 +101,10 @@ public static partial class ScriptInfoExtensionsMethods
 
         if ( validate && (scriptFormat.HasFlag( ScriptFormats.Compressed ) || scriptFormat.HasFlag( ScriptFormats.Encrypted )) )
         {
-            string validationSource = scriptInfo.CompressScript( result, scriptFormat, false );
-            if ( source.Length != validationSource.Length )
-                throw new InvalidOperationException( $"The processed script source could not be validated; it's length {source.Length} is not the same as the length of the validation source {validationSource.Length}; " );
-            if ( !string.Equals( source, validationSource, StringComparison.Ordinal ) )
+            string validationSource = scriptInfo.DecompressScript( scriptInfo.CompressScript( result, scriptFormat, false ), false );
+            if ( result.Length != validationSource.Length )
+                throw new InvalidOperationException( $"The processed script source could not be validated; it's length {result.Length} is not the same as the length of the validation source {validationSource.Length}; " );
+            if ( !string.Equals( result, validationSource, StringComparison.Ordinal ) )
                 throw new InvalidOperationException( "The processed script source could not be validated; it is not equal to the validation source." );
         }
 

@@ -110,7 +110,14 @@ public static partial class SessionBaseExtensionMethods
                 System.IO.File.WriteAllText( filePath, scriptInfo.Compressor.CompressToBase64( System.IO.File.ReadAllText( trimmedFilePath ) ), System.Text.Encoding.Default );
 
                 if ( scriptInfo.DeployFileFormat.HasFlag( ScriptFormats.Encrypted ) )
+                {
+                    message = $"encrypting '{filePath}'\r\n\t\tto '{deployFilePath}'";
+                    if ( consoleOut )
+                        SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
+                    else
+                        SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
                     System.IO.File.WriteAllText( deployFilePath, scriptInfo.Encryptor.EncryptToBase64( System.IO.File.ReadAllText( filePath ) ), System.Text.Encoding.Default );
+                }
             }
         }
         else
@@ -224,6 +231,12 @@ public static partial class SessionBaseExtensionMethods
             SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
 
         session.ImportScript( scriptInfo.Title, trimmedFilePath, TimeSpan.Zero );
+
+        message = $"Running script '{scriptInfo.Title}'";
+        if ( consoleOut )
+            SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
+        else
+            SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
 
         // run the script to ensure the code works.
         session.RunScript( scriptInfo.Title, scriptInfo.VersionGetterElement );

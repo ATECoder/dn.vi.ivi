@@ -2,9 +2,24 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9396]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9401`]: https://www.github.com/atecoder/dn.vi.ivi
 
 Current IVI Visa Compatibility: 8.0.1.9391
+
+## [8.1.9401] - 2025-09-27
+- Device TSP
+  - Add compressor and encryptor to relevant import methods.
+  - Change decompress validation to compare the result with decomress(compress).
+- 2600 MS Test
+  - Add unit tests tot eh read-me file. 
+- 2600 TTM MS Test
+  - Add unit tests tot eh read-me file.
+
+## [8.1.9398] - 2025-09-24
+- TTM
+  - Rename latest, e.g., latest version, to present (e.g., present version).
+- Device TSP:
+  - Use ~cc.isr as a temporary folder.
 
 ## [8.1.9396] - 2025-09-22
 - Rename source and destination file arguments to input and output file arguments.

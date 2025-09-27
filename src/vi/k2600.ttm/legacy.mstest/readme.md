@@ -2,21 +2,38 @@
 
 [cc.isr.VI.Tsp.K2600.Ttm.Legacy.MSTest] unit tests the Keithley 2600 source meter TTM Legacy Driver functionality.
 
-# How to Use
+# Contents
 
-## Preeparing for testing
+  - [Preparing for testing](#preparing_for_testing)
+  - [Device Tests](#device_tests)
+  - [Contact Tests](#contact_tests)
+
+<a name="preparing_for_testing"></a>
+# Preparing for testing
 
 1. Turn on the instrument;
 1. Validate the instrument settings resource name against the actual instrument IP address;
 1. Ping the instrument;
-    1. If has been observer, at least on a VM, that the instrument is found by the VISA resource manager only after the instrument is pinged once.
+    1. It has been observed, at least on a VM, that the instrument is found by the VISA resource manager only after the instrument is pinged successfully.
 
-## Running Tests
+<a name="device_tests"></a>
+# Device Tests
 
-When doing exploratory testing, for example, after new vendor implementation is installed, test must be best run in the following order:
+| Test Set     | Test Name                         | Notes |
+|--------------|-----------------------------------|-------|
+| Device Tests | 01. Session should open           |       |
+|              | 02. Meter should initialize       |       |
+|              | 03. Meter should preset           |       |
+|              | 04. Measurements Should Configure |       |
+|              | 05. Measurement should trigger    |       |
+|              | 06. Trigger cycle should abort    |       |
 
-1. Command Tests;
-1. Script Tests;
+<a name="contact_tests"></a>
+# Contact Tess
+
+| Test Set      | Test Name                                | Notes |
+|---------------|------------------------------------------|-------|
+| Contact Tests | 01. Measurement should fail open contact |       |
 
 # Key Features
 
