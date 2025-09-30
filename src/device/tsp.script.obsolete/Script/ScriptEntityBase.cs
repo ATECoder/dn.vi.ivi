@@ -100,7 +100,7 @@ public abstract class ScriptEntityBase( FirmwareScriptBase firmwareScript, NodeE
     }
 
     /// <summary>
-    /// Queries the embedded firmware version from a remote node and saves it to
+    /// Queries the embedded firmware version from a remote node and adds it to
     /// <see cref="EmbeddedFirmwareVersion">the firmware version cache.</see>
     /// </summary>
     /// <remarks>   2024-09-05. </remarks>
@@ -118,7 +118,7 @@ public abstract class ScriptEntityBase( FirmwareScriptBase firmwareScript, NodeE
     }
 
     /// <summary>
-    /// Queries the embedded firmware version from a remote node and saves it to
+    /// Queries the embedded firmware version from a remote node and adds it to
     /// <see cref="EmbeddedFirmwareVersion">the firmware version cache.</see>
     /// </summary>
     /// <remarks>   2024-09-05. </remarks>
@@ -137,7 +137,7 @@ public abstract class ScriptEntityBase( FirmwareScriptBase firmwareScript, NodeE
     }
 
     /// <summary>
-    /// Queries the embedded firmware version from a remote node and saves it to
+    /// Queries the embedded firmware version from a remote node and adds it to
     /// <see cref="EmbeddedFirmwareVersion">the firmware version cache.</see>
     /// </summary>
     /// <remarks>   2024-09-05. </remarks>
@@ -158,7 +158,7 @@ public abstract class ScriptEntityBase( FirmwareScriptBase firmwareScript, NodeE
     }
 
     /// <summary>
-    /// Queries the embedded firmware version from a remote node and saves it to
+    /// Queries the embedded firmware version from a remote node and adds it to
     /// <see cref="EmbeddedFirmwareVersion">the firmware version cache.</see>
     /// </summary>
     /// <remarks>   2024-09-05. </remarks>
@@ -224,9 +224,9 @@ public abstract class ScriptEntityBase( FirmwareScriptBase firmwareScript, NodeE
     /// <value> True if the script was activated by running this script, false if not. </value>
     public bool Activated { get; set; }
 
-    /// <summary>   Gets or sets a value indicating whether this script is saved in the instrument catalog. </summary>
-    /// <value> True if this script is saved in the instrument catalog, false if not. </value>
-    public bool Saved { get; set; }
+    /// <summary>   Gets or sets a value indicating whether this script is embedded in the instrument catalog. </summary>
+    /// <value> True if this script is embedded in the instrument catalog, false if not. </value>
+    public bool Embedded { get; set; }
 
     /// <summary>
     /// Gets or sets a value indicating whether the script has a defined firmware version getter
@@ -265,12 +265,12 @@ public abstract class ScriptEntityBase( FirmwareScriptBase firmwareScript, NodeE
     /// <value> The last manager actions. </value>
     public string LastScriptManagerActions { get; set; } = string.Empty;
 
-    /// <summary>   Query if this object is save required. </summary>
+    /// <summary>   Query if this script needs to be embedded. </summary>
     /// <remarks>   2024-09-21. </remarks>
-    /// <returns>   True if save required, false if not. </returns>
-    public bool IsSaveRequired()
+    /// <returns>   True if embed is required, false if not. </returns>
+    public bool IsEmbedRequired()
     {
-        return !this.Saved || (this.FirmwareScript.SaveToNonVolatileMemory && this.LoadedAsByteCode);
+        return !this.Embedded || (this.FirmwareScript.SaveToNonVolatileMemory && this.LoadedAsByteCode);
     }
 
     #endregion

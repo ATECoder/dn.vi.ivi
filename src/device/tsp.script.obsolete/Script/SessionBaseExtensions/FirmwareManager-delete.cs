@@ -41,15 +41,15 @@ public static partial class FirmwareManager
     ///                                         subsystem</see>. </param>
     /// <param name="scriptName">               Name of the script. </param>
     /// <returns>   A Tuple. </returns>
-    public static bool DeleteSavedScriptCollectGarbage( this Pith.SessionBase? session, string scriptName )
+    public static bool DeleteEmbeddedScriptCollectGarbage( this Pith.SessionBase? session, string scriptName )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( scriptName is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
 
-        bool deleted = session.DeleteSavedScript( scriptName );
+        bool deleted = session.DeleteEmbeddedScript( scriptName );
 
         if ( !session.CollectGarbageQueryComplete() )
-            _ = session.TraceWarning( message: $"garbage collection incomplete (reply not '1') after deleting saved script {scriptName}" );
+            _ = session.TraceWarning( message: $"garbage collection incomplete (reply not '1') after deleting embedded script {scriptName}" );
 
         _ = session.TraceDeviceExceptionIfError( failureMessage: "ignoring error after deleting scripts." );
 
@@ -57,7 +57,7 @@ public static partial class FirmwareManager
     }
 
     /// <summary>
-    /// Deletes the <paramref scriptName="scriptName">specified</paramref> saved script. Also nulls
+    /// Deletes the <paramref scriptName="scriptName">specified</paramref> embedded script. Also nulls
     /// the script if delete command worked. Uses <see cref="SessionBase.IsNil(string)"/> to
     /// determine if script was deleted.
     /// </summary>
@@ -69,7 +69,7 @@ public static partial class FirmwareManager
     /// <param name="session">      The session. </param>
     /// <param name="scriptName">   Specifies the script name. </param>
     /// <returns>   A Tuple. </returns>
-    public static bool DeleteSavedScript( this Pith.SessionBase? session, string? scriptName )
+    public static bool DeleteEmbeddedScript( this Pith.SessionBase? session, string? scriptName )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( scriptName is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
@@ -103,36 +103,36 @@ public static partial class FirmwareManager
     /// <param name="node">                     Specifies the node entity. </param>
     /// <param name="scriptName">               Name of the script. </param>
     /// <returns>   <c>true</c> if the scripts deleted; otherwise <c>false</c>. </returns>
-    public static bool DeleteSavedScripts( this Pith.SessionBase? session, NodeEntityBase? node, string scriptName )
+    public static bool DeleteEmbeddedScripts( this Pith.SessionBase? session, NodeEntityBase? node, string scriptName )
     {
         if ( node is null ) throw new ArgumentNullException( nameof( node ) );
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( scriptName is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
 
-        bool deleted = session.DeleteSavedScript( node.Number, scriptName );
+        bool deleted = session.DeleteEmbeddedScript( node.Number, scriptName );
 
         if ( !session.CollectGarbageQueryComplete( node.Number ) )
-            _ = session.TraceWarning( message: $"garbage collection incomplete (reply not '1') after deleting saved script {scriptName} on node {node.Number}" );
+            _ = session.TraceWarning( message: $"garbage collection incomplete (reply not '1') after deleting embedded script {scriptName} on node {node.Number}" );
 
-        _ = session.TraceDeviceExceptionIfError( failureMessage: $"ignoring error after deleting saved user script {scriptName} on node {node.Number}" );
+        _ = session.TraceDeviceExceptionIfError( failureMessage: $"ignoring error after deleting embedded user script {scriptName} on node {node.Number}" );
 
         return deleted;
     }
 
 
     /// <summary>
-    /// Deletes the <paramref scriptName="scriptName">specified</paramref> saved script. Also nulls
+    /// Deletes the <paramref scriptName="scriptName">specified</paramref> embedded script. Also nulls
     /// the script if delete command worked. Then checks if the script was deleted and if so returns
     /// true. Otherwise, returns false.
     /// </summary>
-    /// <remarks>   Presumes the saved script exists. Waits for operation completion. </remarks>
+    /// <remarks>   Presumes the embedded script exists. Waits for operation completion. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>
     /// <param name="session">              The session. </param>
     /// <param name="nodeNumber">           Specifies the remote node number. </param>
     /// <param name="scriptName">           Specifies the script name. </param>
     /// <returns>   <c>true</c> if the script is nil; otherwise <c>false</c>. </returns>
-    public static bool DeleteSavedScript( this Pith.SessionBase? session, int nodeNumber, string? scriptName )
+    public static bool DeleteEmbeddedScript( this Pith.SessionBase? session, int nodeNumber, string? scriptName )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( scriptName is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
@@ -171,11 +171,11 @@ public static partial class FirmwareManager
     ///                             subsystem</see>. </param>
     /// <param name="scriptName">   Specifies the script name. </param>
     /// <returns>   <c>true</c> if the script is nil; otherwise <c>false</c>. </returns>
-    public static bool TryDeleteSavedScript( this Pith.SessionBase? session, string scriptName )
+    public static bool TryDeleteEmbeddedScript( this Pith.SessionBase? session, string scriptName )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( scriptName is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
-        return session.DeleteSavedScript( scriptName );
+        return session.DeleteEmbeddedScript( scriptName );
     }
 
     /// <summary>   Deletes the user scripts. </summary>
@@ -191,7 +191,7 @@ public static partial class FirmwareManager
 
         foreach ( ScriptEntityCollection scripts in scriptsCollection )
         {
-            string savedScripts = session.FetchSavedScriptsNames( scripts.Node ).SavedScripts;
+            string embeddedScripts = session.FetchEmbeddedScriptsNames( scripts.Node ).EmbeddedScripts;
             session.LastNodeNumber = scripts.Node.Number;
             Queue<ScriptEntityBase> queue = new( scripts.Reverse() );
             while ( queue.Count > 0 )
@@ -199,8 +199,8 @@ public static partial class FirmwareManager
                 ScriptEntityBase script = queue.Dequeue();
                 if ( !session.IsNil( script.Name ) )
                 {
-                    if ( savedScripts.Contains( script.Name, StringComparison.OrdinalIgnoreCase ) )
-                        _ = session.DeleteSavedScript( script.Name );
+                    if ( embeddedScripts.Contains( script.Name, StringComparison.OrdinalIgnoreCase ) )
+                        _ = session.DeleteEmbeddedScript( script.Name );
                     else
                         _ = session.NillScript( script.Name );
                 }

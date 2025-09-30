@@ -63,23 +63,23 @@ public static class Node
     /// <summary> Gets the connect rule command. Requires node number and value arguments. </summary>
     public const string ConnectRuleSetterWaitCommandFormat = "_G.node[{0}].channel.connectrule = {1} _G.waitcomplete()";
 
-    /// <summary>   Saved script getter command. </summary>
+    /// <summary>   Embedded script getter command. </summary>
     /// <remarks>   2025-04-12. </remarks>
     /// <param name="nodeNumber">   The node number. Must not be a controller node. </param>
     /// <returns>   A string. </returns>
-    public static string SavedScriptGetterCommand( int nodeNumber )
+    public static string EmbeddedScriptGetterCommand( int nodeNumber )
     {
         return string.Format( Syntax.Tsp.Node.ValueGetterWaitCommandFormat2, nodeNumber, Syntax.Tsp.Script.ScriptCatalogGetterCommand, "names" );
     }
 
-    /// <summary>   Returns a command for searching of the specified script on the node. </summary>
+    /// <summary>   Returns a command for searching of the specified embedded script on the node. </summary>
     /// <remarks>   2025-04-12. </remarks>
     /// <param name="scriptName">   Name of the script. </param>
     /// <param name="nodeNumber">   The node number. Must not be a controller node. </param>
     /// <returns>   The find script getter command. </returns>
-    public static string FindSavedScriptCommand( string scriptName, int nodeNumber )
+    public static string FindEmbeddedScriptCommand( string scriptName, int nodeNumber )
     {
-        string getterCommand = string.Format( Syntax.Tsp.Script.FindSavedScriptCommandFormat, scriptName );
+        string getterCommand = string.Format( Syntax.Tsp.Script.FindEmbeddedScriptCommandFormat, scriptName );
         return string.Format( Syntax.Tsp.Node.ValueGetterWaitCommandFormat2, nodeNumber, getterCommand, "exists" );
     }
 

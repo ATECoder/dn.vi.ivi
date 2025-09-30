@@ -5,7 +5,7 @@ namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
 public static partial class NodeMethods
 {
-    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that fetches saved scripts names. </summary>
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that fetches the names of the embedded scripts. </summary>
     /// <remarks>   2024-09-05. </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
     ///                                                 are null. </exception>
@@ -13,8 +13,8 @@ public static partial class NodeMethods
     ///                                                 the required range. </exception>
     /// <param name="session">      The session. </param>
     /// <param name="nodeNumber">   Specifies the subsystem node. </param>
-    /// <returns>   The saved scripts. </returns>
-    public static string FetchSavedScriptsNames( this Pith.SessionBase session, int nodeNumber )
+    /// <returns>   The names of the embedded scripts. </returns>
+    public static string FetchEmbeddedScriptsNames( this Pith.SessionBase session, int nodeNumber )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
 
@@ -25,16 +25,16 @@ public static partial class NodeMethods
 
         if ( controllerNodeNumber == nodeNumber )
         {
-            return session.FetchSavedScriptsNames();
+            return session.FetchEmbeddedScriptsNames();
         }
         else
         {
             session.LastNodeNumber = nodeNumber;
-            session.SetLastAction( $"fetching saved scripts from node {nodeNumber}" );
-            _ = session.WriteLine( Syntax.Tsp.Node.SavedScriptGetterCommand( nodeNumber ) );
+            session.SetLastAction( $"fetching embedded scripts from node {nodeNumber}" );
+            _ = session.WriteLine( Syntax.Tsp.Node.EmbeddedScriptGetterCommand( nodeNumber ) );
             _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay );
 
-            string savedNodScriptNames = session.ReadLineTrimEnd();
+            string embeddedNodeScriptNames = session.ReadLineTrimEnd();
 
             // throw if device error occurred
             session.ThrowDeviceExceptionIfError();
@@ -46,33 +46,33 @@ public static partial class NodeMethods
             // throw if device error occurred
             session.ThrowDeviceExceptionIfError();
 
-            return savedNodScriptNames;
+            return embeddedNodeScriptNames;
         }
     }
 
-    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that all saved. </summary>
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that queries if all scripts are embedded. </summary>
     /// <remarks>   2025-04-25. </remarks>
     /// <param name="session">      The session. </param>
     /// <param name="nodeNumber">   Specifies the subsystem node. </param>
     /// <param name="scripts">      The scripts. </param>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
-    public static bool AllSaved( this Pith.SessionBase session, int nodeNumber, ScriptInfoBaseCollection<ScriptInfo> scripts )
+    /// <returns>   True if all scripts are embedded, false if it fails. </returns>
+    public static bool AllEmbedded( this Pith.SessionBase session, int nodeNumber, ScriptInfoBaseCollection<ScriptInfo> scripts )
     {
-        string scriptNames = session.FetchSavedScriptsNames( nodeNumber );
+        string scriptNames = session.FetchEmbeddedScriptsNames( nodeNumber );
         bool affirmative = true;
         foreach ( ScriptInfo script in scripts )
         {
             affirmative = scriptNames.Contains( $"{script.Title}," );
             if ( !affirmative )
             {
-                session.TraceLastAction( $"\r\n\tscript {script.Title} was not saved;. " );
+                session.TraceLastAction( $"\r\n\tscript {script.Title} is not embedded;. " );
                 break;
             }
         }
         return affirmative;
     }
 
-    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that all saved. </summary>
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that checks if all scripts are embedded on the specified node. </summary>
     /// <remarks>   2025-04-25. </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
     ///                                                 are null. </exception>
@@ -80,8 +80,8 @@ public static partial class NodeMethods
     ///                                                 invalid. </exception>
     /// <param name="session">  The session. </param>
     /// <param name="scripts">  The scripts. </param>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
-    public static bool AllSaved( this Pith.SessionBase session, NodesScriptsCollection scripts )
+    /// <returns>   True if all scripts are embedded, false if it fails. </returns>
+    public static bool AllEmbedded( this Pith.SessionBase session, NodesScriptsCollection scripts )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
@@ -93,8 +93,8 @@ public static partial class NodeMethods
             if ( scriptInfoCollection is not null )
             {
                 affirmative = (scriptInfoCollection.NodeNumber == 0) || (scriptInfoCollection.NodeNumber == session.QueryControllerNodeNumber())
-                    ? session.AllSaved( scriptInfoCollection )
-                    : session.AllSaved( scriptInfoCollection.NodeNumber, scriptInfoCollection );
+                    ? session.AllEmbedded( scriptInfoCollection )
+                    : session.AllEmbedded( scriptInfoCollection.NodeNumber, scriptInfoCollection );
                 if ( !affirmative ) break;
 
             }
@@ -104,7 +104,8 @@ public static partial class NodeMethods
 
 
     /// <summary>
-    /// A <see cref="Pith.SessionBase"/> extension method that query if 'session' is saved script.
+    /// A <see cref="Pith.SessionBase"/> extension method that query if the script is included in the
+    /// list of embedded scripts on the node.
     /// </summary>
     /// <remarks>   2025-04-12. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
@@ -112,8 +113,8 @@ public static partial class NodeMethods
     /// <param name="session">      The session. </param>
     /// <param name="scriptName">   Name of the script. </param>
     /// <param name="nodeNumber">   Specifies the subsystem node. </param>
-    /// <returns>   True if saved script, false if not. </returns>
-    public static bool IsSavedScript( this SessionBase session, string scriptName, int nodeNumber )
+    /// <returns>   True if the script is embedded, false if not. </returns>
+    public static bool IsScriptEmbedded( this SessionBase session, string scriptName, int nodeNumber )
     {
         if ( string.IsNullOrWhiteSpace( scriptName ) )
             throw new ArgumentNullException( nameof( scriptName ) );
@@ -122,17 +123,20 @@ public static partial class NodeMethods
 
         if ( controllerNodeNumber == nodeNumber )
         {
-            return session.IsSavedScript( scriptName );
+            return session.IsScriptEmbedded( scriptName );
         }
         else
         {
-            string findCommand = Syntax.Tsp.Node.FindSavedScriptCommand( scriptName, nodeNumber );
+            string findCommand = Syntax.Tsp.Node.FindEmbeddedScriptCommand( scriptName, nodeNumber );
             string reply = session.QueryTrimEnd( findCommand );
             return SessionBase.EqualsTrue( reply );
         }
     }
 
-    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that removes the saved script. </summary>
+    /// <summary>
+    /// A <see cref="Pith.SessionBase"/> extension method that removes the script fo the catalog of
+    /// embedded scripts on the node and null the script.
+    /// </summary>
     /// <remarks>   2025-04-21. </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
     ///                                                 are null. </exception>
@@ -141,8 +145,11 @@ public static partial class NodeMethods
     /// <param name="session">      The session. </param>
     /// <param name="nodeNumber">   Specifies the subsystem node. </param>
     /// <param name="scriptName">   Name of the script. </param>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
-    public static void RemoveSavedScript( this Pith.SessionBase session, int nodeNumber, string? scriptName )
+    ///
+    /// ### <returns>
+    /// True if the script is no longer embedded on the node, false if it fails.
+    /// </returns>
+    public static void DeleteEmbeddedScript( this Pith.SessionBase session, int nodeNumber, string? scriptName )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
@@ -154,7 +161,7 @@ public static partial class NodeMethods
         session.SetLastAction( $"enabling service request on operation completion" );
         session.EnableServiceRequestOnOperationCompletion();
 
-        session.SetLastAction( $"deleting script '{scriptName}'" );
+        session.SetLastAction( $"removing script '{scriptName}'" );
         _ = session.ExecuteCommandQueryComplete( nodeNumber, $"script.delete('{scriptName}')" );
 
         _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay + session.StatusReadDelay );
@@ -171,7 +178,40 @@ public static partial class NodeMethods
         session.ThrowDeviceExceptionIfError();
     }
 
-    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that saves a script. </summary>
+    /// <summary>   A Pith.SessionBase extension method that removes the embedded script from thecatalog of embedded scripts on the node.. </summary>
+    /// <remarks>   2025-09-29. </remarks>
+    /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
+    ///                                                 are null. </exception>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <param name="session">      The session. </param>
+    /// <param name="nodeNumber">   Specifies the subsystem node. </param>
+    /// <param name="scriptName">   Name of the script. </param>
+    public static void RemoveEmbeddedScript( this Pith.SessionBase session, int nodeNumber, string? scriptName )
+    {
+        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
+        if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
+        if ( scriptName is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
+
+        session.LastNodeNumber = nodeNumber;
+
+        // TODO: Do we need to enable completion detection on the node?
+        session.SetLastAction( $"enabling service request on operation completion" );
+        session.EnableServiceRequestOnOperationCompletion();
+
+        session.SetLastAction( $"removing script '{scriptName}'" );
+        _ = session.ExecuteCommandQueryComplete( nodeNumber, $"script.delete('{scriptName}')" );
+
+        _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay + session.StatusReadDelay );
+
+        string reply = session.ReadLineTrimEnd();
+        if ( reply != cc.isr.VI.Syntax.ScpiSyntax.OperationCompletedValue )
+            throw new InvalidOperationException( $"{session.ResourceNameNodeCaption} operation complete query reply '{reply}' should be '1';. " );
+
+        session.ThrowDeviceExceptionIfError();
+    }
+
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that embeds a script on the node. </summary>
     /// <remarks>   2025-04-27. </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
     ///                                                 are null. </exception>
@@ -180,12 +220,12 @@ public static partial class NodeMethods
     /// <param name="session">      The session. </param>
     /// <param name="nodeNumber">   Specifies the subsystem node. </param>
     /// <param name="scriptName">   Name of the script. </param>
-    public static void SaveScript( this Pith.SessionBase session, int nodeNumber, string scriptName )
+    public static void EmbedScript( this Pith.SessionBase session, int nodeNumber, string scriptName )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
         if ( scriptName is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
-        session.SetLastAction( $"saving script '{scriptName}' on node {nodeNumber}" );
+        session.SetLastAction( $"embedding script '{scriptName}' on node {nodeNumber}" );
         _ = session.ExecuteCommandWaitComplete( nodeNumber, $"script.user.scripts.{scriptName}.save() {cc.isr.VI.Syntax.Tsp.Lua.WaitCommand} " );
 
         session.ThrowDeviceExceptionIfError();
@@ -195,8 +235,8 @@ public static partial class NodeMethods
 
         session.ThrowDeviceExceptionIfError();
 
-        if ( !session.IsSavedScript( scriptName, nodeNumber ) )
-            throw new InvalidOperationException( $"The script {scriptName} failed to be saved on node {nodeNumber}." );
+        if ( !session.IsScriptEmbedded( scriptName, nodeNumber ) )
+            throw new InvalidOperationException( $"The script {scriptName} failed to embed on node {nodeNumber}." );
 
     }
 }

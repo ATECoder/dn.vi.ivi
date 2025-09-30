@@ -2,9 +2,13 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9401`]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9404]: https://www.github.com/atecoder/dn.vi.ivi
 
 Current IVI Visa Compatibility: 8.0.1.9391
+
+## [8.1.9404] - 2025-09-30
+- Device TSP: 
+  - Rename Save to NVM to Embed.
 
 ## [8.1.9401] - 2025-09-27
 - Device TSP
@@ -191,14 +195,14 @@ Current IVI Visa Compatibility: 8.0.1.9391
 
 ## [8.1.9272] - 2025-05-21
 - Device Tsp Script Session Base Extension
-  - Delete saved scripts: 
+  - Delete embedded scripts: 
     - display deleting even if no scripts found.
 	- skip and do not count nil and non ISR scripts.
 	- return the number of removed scripts.
 
 ## [8.1.9271] - 2025-05-20
 Pith:
-  - Tsp.Syntax.Script: Update the getter command for the saved scripts to end with a script name rather than a comma.
+  - Tsp.Syntax.Script: Update the getter command for the embedded scripts to end with a script name rather than a comma.
 
 ## [8.1.9270] - 2025-05-19
 - K2600 TTM:
@@ -242,7 +246,7 @@ Pith:
     - Add Resource File exists method.
 	- Handle an empty script framework ID for common resources to multiple frameworks.
   - Session Base Extensions.
-    - Add Delete Saved Scripts.
+    - Add Delete embedded scripts.
 	- Add toggling auto run when deleting scripts.
 
 ## [8.1.9262] - 2025-05-11
@@ -275,14 +279,14 @@ Pith:
 - Session Base Extensions
   - Deploy: Add query of script version.
   - Read State: run the script if the version getter is not found.
-  - Export: Add export saved scripts.
+  - Export: Add export embedded scripts.
 
 ## [8.1.9258] - 2025-05-07
 - Device Tsp Script Namespace
   - ScriptInfo
     - Initialize string values to empty.
   - Deploy:
-    - add reading status of scripts and saved scripts.
+    - add reading status of scripts and embedded scripts.
 
 ## [8.1.9257] - 2025-05-06
 - Write all text using default encoding.
@@ -391,7 +395,7 @@ Pith:
 - Pith.SessionBase
   - Output garbage collection message tot he debug screen only.
 - Device Tsp Script Namespace Session Base Extensions:
-  - Save Script: Add option to skip if already saved.
+  - Embed Script: Add option to skip if already embedded.
   - Display Line: add a generic method that sets the cursor and pads the text.
 
 ## [8.1.9244] - 2025-04-23
@@ -430,7 +434,7 @@ Pith:
 
 ## [8.1.9239] - 2025-04-18
 - Device Tsp Script namespace:
-  - Add a Load and Save to NVM using a reader source.
+  - Add a Load and Embed in NVM using a reader source.
   - Trim and Compress: Compresses to the trimmed file path appended with a 'c'.
 
 ## [8.1.9238] - 2025-04-17

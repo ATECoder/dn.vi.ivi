@@ -46,9 +46,9 @@ public class FirmwareInfo
     /// <value> True if scripts must be loaded, false if not. </value>
     public bool MustLoad { get; set; }
 
-    /// <summary>   Gets or sets a value indicating that not all loaded scripts were saved. </summary>
-    /// <value> True if not all loaded scripts were saves, false if not. </value>
-    public bool MustSave { get; set; }
+    /// <summary>   Gets or sets a value indicating that not all loaded scripts were embedded. </summary>
+    /// <value> True if not all loaded scripts were embedded, false if not. </value>
+    public bool MustEmbed { get; set; }
 
     /// <summary>   Gets or sets a value indicating whether or not the instrument was registered. </summary>
     /// <value> True if the instrument was registered; otherwise, false. </value>
@@ -88,7 +88,7 @@ public class FirmwareInfo
         string? nextVersion = null;
         bool mayDelete = false;
         bool mustLoad = false;
-        bool mustSave = false;
+        bool mustEmbed = false;
         bool? registered = false;
         bool? certified = null;
         string statusMessage = string.Empty;
@@ -118,8 +118,8 @@ public class FirmwareInfo
             // allow deleting if any firmware exists.
             mayDelete = embeddedScripts.MayDelete;
 
-            // must saving if all script loaded but not all saved.
-            mustSave = embeddedScripts.MustSave;
+            // must embed if all script loaded but not all are embedded.
+            mustEmbed = embeddedScripts.MustEmbed;
 
             ScriptInfo? supportScriptInfo = null;
             foreach ( ScriptInfo scriptInfo in embeddedScripts )
@@ -212,10 +212,10 @@ public class FirmwareInfo
                 statusMessage = "Load firmware";
             }
 
-            string savedScriptNames = embeddedScripts.GetSavedScriptsNames();
-            if ( !string.IsNullOrWhiteSpace( savedScriptNames ) )
+            string embeddedScriptNames = embeddedScripts.GetEmbeddedScriptsNames();
+            if ( !string.IsNullOrWhiteSpace( embeddedScriptNames ) )
             {
-                _ = statusBuilder.AppendLine( $"The following scripts are in non-volatile memory: {savedScriptNames}" );
+                _ = statusBuilder.AppendLine( $"The following scripts are in non-volatile memory: {embeddedScriptNames}" );
             }
         }
 
@@ -225,7 +225,7 @@ public class FirmwareInfo
             StatusDetails = statusBuilder.ToString().TrimEndNewLine(),
             MustLoad = mustLoad,
             MayDelete = mayDelete,
-            MustSave = mustSave,
+            MustEmbed = mustEmbed,
             Registered = registered,
             Certified = certified,
             FirmwareStatus = firmwareStatus,
@@ -252,7 +252,7 @@ public class FirmwareInfo
         _ = sb.AppendLine( $" Embedded: {this.EmbeddedVersion ?? "Unknown"}." );
         _ = sb.AppendLine( $"May delete, i.e., any script is loaded: {this.MayDelete}." );
         _ = sb.AppendLine( $" Must load, i.e., not all scripts loaded: {this.MustLoad}." );
-        _ = sb.AppendLine( $" Must save, i.e., not all loaded scripts were saved: {this.MustSave}." );
+        _ = sb.AppendLine( $" Must embed, i.e., not all loaded scripts were embedded: {this.MustEmbed}." );
         _ = sb.AppendLine( $"Registered: {(this.Registered.HasValue ? this.Registered.Value ? "True" : "False" : "Unknown")}." );
         _ = sb.AppendLine( $" Certified: {(this.Certified.HasValue ? this.Certified.Value ? "True" : "False" : "Unknown")}." );
         _ = sb.Append( $"Firmware status is '{this.FirmwareStatus}', i.e., {this.FirmwareStatus.Description()}" );

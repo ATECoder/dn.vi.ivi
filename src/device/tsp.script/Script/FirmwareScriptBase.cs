@@ -81,10 +81,10 @@ public abstract class FirmwareScriptBase
     ///                                             null. </exception>
     /// <param name="session">      The session. </param>
     /// <param name="nodeNumber">   The node number. </param>
-    /// <returns>   True if the script was saved, false if it fails. </returns>
-    public bool IsSaved( Pith.SessionBase session, int nodeNumber )
+    /// <returns>   True if the script was embedded, false if it fails. </returns>
+    public bool IsEmbedded( Pith.SessionBase session, int nodeNumber )
     {
-        return session != null && session.IsSavedScript( this.Name, nodeNumber );
+        return session != null && session.IsEmbeddedScript( this.Name, nodeNumber );
     }
 
     #endregion
@@ -258,20 +258,20 @@ public abstract class FirmwareScriptBase
     }
 
     /// <summary>
-    /// Gets or sets the condition indicating if the script was already saved to file. This property
+    /// Gets or sets the condition indicating if the script was already exported to file. This property
     /// is set <c>true</c> if the script source is already in the correct format so no new file needs
-    /// to be saved.
+    /// to be embedded.
     /// </summary>
-    /// <value> The saved to file. </value>
-    public bool SavedToFile { get; set; }
+    /// <value> True if the script was exported to file. </value>
+    public bool ExportedToFile { get; set; }
 
     /// <summary>
-    /// Gets or sets a value indicating whether the user script source should be saved to non-
+    /// Gets or sets a value indicating whether the user script source should be embedded to non-
     /// volatile catalog of user scripts. The Deploy format tells us if the script should be
     /// converted to byte code before saving.
     /// </summary>
-    /// <value> True if this user script is to be saved as a binary user script, false if not. </value>
-    public bool SaveToNonVolatileMemory { get; set; }
+    /// <value> True if this user script is to be embedded as a binary user script, false if not. </value>
+    public bool EmbedToNonVolatileMemory { get; set; }
 
     /// <summary>   Gets a value indicating whether the convert to byte code. </summary>
     /// <value> True if convert to byte code, false if not. </value>
@@ -387,10 +387,10 @@ public abstract class FirmwareScriptBase
     #region " script specifications "
 
     /// <summary>
-    /// Gets the sentinel indicating if this script is saved as byte code. This is determined when setting the
+    /// Gets the sentinel indicating if this script is embedded as byte code. This is determined when setting the
     /// source.
     /// </summary>
-    /// <value> <c>true</c> if this script is saved as byte code; otherwise, <c>false</c>. </value>
+    /// <value> <c>true</c> if this script is embedded as byte code; otherwise, <c>false</c>. </value>
     public bool IsByteCodeScript { get; private set; }
 
     /// <summary>   Gets or sets the sentinel indicating if this script needs to be auto executed. </summary>
@@ -445,8 +445,8 @@ public abstract class FirmwareScriptBase
         this._source = source;
         this.IsByteCodeScript = isByteCodeScript;
 
-        // tag file as saved if source format and file format match.
-        this.SavedToFile = sourceFormat == this.DeployFileFormat;
+        // tag file as embedded if source format and file format match.
+        this.ExportedToFile = sourceFormat == this.DeployFileFormat;
         return sourceFormat;
     }
 
@@ -465,7 +465,7 @@ public abstract class FirmwareScriptBase
             {
                 this._source = value;
                 this.IsByteCodeScript = false;
-                this.SavedToFile = true;
+                this.ExportedToFile = true;
             }
             else
                 _ = this.ParseSource( value );
@@ -571,7 +571,7 @@ public abstract class FirmwareScriptBase
         tspFile.Write( source );
     }
 
-    /// <summary>   Reads the scripts, parses them and saves them to file. </summary>
+    /// <summary>   Reads the scripts, parses them and exports them to file. </summary>
     /// <remarks>   2024-09-05. </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
     ///                                                 are null. </exception>
@@ -608,7 +608,7 @@ public abstract class FirmwareScriptBase
         }
     }
 
-    /// <summary>   Reads the scripts, parses them and saves them to file. </summary>
+    /// <summary>   Reads the scripts, parses them and exports them to file. </summary>
     /// <remarks>   2024-09-05. </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
     ///                                                 are null. </exception>

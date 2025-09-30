@@ -37,7 +37,7 @@ public static partial class FirmwareManager
         if ( script.FirmwareScript.isByteCodeScript || (!session.IsNil( script.Name ) && session.isByteCodeScript( script ).GetValueOrDefault( false )) )
         {
             script.Loaded = false;
-            script.Saved = false;
+            script.Embedded = false;
             script.Activated = false;
             string tempName = "isr_temp";
             try
@@ -108,7 +108,7 @@ public static partial class FirmwareManager
         // copy it (upload) from the controller to the remote node.
         else if ( !UploadScriptCopy( statusSubsystem, script ) )
         {
-            script.Saved = false;
+            script.Embedded = false;
             script.Activated = false;
             affirmative = false;
         }

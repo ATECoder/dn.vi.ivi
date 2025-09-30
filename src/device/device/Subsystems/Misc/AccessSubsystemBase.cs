@@ -141,7 +141,7 @@ public abstract partial class AccessSubsystemBase( StatusSubsystemBase statusSub
     /// <summary>   Queries if the connected instrument registration is cached in the connected instrument. </summary>
     /// <remarks>   2025-06-02. </remarks>
     /// <param name="details">      [out] The details. </param>
-    /// <returns>   <c>true</c> if the instrument registration code is saved in the instrument user string. </returns>
+    /// <returns>   <c>true</c> if the instrument registration code is cached in the instrument user string. </returns>
     public abstract bool IsRegistrationCached( out string details );
 
     /// <summary>   Validates the cached certification value. </summary>
@@ -152,7 +152,7 @@ public abstract partial class AccessSubsystemBase( StatusSubsystemBase statusSub
 
     /// <summary>   Queries if the connected instrument certification cached in the connected instrument. </summary>
     /// <remarks>   2025-06-02. </remarks>
-    /// <returns>   <c>true</c> if the instrument certification code is saved in the instrument user string. </returns>
+    /// <returns>   <c>true</c> if the instrument certification code is cached in the instrument user string. </returns>
     public abstract bool IsCertificationCached( out string details );
 
     /// <summary>   Reads certification codes. </summary>

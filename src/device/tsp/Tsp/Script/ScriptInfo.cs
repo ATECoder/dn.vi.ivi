@@ -27,6 +27,7 @@ public class ScriptInfo
         this.Title = script.Title;
         this.Encryptor = script.Encryptor;
         this.Compressor = script.Compressor;
+        this.EmbedAsByteCode = script.EmbedAsByteCode;
         this.IsAutoexec = script.IsAutoexec;
         this.IsEncrypted = script.IsEncrypted;
         this.IsPrimary = script.IsPrimary;
@@ -221,6 +222,11 @@ public class ScriptInfo
     [Description( "Indicates whether this script is encrypted [false]" )]
     public virtual bool IsEncrypted { get; set; } = false;
 
+    /// <summary>   Indicates whether this script is to be embedded as byte code [true]. </summary>
+    /// <value> True if the script is to be embedded as byte code, false if not. </value>
+    [Description( "Indicates whether this script is to be embedded as byte code [true]" )]
+    public virtual bool EmbedAsByteCode { get; set; } = true;
+
     /// <summary>   Gets or sets the title of the script. </summary>
     /// <value> The name and the file title of the script. </value>
     [Description( "The name and the file title of the script []" )]
@@ -273,6 +279,42 @@ public class ScriptInfo
     /// <value> The deploy file format. </value>
     public virtual ScriptFormats DeployFileFormat { get; set; } = ScriptFormats.None;
 
+    /// <summary>   Gets or sets the Version Getter function of the script. </summary>
+    /// <value> The version getter function of the script. </value>
+    [Description( "The version getter method of the script []" )]
+    public virtual string VersionGetter { get; set; } = string.Empty;
+
+    /// <summary>   The version getter element the script [_G.isr_ttm_autoexec.getVersion]. </summary>
+    /// <value> The version getter element. </value>
+    [Description( "The version getter method object of the script []" )]
+    public virtual string VersionGetterElement => string.IsNullOrWhiteSpace( this.VersionGetter ) ? string.Empty : this.VersionGetter.TrimEnd( ['(', ')'] );
+
+    /// <summary>
+    /// The name of a pre-requisite script for this script.
+    /// </summary>
+    /// <value> The name of the require chunk. </value>
+    [Description( "The name of a pre-requisite script for this script []" )]
+    public virtual string RequireChunkName { get; set; } = string.Empty;
+
+    /// <summary>
+    /// The name of this scrip as would be required independent scripts.
+    /// </summary>
+    /// <value> The name of the required chunk. </value>
+    [Description( "The name of this scrip as would be required independent scripts []" )]
+    public virtual string RequiredChunkName { get; set; } = string.Empty;
+
+    /// <summary>   Gets or sets the script status. </summary>
+    /// <value> The script status. </value>
+    public virtual ScriptStatuses ScriptStatus { get; set; } = ScriptStatuses.Unknown;
+
+    /// <summary>   Gets or sets the version status. </summary>
+    /// <value> The version status. </value>
+    public virtual FirmwareVersionStatus VersionStatus { get; set; } = FirmwareVersionStatus.Unknown;
+
+    #endregion
+
+    #region " file name builders "
+
     /// <summary>   Builds the deploy file title. </summary>
     /// <remarks>   2025-04-15. </remarks>
     /// <param name="modelFamily">          Information describing the version. </param>
@@ -316,38 +358,6 @@ public class ScriptInfo
         return this.BuildDeployFileName( versionInfo.ModelFamily, versionInfo.FirmwareVersion.Major.ToString( System.Globalization.CultureInfo.CurrentCulture ) );
     }
 
-    /// <summary>   Gets or sets the Version Getter function of the script. </summary>
-    /// <value> The version getter function of the script. </value>
-    [Description( "The version getter method of the script []" )]
-    public virtual string VersionGetter { get; set; } = string.Empty;
-
-    /// <summary>   The version getter element the script [_G.isr_ttm_autoexec.getVersion]. </summary>
-    /// <value> The version getter element. </value>
-    [Description( "The version getter method object of the script []" )]
-    public virtual string VersionGetterElement => string.IsNullOrWhiteSpace( this.VersionGetter ) ? string.Empty : this.VersionGetter.TrimEnd( ['(', ')'] );
-
-    /// <summary>
-    /// The name of a pre-requisite script for this script.
-    /// </summary>
-    /// <value> The name of the require chunk. </value>
-    [Description( "The name of a pre-requisite script for this script []" )]
-    public virtual string RequireChunkName { get; set; } = string.Empty;
-
-    /// <summary>
-    /// The name of this scrip as would be required independent scripts.
-    /// </summary>
-    /// <value> The name of the required chunk. </value>
-    [Description( "The name of this scrip as would be required independent scripts []" )]
-    public virtual string RequiredChunkName { get; set; } = string.Empty;
-
-    /// <summary>   Gets or sets the script status. </summary>
-    /// <value> The script status. </value>
-    public virtual ScriptStatuses ScriptStatus { get; set; } = ScriptStatuses.Unknown;
-
-    /// <summary>   Gets or sets the version status. </summary>
-    /// <value> The version status. </value>
-    public virtual FirmwareVersionStatus VersionStatus { get; set; } = FirmwareVersionStatus.Unknown;
-
     #endregion
 
     #region " status report "
@@ -384,10 +394,10 @@ public class ScriptInfo
             else
                 _ = builder.AppendLine( $"\tNot activated." );
 
-            if ( ScriptStatuses.Saved == (this.ScriptStatus & ScriptStatuses.Saved) )
-                _ = builder.AppendLine( $"\tSaved." );
+            if ( ScriptStatuses.Embedded == (this.ScriptStatus & ScriptStatuses.Embedded) )
+                _ = builder.AppendLine( $"\tEmbedded." );
             else
-                _ = builder.AppendLine( $"\tNot saved." );
+                _ = builder.AppendLine( $"\tNot embedded." );
         }
         else
             _ = builder.AppendLine( $"\tNot loaded." );
@@ -610,15 +620,15 @@ public class ScriptInfoBaseCollection<TItem> : System.Collections.ObjectModel.Ke
         return builder.ToString().TrimEndNewLine();
     }
 
-    /// <summary>   Gets saved scripts names. </summary>
+    /// <summary>   Gets embedded scripts names. </summary>
     /// <remarks>   2025-04-30. </remarks>
-    /// <returns>   The saved scripts names. </returns>
-    public string GetSavedScriptsNames()
+    /// <returns>   The embedded scripts names. </returns>
+    public string GetEmbeddedScriptsNames()
     {
         System.Text.StringBuilder builder = new();
         foreach ( ScriptInfo script in this.Items )
         {
-            if ( ScriptStatuses.Saved == (script.ScriptStatus & ScriptStatuses.Saved) )
+            if ( ScriptStatuses.Embedded == (script.ScriptStatus & ScriptStatuses.Embedded) )
             {
                 if ( builder.Length > 0 )
                     _ = builder.Append( ", " );
@@ -692,25 +702,25 @@ public class ScriptInfoBaseCollection<TItem> : System.Collections.ObjectModel.Ke
         return false;
     }
 
-    /// <summary>   Determines if we can any saved. </summary>
+    /// <summary>   Determines if any script is embedded. </summary>
     /// <remarks>   2025-04-30. </remarks>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
-    public bool AnySaved()
+    /// <returns>   True if one or more scripts are embedded, false if it fails. </returns>
+    public bool AnyEmbedded()
     {
         foreach ( ScriptInfo script in this.Items )
         {
             if ( !string.IsNullOrWhiteSpace( script.Title ) )
             {
-                if ( ScriptStatuses.Saved == (script.ScriptStatus & ScriptStatuses.Saved) )
+                if ( ScriptStatuses.Embedded == (script.ScriptStatus & ScriptStatuses.Embedded) )
                     return true;
             }
         }
         return false;
     }
 
-    /// <summary>   Gets a value indicating whether all was saved. </summary>
-    /// <value> True if all saved, false if not. </value>
-    public bool AllSaved
+    /// <summary>   Gets a value indicating whether all scripts are embedded. </summary>
+    /// <value> True if all scripts are embedded, false if not. </value>
+    public bool AllEmbedded
     {
         get
         {
@@ -718,7 +728,7 @@ public class ScriptInfoBaseCollection<TItem> : System.Collections.ObjectModel.Ke
             {
                 if ( !string.IsNullOrWhiteSpace( script.Title ) )
                 {
-                    if ( ScriptStatuses.Saved != (script.ScriptStatus & ScriptStatuses.Saved) )
+                    if ( ScriptStatuses.Embedded != (script.ScriptStatus & ScriptStatuses.Embedded) )
                         return false;
                 }
             }
@@ -734,9 +744,9 @@ public class ScriptInfoBaseCollection<TItem> : System.Collections.ObjectModel.Ke
     /// <value> True if we must load, false if not. </value>
     public bool MustLoad => !this.AllLoaded();
 
-    /// <summary>   Gets a value indicating whether one or more scripts must be saved. </summary>
-    /// <value> True if we must save, false if not. </value>
-    public bool MustSave => this.AnyLoaded() && !this.AllSaved;
+    /// <summary>   Gets a value indicating whether one or more scripts must be embedded. </summary>
+    /// <value> True if we must embed, false if not. </value>
+    public bool MustEmbed => this.AnyLoaded() && !this.AllEmbedded;
 
     #endregion
 }
@@ -825,27 +835,27 @@ public class NodesScriptsCollection : Dictionary<int, ScriptInfoCollection>
         return false;
     }
 
-    /// <summary>   Determines if we can any saved. </summary>
+    /// <summary>   Determines if we any script is embedded. </summary>
     /// <remarks>   2025-04-30. </remarks>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
-    public bool AnySaved()
+    /// <returns>   True if one or more scripts are embedded, false if it fails. </returns>
+    public bool AnyEmbedded()
     {
         foreach ( ScriptInfoCollection scriptInfoCollection in this.Values )
         {
-            if ( scriptInfoCollection.AnySaved() )
+            if ( scriptInfoCollection.AnyEmbedded() )
                 return true;
         }
         return false;
     }
 
-    /// <summary>   Determines if we can all saved. </summary>
+    /// <summary>   Determines if we can all scripts are embedded. </summary>
     /// <remarks>   2025-04-30. </remarks>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
-    public bool AllSaved()
+    /// <returns>   True if all scripts are embedded, false if it fails. </returns>
+    public bool AllEmbedded()
     {
         foreach ( ScriptInfoCollection scriptInfoCollection in this.Values )
         {
-            if ( !scriptInfoCollection.AllSaved )
+            if ( !scriptInfoCollection.AllEmbedded )
                 return false;
         }
         return true;
@@ -859,9 +869,9 @@ public class NodesScriptsCollection : Dictionary<int, ScriptInfoCollection>
     /// <value> True if we must load, false if not. </value>
     public bool MustLoad => !this.AllLoaded();
 
-    /// <summary>   Gets a value indicating whether one or more scripts must be saved. </summary>
-    /// <value> True if we must save, false if not. </value>
-    public bool MustSave => this.AnyLoaded() && !this.AllSaved();
+    /// <summary>   Gets a value indicating whether one or more scripts must be embedded. </summary>
+    /// <value> True if we must embed, false if not. </value>
+    public bool MustEmbed => this.AnyLoaded() && !this.AllEmbedded();
 
     #endregion
 }

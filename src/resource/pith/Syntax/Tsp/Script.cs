@@ -47,12 +47,12 @@ public static class Script
     /// </summary>
     public const string ScriptCatalogGetterCommand = "local names for name in _G.script.user.catalog() do if names then names = names .. ',' .. name else names = name end end";
 
-    /// <summary>   (Immutable) the saved script find command format. </summary>
-    public const string FindSavedScriptCommandFormat = "local exists=false for name in _G.script.user.catalog() do exists = (name=='{0}') if exists then break end end";
+    /// <summary>   (Immutable) the embedded script find command format. </summary>
+    public const string FindEmbeddedScriptCommandFormat = "local exists=false for name in _G.script.user.catalog() do exists = (name=='{0}') if exists then break end end";
 
-    /// <summary>   (Immutable) the delete saved script command format. </summary>
-    public const string DeleteSavedScriptCommandFormat = "local exists=false for name in _G.script.user.catalog() do exists = (name=='{0}') if exists then break end end if exists then _G.script.delete( name ) end";
+    /// <summary>   (Immutable) the unembed script command format. </summary>
+    public const string UnembedScriptCommandFormat = "local exists=false for name in _G.script.user.catalog() do exists = (name=='{0}') if exists then break end end if exists then _G.script.delete( name ) end";
 
-    /// <summary>   (Immutable) the find saved script command format. </summary>
-    public const string FindSavedScriptQueryFormat = "local exists=false for name in _G.script.user.catalog() do exists = (name=='{0}') if exists then break end end print(exists)";
+    /// <summary>   (Immutable) the find embedded script command format. </summary>
+    public const string FindEmbeddedScriptQueryFormat = "local exists=false for name in _G.script.user.catalog() do exists = (name=='{0}') if exists then break end end print(exists)";
 }

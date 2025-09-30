@@ -41,7 +41,7 @@ public static partial class FirmwareManager
         }
         else
         {
-            script.Saved = false;
+            script.Embedded = false;
             script.Activated = false;
         }
 

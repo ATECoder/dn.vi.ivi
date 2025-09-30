@@ -24,7 +24,7 @@ public static partial class FirmwareManager
         if ( displaySubsystem.Session.IsNil( script.Name ) )
         {
             script.Loaded = true;
-            script.Saved = false;
+            script.Embedded = false;
             script.Activated = false;
             return displaySubsystem.LoadUserScriptThis( script );
         }

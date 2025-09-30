@@ -22,7 +22,7 @@ public static partial class FirmwareManager
     /// Returns <c>true</c> if script was deleted or did not exit. Returns <c>false</c> if deletion
     /// failed.
     /// </returns>
-    public static bool DeleteSavedUserScript( this DisplaySubsystemBase? displaySubsystem, ScriptEntityBase? script, string scriptNames, bool refreshScriptsCatalog )
+    public static bool DeleteEmbeddedUserScript( this DisplaySubsystemBase? displaySubsystem, ScriptEntityBase? script, string scriptNames, bool refreshScriptsCatalog )
     {
         if ( displaySubsystem is null ) throw new ArgumentNullException( nameof( displaySubsystem ) );
         if ( script is null ) throw new ArgumentNullException( nameof( script ) );
@@ -31,7 +31,7 @@ public static partial class FirmwareManager
         SessionBase session = displaySubsystem.Session;
 
         if ( refreshScriptsCatalog )
-            scriptNames = session.FetchSavedScriptsNames( script.Node ).SavedScripts;
+            scriptNames = session.FetchEmbeddedScriptsNames( script.Node ).EmbeddedScripts;
 
         if ( session.IsNil( script.Node.IsController, script.Node.Number, script.Name ) )
         {
@@ -39,7 +39,7 @@ public static partial class FirmwareManager
             // _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"Instrument '{this.Session.ResourceNameCaption}' had error(s) looking for script '{script.Name}' on node {script.Node.Number};. Nothing to do." );
 
             script.Loaded = false;
-            script.Saved = false;
+            script.Embedded = false;
             script.Activated = false;
             script.IsDeleted = true;
             return true;
@@ -48,18 +48,18 @@ public static partial class FirmwareManager
         displaySubsystem.DisplayLine( 2, $"Deleting {script.Node.Number}:{script.Name}" );
 
         if ( script.Node.IsController )
-            session.DeleteSavedScript( script.Name );
+            session.DeleteEmbeddedScript( script.Name );
         else
-            session.DeleteSavedScript( script.Node.Number, script.Name );
+            session.DeleteEmbeddedScript( script.Node.Number, script.Name );
 
         bool deleted = true;
 #if false
         bool deleted = script.Node.IsController
                 ? FirmwareScript.ScriptNameExists( scriptNames, script.Name )
-                    ? session.DeleteSavedScript( script.Name )
+                    ? session.DeleteEmbeddedScript( script.Name )
                     : session.NillObject( script.Name )
                 : FirmwareScript.ScriptNameExists( scriptNames, script.Name )
-                    ? session.DeleteSavedScript( script.Node.Number, script.Name )
+                    ? session.DeleteEmbeddedScript( script.Node.Number, script.Name )
                     : session.NillObject( script.Node.Number, script.Name );
 
         // todo: check status byte for errors.
@@ -73,10 +73,10 @@ public static partial class FirmwareManager
 
         // do a garbage collection
         if ( !session.CollectGarbageQueryComplete( script.Node.Number ) )
-            _ = session.TraceWarning( message: $"operation incomplete (reply not '1') after deleting saved script {script.Name} on node {script.Node.Number}" );
+            _ = session.TraceWarning( message: $"operation incomplete (reply not '1') after deleting embedded script {script.Name} on node {script.Node.Number}" );
 
         script.Loaded = false;
-        script.Saved = false;
+        script.Embedded = false;
         script.Activated = false;
         script.IsDeleted = true;
         return true;
@@ -92,14 +92,14 @@ public static partial class FirmwareManager
     ///                                         <see cref="VI.Tsp.DisplaySubsystemBase">display
     ///                                         subsystem</see>. </param>
     /// <param name="scripts">                  Specifies the list of the scripts to be deleted. </param>
-    /// <param name="savedScripts">             The saved scripts. </param>
+    /// <param name="embeddedScripts">             The embedded scripts. </param>
     /// <param name="refreshStateRequired">     True if refresh state required. </param>
     /// <param name="refreshScriptsCatalog">    Refresh catalog before checking if script exists. </param>
     /// <param name="deleteOutdatedOnly">       if set to <c>true</c> deletes only if scripts is out
     ///                                         of date. </param>
     /// <returns>   <c>true</c> if success, <c>false</c> otherwise. </returns>
-    public static bool DeleteSavedUserScripts( this DisplaySubsystemBase displaySubsystem, ScriptEntityCollection scripts,
-        string savedScripts, bool refreshStateRequired, bool refreshScriptsCatalog, bool deleteOutdatedOnly )
+    public static bool DeleteEmbeddedUserScripts( this DisplaySubsystemBase displaySubsystem, ScriptEntityCollection scripts,
+        string embeddedScripts, bool refreshStateRequired, bool refreshScriptsCatalog, bool deleteOutdatedOnly )
     {
         if ( displaySubsystem is null ) throw new ArgumentNullException( nameof( displaySubsystem ) );
         if ( scripts is null ) throw new ArgumentNullException( nameof( scripts ) );
@@ -112,7 +112,7 @@ public static partial class FirmwareManager
         // <c>true</c> if any delete action was executed
         bool scriptsDeleted = false;
         if ( refreshScriptsCatalog )
-            savedScripts = session.FetchSavedScriptsNames( scripts.Node ).SavedScripts;
+            embeddedScripts = session.FetchEmbeddedScriptsNames( scripts.Node ).EmbeddedScripts;
 
         if ( refreshStateRequired )
             scripts.ReadScriptsState( session );
@@ -126,7 +126,7 @@ public static partial class FirmwareManager
                 if ( !script.IsDeleted && (script.RequiresDeletion || !deleteOutdatedOnly
                     || scripts.IsDeleteUserScriptRequired( !deleteOutdatedOnly )) )
                 {
-                    if ( displaySubsystem.DeleteSavedUserScript( script, savedScripts, false ) )
+                    if ( displaySubsystem.DeleteEmbeddedUserScript( script, embeddedScripts, false ) )
                     {
                         // mark that scripts were deleted, i.e., that any script was deleted
                         // or if a script that existed no longer exists.
@@ -194,7 +194,7 @@ public static partial class FirmwareManager
     /// <param name="deleteOutdatedOnly">       if set to <c>true</c> deletes only if scripts is out
     ///                                         of date. </param>
     /// <returns>   <c>true</c> if success, <c>false</c> otherwise. </returns>
-    public static bool DeleteSavedUserScripts( this DisplaySubsystemBase displaySubsystem, Dictionary<int, ScriptEntityCollection> nodeScripts,
+    public static bool DeleteEmbeddedUserScripts( this DisplaySubsystemBase displaySubsystem, Dictionary<int, ScriptEntityCollection> nodeScripts,
         bool refreshStateRequired, bool refreshScriptsCatalog, bool deleteOutdatedOnly )
     {
         if ( displaySubsystem is null ) throw new ArgumentNullException( nameof( displaySubsystem ) );
@@ -202,7 +202,7 @@ public static partial class FirmwareManager
 
         bool success = true;
         foreach ( ScriptEntityCollection scripts in nodeScripts.Values )
-            success &= displaySubsystem.DeleteSavedUserScripts( scripts, scripts.SavedScriptNames, refreshStateRequired, refreshScriptsCatalog, deleteOutdatedOnly );
+            success &= displaySubsystem.DeleteEmbeddedUserScripts( scripts, scripts.EmbeddedScriptNames, refreshStateRequired, refreshScriptsCatalog, deleteOutdatedOnly );
         return success;
     }
 }

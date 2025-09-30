@@ -17,7 +17,7 @@ public static partial class FirmwareManager
     ///                                 source before saving. </param>
     /// <returns>   <c>true</c> if okay; otherwise, <c>false</c>. </returns>
     [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0270:Use coalesce expression", Justification = "<Pending>" )]
-    public static bool FetchScriptSaveToFile( this Pith.SessionBase? session, string folderPath, ScriptEntityBase script, bool compress )
+    public static bool FetchScriptExportToFile( this Pith.SessionBase? session, string folderPath, ScriptEntityBase script, bool compress )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( folderPath is null ) throw new ArgumentNullException( nameof( folderPath ) );
@@ -77,7 +77,7 @@ public static partial class FirmwareManager
     /// <param name="compress">     Specifies the compression condition. True to compress the source
     ///                             before saving to file. </param>
     /// <returns>   <c>true</c> if okay; otherwise, <c>false</c>. </returns>
-    public static bool FetchScriptSaveToFile( this Pith.SessionBase? session, string scriptName, string filePath, bool compress )
+    public static bool FetchScriptExportToFile( this Pith.SessionBase? session, string scriptName, string filePath, bool compress )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( filePath is null ) throw new ArgumentNullException( nameof( filePath ) );

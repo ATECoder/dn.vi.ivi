@@ -6,7 +6,7 @@ public static partial class FirmwareManager
 {
     /// <summary>
     /// Saves the specifies script to non-volatile memory, fetch the save scripts and verify that the
-    /// script was saved.
+    /// script was embedded.
     /// </summary>
     /// <remarks>   2024-09-05. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
@@ -15,7 +15,7 @@ public static partial class FirmwareManager
     /// <param name="scriptName">   Gets or sets the script name. </param>
     /// <param name="autoRun">      True to set the script to automatically run. </param>
     /// <returns>   <c>true</c> is script exist; otherwise, <c>false</c>. </returns>
-    public static (bool Saved, string SavedScriptNames, List<string> AuthorScriptNames) SaveScriptAndVerify( this Pith.SessionBase session, string scriptName, bool autoRun )
+    public static (bool Embedded, string EmbeddedScriptNames, List<string> AuthorScriptNames) SaveScriptAndVerify( this Pith.SessionBase session, string scriptName, bool autoRun )
     {
         if ( scriptName is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
@@ -24,7 +24,7 @@ public static partial class FirmwareManager
         session.SaveScript( scriptName, autoRun );
 
         // fetch names
-        (string scriptNames, List<string> authorScripts) = session.FetchSavedScriptsNames();
+        (string scriptNames, List<string> authorScripts) = session.FetchEmbeddedScriptsNames();
 
         return (FirmwareScriptBase.ScriptNameExists( scriptNames, scriptName ), scriptNames, authorScripts);
     }

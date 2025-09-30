@@ -34,7 +34,7 @@ This document includes a partial description of the TTM firmware and is work in 
 
 The TTM firmware is based on the Test Script Processing (TSP) firmware incorporated in the [Keithley] 2600 instruments. TSP is based on the [Lua] programming language.
 
-The TTM firmware consists of a main [isr_ttm] script, a support [isr_support] script and a startup [isr_ttm_boot] script. These scripts are loaded and saved in the instrument using a loader program, which is part of the TTM Framework described in the [TTM Framework Guide].
+The TTM firmware consists of a main [isr_ttm] script, a support [isr_support] script and a startup [isr_ttm_boot] script. These scripts are embedded in the instrument using a loader program, which is part of the TTM Framework described in the [TTM Framework Guide].
 
 <a name="isr_support"></a>
 ## ISR Support

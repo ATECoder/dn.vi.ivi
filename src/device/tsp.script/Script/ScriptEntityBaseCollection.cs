@@ -177,7 +177,7 @@ public class ScriptEntityBaseCollection<TItem>( NodeEntityBase node ) : System.C
     /// <value> The identified script. </value>
     public TItem? IdentifiedScript { get; private set; }
 
-    /// <summary>   Reads the loaded, activated, saved and version of all scripts. </summary>
+    /// <summary>   Reads the loaded, activated, embedded and version of all scripts. </summary>
     /// <remarks>   2024-09-05. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>
@@ -186,9 +186,9 @@ public class ScriptEntityBaseCollection<TItem>( NodeEntityBase node ) : System.C
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
 
-        this.FetchSavedScriptsNames( session );
+        this.FetchEmbeddedScriptsNames( session );
         foreach ( TItem script in this.Items )
-            session.ReadScriptState( script, this.SavedScriptNames );
+            session.ReadScriptState( script, this.EmbeddedScriptNames );
     }
 
     /// <summary>
@@ -233,8 +233,8 @@ public class ScriptEntityBaseCollection<TItem>( NodeEntityBase node ) : System.C
                     else
                         _ = builder.AppendLine( $"\tnot activated." );
 
-                    if ( !script.Saved )
-                        _ = builder.AppendLine( $"\tnot saved." );
+                    if ( !script.Embedded )
+                        _ = builder.AppendLine( $"\tnot embedded." );
                 }
                 else
                     _ = builder.AppendLine( $"\tnot loaded." );
@@ -288,10 +288,10 @@ public class ScriptEntityBaseCollection<TItem>( NodeEntityBase node ) : System.C
                     else
                         _ = builder.AppendLine( $"\tNot activated." );
 
-                    if ( script.Saved )
-                        _ = builder.AppendLine( $"\tSaved." );
+                    if ( script.Embedded )
+                        _ = builder.AppendLine( $"\tEmbedded." );
                     else
-                        _ = builder.AppendLine( $"\tNot saved." );
+                        _ = builder.AppendLine( $"\tNot embedded." );
                 }
                 else
                     _ = builder.AppendLine( $"\tNot loaded." );
@@ -377,10 +377,10 @@ public class ScriptEntityBaseCollection<TItem>( NodeEntityBase node ) : System.C
         return affirmative;
     }
 
-    /// <summary>   All saved. </summary>
+    /// <summary>   All embedded. </summary>
     /// <remarks>   2024-09-05. </remarks>
     /// <returns>   True if it succeeds, false if it fails. </returns>
-    public bool AllSaved()
+    public bool AllEmbedded()
     {
         bool affirmative = true;
         this.IdentifiedScript = null;
@@ -388,7 +388,7 @@ public class ScriptEntityBaseCollection<TItem>( NodeEntityBase node ) : System.C
         {
             if ( script.IsModelMatch( this.ModelNumber ) && !script.FirmwareScript.IsAutoexecScript )
             {
-                if ( !script.Saved )
+                if ( !script.Embedded )
                 {
                     this.IdentifiedScript = script;
                     affirmative = false;
@@ -563,7 +563,7 @@ public class ScriptEntityBaseCollection<TItem>( NodeEntityBase node ) : System.C
 
     /// <summary>
     /// Deletes the <paramref scriptName="scriptName">specified</paramref> script. Also nulls the
-    /// script if delete command worked. Call <see cref="ScriptEntityBaseCollection{TItem}.FetchSavedScriptsNames(SessionBase)"/>
+    /// script if delete command worked. Call <see cref="ScriptEntityBaseCollection{TItem}.FetchEmbeddedScriptsNames(SessionBase)"/>
     /// to refresh the list of names.
     /// </summary>
     /// <remarks>   2024-09-05. </remarks>
@@ -581,9 +581,9 @@ public class ScriptEntityBaseCollection<TItem>( NodeEntityBase node ) : System.C
         // check if the script name exists.
         if ( !session.IsNil( scriptName ) )
         {
-            // check if saved script exists
-            this.FetchSavedScriptsNames( session );
-            if ( FirmwareScriptBase.ScriptNameExists( this.SavedScriptNames, scriptName ) )
+            // check if embedded script exists
+            this.FetchEmbeddedScriptsNames( session );
+            if ( FirmwareScriptBase.ScriptNameExists( this.EmbeddedScriptNames, scriptName ) )
             {
                 session.DeleteScript( scriptName );
                 isNull = session.IsNil( scriptName );
@@ -681,8 +681,8 @@ public class ScriptEntityBaseCollection<TItem>( NodeEntityBase node ) : System.C
     {
         this.LastFetchedScriptName = string.Empty;
         this.LastFetchedScriptSource = string.Empty;
-        this.SavedScriptNames = string.Empty;
-        this._savedAuthorScriptNames = [];
+        this.EmbeddedScriptNames = string.Empty;
+        this._embeddedAuthorScriptNames = [];
     }
 
     #endregion
@@ -699,32 +699,32 @@ public class ScriptEntityBaseCollection<TItem>( NodeEntityBase node ) : System.C
 
     #endregion
 
-    #region " loaded and saved script names "
+    #region " loaded and embedded script names "
 
-    /// <summary>   Gets or sets a the names of the saved scripts. </summary>
-    /// <value> A list of names of the saved scripts. </value>
-    public string SavedScriptNames { get; set; } = string.Empty;
+    /// <summary>   Gets or sets a the names of the embedded scripts. </summary>
+    /// <value> A list of names of the embedded scripts. </value>
+    public string EmbeddedScriptNames { get; set; } = string.Empty;
 
-    /// <summary> The last fetched names of the saved author scripts. </summary>
-    private List<string> _savedAuthorScriptNames = [];
+    /// <summary> The last fetched names of the embedded author scripts. </summary>
+    private List<string> _embeddedAuthorScriptNames = [];
 
     /// <summary>   Last fetched names of the author scripts. </summary>
     /// <remarks>   2024-09-05. </remarks>
     /// <returns>   A list of strings. </returns>
-    public System.Collections.ObjectModel.ReadOnlyCollection<string> SavedAuthorScriptNames()
+    public System.Collections.ObjectModel.ReadOnlyCollection<string> EmbeddedAuthorScriptNames()
     {
-        return this._savedAuthorScriptNames is null
+        return this._embeddedAuthorScriptNames is null
             ? new System.Collections.ObjectModel.ReadOnlyCollection<string>( [] )
-            : new System.Collections.ObjectModel.ReadOnlyCollection<string>( this._savedAuthorScriptNames );
+            : new System.Collections.ObjectModel.ReadOnlyCollection<string>( this._embeddedAuthorScriptNames );
     }
 
-    /// <summary>   Fetches the list of saved scripts. </summary>
+    /// <summary>   Fetches the list of embedded scripts. </summary>
     /// <remarks>   2024-09-09. </remarks>
     /// <param name="session">  Specifies the TSP session. </param>
-    public void FetchSavedScriptsNames( Pith.SessionBase session )
+    public void FetchEmbeddedScriptsNames( Pith.SessionBase session )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
-        (this.SavedScriptNames, this._savedAuthorScriptNames) = session.FetchSavedScriptsNames( this.Node );
+        (this.EmbeddedScriptNames, this._embeddedAuthorScriptNames) = session.FetchEmbeddedScriptsNames( this.Node );
     }
 
     private string[] _loadedScriptNames = [];
@@ -751,63 +751,63 @@ public class ScriptEntityBaseCollection<TItem>( NodeEntityBase node ) : System.C
     }
 
     /// <summary>
-    /// Checks if the specified script exists as a saved script in the <see cref="ScriptEntityBaseCollection{ScriptEntityBase}.SavedScriptNames"/>.
+    /// Checks if the specified script exists as a embedded script in the <see cref="ScriptEntityBaseCollection{ScriptEntityBase}.EmbeddedScriptNames"/>.
     /// </summary>
     /// <remarks>   2024-09-05. </remarks>
     /// <param name="session">              Specifies the <see cref="VI.Pith.SessionBase">TSP
     ///                                     session.</see> </param>
     /// <param name="scriptName">           Specifies the script name. </param>
-    /// <param name="refreshScriptCatalog"> (Optional) True to refresh the list of saved scripts. </param>
+    /// <param name="refreshScriptCatalog"> (Optional) True to refresh the list of embedded scripts. </param>
     /// <returns>
-    /// <c>true</c> if the specified script exists as a saved script; otherwise, <c>false</c>.
+    /// <c>true</c> if the specified script exists as a embedded script; otherwise, <c>false</c>.
     /// </returns>
-    public bool SavedScriptExists( Pith.SessionBase session, string scriptName, bool refreshScriptCatalog = false )
+    public bool EmbeddedScriptExists( Pith.SessionBase session, string scriptName, bool refreshScriptCatalog = false )
     {
         if ( refreshScriptCatalog )
-            this.FetchSavedScriptsNames( session );
+            this.FetchEmbeddedScriptsNames( session );
 
-        return FirmwareScriptBase.ScriptNameExists( this.SavedScriptNames, scriptName );
+        return FirmwareScriptBase.ScriptNameExists( this.EmbeddedScriptNames, scriptName );
     }
 
     /// <summary>
-    /// Checks if the script needs to be saved to non-volatile memory. Presumes list of saved scripts
+    /// Checks if the script needs to be embedded to non-volatile memory. Presumes list of embedded scripts
     /// was retrieved.
     /// </summary>
     /// <remarks>   2024-09-05. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>
     /// <param name="session">                  The session. </param>
-    /// <param name="scriptName">               Specifies the script to save. </param>
-    /// <param name="saveToNonVolatileMemory">  True to save to non volatile memory. </param>
+    /// <param name="scriptName">               Specifies the script to embed. </param>
+    /// <param name="embedToNonVolatileMemory">  True to embed to non volatile memory. </param>
     /// <param name="convertToByteCode">          Specifies the condition requesting saving the source
     ///                                         as byte code. </param>
     /// <param name="isBootScript">             Specifies the condition indicating if this is a boot
     ///                                         script. </param>
-    /// <returns>   <c>true</c> if save required; otherwise, <c>false</c>. </returns>
-    public bool IsSaveRequired( Pith.SessionBase session, string scriptName, bool saveToNonVolatileMemory, bool convertToByteCode, bool isBootScript )
+    /// <returns>   <c>true</c> if embed is required; otherwise, <c>false</c>. </returns>
+    public bool IsEmbedRequired( Pith.SessionBase session, string scriptName, bool embedToNonVolatileMemory, bool convertToByteCode, bool isBootScript )
     {
         return string.IsNullOrWhiteSpace( scriptName )
             ? throw new ArgumentNullException( nameof( scriptName ) )
             : this.Node is null
                 ? throw new ArgumentNullException( nameof( this.Node ) )
-                : saveToNonVolatileMemory &&
+                : embedToNonVolatileMemory &&
                     ((convertToByteCode && !session.isByteCodeScript( scriptName, this.Node ).GetValueOrDefault( false ))
-                    || !this.SavedScriptExists( session, scriptName, false )
-                    || (isBootScript && this.Node.BootScriptSaveRequired));
+                    || !this.EmbeddedScriptExists( session, scriptName, false )
+                    || (isBootScript && this.Node.BootScriptEmbedRequired));
     }
 
     /// <summary>
-    /// checks if save is required for the specified script. Presumes list of saved scripts was
+    /// checks if embed is required for the specified script. Presumes list of embedded scripts was
     /// retrieved.
     /// </summary>
     /// <remarks>   2024-09-09. </remarks>
     /// <param name="session">  The session. </param>
     /// <param name="script">   The object to be added to the end of the <see cref="T:System.Collections.ObjectModel.Collection`1">
     ///                         </see>. The value can be null for reference types. </param>
-    /// <returns>   <c>true</c> if save required; otherwise, <c>false</c>. </returns>
-    public bool IsSaveRequired( Pith.SessionBase session, ScriptEntityBase script )
+    /// <returns>   <c>true</c> if embed required; otherwise, <c>false</c>. </returns>
+    public bool IsEmbedRequired( Pith.SessionBase session, ScriptEntityBase script )
     {
-        return this.IsSaveRequired( session, script.Name, script.FirmwareScript.SaveToNonVolatileMemory, script.FirmwareScript.ConvertToByteCode, script.FirmwareScript.IsAutoexecScript );
+        return this.IsEmbedRequired( session, script.Name, script.FirmwareScript.EmbedToNonVolatileMemory, script.FirmwareScript.ConvertToByteCode, script.FirmwareScript.IsAutoexecScript );
     }
 
     #endregion

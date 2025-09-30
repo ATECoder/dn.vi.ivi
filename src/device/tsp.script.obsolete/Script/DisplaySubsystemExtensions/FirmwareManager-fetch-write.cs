@@ -24,12 +24,12 @@ public static partial class FirmwareManager
         foreach ( ScriptEntityBase script in scripts )
         {
             // do not save the script if is has no file scriptName. Future upgrade might suggest adding a file name to the boot script.
-            if ( !(string.IsNullOrWhiteSpace( script.FirmwareScript.Name ) || script.FirmwareScript.SavedToFile) )
+            if ( !(string.IsNullOrWhiteSpace( script.FirmwareScript.Name ) || script.FirmwareScript.ExportedToFile) )
             {
                 displaySubsystem.DisplayLine( 2, "Writing {0}:{1}", script.Node.ModelNumber, script.Name );
                 if ( displaySubsystem.Session.FetchScriptSaveToFile( folderPath, script, (script.FirmwareScript.DeployFileFormat & ScriptFileFormats.Compressed) != 0 ) )
                 {
-                    script.FirmwareScript.SavedToFile = true;
+                    script.FirmwareScript.ExportedToFile = true;
                     success = success && true;
                 }
                 else

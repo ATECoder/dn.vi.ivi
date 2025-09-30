@@ -145,12 +145,12 @@ public static partial class FirmwareManager
         return session.ReadLines( TimeSpan.FromMilliseconds( 10d ), TimeSpan.FromMilliseconds( 400d ), trimSpaces, !trimSpaces );
     }
 
-    /// <summary>   Check if a user script was saved as a byte code script. </summary>
+    /// <summary>   Check if a user script was embedded as a byte code script. </summary>
     /// <remarks>   2024-09-05. </remarks>
     /// <param name="session">      The session. </param>
     /// <param name="scriptName">   Gets or sets the script name. </param>
     /// <returns>   <c>true</c> if binary; otherwise, <c>false</c>. </returns>
-    public static bool IsScriptSavedAsByteCode( this Pith.SessionBase? session, string scriptName )
+    public static bool IsScriptEmbeddedAsByteCode( this Pith.SessionBase? session, string scriptName )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( scriptName is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );

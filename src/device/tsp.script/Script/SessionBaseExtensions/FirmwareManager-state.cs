@@ -17,7 +17,7 @@ public static partial class FirmwareManager
         script.EmbeddedFirmwareVersion = string.Empty;
         script.HasFirmwareVersionGetter = false;
         script.Loaded = false;
-        script.Saved = false;
+        script.Embedded = false;
 
         script.Loaded = !session.IsNil( script.Node.IsController, script.Node.Number, script.Name );
 
@@ -25,9 +25,9 @@ public static partial class FirmwareManager
         {
             script.Activated = !session.IsNil( script.Node.IsController, script.Node.Number, script.FirmwareVersionGetter.TrimEnd( ['(', ')'] ) );
 
-            string? savedScripts = session.FetchSavedScriptsNames( script.Node ).SavedScripts;
-            script.Saved = !string.IsNullOrWhiteSpace( savedScripts )
-                && (savedScripts!.IndexOf( script.Name + ",", 0, StringComparison.OrdinalIgnoreCase ) >= 0);
+            string? embeddedScripts = session.FetchEmbeddedScriptsNames( script.Node ).EmbeddedScripts;
+            script.Embedded = !string.IsNullOrWhiteSpace( embeddedScripts )
+                && (embeddedScripts!.IndexOf( script.Name + ",", 0, StringComparison.OrdinalIgnoreCase ) >= 0);
         }
 
         if ( script.Activated )
@@ -47,18 +47,18 @@ public static partial class FirmwareManager
     ///                                             null. </exception>
     /// <param name="session">      The session. </param>
     /// <param name="script">       The script. </param>
-    /// <param name="savedScripts"> The saved scripts. </param>
-    public static void ReadScriptState( this Pith.SessionBase? session, ScriptEntityBase script, string savedScripts )
+    /// <param name="embeddedScripts"> The embedded scripts. </param>
+    public static void ReadScriptState( this Pith.SessionBase? session, ScriptEntityBase script, string embeddedScripts )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
-        if ( savedScripts is null ) throw new ArgumentNullException( nameof( savedScripts ) );
+        if ( embeddedScripts is null ) throw new ArgumentNullException( nameof( embeddedScripts ) );
 
         // clear the script state
         script.Activated = false;
         script.EmbeddedFirmwareVersion = string.Empty;
         script.HasFirmwareVersionGetter = false;
         script.Loaded = false;
-        script.Saved = false;
+        script.Embedded = false;
         script.LoadedAsByteCode = false;
 
         script.Loaded = !session.IsNil( script.Node.IsController, script.Node.Number, script.Name );
@@ -68,8 +68,8 @@ public static partial class FirmwareManager
             // note that the scripts are loaded as byte code first on the local node and then copied to the remote node.
             script.Activated = !session.IsNil( script.Node.IsController, script.Node.Number, script.FirmwareVersionGetter.TrimEnd( ['(', ')'] ) );
 
-            script.Saved = !string.IsNullOrWhiteSpace( savedScripts )
-                && (savedScripts!.IndexOf( script.Name + ",", 0, StringComparison.OrdinalIgnoreCase ) >= 0);
+            script.Embedded = !string.IsNullOrWhiteSpace( embeddedScripts )
+                && (embeddedScripts!.IndexOf( script.Name + ",", 0, StringComparison.OrdinalIgnoreCase ) >= 0);
             script.LoadedAsByteCode = session.IsByteCodeScript( script.Name );
         }
 

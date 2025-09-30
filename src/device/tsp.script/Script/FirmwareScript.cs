@@ -42,8 +42,8 @@ public class FirmwareScript : FirmwareScriptBase
         this.IsAutoexecScript = script.IsAutoexecScript;
         this.IsPrimaryScript = script.IsPrimaryScript;
         this.IsSupportScript = script.IsSupportScript;
-        this.SavedToFile = script.SavedToFile;
-        this.SaveToNonVolatileMemory = script.SaveToNonVolatileMemory;
+        this.ExportedToFile = script.ExportedToFile;
+        this.EmbedToNonVolatileMemory = script.EmbedToNonVolatileMemory;
         this.Source = script.Source;
     }
 

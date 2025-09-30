@@ -5,9 +5,9 @@ namespace cc.isr.VI.Tsp.Script.DisplaySubsystemExtensions;
 
 public static partial class FirmwareManager
 {
-    /// <summary>   Saves the user script in non-volatile memory. </summary>
+    /// <summary>   Embeds the user script in non-volatile memory. </summary>
     /// <remarks>
-    /// 2024-09-05. The save needs to be validated once all scripts are saved to save time.
+    /// 2024-09-05. The embed needs to be validated once all scripts are embedded to embed time.
     /// </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
     ///                                                 are null. </exception>
@@ -16,13 +16,13 @@ public static partial class FirmwareManager
     /// <param name="displaySubsystem"> A reference to a
     ///                                 <see cref="VI.Tsp.DisplaySubsystemBase">display
     ///                                 subsystem</see>. </param>
-    /// <param name="scriptName">       Specifies the script to save. </param>
+    /// <param name="scriptName">       Specifies the script to embed. </param>
     /// <param name="node">             Specifies the node. </param>
-    /// <param name="saveAsByteCode">     Specifies the condition requesting saving the user scripts
+    /// <param name="embedAsByteCode">     Specifies the condition requesting saving the user scripts
     ///                                 source as byte code. </param>
     /// <param name="autoRun">          Specifies the condition indicating if this script is to automatically run upon instrument start. </param>
-    public static void SaveUserScript( this DisplaySubsystemBase? displaySubsystem, string scriptName, NodeEntityBase node,
-        bool saveAsByteCode, bool autoRun )
+    public static void EmbedUserScript( this DisplaySubsystemBase? displaySubsystem, string scriptName, NodeEntityBase node,
+        bool embedAsByteCode, bool autoRun )
     {
         if ( scriptName is null ) throw new ArgumentNullException( nameof( scriptName ) );
         if ( string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
@@ -37,17 +37,17 @@ public static partial class FirmwareManager
 
         session.SetLastAction( $"looking for '{scriptName}' on node {node.Number}" );
         if ( session.IsNil( node.IsController, node.Number, scriptName ) )
-            throw new InvalidOperationException( $"{session.ResourceNameNodeCaption} custom firmware script '{scriptName}' not saved on node {node.Number};. " );
+            throw new InvalidOperationException( $"{session.ResourceNameNodeCaption} custom firmware script '{scriptName}' not embedded on node {node.Number};. " );
 
         if ( !autoRun )
 
-            // if a script is a boot script, a boot save is required.
-            node.BootScriptSaveRequired = true;
+            // if a script is a boot script, a boot embed is required.
+            node.BootScriptEmbedRequired = true;
 
-        // save validation is done after all scripts are saved.
+        // embed validation is done after all scripts are embedded.
         // this throws an error on device errors
 
-        if ( saveAsByteCode )
+        if ( embedAsByteCode )
         {
             displaySubsystem.DisplayLine( 2, $"{node.Number}:{scriptName} 2 binary" );
             if ( node.IsController )
@@ -57,16 +57,16 @@ public static partial class FirmwareManager
                 throw new InvalidOperationException( "loading byte code scripts to a remote node is not supported at this time." );
         }
 
-        // save the script.
+        // embed the script.
         displaySubsystem.DisplayLine( 2, $"{node.Number}:{scriptName} saving" );
-        session.SaveScript( scriptName, node, autoRun );
+        session.EmbedScript( scriptName, node, autoRun );
 
-        _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"{session.ResourceNameNodeCaption} saved script '{scriptName}' on node {node.Number};. " );
+        _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"{session.ResourceNameNodeCaption} embedded script '{scriptName}' on node {node.Number};. " );
     }
 
-    /// <summary>   Saves the user script in non-volatile memory. </summary>
+    /// <summary>   Embeds the user script in non-volatile memory. </summary>
     /// <remarks>   2024-09-05.
-    /// Save validation is done after all scripts are saved. </remarks>
+    /// Embed validation is done after all scripts are embedded. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>
     /// <param name="displaySubsystem"> A reference to a
@@ -75,7 +75,7 @@ public static partial class FirmwareManager
     /// <param name="script">           Specifies the <see cref="ScriptEntityBase">script</see>to
     ///                                 delete. </param>
     /// <returns>   <c>true</c> if okay; otherwise, <c>false</c>. </returns>
-    public static void SaveUserScript( this DisplaySubsystemBase? displaySubsystem, ScriptEntityBase script )
+    public static void EmbedUserScript( this DisplaySubsystemBase? displaySubsystem, ScriptEntityBase script )
     {
         if ( script is null ) throw new ArgumentNullException( nameof( script ) );
         if ( script.Node is null ) throw new ArgumentNullException( nameof( script.Node ) );
@@ -83,11 +83,11 @@ public static partial class FirmwareManager
         if ( displaySubsystem.Session is null ) throw new ArgumentNullException( nameof( displaySubsystem.Session ) );
         if ( displaySubsystem.StatusSubsystem is null ) throw new ArgumentNullException( nameof( displaySubsystem.StatusSubsystem ) );
 
-        displaySubsystem.SaveUserScript( script.Name, script.Node, script.FirmwareScript.ConvertToByteCode, script.FirmwareScript.IsAutoexecScript );
+        displaySubsystem.EmbedUserScript( script.Name, script.Node, script.FirmwareScript.ConvertToByteCode, script.FirmwareScript.IsAutoexecScript );
 
     }
 
-    /// <summary>   Saves the user scripts. </summary>
+    /// <summary>   Embeds the user scripts. </summary>
     /// <remarks>   2024-09-05. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>
@@ -95,9 +95,9 @@ public static partial class FirmwareManager
     /// <param name="displaySubsystem"> A reference to a
     ///                                 <see cref="VI.Tsp.DisplaySubsystemBase">display
     ///                                 subsystem</see>. </param>
-    /// <param name="scripts">          Specifies the list of scripts to save. </param>
+    /// <param name="scripts">          Specifies the list of scripts to embed. </param>
     /// <returns>   <c>true</c> if okay; otherwise, <c>false</c>. </returns>
-    public static bool SaveUserScripts( this DisplaySubsystemBase? displaySubsystem, ScriptEntityCollection scripts )
+    public static bool EmbedUserScripts( this DisplaySubsystemBase? displaySubsystem, ScriptEntityCollection scripts )
     {
         if ( scripts is null ) throw new ArgumentNullException( nameof( scripts ) );
         if ( scripts.Node is null ) throw new ArgumentNullException( nameof( scripts.Node ) );
@@ -122,28 +122,28 @@ public static partial class FirmwareManager
             if ( script.FirmwareScript.IsAutoexecScript )
                 bootScript = script;
 
-            if ( script.Loaded && !script.Saved )
-                displaySubsystem.SaveUserScript( script );
+            if ( script.Loaded && !script.Embedded )
+                displaySubsystem.EmbedUserScript( script );
 #if false
             if ( script.Loaded )
             {
-            session.SetLastAction( $"checking if save is required for '{script.Name}' on node {script.Node.Number}" );
-                // TODO: Replace scripts.IsSaveRequired( session, script )  with script.IsSavedRequired()
+            session.SetLastAction( $"checking if embed is required for '{script.Name}' on node {script.Node.Number}" );
+                // TODO: Replace scripts.IsEmbedRequired( session, script )  with script.IsEmbeddedRequired()
 
-                bool isSaveRequired = scripts.IsSaveRequired( session, script );
-                resetRequired = resetRequired || isSaveRequired;
+                bool isEmbedRequired = scripts.IsEmbedRequired( session, script );
+                resetRequired = resetRequired || isEmbedRequired;
 
-                if ( isSaveRequired )
-                    displaySubsystem.SaveUserScript( script );
+                if ( isEmbedRequired )
+                    displaySubsystem.EmbedUserScript( script );
             }
 #endif
         }
 
         session.SetLastAction( "reading the scripts state after saving" );
         scripts.ReadScriptsState( session );
-        bool success = scripts.AllSaved();
+        bool success = scripts.AllEmbedded();
         if ( success )
-            scripts.Node.BootScriptSaveRequired = false;
+            scripts.Node.BootScriptEmbedRequired = false;
 
         if ( resetRequired )
         {
@@ -171,7 +171,7 @@ public static partial class FirmwareManager
         if ( success )
         {
             if ( bootScript is null )
-                displaySubsystem.DisplayLine( 2, $"All scripts saved on node {scripts.Node.Number}" );
+                displaySubsystem.DisplayLine( 2, $"All scripts embedded on node {scripts.Node.Number}" );
             else
             {
                 // query operation completion throw if reply is not 1.
@@ -191,7 +191,7 @@ public static partial class FirmwareManager
         return success;
     }
 
-    /// <summary>   Saves all users scripts. </summary>
+    /// <summary>   Embeds all users scripts. </summary>
     /// <remarks>   2024-09-05. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>
@@ -200,14 +200,14 @@ public static partial class FirmwareManager
     ///                                     subsystem</see>. </param>
     /// <param name="scriptsCollection">    Collection of <see cref="ScriptEntityCollection"/>. </param>
     /// <returns>   <c>true</c> if okay; otherwise, <c>false</c>. </returns>
-    public static bool SaveUserScripts( this DisplaySubsystemBase? displaySubsystem, ICollection<ScriptEntityCollection> scriptsCollection )
+    public static bool EmbedUserScripts( this DisplaySubsystemBase? displaySubsystem, ICollection<ScriptEntityCollection> scriptsCollection )
     {
         if ( displaySubsystem is null ) throw new ArgumentNullException( nameof( displaySubsystem ) );
         if ( displaySubsystem.Session is null ) throw new ArgumentNullException( nameof( displaySubsystem.Session ) );
         if ( displaySubsystem.StatusSubsystem is null ) throw new ArgumentNullException( nameof( displaySubsystem.StatusSubsystem ) );
         bool success = true;
         foreach ( ScriptEntityCollection scripts in scriptsCollection )
-            success &= displaySubsystem.SaveUserScripts( scripts );
+            success &= displaySubsystem.EmbedUserScripts( scripts );
 
         return success;
     }

@@ -485,8 +485,8 @@ public partial class PartsView : cc.isr.WinControls.ModelViewBase
         }
     }
 
-    /// <summary> Gets the save enabled. </summary>
-    /// <value> The save enabled. </value>
+    /// <summary> Gets the save parts data enabled condition. </summary>
+    /// <value> The save parts data enabled condition. </value>
     public bool SaveEnabled => this._savePartsToolStripButton.Enabled;
 
     /// <summary> Saves data for all parts. </summary>

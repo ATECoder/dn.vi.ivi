@@ -70,14 +70,14 @@ public abstract class NodeEntityBase( int number, NodeEntityBase? controllerNode
     }
 
     /// <summary>
-    /// Gets the condition to indicate that the boot script must be re-saved because a script
+    /// Gets the condition to indicate that the boot script must be re-embedded because a script
     /// reference changes as would happened if a new byte code script was created with a table reference
     /// that differs from the table reference of the previous script that was used in the previous
     /// boot script.
     /// </summary>
     /// <exception cref="ArgumentNullException"> Thrown when one or more required arguments are null. </exception>
-    /// <value> The boot script save required. </value>
-    public bool BootScriptSaveRequired { get; set; }
+    /// <value> The boot script embed required. </value>
+    public bool BootScriptEmbedRequired { get; set; }
 
     /// <summary> Gets the data queue capacity. </summary>
     /// <exception cref="ArgumentNullException"> Thrown when one or more required arguments are null. </exception>

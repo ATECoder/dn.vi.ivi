@@ -43,9 +43,9 @@ public enum ScriptStatuses
     [System.ComponentModel.Description( "Activated" )]
     Activated = 4,
 
-    /// <summary>   A bit constant representing the saved flag. </summary>
-    [System.ComponentModel.Description( "Saved" )]
-    Saved = 8,
+    /// <summary>   A bit constant representing the embedded flag. </summary>
+    [System.ComponentModel.Description( "Embedded" )]
+    Embedded = 8,
 
     /// <summary>   A bit constant representing the byte code flag. </summary>
     [System.ComponentModel.Description( "Byte Code" )]
@@ -74,7 +74,7 @@ public enum FirmwareVersionStatus
     Newer = 3,
 
     /// <summary> The embedded version is not known (empty). 
-    ///           The embedded firmware version was not set because the script was not loaded or saved. </summary>
+    ///           The embedded firmware version was not set because the script was not loaded or embedded. </summary>
     [System.ComponentModel.Description( "The embedded version is not known (empty)" )]
     Unknown = 4,
 

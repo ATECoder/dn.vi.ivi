@@ -39,7 +39,7 @@ public enum FirmwareVersionStatus
     [System.ComponentModel.Description( "Version as new than expected" )]
     Newer = 3,
 
-    /// <summary> Embedded firmware version was not set because the script was not loaded or saved. </summary>
+    /// <summary> Embedded firmware version was not set because the script was not loaded or embedded. </summary>
     [System.ComponentModel.Description( "Embedded version not known (empty)" )]
     Unknown = 4,
 

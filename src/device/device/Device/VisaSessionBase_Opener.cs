@@ -686,7 +686,7 @@ public partial class VisaSessionBase : cc.isr.Std.Notifiers.OpenResourceBase
         this.Identity = hasIdentity ? this.StatusSubsystemBase!.Identity : string.Empty;
         if ( this.SubsystemSupportMode == SubsystemSupportMode.Full )
         {
-            // resource name is saved only with full support
+            // resource name is cached only with full support
             // update the session open resource model, which updates the visa session base title as well.
             if ( !string.IsNullOrWhiteSpace( this.StatusSubsystemBase!.VersionInfoBase.Model ) )
             {

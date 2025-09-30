@@ -51,7 +51,7 @@ public static partial class NodeMethods
     /// </summary>
     /// <remarks>
     /// 2025-04-22. <para>
-    /// The script must be saved to make this so. </para>
+    /// The script must be embedded to make this so. </para>
     /// </remarks>
     /// <param name="session">      The session. </param>
     /// <param name="nodeNumber">   The node number. </param>
@@ -169,9 +169,9 @@ public static partial class NodeMethods
                     embeddedScript.ScriptStatus |= ScriptStatuses.ByteCode;
             }
 
-            if ( session.IsSavedScript( script.Title, nodeNumber ) )
+            if ( session.IsScriptEmbedded( script.Title, nodeNumber ) )
             {
-                embeddedScript.ScriptStatus |= ScriptStatuses.Saved;
+                embeddedScript.ScriptStatus |= ScriptStatuses.Embedded;
             }
         }
         embeddedScript.VersionStatus = SessionBaseExtensionMethods.ParseFirmwareVersionStatis( embeddedScript );

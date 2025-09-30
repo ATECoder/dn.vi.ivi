@@ -7,7 +7,7 @@ public static partial class FirmwareManager
 {
     /// <summary>   Saves the user script in non-volatile memory. </summary>
     /// <remarks>
-    /// 2024-09-05. The save needs to be validated once all scripts are saved to save time.
+    /// 2024-09-05. The save needs to be validated once all scripts are embedded to save time.
     /// </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
     ///                                                 are null. </exception>
@@ -37,14 +37,14 @@ public static partial class FirmwareManager
 
         session.SetLastAction( $"looking for '{scriptName}' on node {node.Number}" );
         if ( session.IsNil( node.IsController, node.Number, scriptName ) )
-            throw new InvalidOperationException( $"{session.ResourceNameNodeCaption} custom firmware script '{scriptName}' not saved on node {node.Number};. " );
+            throw new InvalidOperationException( $"{session.ResourceNameNodeCaption} custom firmware script '{scriptName}' not embedded on node {node.Number};. " );
 
         if ( !autoRun )
 
             // if a script is a boot script, a boot save is required.
             node.BootScriptSaveRequired = true;
 
-        // save validation is done after all scripts are saved.
+        // save validation is done after all scripts are embedded.
         // this throws an error on device errors
 
         if ( saveAsByteCode )
@@ -57,12 +57,12 @@ public static partial class FirmwareManager
         displaySubsystem.DisplayLine( 2, $"{node.Number}:{scriptName} saving" );
         session.SaveScript( scriptName, node, autoRun );
 
-        _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"{session.ResourceNameNodeCaption} saved script '{scriptName}' on node {node.Number};. " );
+        _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"{session.ResourceNameNodeCaption} embedded script '{scriptName}' on node {node.Number};. " );
     }
 
     /// <summary>   Saves the user script in non-volatile memory. </summary>
     /// <remarks>   2024-09-05.
-    /// Save validation is done after all scripts are saved. </remarks>
+    /// Save validation is done after all scripts are embedded. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>
     /// <param name="displaySubsystem"> A reference to a
@@ -163,18 +163,18 @@ public static partial class FirmwareManager
             if ( script.FirmwareScript.IsBootScript )
                 bootScript = script;
 
-            if ( script.Loaded && !script.Saved )
+            if ( script.Loaded && !script.Embedded )
                 displaySubsystem.SaveUserScript( script );
 #if false
             if ( script.Loaded )
             {
             session.SetLastAction( $"checking if save is required for '{script.Name}' on node {script.Node.Number}" );
-                // TODO: Replace scripts.IsSaveRequired( session, script )  with script.IsSavedRequired()
+                // TODO: Replace scripts.IsEmbedRequired( session, script )  with script.IsEmbeddedRequired()
 
-                bool isSaveRequired = scripts.IsSaveRequired( session, script );
-                resetRequired = resetRequired || isSaveRequired;
+                bool isEmbedRequired = scripts.IsEmbedRequired( session, script );
+                resetRequired = resetRequired || isEmbedRequired;
 
-                if ( isSaveRequired )
+                if ( isEmbedRequired )
                     displaySubsystem.SaveUserScript( script );
             }
 #endif
@@ -182,7 +182,7 @@ public static partial class FirmwareManager
 
         session.SetLastAction( "reading the scripts state after saving" );
         scripts.ReadScriptsState( session );
-        bool success = scripts.AllSaved();
+        bool success = scripts.AllEmbedded();
         if ( success )
             scripts.Node.BootScriptSaveRequired = false;
 
@@ -212,7 +212,7 @@ public static partial class FirmwareManager
         if ( success )
         {
             if ( bootScript is null )
-                displaySubsystem.DisplayLine( 2, $"All scripts saved on node {scripts.Node.Number}" );
+                displaySubsystem.DisplayLine( 2, $"All scripts embedded on node {scripts.Node.Number}" );
             else
             {
                 // query operation completion throw if reply is not 1.

@@ -27,7 +27,7 @@ public class ReadingStatus : ReadingValue
     #region " values "
 
     /// <summary> Gets the Status Value. </summary>
-    /// <remarks> Handles the case where the status value was saved as infinite. </remarks>
+    /// <remarks> Handles the case where the status value is infinite. </remarks>
     /// <value> The Status Value. </value>
     public long? StatusValue => this.Value.HasValue ? ( long ) (this.Value.Value < 0d ? 0d : this.Value.Value > long.MaxValue ? long.MaxValue : this.Value.Value) : new long?();
 

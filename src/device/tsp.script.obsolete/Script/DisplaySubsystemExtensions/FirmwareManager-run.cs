@@ -38,7 +38,7 @@ public static partial class FirmwareManager
         if ( session.IsNil( script ) )
         {
             script.Loaded = false;
-            script.Saved = false;
+            script.Embedded = false;
             script.Activated = false;
             return (false, $"failed running {script.Name} because it does not exist;. {Environment.NewLine}{new StackFrame( true ).UserCallStack()}");
         }
@@ -70,7 +70,7 @@ public static partial class FirmwareManager
             if ( script.FirmwareScript.Namespaces is not null && script.FirmwareScript.Namespaces.Length > 0
                 && session.IsNil( script.Node.IsController, script.Node.Number, script.FirmwareScript.Namespaces ) )
             {
-                script.Saved = false;
+                script.Embedded = false;
                 script.Activated = false;
 
                 // if not a visa error, report the specific namespaces.

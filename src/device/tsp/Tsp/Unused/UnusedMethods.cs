@@ -8,7 +8,7 @@ internal static class UnusedMethods
 
     /// <summary>
     /// A <see cref="Pith.SessionBase"/> extension method that loads the script from the deploy file
-    /// and saves it to non-volatile memory.
+    /// and embeds it to non-volatile memory.
     /// </summary>
     /// <remarks>   2025-04-15. </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
@@ -19,7 +19,7 @@ internal static class UnusedMethods
     /// <param name="scriptInfo">   Information describing the script. </param>
     /// <param name="folderPath">   Full pathname of the folder file. </param>
     /// <param name="lineDelay">    The line delay. </param>
-    public static void ImportSaveToNvm( this Pith.SessionBase session, ScriptInfo scriptInfo, string folderPath, TimeSpan lineDelay )
+    public static void ImportEmbed( this Pith.SessionBase session, ScriptInfo scriptInfo, string folderPath, TimeSpan lineDelay )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( scriptInfo is null ) throw new ArgumentNullException( nameof( scriptInfo ) );
@@ -37,7 +37,7 @@ internal static class UnusedMethods
 
         session.RunScript( scriptInfo.Title, scriptInfo.VersionGetterElement );
 
-        session.SaveScript( scriptInfo.Title );
+        session.EmbedScript( scriptInfo.Title, scriptInfo.EmbedAsByteCode, false );
 
         session.RunScript( scriptInfo.Title, scriptInfo.VersionGetterElement );
     }

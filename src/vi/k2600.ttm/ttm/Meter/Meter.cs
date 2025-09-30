@@ -980,7 +980,7 @@ public partial class Meter : CommunityToolkit.Mvvm.ComponentModel.ObservableObje
     } = string.Empty;
 
     /// <summary>
-    /// Queries the embedded firmware version from a remote node and saves it to
+    /// Queries the embedded firmware version from a remote node and adds it to
     /// <see cref="FirmwareReleasedVersion">the firmware version cache.</see>
     /// </summary>
     /// <remarks> David, 2020-10-12. </remarks>

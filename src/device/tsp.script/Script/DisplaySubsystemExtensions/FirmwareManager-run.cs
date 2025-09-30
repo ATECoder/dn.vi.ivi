@@ -38,7 +38,7 @@ public static partial class FirmwareManager
         if ( session.IsNil( script ) )
         {
             script.Loaded = false;
-            script.Saved = false;
+            script.Embedded = false;
             script.Activated = false;
             return (false, $"failed running {script.Name} because it does not exist;. {Environment.NewLine}{new StackFrame( true ).UserCallStack()}");
         }
@@ -70,7 +70,7 @@ public static partial class FirmwareManager
             if ( script.FirmwareVersionGetter is not null && script.FirmwareVersionGetter.Length > 0
                 && session.IsNil( script.Node.IsController, script.Node.Number, script.FirmwareVersionGetter.TrimEnd( ['(', ')'] ) ) )
             {
-                script.Saved = false;
+                script.Embedded = false;
                 script.Activated = false;
                 _ = builder.AppendLine( $"{session.ResourceNameNodeCaption} namespace {script.FirmwareVersionGetter.TrimEnd( ['(', ')'] )} is nil;. " );
                 displaySubsystem.DisplayLine( 2, $"{script.Name}{session.LastNodeNumberCaption} missing version getter" );

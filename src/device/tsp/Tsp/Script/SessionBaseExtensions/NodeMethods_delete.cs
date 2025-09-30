@@ -50,7 +50,7 @@ public static partial class NodeMethods
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( scriptName is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
 
-        session.RemoveSavedScript( nodeNumber, scriptName );
+        session.DeleteEmbeddedScript( nodeNumber, scriptName );
 
         session.RemoveUserScript( nodeNumber, scriptName );
 

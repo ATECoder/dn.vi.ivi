@@ -148,7 +148,7 @@ public static partial class FirmwareManager
                         else
                         {
                             script.Activated = false;
-                            script.Saved = false;
+                            script.Embedded = false;
                             script.EmbeddedFirmwareVersion = string.Empty;
                             script.HasFirmwareVersionGetter = false;
                             _ = builder.AppendLine( $"{session.ResourceNameNodeCaption} script '{script.Name}' not found after running on node {script.Node.Number}." );
@@ -158,7 +158,7 @@ public static partial class FirmwareManager
                     catch ( Exception ex )
                     {
                         script.Activated = false;
-                        script.Saved = false;
+                        script.Embedded = false;
                         script.EmbeddedFirmwareVersion = string.Empty;
                         script.HasFirmwareVersionGetter = false;
                         script.LastScriptManagerActions = $"Exception occurred running script: {ex}.";

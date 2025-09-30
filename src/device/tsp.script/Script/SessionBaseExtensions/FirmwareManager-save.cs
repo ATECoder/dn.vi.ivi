@@ -5,8 +5,8 @@ namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 public static partial class FirmwareManager
 {
     /// <summary>
-    /// Saves the specifies script to non-volatile memory, fetch the save scripts and verify that the
-    /// script was saved.
+    /// Embeds the specifies script to non-volatile memory, fetch the embedded scripts and verify that the
+    /// script was embedded.
     /// </summary>
     /// <remarks>   2024-09-05. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
@@ -15,7 +15,7 @@ public static partial class FirmwareManager
     /// <param name="scriptName">   Gets or sets the script name. </param>
     /// <param name="autoRun">      True to set the script to automatically run. </param>
     /// <returns>   <c>true</c> is script exist; otherwise, <c>false</c>. </returns>
-    public static (bool Saved, string SavedScriptNames, List<string> AuthorScriptNames) SaveScriptAndVerify( this Pith.SessionBase session, string scriptName, bool autoRun )
+    public static (bool Embedded, string EmbeddedScriptNames, List<string> AuthorScriptNames) EmbedScriptAndVerify( this Pith.SessionBase session, string scriptName, bool autoRun )
     {
         if ( scriptName is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
@@ -23,15 +23,15 @@ public static partial class FirmwareManager
         if ( autoRun )
             session.TurnOnAutoRun( scriptName );
 
-        session.SaveScript( scriptName );
+        session.EmbedScript( scriptName );
 
         // fetch names
-        (string scriptNames, List<string> authorScripts) = FirmwareManager.FetchSavedScriptsNames( session );
+        (string scriptNames, List<string> authorScripts) = FirmwareManager.FetchEmbeddedScriptsNames( session );
 
         return (FirmwareScriptBase.ScriptNameExists( scriptNames, scriptName ), scriptNames, authorScripts);
     }
 
-    /// <summary>   A Pith.SessionBase extension method that saves a script. </summary>
+    /// <summary>   A Pith.SessionBase extension method that embeds a script. </summary>
     /// <remarks>   2024-09-20. </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
     ///                                                 are null. </exception>
@@ -40,8 +40,8 @@ public static partial class FirmwareManager
     /// <param name="session">      The session. </param>
     /// <param name="scriptName">   Gets or sets the script name. </param>
     /// <param name="autoRun">      True to set the script to automatically run. </param>
-    /// <param name="skipSaved">    (Optional) [false] True if to skip if the script was already saved. </param>
-    public static void SaveScript( this Pith.SessionBase session, string scriptName, bool autoRun, bool skipSaved = false )
+    /// <param name="skipEmbedded">    (Optional) [false] True if to skip if the script was already embedded. </param>
+    public static void EmbedScript( this Pith.SessionBase session, string scriptName, bool autoRun, bool skipEmbedded = false )
     {
         if ( scriptName is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
@@ -56,8 +56,8 @@ public static partial class FirmwareManager
             _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay );
         }
 
-        if ( session.IsSavedScript( scriptName ) && !skipSaved )
-            throw new InvalidOperationException( $"The script {scriptName} is already saved." );
+        if ( session.IsEmbeddedScript( scriptName ) && !skipEmbedded )
+            throw new InvalidOperationException( $"The script {scriptName} is already embedded." );
 
         session.SetLastAction( $"saving script '{scriptName}'" );
         // _ = session.WriteLine( $"{scriptName}.save()" );
@@ -71,7 +71,7 @@ public static partial class FirmwareManager
         session.ThrowDeviceExceptionIfError();
     }
 
-    /// <summary>   A Pith.SessionBase extension method that saves a script. </summary>
+    /// <summary>   A Pith.SessionBase extension method that embeds a script. </summary>
     /// <remarks>   2024-11-23. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>
@@ -79,7 +79,7 @@ public static partial class FirmwareManager
     /// <param name="scriptName">   Gets or sets the script name. </param>
     /// <param name="node">         The node. </param>
     /// <param name="autoRun">      True to set the script to automatically run. </param>
-    public static void SaveScript( this Pith.SessionBase session, string scriptName, NodeEntityBase node, bool autoRun )
+    public static void EmbedScript( this Pith.SessionBase session, string scriptName, NodeEntityBase node, bool autoRun )
     {
         if ( scriptName is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
@@ -90,7 +90,7 @@ public static partial class FirmwareManager
             if ( autoRun )
                 session.TurnOnAutoRun( scriptName );
 
-            session.SaveScript( scriptName );
+            session.EmbedScript( scriptName );
         }
         else
         {

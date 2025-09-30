@@ -27,7 +27,7 @@ public class ScriptEntity( FirmwareScriptBase firmwareScript, NodeEntityBase nod
         this.Loaded = script.Loaded;
         this.Node = script.Node;
         this.RequiresDeletion = script.RequiresDeletion;
-        this.Saved = script.Saved;
+        this.Embedded = script.Embedded;
         this.VersionStatus = script.VersionStatus;
     }
 }

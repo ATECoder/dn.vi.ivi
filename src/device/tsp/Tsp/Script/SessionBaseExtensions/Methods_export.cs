@@ -93,7 +93,7 @@ public static partial class SessionBaseExtensionMethods
     }
 
     /// <summary>
-    /// A <see cref="Pith.SessionBase"/> extension method that export saved scripts.
+    /// A <see cref="Pith.SessionBase"/> extension method that export embedded scripts.
     /// </summary>
     /// <remarks>   2025-05-08. </remarks>
     /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
@@ -108,7 +108,7 @@ public static partial class SessionBaseExtensionMethods
     /// <param name="fileFormat">               The file format. </param>
     /// <param name="consoleOut">               (Optional) True to console out. </param>
     /// <param name="validate">                 (Optional) True to validate. </param>
-    public static void ExportSavedScripts( this Pith.SessionBase session, IScriptCompressor compressor, IScriptEncryptor encryptor,
+    public static void ExportEmbeddedScripts( this Pith.SessionBase session, IScriptCompressor compressor, IScriptEncryptor encryptor,
         VersionInfoBase versionInfo, List<string[]> frameworkScripts, List<string[]> frameworkVersionGetters,
         string topPath, ScriptFormats fileFormat, bool consoleOut = false, bool validate = true )
     {
@@ -119,10 +119,10 @@ public static partial class SessionBaseExtensionMethods
         if ( string.IsNullOrWhiteSpace( topPath ) )
             topPath = System.IO.Path.GetTempPath();
 
-        string savedScriptsNames = session.FetchSavedScriptsNames().Trim();
+        string embeddedScriptsNames = session.FetchEmbeddedScriptsNames().Trim();
 
-        string message = "No saved scripts were found.";
-        if ( string.IsNullOrWhiteSpace( savedScriptsNames ) )
+        string message = "No embedded scripts were found.";
+        if ( string.IsNullOrWhiteSpace( embeddedScriptsNames ) )
         {
             if ( consoleOut )
                 SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
@@ -146,7 +146,7 @@ public static partial class SessionBaseExtensionMethods
                 _ = Directory.CreateDirectory( folderPath );
 
 
-            foreach ( string scriptName in savedScriptsNames.Split( ',' ) )
+            foreach ( string scriptName in embeddedScriptsNames.Split( ',' ) )
             {
                 string scriptTitle = scriptName.Trim();
                 message = $"Fetching '{scriptTitle}'";

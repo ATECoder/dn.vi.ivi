@@ -57,8 +57,8 @@ public static partial class SessionBaseExtensionMethods
             session.TurnOffAutoRun( scriptName );
         }
 
-        // removes the saved script from the catalog of saved scripts. 
-        session.RemoveSavedScript( scriptName );
+        // removes the embedded script from the catalog of embedded scripts.
+        session.RemoveEmbeddedScript( scriptName );
 
         // remove the script from the list of user scripts.
         session.RemoveUserScript( scriptName );
@@ -68,8 +68,7 @@ public static partial class SessionBaseExtensionMethods
     }
 
     /// <summary>
-    /// A <see cref="Pith.SessionBase"/> extension method that deletes the saved scripts described by
-    /// session.
+    /// A <see cref="Pith.SessionBase"/> extension method that deletes the embedded scripts.
     /// </summary>
     /// <remarks>   2025-05-13. </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
@@ -79,7 +78,7 @@ public static partial class SessionBaseExtensionMethods
     /// <param name="session">      The session. </param>
     /// <param name="prefixFilter"> (Optional) A filter specifying the prefix. </param>
     /// <returns>   A tuple: TTM embedded script count, Deleted Scripts count). </returns>
-    public static (int TtmScriptCount, int deletedScriptCount) DeleteSavedScripts( this SessionBase session, string prefixFilter = "isr_" )
+    public static (int TtmScriptCount, int deletedScriptCount) DeleteEmbeddedScripts( this SessionBase session, string prefixFilter = "isr_" )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
@@ -87,10 +86,10 @@ public static partial class SessionBaseExtensionMethods
         session.TraceLastAction( "enabling service request on operation completion" );
         session.EnableServiceRequestOnOperationCompletion();
 
-        string savedScripts = session.FetchSavedScriptsNames();
+        string embeddedScripts = session.FetchEmbeddedScriptsNames();
 
         int removedCount = 0;
-        string[] scriptNames = savedScripts.Split( ',' );
+        string[] scriptNames = embeddedScripts.Split( ',' );
         int scriptCount = scriptNames.Length;
 
         session.DisplayLine( "Deleting scripts", 1 );

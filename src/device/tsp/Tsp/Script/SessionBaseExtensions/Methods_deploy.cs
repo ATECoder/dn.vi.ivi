@@ -31,7 +31,7 @@ public static partial class SessionBaseExtensionMethods
     /// the instrument starts.
     /// </summary>
     /// <remarks>   2025-04-22. <para>
-    /// The script must be saved to make this so. </para> </remarks>
+    /// The script must be embedded to make this so. </para> </remarks>
     /// <param name="session">      The session. </param>
     /// <param name="scriptName">   Name of the script. </param>
     public static void TurnOffAutoRun( this SessionBase session, string scriptName )
@@ -54,7 +54,7 @@ public static partial class SessionBaseExtensionMethods
     /// </summary>
     /// <remarks>
     /// 2025-04-22. <para>
-    /// The script must be saved to make this so. </para>
+    /// The script must be embedded to make this so. </para>
     /// </remarks>
     /// <param name="session">      The session. </param>
     /// <param name="scriptName">   Name of the script. </param>
@@ -202,9 +202,9 @@ public static partial class SessionBaseExtensionMethods
                     embeddedScript.ScriptStatus |= ScriptStatuses.ByteCode;
             }
 
-            if ( session.IsSavedScript( script.Title ) )
+            if ( session.IsScriptEmbedded( script.Title ) )
             {
-                embeddedScript.ScriptStatus |= ScriptStatuses.Saved;
+                embeddedScript.ScriptStatus |= ScriptStatuses.Embedded;
             }
         }
         embeddedScript.VersionStatus = SessionBaseExtensionMethods.ParseFirmwareVersionStatis( embeddedScript );

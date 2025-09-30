@@ -26,7 +26,7 @@ Table of Contents
 		* [Updating the Firmware]
 			* [Unload Existing Firmware]
 			* [Load New Firmware]
-			* [Save to Non Volatile Memory]
+			* [Embed to Non Volatile Memory]
 			* [Testing Persistence of Firmware]
 * [Testing]
 	* [Configuring a TTM Test]
@@ -54,11 +54,11 @@ The ISR Thermal Transient Meter comes already installed with the TTM Firmware. T
 
 Saving and Volatile and Non-Volatile Memory
 
-When updated, the TTM Firmware exists in the instrument volatile memory. Scripts residing in volatile memory are erased when turning off the Driver. The TTM Console is capable of saving the TTM Firmware in non-volatile memory. Scripts saved in non-volatile memory persist in the Driver.
+When updated, the TTM Firmware exists in the instrument volatile memory. Scripts residing in volatile memory are erased when turning off the Driver. The TTM Console is capable of saving the TTM Firmware in non-volatile memory. Scripts embedded in non-volatile memory persist in the Driver.
 
 Startup (boot) Firmware
 
-When starting the TTM instrument, the instrument panel displays the Thermal Transient Meter 'welcome message. In addition, the TTM Firmware is initiated to prepare the instrument for measurement. This is done by the TTM Startup or bootstrap script. The startup script is saved in non-volatile memory when saving the TTM Firmware to non-volatile memory.  
+When starting the TTM instrument, the instrument panel displays the Thermal Transient Meter 'welcome message. In addition, the TTM Firmware is initiated to prepare the instrument for measurement. This is done by the TTM Startup or bootstrap script. The startup script is embedded in non-volatile memory when saving the TTM Firmware to non-volatile memory.  
 
 ### Requirements
 
@@ -127,10 +127,10 @@ At times, especially when using a USB GPIB adaptor, VISA loses track of the avai
 ### Notes
 
 *   When connecting, the program queries the instrument for the current firmware revision and displays the firmware status under the _FIRMWARE_ tab.
-*   The TTM firmware can be unloaded (removed from the instrument), loaded, and saved to permanent memory from the _FIRMWARE_ tab.
+*   The TTM firmware can be unloaded (removed from the instrument), loaded, and embedded to permanent memory from the _FIRMWARE_ tab.
 *   A good practice when updating firmware is to disconnect and toggle the instrument power after deleting scripts.
 *   Firmware resides in volatile memory after it is loaded using the _LOAD FIRMWARE_ button. Firmware residing in volatile memory is cleared when the instrument is turned off.
-*   For using the instrument in its stand alone mode, save the firmware into permanent (non-volatile) memory after loading.
+*   For using the instrument in its stand alone mode, embed the firmware into permanent (non-volatile) memory after loading.
 *   Once the firmware is loaded, the program enables the measurement controls on the _Measurement_ Tab.
 
 ### Updating the Firmware
@@ -151,12 +151,12 @@ At times, especially when using a USB GPIB adaptor, VISA loses track of the avai
 *   Click the _LOAD FIRMWARE_ button;
 *   Allow time for the firmware to load.
 *   Once loaded, the current version of the firmware will be displayed in the _INSTALLED VERSION_ text box. This version should match the version listed in the _RELEASED VERSION_ text box. At this point, the firmware resides in volatile memory and will be cleared when the instrument is turned off;
-*   Also, the _SAVE FIRMWARE_ button will be enabled.
+*   Also, the _EMBED FIRMWARE_ button will be enabled.
 
-### Save to Non Volatile Memory
+### Embed to Non Volatile Memory
 
-*   Click _SAVE FIRMWARE_. This will save the firmware in non-volatile memory. Firmware residing in non-volatile memory persists after the instrument power is toggled;
-*   Allow time for the firmware to be saved into non-volatile memory;
+*   Click _EMBED FIRMWARE_. This will embed the firmware in non-volatile memory. Firmware residing in non-volatile memory persists after the instrument power is toggled;
+*   Allow time for the firmware to be embedded into non-volatile memory;
 *   You can now proceed with measurements.
 
 ### Testing Persistence of Firmware

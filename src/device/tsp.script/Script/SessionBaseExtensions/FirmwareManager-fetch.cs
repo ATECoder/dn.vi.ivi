@@ -6,7 +6,7 @@ namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
 public static partial class FirmwareManager
 {
-    #region " fetch saved scripts names "
+    #region " fetch embedded scripts names "
 
     /// <summary>
     /// Loads the 'printUserScriptNames' function and return the function scriptName. The function is
@@ -141,20 +141,20 @@ public static partial class FirmwareManager
 
     #endregion
 
-    #region " fetch saved scripts names "
+    #region " fetch embedded scripts names "
 
     /// <summary>
-    /// Fetches the names of the saved scripts. </summary>
+    /// Fetches the names of the embedded scripts. </summary>
     /// <remarks>   2024-09-05. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>
     /// <param name="session">  The session. </param>
-    /// <returns>   The saved scripts. </returns>
-    public static (string SavedScripts, List<string> SavedAuthorScripts) FetchSavedScriptsNames( Pith.SessionBase? session )
+    /// <returns>   The embedded scripts. </returns>
+    public static (string EmbeddedScripts, List<string> EmbeddedAuthorScripts) FetchEmbeddedScriptsNames( Pith.SessionBase? session )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
 
-        string scriptNames = session.FetchSavedScriptsNames();
+        string scriptNames = session.FetchEmbeddedScriptsNames();
 
         List<string> authorScripts = [];
         if ( !string.IsNullOrWhiteSpace( scriptNames ) )
@@ -170,20 +170,20 @@ public static partial class FirmwareManager
         return (scriptNames, authorScripts);
     }
 
-    /// <summary>   Fetches the names of the saved scripts. </summary>
+    /// <summary>   Fetches the names of the embedded scripts. </summary>
     /// <remarks>   2024-09-09. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>
     /// <param name="session">  The session. </param>
     /// <param name="node">     Specifies a node on which to operate; null if this is the controller node. </param>
-    /// <returns>   The saved scripts. </returns>
-    public static (string SavedScripts, List<string> AuthorScripts) FetchSavedScriptsNames( this Pith.SessionBase? session, NodeEntityBase? node )
+    /// <returns>   The embedded scripts. </returns>
+    public static (string EmbeddedScripts, List<string> AuthorScripts) FetchEmbeddedScriptsNames( this Pith.SessionBase? session, NodeEntityBase? node )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( node is null ) throw new ArgumentNullException( nameof( node ) );
         string scriptNames;
         List<string> authorScripts = [];
-        session.SetLastAction( "fetching saved scripts" );
+        session.SetLastAction( "fetching embedded scripts" );
         session.LastNodeNumber = node.Number;
         if ( node is null || node.IsController )
             _ = session.WriteLine( "do {0} print( names ) end ", Syntax.Tsp.Script.ScriptCatalogGetterCommand );

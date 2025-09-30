@@ -79,31 +79,31 @@ public abstract class ScriptManagerBase( Tsp.StatusSubsystemBase statusSubsystem
 
     #endregion
 
-    #region " saved user script names "
+    #region " embedded user script names "
 
-    /// <summary>   Fetches the saved user script names from the non-volatile user script catalog. </summary>
+    /// <summary>   Fetches the embedded user script names from the non-volatile user script catalog. </summary>
     /// <remarks>   2024-09-10. </remarks>
-    public int FetchSavedUserScriptNames()
+    public int FetchEmbeddedUserScriptNames()
     {
-        string savedScriptNames;
+        string embeddedScriptNames;
         if ( this.ScriptEntities is null )
-            savedScriptNames = this.Session.FetchSavedScriptsNames();
+            embeddedScriptNames = this.Session.FetchEmbeddedScriptsNames();
         else
         {
-            this.ScriptEntities!.FetchSavedScriptsNames( this.Session );
-            savedScriptNames = this.ScriptEntities.SavedScriptNames;
+            this.ScriptEntities!.FetchEmbeddedScriptsNames( this.Session );
+            embeddedScriptNames = this.ScriptEntities.EmbeddedScriptNames;
         }
-        if ( string.IsNullOrWhiteSpace( savedScriptNames ) )
-            this.SavedUserScriptNames = [];
+        if ( string.IsNullOrWhiteSpace( embeddedScriptNames ) )
+            this.EmbeddedUserScriptNames = [];
         else
-            this.SavedUserScriptNames = savedScriptNames.Split( ',' );
+            this.EmbeddedUserScriptNames = embeddedScriptNames.Split( ',' );
 
-        return this.SavedUserScriptNames.Length;
+        return this.EmbeddedUserScriptNames.Length;
     }
 
-    /// <summary>   Returns the list of saved user script names. </summary>
-    /// <value> the list of saved user script names. </value>
-    public string[] SavedUserScriptNames { get; private set; } = [];
+    /// <summary>   Returns the list of embedded user script names. </summary>
+    /// <value> the list of embedded user script names. </value>
+    public string[] EmbeddedUserScriptNames { get; private set; } = [];
 
     /// <summary>   Fetches the loaded script names from the user script catalog. </summary>
     /// <remarks>   2024-09-10. </remarks>
@@ -153,53 +153,53 @@ public abstract class ScriptManagerBase( Tsp.StatusSubsystemBase statusSubsystem
 
     #region " find script "
 
-    /// <summary>   Checks if the specified script allSaved as a saved script in the <see cref="ScriptEntityBaseCollection{ScriptEntityBase}.SavedScriptNames"/>. </summary>
+    /// <summary>   Checks if the specified script allEmbedded as a embedded script in the <see cref="ScriptEntityBaseCollection{ScriptEntityBase}.EmbeddedScriptNames"/>. </summary>
     /// <remarks>   2024-09-05. </remarks>
     /// <param name="scriptName">           Specifies the script name. </param>
-    /// <param name="refreshScriptCatalog"> (Optional) True to refresh the list of saved scripts. </param>
+    /// <param name="refreshScriptCatalog"> (Optional) True to refresh the list of embedded scripts. </param>
     /// <returns>
-    /// <c>true</c> if the specified script allSaved as a saved script; otherwise, <c>false</c>.
+    /// <c>true</c> if the specified script allEmbedded as a embedded script; otherwise, <c>false</c>.
     /// </returns>
-    public bool LastSavedScriptExists( string scriptName, bool refreshScriptCatalog = false )
+    public bool LastEmbeddedScriptExists( string scriptName, bool refreshScriptCatalog = false )
     {
-        return this.NodeScripts[this.ScriptEntities!.ControllerNodeNumber].SavedScriptExists( this.Session, scriptName, refreshScriptCatalog );
+        return this.NodeScripts[this.ScriptEntities!.ControllerNodeNumber].EmbeddedScriptExists( this.Session, scriptName, refreshScriptCatalog );
     }
 
     /// <summary>
-    /// Returns <c>true</c> if the specified script allSaved as a saved script in the remote <see cref="ScriptEntityBaseCollection{ScriptEntityBase}.SavedScriptNames"/>.
+    /// Returns <c>true</c> if the specified script allEmbedded as a embedded script in the remote <see cref="ScriptEntityBaseCollection{ScriptEntityBase}.EmbeddedScriptNames"/>.
     /// </summary>
     /// <remarks>   2024-09-05. </remarks>
     /// <param name="scriptName">           Specifies the script name. </param>
     /// <param name="node">                 Specifies the node to validate. </param>
-    /// <param name="refreshScriptCatalog"> (Optional) True to refresh the list of saved scripts. </param>
+    /// <param name="refreshScriptCatalog"> (Optional) True to refresh the list of embedded scripts. </param>
     /// <returns>
-    /// <c>true</c> if the specified script allSaved as a saved script on the remote node;
+    /// <c>true</c> if the specified script allEmbedded as a embedded script on the remote node;
     /// otherwise, <c>false</c>.
     /// </returns>
-    public bool LastSavedScriptExists( string scriptName, NodeEntityBase node, bool refreshScriptCatalog = false )
+    public bool LastEmbeddedScriptExists( string scriptName, NodeEntityBase node, bool refreshScriptCatalog = false )
     {
         ScriptEntityBaseCollection<ScriptEntityBase> scripts = this.NodeScripts[node.Number];
-        return scripts.SavedScriptExists( this.Session, scriptName, refreshScriptCatalog );
+        return scripts.EmbeddedScriptExists( this.Session, scriptName, refreshScriptCatalog );
     }
 
-    /// <summary>   Returns <c>true</c> if the specified script allSaved as a saved script. </summary>
+    /// <summary>   Returns <c>true</c> if the specified script allEmbedded as a embedded script. </summary>
     /// <remarks>   2024-09-05. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>
     /// <param name="scriptName">           Specifies the script name. </param>
     /// <param name="node">                 Specifies the node to validate. </param>
-    /// <param name="refreshScriptCatalog"> True to refresh the list of saved scripts. </param>
+    /// <param name="refreshScriptCatalog"> True to refresh the list of embedded scripts. </param>
     /// <returns>
-    /// <c>true</c> if the specified script allSaved as a saved script; otherwise,
+    /// <c>true</c> if the specified script allEmbedded as a embedded script; otherwise,
     /// <c>false</c>.
     /// </returns>
-    public bool SavedScriptExists( string scriptName, NodeEntityBase node, bool refreshScriptCatalog )
+    public bool EmbeddedScriptExists( string scriptName, NodeEntityBase node, bool refreshScriptCatalog )
     {
         return node is null
             ? throw new ArgumentNullException( nameof( node ) )
             : node.IsController
-                ? this.LastSavedScriptExists( scriptName, refreshScriptCatalog )
-                : this.LastSavedScriptExists( scriptName, node, refreshScriptCatalog );
+                ? this.LastEmbeddedScriptExists( scriptName, refreshScriptCatalog )
+                : this.LastEmbeddedScriptExists( scriptName, node, refreshScriptCatalog );
     }
 
     #endregion
@@ -364,33 +364,33 @@ public abstract class ScriptManagerBase( Tsp.StatusSubsystemBase statusSubsystem
                     ?? throw new NativeException( "Failed selecting serial number script." );
     }
 
-    /// <summary> The firmware allSaved. </summary>
+    /// <summary> The firmware allEmbedded. </summary>
     private bool? _firmwareExists;
 
-    /// <summary>   Gets or sets the firmware allSaved. </summary>
-    /// <value> The firmware allSaved. </value>
+    /// <summary>   Gets or sets the firmware allEmbedded. </summary>
+    /// <value> The firmware allEmbedded. </value>
     public bool? FirmwareExists
     {
         get => this._firmwareExists;
         set => _ = this.SetProperty( ref this._firmwareExists, value );
     }
 
-    /// <summary>   Checks if firmware allSaved on the controller node. </summary>
+    /// <summary>   Checks if firmware allEmbedded on the controller node. </summary>
     /// <remarks>   2024-09-05. </remarks>
     /// <exception cref="NativeException">  Thrown when a Native error condition occurs. </exception>
-    /// <returns>   <c>true</c> if the firmware allSaved; otherwise, <c>false</c>. </returns>
+    /// <returns>   <c>true</c> if the firmware allEmbedded; otherwise, <c>false</c>. </returns>
     public bool FindFirmware()
     {
         if ( this.ScriptEntities is null ) throw new NativeException( $"{nameof( this.ScriptEntities )} must not be null." );
         return this.FindFirmware( this.ScriptEntities.Node );
     }
 
-    /// <summary>   Checks if the main firmware allSaved . </summary>
+    /// <summary>   Checks if the main firmware allEmbedded . </summary>
     /// <remarks>   Value is cached in the <see cref="FirmwareExists">sentinel</see> </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>
     /// <param name="node"> Specifies the node. </param>
-    /// <returns>   <c>true</c> if the firmware allSaved; otherwise, <c>false</c>. </returns>
+    /// <returns>   <c>true</c> if the firmware allEmbedded; otherwise, <c>false</c>. </returns>
     public bool FindFirmware( NodeEntityBase? node )
     {
         if ( node is null ) throw new ArgumentNullException( nameof( node ) );
@@ -403,7 +403,7 @@ public abstract class ScriptManagerBase( Tsp.StatusSubsystemBase statusSubsystem
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>
     /// <param name="node"> Specifies the node. </param>
-    /// <returns>   <c>true</c> if the Support Firmware Script allSaved; otherwise, <c>false</c>. </returns>
+    /// <returns>   <c>true</c> if the Support Firmware Script allEmbedded; otherwise, <c>false</c>. </returns>
     public string? SupportScriptNameGetter( NodeEntityBase? node )
     {
         if ( this.ScriptEntities is null ) throw new NativeException( $"{nameof( this.ScriptEntities )} must not be null." );
@@ -414,32 +414,32 @@ public abstract class ScriptManagerBase( Tsp.StatusSubsystemBase statusSubsystem
 
     private bool? _supportScriptExists;
 
-    /// <summary>   Gets or sets the firmware allSaved. </summary>
-    /// <value> The Support Firmware Script allSaved 1. </value>
+    /// <summary>   Gets or sets the firmware allEmbedded. </summary>
+    /// <value> The Support Firmware Script allEmbedded 1. </value>
     public bool? SupportScriptExists1
     {
         get => this._supportScriptExists;
         set => _ = this.SetProperty( ref this._supportScriptExists, value );
     }
 
-    /// <summary>   Checks if the Support Firmware Script allSaved on the controller node. </summary>
+    /// <summary>   Checks if the Support Firmware Script allEmbedded on the controller node. </summary>
     /// <remarks>   2024-09-05. </remarks>
     /// <exception cref="NativeException">  Thrown when a Native error condition occurs. </exception>
-    /// <returns>   <c>true</c> if the Support Firmware Script allSaved; otherwise, <c>false</c>. </returns>
+    /// <returns>   <c>true</c> if the Support Firmware Script allEmbedded; otherwise, <c>false</c>. </returns>
     public bool FindSupportScript()
     {
         if ( this.ScriptEntities is null ) throw new NativeException( $"{nameof( this.ScriptEntities )} must not be null." );
         return this.FindSupportScript( this.ScriptEntities.Node );
     }
 
-    /// <summary>   Checks if the Support Firmware Script allSaved. </summary>
+    /// <summary>   Checks if the Support Firmware Script allEmbedded. </summary>
     /// <remarks>   2024-09-05. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>
     /// <exception cref="NativeException">          Thrown when a Native error condition occurs. </exception>
     /// <param name="node">     Specifies the node. </param>
     /// <returns>
-    /// <c>true</c> if the Support Firmware Script allSaved; otherwise, <c>false</c>.
+    /// <c>true</c> if the Support Firmware Script allEmbedded; otherwise, <c>false</c>.
     /// </returns>
     public bool FindSupportScript( NodeEntityBase? node )
     {
@@ -459,24 +459,24 @@ public abstract class ScriptManagerBase( Tsp.StatusSubsystemBase statusSubsystem
         return this.ScriptEntities.QueryFirmwareVersions( this.Session );
     }
 
-    /// <summary>   Checks if all scripts were saved. </summary>
+    /// <summary>   Checks if all scripts were embedded. </summary>
     /// <remarks>   2024-09-05. </remarks>
     /// <exception cref="NativeException">  Thrown when a Native error condition occurs. </exception>
-    /// <param name="refreshScriptCatalog"> Specifies the condition for updating the catalog of saved
+    /// <param name="refreshScriptCatalog"> Specifies the condition for updating the catalog of embedded
     ///                                     scripts before checking the status of these scripts. </param>
-    /// <returns>   <c>true</c> if all scripts were saved; otherwise, <c>false</c>. </returns>
-    public bool AllScriptsSaved( bool refreshScriptCatalog )
+    /// <returns>   <c>true</c> if all scripts were embedded; otherwise, <c>false</c>. </returns>
+    public bool AllScriptsEmbedded( bool refreshScriptCatalog )
     {
         if ( this.NodeScripts is null ) throw new NativeException( $"{nameof( this.NodeScripts )} must not be null." );
-        bool allSaved = true;
+        bool allEmbedded = true;
         foreach ( ScriptEntityCollection scripts in this.NodeScripts.Values )
         {
             if ( refreshScriptCatalog )
                 scripts.ReadScriptsState( this.Session );
-            allSaved = allSaved && scripts.AllSaved();
-            if ( !allSaved ) break;
+            allEmbedded = allEmbedded && scripts.AllEmbedded();
+            if ( !allEmbedded ) break;
         }
-        return allSaved;
+        return allEmbedded;
     }
 
     /// <summary>   Reads scripts state. </summary>
@@ -512,10 +512,10 @@ public abstract class ScriptManagerBase( Tsp.StatusSubsystemBase statusSubsystem
         return allExist;
     }
 
-    /// <summary>   Checks if any script allSaved on the controller node. </summary>
+    /// <summary>   Checks if any script allEmbedded on the controller node. </summary>
     /// <remarks>   2024-09-05. </remarks>
     /// <exception cref="NativeException">  Thrown when a Native error condition occurs. </exception>
-    /// <returns>   <c>true</c> if any script allSaved; otherwise, <c>false</c>. </returns>
+    /// <returns>   <c>true</c> if any script allEmbedded; otherwise, <c>false</c>. </returns>
     public bool AnyScriptExists()
     {
         if ( this.NodeScripts is null ) throw new NativeException( $"{nameof( this.NodeScripts )} must not be null." );
@@ -531,7 +531,7 @@ public abstract class ScriptManagerBase( Tsp.StatusSubsystemBase statusSubsystem
     /// <summary>   Returns <c>true</c> if any legacy scripts exist on the controller node. </summary>
     /// <remarks>   2024-09-05. </remarks>
     /// <exception cref="NativeException">  Thrown when a Native error condition occurs. </exception>
-    /// <returns>   <c>true</c> if any legacy script allSaved; otherwise, <c>false</c>. </returns>
+    /// <returns>   <c>true</c> if any legacy script allEmbedded; otherwise, <c>false</c>. </returns>
     public bool AnyLegacyScriptExists()
     {
         if ( this.NodeLegacyScripts is null ) throw new NativeException( $"{nameof( this.NodeLegacyScripts )} must not be null." );
@@ -608,7 +608,7 @@ public abstract class ScriptManagerBase( Tsp.StatusSubsystemBase statusSubsystem
     /// <param name="displaySubsystem"> A reference to a
     ///                                 <see cref="VI.Tsp.DisplaySubsystemBase">display
     ///                                 subsystem</see>. </param>
-    [Obsolete( "Use DeleteSavedUserScripts( displaySubsystem, confirmFunction) )" )]
+    [Obsolete( "Use DeleteEmbeddedUserScripts( displaySubsystem, confirmFunction) )" )]
     public virtual void DeleteUserScripts( StatusSubsystemBase statusSubsystem, DisplaySubsystemBase displaySubsystem )
     {
     }
@@ -623,7 +623,7 @@ public abstract class ScriptManagerBase( Tsp.StatusSubsystemBase statusSubsystem
     ///                                 subsystem</see>. </param>
     /// <param name="confirmFunction">  The confirm function; typically displays a dialog of Message,
     ///                                 Caption. </param>
-    [Obsolete( "Use DeleteSavedUserScripts( displaySubsystem, confirmFunction) )" )]
+    [Obsolete( "Use DeleteEmbeddedUserScripts( displaySubsystem, confirmFunction) )" )]
     public virtual void DeleteUserScripts( StatusSubsystemBase statusSubsystem, DisplaySubsystemBase displaySubsystem, Func<string, string, bool> confirmFunction )
     {
     }
@@ -656,7 +656,7 @@ public abstract class ScriptManagerBase( Tsp.StatusSubsystemBase statusSubsystem
     /// <param name="confirmFunction">  The confirm function; typically displays a dialog of Message,
     ///                                 Caption. </param>
     /// <returns>   <c>true</c> if uploaded; otherwise, <c>false</c>. </returns>
-    [Obsolete( "Use DeleteSavedUserScripts( displaySubsystem, accessSubsystem, confirmFunction) )" )]
+    [Obsolete( "Use DeleteEmbeddedUserScripts( displaySubsystem, accessSubsystem, confirmFunction) )" )]
     public virtual bool UploadUserScripts( StatusSubsystemBase statusSubsystem, DisplaySubsystemBase displaySubsystem,
         AccessSubsystemBase accessSubsystem, Func<string, string, bool> confirmFunction )
     {
