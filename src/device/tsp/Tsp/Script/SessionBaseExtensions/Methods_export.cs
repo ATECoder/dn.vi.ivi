@@ -9,12 +9,19 @@ public static partial class SessionBaseExtensionMethods
 
     /// <summary>   Gets temporary path. </summary>
     /// <remarks>   2025-06-03. </remarks>
-    /// <param name="subFolderName">    (optional) [RegisterTests] Pathname of the sub folder. </param>
+    /// <param name="subFolderName">    (optional) [SessionBaseExtensions] Pathname of the sub folder. </param>
+    /// <param name="subSubFolder">     (Optional) [Empty] Pathname of the sub folder. </param>
     /// <returns>   The temporary path. </returns>
-    public static string GetTempPath( string subFolderName = "SessionBaseExtensions" )
+    public static string GetTempPath( string subFolderName = "SessionBaseExtensions", string subSubFolder = "" )
     {
         string tempPath = Path.Combine( Path.GetTempPath(), "~cc.isr", subFolderName );
         _ = System.IO.Directory.CreateDirectory( tempPath );
+
+        if ( !string.IsNullOrWhiteSpace( subSubFolder ) )
+        {
+            tempPath = Path.Combine( tempPath, subSubFolder );
+            _ = System.IO.Directory.CreateDirectory( tempPath );
+        }
         return tempPath;
     }
 

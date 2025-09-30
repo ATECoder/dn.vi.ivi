@@ -9,6 +9,7 @@ Current IVI Visa Compatibility: 8.0.1.9391
 ## [8.1.9404] - 2025-09-30
 - Device TSP: 
   - Rename Save to NVM to Embed.
+  - Add optional folder to GetTempFolder method.
 
 ## [8.1.9401] - 2025-09-27
 - Device TSP
