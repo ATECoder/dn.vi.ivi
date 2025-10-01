@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using cc.isr.VI.Pith;
 using cc.isr.VI.Tsp.Script.ExportExtensions;
 
@@ -7,21 +8,27 @@ public static partial class SessionBaseExtensionMethods
 {
     #region " support methods "
 
-    /// <summary>   Gets temporary path. </summary>
+    /// <summary>   Gets temporary path under the '~cc.isr` and this class namespace folder name. </summary>
     /// <remarks>   2025-06-03. </remarks>
-    /// <param name="subFolderName">    (optional) [SessionBaseExtensions] Pathname of the sub folder. </param>
-    /// <param name="subSubFolder">     (Optional) [Empty] Pathname of the sub folder. </param>
+    /// <param name="firstSubfolderName">   (Optional) [CallerMemberName] Name of the second
+    ///                                     subfolder. </param>
+    /// <param name="secondSubfolderName">  (Optional) Name of the second subfolder. </param>
     /// <returns>   The temporary path. </returns>
-    public static string GetTempPath( string subFolderName = "SessionBaseExtensions", string subSubFolder = "" )
+    public static string GetTempPath( [CallerMemberName] string firstSubfolderName = "", string secondSubfolderName = "" )
     {
-        string tempPath = Path.Combine( Path.GetTempPath(), "~cc.isr", subFolderName );
-        _ = System.IO.Directory.CreateDirectory( tempPath );
+        string tempPath = Path.Combine( Path.GetTempPath(), "~cc.isr", "VI", "Tsp", "Script", "SessionBaseExtensions" );
 
-        if ( !string.IsNullOrWhiteSpace( subSubFolder ) )
+        if ( !string.IsNullOrWhiteSpace( firstSubfolderName ) )
         {
-            tempPath = Path.Combine( tempPath, subSubFolder );
-            _ = System.IO.Directory.CreateDirectory( tempPath );
+            tempPath = Path.Combine( tempPath, firstSubfolderName );
         }
+
+        if ( !string.IsNullOrWhiteSpace( secondSubfolderName ) )
+        {
+            tempPath = Path.Combine( tempPath, secondSubfolderName );
+        }
+
+        _ = System.IO.Directory.CreateDirectory( tempPath );
         return tempPath;
     }
 

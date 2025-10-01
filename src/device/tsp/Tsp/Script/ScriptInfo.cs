@@ -98,6 +98,38 @@ public class ScriptInfo
                  : ScriptInfo.ScriptFileExtension;
     }
 
+    /// <summary>   Detect script file format. </summary>
+    /// <remarks>   2025-09-30. </remarks>
+    /// <param name="fileExtension">    The file extension. </param>
+    /// <returns>   The ScriptFormats. </returns>
+    public static ScriptFormats DetectScriptFileFormat( string fileExtension )
+    {
+        return fileExtension.ToLowerInvariant() switch
+        {
+            ScriptInfo.ScriptFileExtension => ScriptFormats.None,
+            ScriptInfo.ScriptEncryptedFileExtension => ScriptFormats.Encrypted,
+            ScriptInfo.ScriptCompressedFileExtension => ScriptFormats.Compressed,
+            ScriptInfo.ScriptCompressedEncryptedFileExtension => ScriptFormats.Compressed | ScriptFormats.Encrypted,
+            ScriptInfo.ScriptByteCodeFileExtension => ScriptFormats.ByteCode,
+            ScriptInfo.ScriptByteCodeEncryptedFileExtension => ScriptFormats.ByteCode | ScriptFormats.Encrypted,
+            ScriptInfo.ScriptByteCodeCompressedFileExtension => ScriptFormats.ByteCode | ScriptFormats.Compressed,
+            ScriptInfo.ScriptByteCodeCompressedEncryptedFileExtension => ScriptFormats.ByteCode | ScriptFormats.Compressed | ScriptFormats.Encrypted,
+            _ => ScriptFormats.None,
+        };
+    }
+
+    /// <summary>   Detect script file format. </summary>
+    /// <remarks>   2025-09-30. </remarks>
+    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
+    ///                                             null. </exception>
+    /// <param name="fileInfo"> Information describing the file. </param>
+    /// <returns>   The ScriptFormats. </returns>
+    public static ScriptFormats DetectScriptFileFormat( FileInfo fileInfo )
+    {
+        if ( fileInfo is null ) throw new ArgumentNullException( nameof( fileInfo ) );
+        return DetectScriptFileFormat( fileInfo.Extension );
+    }
+
     /// <summary>   Builds script file title. </summary>
     /// <remarks>   2025-04-05. </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments

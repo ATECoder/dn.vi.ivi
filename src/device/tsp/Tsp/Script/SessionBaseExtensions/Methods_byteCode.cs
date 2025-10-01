@@ -87,9 +87,11 @@ public static partial class SessionBaseExtensionMethods
         session.SetLastAction( $"checking if the {scriptName} script exists;. " );
         session.LastNodeNumber = default;
 
-        session.SetLastAction( $"checking if the {scriptName} script exists;. " );
         if ( session.IsNil( scriptName ) )
             throw new InvalidOperationException( $"The script {scriptName} cannot be converted to byte code because it was not found." );
+
+        if ( session.IsByteCodeScript( scriptName ) )
+            throw new InvalidOperationException( $"The script {scriptName} is already a byte code script." );
 
         session.SetLastAction( "converting the script to byte code;. " );
         _ = session.WriteLine( $"{scriptName}.source=nil" );
