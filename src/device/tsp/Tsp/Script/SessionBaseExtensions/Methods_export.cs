@@ -106,6 +106,118 @@ public static partial class SessionBaseExtensionMethods
         File.WriteAllText( filePath, compressor.CompressToBase64( scriptSource ), System.Text.Encoding.Default );
     }
 
+    /// <summary>   A Pith.SessionBase extension method that export embedded script. </summary>
+    /// <remarks>   2025-10-01. </remarks>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <param name="session">              The session to act on. </param>
+    /// <param name="compressor">           The compressor. </param>
+    /// <param name="encryptor">            The encryptor. </param>
+    /// <param name="scriptTitle">          The script title. </param>
+    /// <param name="scriptVersionGetter">  The script version getter. </param>
+    /// <param name="folderPath">           Full pathname of the top folder. </param>
+    /// <param name="fileFormat">           The file format. </param>
+    /// <param name="consoleOut">           (Optional) True to console out. </param>
+    /// <param name="validate">             (Optional) True to validate. </param>
+    public static void ExportEmbeddedScript( this Pith.SessionBase session, IScriptCompressor compressor, IScriptEncryptor encryptor,
+        string scriptTitle, string scriptVersionGetter,
+        string folderPath, ScriptFormats fileFormat, bool consoleOut = false, bool validate = true )
+    {
+        if ( session is null ) throw new InvalidOperationException( $"{nameof( session )} is null" );
+        if ( !session.IsDeviceOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open" );
+
+        if ( string.IsNullOrWhiteSpace( folderPath ) ) throw new InvalidOperationException( $"{nameof( folderPath )} is null or empty" );
+
+        string message = $"Fetching '{scriptTitle}'";
+        if ( consoleOut )
+            SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
+        else
+            _ = SessionLogger.Instance.LogDebug( message );
+
+        string scriptSource = session.FetchScript( scriptTitle );
+        if ( string.IsNullOrWhiteSpace( scriptSource ) )
+            throw new InvalidOperationException( $"Failed fetching script {scriptTitle} source;. " );
+
+        // run the script
+        session.RunScript( scriptTitle );
+
+        string actualVersion = session.QueryFirmwareVersion( scriptVersionGetter );
+        actualVersion = Syntax.Tsp.Lua.NilValue == actualVersion
+            ? "0.0.9999"
+            : actualVersion;
+
+        // Correcting the assignment to use the appropriate method to select the file extension
+        ScriptFormats exportFileFormat = scriptSource.IsByteCodeScript()
+                ? fileFormat | ScriptFormats.ByteCode
+                : fileFormat;
+
+        string fileExtension = Tsp.Script.ScriptInfo.SelectScriptFileExtension( exportFileFormat );
+
+        string buildNumber = new Version( actualVersion ).Build.ToString( System.Globalization.CultureInfo.CurrentCulture );
+        string fileName = $"{scriptTitle}.{buildNumber}.{System.DateTime.Now:yyyyMMddHHmm}{fileExtension}";
+
+        string filePath = Path.Combine( folderPath, fileName );
+
+        if ( exportFileFormat.HasFlag( ScriptFormats.Compressed ) )
+        {
+            message = $"Compressing '{scriptTitle}'";
+            if ( consoleOut )
+                SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
+            else
+                _ = SessionLogger.Instance.LogDebug( message );
+
+            scriptSource = compressor.CompressToBase64( scriptSource );
+
+            if ( validate )
+            {
+                // validate the compression
+                string decompressed = compressor.DecompressFromBase64( compressor.CompressToBase64( scriptSource ) );
+                if ( !string.Equals( scriptSource, decompressed, StringComparison.Ordinal ) )
+                    throw new InvalidOperationException( $"Failed validating the compression of the script {scriptTitle} source;. " );
+            }
+        }
+
+        if ( exportFileFormat.HasFlag( ScriptFormats.Encrypted ) )
+        {
+            message = $"Encrypting '{scriptTitle}'";
+            if ( consoleOut )
+                SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
+            else
+                _ = SessionLogger.Instance.LogDebug( message );
+
+            scriptSource = encryptor.EncryptToBase64( scriptSource );
+
+            if ( validate )
+            {
+                // validate the encryption
+                string decrypted = encryptor.DecryptFromBase64( encryptor.EncryptToBase64( scriptSource ) );
+                if ( !string.Equals( scriptSource, decrypted, StringComparison.Ordinal ) )
+                    throw new InvalidOperationException( $"Failed validating the encryption of the script {scriptTitle} source;. " );
+            }
+
+        }
+
+        message = $"Exporting '{scriptTitle}'\r\n\t\tto '{filePath}'";
+        if ( consoleOut )
+            SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
+        else
+            _ = SessionLogger.Instance.LogDebug( message );
+
+        scriptSource.ExportScript( filePath );
+
+        if ( validate )
+        {
+            scriptSource = session.FetchScript( scriptTitle );
+            string importedContents = System.IO.File.ReadAllText( filePath );
+            if ( exportFileFormat.HasFlag( ScriptFormats.Encrypted ) )
+                importedContents = encryptor.DecryptFromBase64( importedContents );
+            if ( exportFileFormat.HasFlag( ScriptFormats.Compressed ) )
+                importedContents = compressor.DecompressFromBase64( importedContents );
+            if ( !string.Equals( scriptSource, importedContents, StringComparison.Ordinal ) )
+                throw new InvalidOperationException( $"Failed validating the the exported script {scriptTitle} source;. " );
+        }
+    }
+
     /// <summary>
     /// A <see cref="Pith.SessionBase"/> extension method that export embedded scripts.
     /// </summary>
@@ -116,14 +228,14 @@ public static partial class SessionBaseExtensionMethods
     /// <param name="compressor">               The compressor. </param>
     /// <param name="encryptor">                The encryptor. </param>
     /// <param name="versionInfo">              Information describing the version. </param>
-    /// <param name="frameworkScripts">         The framework scripts. </param>
-    /// <param name="frameworkVersionGetters">  The version getters. </param>
+    /// <param name="scriptsNames">             The framework scripts. </param>
+    /// <param name="scriptsVersionGetters">    The version getters. </param>
     /// <param name="topPath">                  Full pathname of the top file. </param>
     /// <param name="fileFormat">               The file format. </param>
     /// <param name="consoleOut">               (Optional) True to console out. </param>
     /// <param name="validate">                 (Optional) True to validate. </param>
     public static void ExportEmbeddedScripts( this Pith.SessionBase session, IScriptCompressor compressor, IScriptEncryptor encryptor,
-        VersionInfoBase versionInfo, List<string[]> frameworkScripts, List<string[]> frameworkVersionGetters,
+        VersionInfoBase versionInfo, string[] scriptsNames, string[] scriptsVersionGetters,
         string topPath, ScriptFormats fileFormat, bool consoleOut = false, bool validate = true )
     {
         if ( session is null ) throw new InvalidOperationException( $"{nameof( session )} is null" );
@@ -131,7 +243,11 @@ public static partial class SessionBaseExtensionMethods
         if ( versionInfo is null ) throw new InvalidOperationException( $"{nameof( versionInfo )} is null" );
 
         if ( string.IsNullOrWhiteSpace( topPath ) )
+        {
             topPath = System.IO.Path.GetTempPath();
+            topPath = Path.Combine( topPath, "~cc.isr", "2025", "exports" );
+        }
+        topPath = Path.Combine( topPath, $"{( int ) Math.Floor( (DateTime.UtcNow - new DateTime( 2000, 1, 1 )).TotalDays )}" );
 
         string embeddedScriptsNames = session.FetchEmbeddedScriptsNames().Trim();
 
@@ -159,112 +275,22 @@ public static partial class SessionBaseExtensionMethods
             if ( !Directory.Exists( folderPath ) )
                 _ = Directory.CreateDirectory( folderPath );
 
-
             foreach ( string scriptName in embeddedScriptsNames.Split( ',' ) )
             {
                 string scriptTitle = scriptName.Trim();
-                message = $"Fetching '{scriptTitle}'";
-                if ( consoleOut )
-                    SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
-                else
-                    _ = SessionLogger.Instance.LogDebug( message );
+                string versionGetter = string.Empty;
 
-                string scriptSource = session.FetchScript( scriptTitle );
-                if ( string.IsNullOrWhiteSpace( scriptSource ) )
-                    throw new InvalidOperationException( $"Failed fetching script {scriptTitle} source;. " );
-
-                // run the script
-                session.RunScript( scriptTitle );
-
-                string actualVersion = Syntax.Tsp.Lua.NilValue;
-                // lookup the script version.
-                for ( int i = 0; i < frameworkScripts.Count; i++ )
+                // lookup the script version getter.
+                if ( scriptsNames.Contains( scriptTitle ) )
                 {
-                    string[] versionGetters = frameworkVersionGetters[i];
-                    string[] scriptNames = frameworkScripts[i];
-                    if ( scriptNames.Contains( scriptTitle ) )
-                    {
-                        int idx = Array.IndexOf( scriptNames, scriptTitle );
-                        // get the version from the script.
-                        actualVersion = session.QueryFirmwareVersion( versionGetters[idx] );
-                        if ( Syntax.Tsp.Lua.NilValue != actualVersion )
-                            break;
-                    }
-                }
-                actualVersion = Syntax.Tsp.Lua.NilValue == actualVersion
-                    ? "0.0.9999"
-                    : actualVersion;
+                    int idx = Array.IndexOf( scriptsNames, scriptTitle );
+                    // get the version from the script.
+                    versionGetter = scriptsVersionGetters[idx];
 
-                // Correcting the assignment to use the appropriate method to select the file extension
-                ScriptFormats exportFileFormat = scriptSource.IsByteCodeScript()
-                        ? fileFormat | ScriptFormats.ByteCode
-                        : fileFormat;
-
-                string fileExtension = Tsp.Script.ScriptInfo.SelectScriptFileExtension( exportFileFormat );
-
-                string buildNumber = new Version( actualVersion ).Build.ToString( System.Globalization.CultureInfo.CurrentCulture );
-                string fileName = $"{scriptTitle}.{buildNumber}.{System.DateTime.Now:yyyyMMddHHmm}{fileExtension}";
-
-                string filePath = Path.Combine( folderPath, fileName );
-
-                message = $"Exporting '{scriptTitle}'\r\n\t\tto '{filePath}'";
-                if ( consoleOut )
-                    SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
-                else
-                    _ = SessionLogger.Instance.LogDebug( message );
-
-                if ( exportFileFormat.HasFlag( ScriptFormats.Compressed ) )
-                {
-                    message = $"Compressing '{scriptTitle}'";
-                    if ( consoleOut )
-                        SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
-                    else
-                        _ = SessionLogger.Instance.LogDebug( message );
-
-                    if ( validate )
-                    {
-                        // validate the compression
-                        string decompressed = compressor.DecompressFromBase64( compressor.CompressToBase64( scriptSource ) );
-                        if ( !string.Equals( scriptSource, decompressed, StringComparison.Ordinal ) )
-                            throw new InvalidOperationException( $"Failed validating the compression of the script {scriptTitle} source;. " );
-                    }
-
-                    scriptSource = compressor.CompressToBase64( scriptSource );
-                }
-
-                if ( exportFileFormat.HasFlag( ScriptFormats.Encrypted ) )
-                {
-                    message = $"Encrypting '{scriptTitle}'";
-                    if ( consoleOut )
-                        SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
-                    else
-                        _ = SessionLogger.Instance.LogDebug( message );
-
-                    if ( validate )
-                    {
-                        // validate the encryption
-                        string decrypted = encryptor.DecryptFromBase64( encryptor.EncryptToBase64( scriptSource ) );
-                        if ( !string.Equals( scriptSource, decrypted, StringComparison.Ordinal ) )
-                            throw new InvalidOperationException( $"Failed validating the encryption of the script {scriptTitle} source;. " );
-                    }
-
-                    scriptSource = encryptor.EncryptToBase64( scriptSource );
-                }
-
-                scriptSource.ExportScript( filePath );
-
-                if ( validate )
-                {
-                    string importedContents = System.IO.File.ReadAllText( filePath );
-                    if ( exportFileFormat.HasFlag( ScriptFormats.Encrypted ) )
-                        importedContents = encryptor.DecryptFromBase64( importedContents );
-                    if ( exportFileFormat.HasFlag( ScriptFormats.Compressed ) )
-                        importedContents = compressor.DecompressFromBase64( importedContents );
-                    if ( !string.Equals( scriptSource, importedContents, StringComparison.Ordinal ) )
-                        throw new InvalidOperationException( $"Failed validating the the exported script {scriptTitle} source;. " );
+                    session.ExportEmbeddedScript( compressor, encryptor, scriptName.Trim(), versionGetter,
+                        folderPath, fileFormat, consoleOut, validate );
                 }
             }
         }
     }
-
 }

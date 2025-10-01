@@ -13,13 +13,13 @@ public class FirmwareInfo
     public FirmwareInfo()
     { }
 
-    /// <summary>   Gets or sets the status message. </summary>
+    /// <summary>   Gets or sets the required action message. </summary>
     /// <value> The status message. </value>
-    public string StatusMessage { get; set; } = string.Empty;
+    public string RequiredActionMessage { get; set; } = string.Empty;
 
     /// <summary>   Gets or sets the firmware installed status. </summary>
     /// <value> The firmware installed status. </value>
-    public string StatusDetails { get; set; } = string.Empty;
+    public string RequiredActionDetails { get; set; } = string.Empty;
 
     /// <summary>   Gets or sets the version of the firmware actually installed (embedded) in the instrument. </summary>
     /// <value> The version of the firmware actually installed (embedded) in the instrument. </value>
@@ -62,7 +62,10 @@ public class FirmwareInfo
     /// <value> The firmware status. </value>
     public FirmwareStatus FirmwareStatus { get; set; }
 
-    /// <summary>   Builds the firmware info for the <paramref name="embeddedScripts"/> that are read from the instrument. </summary>
+    /// <summary>
+    /// Builds the firmware info for the <paramref name="embeddedScripts"/> that are read from the
+    /// instrument.
+    /// </summary>
     /// <remarks>   2025-04-25. </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
     ///                                                 are null. </exception>
@@ -91,7 +94,7 @@ public class FirmwareInfo
         bool mustEmbed = false;
         bool? registered = false;
         bool? certified = null;
-        string statusMessage = string.Empty;
+        string requiredAction = "None";
         FirmwareStatus firmwareStatus = FirmwareStatus.Current;
 
         // Check if instrument serial number is listed in the instrument resource.
@@ -99,8 +102,8 @@ public class FirmwareInfo
 
         if ( statusSubsystem.SerialNumberReading is null || string.IsNullOrWhiteSpace( statusSubsystem.SerialNumberReading ) )
         {
-            _ = statusBuilder.AppendLine( "Instrument serial number is empty. Contact developer--Error at Firmware Loader Control Base line 196." );
-            statusMessage = "Instrument serial number is empty";
+            _ = statusBuilder.AppendLine( "Instrument serial number reading is empty." );
+            requiredAction = "Contact the developer";
         }
         else
         {
@@ -109,7 +112,7 @@ public class FirmwareInfo
             {
                 _ = cc.isr.VI.SessionLogger.Instance.LogWarning( details );
                 _ = statusBuilder.AppendLine( details );
-                statusMessage = "Register this instrument";
+                requiredAction = "Register this instrument";
             }
 
             // must load if any firmware does not exist.
@@ -142,7 +145,7 @@ public class FirmwareInfo
                 {
                     _ = cc.isr.VI.SessionLogger.Instance.LogWarning( details );
                     _ = statusBuilder.AppendLine( details );
-                    statusMessage = "Register this instrument";
+                    requiredAction = "Register this instrument";
                 }
 
                 // read the firmware versions
@@ -161,8 +164,8 @@ public class FirmwareInfo
 
                 if ( autoExecScript is null )
                 {
-                    _ = statusBuilder.AppendLine( "Autoexec script not found. Use this application to load new firmware." );
-                    statusMessage = "Load Firmware";
+                    _ = statusBuilder.AppendLine( "Autoexec script not found." );
+                    requiredAction = "Use this application to load new firmware";
                 }
                 else
                 {
@@ -170,13 +173,13 @@ public class FirmwareInfo
                     {
                         // set version status to indicate that the program needs to be updated.
                         firmwareStatus = FirmwareStatus.UpdateRequired;
-                        _ = statusBuilder.AppendLine( $"{autoExecScript.Title} script not found. Use this application to load new firmware." );
-                        statusMessage = "Load Firmware";
+                        _ = statusBuilder.AppendLine( $"The '{autoExecScript.Title}' firmware was not found." );
+                        requiredAction = "Use this application to load new firmware";
                     }
                     else if ( ScriptStatuses.Activated != (autoExecScript.ScriptStatus & ScriptStatuses.Activated) )
                     {
-                        _ = statusBuilder.AppendLine( $"{autoExecScript.Title} script not run. Report to the vendor." );
-                        statusMessage = "Run Firmware";
+                        _ = statusBuilder.AppendLine( $"The {autoExecScript.Title} firmware is inactive." );
+                        requiredAction = "Contact the developer";
                     }
                     else
                     {
@@ -189,17 +192,20 @@ public class FirmwareInfo
                         if ( compareStatus == 0 )
                         {
                             firmwareStatus = FirmwareStatus.Current;
-                            _ = statusBuilder.AppendLine( $"The installed (embedded) firmware version {embeddedVersion} is up to date. No actions required." );
+                            requiredAction = "None";
+                            _ = statusBuilder.AppendLine( $"The installed (embedded) firmware version {embeddedVersion} is up to date." );
                         }
                         else if ( compareStatus < 0 )
                         {
                             firmwareStatus = FirmwareStatus.UpdateRequired;
-                            _ = statusBuilder.AppendLine( $"The installed (embedded) firmware version {embeddedVersion} needs updating. Load new firmware." );
+                            requiredAction = "Use this application to load new firmware";
+                            _ = statusBuilder.AppendLine( $"The installed (embedded) firmware version {embeddedVersion} needs updating." );
                         }
                         else if ( compareStatus > 0 )
                         {
+                            requiredAction = "Get a new release of this application";
                             firmwareStatus = FirmwareStatus.NewVersionAvailable;
-                            _ = statusBuilder.AppendLine( $"The installed (embedded) firmware version {embeddedVersion} is newer than the version you are trying to install; Contact the Vendor for the present release" );
+                            _ = statusBuilder.AppendLine( $"The installed (embedded) firmware version {embeddedVersion} is newer than the version you are trying to install." );
                         }
                     }
                 }
@@ -209,20 +215,20 @@ public class FirmwareInfo
                 // set version status to indicate that the program needs to be loaded
                 firmwareStatus = FirmwareStatus.LoadFirmware;
                 _ = statusBuilder.AppendLine( "Firmware not found. Use this application to load new firmware." );
-                statusMessage = "Load firmware";
+                requiredAction = "Use this application to load new firmware";
             }
 
             string embeddedScriptNames = embeddedScripts.GetEmbeddedScriptsNames();
             if ( !string.IsNullOrWhiteSpace( embeddedScriptNames ) )
             {
-                _ = statusBuilder.AppendLine( $"The following scripts are in non-volatile memory: {embeddedScriptNames}" );
+                _ = statusBuilder.AppendLine( $"The following firmware is embedded in non-volatile memory:\n    {embeddedScriptNames}." );
             }
         }
 
         return new FirmwareInfo()
         {
-            StatusMessage = statusMessage.TrimEndNewLine(),
-            StatusDetails = statusBuilder.ToString().TrimEndNewLine(),
+            RequiredActionMessage = requiredAction.TrimEndNewLine(),
+            RequiredActionDetails = statusBuilder.ToString().TrimEndNewLine(),
             MustLoad = mustLoad,
             MayDelete = mayDelete,
             MustEmbed = mustEmbed,
@@ -236,26 +242,30 @@ public class FirmwareInfo
 
     }
 
-    /// <summary>   Returns a string that represents the current object. </summary>
+    /// <summary>   Builds the report. </summary>
     /// <remarks>   2024-08-27. </remarks>
     /// <returns>   A string that represents the current object. </returns>
-    public override string ToString()
+    public string BuildReport( string frameworkId )
     {
         System.Text.StringBuilder sb = new();
-        if ( !string.IsNullOrEmpty( this.StatusMessage ) )
-            _ = sb.AppendLine( $"Status Message: {this.StatusMessage}" );
-        if ( !string.IsNullOrEmpty( this.StatusDetails ) )
-            _ = sb.AppendLine( $"Status Details: {this.StatusDetails}" );
+        _ = sb.AppendLine( $"{frameworkId} firmware status: '{this.FirmwareStatus}':" );
+        _ = sb.AppendLine( $"\t{this.FirmwareStatus.Description()}" );
+        _ = sb.AppendLine( $"Required action: {this.RequiredActionMessage}." );
+        foreach ( string line in this.RequiredActionDetails.Split( ['\r', '\n'], StringSplitOptions.RemoveEmptyEntries ) )
+        {
+            _ = sb.AppendLine( $"\t{line}" );
+        }
         _ = sb.AppendLine( $"Versions:" );
-        _ = sb.AppendLine( $"     Next: {this.NextVersion ?? "Unknown"}." );
-        _ = sb.AppendLine( $"    Prior: {this.PriorVersion ?? "Unknown"}." );
-        _ = sb.AppendLine( $" Embedded: {this.EmbeddedVersion ?? "Unknown"}." );
-        _ = sb.AppendLine( $"May delete, i.e., any script is loaded: {this.MayDelete}." );
-        _ = sb.AppendLine( $" Must load, i.e., not all scripts loaded: {this.MustLoad}." );
-        _ = sb.AppendLine( $" Must embed, i.e., not all loaded scripts were embedded: {this.MustEmbed}." );
-        _ = sb.AppendLine( $"Registered: {(this.Registered.HasValue ? this.Registered.Value ? "True" : "False" : "Unknown")}." );
-        _ = sb.AppendLine( $" Certified: {(this.Certified.HasValue ? this.Certified.Value ? "True" : "False" : "Unknown")}." );
-        _ = sb.Append( $"Firmware status is '{this.FirmwareStatus}', i.e., {this.FirmwareStatus.Description()}" );
+        _ = sb.AppendLine( $"      Next: {this.NextVersion ?? "Unknown"}." );
+        _ = sb.AppendLine( $"     Prior: {this.PriorVersion ?? "Unknown"}." );
+        _ = sb.AppendLine( $"  Embedded: {this.EmbeddedVersion ?? "Unknown"}." );
+        _ = sb.AppendLine( $"Possible actions:" );
+        _ = sb.AppendLine( $"  May delete, i.e., any script is loaded: {this.MayDelete}." );
+        _ = sb.AppendLine( $"   Must load, i.e., not all scripts loaded: {this.MustLoad}." );
+        _ = sb.AppendLine( $"  Must embed, i.e., not all loaded scripts were embedded: {this.MustEmbed}." );
+        _ = sb.AppendLine( $"API access status:" );
+        _ = sb.AppendLine( $"  Registered: {(this.Registered.HasValue ? this.Registered.Value ? "True" : "False" : "Unknown")}." );
+        _ = sb.Append( $"   Certified: {(this.Certified.HasValue ? this.Certified.Value ? "True" : "False" : "Unknown")}." );
         return sb.ToString();
     }
 }

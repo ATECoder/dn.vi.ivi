@@ -402,9 +402,9 @@ public class ScriptInfo
         System.Text.StringBuilder builder = new();
 
         if ( string.IsNullOrWhiteSpace( this.Title ) )
-            return "Script name is empty ";
+            return "Firmware script title is empty";
 
-        _ = builder.AppendLine( $"Info for script '{this.Title}':" );
+        _ = builder.AppendLine( $"Info for firmware '{this.Title}':" );
         _ = builder.AppendLine( $"\tVersions:" );
         _ = builder.AppendLine( $"\t\t     New: {(string.IsNullOrEmpty( this.NextVersion ) ? "unknown" : this.NextVersion)}." );
         _ = builder.AppendLine( $"\t\t   Prior: {(string.IsNullOrEmpty( this.PriorVersion ) ? "unknown" : this.PriorVersion)}." );
@@ -412,73 +412,82 @@ public class ScriptInfo
         if ( string.IsNullOrWhiteSpace( this.EmbeddedVersion ) )
             _ = builder.AppendLine( $"\t{(string.IsNullOrWhiteSpace( this.VersionGetterElement ) ? "has a" : "does not have a")} firmware version getter." );
 
+        _ = builder.AppendLine( $"\t'{this.Title}' firmware state:" );
         if ( ScriptStatuses.Loaded == (this.ScriptStatus & ScriptStatuses.Loaded) )
         {
             if ( ScriptStatuses.ByteCode == (this.ScriptStatus & ScriptStatuses.ByteCode) )
-                _ = builder.AppendLine( $"\tLoaded byte code." );
+                _ = builder.AppendLine( $"\t\t   Loaded: Byte code." );
             else
-                _ = builder.AppendLine( $"\tLoaded." );
+                _ = builder.AppendLine( $"\t\t  Loaded: Plain code." );
 
             if ( ScriptStatuses.Activated == (this.ScriptStatus & ScriptStatuses.Activated) )
             {
-                _ = builder.AppendLine( $"\tActivated." );
+                _ = builder.AppendLine( $"\t\tActivated: True." );
             }
             else
-                _ = builder.AppendLine( $"\tNot activated." );
+                _ = builder.AppendLine( $"\t\tActivated: False." );
 
             if ( ScriptStatuses.Embedded == (this.ScriptStatus & ScriptStatuses.Embedded) )
-                _ = builder.AppendLine( $"\tEmbedded." );
+                _ = builder.AppendLine( $"\t\t Embedded: True." );
             else
-                _ = builder.AppendLine( $"\tNot embedded." );
+                _ = builder.AppendLine( $"\t\t Embedded: False." );
         }
         else
-            _ = builder.AppendLine( $"\tNot loaded." );
+            _ = builder.AppendLine( $"\t\t   Loaded: False." );
 
         switch ( this.VersionStatus )
         {
             case FirmwareVersionStatus.Current:
                 {
-                    _ = builder.AppendLine( $"\tThe embedded firmware is current." );
+                    _ = builder.AppendLine( "\tAction required: None." );
+                    _ = builder.AppendLine( $"\t\tThe embedded '{this.Title}' is current." );
                     break;
                 }
 
             case FirmwareVersionStatus.Missing:
                 {
-                    _ = builder.AppendLine( $"\tThe version function not defined." );
+                    _ = builder.AppendLine( "\tAction required: Contact the developer." );
+                    _ = builder.AppendLine( $"\t\tA version function was not found for the '{this.Title}' firmware." );
                     break;
                 }
 
             case FirmwareVersionStatus.Newer:
                 {
-                    _ = builder.AppendLine( $"\tOutdated Program: The embedded firmware {this.EmbeddedVersion} is newer than the candidate version of the firmware ({this.NextVersion}). A newer version of this program is available." );
+                    _ = builder.AppendLine( "\tAction required: Get the new Loader program." );
+                    _ = builder.AppendLine( $"\t\tThe embedded '{this.Title}' version {this.EmbeddedVersion} is newer than the candidate version of the '{this.Title}' firmware ({this.NextVersion}). A newer version of this program is available." );
                     break;
                 }
 
             case FirmwareVersionStatus.Older:
                 {
-                    _ = builder.AppendLine( $"\tOutdated Firmware: The embedded firmware {this.EmbeddedVersion} is older than the candidate version of the firmware ({this.NextVersion})." );
+                    _ = builder.AppendLine( "\tAction required: Update the embedded firmware." );
+                    _ = builder.AppendLine( $"\t\tOutdated Firmware: The embedded '{this.Title}' version {this.EmbeddedVersion} is older than the version of the new '{this.Title}' firmware ({this.NextVersion})." );
                     break;
                 }
 
             case FirmwareVersionStatus.NextVersionNotSet:
                 {
-                    _ = builder.AppendLine( $"\tThe version of the next firmware is not specified." );
+                    _ = builder.AppendLine( "\tAction required: Contact the developer." );
+                    _ = builder.AppendLine( $"\t\tThe version of the next '{this.Title}' firmware is not specified." );
                     break;
                 }
 
             case FirmwareVersionStatus.Unknown:
                 {
-                    _ = builder.AppendLine( $"\tThe version of the embedded firmware is not known." );
+                    _ = builder.AppendLine( "\tAction required: Contact the developer." );
+                    _ = builder.AppendLine( $"\t\tThe version of the embedded '{this.Title}' firmware is not known." );
                     break;
                 }
 
             case FirmwareVersionStatus.None:
-                _ = builder.AppendLine( $"\tThe status of the firmware version was not set." );
+                _ = builder.AppendLine( "\tAction required: Contact the developer." );
+                _ = builder.AppendLine( $"\t\tThe status of the '{this.Title}' firmware version was not set." );
                 break;
 
             default:
                 {
-                    _ = builder.AppendLine( $"The case {this.VersionStatus} was unhandled when reporting the firmware version status." );
+                    _ = builder.AppendLine( "\tAction required: Contact the developer." );
+                    _ = builder.AppendLine( $"\t\tThe {this.VersionStatus} item was not handled when building the firmware status report." );
                     break;
                 }
         }

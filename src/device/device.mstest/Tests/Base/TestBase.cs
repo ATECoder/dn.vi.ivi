@@ -178,10 +178,10 @@ public abstract class TestBase
         TestBase.ConsoleOutputMemberMessage( $"{resourceSettings.ResourceName} pinged in {elapsed:s\\.fff}s after {trials} trials." );
     }
 
-    /// <summary>   (Unit Test Method) settings is local pacific standard time. </summary>
+    /// <summary>   (Unit Test Method) time zone settings should be local. </summary>
     /// <remarks>   David, 2020-09-23. </remarks>
-    [TestMethod( "00. Local time zone should equals the expected time zone" )]
-    public void SettingsIsLocalPacificStandardTime()
+    [TestMethod( "00. Time zone settings should be local" )]
+    public void TimeZoneSettingsShouldBeLocal()
     {
         Assert.IsNotNull( this.TestSiteSettings, $"{nameof( this.TestSiteSettings )} should not be null." );
         TimeZoneInfo tz = TimeZoneInfo.Local;
