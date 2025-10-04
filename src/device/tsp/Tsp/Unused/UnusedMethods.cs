@@ -5,7 +5,6 @@ namespace cc.isr.VI.Tsp.Unused;
 
 internal static class UnusedMethods
 {
-
     /// <summary>
     /// A <see cref="Pith.SessionBase"/> extension method that loads the script from the deploy file
     /// and embeds it to non-volatile memory.

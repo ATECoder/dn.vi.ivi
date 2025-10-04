@@ -91,7 +91,7 @@ public class TspSessionDebugScriptTests : Device.Tests.Base.ScriptTests
         {
             TestBase.ConsoleOutputMemberMessage( $"Importing script from '{filePath}' file" );
             session.DeleteScript( scriptName );
-            session.ImportScript( scriptName, filePath, TimeSpan.Zero );
+            session.ImportScript( scriptName, filePath, TimeSpan.Zero, false, false, false );
             // session.ImportScript( scriptName, filePath );
             session.RunScript( scriptName, scriptFunctionName );
 

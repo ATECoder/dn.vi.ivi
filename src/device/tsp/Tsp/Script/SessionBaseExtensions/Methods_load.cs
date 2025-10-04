@@ -67,7 +67,7 @@ public static partial class SessionBaseExtensionMethods
     /// <param name="deleteExisting">           (Optional) [false] True to delete the existing. </param>
     /// <param name="ignoreExisting">           (Optional) [false] True to ignore existing. </param>
     public static void LoadScript( this Pith.SessionBase session, string scriptName, string source, TimeSpan lineDelay,
-        bool runScriptAfterLoading = false, bool deleteExisting = false, bool ignoreExisting = false )
+        bool runScriptAfterLoading, bool deleteExisting, bool ignoreExisting )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( string.IsNullOrWhiteSpace( source ) ) throw new ArgumentNullException( nameof( source ) );
@@ -88,11 +88,11 @@ public static partial class SessionBaseExtensionMethods
     ///                                         script. </param>
     /// <param name="scriptLines">              The script lines. </param>
     /// <param name="lineDelay">                The line delay. </param>
-    /// <param name="runScriptAfterLoading">    (Optional) [false] True to run script after loading. </param>
-    /// <param name="deleteExisting">           (Optional) [false] True to delete the existing. </param>
-    /// <param name="ignoreExisting">           (Optional) [false] True to ignore existing. </param>
+    /// <param name="runScriptAfterLoading">    True to run script after loading. </param>
+    /// <param name="deleteExisting">           True to delete the existing. </param>
+    /// <param name="ignoreExisting">           True to ignore existing. </param>
     public static void LoadScript( this Pith.SessionBase session, string scriptName, string[] scriptLines, TimeSpan lineDelay,
-        bool runScriptAfterLoading = false, bool deleteExisting = false, bool ignoreExisting = false )
+        bool runScriptAfterLoading, bool deleteExisting, bool ignoreExisting )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( scriptName is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
@@ -104,8 +104,9 @@ public static partial class SessionBaseExtensionMethods
         bool scriptExists = !session.IsNil( scriptName );
         if ( scriptExists && deleteExisting )
             session.DeleteScript( scriptName );
-        else if ( scriptExists && !ignoreExisting )
-            throw new InvalidOperationException( $"The script {scriptName} cannot be imported over an existing script." );
+
+        if ( scriptExists && !ignoreExisting )
+            throw new InvalidOperationException( $"The script {scriptName} may not be imported over an existing script." );
 
         string loadCommand = runScriptAfterLoading
                     ? Syntax.Tsp.Script.LoadAndRunScriptCommand

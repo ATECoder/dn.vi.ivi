@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 using cc.isr.VI.Tsp.Script.ExportExtensions;
 using cc.isr.VI.Tsp.Script.ScriptInfoExtensions;
@@ -21,18 +22,56 @@ public static partial class SessionBaseExtensionMethods
         cc.isr.VI.Syntax.Tsp.TspScriptParser.TrimTspSourceCode( inputFilePath, outputFilePath, retainOutline );
     }
 
+    /// <summary>   A <see cref="string"/> extension method that trims a script file. </summary>
+    /// <remarks>   2025-10-03. </remarks>
+    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
+    ///                                             null. </exception>
+    /// <exception cref="ValidationException">      Thrown when a Validation error condition occurs. </exception>
+    /// <exception cref="FileNotFoundException">    Thrown when the requested file is not present. </exception>
+    /// <param name="scriptInfo">   Information describing the script. </param>
+    /// <param name="inputFolder">  Full pathname of the input folder where the untrimmed script
+    ///                             resides and the trimmed file will reside. </param>
+    /// <param name="outputFolder"> Full pathname of the output folder where the compressed and
+    ///                             encrypted script will reside. Set to the <paramref name="inputFolder"/>
+    ///                             if null or empty. </param>
+    /// <param name="overWrite">    (Optional) True to over write. </param>
+    public static void TrimScript( this ScriptInfo scriptInfo, string inputFolder, string outputFolder, bool overWrite = true )
+    {
+        if ( scriptInfo is null ) throw new ArgumentNullException( nameof( scriptInfo ) );
+        if ( string.IsNullOrWhiteSpace( inputFolder ) ) throw new ArgumentNullException( nameof( inputFolder ) ); ;
+
+        if ( string.IsNullOrWhiteSpace( outputFolder ) ) outputFolder = inputFolder;
+        string outFilePath = Path.Combine( outputFolder, scriptInfo.TrimmedFileName );
+
+        if ( !overWrite && System.IO.File.Exists( outFilePath ) )
+            throw new ValidationException( $"The file '{outFilePath}' already exists." );
+
+        string inputFilePath = Path.Combine( inputFolder, scriptInfo.BuiltFileName );
+
+        if ( System.IO.File.Exists( inputFilePath ) )
+        {
+            SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tTrimming script file '{inputFilePath}'\r\n\t\tto '{outFilePath}'" );
+            inputFilePath.TrimScript( outFilePath, true );
+        }
+        else
+            throw new FileNotFoundException( inputFilePath );
+    }
+
     /// <summary>
-    /// A <see cref="ScriptInfo"/> extension method that builds (trims, compresses and encrypts) to files.
+    /// A <see cref="ScriptInfo"/> extension method that builds (trims, compresses and encrypts) to
+    /// files.
     /// </summary>
     /// <remarks>   2025-04-16. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>
+    /// <exception cref="ValidationException">      Thrown when a Validation error condition occurs. </exception>
     /// <exception cref="FileNotFoundException">    Thrown when the requested file is not present. </exception>
     /// <param name="scriptInfo">       Information describing the script. </param>
     /// <param name="inputFolder">      Full pathname of the input folder where the untrimmed script
     ///                                 resides and the trimmed file will reside. </param>
     /// <param name="outputFolder">     Full pathname of the output folder where the compressed and
-    ///                                 encrypted script will reside. </param>
+    ///                                 encrypted script will reside. Set to the <paramref name="inputFolder"/>
+    ///                                 if null or empty. </param>
     /// <param name="scriptFileFormat"> The script file format. </param>
     /// <param name="overWrite">        (Optional) True to over write. </param>
     /// <param name="validate">         (Optional) True to validate. </param>
@@ -40,11 +79,19 @@ public static partial class SessionBaseExtensionMethods
         ScriptFormats scriptFileFormat, bool overWrite = true, bool validate = true )
     {
         if ( scriptInfo is null ) throw new ArgumentNullException( nameof( scriptInfo ) );
+        if ( string.IsNullOrWhiteSpace( inputFolder ) ) throw new ArgumentNullException( nameof( inputFolder ) ); ;
+
+        if ( string.IsNullOrWhiteSpace( outputFolder ) ) outputFolder = inputFolder;
+        string outFilePath = Path.Combine( outputFolder, scriptInfo.TrimmedFileName );
+
+        if ( !overWrite && System.IO.File.Exists( outFilePath ) )
+            throw new ValidationException( $"The file '{outFilePath}' already exists." );
 
         string inputFilePath = Path.Combine( inputFolder, scriptInfo.BuiltFileName );
-        if ( string.IsNullOrWhiteSpace( outputFolder ) )
-            outputFolder = inputFolder;
-        string outFilePath = Path.Combine( outputFolder, scriptInfo.TrimmedFileName );
+
+        if ( !overWrite && System.IO.File.Exists( outFilePath ) )
+            throw new ValidationException( $"The file '{outFilePath}' already exists." );
+
         if ( System.IO.File.Exists( inputFilePath ) )
         {
             SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tTrimming script file '{inputFilePath}'\r\n\t\tto '{outFilePath}'" );
@@ -241,7 +288,7 @@ public static partial class SessionBaseExtensionMethods
         else
             SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
 
-        session.ImportScript( scriptInfo.Title, trimmedFilePath, TimeSpan.Zero );
+        session.ImportScript( scriptInfo.Title, trimmedFilePath, TimeSpan.Zero, false, false, false );
 
         message = $"Running script '{scriptInfo.Title}'";
         if ( consoleOut )
@@ -284,7 +331,7 @@ public static partial class SessionBaseExtensionMethods
 
         try
         {
-            session.Display( $"Building TTM", "Building scripts..." );
+            session.Display( $"Compiling TTM", "Compiling scripts..." );
 
             foreach ( ScriptInfo scriptInfo in scripts )
             {
@@ -294,7 +341,7 @@ public static partial class SessionBaseExtensionMethods
                 // build the deploy file name based on the FrameworkInfo default file format for this script.
                 _ = scriptInfo.BuildDeployFileName( versionInfo );
 
-                session.DisplayLine( $"Building {scriptInfo.Title} ...", 2, 1 );
+                session.DisplayLine( $"Compiling {scriptInfo.Title} ...", 2, 1 );
                 session.CompileScript( scriptInfo, buildFolder, deployFolder, consoleOut );
             }
         }
@@ -350,7 +397,7 @@ public static partial class SessionBaseExtensionMethods
             session.DeleteScript( scriptName );
         }
         session.TraceLastAction( $"\r\n\tLoading {scriptName} script" );
-        session.LoadScript( scriptName, scriptSource, TimeSpan.Zero );
+        session.LoadScript( scriptName, scriptSource, TimeSpan.Zero, false, false, false );
         return (scriptName, scriptFunctionName);
     }
 }

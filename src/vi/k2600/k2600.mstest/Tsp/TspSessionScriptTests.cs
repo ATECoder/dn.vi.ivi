@@ -122,7 +122,7 @@ public class TspSessionScriptTests : Device.Tests.Base.ScriptTests
             filePath.TrimScript( outFilePath, true );
 
             TestBase.ConsoleOutputMemberMessage( $"Importing script from trimmed '{outFilePath}' file" );
-            this.Device.Session.ImportScript( scriptName, outFilePath, TimeSpan.Zero );
+            this.Device.Session.ImportScript( scriptName, outFilePath, TimeSpan.Zero, false, true, false );
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
 
@@ -215,7 +215,7 @@ public class TspSessionScriptTests : Device.Tests.Base.ScriptTests
             filePath.TrimScript( outputFilePath, true );
 
             TestBase.ConsoleOutputMemberMessage( $"Importing script from trimmed '{outputFilePath}' file" );
-            this.Device.Session.ImportScript( scriptName, outputFilePath, TimeSpan.Zero );
+            this.Device.Session.ImportScript(scriptName, outputFilePath, TimeSpan.Zero, false, true, false);
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
 
@@ -328,7 +328,7 @@ public class TspSessionScriptTests : Device.Tests.Base.ScriptTests
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
 
             TestBase.ConsoleOutputMemberMessage( $"Importing script from binary '{filePath}' file" );
-            this.Device.Session.ImportScript( scriptName, filePath, TimeSpan.Zero );
+            this.Device.Session.ImportScript( scriptName, filePath, TimeSpan.Zero, false, false, false );
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
 
