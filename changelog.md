@@ -2,9 +2,18 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9407]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9409]: https://www.github.com/atecoder/dn.vi.ivi
 
 Current IVI Visa Compatibility: 8.0.1.9391
+
+## [8.1.9409] - 2025-10-05
+- Device.tsp
+  - Session extensions
+    - Embed: Document that the scripts are Embedded as byte code.
+    - build: 
+	  - Compile to byte code only if script format so indicates.
+	  - Add argument for deleting the existing script.
+	- import: remove optional condition from the import method.
 
 ## [8.1.9407] - 2025-10-03
 - Device.tsp Session Base Extensions

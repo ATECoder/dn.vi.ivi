@@ -155,7 +155,7 @@ public static partial class SessionBaseExtensionMethods
 
     /// <summary>
     /// A <see cref="Pith.SessionBase"/> extension method that embeds a script in non-volatile-
-    /// memory (NVM).
+    /// memory (NVM) as byte code.
     /// </summary>
     /// <remarks>   2025-04-10. </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments

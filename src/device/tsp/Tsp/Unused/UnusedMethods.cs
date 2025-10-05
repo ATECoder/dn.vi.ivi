@@ -32,7 +32,8 @@ internal static class UnusedMethods
         session.DeleteScript( scriptInfo.Title );
 
         SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tImporting script from {scriptInfo.DeployFileFormat} '{deployFilePath}' file" );
-        session.ImportScript( scriptInfo.Compressor, scriptInfo.Encryptor, scriptInfo.Title, deployFilePath, lineDelay );
+        session.ImportScript( scriptInfo.Compressor, scriptInfo.Encryptor, scriptInfo.Title, deployFilePath, lineDelay,
+            false, false,false );
 
         session.RunScript( scriptInfo.Title, scriptInfo.VersionGetterElement );
 

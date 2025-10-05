@@ -116,7 +116,7 @@ public static partial class SessionBaseExtensionMethods
     /// script is trimmed and compressed and encrypted based on the <see cref="ScriptInfo"/>.<see cref="ScriptInfo.DeployFileFormat"/>
     /// unless the format is <see cref="ScriptFormats.ByteCode"/> in which case the script is
     /// compressed and encrypted after it is converted to byte code (compiled) by the
-    ///  <see cref="CompileScript(Pith.SessionBase, ScriptInfo, string, string, bool)"/> method.
+    ///  <see cref="CompileScript(Pith.SessionBase, ScriptInfo, string, string, bool, bool)"/> method.
     /// </summary>
     /// <remarks>   2025-09-19. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
@@ -201,7 +201,7 @@ public static partial class SessionBaseExtensionMethods
         string message;
 
         // convert the script to byte code.
-        if ( !session.IsByteCodeScript( scriptInfo.Title ) )
+        if ( scriptInfo.DeployFileFormat.HasFlag( ScriptFormats.ByteCode) && !session.IsByteCodeScript( scriptInfo.Title ) )
         {
             message = $"converting to byte code '{scriptInfo.Title}'";
             if ( consoleOut )
@@ -250,25 +250,25 @@ public static partial class SessionBaseExtensionMethods
     }
 
     /// <summary>
-    /// A <see cref="Pith.SessionBase"/> extension method that trims, compressed and encrypts 
-    /// the script based on the <see cref="ScriptInfo"/>.<see cref="ScriptInfo.DeployFileFormat"/>,
-    /// loads and runs the script and, optionally, exports the script to compressed and encrypted
-    /// byte code.
+    /// A <see cref="Pith.SessionBase"/> extension method that trims, compressed and encrypts the
+    /// script based on the <see cref="ScriptInfo"/>.<see cref="ScriptInfo.DeployFileFormat"/>, loads
+    /// and runs the script and, optionally, exports the script to compressed and encrypted byte code.
     /// </summary>
-    /// <remarks>   2025-04-15. <para>
-    /// This loads and runs the script leaving it in volatile memory. </para></remarks>
+    /// <remarks>
+    /// 2025-04-15. <para>
+    /// This loads and runs the script leaving it in volatile memory. </para>
+    /// </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
     ///                                                 are null. </exception>
     /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
     ///                                                 invalid. </exception>
-    /// <exception cref="FileNotFoundException">        Thrown when the requested file is not
-    ///                                                 present. </exception>
-    /// <param name="session">      The session. </param>
-    /// <param name="scriptInfo">   Information describing the script. </param>
-    /// <param name="buildFolder">  Pathname of the build folder. </param>
-    /// <param name="deployFolder"> Pathname of the deploy folder. </param>
-    /// <param name="consoleOut">   (Optional) True to console out. </param>
-    public static void CompileScript( this Pith.SessionBase session, ScriptInfo scriptInfo, string buildFolder, string deployFolder, bool consoleOut = false )
+    /// <param name="session">          The session. </param>
+    /// <param name="scriptInfo">       Information describing the script. </param>
+    /// <param name="buildFolder">      Pathname of the build folder. </param>
+    /// <param name="deployFolder">     Pathname of the deploy folder. </param>
+    /// <param name="deleteExisting">   True to delete the existing script prior to building. </param>
+    /// <param name="consoleOut">       True to output to the console. </param>
+    public static void CompileScript( this Pith.SessionBase session, ScriptInfo scriptInfo, string buildFolder, string deployFolder, bool deleteExisting, bool consoleOut )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( scriptInfo is null ) throw new ArgumentNullException( nameof( scriptInfo ) );
@@ -279,7 +279,8 @@ public static partial class SessionBaseExtensionMethods
         scriptInfo.BuildScript( buildFolder, deployFolder, consoleOut );
 
         // delete the script if it exists.
-        session.DeleteScript( scriptInfo.Title );
+        if ( deleteExisting && !session.IsNil( scriptInfo.Title ) )
+            session.DeleteScript( scriptInfo.Title );
 
         string trimmedFilePath = Path.Combine( buildFolder, scriptInfo.TrimmedFileName );
         string message = $"Importing script from trimmed '{trimmedFilePath}' file";
@@ -315,14 +316,15 @@ public static partial class SessionBaseExtensionMethods
     /// </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>
-    /// <param name="session">      The session. </param>
-    /// <param name="versionInfo">  The versionInfo to act on. </param>
-    /// <param name="scripts">      The collection of scripts. </param>
-    /// <param name="buildFolder">  Pathname of the build folder. </param>
-    /// <param name="deployFolder"> Pathname of the deploy folder. </param>
-    /// <param name="consoleOut">   (Optional) True to console out. </param>
+    /// <param name="session">          The session. </param>
+    /// <param name="versionInfo">      The versionInfo to act on. </param>
+    /// <param name="scripts">          The collection of scripts. </param>
+    /// <param name="buildFolder">      Pathname of the build folder. </param>
+    /// <param name="deployFolder">     Pathname of the deploy folder. </param>
+    /// <param name="deleteExisting">   True to delete the existing script prior to building. </param>
+    /// <param name="consoleOut">       True to console out. </param>
     public static void CompileScripts( this Pith.SessionBase session, VersionInfoBase versionInfo, ScriptInfoCollection scripts,
-        string buildFolder, string deployFolder, bool consoleOut = false )
+        string buildFolder, string deployFolder, bool deleteExisting, bool consoleOut )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( scripts is null ) throw new ArgumentNullException( nameof( scripts ) );
@@ -342,7 +344,7 @@ public static partial class SessionBaseExtensionMethods
                 _ = scriptInfo.BuildDeployFileName( versionInfo );
 
                 session.DisplayLine( $"Compiling {scriptInfo.Title} ...", 2, 1 );
-                session.CompileScript( scriptInfo, buildFolder, deployFolder, consoleOut );
+                session.CompileScript( scriptInfo, buildFolder, deployFolder, deleteExisting, consoleOut );
             }
         }
         catch ( Exception )
