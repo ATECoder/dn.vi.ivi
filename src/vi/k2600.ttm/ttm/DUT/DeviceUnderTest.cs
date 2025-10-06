@@ -369,7 +369,6 @@ public class DeviceUnderTest : CommunityToolkit.Mvvm.ComponentModel.ObservableOb
         }
     }
 
-    /// <summary> The contact check threshold. </summary>
     private int _contactCheckThreshold;
 
     /// <summary> Gets or sets the contact check threshold. </summary>

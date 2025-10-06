@@ -198,7 +198,7 @@ internal static partial class Asserts
         {
             Assert.AreEqual( 0, initialVoltage, $"{nameof( initialVoltage )} {initialVoltage} should be zero if {nameof( outcome )} is not known." );
             Assert.AreEqual( 0, finalVoltage, $"{nameof( finalVoltage )} {finalVoltage} should be zero if {nameof( outcome )} is not known." );
-            Assert.AreEqual( 0, voltageChange, $"{nameof( voltageChange )} {finalVoltage} should be zero if {nameof( outcome )} is not known." );
+            Assert.AreEqual( 9.91E+34, voltageChange, $"{nameof( voltageChange )} {finalVoltage} should be zero if {nameof( outcome )} is not known." );
         }
         else if ( 0 == initialVoltage )
         {

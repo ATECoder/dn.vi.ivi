@@ -148,7 +148,7 @@ public abstract class ContactCheckTests
 
     /// <summary>   Gets or sets the contact check threshold. </summary>
     /// <value> The contact check threshold. </value>
-    public int ContactCheckThreshold { get; set; } = 50;
+    public int ContactCheckThreshold { get; set; } = 75;
 
     /// <summary>   (Unit Test Method) contact check should pass. </summary>
     /// <remarks>   2025-01-23. </remarks>
@@ -178,7 +178,7 @@ public abstract class ContactCheckTests
 
     /// <summary>   (Unit Test Method) contact check should detect open leads. </summary>
     /// <remarks>   2025-09-12. </remarks>
-    [TestMethod( "04. Contact check detect open leads (>50 ohms)" )]
+    [TestMethod( "04. Contact check detect open leads (>75 ohms)" )]
     public void ContactCheckShouldDetectOpenLeads()
     {
         this.AssertCheckContacts( false, false, this.ContactCheckThreshold );

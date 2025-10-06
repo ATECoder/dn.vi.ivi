@@ -47,7 +47,7 @@ public class ContactCheckTests : Device.Tests.Base.ContactCheckTests
         // create an instance of the session logger.
         SessionLogger.Instance.CreateLogger( typeof( ContactCheckTests ) );
 
-        base.ContactCheckThreshold = 50;
+        base.ContactCheckThreshold = 75;
         this.TestSiteSettings = Settings.AllSettings.Instance.TestSiteSettings;
         this.ResourceSettings = Settings.AllSettings.Instance.ResourceSettings;
         this.DeviceErrorsSettings = Settings.AllSettings.Instance.DeviceErrorsSettings;

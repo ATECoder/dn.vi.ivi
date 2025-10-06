@@ -2,9 +2,17 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9409]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9410]: https://www.github.com/atecoder/dn.vi.ivi
 
 Current IVI Visa Compatibility: 8.0.1.9391
+
+## [8.1.9410] - 2025-10-06
+- Increment TTM firmware release version to 9410.
+- Increment project versions to 9410.
+- TTM Settings
+  - Set contact limit to 75.
+  - Set default contact limit to 75.
+- All tests passed.
 
 ## [8.1.9409] - 2025-10-05
 - Device.tsp

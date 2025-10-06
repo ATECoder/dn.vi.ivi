@@ -71,6 +71,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="cc.isr.VI.Tsp.K2600.Ttm.Console.Driver.json" />
     <None Remove="cc.isr.VI.Tsp.K2600.Ttm.Console.Lot.json" />
   </ItemGroup>
 
@@ -99,6 +100,9 @@
     </None>
     <Content Include="CandidateResources.json">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Include="cc.isr.VI.Tsp.K2600.Ttm.Console.Driver.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="cc.isr.VI.Tsp.K2600.Ttm.Console.Lot.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

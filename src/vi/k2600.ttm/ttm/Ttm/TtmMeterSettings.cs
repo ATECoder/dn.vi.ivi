@@ -84,14 +84,14 @@ public partial class TtmMeterSettings : CommunityToolkit.Mvvm.ComponentModel.Obs
     /// <summary>   Gets or sets the contact check threshold. </summary>
     /// <value> The contact check threshold. </value>
     [ObservableProperty]
-    [Description( "The Contact Check Threshold (100)." )]
-    public partial int ContactCheckThreshold { get; set; } = 10;
+    [Description( "The Contact Check Threshold (75)." )]
+    public partial int ContactCheckThreshold { get; set; } = 75;
 
     /// <summary>   Gets or sets the contact check threshold default. </summary>
     /// <value> The contact check threshold default. </value>
     [ObservableProperty]
-    [Description( "The Default Contact Check Threshold (100)." )]
-    public partial int ContactCheckThresholdDefault { get; set; } = 100;
+    [Description( "The Default Contact Check Threshold (75)." )]
+    public partial int ContactCheckThresholdDefault { get; set; } = 75;
 
     #endregion
 

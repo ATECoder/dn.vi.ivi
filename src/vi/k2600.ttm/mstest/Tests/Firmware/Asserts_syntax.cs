@@ -134,7 +134,7 @@ internal static partial class Asserts
 
         if ( !MeterSubsystem.LegacyFirmware )
         {
-            int contactLimit; // 100;
+            int contactLimit; // 75;
             query = "_G.print(string.format('%d',_G.ttm.meterDefaults.contactLimit))";
 
             contactLimit = session.QueryIntegerThrowIfError( query, "contact limit" );

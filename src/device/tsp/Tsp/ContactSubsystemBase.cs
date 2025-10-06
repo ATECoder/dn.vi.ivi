@@ -113,8 +113,6 @@ public class ContactSubsystemBase( Tsp.StatusSubsystemBase statusSubsystem ) : S
 
     #region " threshold "
 
-    /// <summary> The contact check threshold. </summary>
-
     /// <summary> Gets or sets (Protected) the contact check threshold. </summary>
     /// <value> The contact check threshold. </value>
     public int? ContactCheckThreshold
