@@ -61,38 +61,12 @@ public static partial class SessionBaseExtensionMethods
     /// <param name="session">                  The session. </param>
     /// <param name="scriptName">               Specifies the script name. Empty for an anonymous
     ///                                         script. </param>
-    /// <param name="source">                   specifies the source code for the script. </param>
-    /// <param name="lineDelay">                The line delay. </param>
-    /// <param name="runScriptAfterLoading">    (Optional) [false] True to run script after loading. </param>
-    /// <param name="deleteExisting">           (Optional) [false] True to delete the existing. </param>
-    /// <param name="ignoreExisting">           (Optional) [false] True to ignore existing. </param>
-    public static void LoadScript( this Pith.SessionBase session, string scriptName, string source, TimeSpan lineDelay,
-        bool runScriptAfterLoading, bool deleteExisting, bool ignoreExisting )
-    {
-        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
-        if ( string.IsNullOrWhiteSpace( source ) ) throw new ArgumentNullException( nameof( source ) );
-        string[] scriptLines = source.Split( Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries );
-        session.LoadScript( scriptName, scriptLines, lineDelay, runScriptAfterLoading, deleteExisting, ignoreExisting );
-    }
-
-    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that loads a script. </summary>
-    /// <remarks>   2025-04-20. <para>
-    /// Notes:</para><para>
-    /// 1. The script must not include the load script command or the end script command. </para><para>
-    /// 2. A byte code script must include the <see cref="Syntax.Tsp.Lua.LoadStringCommand"/>. </para>
-    /// </remarks>
-    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
-    ///                                             null. </exception>
-    /// <param name="session">                  The session. </param>
-    /// <param name="scriptName">               Specifies the script name. Empty for an anonymous
-    ///                                         script. </param>
     /// <param name="scriptLines">              The script lines. </param>
     /// <param name="lineDelay">                The line delay. </param>
     /// <param name="runScriptAfterLoading">    True to run script after loading. </param>
-    /// <param name="deleteExisting">           True to delete the existing. </param>
-    /// <param name="ignoreExisting">           True to ignore existing. </param>
+    /// <param name="deleteExisting">           True to delete the existing script before loading the new script. </param>
     public static void LoadScript( this Pith.SessionBase session, string scriptName, string[] scriptLines, TimeSpan lineDelay,
-        bool runScriptAfterLoading, bool deleteExisting, bool ignoreExisting )
+        bool runScriptAfterLoading, bool deleteExisting )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( scriptName is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
@@ -101,12 +75,8 @@ public static partial class SessionBaseExtensionMethods
         session.SetLastAction( $"checking if the {scriptName} script exists;. " );
         session.LastNodeNumber = default;
 
-        bool scriptExists = !session.IsNil( scriptName );
-        if ( scriptExists && deleteExisting )
-            session.DeleteScript( scriptName );
-
-        if ( scriptExists && !ignoreExisting )
-            throw new InvalidOperationException( $"The script {scriptName} may not be imported over an existing script." );
+        if ( deleteExisting && (session.IsScriptEmbedded( scriptName ) || session.IsUserScript( scriptName ) || !session.IsNil( scriptName )) )
+            session.DeleteScript( scriptName, true );
 
         string loadCommand = runScriptAfterLoading
                     ? Syntax.Tsp.Script.LoadAndRunScriptCommand
@@ -169,9 +139,32 @@ public static partial class SessionBaseExtensionMethods
         if ( !string.IsNullOrWhiteSpace( scriptName ) )
         {
             session.SetLastAction( $"checking if the {scriptName} script exists after load;. " );
-            scriptExists = !session.IsNil( scriptName );
-            if ( !scriptExists )
+            if ( session.IsNil( scriptName ) )
                 throw new InvalidOperationException( $"The script {scriptName} was not found after loading the script." );
         }
+    }
+
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that loads a script. </summary>
+    /// <remarks>   2025-04-20. <para>
+    /// Notes:</para><para>
+    /// 1. The script must not include the load script command or the end script command. </para><para>
+    /// 2. A byte code script must include the <see cref="Syntax.Tsp.Lua.LoadStringCommand"/>. </para>
+    /// </remarks>
+    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
+    ///                                             null. </exception>
+    /// <param name="session">                  The session. </param>
+    /// <param name="scriptName">               Specifies the script name. Empty for an anonymous
+    ///                                         script. </param>
+    /// <param name="source">                   specifies the source code for the script. </param>
+    /// <param name="lineDelay">                The line delay. </param>
+    /// <param name="runScriptAfterLoading">    True to run script after loading. </param>
+    /// <param name="deleteExisting">           True to delete the existing script before loading the new script. </param>
+    public static void LoadScript( this Pith.SessionBase session, string scriptName, string source, TimeSpan lineDelay,
+        bool runScriptAfterLoading, bool deleteExisting )
+    {
+        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
+        if ( string.IsNullOrWhiteSpace( source ) ) throw new ArgumentNullException( nameof( source ) );
+        string[] scriptLines = source.Split( Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries );
+        session.LoadScript( scriptName, scriptLines, lineDelay, runScriptAfterLoading, deleteExisting );
     }
 }

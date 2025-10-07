@@ -49,10 +49,9 @@ public static partial class SessionBaseExtensionMethods
     /// <param name="filePath">                 Full pathname of the file. </param>
     /// <param name="lineDelay">                The line delay. </param>
     /// <param name="runScriptAfterLoading">    True to run script after loading. </param>
-    /// <param name="deleteExisting">           True to delete the existing. </param>
-    /// <param name="ignoreExisting">           True to ignore existing. </param>
+    /// <param name="deleteExisting">           True to delete the existing existing script before loading the script. </param>
     public static void ImportScript( this Pith.SessionBase session, string scriptName, string filePath, TimeSpan lineDelay,
-        bool runScriptAfterLoading, bool deleteExisting, bool ignoreExisting )
+        bool runScriptAfterLoading, bool deleteExisting )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( filePath is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( filePath ) );
@@ -65,7 +64,7 @@ public static partial class SessionBaseExtensionMethods
             throw new ArgumentNullException( $"Failed reading {scriptNameOrAnonymous} script source from {filePath}" );
 
         // This reads the entire source from the file and then loads the file line by line as source code or byte code
-        session.LoadScript( scriptName, scriptSource, lineDelay, runScriptAfterLoading, deleteExisting, ignoreExisting );
+        session.LoadScript( scriptName, scriptSource, lineDelay, runScriptAfterLoading, deleteExisting );
     }
 
     /// <summary>
@@ -120,11 +119,9 @@ public static partial class SessionBaseExtensionMethods
     /// <param name="filePath">                 Full pathname of the file. </param>
     /// <param name="lineDelay">                The line delay. </param>
     /// <param name="runScriptAfterLoading">    True to run script after loading. </param>
-    /// <param name="deleteExisting">           True to delete the existing. </param>
-    /// <param name="ignoreExisting">           True to ignore existing. </param>
+    /// <param name="deleteExisting">           True to delete the existing script prior to loading the new script. </param>
     public static void ImportScript( this Pith.SessionBase session, IScriptCompressor compressor, IScriptEncryptor encryptor,
-        string scriptName, string filePath, TimeSpan lineDelay,
-        bool runScriptAfterLoading, bool deleteExisting, bool ignoreExisting )
+        string scriptName, string filePath, TimeSpan lineDelay, bool runScriptAfterLoading, bool deleteExisting )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( filePath is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( filePath ) );
@@ -137,6 +134,6 @@ public static partial class SessionBaseExtensionMethods
             throw new ArgumentNullException( $"Failed reading {scriptNameOrAnonymous} script source from {filePath}" );
 
         // This reads the entire source from the file and then loads the file line by line as source code or byte code
-        session.LoadScript( scriptName, scriptSource, lineDelay, runScriptAfterLoading, deleteExisting, ignoreExisting );
+        session.LoadScript( scriptName, scriptSource, lineDelay, runScriptAfterLoading, deleteExisting );
     }
 }

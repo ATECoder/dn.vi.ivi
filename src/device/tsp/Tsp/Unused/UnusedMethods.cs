@@ -28,12 +28,15 @@ internal static class UnusedMethods
         // set the deploy file path.
         string deployFilePath = Path.Combine( folderPath, scriptInfo.DeployFileName );
 
-        // delete the script if it exists.
-        session.DeleteScript( scriptInfo.Title );
+        // delete the existing script.
+        if ( session.IsScriptExists( scriptInfo.Title, out string details ) )
+        {
+            Console.WriteLine( $"Deleting {scriptInfo.Title} script;. {details}" );
+            session.DeleteScript( scriptInfo.Title, true );
+        }
 
         SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tImporting script from {scriptInfo.DeployFileFormat} '{deployFilePath}' file" );
-        session.ImportScript( scriptInfo.Compressor, scriptInfo.Encryptor, scriptInfo.Title, deployFilePath, lineDelay,
-            false, false,false );
+        session.ImportScript( scriptInfo.Compressor, scriptInfo.Encryptor, scriptInfo.Title, deployFilePath, lineDelay, false, false );
 
         session.RunScript( scriptInfo.Title, scriptInfo.VersionGetterElement );
 

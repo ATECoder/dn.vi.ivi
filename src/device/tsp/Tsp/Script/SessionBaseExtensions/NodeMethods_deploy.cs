@@ -24,7 +24,7 @@ public static partial class NodeMethods
         return string.Equals( reply.Trim().TrimEndNewLine(), "yes", StringComparison.OrdinalIgnoreCase );
     }
 
-    /// <summary>   A SessionBase extension method that turn off automatic run. </summary>
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that turn off automatic run. </summary>
     /// <remarks>   2025-04-27. </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
     ///                                                 are null. </exception>

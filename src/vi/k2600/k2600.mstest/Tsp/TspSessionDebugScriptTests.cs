@@ -74,7 +74,10 @@ public class TspSessionDebugScriptTests : Device.Tests.Base.ScriptTests
 
     #region " methods "
 
-    /// <summary>   Assert script should import and run. </summary>
+    /// <summary>
+    /// Assert script should import and run. This method deletes the existing <paramref name="scriptName"/>
+    /// before importing and upon exit.
+    /// </summary>
     /// <remarks>   2025-04-20. </remarks>
     /// <param name="session">                  The session. </param>
     /// <param name="scriptName">               Name of the script. </param>
@@ -90,8 +93,8 @@ public class TspSessionDebugScriptTests : Device.Tests.Base.ScriptTests
         try
         {
             TestBase.ConsoleOutputMemberMessage( $"Importing script from '{filePath}' file" );
-            session.DeleteScript( scriptName );
-            session.ImportScript( scriptName, filePath, TimeSpan.Zero, false, false, false );
+            session.DeleteScript( scriptName, true );
+            session.ImportScript( scriptName, filePath, TimeSpan.Zero, false, false );
             // session.ImportScript( scriptName, filePath );
             session.RunScript( scriptName, scriptFunctionName );
 
@@ -105,9 +108,7 @@ public class TspSessionDebugScriptTests : Device.Tests.Base.ScriptTests
         finally
         {
             if ( session is not null && session.IsSessionOpen )
-            {
-                session.DeleteScript( scriptName );
-            }
+                session.DeleteScript( scriptName, true );
         }
     }
 

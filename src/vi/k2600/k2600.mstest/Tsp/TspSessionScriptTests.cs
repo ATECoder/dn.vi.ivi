@@ -113,7 +113,7 @@ public class TspSessionScriptTests : Device.Tests.Base.ScriptTests
             string filePath = Path.Combine( folderPath, $"{fileTitle}{cc.isr.VI.Tsp.Script.ScriptInfo.ScriptFileExtension}" );
             scriptSource.ToString().ExportScript( filePath, overWrite: true );
 
-            this.Device.Session.DeleteScript( scriptName );
+            this.Device.Session.DeleteScript( scriptName, true );
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
 
@@ -122,7 +122,7 @@ public class TspSessionScriptTests : Device.Tests.Base.ScriptTests
             filePath.TrimScript( outFilePath, true );
 
             TestBase.ConsoleOutputMemberMessage( $"Importing script from trimmed '{outFilePath}' file" );
-            this.Device.Session.ImportScript( scriptName, outFilePath, TimeSpan.Zero, false, true, false );
+            this.Device.Session.ImportScript( scriptName, outFilePath, TimeSpan.Zero, false, true );
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
 
@@ -161,7 +161,7 @@ public class TspSessionScriptTests : Device.Tests.Base.ScriptTests
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
 
-            this.Device.Session.DeleteScript( scriptName );
+            this.Device.Session.DeleteScript( scriptName, true );
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
 
@@ -174,7 +174,7 @@ public class TspSessionScriptTests : Device.Tests.Base.ScriptTests
         {
             if ( this.Device.Session is not null && this.Device.Session.IsSessionOpen )
             {
-                this.Device.Session.DeleteScript( scriptName );
+                this.Device.Session.DeleteScript( scriptName, true );
                 cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
                 cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
                 cc.isr.VI.Device.Tests.Asserts.AssertDeviceShouldCloseWithoutErrors( this.Device );
@@ -206,7 +206,7 @@ public class TspSessionScriptTests : Device.Tests.Base.ScriptTests
             string filePath = Path.Combine( folderPath, $"{fileTitle}{cc.isr.VI.Tsp.Script.ScriptInfo.ScriptFileExtension}" );
             scriptSource.ToString().ExportScript( filePath, overWrite: true );
 
-            this.Device.Session.DeleteScript( scriptName );
+            this.Device.Session.DeleteScript( scriptName, true );
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
 
@@ -215,7 +215,7 @@ public class TspSessionScriptTests : Device.Tests.Base.ScriptTests
             filePath.TrimScript( outputFilePath, true );
 
             TestBase.ConsoleOutputMemberMessage( $"Importing script from trimmed '{outputFilePath}' file" );
-            this.Device.Session.ImportScript(scriptName, outputFilePath, TimeSpan.Zero, false, true, false);
+            this.Device.Session.ImportScript( scriptName, outputFilePath, TimeSpan.Zero, false, true );
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
 
@@ -270,7 +270,7 @@ public class TspSessionScriptTests : Device.Tests.Base.ScriptTests
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
 
-            this.Device.Session.DeleteScript( scriptName );
+            this.Device.Session.DeleteScript( scriptName, true );
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
         }
@@ -280,9 +280,9 @@ public class TspSessionScriptTests : Device.Tests.Base.ScriptTests
         }
         finally
         {
-            if ( this.Device.Session is not null && this.Device.Session.IsSessionOpen )
+            if ( this.Device.Session is not null && this.Device.Session.IsSessionOpen && this.Device.Session.IsScriptExists( scriptName, out _ ) )
             {
-                this.Device.Session.DeleteScript( scriptName );
+                this.Device.Session.DeleteScript( scriptName, true );
                 cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
                 cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
                 cc.isr.VI.Device.Tests.Asserts.AssertDeviceShouldCloseWithoutErrors( this.Device );
@@ -323,12 +323,12 @@ public class TspSessionScriptTests : Device.Tests.Base.ScriptTests
             string filePath = Path.Combine( folderPath, $"{fileTitle}{cc.isr.VI.Tsp.Script.ScriptInfo.ScriptByteCodeFileExtension}" );
             scriptSource.ToString().ExportScript( filePath, overWrite: true );
 
-            this.Device.Session.DeleteScript( scriptName );
+            this.Device.Session.DeleteScript( scriptName, true );
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
 
             TestBase.ConsoleOutputMemberMessage( $"Importing script from binary '{filePath}' file" );
-            this.Device.Session.ImportScript( scriptName, filePath, TimeSpan.Zero, false, false, false );
+            this.Device.Session.ImportScript( scriptName, filePath, TimeSpan.Zero, false, false );
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
 
@@ -351,7 +351,7 @@ public class TspSessionScriptTests : Device.Tests.Base.ScriptTests
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
 
-            this.Device.Session.DeleteScript( scriptName );
+            this.Device.Session.DeleteScript( scriptName, true );
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
         }
@@ -363,7 +363,7 @@ public class TspSessionScriptTests : Device.Tests.Base.ScriptTests
         {
             if ( this.Device.Session is not null && this.Device.Session.IsSessionOpen )
             {
-                this.Device.Session.DeleteScript( scriptName );
+                Assert.IsTrue( this.Device.Session.TryDeleteScript( scriptName, true, out string details ), details );
                 cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
                 cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
                 cc.isr.VI.Device.Tests.Asserts.AssertDeviceShouldCloseWithoutErrors( this.Device );

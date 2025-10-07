@@ -167,7 +167,7 @@ public static partial class SessionBaseExtensionMethods
         }
     }
 
-    /// <summary>   A SessionBase extension method that executes the 'scripts' operation. </summary>
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that executes the 'scripts' operation. </summary>
     /// <remarks>   2025-04-26. </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
     ///                                                 are null. </exception>

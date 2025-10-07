@@ -5,6 +5,40 @@ namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
 public static partial class SessionBaseExtensionMethods
 {
+    /// <summary>
+    /// A <see cref="Pith.SessionBase"/> extension method that query if <paramref name="scriptName"/>
+    /// exists, is a named script and is listed in the catalog of user scripts.
+    /// </summary>
+    /// <remarks>   2025-10-06. </remarks>
+    /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
+    ///                                                 are null. </exception>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <param name="session">      The session. </param>
+    /// <param name="scriptName">   Specifies the script name. </param>
+    /// <returns>   True if <paramref name="scriptName"/> is a user script, false if not. </returns>
+    public static bool IsUserScript( this SessionBase session, string scriptName )
+    {
+        if ( session == null ) throw new ArgumentNullException( nameof( session ) );
+        if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
+        if ( string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
+
+        return !(session.IsNil( scriptName ) || session.IsNil( $"script.user.scripts.{scriptName}" ));
+    }
+
+    /// <summary>
+    /// A <see cref="Pith.SessionBase"/> extension method that query if <paramref name="scriptName"/>
+    /// is a loaded script.
+    /// </summary>
+    /// <remarks>   2025-10-06. </remarks>
+    /// <param name="session">      The session. </param>
+    /// <param name="scriptName">   Specifies the script name. </param>
+    /// <returns>   True if loaded script, false if not. </returns>
+    public static bool IsLoadedScript( this SessionBase session, string scriptName )
+    {
+        return session.IsUserScript( scriptName );
+    }
+
     /// <summary>   A <see cref="Pith.SessionBase"/> extension method that removes the script from the list of user scripts. </summary>
     /// <remarks>   2025-04-11. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
@@ -35,15 +69,48 @@ public static partial class SessionBaseExtensionMethods
             throw new InvalidOperationException( $"The script {scriptName} was not removed from the user scripts." );
     }
 
-    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that deletes the script. </summary>
-    /// <remarks>   2025-04-10. </remarks>
+    /// <summary>
+    /// A <see cref="Pith.SessionBase"/> extension method that query if the <paramref name="scriptName"/> exists. The script exists if 
+    /// it <see cref="IsScriptEmbedded(SessionBase, string)"/> or <see cref="IsUserScript(SessionBase, string)"/> of not <see cref="SessionBase.IsNil(string)"/>.
+    /// </summary>
+    /// <remarks>   2025-10-06. </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
     ///                                                 are null. </exception>
     /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
     ///                                                 invalid. </exception>
-    /// <param name="session">          The session. </param>
-    /// <param name="scriptName">       Name of the script. </param>
-    public static void DeleteScript( this SessionBase session, string scriptName )
+    /// <param name="session">      The session. </param>
+    /// <param name="scriptName">   Specifies the script name. </param>
+    /// <param name="details">      [out] The details indicating if the script is either embedded, or a user script or is not nil. </param>
+    /// <returns>   True if script deleted, false if not. </returns>
+    public static bool IsScriptExists( this SessionBase session, string scriptName, out string details )
+    {
+        if ( session == null ) throw new ArgumentNullException( nameof( session ) );
+        if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
+        if ( string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
+        details = string.Empty;
+        if ( session.IsScriptEmbedded( scriptName ) )
+            details = $"script '{scriptName}' is embedded;. ";
+        else if ( session.IsUserScript( scriptName ) )
+            details = $"script '{scriptName}' is a user script;. ";
+        else if ( !session.IsNil( scriptName ) )
+            details = $"script '{scriptName}' is not nil;. ";
+
+        return !string.IsNullOrWhiteSpace( details );
+    }
+
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that attempts to delete script. </summary>
+    /// <remarks>   2025-10-06. </remarks>
+    /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
+    ///                                                 are null. </exception>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <param name="session">      The session. </param>
+    /// <param name="scriptName">   Specifies the script name. </param>
+    /// <param name="validate">     True to validate if the script was deleted. </param>
+    /// <param name="details">      [out] The details indicating if the script is either embedded, or
+    ///                             a user script or is not nil. </param>
+    /// <returns>   True if it succeeds, false if it fails. </returns>
+    public static bool TryDeleteScript( this SessionBase session, string scriptName, bool validate, out string details )
     {
         if ( session == null ) throw new ArgumentNullException( nameof( session ) );
         if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
@@ -65,6 +132,30 @@ public static partial class SessionBaseExtensionMethods
 
         // nill the script if is is not nil.
         session.NillObject( scriptName );
+
+        details = string.Empty;
+        if ( validate && session.IsScriptExists( scriptName, out details ) )
+        {
+            details = $"The script '{scriptName}' was not deleted;. {details}";
+            return false;
+        }
+        return true;
+    }
+
+
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that deletes the script. </summary>
+    /// <remarks>   2025-04-10. </remarks>
+    /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
+    ///                                                 are null. </exception>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <param name="session">      The session. </param>
+    /// <param name="scriptName">   Name of the script. </param>
+    /// <param name="validate">     True to validate if the script was deleted. </param>
+    public static void DeleteScript( this SessionBase session, string scriptName, bool validate )
+    {
+        if ( !session.TryDeleteScript( scriptName, validate, out string details ) )
+            throw new InvalidOperationException( details );
     }
 
     /// <summary>
@@ -106,7 +197,7 @@ public static partial class SessionBaseExtensionMethods
             {
                 removedCount += 1;
                 session.DisplayLine( $"Removing {scriptTitle}", 2 );
-                session.DeleteScript( scriptTitle );
+                session.DeleteScript( scriptTitle, true );
             }
             else
             {
@@ -151,7 +242,7 @@ public static partial class SessionBaseExtensionMethods
                 session.DisplayLine( $"Deleting {frameworkName}", 1 );
                 session.DisplayLine( $"Removing {script.Title}", 2 );
                 removedCount += 1;
-                session.DeleteScript( script.Title );
+                session.DeleteScript( script.Title, true );
             }
         }
 

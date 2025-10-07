@@ -201,7 +201,7 @@ public static partial class SessionBaseExtensionMethods
         string message;
 
         // convert the script to byte code.
-        if ( scriptInfo.DeployFileFormat.HasFlag( ScriptFormats.ByteCode) && !session.IsByteCodeScript( scriptInfo.Title ) )
+        if ( scriptInfo.DeployFileFormat.HasFlag( ScriptFormats.ByteCode ) && !session.IsByteCodeScript( scriptInfo.Title ) )
         {
             message = $"converting to byte code '{scriptInfo.Title}'";
             if ( consoleOut )
@@ -266,7 +266,7 @@ public static partial class SessionBaseExtensionMethods
     /// <param name="scriptInfo">       Information describing the script. </param>
     /// <param name="buildFolder">      Pathname of the build folder. </param>
     /// <param name="deployFolder">     Pathname of the deploy folder. </param>
-    /// <param name="deleteExisting">   True to delete the existing script prior to building. </param>
+    /// <param name="deleteExisting">   True to delete the existing script prior to loading the new script. </param>
     /// <param name="consoleOut">       True to output to the console. </param>
     public static void CompileScript( this Pith.SessionBase session, ScriptInfo scriptInfo, string buildFolder, string deployFolder, bool deleteExisting, bool consoleOut )
     {
@@ -278,18 +278,27 @@ public static partial class SessionBaseExtensionMethods
         // trim and optionally compress and encrypt the script to the deploy file name.
         scriptInfo.BuildScript( buildFolder, deployFolder, consoleOut );
 
-        // delete the script if it exists.
-        if ( deleteExisting && !session.IsNil( scriptInfo.Title ) )
-            session.DeleteScript( scriptInfo.Title );
+        string message;
+
+        // delete the existing script.
+        if ( deleteExisting && session.IsScriptExists( scriptInfo.Title, out string details ) )
+        {
+            message = $"Deleting '{scriptInfo.Title}';. {details}";
+            if ( consoleOut )
+                SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
+            else
+                SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
+            session.DeleteScript( scriptInfo.Title, true );
+        }
 
         string trimmedFilePath = Path.Combine( buildFolder, scriptInfo.TrimmedFileName );
-        string message = $"Importing script from trimmed '{trimmedFilePath}' file";
+        message = $"Importing script from trimmed '{trimmedFilePath}' file";
         if ( consoleOut )
             SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
         else
             SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
 
-        session.ImportScript( scriptInfo.Title, trimmedFilePath, TimeSpan.Zero, false, false, false );
+        session.ImportScript( scriptInfo.Title, trimmedFilePath, TimeSpan.Zero, false, false );
 
         message = $"Running script '{scriptInfo.Title}'";
         if ( consoleOut )
@@ -321,7 +330,7 @@ public static partial class SessionBaseExtensionMethods
     /// <param name="scripts">          The collection of scripts. </param>
     /// <param name="buildFolder">      Pathname of the build folder. </param>
     /// <param name="deployFolder">     Pathname of the deploy folder. </param>
-    /// <param name="deleteExisting">   True to delete the existing script prior to building. </param>
+    /// <param name="deleteExisting">   True to delete the existing script prior to building nad importing. </param>
     /// <param name="consoleOut">       True to console out. </param>
     public static void CompileScripts( this Pith.SessionBase session, VersionInfoBase versionInfo, ScriptInfoCollection scripts,
         string buildFolder, string deployFolder, bool deleteExisting, bool consoleOut )
@@ -393,13 +402,13 @@ public static partial class SessionBaseExtensionMethods
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         (string scriptName, string scriptSource, string scriptFunctionName) = SessionBaseExtensionMethods.BuildTimeDisplayClearScript();
-        if ( !session.IsNil( scriptName ) )
+        if ( session.IsScriptExists( scriptName, out string details ) )
         {
-            session.TraceLastAction( $"\r\n\tDeleting {scriptName} script" );
-            session.DeleteScript( scriptName );
+            session.TraceLastAction( $"\r\n\tDeleting {scriptName} script;. {details}" );
+            session.DeleteScript( scriptName, true );
         }
         session.TraceLastAction( $"\r\n\tLoading {scriptName} script" );
-        session.LoadScript( scriptName, scriptSource, TimeSpan.Zero, false, false, false );
+        session.LoadScript( scriptName, scriptSource, TimeSpan.Zero, false, false );
         return (scriptName, scriptFunctionName);
     }
 }

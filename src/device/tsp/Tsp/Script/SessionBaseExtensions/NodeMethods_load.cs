@@ -1,9 +1,32 @@
+using cc.isr.VI.Pith;
 using cc.isr.VI.Tsp.SessionBaseExtensions;
 
 namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
 public static partial class NodeMethods
 {
+    /// <summary>
+    /// A <see cref="Pith.SessionBase"/> extension method that query if <paramref name="scriptName"/>
+    /// exists, is a named script and is listed in the catalog of user scripts.
+    /// </summary>
+    /// <remarks>   2025-10-06. </remarks>
+    /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
+    ///                                                 are null. </exception>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <param name="session">      The session. </param>
+    /// <param name="nodeNumber">   The node number. </param>
+    /// <param name="scriptName">   Specifies the script name. </param>
+    /// <returns>   True if <paramref name="scriptName"/> is a user script, false if not. </returns>
+    public static bool IsUserScript( this SessionBase session, int nodeNumber, string scriptName )
+    {
+        if ( session == null ) throw new ArgumentNullException( nameof( session ) );
+        if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
+        if ( string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
+
+        return !(session.IsNil( nodeNumber, scriptName ) || session.IsNil( nodeNumber, $"script.user.scripts.{scriptName}" ));
+    }
+
     /// <summary>   A <see cref="Pith.SessionBase"/> extension method that query if 'script' name is nil. </summary>
     /// <remarks>   2024-09-09. </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
@@ -14,14 +37,14 @@ public static partial class NodeMethods
     /// <param name="nodeNumber">   The node number. </param>
     /// <param name="script">       The script. </param>
     /// <returns>   True if nil, false if not. </returns>
-    public static bool IsLoaded( this Pith.SessionBase session, int nodeNumber, ScriptInfo script )
+    public static bool IsLoadedScript( this Pith.SessionBase session, int nodeNumber, ScriptInfo script )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( !session.IsDeviceOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
 
         return session.IsControllerNode( nodeNumber )
-            ? session.IsNil( script.Title )
-            : session.IsNil( nodeNumber, script.Title );
+            ? session.IsLoadedScript( script.Title )
+            : session.IsUserScript( nodeNumber, script.Title );
     }
 
     /// <summary>   A <see cref="Pith.SessionBase"/> extension method that query if 'session' is loaded. </summary>

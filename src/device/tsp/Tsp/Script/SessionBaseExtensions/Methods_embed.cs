@@ -41,7 +41,8 @@ public static partial class SessionBaseExtensionMethods
     }
 
     /// <summary>
-    /// A <see cref="Pith.SessionBase"/> extension method that check if a script is included in the catalog of embedded scripts.
+    /// A <see cref="Pith.SessionBase"/> extension method that check if a script is included in the
+    /// catalog of embedded scripts (TSP: _G.script.user.catalog()).
     /// </summary>
     /// <remarks>   2025-04-11. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are

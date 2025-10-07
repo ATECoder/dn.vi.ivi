@@ -60,7 +60,7 @@ public static partial class SessionBaseMethods
         }
     }
 
-    /// <summary>   A SessionBase extension method that adds a load menu item. </summary>
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that adds a load menu item. </summary>
     /// <remarks>   2025-09-11. </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
     ///                                                 are null. </exception>
