@@ -2,9 +2,15 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9411]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9412]: https://www.github.com/atecoder/dn.vi.ivi
 
 Current IVI Visa Compatibility: 8.0.1.9391
+
+## [8.1.9412] - 2025-10-08
+- Visa
+  - Add KeysightVisa compilation condition to toggle between Keysight Visa and Kelary Visa packages.
+- Device.TSP
+  - Export: Export to FrameworkID\Boot Version\Instrument Model\SN\Date\
 
 ## [8.1.9411] - 2025-10-07
 - Update the versions to 8.1.9411.108

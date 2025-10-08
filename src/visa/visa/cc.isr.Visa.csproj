@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -52,17 +52,36 @@
     </AssemblyAttribute>
   </ItemGroup>
 
+  <PropertyGroup>
+    <DefineConstants>$(DefineConstants);KeysightVisa;</DefineConstants>
+  </PropertyGroup>
+
+  <Choose>
+    <When Condition="$(DefineConstants.Contains(';KeysightVisa;'))">
+      <ItemGroup>
+        <!-- IviFoundation.Visa is included in KeysightTechnologies.Visa -->
+        <PackageReference Include="KeysightTechnologies.Visa" Version="18.6.6" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <PackageReference Include="Kelary.Ivi.Visa" Version="7.2.0" />
+        <!--
+          <PackageReference Include="IviFoundation.Visa" Version="8.0.2" />
+          <Reference Include="Ivi.Visa">
+            <HintPath>..\..\..\runtimes\Ivi.Visa.dll</HintPath>
+          </Reference>
+        -->
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
+
   <ItemGroup>
     <None Include="readme.md" Pack="true" PackagePath="" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Include="..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <!-- IviFoundation.Visa is included in KeysightTechnologies.Visa -->
-    <PackageReference Include="KeysightTechnologies.Visa" Version="18.6.6" />
   </ItemGroup>
 
   <ItemGroup>
