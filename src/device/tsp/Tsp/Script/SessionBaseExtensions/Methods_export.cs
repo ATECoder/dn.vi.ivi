@@ -350,25 +350,22 @@ public static partial class SessionBaseExtensionMethods
     /// <param name="session">                  The session to act on. </param>
     /// <param name="compressor">               The compressor. </param>
     /// <param name="encryptor">                The encryptor. </param>
-    /// <param name="versionInfo">              Information describing the version. </param>
     /// <param name="scriptsNames">             The framework scripts. </param>
     /// <param name="scriptsVersionGetters">    The version getters. </param>
-    /// <param name="topPath">                  Full pathname of the top file. </param>
+    /// <param name="folderPath">               Full pathname of the export folder. </param>
     /// <param name="fileFormat">               The file format. </param>
     /// <param name="consoleOut">               True to console out. </param>
     /// <param name="validate">                 True to validate. </param>
     public static void ExportEmbeddedScripts( this Pith.SessionBase session, IScriptCompressor compressor, IScriptEncryptor encryptor,
-        VersionInfoBase versionInfo, string[] scriptsNames, string[] scriptsVersionGetters,
-        string topPath, ScriptFormats fileFormat, bool consoleOut, bool validate )
+        string[] scriptsNames, string[] scriptsVersionGetters,
+        string folderPath, ScriptFormats fileFormat, bool consoleOut, bool validate )
     {
         if ( session is null ) throw new InvalidOperationException( $"{nameof( session )} is null" );
         if ( !session.IsDeviceOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open" );
-        if ( versionInfo is null ) throw new InvalidOperationException( $"{nameof( versionInfo )} is null" );
-
-        if ( string.IsNullOrWhiteSpace( topPath ) )
+        if ( string.IsNullOrWhiteSpace( folderPath ) )
         {
-            topPath = System.IO.Path.GetTempPath();
-            topPath = Path.Combine( topPath, "~cc.isr", "exports" );
+            folderPath = System.IO.Path.GetTempPath();
+            folderPath = Path.Combine( folderPath, "~cc.isr", "exports" );
         }
 
         string embeddedScriptsNames = session.FetchEmbeddedScriptsNames().Trim();
@@ -383,28 +380,9 @@ public static partial class SessionBaseExtensionMethods
         }
         else
         {
-            string majorRevision = versionInfo.FirmwareVersion.Major.ToString( System.Globalization.CultureInfo.CurrentCulture );
-            string model = versionInfo.Model;
-            string serialNumber = versionInfo.SerialNumber;
-            if ( string.IsNullOrWhiteSpace( model ) )
-                throw new InvalidOperationException( $"{nameof( VersionInfoBase )}.{nameof( VersionInfoBase.Model )} must not be null or empty." );
-
-            string folderPath = Path.Combine( topPath, $"{model}.{majorRevision}" );
-            if ( !Directory.Exists( folderPath ) )
-                _ = Directory.CreateDirectory( folderPath );
-
-            folderPath = Path.Combine( folderPath, serialNumber );
-            if ( !Directory.Exists( folderPath ) )
-                _ = Directory.CreateDirectory( folderPath );
-
-            folderPath = Path.Combine( folderPath, $"{DateTime.UtcNow:yyyyMMdd}" );
-            if ( !Directory.Exists( folderPath ) )
-                _ = Directory.CreateDirectory( folderPath );
-
             foreach ( string scriptName in embeddedScriptsNames.Split( ',' ) )
             {
                 string scriptTitle = scriptName.Trim();
-                string versionGetter = string.Empty;
 
                 // lookup the script version getter.
                 if ( scriptsNames.Contains( scriptTitle ) )
@@ -412,7 +390,7 @@ public static partial class SessionBaseExtensionMethods
                     int idx = Array.IndexOf( scriptsNames, scriptTitle );
 
                     // get the version from the script.
-                    versionGetter = scriptsVersionGetters[idx];
+                    string versionGetter = scriptsVersionGetters[idx];
 
                     // use the version getter so that each script is identified with its version to be sure.
                     session.ExportEmbeddedScript( compressor, encryptor, scriptTitle, versionGetter,

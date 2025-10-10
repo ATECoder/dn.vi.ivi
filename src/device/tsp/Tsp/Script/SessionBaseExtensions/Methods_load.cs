@@ -167,4 +167,39 @@ public static partial class SessionBaseExtensionMethods
         string[] scriptLines = source.Split( Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries );
         session.LoadScript( scriptName, scriptLines, lineDelay, runScriptAfterLoading, deleteExisting );
     }
+
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that loads a script. </summary>
+    /// <remarks>
+    /// 2025-04-20. <para>
+    /// Notes:</para><para>
+    /// 1. The script must not include the load script command or the end script command. </para><para>
+    /// 2. A byte code script must include the <see cref="Syntax.Tsp.Lua.LoadStringCommand"/>. </para>
+    /// </remarks>
+    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
+    ///                                             null. </exception>
+    /// <param name="session">                  The session. </param>
+    /// <param name="scriptName">               Specifies the script name. Empty for an anonymous
+    ///                                         script. </param>
+    /// <param name="source">                   specifies the source code for the script. </param>
+    /// <param name="lineDelay">                The line delay. </param>
+    /// <param name="runScriptAfterLoading">    True to run script after loading. </param>
+    /// <param name="deleteExisting">           True to delete the existing script before loading the
+    ///                                         new script. </param>
+    /// <param name="loadAsByteCode">           True to load as byte code. </param>
+    public static void LoadScript( this Pith.SessionBase session, string scriptName, string source, TimeSpan lineDelay,
+        bool runScriptAfterLoading, bool deleteExisting, bool loadAsByteCode )
+    {
+        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
+        if ( string.IsNullOrWhiteSpace( source ) ) throw new ArgumentNullException( nameof( source ) );
+        string[] scriptLines = source.Split( Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries );
+        session.LoadScript( scriptName, scriptLines, lineDelay, runScriptAfterLoading, deleteExisting );
+
+        if ( loadAsByteCode && !session.IsByteCodeScript( scriptName ) )
+        {
+            _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay + session.StatusReadDelay );
+            _ = session.WriteLine( $"{scriptName}.source=nil" );
+            _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay + session.StatusReadDelay );
+        }
+    }
+
 }
