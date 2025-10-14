@@ -6,7 +6,7 @@ public abstract partial class SessionBase
     /// <value> The 'collect garbage query complete' command. </value>
     public string CollectGarbageQueryCompleteCommand { get; protected set; } = string.Empty;
 
-    /// <summary>   A Pith.SessionBase extension method that collect garbage with a complete query. </summary>
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that collect garbage with a complete query. </summary>
     /// <remarks>   2024-09-11. </remarks>
     /// <returns>   A Tuple. </returns>
     public bool CollectGarbageQueryComplete()
@@ -28,7 +28,7 @@ public abstract partial class SessionBase
     /// <value> The 'collect garbage operation complete' command. </value>
     public string CollectGarbageOperationCompleteCommand { get; protected set; } = string.Empty;
 
-    /// <summary>   A Pith.SessionBase extension method that collect garbage wait complete. </summary>
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that collect garbage wait complete. </summary>
     /// <remarks>   2024-09-11. </remarks>
     /// <param name="operationCompletionTimeout">   The operation completion timeout. </param>
     /// <returns>   A Tuple. </returns>
@@ -57,7 +57,7 @@ public abstract partial class SessionBase
     /// <value> The collect garbage query complete command format. </value>
     public string CollectGarbageQueryCompleteCommandFormat { get; protected set; } = string.Empty;
 
-    /// <summary>   A Pith.SessionBase extension method that collect garbage query  complete. </summary>
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that collect garbage query  complete. </summary>
     /// <remarks>   2024-09-11. </remarks>
     /// <param name="nodeNumber">                   The node number. </param>
     /// <returns>   A Tuple. </returns>
@@ -84,7 +84,7 @@ public abstract partial class SessionBase
     /// <value> The collect garbage operation complete command format. </value>
     public string CollectGarbageOperationCompleteCommandFormat { get; protected set; } = string.Empty;
 
-    /// <summary>   A Pith.SessionBase extension method that collect garbage wait complete. </summary>
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that collect garbage wait complete. </summary>
     /// <remarks>   2024-09-11. </remarks>
     /// <param name="nodeNumber">                   The node number. </param>
     /// <param name="operationCompletionTimeout">   The operation completion timeout. </param>

@@ -6,7 +6,7 @@ public static partial class SessionBaseMethods
 {
 
     /// <summary>
-    /// A Pith.SessionBase extension method that queries controller node serial number.
+    /// A <see cref="Pith.SessionBase"/> extension method that queries controller node serial number.
     /// </summary>
     /// <remarks>   2025-05-26. </remarks>
     /// <param name="session">  The session to act on. </param>

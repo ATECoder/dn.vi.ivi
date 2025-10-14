@@ -178,7 +178,7 @@ public static partial class NodeMethods
         session.ThrowDeviceExceptionIfError();
     }
 
-    /// <summary>   A Pith.SessionBase extension method that removes the embedded script from thecatalog of embedded scripts on the node.. </summary>
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that removes the embedded script from thecatalog of embedded scripts on the node.. </summary>
     /// <remarks>   2025-09-29. </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
     ///                                                 are null. </exception>
