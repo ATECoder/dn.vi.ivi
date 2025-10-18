@@ -69,7 +69,7 @@
       For more information, visit https://learn.microsoft.com/dotnet/core/testing/unit-testing-platform-integration-dotnet-test#show-failure-per-test
       <TestingPlatformShowTestsFailure>true</TestingPlatformShowTestsFailure>
       -->
-    </PropertyGroup>
+  </PropertyGroup>
 
   <ItemGroup>
     <!-- Suppress warning about newton soft 9.0.1 which is part of the .net fx testing extensions code coverage.

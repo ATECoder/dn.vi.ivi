@@ -42,6 +42,10 @@
     </AssemblyAttribute>
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="..\..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
+  </ItemGroup>
+
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);MYPROJREF;</DefineConstants>
   </PropertyGroup>
@@ -76,10 +80,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Include="CandidateResources.json">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
@@ -106,25 +106,8 @@
       <NuGetAuditSuppress Include="https://github.com/advisories/GHSA-5crp-9r3c-p9vr" />
     -->
     <!-- Already included with the default profile of the MSTest.SDK
-      <PackageReference Update="Microsoft.Testing.Extensions.CodeCoverage" />
+      <PackageReference Update="Microsoft.Testing.Extensions.CodeCoverage" Version="18.1.0" />
     -->
-  </ItemGroup>
-
-  <ItemGroup>
-    <!-- This attempts to prevent NU1605 error: 
-       Warning As Error: Detected package downgrade: Microsoft.Testing.Extensions.CodeCoverage from 18.1.0 to 17.14.2.
-       Reference the package directly from the project to select a different version. 
-       cc.isr.VI.Device.Tsp.MSTest -> cc.isr.Std.MSTest -> Microsoft.Testing.Extensions.CodeCoverage (>= 18.1.0) 
-       cc.isr.VI.Device.Tsp.MSTest -> Microsoft.Testing.Extensions.CodeCoverage (>= 17.14.2)    
-    -->
-    <PackageReference Update="Microsoft.Testing.Extensions.CodeCoverage" Version="18.1.0" />
-    <!-- This attempts to prevent NU1605 error: 
-        Warning As Error: Detected package downgrade: Microsoft.Testing.Extensions.TrxReport from 2.0.1 to 1.8.4.
-        Reference the package directly from the project to select a different version. 
-        cc.isr.VI.Device.Tsp.MSTest -> cc.isr.Std.MSTest -> Microsoft.Testing.Extensions.TrxReport (>= 2.0.1) 
-        cc.isr.VI.Device.Tsp.MSTest -> Microsoft.Testing.Extensions.TrxReport (>= 1.8.4)
-    -->
-    <PackageReference Update="Microsoft.Testing.Extensions.TrxReport" Version="2.0.1" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)'=='net472' or '$(TargetFramework)'=='net48'">
