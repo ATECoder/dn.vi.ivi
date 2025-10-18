@@ -69,6 +69,10 @@
     <None Include="readme.md" Pack="true" PackagePath="" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
+  </ItemGroup>
+
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);MYPROJREF;</DefineConstants>
   </PropertyGroup>
@@ -82,8 +86,10 @@
         <ProjectReference Include="..\..\..\..\..\core\win.controls\src\progress\progress\cc.isr.WinControls.Progress.csproj" />
         <ProjectReference Include="..\..\..\..\..\core\win.controls\src\selectors\selectors\cc.isr.WinControls.Selectors.csproj" />
         <ProjectReference Include="..\..\..\..\..\core\win.controls\src\trees\trees\cc.isr.WinControls.Trees.csproj" />
+        <ProjectReference Include="..\..\..\..\..\core\win.controls\src\model.view.logger\model.view.logger\cc.isr.WinControls.ModelViewLogger.csproj" />
         <ProjectReference Include="..\..\device\device\cc.isr.VI.Device.csproj" />
       </ItemGroup>
+
     </When>
     <Otherwise>
     <ItemGroup>
@@ -111,10 +117,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <EmbeddedResource Include="resources\Clear-22x22.png" />
     <EmbeddedResource Include="resources\Connected-22x22.png" />
     <EmbeddedResource Include="resources\Disconnected-22x22.png" />
@@ -126,10 +128,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\core\win.controls\src\model.view.logger\model.view.logger\cc.isr.WinControls.ModelViewLogger.csproj" />
-  </ItemGroup>
- 
-  <ItemGroup>
     <!-- 
     This Service element runs the C:\Program Files\Microsoft Visual Studio 9.0\Common7\IDE\UserControlTestContainer.exe executable, passing the assembly path as a parameter.
     -->
@@ -138,6 +136,11 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -156,12 +159,4 @@
 
   <Import Project="version.build.props" />
     
-  <ItemGroup>
-    <Compile Update="Properties\Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
 </Project>

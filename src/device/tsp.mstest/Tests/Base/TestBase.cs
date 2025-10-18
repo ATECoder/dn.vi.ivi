@@ -180,7 +180,7 @@ public abstract class TestBase
 
     /// <summary>   (Unit Test Method) settings is local pacific standard time. </summary>
     /// <remarks>   David, 2020-09-23. </remarks>
-    [TestMethod( "00. Local time zone should equals the expected time zone" )]
+    [TestMethod( DisplayName = "00. Local time zone should equals the expected time zone" )]
     public void SettingsIsLocalPacificStandardTime()
     {
         Assert.IsNotNull( this.TestSiteSettings, $"{nameof( this.TestSiteSettings )} should not be null." );

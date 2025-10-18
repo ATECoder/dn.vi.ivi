@@ -26,7 +26,7 @@ public class TspSessionDebugScriptTests : Device.Tests.Base.ScriptTests
 
     /// <summary> Cleans up the test class after all tests in the class have run. </summary>
     /// <remarks> Use <see cref="CleanupTestClass"/> to run code after all tests in the class have run. </remarks>
-    [ClassCleanup( ClassCleanupBehavior.EndOfClass )]
+    [ClassCleanup]
     public static void CleanupTestClass()
     {
         VI.Device.Tests.Base.SubsystemsTests.CleanupBaseTestClass();
@@ -118,7 +118,7 @@ public class TspSessionDebugScriptTests : Device.Tests.Base.ScriptTests
 
     /// <summary>   (Unit Test Method) script should import and run. </summary>
     /// <remarks>   2025-04-20. </remarks>
-    [TestMethod( "01. Script should import and run" )]
+    [TestMethod( DisplayName = "01. Script should import and run" )]
     public void ScriptShouldImportAndRun()
     {
         Assert.IsNotNull( this.Device );
@@ -153,7 +153,7 @@ public class TspSessionDebugScriptTests : Device.Tests.Base.ScriptTests
 
     /// <summary>   (Unit Test Method) byte code script should import and run. </summary>
     /// <remarks>   2025-04-20. </remarks>
-    [TestMethod( "02. byte code script should import and run" )]
+    [TestMethod( DisplayName = "02. byte code script should import and run" )]
     public void BinaryScriptShouldImportAndRun()
     {
         Assert.IsNotNull( this.Device );

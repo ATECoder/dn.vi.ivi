@@ -30,6 +30,7 @@
 
   <!-- Assembly attributes -->
   <ItemGroup>
+    <AssemblyAttribute Include="Microsoft.VisualStudio.TestTools.UnitTesting.DoNotParallelize"/>
     <AssemblyAttribute Include="System.CLSCompliantAttribute">
       <_Parameter1>false</_Parameter1>
     </AssemblyAttribute>
@@ -38,14 +39,9 @@
     </AssemblyAttribute>
   </ItemGroup>
 
-  <PropertyGroup>
-    <!--
-      <RunSettingsFilePath>$(MSBuildProjectDirectory)\.runsettings</RunSettingsFilePath>
-      Displays error on console in addition to the log file. Note that this feature comes with a performance impact.
-      For more information, visit https://learn.microsoft.com/dotnet/core/testing/unit-testing-platform-integration-dotnet-test#show-failure-per-test
-      -->
-    <TestingPlatformShowTestsFailure>true</TestingPlatformShowTestsFailure>
-  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
+  </ItemGroup>
 
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);MYPROJREF;</DefineConstants>
@@ -66,17 +62,21 @@
     </Otherwise>
   </Choose>
 
-  <ItemGroup>
-    <Compile Include="..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
-  </ItemGroup>
+  <PropertyGroup>
+    <!--
+      <RunSettingsFilePath>$(MSBuildProjectDirectory)\.runsettings</RunSettingsFilePath>
+      Displays error on console in addition to the log file. Note that this feature comes with a performance impact.
+      For more information, visit https://learn.microsoft.com/dotnet/core/testing/unit-testing-platform-integration-dotnet-test#show-failure-per-test
+      <TestingPlatformShowTestsFailure>true</TestingPlatformShowTestsFailure>
+      -->
+    </PropertyGroup>
 
   <ItemGroup>
-    <!--
-      Suppress warning about newton soft 9.0.1 which is part of the .net fx testing extensions code coverage.
+    <!-- Suppress warning about newton soft 9.0.1 which is part of the .net fx testing extensions code coverage.
       <NuGetAuditSuppress Include="https://github.com/advisories/GHSA-5crp-9r3c-p9vr" />
     -->
     <!-- Already included with the default profile of the MSTest.SDK
-      <PackageReference Update="Microsoft.Testing.Extensions.CodeCoverage" />
+      <PackageReference Update="Microsoft.Testing.Extensions.CodeCoverage" Version="18.1.0" />
     -->
   </ItemGroup>
 

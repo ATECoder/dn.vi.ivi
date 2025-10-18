@@ -1,4 +1,4 @@
-﻿<Project Sdk="MSTest.Sdk">
+<Project Sdk="MSTest.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>net472;net48;net9.0</TargetFrameworks>
@@ -31,6 +31,7 @@
 
   <!-- Assembly attributes -->
   <ItemGroup>
+    <AssemblyAttribute Include="Microsoft.VisualStudio.TestTools.UnitTesting.DoNotParallelize"/>
     <AssemblyAttribute Include="System.CLSCompliantAttribute">
       <_Parameter1>false</_Parameter1>
     </AssemblyAttribute>
@@ -72,8 +73,8 @@
     <!--
       Displays error on console in addition to the log file. Note that this feature comes with a performance impact.
       For more information, visit https://learn.microsoft.com/dotnet/core/testing/unit-testing-platform-integration-dotnet-test#show-failure-per-test
-      -->
-    <TestingPlatformShowTestsFailure>true</TestingPlatformShowTestsFailure>
+      <TestingPlatformShowTestsFailure>true</TestingPlatformShowTestsFailure>
+    -->
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'=='net472' or '$(TargetFramework)'=='net48'">
@@ -83,6 +84,23 @@
     or one of its dependencies. The located assembly's manifest definition does not match the assembly reference. (Exception from HRESULT: 0x80131040)
     -->
     <PackageReference Include="Serilog.Settings.Configuration" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- This attempts to prevent NU1605 error: 
+       Warning As Error: Detected package downgrade: Microsoft.Testing.Extensions.CodeCoverage from 18.1.0 to 17.14.2.
+       Reference the package directly from the project to select a different version. 
+       cc.isr.VI.Device.Tsp.MSTest -> cc.isr.Std.MSTest -> Microsoft.Testing.Extensions.CodeCoverage (>= 18.1.0) 
+       cc.isr.VI.Device.Tsp.MSTest -> Microsoft.Testing.Extensions.CodeCoverage (>= 17.14.2)    
+    -->
+    <PackageReference Update="Microsoft.Testing.Extensions.CodeCoverage" Version="18.1.0" />
+    <!-- This attempts to prevent NU1605 error: 
+        Warning As Error: Detected package downgrade: Microsoft.Testing.Extensions.TrxReport from 2.0.1 to 1.8.4.
+        Reference the package directly from the project to select a different version. 
+        cc.isr.VI.Device.Tsp.MSTest -> cc.isr.Std.MSTest -> Microsoft.Testing.Extensions.TrxReport (>= 2.0.1) 
+        cc.isr.VI.Device.Tsp.MSTest -> Microsoft.Testing.Extensions.TrxReport (>= 1.8.4)
+    -->
+    <PackageReference Update="Microsoft.Testing.Extensions.TrxReport" Version="2.0.1" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)'=='net472' or '$(TargetFramework)'=='net48'">

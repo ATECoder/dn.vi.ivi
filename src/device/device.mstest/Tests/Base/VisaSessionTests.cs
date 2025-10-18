@@ -137,7 +137,7 @@ public abstract class VisaSessionTests
 
     /// <summary>   (Unit Test Method) resource name should be included. </summary>
     /// <remarks>   Finds the resource using the session factory resources manager. </remarks>
-    [TestMethod( "01. Resource name should be included" )]
+    [TestMethod( DisplayName = "01. Resource name should be included" )]
     public void ResourceNameShouldBeIncluded()
     {
         Assert.IsNotNull( this.VisaSessionBase );
@@ -147,7 +147,7 @@ public abstract class VisaSessionTests
 
     /// <summary>   (Unit Test Method) resource name should be found. </summary>
     /// <remarks>   David, 2021-07-04. </remarks>
-    [TestMethod( "02. Resource name should be found" )]
+    [TestMethod( DisplayName = "02. Resource name should be found" )]
     public void ResourceNameShouldBeFound()
     {
         using VisaSession session = VisaSession.Create();
@@ -163,7 +163,7 @@ public abstract class VisaSessionTests
 
     /// <summary>   (Unit Test Method) trace message should be queued. </summary>
     /// <remarks>   Checks if the device adds a trace message to a trace listener. </remarks>
-    [TestMethod( "03. Trace message should be queued" )]
+    [TestMethod( DisplayName = "03. Trace message should be queued" )]
     public void TraceMessageShouldBeQueued()
     {
         using VisaSession session = VisaSession.Create();
@@ -179,7 +179,7 @@ public abstract class VisaSessionTests
 
     /// <summary>   (Unit Test Method) queries if a given visa session should open. </summary>
     /// <remarks>   David, 2021-07-04. </remarks>
-    [TestMethod( "04. Visa session should open" )]
+    [TestMethod( DisplayName = "04. Visa session should open" )]
     public void VisaSessionShouldOpen()
     {
         Assert.IsNotNull( this.VisaSessionBase );
@@ -202,7 +202,7 @@ public abstract class VisaSessionTests
     /// (Unit Test Method) queries if a given visa session should open and clear execution state.
     /// </summary>
     /// <remarks>   2024-08-02. </remarks>
-    [TestMethod( "05. Visa session should clear execution state" )]
+    [TestMethod( DisplayName = "05. Visa session should clear execution state" )]
     public void VisaSessionShouldClearExecutionState()
     {
         Assert.IsNotNull( this.VisaSessionBase );
@@ -228,7 +228,7 @@ public abstract class VisaSessionTests
 
     /// <summary>   (Unit Test Method) visa session should wait for status bitmask. </summary>
     /// <remarks>   David, 2021-07-04. </remarks>
-    [TestMethod( "06. Visa session should wait for status bitmask" )]
+    [TestMethod( DisplayName = "06. Visa session should wait for status bitmask" )]
     public void VisaSessionShouldWaitForStatusBitmask()
     {
         Assert.IsNotNull( this.VisaSessionBase );
@@ -250,7 +250,7 @@ public abstract class VisaSessionTests
 
     /// <summary>   (Unit Test Method) should wait for operation completion. </summary>
     /// <remarks>   David, 2021-07-04. </remarks>
-    [TestMethod( "07. Session should wait for operation completion" )]
+    [TestMethod( DisplayName = "07. Session should wait for operation completion" )]
     public void VisaSessionShouldWaitForOperationCompletion()
     {
         Assert.IsNotNull( this.VisaSessionBase );
@@ -276,7 +276,7 @@ public abstract class VisaSessionTests
     /// Initial Standard Event Enable Bitmask Is 0x00</para><para>
     /// DMM2002 status Byte 0x50 0x10 bitmask was Set</para>
     /// </remarks>
-    [TestMethod( "08. Visa session should wait for the Message Available bitmask" )]
+    [TestMethod( DisplayName = "08. Visa session should wait for the Message Available bitmask" )]
     public void VisaSessionShouldWaitForMessageAvailable()
     {
         Assert.IsNotNull( this.VisaSessionBase );
@@ -305,7 +305,7 @@ public abstract class VisaSessionTests
     /// Initial Standard Event Enable Bitmask Is 0x00</para><para>
     /// DMM2002 status Byte 0x50 0x10 bitmask was Set</para>
     /// </remarks>
-    [TestMethod( "09. Clear Execution State should preserve enable bitmasks" )]
+    [TestMethod( DisplayName = "09. Clear Execution State should preserve enable bitmasks" )]
     public void ClearExecutionStateShouldPreserveEnableBitmasks()
     {
         Assert.IsNotNull( this.VisaSessionBase );
@@ -337,7 +337,7 @@ public abstract class VisaSessionTests
     /// (Unit Test Method) clear execution state should preserve completion bitmasks.
     /// </summary>
     /// <remarks>   2024-09-16. </remarks>
-    [TestMethod( "10. Clear Execution State should preserve completion bitmasks" )]
+    [TestMethod( DisplayName = "10. Clear Execution State should preserve completion bitmasks" )]
     public void ClearExecutionStateShouldPreserveCompletionBitmasks()
     {
         Assert.IsNotNull( this.VisaSessionBase );

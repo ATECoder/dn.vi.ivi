@@ -41,7 +41,7 @@ public class ImplementationTests
 
     /// <summary> Cleans up the test class after all tests in the class have run. </summary>
     /// <remarks> Use <see cref="CleanupTestClass"/> to run code after all tests in the class have run. </remarks>
-    [ClassCleanup( ClassCleanupBehavior.EndOfClass )]
+    [ClassCleanup]
     public static void CleanupTestClass()
     {
     }
@@ -60,7 +60,7 @@ public class ImplementationTests
     public virtual void InitializeBeforeEachTest()
     {
         Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {TimeZoneInfo.Local}" );
-        cc.isr.VI.Device.Tests.Asserts.AssertVisaImplementationShouldBeLoaded();
+        Asserts.AssertVisaImplementationShouldBeLoaded();
         Console.WriteLine( $"\tTesting {typeof( cc.isr.Visa.Gac.GacLoader ).Assembly.FullName}" );
     }
 
@@ -73,7 +73,7 @@ public class ImplementationTests
 
     /// <summary>   (Unit Test Method) dot net implementations should exist. </summary>
     /// <remarks>   2024-07-13. </remarks>
-    [TestMethod( "01. .NET Visa implementation(s) should exist" )]
+    [TestMethod( DisplayName = "01. .NET Visa implementation(s) should exist" )]
     public void DotNetVisaImplementationsShouldExist()
     {
         _ = Gac.GacLoader.TryLoadInstalledVisaAssemblies( out _ );
@@ -82,7 +82,7 @@ public class ImplementationTests
 
     /// <summary>   (Unit Test Method) ivi visa assembly should exist. </summary>
     /// <remarks>   2024-07-13. </remarks>
-    [TestMethod( "02. IVI Visa assembly should exist" )]
+    [TestMethod( DisplayName = "02. IVI Visa assembly should exist" )]
     public void IviVisaAssemblyShouldExist()
     {
         (bool success, string details) = Gac.Vendor.IsIviVisaAssemblyExists();
@@ -91,7 +91,7 @@ public class ImplementationTests
 
     /// <summary>   (Unit Test Method) Keysight visa should exist. </summary>
     /// <remarks>   2024-07-13. </remarks>
-    [TestMethod( "03. Keysight Visa should exist" )]
+    [TestMethod( DisplayName = "03. Keysight Visa should exist" )]
     public void KeysightVisaShouldExist()
     {
         if ( Gac.Vendor.IsLoadedKeysightImplementation() )
@@ -103,7 +103,7 @@ public class ImplementationTests
 
     /// <summary>   (Unit Test Method) Keysight resource manager should exist. </summary>
     /// <remarks>   David, 2021-11-06. </remarks>
-    [TestMethod( "04. Keysight resource manager should exist" )]
+    [TestMethod( DisplayName = "04. Keysight resource manager should exist" )]
     public void KeysightResourceManagerShouldExist()
     {
         if ( Gac.Vendor.IsLoadedKeysightImplementation() )
@@ -115,7 +115,7 @@ public class ImplementationTests
 
     /// <summary>   National instruments visa should exist. </summary>
     /// <remarks>   2024-07-13. </remarks>
-    [TestMethod( "05. NI Visa should exist" )]
+    [TestMethod( DisplayName = "05. NI Visa should exist" )]
     public void NationalInstrumentsVisaShouldExist()
     {
         if ( Gac.Vendor.IsLoadedNImplementation() )
@@ -127,7 +127,7 @@ public class ImplementationTests
 
     /// <summary>   National instruments resource manager should exist. </summary>
     /// <remarks>   2024-07-13. </remarks>
-    [TestMethod( "06. NI Visa resource manager should exist" )]
+    [TestMethod( DisplayName = "06. NI Visa resource manager should exist" )]
     public void NationalInstrumentsResourceManagerShouldExist()
     {
         if ( Gac.Vendor.IsLoadedNImplementation() )
@@ -139,7 +139,7 @@ public class ImplementationTests
 
     /// <summary>   (Unit Test Method) visa implementations should be enumerated. </summary>
     /// <remarks>   2024-07-13. </remarks>
-    [TestMethod( "07. Visa implementations should be enumerated" )]
+    [TestMethod( DisplayName = "07. Visa implementations should be enumerated" )]
     public void VisaImplementationsShouldBeEnumerated()
     {
         System.Collections.Generic.IEnumerable<Ivi.Visa.ConflictManager.VisaImplementation> installedVisas = Gac.Vendor.EnumerateDotNetImplementations();

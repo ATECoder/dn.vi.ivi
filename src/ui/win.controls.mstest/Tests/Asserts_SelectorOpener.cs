@@ -1,5 +1,3 @@
-using System;
-
 namespace cc.isr.VI.WinControls.Tests;
 
 public sealed partial class Asserts

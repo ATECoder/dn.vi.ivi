@@ -5,22 +5,20 @@ VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "`build", "`build", "{286AA6FE-67D4-4818-8C77-F3AFFF3CCD7D}"
 	ProjectSection(SolutionItems) = preProject
+		directory.build.props = directory.build.props
 		exclusion.dic = exclusion.dic
 		global.json = global.json
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "`docs", "`docs", "{7DB60340-1A19-41FE-A38B-2C51C86D6B34}"
 	ProjectSection(SolutionItems) = preProject
-		..\changelog.md = ..\changelog.md
 		..\developer.md = ..\developer.md
+		visa\isr.visa.changelog.md = visa\isr.visa.changelog.md
 		..\readme.md = ..\readme.md
 		..\todo.md = ..\todo.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "visa", "visa", "{76EDB5EA-335F-4FD2-A5E9-096D58740739}"
-	ProjectSection(SolutionItems) = preProject
-		visa\isr.visa.changelog.md = visa\isr.visa.changelog.md
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cc.isr.Visa.WinControls", "visa\visa.win.controls\cc.isr.Visa.WinControls.csproj", "{8E586690-CAEF-4D68-A679-A7B6F8A9A727}"
 EndProject

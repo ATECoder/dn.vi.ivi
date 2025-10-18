@@ -55,10 +55,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- This service generates text from T4 text templates. -->
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
     <None Update="version.build.props">
-      <DependentUpon>version.build.tt</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
+      <DependentUpon>version.build.tt</DependentUpon>
     </None>
     <None Update="version.build.tt">
       <LastGenOutput>version.build.props</LastGenOutput>
@@ -67,10 +69,6 @@
   </ItemGroup>
 
   <Import Project="version.build.props" />
-
-  <ItemGroup>
-    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
-  </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>

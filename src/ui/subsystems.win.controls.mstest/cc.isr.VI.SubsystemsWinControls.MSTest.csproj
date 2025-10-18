@@ -35,6 +35,7 @@
 
   <!-- Assembly attributes -->
   <ItemGroup>
+    <AssemblyAttribute Include="Microsoft.VisualStudio.TestTools.UnitTesting.DoNotParallelize"/>
     <AssemblyAttribute Include="System.CLSCompliantAttribute">
       <_Parameter1>false</_Parameter1>
     </AssemblyAttribute>
@@ -92,7 +93,6 @@
     <!-- Already included with the default profile of the MSTest.SDK
       <PackageReference Update="Microsoft.Testing.Extensions.CodeCoverage" />
     -->
-
   </ItemGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)'=='net472' or '$(TargetFramework)'=='net48'">
@@ -102,8 +102,6 @@
 
   <Import Project="..\subsystems.win.controls\version.build.props" />
 
-
-
-
-
 </Project>
+
+

@@ -28,7 +28,7 @@ public class TspSessionScriptTests : Device.Tests.Base.ScriptTests
 
     /// <summary> Cleans up the test class after all tests in the class have run. </summary>
     /// <remarks> Use <see cref="CleanupTestClass"/> to run code after all tests in the class have run. </remarks>
-    [ClassCleanup( ClassCleanupBehavior.EndOfClass )]
+    [ClassCleanup]
     public static void CleanupTestClass()
     {
         VI.Device.Tests.Base.SubsystemsTests.CleanupBaseTestClass();
@@ -80,7 +80,7 @@ public class TspSessionScriptTests : Device.Tests.Base.ScriptTests
     /// <remarks> Finds the resource using the session factory resources manager. </remarks>
     [System.Diagnostics.CodeAnalysis.SuppressMessage( "Globalization", "CA1305:Specify IFormatProvider", Justification = "<Pending>" )]
     [System.Diagnostics.CodeAnalysis.SuppressMessage( "CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "<Pending>" )]
-    [TestMethod( "01. Script should load and run" )]
+    [TestMethod( DisplayName = "01. Script should load and run" )]
     public void ScriptShouldLoadAndRun()
     {
         Assert.IsNotNull( this.Device );
@@ -184,7 +184,7 @@ public class TspSessionScriptTests : Device.Tests.Base.ScriptTests
 
     /// <summary>   (Unit Test Method) script should load and run from file. </summary>
     /// <remarks>   2025-04-10. </remarks>
-    [TestMethod( "02. Script should load and run from file" )]
+    [TestMethod( DisplayName = "02. Script should load and run from file" )]
     public void ScriptShouldLoadAndRunFromFile()
     {
         Assert.IsNotNull( this.Device );
@@ -292,7 +292,7 @@ public class TspSessionScriptTests : Device.Tests.Base.ScriptTests
 
     /// <summary>   (Unit Test Method) byte code script should load and run from file. </summary>
     /// <remarks>   2025-04-10. </remarks>
-    [TestMethod( "03. byte code script should load and run from file" )]
+    [TestMethod( DisplayName = "03. byte code script should load and run from file" )]
     public void BinaryScriptShouldLoadAndRunFromFile()
     {
         Assert.IsNotNull( this.Device );

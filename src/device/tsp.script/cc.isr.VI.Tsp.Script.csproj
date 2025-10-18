@@ -53,8 +53,12 @@
     <None Include="readme.md" Pack="true" PackagePath="" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
+  </ItemGroup>
+
   <PropertyGroup>
-    <DefineConstants>$(DefineConstants);MYPROJREF;ISR</DefineConstants>
+    <DefineConstants>$(DefineConstants);MYPROJREF;ISR;</DefineConstants>
   </PropertyGroup>
 
   <Choose>
@@ -70,19 +74,11 @@
     </Otherwise>
   </Choose>
 
-  <Choose>
-    <When Condition="$(DefineConstants.Contains('ISR'))" />
-  </Choose>
-  
-    <Choose>
-    <When Condition="$(DefineConstants.Contains('ISR'))" />
-  </Choose>
-
-
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
   </PropertyGroup>
+
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DefineDebug>false</DefineDebug>
@@ -90,11 +86,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-
+    <!-- This service generates text from T4 text templates. -->
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
     <None Update="version.build.props">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -108,8 +101,4 @@
 
   <Import Project="version.build.props" />
     
-  <ItemGroup>
-    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
-  </ItemGroup>
-
 </Project>

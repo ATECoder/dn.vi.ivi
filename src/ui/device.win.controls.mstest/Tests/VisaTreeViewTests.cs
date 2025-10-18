@@ -1,6 +1,3 @@
-using System;
-using System.Threading.Tasks;
-
 namespace cc.isr.VI.DeviceWinControls.Tests;
 
 /// <summary> Visa Tree View unit tests. </summary>
@@ -29,7 +26,7 @@ public class VisaTreeViewTests : cc.isr.VI.DeviceWinControls.Tests.Base.IVisaVie
 
     /// <summary> Cleans up the test class after all tests in the class have run. </summary>
     /// <remarks> Use <see cref="CleanupTestClass"/> to run code after all tests in the class have run. </remarks>
-    [ClassCleanup( ClassCleanupBehavior.EndOfClass )]
+    [ClassCleanup]
     public static void CleanupTestClass()
     {
         VI.Device.Tests.Base.DeviceTests.CleanupBaseTestClass();
@@ -84,7 +81,7 @@ public class VisaTreeViewTests : cc.isr.VI.DeviceWinControls.Tests.Base.IVisaVie
 
     /// <summary> (Unit Test Method) asserts that a resource name should be selected. </summary>
     /// <remarks> David, 2020-10-12. </remarks>
-    [TestMethod( "02. Visa tree view resource name should be selected" )]
+    [TestMethod( DisplayName = "02. Visa tree view resource name should be selected" )]
     public void ResourceNameShouldBeSelected()
     {
         using VisaTreeView? view = new( this.VisaSessionBase );
@@ -93,7 +90,7 @@ public class VisaTreeViewTests : cc.isr.VI.DeviceWinControls.Tests.Base.IVisaVie
 
     /// <summary>   (Unit Test Method) asserts that a visa session should open. </summary>
     /// <remarks>   David, 2020-10-12. </remarks>
-    [TestMethod( "03. Visa Tree View Session Should Open." )]
+    [TestMethod( DisplayName = "03. Visa Tree View Session Should Open." )]
     public void VisaTreeViewSessionShouldOpen()
     {
         Assert.IsNotNull( this.VisaSessionBase, $"{nameof( this.VisaSessionBase )} should not be null." );
@@ -117,7 +114,7 @@ public class VisaTreeViewTests : cc.isr.VI.DeviceWinControls.Tests.Base.IVisaVie
 
     /// <summary>   (Unit Test Method) asserts that a visa session should open and close twice. </summary>
     /// <remarks> David, 2020-10-12. </remarks>
-    [TestMethod( "04. Visa tree view session should open twice" )]
+    [TestMethod( DisplayName = "04. Visa tree view session should open twice" )]
     public void VisaTreeViewSessionShouldOpenTwice()
     {
         Assert.IsNotNull( this.VisaSessionBase, $"{nameof( this.VisaSessionBase )} should not be null." );
@@ -139,7 +136,7 @@ public class VisaTreeViewTests : cc.isr.VI.DeviceWinControls.Tests.Base.IVisaVie
         {
             Asserts.AssertVisaViewSessionShouldOpenAndClose( trialNumber, view, this.ResourceSettings );
             Task.Delay( TimeSpan.FromMilliseconds( 100d ),
-                this.TestContext?.CancellationTokenSource.Token ?? System.Threading.CancellationToken.None ).Wait( this.TestContext?.CancellationTokenSource.Token ?? System.Threading.CancellationToken.None );
+                this.TestContext?.CancellationToken ?? System.Threading.CancellationToken.None ).Wait( this.TestContext?.CancellationToken ?? System.Threading.CancellationToken.None );
             trialNumber += 1;
             Asserts.AssertVisaViewSessionShouldOpenAndClose( trialNumber, view, this.ResourceSettings );
         }
@@ -151,7 +148,7 @@ public class VisaTreeViewTests : cc.isr.VI.DeviceWinControls.Tests.Base.IVisaVie
 
     /// <summary>   (Unit Test Method) asserts that a visa session should bind a visa session. </summary>
     /// <remarks> David, 2020-10-12. </remarks>
-    [TestMethod( "05. Visa tree view should bind a Visa session" )]
+    [TestMethod( DisplayName = "05. Visa tree view should bind a Visa session" )]
     public void VisaTreeViewShouldBindVisaSession()
     {
         int trialNumber = 0;
@@ -162,7 +159,7 @@ public class VisaTreeViewTests : cc.isr.VI.DeviceWinControls.Tests.Base.IVisaVie
 
     /// <summary>   (Unit Test Method) asserts that a visa session should open and close twice. </summary>
     /// <remarks> David, 2020-10-12. </remarks>
-    [TestMethod( "06. Visa tree view should bind an open Visa session" )]
+    [TestMethod( DisplayName = "06. Visa tree view should bind an open Visa session" )]
     public void VisaTreeViewShouldBindOpenVisaSession()
     {
         int trialNumber = 0;

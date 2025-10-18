@@ -1,4 +1,3 @@
-using System;
 using System.Text.Json.Serialization;
 using cc.isr.Json.AppSettings.Models;
 

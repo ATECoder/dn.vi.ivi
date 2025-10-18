@@ -137,7 +137,7 @@ public abstract class VisaSessionServiceRequestTests
 
     /// <summary>   (Unit Test Method) service request handling should toggle. </summary>
     /// <remarks>   David, 2021-07-04. </remarks>
-    [TestMethod( "01. Service request handling should toggle" )]
+    [TestMethod( DisplayName = "01. Service request handling should toggle" )]
     public void ServiceRequestHandlingShouldToggle()
     {
         using VisaSession session = VisaSession.Create();
@@ -162,7 +162,7 @@ public abstract class VisaSessionServiceRequestTests
 
     /// <summary>   (Unit Test Method) should wait for operation completion. </summary>
     /// <remarks>   David, 2021-07-04. </remarks>
-    [TestMethod( "02. Operation completion should wait for" )]
+    [TestMethod( DisplayName = "02. Operation completion should wait for" )]
     public void OperationCompletionShouldWaitFor()
     {
         using VisaSession session = VisaSession.Create();

@@ -58,11 +58,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="KeysightTechnologies.Visa" Version="18.6.6" />
+    <Compile Include="..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
+    <PackageReference Include="KeysightTechnologies.Visa" Version="18.6.6" />
   </ItemGroup>
 
   <ItemGroup>
@@ -82,6 +82,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- This service generates text from T4 text templates. -->
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
     <None Update="version.build.props">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -94,9 +96,5 @@
   </ItemGroup>
 
   <Import Project="version.build.props" />
-    
-  <ItemGroup>
-    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
-  </ItemGroup>
 
 </Project>

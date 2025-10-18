@@ -51,7 +51,7 @@ public class DeviceTests
 
     /// <summary> Cleans up the test class after all tests in the class have run. </summary>
     /// <remarks> David, 2020-10-12. </remarks>
-    [ClassCleanup( ClassCleanupBehavior.EndOfClass )]
+    [ClassCleanup]
     public static void CleanupTestClass()
     {
     }
@@ -151,7 +151,7 @@ public class DeviceTests
     /// The synchronization context is captured as part of the property change and other event
     /// handlers and is no longer needed here.
     /// </remarks>
-    [TestMethod( "01. Session should open" )]
+    [TestMethod( DisplayName = "01. Session should open" )]
     public void SessionShouldOpen()
     {
         Assert.IsNotNull( this.LegacyDevice, $"{nameof( this.LegacyDevice )} should not be null." );
@@ -161,7 +161,7 @@ public class DeviceTests
         _ = this.LegacyDevice.Disconnect();
     }
 
-    [TestMethod( "02. Meter should initialize" )]
+    [TestMethod( DisplayName = "02. Meter should initialize" )]
     public void MeterShouldInitialize()
     {
         Assert.IsNotNull( this.LegacyDevice, $"{nameof( this.LegacyDevice )} should not be null." );
@@ -173,7 +173,7 @@ public class DeviceTests
         _ = this.LegacyDevice.Disconnect();
     }
 
-    [TestMethod( "03. Meter should preset" )]
+    [TestMethod( DisplayName = "03. Meter should preset" )]
     public void MeterShouldPreset()
     {
         Assert.IsNotNull( this.LegacyDevice, $"{nameof( this.LegacyDevice )} should not be null." );
@@ -188,7 +188,7 @@ public class DeviceTests
 
     /// <summary>   (Unit Test Method) measurements should configure. </summary>
     /// <remarks>   2024-11-08. </remarks>
-    [TestMethod( "04. Measurements Should Configure" )]
+    [TestMethod( DisplayName = "04. Measurements Should Configure" )]
     public void MeasurementsShouldConfigure()
     {
         Assert.IsNotNull( this.LegacyDevice, $"{nameof( this.LegacyDevice )} should not be null." );
@@ -203,7 +203,7 @@ public class DeviceTests
 
     /// <summary>   (Unit Test Method) measurement should trigger. </summary>
     /// <remarks>   2024-11-15. </remarks>
-    [TestMethod( "05. Measurement should trigger" )]
+    [TestMethod( DisplayName = "05. Measurement should trigger" )]
     public void MeasurementShouldTrigger()
     {
         Assert.IsNotNull( this.LegacyDevice, $"{nameof( this.LegacyDevice )} should not be null." );
@@ -226,7 +226,7 @@ public class DeviceTests
 
     /// <summary>   (Unit Test Method) trigger cycle should abort. </summary>
     /// <remarks>   2024-11-08. </remarks>
-    [TestMethod( "06. Trigger cycle should abort" )]
+    [TestMethod( DisplayName = "06. Trigger cycle should abort" )]
     public void TriggerCycleShouldAbort()
     {
         Assert.IsNotNull( this.LegacyDevice, $"{nameof( this.LegacyDevice )} should not be null." );

@@ -135,7 +135,7 @@ public abstract class DeviceServiceRequestTests
 
     /// <summary>   (Unit Test Method) device should open without device errors. </summary>
     /// <remarks>   David, 2021-07-04. </remarks>
-    [TestMethod( "01. Device should open without device errors" )]
+    [TestMethod( DisplayName = "01. Device should open without device errors" )]
     public void DeviceShouldOpenWithoutDeviceErrors()
     {
         Assert.IsNotNull( this.VisaSessionBase );
@@ -163,7 +163,7 @@ public abstract class DeviceServiceRequestTests
     /// <remarks>
     /// This test will fail the first time it is run if Windows requests access through the Firewall.
     /// </remarks>
-    [TestMethod( "02. Service request handling should toggle" )]
+    [TestMethod( DisplayName = "02. Service request handling should toggle" )]
     public void ServiceRequestHandlingShouldToggle()
     {
         Assert.IsNotNull( this.VisaSessionBase );
@@ -186,7 +186,7 @@ public abstract class DeviceServiceRequestTests
 
     /// <summary>   (Unit Test Method) service request should be handled by session. </summary>
     /// <remarks>   David, 2021-07-04. </remarks>
-    [TestMethod( "03. Service request should be handled by session" )]
+    [TestMethod( DisplayName = "03. Service request should be handled by session" )]
     public void ServiceRequestShouldBeHandledBySession()
     {
         Assert.IsNotNull( this.VisaSessionBase );
@@ -211,7 +211,7 @@ public abstract class DeviceServiceRequestTests
     /// <remarks>
     /// This test will fail the first time it is run if Windows requests access through the Firewall.
     /// </remarks>
-    [TestMethod( "04. Service request should be handled by device" )]
+    [TestMethod( DisplayName = "04. Service request should be handled by device" )]
     public void ServiceRequestShouldBeHandledByDevice()
     {
         Assert.IsNotNull( this.VisaSessionBase );

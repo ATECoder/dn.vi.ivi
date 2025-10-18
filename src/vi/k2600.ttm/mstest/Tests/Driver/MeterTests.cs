@@ -50,7 +50,7 @@ public class MeterTests
 
     /// <summary> Cleans up the test class after all tests in the class have run. </summary>
     /// <remarks> David, 2020-10-12. </remarks>
-    [ClassCleanup( ClassCleanupBehavior.EndOfClass )]
+    [ClassCleanup]
     public static void CleanupTestClass()
     {
     }
@@ -135,7 +135,7 @@ public class MeterTests
     /// The synchronization context is captured as part of the property change and other event
     /// handlers and is no longer needed here.
     /// </remarks>
-    [TestMethod( "01. Session should open" )]
+    [TestMethod( DisplayName = "01. Session should open" )]
     public void SessionShouldOpen()
     {
         Assert.IsNotNull( this.Meter, $"{nameof( this.Meter )} should not be null." );

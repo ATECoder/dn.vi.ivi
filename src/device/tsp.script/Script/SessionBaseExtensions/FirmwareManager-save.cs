@@ -23,7 +23,7 @@ public static partial class FirmwareManager
         if ( autoRun )
             session.TurnOnAutoRun( scriptName );
 
-        session.EmbedScript( scriptName );
+        session.EmbedScript( scriptName, false );
 
         // fetch names
         (string scriptNames, List<string> authorScripts) = FirmwareManager.FetchEmbeddedScriptsNames( session );
@@ -41,7 +41,8 @@ public static partial class FirmwareManager
     /// <param name="scriptName">   Gets or sets the script name. </param>
     /// <param name="autoRun">      True to set the script to automatically run. </param>
     /// <param name="skipEmbedded">    (Optional) [false] True if to skip if the script was already embedded. </param>
-    public static void EmbedScript( this Pith.SessionBase session, string scriptName, bool autoRun, bool skipEmbedded = false )
+    [Obsolete( "Use Device.Tsp.SessionExceptions" )]
+    public static void EmbedScriptObsolete( this Pith.SessionBase session, string scriptName, bool autoRun, bool skipEmbedded = false )
     {
         if ( scriptName is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
@@ -56,7 +57,7 @@ public static partial class FirmwareManager
             _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay );
         }
 
-        if ( session.IsEmbeddedScript( scriptName ) && !skipEmbedded )
+        if ( session.IsScriptEmbedded( scriptName ) && !skipEmbedded )
             throw new InvalidOperationException( $"The script {scriptName} is already embedded." );
 
         session.SetLastAction( $"saving script '{scriptName}'" );
@@ -90,7 +91,7 @@ public static partial class FirmwareManager
             if ( autoRun )
                 session.TurnOnAutoRun( scriptName );
 
-            session.EmbedScript( scriptName );
+            session.EmbedScript( scriptName, false );
         }
         else
         {

@@ -23,7 +23,7 @@ public class K2600Tests : InstrumentTests
 
     /// <summary> Cleans up the test class after all tests in the class have run. </summary>
     /// <remarks> Use <see cref="CleanupTestClass"/> to run code after all tests in the class have run. </remarks>
-    [ClassCleanup( ClassCleanupBehavior.EndOfClass )]
+    [ClassCleanup]
     public static void CleanupTestClass()
     {
         CleanupBaseTestClass();
@@ -37,7 +37,7 @@ public class K2600Tests : InstrumentTests
     public override void InitializeBeforeEachTest()
     {
         Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
-        cc.isr.VI.Device.Tests.Asserts.AssertVisaImplementationShouldBeLoaded();
+        Asserts.AssertVisaImplementationShouldBeLoaded();
         Console.WriteLine( $"\tTesting {string.Join( ",", cc.isr.Visa.Gac.GacLoader.LoadedImplementationFriendlyNames )}." );
 
         // inst0 must be lower case

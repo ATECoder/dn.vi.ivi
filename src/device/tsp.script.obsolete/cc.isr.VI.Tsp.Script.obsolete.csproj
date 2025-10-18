@@ -33,12 +33,30 @@
 
   </PropertyGroup>
 
+  <!-- Assembly attributes -->
+  <ItemGroup>
+    <AssemblyAttribute Include="System.CLSCompliantAttribute">
+      <_Parameter1>true</_Parameter1>
+    </AssemblyAttribute>
+    <AssemblyAttribute Include="System.Runtime.InteropServices.ComVisibleAttribute">
+      <_Parameter1>false</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
+  </ItemGroup>
+
   <PropertyGroup>
-    <DefineConstants>$(DefineConstants);MYPROJREF;ISR</DefineConstants>
+    <DefineConstants>$(DefineConstants);MYPROJREF;ISR;</DefineConstants>
   </PropertyGroup>
 
   <Choose>
-    <When Condition="$(DefineConstants.Contains(';PROJREF;')) OR $(DefineConstants.Contains(';MYPROJREF;'))" />
+    <When Condition="$(DefineConstants.Contains(';PROJREF;')) OR $(DefineConstants.Contains(';MYPROJREF;'))">
+	  <ItemGroup>
+		<ProjectReference Include="..\tsp.script\cc.isr.VI.Tsp.Script.csproj" />
+	  </ItemGroup>
+	</When>
     <Otherwise>
       <ItemGroup>
         <PackageReference Include="cc.isr.VI.Device.Tsp" Version="8.0.8121" />
@@ -56,26 +74,20 @@
     <DefineTrace>true</DefineTrace>
   </PropertyGroup>
 
-  <!-- Assembly attributes -->
   <ItemGroup>
-    <AssemblyAttribute Include="System.CLSCompliantAttribute">
-      <_Parameter1>true</_Parameter1>
-    </AssemblyAttribute>
-    <AssemblyAttribute Include="System.Runtime.InteropServices.ComVisibleAttribute">
-      <_Parameter1>false</_Parameter1>
-    </AssemblyAttribute>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\tsp.script\cc.isr.VI.Tsp.Script.csproj" />
-  </ItemGroup>
-   
-  <ItemGroup>
+    <!-- This service generates text from T4 text templates. -->
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+    <None Update="version.build.props">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>version.build.tt</DependentUpon>
+    </None>
+    <None Update="version.build.tt">
+      <LastGenOutput>version.build.props</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
   </ItemGroup>
+
+  <Import Project="version.build.props" />
 
 </Project>

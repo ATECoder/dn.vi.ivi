@@ -111,14 +111,14 @@ public static partial class FirmwareManager
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( scriptName is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
 
-        bool deleted = session.DeleteEmbeddedScript( node.Number, scriptName );
+        session.DeleteEmbeddedScript( node.Number, scriptName );
 
         if ( !session.CollectGarbageQueryComplete( node.Number ) )
             _ = session.TraceWarning( message: $"garbage collection incomplete (reply not '1') after deleting embedded script {scriptName} on node {node.Number}" );
 
         _ = session.TraceDeviceExceptionIfError( failureMessage: $"ignoring error after deleting embedded user script {scriptName} on node {node.Number}" );
 
-        return deleted;
+        return session.IsNil( node.Number, scriptName );
     }
 
     /// <summary>
@@ -133,7 +133,8 @@ public static partial class FirmwareManager
     /// <param name="nodeNumber">           Specifies the remote node number. </param>
     /// <param name="scriptName">           Specifies the script name. </param>
     /// <returns>   <c>true</c> if the script is nil; otherwise <c>false</c>. </returns>
-    public static bool DeleteEmbeddedScript( this Pith.SessionBase? session, int nodeNumber, string? scriptName )
+    [Obsolete( "Use method from Device.Tsp.SessionBaseExtensions" )]
+    public static bool DeleteEmbeddedScriptObsolete( this Pith.SessionBase? session, int nodeNumber, string? scriptName )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( scriptName is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
@@ -176,7 +177,7 @@ public static partial class FirmwareManager
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( scriptName is null || string.IsNullOrWhiteSpace( scriptName ) ) throw new ArgumentNullException( nameof( scriptName ) );
-        session.DeleteScript( scriptName );
+        session.DeleteScript( scriptName, true );
         return !session.IsNil( scriptName );
     }
 
@@ -202,7 +203,7 @@ public static partial class FirmwareManager
                 if ( !session.IsNil( script.Name ) )
                 {
                     if ( embeddedScripts.Contains( script.Name, StringComparison.OrdinalIgnoreCase ) )
-                        session.DeleteScript( script.Name );
+                        session.DeleteScript( script.Name, true );
                     else
                         session.NillObject( script.Name );
                 }

@@ -1,4 +1,3 @@
-using System;
 using cc.isr.Std.Tests;
 using cc.isr.Std.Tests.Extensions;
 using cc.isr.VI.Pith.Settings;
@@ -137,7 +136,7 @@ Math.Abs( this.TestSiteSettings.TimeZoneOffset() ), $"{nameof( this.TestSiteSett
 
     /// <summary>   (Unit Test Method) tests that a trace message should be queued. </summary>
     /// <remarks>   Checks if the a trace message is added to the trace listener. </remarks>
-    [TestMethod( "01. Trace message should be queued" )]
+    [TestMethod( DisplayName = "01. Trace message should be queued" )]
     public void TraceMessageShouldBeQueued()
     {
         Asserts.AssertTraceMessageShouldBeQueued();

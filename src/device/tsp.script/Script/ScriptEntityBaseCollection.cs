@@ -585,7 +585,7 @@ public class ScriptEntityBaseCollection<TItem>( NodeEntityBase node ) : System.C
             this.FetchEmbeddedScriptsNames( session );
             if ( FirmwareScriptBase.ScriptNameExists( this.EmbeddedScriptNames, scriptName ) )
             {
-                session.DeleteScript( scriptName );
+                session.DeleteScript( scriptName, true );
                 isNull = session.IsNil( scriptName );
             }
             else

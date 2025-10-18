@@ -137,7 +137,7 @@ public abstract class DeviceTests
 
     /// <summary>   (Unit Test Method) trace message should be queued. </summary>
     /// <remarks>   Checks if the device adds a trace message to a trace listener. </remarks>
-    [TestMethod( "01. Trace message should be queued" )]
+    [TestMethod( DisplayName = "01. Trace message should be queued" )]
     public void TraceMessageShouldBeQueued()
     {
         Assert.IsNotNull( this.VisaSessionBase );
@@ -150,7 +150,7 @@ public abstract class DeviceTests
 
     /// <summary> (Unit Test Method) queries if a given visa session base should open. </summary>
     /// <remarks> David, 2020-10-12. </remarks>
-    [TestMethod( "02. Visa Session Base should open" )]
+    [TestMethod( DisplayName = "02. Visa Session Base should open" )]
     public void VisaSessionBaseShouldOpen()
     {
         Assert.IsNotNull( this.VisaSessionBase );
@@ -174,7 +174,7 @@ public abstract class DeviceTests
 
     /// <summary>   (Unit Test Method) device should open without device errors. </summary>
     /// <remarks>   Tests opening and closing a VISA session. </remarks>
-    [TestMethod( "03. Device should open without device errors" )]
+    [TestMethod( DisplayName = "03. Device should open without device errors" )]
     public void DeviceShouldOpenWithoutDeviceErrors()
     {
         Assert.IsNotNull( this.VisaSessionBase );
@@ -195,7 +195,7 @@ public abstract class DeviceTests
         }
     }
 
-    [TestMethod( "04. Session should collect garbage" )]
+    [TestMethod( DisplayName = "04. Session should collect garbage" )]
     public void SessionShouldCollectGarbage()
     {
         Assert.IsNotNull( this.VisaSessionBase );
@@ -220,7 +220,7 @@ public abstract class DeviceTests
     #region " Session Base "
 
     /// <summary> (Unit Test Method) tests session should read device errors. </summary>
-    [TestMethod( "05. Session should read device error" )]
+    [TestMethod( DisplayName = "05. Session should read device error" )]
     public void SessionShouldReadDeviceErrors()
     {
         Assert.IsNotNull( this.VisaSessionBase );
@@ -253,7 +253,7 @@ public abstract class DeviceTests
     }
 
     /// <summary> (Unit Test Method) tests session should clear device errors. </summary>
-    [TestMethod( "06. Session should clear device error" )]
+    [TestMethod( DisplayName = "06. Session should clear device error" )]
     public void SessionShouldClearDeviceErrors()
     {
         Assert.IsNotNull( this.VisaSessionBase );

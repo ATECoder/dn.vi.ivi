@@ -4,8 +4,40 @@ namespace cc.isr.Visa.Tests;
 
 /// <summary>   Implements specific assertion tests. </summary>
 /// <remarks>   David, 2021-11-05. </remarks>
-internal sealed class Asserts
+public sealed partial class Asserts
 {
+    #region " visa implementation checks "
+
+    /// <summary>   Assert visa implementation should be loaded. </summary>
+    /// <remarks>   2025-09-18. </remarks>
+    /// <param name="verbose">  (Optional) True to verbose. </param>
+    public static void AssertVisaImplementationShouldBeLoaded( bool verbose = true )
+    {
+        if ( typeof( Ivi.Visa.IMessageBasedSession ).Assembly is System.Reflection.Assembly iviVisaAssembly )
+        {
+            if ( verbose )
+            {
+                Console.WriteLine( $"\t{iviVisaAssembly.FullName}." );
+                Console.WriteLine( $"\t{iviVisaAssembly.Location}." );
+            }
+        }
+        else
+            Assert.Fail( $"{nameof( Ivi.Visa.IMessageBasedSession )} assembly not found." );
+
+        if ( typeof( cc.isr.Visa.Gac.Vendor ).Assembly is System.Reflection.Assembly vendorVisaAssembly )
+        {
+            if ( verbose )
+            {
+                Console.WriteLine( $"\t{vendorVisaAssembly.FullName}." );
+                Console.WriteLine( $"\t{vendorVisaAssembly.Location}." );
+            }
+        }
+        else
+            Assert.Fail( $"{nameof( cc.isr.Visa.Gac.Vendor )} VISA assembly not found." );
+    }
+
+    #endregion
+
     #region " console output "
 
     /// <summary>   Console output member message. </summary>
@@ -31,6 +63,8 @@ internal sealed class Asserts
     }
 
     #endregion
+
+    #region " session "
 
     /// <summary>   Opens an <see cref="Ivi.Visa.IVisaSession?"/>. </summary>
     /// <remarks>   2024-08-10. </remarks>
@@ -196,6 +230,8 @@ internal sealed class Asserts
         }
 
     }
+
+    #endregion
 
     #region " service request handling "
 

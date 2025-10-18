@@ -30,6 +30,7 @@
 
   <!-- Assembly attributes -->
   <ItemGroup>
+    <AssemblyAttribute Include="Microsoft.VisualStudio.TestTools.UnitTesting.DoNotParallelize"/>
     <AssemblyAttribute Include="System.CLSCompliantAttribute">
       <_Parameter1>false</_Parameter1>
     </AssemblyAttribute>
@@ -64,15 +65,6 @@
     </Otherwise>
   </Choose>
 
-  <ItemGroup>
-    <!-- Suppress warning about newton soft 9.0.1 which is part of the .net fx testing extensions code coverage.
-      <NuGetAuditSuppress Include="https://github.com/advisories/GHSA-5crp-9r3c-p9vr" />
-    -->
-    <!-- Already included with the default profile of the MSTest.SDK
-      <PackageReference Update="Microsoft.Testing.Extensions.CodeCoverage" />
-    -->
-  </ItemGroup>
-
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
@@ -87,11 +79,6 @@
     <Compile Include="..\..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
     <Compile Remove="standard\*.cs" Condition="'$(TargetFramework)' == 'net9.0'" />
   </ItemGroup>
-
-  <PropertyGroup Condition="'$(TargetFramework)'=='net472' or '$(TargetFramework)'=='net48'">
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
-  </PropertyGroup>
 
   <ItemGroup>
     <Content Include="CandidateResources.json">
@@ -108,6 +95,43 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+
+  <ItemGroup>
+    <!-- Suppress warning about newton soft 9.0.1 which is part of the .net fx testing extensions code coverage.
+      <NuGetAuditSuppress Include="https://github.com/advisories/GHSA-5crp-9r3c-p9vr" />
+    -->
+    <!-- Already included with the default profile of the MSTest.SDK
+      <PackageReference Update="Microsoft.Testing.Extensions.CodeCoverage" />
+    -->
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- This attempts to prevent NU1605 error: 
+       Warning As Error: Detected package downgrade: Microsoft.Testing.Extensions.CodeCoverage from 18.1.0 to 17.14.2.
+       Reference the package directly from the project to select a different version. 
+       cc.isr.VI.Device.Tsp.MSTest -> cc.isr.Std.MSTest -> Microsoft.Testing.Extensions.CodeCoverage (>= 18.1.0) 
+       cc.isr.VI.Device.Tsp.MSTest -> Microsoft.Testing.Extensions.CodeCoverage (>= 17.14.2)    
+    -->
+    <PackageReference Update="Microsoft.Testing.Extensions.CodeCoverage" Version="18.1.0" />
+    <!-- This attempts to prevent NU1605 error: 
+        Warning As Error: Detected package downgrade: Microsoft.Testing.Extensions.TrxReport from 2.0.1 to 1.8.4.
+        Reference the package directly from the project to select a different version. 
+        cc.isr.VI.Device.Tsp.MSTest -> cc.isr.Std.MSTest -> Microsoft.Testing.Extensions.TrxReport (>= 2.0.1) 
+        cc.isr.VI.Device.Tsp.MSTest -> Microsoft.Testing.Extensions.TrxReport (>= 1.8.4)
+    -->
+    <PackageReference Update="Microsoft.Testing.Extensions.TrxReport" Version="2.0.1" />
+
+    <!-- This attempts to prevent CS0012 error: 
+        The type 'TestContext' is defined in an assembly that is not referenced.
+        You must add a reference to assembly 'Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+    -->
+    <PackageReference Update="Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions" Version="14.0.0" />
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)'=='net472' or '$(TargetFramework)'=='net48'">
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+  </PropertyGroup>
 
   <Import Project="..\k2600\version.build.props" />
 

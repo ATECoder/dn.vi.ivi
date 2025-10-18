@@ -180,7 +180,7 @@ public abstract class TestBase
 
     /// <summary>   (Unit Test Method) time zone settings should be local. </summary>
     /// <remarks>   David, 2020-09-23. </remarks>
-    [TestMethod( "00. Time zone settings should be local" )]
+    [TestMethod( DisplayName = "00. Time zone settings should be local" )]
     public void TimeZoneSettingsShouldBeLocal()
     {
         Assert.IsNotNull( this.TestSiteSettings, $"{nameof( this.TestSiteSettings )} should not be null." );

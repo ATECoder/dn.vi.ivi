@@ -60,6 +60,7 @@
   <Choose>
     <When Condition="$(DefineConstants.Contains(';PROJREF;')) OR $(DefineConstants.Contains(';MYPROJREF;'))">
       <ItemGroup>
+        <ProjectReference Include="..\visa\cc.isr.Visa.csproj" />
         <ProjectReference Include="..\..\..\..\..\core\tracing\src\win.forms\tracing.win.forms\cc.isr.Tracing.WinForms.csproj" />
         <ProjectReference Include="..\..\..\..\..\core\json\src\app.settings\app.settings.view.models\cc.isr.Json.AppSettings.ViewModels.csproj" />
         <ProjectReference Include="..\..\..\..\..\core\json\src\app.settings\app.settings.win.forms\cc.isr.Json.AppSettings.WinForms.csproj" />
@@ -98,10 +99,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\visa\cc.isr.Visa.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -112,8 +109,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-
-  <Import Project="..\visa.win.controls\version.build.props" />
 
   <PropertyGroup>
     <!-- WiX Toolset; See https://github.com/wixtoolset/issues/issues/5705
@@ -126,6 +121,7 @@
       <_FakeOutputPath Include="$(MSBuildProjectDirectory)\$(OutputPath)\$(_InstallerTargetFramework)\$(AssemblyName).dll" />
     </ItemGroup>
     <ItemGroup Condition="'$(OutputType)' == 'Exe'">
+
       <_FakeOutputPath Include="$(MSBuildProjectDirectory)\$(OutputPath)\$(_InstallerTargetFramework)\$(AssemblyName).exe" />
     </ItemGroup>
     <ItemGroup Condition="'$(OutputType)' == 'WinExe'">
@@ -133,4 +129,7 @@
     </ItemGroup>
   </Target>
 
+  <Import Project="..\visa.win.controls\version.build.props" />
+
 </Project>
+

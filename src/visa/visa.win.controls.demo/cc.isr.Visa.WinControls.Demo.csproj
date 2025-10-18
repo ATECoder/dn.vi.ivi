@@ -52,6 +52,10 @@
     </AssemblyAttribute>
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
+  </ItemGroup>
+
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);MYPROJREF;</DefineConstants>
   </PropertyGroup>
@@ -60,6 +64,7 @@
     <When Condition="$(DefineConstants.Contains(';PROJREF;')) OR $(DefineConstants.Contains(';MYPROJREF;'))">
       <!-- Using project references  -->
       <ItemGroup>
+        <ProjectReference Include="..\visa\cc.isr.Visa.csproj" />
         <ProjectReference Include="..\visa.win.controls\cc.isr.Visa.WinControls.csproj" />
       </ItemGroup>
     </When>
@@ -77,14 +82,6 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Properties\favicon.ico" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\visa\cc.isr.Visa.csproj" />
   </ItemGroup>
 
   <Import Project="..\visa.win.controls\version.build.props" />

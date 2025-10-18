@@ -107,7 +107,7 @@ public abstract partial class InstrumentTests
 
     /// <summary>   (Unit Test Method) assert that resource should exist. </summary>
     /// <remarks>   David, 2021-11-13. </remarks>
-    [TestMethod( "01. Resource should exist" )]
+    [TestMethod( DisplayName = "01. Resource should exist" )]
     [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0028:Simplify collection initialization", Justification = "<Pending>" )]
     [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0306:Simplify collection initialization", Justification = "<Pending>" )]
     public void ResourceShouldExist()
@@ -124,7 +124,7 @@ public abstract partial class InstrumentTests
 
     /// <summary>   (Unit Test Method) queries if a given session should open. </summary>
     /// <remarks>   David, 2021-11-05. </remarks>
-    [TestMethod( "02. Session should open" )]
+    [TestMethod( DisplayName = "02. Session should open" )]
     public void SessionShouldOpen()
     {
         if ( this.ResourceName == null ) return;
@@ -146,7 +146,7 @@ public abstract partial class InstrumentTests
 
     /// <summary>   (Unit Test Method) session should handle service requests. </summary>
     /// <remarks>   David, 2021-11-06. </remarks>
-    [TestMethod( "03. Session should handle service requests" )]
+    [TestMethod( DisplayName = "03. Session should handle service requests" )]
     [Ignore( "Awaits fixing of service request on the Virtual Machine" )]
     [System.Diagnostics.CodeAnalysis.SuppressMessage( "Design", "MSTEST0015:Test method should not be ignored", Justification = "<Pending>" )]
     [System.Diagnostics.CodeAnalysis.SuppressMessage( "CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "<Pending>" )]
@@ -176,7 +176,7 @@ public abstract partial class InstrumentTests
 
     /// <summary>   (Unit Test Method) Assert that the session should write and read asynchronously. </summary>
     /// <remarks>   2024-08-30. </remarks>
-    [TestMethod( "04. Session should write read asynchronously" )]
+    [TestMethod( DisplayName = "04. Session should write read asynchronously" )]
     public void SessionShouldWriteReadAsync()
     {
         if ( this.ResourceName == null ) return;
@@ -207,7 +207,7 @@ public abstract partial class InstrumentTests
 
     /// <summary>   (Unit Test Method) syntax tests should pass. </summary>
     /// <remarks>   2024-09-25. </remarks>
-    [TestMethod( "05. Syntax tests should pass" )]
+    [TestMethod( DisplayName = "05. Syntax tests should pass" )]
     public void SyntaxTestsShouldPass()
     {
         if ( this.ResourceName == null ) return;

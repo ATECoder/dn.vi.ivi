@@ -113,7 +113,7 @@ public abstract class SessionBaseTests
     #region " session termination "
 
     /// <summary> (Unit Test Method) tests initial termination. </summary>
-    [TestMethod( "01. Termination character should be line feed" )]
+    [TestMethod( DisplayName = "01. Termination character should be line feed" )]
     public void TerminationCharacterShouldBeLineFeed()
     {
         using Pith.SessionBase session = SessionFactory.Instance.Factory.Session();
@@ -123,13 +123,13 @@ public abstract class SessionBaseTests
 
     /// <summary>   (Unit Test Method)Assert that a new termination could be set. </summary>
     /// <remarks>   2024-08-30. </remarks>
-    [TestMethod( "02. New termination character could be set" )]
+    [TestMethod( DisplayName = "02. New termination character could be set" )]
     public void NewTerminationCharacterCouldBeSet()
     {
         using Pith.SessionBase session = SessionFactory.Instance.Factory.Session();
         char[] values = Environment.NewLine.ToCharArray();
         session.NewTermination( values );
-        Assert.AreEqual( values.Length, session.TerminationCharacters().Length );
+        Assert.HasCount<char>( values.Length, session.TerminationCharacters() );
         for ( int i = 0, loopTo = values.Length - 1; i <= loopTo; i++ )
             Assert.AreEqual( values[i], session.TerminationCharacters().ElementAtOrDefault( i ) );
     }

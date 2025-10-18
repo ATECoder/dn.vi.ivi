@@ -84,7 +84,7 @@ public abstract class FirmwareScriptBase
     /// <returns>   True if the script was embedded, false if it fails. </returns>
     public bool IsEmbedded( Pith.SessionBase session, int nodeNumber )
     {
-        return session != null && session.IsEmbeddedScript( this.Name, nodeNumber );
+        return session != null && session.IsScriptEmbedded( this.Name, nodeNumber );
     }
 
     #endregion
@@ -414,6 +414,54 @@ public abstract class FirmwareScriptBase
 
     /// <summary>   Parse source. </summary>
     /// <remarks>   2024-09-23. </remarks>
+    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
+    ///                                             null. </exception>
+    /// <param name="value">        The string being chopped. </param>
+    /// <param name="compressor">   The compressor. </param>
+    /// <param name="encryptor">    The encryptor. </param>
+    /// <returns>   The ScriptFileFormats. </returns>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0051:Remove unused private members", Justification = "<Pending>" )]
+    private ScriptFormats ParseSource( string value, IScriptCompressor compressor, IScriptEncryptor encryptor )
+    {
+        if ( compressor is null )
+            throw new ArgumentNullException( nameof( compressor ) );
+        if ( encryptor is null )
+            throw new ArgumentNullException( nameof( encryptor ) );
+
+        ScriptFormats sourceFormat = ScriptFormats.None;
+        bool isByteCodeScript = false;
+        string source = string.Empty;
+        if ( !this.RequiresReadParseWrite )
+        {
+            if ( encryptor.IsEncrypted( value ) )
+                source = encryptor.DecryptFromBase64( value );
+            else
+                source = value;
+
+            if ( compressor.IsCompressed( value ) )
+                source = compressor.DecompressFromBase64( value );
+
+            if ( !string.IsNullOrWhiteSpace( this.Source ) )
+            {
+                isByteCodeScript = source.IsByteCodeScript();
+            }
+
+            if ( !source.EndsWith( " ", true, System.Globalization.CultureInfo.CurrentCulture ) )
+                source = source.Insert( source.Length, " " );
+
+            if ( isByteCodeScript )
+                sourceFormat |= ScriptFormats.ByteCode;
+        }
+        this._source = source;
+        this.IsByteCodeScript = isByteCodeScript;
+
+        // tag file as embedded if source format and file format match.
+        this.ExportedToFile = sourceFormat == this.DeployFileFormat;
+        return sourceFormat;
+    }
+
+    /// <summary>   Parse source. </summary>
+    /// <remarks>   2025-10-16. </remarks>
     /// <param name="value">    The string being chopped. </param>
     /// <returns>   The ScriptFileFormats. </returns>
     private ScriptFormats ParseSource( string value )
@@ -423,13 +471,7 @@ public abstract class FirmwareScriptBase
         string source = string.Empty;
         if ( !this.RequiresReadParseWrite )
         {
-            if ( value.StartsWith( Tsp.Script.ScriptCompressor.CompressedPrefix, false, System.Globalization.CultureInfo.CurrentCulture ) )
-            {
-                source = Tsp.Script.ScriptCompressor.Decompress( source );
-                sourceFormat |= ScriptFormats.Compressed;
-            }
-            else
-                source = value;
+            source = value;
 
             if ( !string.IsNullOrWhiteSpace( this.Source ) )
             {
@@ -537,12 +579,18 @@ public abstract class FirmwareScriptBase
 
     /// <summary>   Reads the script from the script file. </summary>
     /// <remarks>   2024-07-09. </remarks>
-    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
-    ///                                             null. </exception>
-    /// <param name="filePath"> Specifies the script file path. </param>
+    /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
+    ///                                                 are null. </exception>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <param name="filePath">     Specifies the script file path. </param>
+    /// <param name="compressor">   The compressor. </param>
+    /// <param name="encryptor">    The encryptor. </param>
     /// <returns>   The script. </returns>
-    public static string? ReadScript( string? filePath )
+    public static string? ReadScript( string? filePath, IScriptCompressor compressor, IScriptEncryptor encryptor )
     {
+        if ( compressor is null ) throw new ArgumentNullException( nameof( compressor ) );
+        if ( encryptor is null ) throw new ArgumentNullException( nameof( encryptor ) );
         if ( string.IsNullOrWhiteSpace( filePath ) ) throw new ArgumentNullException( nameof( filePath ) );
         using StreamReader? tspFile = FirmwareFileInfo.OpenScriptFile( filePath! );
         string? source = tspFile?.ReadToEnd();
@@ -551,8 +599,13 @@ public abstract class FirmwareScriptBase
             throw new InvalidOperationException( $"Failed reading script;. file '{filePath}' includes no source." );
         else if ( source.Length < 2 )
             throw new InvalidOperationException( $"Failed reading script;. file '{filePath}' includes no source." );
-        else if ( ScriptCompressor.IsCompressed( source ) )
-            source = Tsp.Script.ScriptCompressor.Decompress( source );
+        else if ( compressor.IsCompressed( source ) || encryptor.IsEncrypted( source ) )
+        {
+            if ( encryptor.IsEncrypted( source ) )
+                source = encryptor.DecryptFromBase64( source );
+            if ( compressor.IsCompressed( source ) )
+                source = compressor.DecompressFromBase64( source );
+        }
 
         return source;
     }
@@ -581,9 +634,12 @@ public abstract class FirmwareScriptBase
     /// <param name="folderPath">       Specifies the folder where scripts are stored. </param>
     /// <param name="buildFileName">    The filename of the build file. </param>
     /// <param name="trimmedFileName">  The filename of the trimmed file. </param>
+    /// <param name="compressor">       The compressor. </param>
+    /// <param name="encryptor">        The encryptor. </param>
     /// <param name="retainOutline">    (Optional) Specifies if the code outline is retained or
     ///                                 trimmed. </param>
-    public static void ReadParseWriteScript( string? folderPath, string buildFileName, string trimmedFileName, bool retainOutline = false )
+    public static void ReadParseWriteScript( string? folderPath, string buildFileName, string trimmedFileName, IScriptCompressor compressor,
+        IScriptEncryptor encryptor, bool retainOutline = false )
     {
         if ( string.IsNullOrWhiteSpace( folderPath ) ) throw new ArgumentNullException( nameof( folderPath ) );
 
@@ -592,7 +648,7 @@ public abstract class FirmwareScriptBase
             throw new System.IO.FileNotFoundException( "Script file not found", folderPath );
         else
         {
-            string? scriptSource = ReadScript( Path.Combine( folderPath, buildFileName ) );
+            string? scriptSource = ReadScript( Path.Combine( folderPath, buildFileName ), compressor, encryptor );
             if ( string.IsNullOrWhiteSpace( scriptSource ) )
                 throw new InvalidOperationException( $"Failed reading script;. file '{folderPath}' includes no source." );
             else
@@ -615,10 +671,15 @@ public abstract class FirmwareScriptBase
     /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
     ///                                                 invalid. </exception>
     /// <param name="scripts">          Specifies the collection of scripts. </param>
+    /// <param name="compressor">       The compressor. </param>
+    /// <param name="encryptor">        The encryptor. </param>
     /// <param name="retainOutline">    (Optional) Specifies if the code outline is retained or
     ///                                 trimmed. </param>
-    public static void ReadParseWriteScripts( FirmwareScriptBaseCollection<FirmwareScriptBase> scripts, bool retainOutline = false )
+    public static void ReadParseWriteScripts( FirmwareScriptBaseCollection<FirmwareScriptBase> scripts,
+        IScriptCompressor compressor, IScriptEncryptor encryptor, bool retainOutline = false )
     {
+        if ( compressor is null ) throw new ArgumentNullException( nameof( compressor ) );
+        if ( encryptor is null ) throw new ArgumentNullException( nameof( encryptor ) );
         if ( scripts is null ) throw new ArgumentNullException( nameof( scripts ) );
         foreach ( FirmwareScriptBase script in scripts )
         {
@@ -633,7 +694,7 @@ public abstract class FirmwareScriptBase
                 else if ( string.IsNullOrWhiteSpace( script.TrimmedFileName ) )
                     throw new InvalidOperationException( $"{nameof( FirmwareScriptBase )}.{nameof( FirmwareScriptBase.TrimmedFileName )} not specified for script." );
                 else
-                    FirmwareScriptBase.ReadParseWriteScript( script.FolderPath, script.BuildFileName, script.TrimmedFileName, retainOutline );
+                    FirmwareScriptBase.ReadParseWriteScript( script.FolderPath, script.BuildFileName, script.TrimmedFileName, compressor, encryptor, retainOutline );
             }
         }
     }

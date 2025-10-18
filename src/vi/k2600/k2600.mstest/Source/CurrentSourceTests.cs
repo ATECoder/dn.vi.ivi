@@ -23,7 +23,7 @@ public class CurrentSourceTests : Device.Tsp.Tests.Base.TestBase
 
     /// <summary> Cleans up the test class after all tests in the class have run. </summary>
     /// <remarks> Use <see cref="CleanupTestClass"/> to run code after all tests in the class have run. </remarks>
-    [ClassCleanup( ClassCleanupBehavior.EndOfClass )]
+    [ClassCleanup]
     public static void CleanupTestClass()
     {
         VI.Device.Tsp.Tests.Base.TestBase.CleanupBaseTestClass();
@@ -75,7 +75,7 @@ public class CurrentSourceTests : Device.Tsp.Tests.Base.TestBase
     /// e.g., <see cref="SourceFunctionMode.CurrentDC"/>, should apply.
     /// </summary>
     /// <remarks>   David, 2020-10-12. </remarks>
-    [TestMethod( "01. Source function should apply" )]
+    [TestMethod( DisplayName = "01. Source function should apply" )]
     public void SourceFunctionShouldApply()
     {
         try

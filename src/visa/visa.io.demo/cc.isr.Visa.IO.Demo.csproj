@@ -52,6 +52,10 @@
     </AssemblyAttribute>
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
+  </ItemGroup>
+
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);MYPROJREF;</DefineConstants>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -60,6 +64,7 @@
   <Choose>
     <When Condition="$(DefineConstants.Contains(';PROJREF;')) OR $(DefineConstants.Contains(';MYPROJREF;'))">
       <ItemGroup>
+        <ProjectReference Include="..\visa\cc.isr.Visa.csproj" />
         <ProjectReference Include="..\..\..\..\..\core\tracing\src\win.forms\tracing.win.forms\cc.isr.Tracing.WinForms.csproj" />
         <ProjectReference Include="..\..\..\..\..\core\json\src\app.settings\app.settings.view.models\cc.isr.Json.AppSettings.ViewModels.csproj" />
         <ProjectReference Include="..\..\..\..\..\core\json\src\app.settings\app.settings.win.forms\cc.isr.Json.AppSettings.WinForms.csproj" />
@@ -78,38 +83,8 @@
   </Choose>
 
   <ItemGroup>
-    <Content Update="cc.isr.Visa.IO.Demo.Serilog.json">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>isr.Visa.IO.Demo.SerilogSettings.tt</DependentUpon>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <None Update="cc.isr.Visa.IO.Demo.Serilog.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="cc.isr.Visa.IO.Demo.SerilogSettings.json">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>cc.isr.Visa.IO.Demo.SerilogSettings.tt</DependentUpon>
-    </None>
-    <None Update="cc.isr.Visa.IO.Demo.SerilogSettings.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>cc.isr.Visa.IO.Demo.SerilogSettings.json</LastGenOutput>
-    </None>
-    <Content Include="cc.isr.Visa.IO.Demo.Settings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-
-    <ProjectReference Include="..\visa\cc.isr.Visa.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
-
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
@@ -120,21 +95,28 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+    <Content Update="cc.isr.Visa.IO.Demo.Serilog.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="cc.isr.Visa.IO.Demo.Settings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
-  <!--
-  <Import Project="..\visa.win.controls\version.build.props" />
-  -->
-
-  <PropertyGroup>
-    <AssemblyVersion>8.0.1.9356</AssemblyVersion>
-    <FileVersion>8.0.1.9356</FileVersion>
-    <InformationalVersion>8.0.1.9356</InformationalVersion>
-    <Version>8.0.1</Version>
-    <ApplicationDisplayVersion>8.0.1</ApplicationDisplayVersion>
-    <ApplicationVersion>8</ApplicationVersion>
-  </PropertyGroup>
+  <ItemGroup>
+    <!-- This service generates text from T4 text templates. -->
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+    <Content  Update="cc.isr.Visa.IO.Demo.SerilogSettings.json">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>cc.isr.Visa.IO.Demo.SerilogSettings.tt</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content >
+    <None Update="cc.isr.Visa.IO.Demo.SerilogSettings.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>cc.isr.Visa.IO.Demo.SerilogSettings.json</LastGenOutput>
+    </None>
+  </ItemGroup>
 
   <PropertyGroup>
     <!-- WiX Toolset; See https://github.com/wixtoolset/issues/issues/5705
@@ -154,4 +136,7 @@
     </ItemGroup>
   </Target>
 
+  <Import Project="..\visa.win.controls\version.build.props" />
+
 </Project>
+

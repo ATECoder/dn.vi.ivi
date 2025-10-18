@@ -52,7 +52,7 @@ public class ContactTests
 
     /// <summary> Cleans up the test class after all tests in the class have run. </summary>
     /// <remarks> David, 2020-10-12. </remarks>
-    [ClassCleanup( ClassCleanupBehavior.EndOfClass )]
+    [ClassCleanup]
     public static void CleanupTestClass()
     {
     }
@@ -149,7 +149,7 @@ public class ContactTests
 
     /// <summary>   (Unit Test Method) measurement should trigger but fail open contact. </summary>
     /// <remarks>   2024-11-15. </remarks>
-    [TestMethod( "01. Measurement should fail open contact" )]
+    [TestMethod( DisplayName = "01. Measurement should fail open contact" )]
     public void MeasurementShouldFailOpenContact()
     {
         Assert.IsNotNull( this.LegacyDevice, $"{nameof( this.LegacyDevice )} should not be null." );

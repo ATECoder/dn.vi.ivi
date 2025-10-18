@@ -6,14 +6,14 @@
     <WaningsNotAsErrors>NU1900;NU1901;NU1802</WaningsNotAsErrors>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <DefineConstants>$(DefineConstants);TRACE;PROJREF_;PACK_;GitHub;</DefineConstants>
+  </PropertyGroup>
+
   <ItemGroup Condition="$(DefineConstants.Contains(';PACK;GitHub;'))" >
     <!-- Suppress warning about newton soft 9.0.1 which is part of the .net fx testing extensions code coverage. -->
     <NuGetAuditSuppress Include="https://github.com/advisories/GHSA-5crp-9r3c-p9vr" />
   </ItemGroup>
-
-  <PropertyGroup>
-    <DefineConstants>$(DefineConstants);TRACE;PROJREF_;PACK_;GitHub;</DefineConstants>
-  </PropertyGroup>
  
   <PropertyGroup Condition="$(DefineConstants.Contains(';PACK;'))" >
     <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
@@ -21,21 +21,21 @@
   </PropertyGroup>
 
   <ItemGroup Condition="$(DefineConstants.Contains(';PACK;GitHub;'))" >
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup Condition="$(DefineConstants.Contains(';PACK;GitHub_;'))" >
-    <PackageReference Include="Microsoft.SourceLink.Bitbucket.Git" Version="1.1.1" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.SourceLink.Bitbucket.Git" Version="8.0.0" PrivateAssets="All" />
   </ItemGroup>
 
   <PropertyGroup Condition="$(DefineConstants.Contains(';GitHub;'))" >
-    <GitRepositoryRemoteName>hub</GitRepositoryRemoteName>
-    <PackageProjectUrl>https://github.com/AteCoder/visa.ni.dn</PackageProjectUrl>
+    <GitRepositoryRemoteName>origin</GitRepositoryRemoteName>
+    <PackageProjectUrl>https://github.com/ATECoder/dn.vi.ivi</PackageProjectUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="$(DefineConstants.Contains(';GitHub_;'))" >
-    <GitRepositoryRemoteName>origin</GitRepositoryRemoteName>
-    <PackageProjectUrl>https://bitbucket.org/davidhary/dn.visa.ni</PackageProjectUrl>
+    <GitRepositoryRemoteName>bucket</GitRepositoryRemoteName>
+    <PackageProjectUrl>https://bitbucket.org/davidhary/dn.vi.ivi</PackageProjectUrl>
   </PropertyGroup>
 
   <PropertyGroup Label="BasePath">

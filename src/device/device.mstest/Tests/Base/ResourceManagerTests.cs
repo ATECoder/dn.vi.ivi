@@ -133,7 +133,7 @@ public abstract class ResourceManagerTests
 
     /// <summary> (Unit Test Method) tests visa resource. </summary>
     /// <remarks> Finds the resource using the session factory resources manager. </remarks>
-    [TestMethod( "01. Resource name should be included" )]
+    [TestMethod( DisplayName = "01. Resource name should be included" )]
     public void ResourceNameShouldBeIncluded()
     {
         Assert.IsNotNull( this.VisaSessionBase );
@@ -142,7 +142,7 @@ public abstract class ResourceManagerTests
     }
 
     /// <summary>   (Unit Test Method) visa resource manger should find resource name. </summary>
-    [TestMethod( "02. Resource name should be found" )]
+    [TestMethod( DisplayName = "02. Resource name should be found" )]
     public void ResourceNameShouldBeFound()
     {
         Assert.IsNotNull( this.VisaSessionBase );

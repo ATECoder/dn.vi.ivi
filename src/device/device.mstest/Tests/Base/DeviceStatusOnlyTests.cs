@@ -133,7 +133,7 @@ public abstract class DeviceStatusOnlyTests
 
     /// <summary>   (Unit Test Method) device should open without device errors. </summary>
     /// <remarks>   David, 2021-07-04. </remarks>
-    [TestMethod( "01. Device should open without device errors" )]
+    [TestMethod( DisplayName = "01. Device should open without device errors" )]
     public void DeviceShouldOpenWithoutDeviceErrors()
     {
         Assert.IsNotNull( this.VisaSessionBase );
@@ -158,7 +158,7 @@ public abstract class DeviceStatusOnlyTests
 
     /// <summary>   (Unit Test Method) message available should wait for. </summary>
     /// <remarks>   David, 2021-07-04. </remarks>
-    [TestMethod( "02. Message available should wait for" )]
+    [TestMethod( DisplayName = "02. Message available should wait for" )]
     public void MessageAvailableShouldWaitFor()
     {
         Assert.IsNotNull( this.VisaSessionBase );
@@ -185,7 +185,7 @@ public abstract class DeviceStatusOnlyTests
 
     /// <summary>   (Unit Test Method) operation completion should wait for. </summary>
     /// <remarks>   David, 2021-07-04. </remarks>
-    [TestMethod( "03. Operation completion should wait for" )]
+    [TestMethod( DisplayName = "03. Operation completion should wait for" )]
     public void OperationCompletionShouldWaitFor()
     {
         Assert.IsNotNull( this.VisaSessionBase );
@@ -215,7 +215,7 @@ public abstract class DeviceStatusOnlyTests
     #region " poll tests "
 
     /// <summary> (Unit Test Method) tests device polling. </summary>
-    [TestMethod( "04. Device should be polled" )]
+    [TestMethod( DisplayName = "04. Device should be polled" )]
     public void DeviceShouldBePolled()
     {
         Assert.IsNotNull( this.VisaSessionBase );
@@ -242,7 +242,7 @@ public abstract class DeviceStatusOnlyTests
 
     /// <summary>   (Unit Test Method) requesting service should be enabled by session. </summary>
     /// <remarks>   David, 2021-11-29. </remarks>
-    [TestMethod( "05. Requesting service should be enabled by session" )]
+    [TestMethod( DisplayName = "05. Requesting service should be enabled by session" )]
     public void RequestingServiceShouldBeEnabledBySession()
     {
         Assert.IsNotNull( this.VisaSessionBase );

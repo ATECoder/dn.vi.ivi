@@ -35,12 +35,17 @@
 
   <!-- Assembly attributes -->
   <ItemGroup>
+    <AssemblyAttribute Include="Microsoft.VisualStudio.TestTools.UnitTesting.DoNotParallelize"/>
     <AssemblyAttribute Include="System.CLSCompliantAttribute">
       <_Parameter1>false</_Parameter1>
     </AssemblyAttribute>
     <AssemblyAttribute Include="System.Runtime.InteropServices.ComVisibleAttribute">
       <_Parameter1>false</_Parameter1>
     </AssemblyAttribute>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
   </ItemGroup>
 
   <PropertyGroup>
@@ -79,13 +84,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <!-- Suppress warning about newton soft 9.0.1 which is part of the .net fx testing extensions code coverage.
-      <NuGetAuditSuppress Include="https://github.com/advisories/GHSA-5crp-9r3c-p9vr" />
-    -->
     <Content Include="cc.isr.VI.DeviceWinControls.MSTest.Settings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -96,11 +94,16 @@
     <Content Include="cc.isr.VI.DeviceWinControls.MSTest.Session.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <!-- Already included with the default profile of the MSTest.SDK
-      <PackageReference Update="Microsoft.Testing.Extensions.CodeCoverage" />
-    -->
   </ItemGroup>
 
+  <ItemGroup>
+    <!-- Suppress warning about newton soft 9.0.1 which is part of the .net fx testing extensions code coverage.
+      <NuGetAuditSuppress Include="https://github.com/advisories/GHSA-5crp-9r3c-p9vr" />
+    -->
+    <!-- Already included with the default profile of the MSTest.SDK
+      <PackageReference Update="Microsoft.Testing.Extensions.CodeCoverage" Version="18.1.0" />
+    -->
+  </ItemGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)'=='net472' or '$(TargetFramework)'=='net48'">
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

@@ -147,14 +147,14 @@ public abstract class SubsystemsTests
 
     /// <summary>   (Unit Test Method) opens session check status should pass. </summary>
     /// <remarks>   David, 2021-07-04. </remarks>
-    [TestMethod( "01. Open session check status should pass all tests" )]
+    [TestMethod( DisplayName = "01. Open session check status should pass all tests" )]
     public void OpenSessionCheckStatusShouldPass()
     {
         this.AssertOpenSessionCheckStatus( false );
     }
 
     /// <summary> (Unit Test Method) tests open session read device errors. </summary>
-    [TestMethod( "02. Open session should pass all tests and read device errors" )]
+    [TestMethod( DisplayName = "02. Open session should pass all tests and read device errors" )]
     public void OpenSessionReadDeviceErrorsShouldPass()
     {
         this.AssertOpenSessionCheckStatus( true );

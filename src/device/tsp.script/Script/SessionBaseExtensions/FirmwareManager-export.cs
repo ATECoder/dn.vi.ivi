@@ -8,17 +8,22 @@ public static partial class FirmwareManager
     /// <remarks>   2024-09-05. Requires the ISR support scripts. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>
-    /// <exception cref="IOException">              Thrown when an IO failure occurred. </exception>
     /// <exception cref="NativeException">          Thrown when a Native error condition occurs. </exception>
-    /// <param name="session">          The session. </param>
-    /// <param name="folderPath">       Specifies the script file folder. </param>
-    /// <param name="script">           Specifies the script. </param>
-    /// <param name="compress">         Specifies the compression condition. True to compress the
-    ///                                 source before saving. </param>
+    /// <exception cref="IOException">              Thrown when an IO failure occurred. </exception>
+    /// <param name="session">      The session. </param>
+    /// <param name="folderPath">   Specifies the script file folder. </param>
+    /// <param name="script">       Specifies the script. </param>
+    /// <param name="compress">     Specifies the compression condition. True to compress the source
+    ///                             before saving. </param>
+    /// <param name="compressor">   The compressor. </param>
+    /// <param name="encryptor">    The encryptor. </param>
     /// <returns>   <c>true</c> if okay; otherwise, <c>false</c>. </returns>
     [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0270:Use coalesce expression", Justification = "<Pending>" )]
-    public static bool FetchScriptExportToFile( this Pith.SessionBase? session, string folderPath, ScriptEntityBase script, bool compress )
+    public static bool FetchScriptExportToFile( this Pith.SessionBase? session, string folderPath, ScriptEntityBase script,
+        bool compress, IScriptCompressor compressor, IScriptEncryptor encryptor )
     {
+        if ( compressor is null ) throw new ArgumentNullException( nameof( compressor ) );
+        if ( encryptor is null ) throw new ArgumentNullException( nameof( encryptor ) );
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( folderPath is null ) throw new ArgumentNullException( nameof( folderPath ) );
         if ( script is null ) throw new ArgumentNullException( nameof( script ) );
@@ -50,9 +55,14 @@ public static partial class FirmwareManager
 
 
             if ( compress )
-                scriptFile.WriteLine( Tsp.Script.ScriptCompressor.Compress( scriptSource ) );
-            else
-                scriptFile.WriteLine( scriptSource );
+            {
+                if ( !compressor.IsCompressed( scriptSource ) )
+                    scriptSource = compressor.CompressToBase64( scriptSource );
+                if ( !encryptor.IsEncrypted( scriptSource ) )
+                    scriptSource = encryptor.EncryptToBase64( scriptSource );
+            }
+
+            scriptFile.WriteLine( scriptSource );
 
             return true;
         }
@@ -76,9 +86,14 @@ public static partial class FirmwareManager
     /// <param name="filePath">     full path name of the file. </param>
     /// <param name="compress">     Specifies the compression condition. True to compress the source
     ///                             before saving to file. </param>
+    /// <param name="compressor">   The compressor. </param>
+    /// <param name="encryptor">    The encryptor. </param>
     /// <returns>   <c>true</c> if okay; otherwise, <c>false</c>. </returns>
-    public static bool FetchScriptExportToFile( this Pith.SessionBase? session, string scriptName, string filePath, bool compress )
+    public static bool FetchScriptExportToFile( this Pith.SessionBase? session, string scriptName, string filePath, bool compress,
+        IScriptCompressor compressor, IScriptEncryptor encryptor )
     {
+        if ( compressor is null ) throw new ArgumentNullException( nameof( compressor ) );
+        if ( encryptor is null ) throw new ArgumentNullException( nameof( encryptor ) );
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( filePath is null ) throw new ArgumentNullException( nameof( filePath ) );
 
@@ -96,9 +111,15 @@ public static partial class FirmwareManager
                 throw new cc.isr.VI.Pith.NativeException( $"Failed fetching script source for {scriptName}" );
 
             if ( compress )
-                scriptFile.WriteLine( Tsp.Script.ScriptCompressor.Compress( scriptSource ) );
-            else
-                scriptFile.WriteLine( scriptSource );
+                if ( compress )
+                {
+                    if ( !compressor.IsCompressed( scriptSource ) )
+                        scriptSource = compressor.CompressToBase64( scriptSource );
+                    if ( !encryptor.IsEncrypted( scriptSource ) )
+                        scriptSource = encryptor.EncryptToBase64( scriptSource );
+                }
+
+            scriptFile.WriteLine( scriptSource );
 
             return true;
         }

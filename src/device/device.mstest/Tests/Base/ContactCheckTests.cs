@@ -152,7 +152,7 @@ public abstract class ContactCheckTests
 
     /// <summary>   (Unit Test Method) contact check should pass. </summary>
     /// <remarks>   2025-01-23. </remarks>
-    [TestMethod( "01. Contact check should pass" )]
+    [TestMethod( DisplayName = "01. Contact check should pass" )]
     public void ContactCheckShouldPass()
     {
         this.AssertCheckContacts( true, true, this.ContactCheckThreshold );
@@ -160,7 +160,7 @@ public abstract class ContactCheckTests
 
     /// <summary>   (Unit Test Method) contact check should detect open sense low. </summary>
     /// <remarks>   2025-01-23. </remarks>
-    [TestMethod( "02. Contact check detect open low sense terminal" )]
+    [TestMethod( DisplayName = "02. Contact check detect open low sense terminal" )]
     public void ContactCheckShouldDetectOpenSenseLow()
     {
         this.AssertCheckContacts( true, false, this.ContactCheckThreshold );
@@ -170,7 +170,7 @@ public abstract class ContactCheckTests
     /// <remarks>   2025-01-23. <para>
     /// The 2600 measure the DUT resistance when either the low or high source lead is open.
     /// Consequently, the contact check will pass if the DUT resistance is lower than the contact check threshold. </para></remarks>
-    [TestMethod( "03. Contact check detect open low source terminal" )]
+    [TestMethod( DisplayName = "03. Contact check detect open low source terminal" )]
     public void ContactCheckShouldDetectOpenSourceLow()
     {
         this.AssertCheckContacts( true, true, this.ContactCheckThreshold );
@@ -178,7 +178,7 @@ public abstract class ContactCheckTests
 
     /// <summary>   (Unit Test Method) contact check should detect open leads. </summary>
     /// <remarks>   2025-09-12. </remarks>
-    [TestMethod( "04. Contact check detect open leads (>75 ohms)" )]
+    [TestMethod( DisplayName = "04. Contact check detect open leads (>75 ohms)" )]
     public void ContactCheckShouldDetectOpenLeads()
     {
         this.AssertCheckContacts( false, false, this.ContactCheckThreshold );

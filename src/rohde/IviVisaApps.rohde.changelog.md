@@ -2,9 +2,15 @@
 All notable changes to these libraries will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-[8.0.2.9391]: https://www.github.com/atecoder/dn.vi.ivi
+[8.0.2.9421]: https://www.github.com/atecoder/dn.vi.ivi
 
 Current IVI Visa Compatibility: 8.0.2.9391
+
+## [8.0.2.9421] - 2025-10-17
+- Create the Rohde Schwarz solution.
+- directory.build.props
+  - update packages.
+  - point to the current repository.
 
 ## [8.0.2.9391] - 2025-09-17
 - Update to Keysight IO Suite 21.2.207 and use KeySight Technologies VISA 18.6.6 package.

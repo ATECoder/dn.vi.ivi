@@ -119,7 +119,7 @@ public abstract class VisaResourceTests
     /// To test the 32bit version, change the default processor architecture from the Test, Test
     /// Settings menu.
     /// </remarks>
-    [TestMethod( "01. Visa versions should be valid" )]
+    [TestMethod( DisplayName = "01. Visa versions should be valid" )]
     public void VisaVersionsShouldBeValid()
     {
         (bool success, string details) = SessionFactory.ValidateFunctionalVisaVersions();
@@ -132,7 +132,7 @@ public abstract class VisaResourceTests
 
     /// <summary>   (Unit Test Method) Assert that visa implementations version should exist. </summary>
     /// <remarks>   2024-07-09. </remarks>
-    [TestMethod( "02. Visa implementation version should exist" )]
+    [TestMethod( DisplayName = "02. Visa implementation version should exist" )]
     public void VisaImplementationVersionShouldExist()
     {
         Version expectedVersion = new( Visa.Gac.Vendor.IVI_VISA_IMPLEMENTATION_VERSION );
@@ -146,7 +146,7 @@ public abstract class VisaResourceTests
     }
 
     /// <summary> (Unit Test Method) Assert that visa resources can be located for some filters. </summary>
-    [TestMethod( "03. Visa resources should be found" )]
+    [TestMethod( DisplayName = "03. Visa resources should be found" )]
     public void VisaResourcesShouldBeFound()
     {
         // resourcesFilter = resourcesFilter.Replace("(", "[")
@@ -198,7 +198,7 @@ public abstract class VisaResourceTests
     #region " resource name info "
 
     /// <summary> (Unit Test Method) Assert that a visa resource could be added to the resource collection. </summary>
-    [TestMethod( "04. Visa resource name should be added" )]
+    [TestMethod( DisplayName = "04. Visa resource name should be added" )]
     public void VisaResourceNameShouldBeAdded()
     {
         ResourceNameInfoCollection resourceNameInfoCollection = [];

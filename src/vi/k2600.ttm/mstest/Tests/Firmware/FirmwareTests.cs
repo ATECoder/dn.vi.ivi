@@ -50,7 +50,7 @@ public class FirmwareTests
 
     /// <summary> Cleans up the test class after all tests in the class have run. </summary>
     /// <remarks> David, 2020-10-12. </remarks>
-    [ClassCleanup( ClassCleanupBehavior.EndOfClass )]
+    [ClassCleanup]
     public static void CleanupTestClass()
     {
     }
@@ -126,7 +126,7 @@ public class FirmwareTests
     /// The synchronization context is captured as part of the property change and other event
     /// handlers and is no longer needed here.
     /// </remarks>
-    [TestMethod( "01. Session should open" )]
+    [TestMethod( DisplayName = "01. Session should open" )]
     public void SessionShouldOpen()
     {
         using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( this.ResourceSettings.ResourceName );
@@ -135,7 +135,7 @@ public class FirmwareTests
 
     /// <summary>   (Unit Test Method) Assert that a current should be measured. </summary>
     /// <remarks>   David, 2020-10-12. </remarks>
-    [TestMethod( "02. Current should measure" )]
+    [TestMethod( DisplayName = "02. Current should measure" )]
     public void CurrentShouldMeasure()
     {
         string resourceName = this.ResourceSettings.ResourceName;
@@ -149,7 +149,7 @@ public class FirmwareTests
 
     /// <summary> (Unit Test Method) Assert that current should be measured multiple times. </summary>
     /// <remarks> David, 2020-10-12. </remarks>
-    [TestMethod( "03. Current should be measured multiple times" )]
+    [TestMethod( DisplayName = "03. Current should be measured multiple times" )]
     public void CurrentShouldBeMeasuredMultipleTimes()
     {
         string resourceName = this.ResourceSettings.ResourceName;
@@ -166,7 +166,7 @@ public class FirmwareTests
 
     /// <summary>   (Unit Test Method) tsp syntax should not fail. </summary>
     /// <remarks>   2025-02-06. </remarks>
-    [TestMethod( "04. TSP syntax should not fail" )]
+    [TestMethod( DisplayName = "04. TSP syntax should not fail" )]
     public void TspSyntaxShouldNotFail()
     {
         string resourceName = this.ResourceSettings.ResourceName;
@@ -180,7 +180,7 @@ public class FirmwareTests
 
     /// <summary>   (Unit Test Method) meter value should reset. </summary>
     /// <remarks>   2025-02-06. </remarks>
-    [TestMethod( "05. Meter value should reset" )]
+    [TestMethod( DisplayName = "05. Meter value should reset" )]
     public void MeterValueShouldReset()
     {
         string resourceName = this.ResourceSettings.ResourceName;
@@ -194,7 +194,7 @@ public class FirmwareTests
 
     /// <summary>   (Unit Test Method) cold resistance defaults should equal settings. </summary>
     /// <remarks>   2025-02-06. </remarks>
-    [TestMethod( "06. Cold resistance defaults should equal settings" )]
+    [TestMethod( DisplayName = "06. Cold resistance defaults should equal settings" )]
     public void ColdResistanceDefaultsShouldEqualSettings()
     {
         string resourceName = this.ResourceSettings.ResourceName;
@@ -208,7 +208,7 @@ public class FirmwareTests
 
     /// <summary>   (Unit Test Method) initial resistance should reset. </summary>
     /// <remarks>   2025-02-06. </remarks>
-    [TestMethod( "07. Initial resistance should reset" )]
+    [TestMethod( DisplayName = "07. Initial resistance should reset" )]
     public void InitialResistanceShouldReset()
     {
         string resourceName = this.ResourceSettings.ResourceName;
@@ -220,7 +220,7 @@ public class FirmwareTests
         VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
     }
 
-    [TestMethod( "08. Final resistance should reset" )]
+    [TestMethod( DisplayName = "08. Final resistance should reset" )]
     public void FinalResistanceShouldReset()
     {
         string resourceName = this.ResourceSettings.ResourceName;
@@ -232,7 +232,7 @@ public class FirmwareTests
         VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
     }
 
-    [TestMethod( "09. Estimator should reset" )]
+    [TestMethod( DisplayName = "09. Estimator should reset" )]
     public void EstimatorShouldReset()
     {
         string resourceName = this.ResourceSettings.ResourceName;
@@ -246,7 +246,7 @@ public class FirmwareTests
 
     /// <summary>   (Unit Test Method) thermal transient defaults should equal settings. </summary>
     /// <remarks>   2025-02-18. </remarks>
-    [TestMethod( "10. Thermal transient defaults should equal settings" )]
+    [TestMethod( DisplayName = "10. Thermal transient defaults should equal settings" )]
     public void ThermalTransientDefaultsShouldEqualSettings()
     {
         string resourceName = this.ResourceSettings.ResourceName;
@@ -260,7 +260,7 @@ public class FirmwareTests
 
     /// <summary>   (Unit Test Method) thermal transient should reset. </summary>
     /// <remarks>   2025-02-18. </remarks>
-    [TestMethod( "11. Thermal transient should reset" )]
+    [TestMethod( DisplayName = "11. Thermal transient should reset" )]
     public void ThermalTransientShouldReset()
     {
         string resourceName = this.ResourceSettings.ResourceName;
@@ -274,7 +274,7 @@ public class FirmwareTests
 
     /// <summary>   (Unit Test Method) framework should clear known state. </summary>
     /// <remarks>   2024-10-31. </remarks>
-    [TestMethod( "12. Framework should clear known state" )]
+    [TestMethod( DisplayName = "12. Framework should clear known state" )]
     public void FrameworkShouldClearKnownState()
     {
         string resourceName = this.ResourceSettings.ResourceName;
@@ -304,7 +304,7 @@ public class FirmwareTests
 
     /// <summary>   (Unit Test Method) measurement should be triggered. </summary>
     /// <remarks>   2025-02-07. </remarks>
-    [TestMethod( "13. Measurement should be triggered" )]
+    [TestMethod( DisplayName = "13. Measurement should be triggered" )]
     public void MeasurementShouldBeTriggered()
     {
         string resourceName = this.ResourceSettings.ResourceName;
