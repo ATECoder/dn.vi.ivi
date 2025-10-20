@@ -2,13 +2,18 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9422]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9424]: https://www.github.com/atecoder/dn.vi.ivi
 
 Current IVI Visa Compatibility: 8.0.1.9391
 
-## [8.1.9422] - 2025-10-18
+## [8.1.9424] - 2025-10-20
 - project files: cleanup.
 - Remove extra packages from test project files. 
+- Add bucket repository reference to the build properties.
+- Tsp.Script:
+  - Update code using the script compressor and encryptor interfaces.
+- Device MSTest
+  - Test Assert: Replace string format expressions with interpolated scripts.
 
 ## [8.1.9421] - 2025-10-17
 - Update packages:

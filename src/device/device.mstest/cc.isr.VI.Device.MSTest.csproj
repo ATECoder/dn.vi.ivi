@@ -81,7 +81,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'=='net472' or '$(TargetFramework)'=='net48'">
-    <!--
+    <!-- Verified on 20251018.
     This prevents the following exception:
     System.IO.FileLoadException: Could not load file or assembly 'Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10'
     or one of its dependencies. The located assembly's manifest definition does not match the assembly reference. (Exception from HRESULT: 0x80131040)

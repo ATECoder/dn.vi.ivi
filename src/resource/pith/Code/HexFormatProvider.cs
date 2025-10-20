@@ -1,3 +1,5 @@
+using cc.isr.Std.FormatProviders;
+
 namespace cc.isr.VI.Pith;
 
 /// <summary> An Hex format provider. </summary>
@@ -6,7 +8,7 @@ namespace cc.isr.VI.Pith;
 /// Licensed under The MIT License.</para><para>
 /// David, 2019-11-21 </para>
 /// </remarks>
-public class HexFormatProvider : Std.DigitalValueFormatProvider
+public class HexFormatProvider : DigitalValueFormatProvider
 {
     /// <summary> Converts a value to a service requests enum value. </summary>
     /// <param name="value"> The value. </param>

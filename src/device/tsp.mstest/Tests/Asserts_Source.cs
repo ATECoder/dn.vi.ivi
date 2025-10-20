@@ -21,6 +21,5 @@ public sealed partial class Asserts
             $"{typeof( VI.Tsp.SourceSubsystemBase )}.{nameof( VI.Tsp.SourceSubsystemBase.SourceFunction )} is {sourceFunction} ; expected {expectedFunctionMode}" );
     }
 
-
     #endregion
 }

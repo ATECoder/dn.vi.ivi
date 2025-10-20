@@ -1,7 +1,6 @@
 using cc.isr.Std.Tests;
 using cc.isr.VI.Pith;
 using cc.isr.Std.Tests.Extensions;
-
 namespace cc.isr.VI.Device.Tests.Base;
 
 /// <summary> The abstract VISA Resource Settings tests. </summary>

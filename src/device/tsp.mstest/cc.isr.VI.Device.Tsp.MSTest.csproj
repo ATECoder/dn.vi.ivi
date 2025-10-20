@@ -1,4 +1,4 @@
-<Project Sdk="MSTest.Sdk">
+﻿<Project Sdk="MSTest.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>net472;net48;net9.0</TargetFrameworks>
@@ -40,6 +40,10 @@
     </AssemblyAttribute>
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
+  </ItemGroup>
+
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);MYPROJREF;</DefineConstants>
   </PropertyGroup>
@@ -49,6 +53,7 @@
       <ItemGroup>
         <ProjectReference Include="..\..\..\..\..\core\std\src\mstest\mstest\cc.isr.Std.MSTest.csproj" />
         <ProjectReference Include="..\..\..\..\..\core\json\src\app.settings\app.settings.view.models\cc.isr.Json.AppSettings.ViewModels.csproj" />
+        <ProjectReference Include="..\tsp\cc.isr.VI.Device.Tsp.csproj" />
       </ItemGroup>
     </When>
     <Otherwise>
@@ -57,14 +62,6 @@
       </ItemGroup>
     </Otherwise>
   </Choose>
-
-  <ItemGroup>
-    <Compile Include="..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\tsp\cc.isr.VI.Device.Tsp.csproj" />
-  </ItemGroup>
 
   <PropertyGroup>
     <!--
@@ -84,12 +81,12 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'=='net472' or '$(TargetFramework)'=='net48'">
-    <!--
+    <!-- Verified on 20251018. Must be included in cc.isr.VI.Device.MSTest
     This prevents the following exception:
     System.IO.FileLoadException: Could not load file or assembly 'Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10'
     or one of its dependencies. The located assembly's manifest definition does not match the assembly reference. (Exception from HRESULT: 0x80131040)
-    -->
     <PackageReference Include="Serilog.Settings.Configuration" Version="9.0.0" />
+    -->
   </ItemGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)'=='net472' or '$(TargetFramework)'=='net48'">

@@ -2,7 +2,7 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Tests.Settings;
 
 /// <summary>   Provides settings for all tests. </summary>
 /// <remarks>   2023-04-24. </remarks>
-internal sealed class TestSiteSettings() : isr.Std.Tests.TestSiteSettings
+internal sealed class TestSiteSettings() : cc.isr.Std.Tests.TestSiteSettings
 {
     #region " scribe "
 
@@ -10,7 +10,7 @@ internal sealed class TestSiteSettings() : isr.Std.Tests.TestSiteSettings
     /// <remarks>   2024-08-03. </remarks>
     public override void ReadSettings()
     {
-        isr.Std.Tests.TestSiteSettings.SettingsPath = Settings.AllSettings.Instance.Scribe!.AllUsersSettingsPath!;
+        cc.isr.Std.Tests.TestSiteSettings.SettingsPath = Settings.AllSettings.Instance.Scribe!.AllUsersSettingsPath!;
 #if false
         AppSettingsScribe.ReadSettings( Settings.AllSettings.Instance.Scribe!.AllUsersSettingsPath!, nameof( Settings.TestSiteSettings ),
             Settings.AllSettings.Instance.TestSiteSettings,
