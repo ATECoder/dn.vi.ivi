@@ -1,6 +1,6 @@
 # About
 
-cc.isr.VI.Tsp.K2600.Ttm is a .Net library supporting Thermal Transient Measurements using the Keithley 2600 instrument.
+cc.isr.VI.Tsp.K2600.Ttm is a .NET standard 2.0 library supporting Thermal Transient Measurements using the Keithley 2600 instrument.
 
 # How to Use
 

@@ -1,6 +1,6 @@
 # About
 
-cc.isr.VI.Device.Tsp is a .Net library implementing TSP-type virtual devices and subsystems.
+cc.isr.VI.Device.Tsp is a .NET standard 2.0 library implementing TSP-type virtual devices and subsystems.
 
 # How to Use
 

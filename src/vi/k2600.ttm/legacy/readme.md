@@ -1,6 +1,6 @@
 # About
 
-cc.isr.VI.Tsp.K2600.Ttm.Legacy is a .Net library supporting Thermal Transient Measurements (TTM) using the Keithley 2600 instrument aiming for compatibility with the legacy `Device` class used in the field with versions 3.2.5367 and 2.3.4077 of the ISR TTM Library.
+cc.isr.VI.Tsp.K2600.Ttm.Legacy is a .NET standard 2.0 library supporting Thermal Transient Measurements (TTM) using the Keithley 2600 instrument aiming for compatibility with the legacy `Device` class used in the field with versions 3.2.5367 and 2.3.4077 of the ISR TTM Library.
 
 # How to Use
 

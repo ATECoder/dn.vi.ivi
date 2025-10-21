@@ -1,6 +1,6 @@
 # About
 
-cc.isr.VI.Foundation is a .Net library implementing IVI-Foundation based VISA sessions.
+cc.isr.VI.Foundation is a .NET standard 2.0 library implementing IVI-Foundation based VISA sessions.
 
 # How to Use
 

@@ -1,6 +1,6 @@
 # About
 
-cc.isr.VI.Device is a .Net library implementing virtual devices and subsystems
+cc.isr.VI.Device is a .NET standard 2.0 library implementing virtual devices and subsystems
 using Virtual Instruments Standard Architecture (VISA.)
 
 # How to Use

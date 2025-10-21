@@ -1,6 +1,6 @@
 # About
 
-[cc.isr.Visa] is a .Net library providing a unifying API for IVI supporting implementations from Keysight and NI visa the [Kelary.Ivi.Visa] package.
+[cc.isr.Visa] is a .NET standard 2.0 library providing a unifying API for IVI supporting implementations from Keysight and NI visa the [Kelary.Ivi.Visa] package.
 
 # How to Use
 

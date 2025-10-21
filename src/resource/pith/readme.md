@@ -1,6 +1,6 @@
 # About
 
-cc.isr.VI.Pith is a .Net library defining base classes and interfaces for VISA sessions.
+cc.isr.VI.Pith is a .NET standard 2.0 library defining base classes and interfaces for VISA sessions.
 
 # How to Use
 
