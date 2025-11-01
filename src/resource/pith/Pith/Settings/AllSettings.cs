@@ -57,7 +57,7 @@ public class AllSettings : Json.AppSettings.Settings.SettingsContainerBase
     ///                                     file. </param>
     /// <param name="overrideThisUserFile"> (Optional) [false] True to override this user settings
     ///                                     file. </param>
-    public override void ReadSettings( Type declaringType, string settingsFileSuffix = ".session",
+    public override void ReadSettings( Type declaringType, string settingsFileSuffix = ".Session",
         bool overrideAllUsersFile = false, bool overrideThisUserFile = false )
     {
         base.ReadSettings( declaringType, settingsFileSuffix, overrideAllUsersFile, overrideThisUserFile );

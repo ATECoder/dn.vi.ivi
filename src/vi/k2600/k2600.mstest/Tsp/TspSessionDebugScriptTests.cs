@@ -55,7 +55,7 @@ public class TspSessionDebugScriptTests : Device.Tests.Base.ScriptTests
         this.Device = K2600Device.Create();
         Assert.IsNotNull( this.Device );
         Assert.IsNotNull( this.Device.Session );
-        this.Device.Session.ReadSettings( this.GetType(), ".Session", true, true );
+        this.Device.Session.ReadSettings( this.GetType(), overrideAllUsersFile: System.Diagnostics.Debugger.IsAttached, overrideThisUserFile: System.Diagnostics.Debugger.IsAttached );
         Assert.IsTrue( this.Device.Session.AllSettings.TimingSettings.Exists, $"{nameof( K2600Device )}.{nameof( K2600Device.Session )}.{nameof( K2600Device.Session.AllSettings.TimingSettings )} does not exist." );
         this.VisaSessionBase = this.Device;
         base.InitializeBeforeEachTest();

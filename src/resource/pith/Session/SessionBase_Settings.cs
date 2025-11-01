@@ -31,7 +31,7 @@ public partial class SessionBase
     ///                                     cc.isr.VI.Tsp.K2600.Device.MSTest is the assembly name. </param>
     /// <param name="overrideAllUsersFile"> (Optional) [false] True to override all users settings file. </param>
     /// <param name="overrideThisUserFile"> (Optional) [false] True to override this user settings file. </param>
-    public void ReadSettings( Type declaringType, string settingsFileSuffix = ".session", bool overrideAllUsersFile = false, bool overrideThisUserFile = false )
+    public void ReadSettings( Type declaringType, string settingsFileSuffix = ".Session", bool overrideAllUsersFile = false, bool overrideThisUserFile = false )
     {
         this.AllSettings.ReadSettings( declaringType, settingsFileSuffix, overrideAllUsersFile, overrideThisUserFile );
         this.ApplySettings( this.AllSettings.TimingSettings );
