@@ -1,6 +1,3 @@
-using System;
-using System.Windows.Forms;
-
 namespace cc.isr.Visa.Console.UI;
 
 /// <summary>   Form for viewing the Visa IO user control. </summary>

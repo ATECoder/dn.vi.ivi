@@ -37,6 +37,8 @@ public class VisaViewTests : cc.isr.VI.DeviceWinControls.Tests.Base.IVisaViewTes
     [TestInitialize()]
     public override void InitializeBeforeEachTest()
     {
+        base.DefineTraceListener();
+
         Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
         cc.isr.VI.Device.Tests.Asserts.AssertVisaImplementationShouldBeLoaded();
         Console.WriteLine( $"\tTesting {typeof( cc.isr.VI.DeviceWinControls.VisaView ).Assembly.FullName}" );
@@ -44,7 +46,7 @@ public class VisaViewTests : cc.isr.VI.DeviceWinControls.Tests.Base.IVisaViewTes
         // create an instance of the session logger.
         SessionLogger.Instance.CreateLogger( typeof( VisaViewTests ) );
 
-        this.TestSiteSettings = AllSettings.Instance.TestSiteSettings;
+        this.LocationSettings = AllSettings.Instance.LocationSettings;
         this.ResourceSettings = AllSettings.Instance.ResourceSettings;
 
         VisaSession visaSession = new()
@@ -53,9 +55,9 @@ public class VisaViewTests : cc.isr.VI.DeviceWinControls.Tests.Base.IVisaViewTes
         };
         Assert.IsNotNull( visaSession.Session );
         Assert.AreEqual( VI.Syntax.Ieee488Syntax.ClearExecutionStateCommand, visaSession.Session.ClearExecutionStateCommand );
-        visaSession.Session.ReadSettings( this.GetType().Assembly, ".Session", true, true );
-        Assert.IsTrue( visaSession.Session.TimingSettings.Exists,
-            $"{nameof( VisaSession )}.{nameof( VisaSession.Session )}.{nameof( VisaSession.Session.TimingSettings )} does not exist." );
+        visaSession.Session.ReadSettings( this.GetType(), ".Session", true, true );
+        Assert.IsTrue( visaSession.Session.AllSettings.TimingSettings.Exists,
+            $"{nameof( VisaSession )}.{nameof( VisaSession.Session )}.{nameof( VisaSession.Session.AllSettings.TimingSettings )} does not exist." );
 
         this.VisaSessionBase = visaSession;
 
@@ -133,7 +135,7 @@ public class VisaViewTests : cc.isr.VI.DeviceWinControls.Tests.Base.IVisaViewTes
         using ( VisaView view = new( this.VisaSessionBase ) )
         {
             Asserts.AssertVisaViewSessionShouldOpenAndClose( trialNumber, view, this.ResourceSettings );
-            Task.Delay( TimeSpan.FromMilliseconds( 100d ), this.TestContext?.CancellationTokenSource.Token ?? System.Threading.CancellationToken.None ).Wait( this.TestContext?.CancellationTokenSource.Token ?? System.Threading.CancellationToken.None );
+            Task.Delay( TimeSpan.FromMilliseconds( 100d ), this.TestContext?.CancellationToken ?? System.Threading.CancellationToken.None ).Wait( this.TestContext?.CancellationToken ?? System.Threading.CancellationToken.None );
             trialNumber += 1;
             Asserts.AssertVisaViewSessionShouldOpenAndClose( trialNumber, view, this.ResourceSettings );
         }

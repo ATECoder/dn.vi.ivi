@@ -2,9 +2,57 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9424]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9436]: https://www.github.com/atecoder/dn.vi.ivi
 
 Current IVI Visa Compatibility: 8.0.1.9391
+
+## [8.1.9436] - 2025-11-01
+- Pith
+  - Add Node and error queue commands.
+- Replace operation failed exception with Invalid Operation Exception.
+- Visa Console:
+  - support nullability.
+- Session:
+  - Move settings classes to an All Settings class.
+- Settings
+  - Move Scribe and Assembly File Info creation to Create Instance.
+  - Define section name when construction a single settings scribe.
+  - Use the scribe for reading the settings.
+  - Document creating the instance.
+  - Copy settings if debug or not existing.
+  - Use existence check from the scribe class.
+  - Replace the abstract read and save settings with implementations using the created scribe.
+  - Override CreateScribe.
+  - Use Read Settings to initialize the settings instance.
+- Tests
+  - Replace TestContext?.CancellationTokenSource.Token with TestContext?.CancellationToken.
+  - Remove  test class attributes from abstract test classes.
+
+## [8.1.9432] - 2025-10-28
+- Replace operation failed exception with Invalid Operation Exception.
+- Visa Console:
+  - support nullability.
+- Session:
+  - Move settings classes to an All Settings class.
+- Settings
+  - Move Scribe and Assembly File Info creation to Create Instance.
+  - Define section name when construction a single settings scribe.
+  - Use the scribe for reading the settings.
+  - document creating the instance.
+  - Copy settings if debug or not existing.
+  - Use existence check from the scribe class.
+  - Replace the abstract read and save settings with implementations using the created scribe.
+- All Settings
+  - Initialize default scribe and update when reading.
+
+## [8.1.9428] - 2025-10-24
+- Remove Std MSTest project from solution.
+- Add Exists to settings file and remove enabled and all from settigns files and classes.
+- MS Test:
+  - Remove reference to the cc.isr.Std.MSTest project.
+  - Replace test site settings with Location Settings subclass of the JSon location settings base.
+  - Use Settings base class from the JSon Application Settings library.
+  - Use Settings Container base class from the JSon Application Settings library.
 
 ## [8.1.9424] - 2025-10-20
 - project files: cleanup.

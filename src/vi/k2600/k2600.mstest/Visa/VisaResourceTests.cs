@@ -38,6 +38,8 @@ public class VisaResourceTests : Device.Tests.Base.VisaResourceTests
     [TestInitialize()]
     public override void InitializeBeforeEachTest()
     {
+        base.DefineTraceListener();
+
         Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
         cc.isr.VI.Device.Tests.Asserts.AssertVisaImplementationShouldBeLoaded();
         Console.WriteLine( $"\tTesting {typeof( cc.isr.VI.Tsp.K2600.K2600Device ).Assembly.FullName}" );
@@ -45,11 +47,11 @@ public class VisaResourceTests : Device.Tests.Base.VisaResourceTests
         // create an instance of the session logger.
         SessionLogger.Instance.CreateLogger( typeof( VisaResourceTests ) );
 
-        this.TestSiteSettings = Settings.AllSettings.Instance.TestSiteSettings;
+        this.LocationSettings = Settings.AllSettings.Instance.LocationSettings;
         this.Device = K2600Device.Create();
         Assert.IsNotNull( this.Device );
         Assert.IsNotNull( this.Device.Session );
-        this.Device.Session.ReadSettings( this.GetType().Assembly, ".Session", true, true );
+        this.Device.Session.ReadSettings( this.GetType(), ".Session", true, true );
         base.InitializeBeforeEachTest();
     }
 

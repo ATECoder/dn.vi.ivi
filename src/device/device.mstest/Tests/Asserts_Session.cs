@@ -14,11 +14,11 @@ public sealed partial class Asserts
     {
 
         Assert.IsNotNull( session, $"{nameof( session )} should not be null." );
-        Assert.IsTrue( session.TimingSettings.Exists );
+        Assert.IsTrue( session.AllSettings.TimingSettings.Exists );
         Assert.IsNotNull( resourceSettings, $"{nameof( Pith.Settings.ResourceSettings )} should not be null." );
         Assert.IsTrue( resourceSettings.Exists, $"{nameof( Pith.Settings.ResourceSettings )} should exist in the settings file." );
         string propertyName = nameof( cc.isr.VI.Pith.ServiceRequests.ErrorAvailable ).SplitWords();
-        int expectedErrorAvailableBitmask = session.RegistersBitmasksSettings.ErrorAvailableBitmask;
+        int expectedErrorAvailableBitmask = session.AllSettings.RegistersBitmasksSettings.ErrorAvailableBitmask;
         int actualErrorAvailableBitmask = ( int ) session.ErrorAvailableBitmask;
         Assert.AreEqual( expectedErrorAvailableBitmask, actualErrorAvailableBitmask,
                     $"{session.ResourceNameCaption} {propertyName} bitmask set upon on creating device should match" );
@@ -30,7 +30,7 @@ public sealed partial class Asserts
     public static void AssertSessionOpenValuesShouldMatch( cc.isr.VI.Pith.SessionBase? session, Pith.Settings.ResourceSettings? resourceSettings )
     {
         Assert.IsNotNull( session, $"{nameof( session )} should not be null." );
-        Assert.IsTrue( session.TimingSettings.Exists );
+        Assert.IsTrue( session.AllSettings.TimingSettings.Exists );
         Assert.IsNotNull( resourceSettings, $"{nameof( Pith.Settings.ResourceSettings )} should not be null." );
         Assert.IsTrue( resourceSettings.Exists, $"{nameof( Pith.Settings.ResourceSettings )} should exist in the settings file." );
 
@@ -107,8 +107,8 @@ public sealed partial class Asserts
         Assert.IsTrue( session.IsDeviceOpen, "session should be open" );
         if ( string.IsNullOrWhiteSpace( session.CollectGarbageOperationCompleteCommand ) ) return;
 
-        Assert.IsTrue( session.TimingSettings.CollectGarbageTimeout > System.TimeSpan.Zero,
-            $"{nameof( session.TimingSettings.CollectGarbageTimeout )} should be larger than zero." );
+        Assert.IsTrue( session.AllSettings.TimingSettings.CollectGarbageTimeout > System.TimeSpan.Zero,
+            $"{nameof( session.AllSettings.TimingSettings.CollectGarbageTimeout )} should be larger than zero." );
 
         Assert.IsTrue( session.CollectGarbageQueryComplete(), "collecting garbage incomplete (reply not '1')." );
 

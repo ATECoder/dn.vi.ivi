@@ -43,7 +43,7 @@ public static partial class GacLoader
     /// <param name="resourceName"> Name of the resource. </param>
     /// <param name="identity">     [out] The identity. </param>
     /// <param name="verbose">      (Optional) True to verbose. </param>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     public static bool TryQueryIdentity( string resourceName, out string identity, bool verbose = false )
     {
         identity = string.Empty;

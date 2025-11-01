@@ -22,13 +22,13 @@ public sealed partial class Asserts
         Assert.IsNotNull( session.Session );
         Assert.IsNotNull( resourceSettings, $"{nameof( Pith.Settings.ResourceSettings )} should not be null." );
         Assert.IsTrue( resourceSettings.Exists, $"{nameof( Pith.Settings.ResourceSettings )} should exist in the settings file." );
-        Assert.IsTrue( session.Session.TimingSettings.Exists );
-        Assert.IsTrue( session.Session.RegistersBitmasksSettings.Exists );
+        Assert.IsTrue( session.Session.AllSettings.TimingSettings.Exists );
+        Assert.IsTrue( session.Session.AllSettings.RegistersBitmasksSettings.Exists );
         Tests.Base.TestBase.AssertResourceNameShouldPing( session.Session, resourceSettings );
 
         Assert.AreEqual( cc.isr.VI.Syntax.Ieee488Syntax.LanguageTsp.Equals( resourceSettings.Language, StringComparison.OrdinalIgnoreCase ),
             session.Session.SplitCommonCommands, $"{resourceSettings.Language} instruments must split common commands." );
-        Assert.AreEqual( ( int ) session.Session.ServiceRequestEnableEventsBitmask, session.Session.RegistersBitmasksSettings.ServiceRequestEnableEventsBitmask );
+        Assert.AreEqual( ( int ) session.Session.ServiceRequestEnableEventsBitmask, session.Session.AllSettings.RegistersBitmasksSettings.ServiceRequestEnableEventsBitmask );
 
         session.SubsystemSupportMode = SubsystemSupportMode.Native;
         session.OpenSession( resourceSettings.ResourceName, resourceSettings.ResourceModel );
@@ -315,7 +315,7 @@ public sealed partial class Asserts
     public static void AssertClearExecutionStatePreservesEnableBitmasks( cc.isr.VI.Pith.SessionBase? session, int standardEventEnableBitmask, int serviceRequestEnableBitmask )
     {
         Assert.IsNotNull( session, $"{nameof( session )} should not be null." );
-        Assert.IsTrue( session.TimingSettings.Exists );
+        Assert.IsTrue( session.AllSettings.TimingSettings.Exists );
 
         Assert.IsTrue( session.IsDeviceOpen, $"Attempted a call with closed session" );
         string propertyName = nameof( cc.isr.VI.Pith.SessionBase.ServiceRequestEnableBitmask ).SplitWords();
@@ -368,8 +368,8 @@ public sealed partial class Asserts
         Base.TestBase.ConsoleOutputMemberMessage( $"Initial {propertyName} is 0x{actualStandardEventEnableBitmask:X2}: {actualStandardEventEnableBitmask}" );
 
         // program the service request register.
-        int expectedServiceRequestEnableBitmask = session.RegistersBitmasksSettings.ServiceRequestEnableEventsBitmask;
-        int expectedStandardEventEnableBitmask = session.RegistersBitmasksSettings.StandardEventEnableEventsBitmask;
+        int expectedServiceRequestEnableBitmask = session.AllSettings.RegistersBitmasksSettings.ServiceRequestEnableEventsBitmask;
+        int expectedStandardEventEnableBitmask = session.AllSettings.RegistersBitmasksSettings.StandardEventEnableEventsBitmask;
         session.ApplyStandardServiceRequestEnableBitmasks( expectedStandardEventEnableBitmask, expectedServiceRequestEnableBitmask );
         actualServiceRequestEnableBitmask = session.QueryServiceRequestEnableBitmask();
         actualStandardEventEnableBitmask = ( int ) session.QueryStandardEventEnableBitmask()!;

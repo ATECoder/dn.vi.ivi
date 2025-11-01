@@ -70,12 +70,12 @@ public class ContactTests
         SessionLogger.Instance.CreateLogger( typeof( ContactTests ) );
 
         // read the TTM Driver settings
-        // this.TtmSettings.ReadSettings( this.GetType().Assembly, ".Driver", true, true );
+        // this.TtmSettings.ReadSettings( this.GetType(), ".Driver", true, true );
         // Assert.IsTrue( this.TtmSettings.TtmMeterSettings.Exists, $"{nameof( this.TtmSettings.TtmMeterSettings )} should exist" );
         // Asserts.LegacyDriver = this.TtmSettings.TtmMeterSettings.LegacyDriver;
 
         // read the settings and throw if not found
-        this.TestSiteSettings = AllSettings.Instance.TestSiteSettings;
+        this.LocationSettings = AllSettings.Instance.LocationSettings;
         Assert.IsNotNull( AllSettings.Instance.Scribe, $"{nameof( AllSettings )}.{nameof( AllSettings.Instance )}.{nameof( AllSettings.Instance.Scribe )} must not be null." );
         AllSettings.Instance.Scribe.InitializeSettingsFiles();
         AllSettings.Instance.Scribe.ReadSettings();
@@ -98,11 +98,11 @@ public class ContactTests
         Assert.IsNotNull( this.VisaSessionBase );
         Assert.IsNotNull( this.VisaSessionBase.Session );
         Assert.AreEqual( VI.Syntax.Tsp.Lua.ClearExecutionStateCommand, this.VisaSessionBase.Session.ClearExecutionStateCommand );
-        this.VisaSessionBase.Session.ReadSettings( this.GetType().Assembly, ".Session", true, true );
-        this.ResourceSettings = this.VisaSessionBase.Session.ResourceSettings;
+        this.VisaSessionBase.Session.ReadSettings( this.GetType(), ".Session", true, true );
+        this.ResourceSettings = this.VisaSessionBase.Session.AllSettings.ResourceSettings;
 
-        Assert.IsTrue( this.VisaSessionBase.Session.TimingSettings.Exists,
-            $"{nameof( K2600Device )}.{nameof( K2600Device.Session )}.{nameof( K2600Device.Session.TimingSettings )} does not exist." );
+        Assert.IsTrue( this.VisaSessionBase.Session.AllSettings.TimingSettings.Exists,
+            $"{nameof( K2600Device )}.{nameof( K2600Device.Session )}.{nameof( K2600Device.Session.AllSettings.TimingSettings )} does not exist." );
     }
 
     /// <summary> Cleans up the test class instance after each test has run. </summary>
@@ -121,9 +121,9 @@ public class ContactTests
     /// <value> The ttm settings. </value>
     internal Properties.Settings TtmSettings { get; set; } = Properties.Settings.Instance;
 
-    /// <summary>   Gets or sets the test site settings. </summary>
-    /// <value> The test site settings. </value>
-    internal TestSiteSettings TestSiteSettings { get; set; } = new();
+    /// <summary>   Gets or sets the location settings. </summary>
+    /// <value> The location settings. </value>
+    internal cc.isr.Json.AppSettings.Settings.LocationSettings LocationSettings { get; set; } = new();
 
     /// <summary>   Gets or sets the resource settings. </summary>
     /// <value> The resource settings. </value>

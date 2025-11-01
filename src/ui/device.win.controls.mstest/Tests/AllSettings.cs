@@ -1,11 +1,10 @@
-using cc.isr.Std.Tests;
 using cc.isr.VI.Pith.Settings;
 
 namespace cc.isr.VI.DeviceWinControls.Tests;
 
-/// <summary>   A settings. </summary>
-/// <remarks>   David, 2021-02-01. </remarks>
-public class AllSettings
+/// <summary>   A settings container class for all settings. </summary>
+/// <remarks>   2024-10-16. </remarks>
+public class AllSettings : cc.isr.Json.AppSettings.Settings.SettingsContainerBase
 {
     #region " construction "
 
@@ -19,18 +18,35 @@ public class AllSettings
 
     #region " singleton "
 
+    /// <summary>   Creates the scribe. </summary>
+    /// <remarks>   2025-10-30. </remarks>
+    public override void CreateScribe()
+    {
+        this.LocationSettings = new();
+        this.ResourceSettings = new();
+        this.DisplayViewSettings = new();
+
+        this.Scribe = new( [this.LocationSettings, this.ResourceSettings, this.DisplayViewSettings] )
+        {
+            SerializerOptions = cc.isr.Json.AppSettings.Models.AppSettingsScribe.CsvRgbColorSerializerOptions
+        };
+    }
+
     /// <summary>
     /// Creates an instance of the <see cref="AllSettings"/> after restoring the application context
-    /// settings to both the user and all user files.
+    /// settings to both the user and all user files if these do not exist.
     /// </summary>
     /// <remarks>   2023-05-15. </remarks>
     /// <returns>   The new instance. </returns>
     private static AllSettings CreateInstance()
     {
-        AssemblyFileInfo settingsFileInfo = AllSettings.CreateSettingsFileInfo();
+        // Get the type of the class that declares this method.
+        Type declaringType = System.Reflection.MethodBase.GetCurrentMethod()!.DeclaringType!;
 
         AllSettings ti = new();
-        ti.Scribe = ti.CreateScribe( settingsFileInfo );
+
+        ti.ReadSettings( declaringType, ".Settings", System.Diagnostics.Debugger.IsAttached, System.Diagnostics.Debugger.IsAttached );
+
         return ti;
     }
 
@@ -42,103 +58,11 @@ public class AllSettings
 
     #endregion
 
-    #region " assembly settings file information "
-
-    /// <summary>
-    /// Creates an instance of the settings <see cref="AssemblyFileInfo"/>. This restores the
-    /// application context settings to both the user and all user files.
-    /// </summary>
-    /// <remarks>   2024-07-18. </remarks>
-    /// <returns>   The new settings file information. </returns>
-    private static AssemblyFileInfo CreateSettingsFileInfo()
-    {
-        // Get the method declaring type for the assembly file information and the settings section name.
-        Type declaringType = System.Reflection.MethodBase.GetCurrentMethod()!.DeclaringType!;
-
-        // get assembly files using the .Settings suffix.
-
-        AssemblyFileInfo ai = new( declaringType.Assembly, null, ".Settings", ".json" );
-
-        // must copy application context settings here to clear any bad settings files.
-
-        // must copy application context settings here to clear any bad settings files.
-
-        AppSettingsScribe.InitializeSettingsFiles( ai, true, true );
-
-        return ai;
-    }
-
-    #endregion
-
-    #region " settings scribe "
-
-    /// <summary>
-    /// Creates an instance of the <see cref="AllSettings"/> after restoring the application context
-    /// settings to both the user and all user files.
-    /// </summary>
-    /// <remarks>   2023-05-15. </remarks>
-    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
-    ///                                                 invalid. </exception>
-    /// <param name="settingsFileInfo"> Information describing the settings file. </param>
-    /// <returns>   The new instance. </returns>
-    private AppSettingsScribe CreateScribe( AssemblyFileInfo settingsFileInfo )
-    {
-        AppSettingsScribe scribe = new( [this.TestSiteSettings, this.ResourceSettings, this.DisplayViewSettings], settingsFileInfo )
-        {
-            SerializerOptions = AppSettingsScribe.CsvRgbColorSerializerOptions
-        };
-
-        scribe.ReadSettings();
-
-        if ( !this.SettingsExist( out string settingsClassName ) )
-            throw new InvalidOperationException( $"{settingsClassName} not found or failed to read from {scribe.UserSettingsPath}." );
-
-        return scribe;
-    }
-
-    /// <summary>   Gets or sets the <see cref="AppSettingsScribe">settings reader and writer</see>. </summary>
-    /// <value> The scribe. </value>
-    [JsonIgnore]
-    public AppSettingsScribe? Scribe { get; private set; }
-
-    /// <summary>   Gets the full path name of the settings file. </summary>
-    /// <value> The full path name of the settings file. </value>
-    [JsonIgnore]
-    public string? FilePath => this.Scribe?.UserSettingsPath;
-
-    /// <summary>   Check if the settings file exists. </summary>
-    /// <remarks>   2024-07-06. </remarks>
-    /// <returns>   True if it the settings file exists; otherwise false. </returns>
-    public bool SettingsFileExists()
-    {
-        return this.FilePath is not null && System.IO.File.Exists( this.FilePath );
-    }
-
-    /// <summary>   Checks if all settings exist. </summary>
-    /// <remarks>   2025-01-18. </remarks>
-    /// <param name="settingsClassName"> The name of the settings class that failed to read. </param>
-    /// <returns>   True if all settings exit; otherwise false. </returns>
-    public bool SettingsExist( out string settingsClassName )
-    {
-        if ( this.TestSiteSettings is null || !this.TestSiteSettings.Exists )
-            settingsClassName = $"{nameof( AllSettings.TestSiteSettings )}";
-        else if ( this.ResourceSettings is null || !this.ResourceSettings.Exists )
-            settingsClassName = $"{nameof( AllSettings.ResourceSettings )}";
-        else if ( this.DisplayViewSettings is null || !this.DisplayViewSettings.Exists )
-            settingsClassName = $"{nameof( AllSettings.DisplayViewSettings )}";
-        else
-            settingsClassName = string.Empty;
-
-        return settingsClassName.Length == 0;
-    }
-
-    #endregion
-
     #region " settings "
 
-    /// <summary>   Gets or sets the test site settings. </summary>
-    /// <value> The test site settings. </value>
-    internal TestSiteSettings TestSiteSettings { get; private set; } = new();
+    /// <summary>   Gets or sets the location settings. </summary>
+    /// <value> The location settings. </value>
+    internal Json.AppSettings.Settings.LocationSettings LocationSettings { get; private set; } = new();
 
     /// <summary>   Gets or sets the resource settings. </summary>
     /// <value> The resource settings. </value>

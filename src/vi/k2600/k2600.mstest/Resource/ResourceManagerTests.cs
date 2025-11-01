@@ -38,19 +38,21 @@ public class ResourceManagerTests : Device.Tests.Base.ResourceManagerTests
     [TestInitialize()]
     public override void InitializeBeforeEachTest()
     {
+        base.DefineTraceListener();
+
         Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
         cc.isr.VI.Device.Tests.Asserts.AssertVisaImplementationShouldBeLoaded();
         Console.WriteLine( $"\tTesting {typeof( cc.isr.VI.Pith.ResourceNamesManager ).Assembly.FullName}" );
 
         SessionLogger.Instance.CreateLogger( typeof( ResourceManagerTests ) );
 
-        this.TestSiteSettings = Settings.AllSettings.Instance.TestSiteSettings;
+        this.LocationSettings = Settings.AllSettings.Instance.LocationSettings;
         this.ResourceSettings = Settings.AllSettings.Instance.ResourceSettings;
         this.Device = K2600Device.Create();
         Assert.IsNotNull( this.Device );
         Assert.IsNotNull( this.Device.Session );
-        this.Device.Session.ReadSettings( this.GetType().Assembly, ".Session", true, true );
-        Assert.IsTrue( this.Device.Session.TimingSettings.Exists, $"{nameof( K2600Device )}.{nameof( K2600Device.Session )}.{nameof( K2600Device.Session.TimingSettings )} does not exist." );
+        this.Device.Session.ReadSettings( this.GetType(), ".Session", true, true );
+        Assert.IsTrue( this.Device.Session.AllSettings.TimingSettings.Exists, $"{nameof( K2600Device )}.{nameof( K2600Device.Session )}.{nameof( K2600Device.Session.AllSettings.TimingSettings )} does not exist." );
         this.VisaSessionBase = this.Device;
         base.InitializeBeforeEachTest();
     }

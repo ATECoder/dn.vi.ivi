@@ -8,13 +8,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "`build", "`build", "{286AA6
 		ni\directory.build.props = ni\directory.build.props
 		exclusion.dic = exclusion.dic
 		global.json = global.json
-		ni\IviVisaApps.ni.changelog.md = ni\IviVisaApps.ni.changelog.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "`docs", "`docs", "{7DB60340-1A19-41FE-A38B-2C51C86D6B34}"
 	ProjectSection(SolutionItems) = preProject
 		ni\IviVisaApps.ni.changelog.md = ni\IviVisaApps.ni.changelog.md
-		rohde\IviVisaApps.rohde.changelog.md = rohde\IviVisaApps.rohde.changelog.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ni", "ni", "{15ECA413-0E4B-4B8B-AC96-7794BB1CE7B0}"

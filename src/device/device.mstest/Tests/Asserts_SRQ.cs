@@ -18,7 +18,7 @@ public sealed partial class Asserts
     {
         Assert.IsNotNull( device );
         Assert.IsNotNull( device.Session );
-        Assert.IsTrue( device.Session.TimingSettings.Exists );
+        Assert.IsTrue( device.Session.AllSettings.TimingSettings.Exists );
         Assert.IsNotNull( resourceSettings, $"{nameof( Pith.Settings.ResourceSettings )} should not be null." );
         Assert.IsTrue( resourceSettings.Exists, $"{nameof( Pith.Settings.ResourceSettings )} should exist in the settings file." );
         Assert.IsTrue( device.IsDeviceOpen, "session should be open" );
@@ -34,7 +34,7 @@ public sealed partial class Asserts
         device.Session.ThrowDeviceExceptionIfError( device.Session.ReadStatusByte() );
 
         Assert.IsFalse( device.Session.ServiceRequestEventEnabled, $"{nameof( cc.isr.VI.Pith.SessionBase.ServiceRequestEventEnabled ).SplitWords()} should be disabled" );
-        device.Session.ApplyStatusByteEnableBitmask( device.Session.RegistersBitmasksSettings.ServiceRequestEnableEventsBitmask );
+        device.Session.ApplyStatusByteEnableBitmask( device.Session.AllSettings.RegistersBitmasksSettings.ServiceRequestEnableEventsBitmask );
         Assert.IsFalse( device.Session.ServiceRequestEventEnabled, "service request event should not be enabled" );
         try
         {
@@ -190,7 +190,7 @@ public sealed partial class Asserts
         Assert.IsNotNull( session, $"{nameof( session )} should not be null." );
         Assert.IsNotNull( resourceSettings, $"{nameof( Pith.Settings.ResourceSettings )} should not be null." );
         Assert.IsTrue( resourceSettings.Exists, $"{nameof( Pith.Settings.ResourceSettings )} should exist in the settings file." );
-        Assert.IsTrue( session.TimingSettings.Exists );
+        Assert.IsTrue( session.AllSettings.TimingSettings.Exists );
         Assert.IsFalse( session.ServiceRequestEventEnabled, "service request event should not be enabled" );
         Assert.IsNotNull( session.ServiceRequestEnableBitmask );
         string expectedServiceRequestEnableCommand = string.Format( System.Globalization.CultureInfo.CurrentCulture,
@@ -240,15 +240,15 @@ public sealed partial class Asserts
         Assert.IsNotNull( device.Session );
         Assert.IsNotNull( resourceSettings, $"{nameof( Pith.Settings.ResourceSettings )} should not be null." );
         Assert.IsTrue( resourceSettings.Exists, $"{nameof( Pith.Settings.ResourceSettings )} should exist in the settings file." );
-        Assert.IsTrue( device.Session.TimingSettings.Exists );
+        Assert.IsTrue( device.Session.AllSettings.TimingSettings.Exists );
         Assert.IsTrue( device.IsDeviceOpen, "session should be open" );
 
         if ( device.Session is null ) throw new ArgumentException( $"{nameof( device )}.{nameof( device.Session )} is null." );
         if ( device.StatusSubsystemBase is null ) throw new ArgumentException( $"{nameof( device )}.{nameof( device.StatusSubsystemBase )} is null." );
 
         _ = device.Session.WriteLine( device.Session.ClearExecutionStateCommand );
-        device.Session.ApplyStatusByteEnableBitmask( device.Session.RegistersBitmasksSettings.ServiceRequestEnableEventsBitmask );
-        device.Session.ApplyStandardEventEnableBitmask( device.Session.RegistersBitmasksSettings.StandardEventEnableEventsBitmask );
+        device.Session.ApplyStatusByteEnableBitmask( device.Session.AllSettings.RegistersBitmasksSettings.ServiceRequestEnableEventsBitmask );
+        device.Session.ApplyStandardEventEnableBitmask( device.Session.AllSettings.RegistersBitmasksSettings.StandardEventEnableEventsBitmask );
         _ = device.Session.ReadStatusByte();
         // read operation completion
         string queryCommand = "*OPC\n";
@@ -272,15 +272,15 @@ public sealed partial class Asserts
         Assert.IsNotNull( device.Session );
         Assert.IsNotNull( resourceSettings, $"{nameof( Pith.Settings.ResourceSettings )} should not be null." );
         Assert.IsTrue( resourceSettings.Exists, $"{nameof( Pith.Settings.ResourceSettings )} should exist in the settings file." );
-        Assert.IsTrue( device.Session.TimingSettings.Exists );
+        Assert.IsTrue( device.Session.AllSettings.TimingSettings.Exists );
         Assert.IsTrue( device.IsDeviceOpen, "session should be open" );
 
         if ( device.Session is null ) throw new ArgumentException( $"{nameof( device )}.{nameof( device.Session )} is null." );
         if ( device.StatusSubsystemBase is null ) throw new ArgumentException( $"{nameof( device )}.{nameof( device.StatusSubsystemBase )} is null." );
 
         _ = device.Session.WriteLine( device.Session.ClearExecutionStateCommand );
-        device.Session.ApplyStatusByteEnableBitmask( device.Session.RegistersBitmasksSettings.ServiceRequestEnableEventsBitmask );
-        device.Session.ApplyStandardEventEnableBitmask( device.Session.RegistersBitmasksSettings.StandardEventEnableEventsBitmask );
+        device.Session.ApplyStatusByteEnableBitmask( device.Session.AllSettings.RegistersBitmasksSettings.ServiceRequestEnableEventsBitmask );
+        device.Session.ApplyStandardEventEnableBitmask( device.Session.AllSettings.RegistersBitmasksSettings.StandardEventEnableEventsBitmask );
         _ = device.Session.ReadStatusByte();
         AssertServiceRequestShouldBeHandled( device.Session, resourceSettings );
     }
@@ -298,13 +298,13 @@ public sealed partial class Asserts
         Assert.IsNotNull( device.Session );
         Assert.IsNotNull( resourceSettings, $"{nameof( Pith.Settings.ResourceSettings )} should not be null." );
         Assert.IsTrue( resourceSettings.Exists, $"{nameof( Pith.Settings.ResourceSettings )} should exist in the settings file." );
-        Assert.IsTrue( device.Session.TimingSettings.Exists );
+        Assert.IsTrue( device.Session.AllSettings.TimingSettings.Exists );
         Assert.IsTrue( device.IsDeviceOpen, "session should be open" );
 
         if ( device.Session is null ) throw new ArgumentException( $"{nameof( device )}.{nameof( device.Session )} is null." );
         if ( device.StatusSubsystemBase is null ) throw new ArgumentException( $"{nameof( device )}.{nameof( device.StatusSubsystemBase )} is null." );
 
-        device.Session.ApplyStatusByteEnableBitmask( device.Session.RegistersBitmasksSettings.ServiceRequestEnableEventsBitmask );
+        device.Session.ApplyStatusByteEnableBitmask( device.Session.AllSettings.RegistersBitmasksSettings.ServiceRequestEnableEventsBitmask );
         Assert.IsFalse( device.Session.ServiceRequestEventEnabled, $"{nameof( cc.isr.VI.Pith.SessionBase.ServiceRequestEventEnabled ).SplitWords()} should not be enabled" );
         int expectedPollMessageAvailableBitmask = ( int ) cc.isr.VI.Pith.ServiceRequests.MessageAvailable;
         Assert.AreEqual( expectedPollMessageAvailableBitmask, device.PollMessageAvailableBitmask, "Message available " );

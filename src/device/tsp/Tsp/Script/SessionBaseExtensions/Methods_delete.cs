@@ -45,7 +45,7 @@ public static partial class SessionBaseExtensionMethods
     ///                                             null. </exception>
     /// <param name="session">      The session. </param>
     /// <param name="scriptName">   Specifies the script name. </param>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     public static void RemoveUserScript( this Pith.SessionBase session, string? scriptName )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
@@ -109,7 +109,7 @@ public static partial class SessionBaseExtensionMethods
     /// <param name="validate">     True to validate if the script was deleted. </param>
     /// <param name="details">      [out] The details indicating if the script is either embedded, or
     ///                             a user script or is not nil. </param>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     public static bool TryDeleteScript( this SessionBase session, string scriptName, bool validate, out string details )
     {
         if ( session == null ) throw new ArgumentNullException( nameof( session ) );

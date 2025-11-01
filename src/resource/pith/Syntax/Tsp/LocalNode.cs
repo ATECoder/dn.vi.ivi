@@ -7,6 +7,9 @@ namespace cc.isr.VI.Syntax.Tsp;
 public static class LocalNode
 {
     /// <summary> The line frequency property string. </summary>
+    public const string Local_Node = "_G.localnode";
+
+    /// <summary> The line frequency property string. </summary>
     public const string LineFrequency = "localnode.linefreq";
 
     /// <summary> The line frequency query (print) command. </summary>

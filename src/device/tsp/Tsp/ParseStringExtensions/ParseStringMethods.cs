@@ -9,7 +9,7 @@ public static class ParseStringMethods
     /// <remarks>   2024-11-11. </remarks>
     /// <param name="value">    The value. </param>
     /// <param name="result">   [out] True to result. </param>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     public static bool TryParseNullableBool( this string value, out bool? result )
     {
         if ( string.IsNullOrWhiteSpace( value ) || string.Equals( cc.isr.VI.Syntax.Tsp.Lua.NilValue, value, StringComparison.Ordinal ) )
@@ -69,7 +69,7 @@ public static class ParseStringMethods
     /// <remarks>   2024-11-11. </remarks>
     /// <param name="value">    The value. </param>
     /// <param name="result">   [out] True to result. </param>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     public static bool TryParseNullableDouble( this string value, out double? result )
     {
         if ( string.IsNullOrWhiteSpace( value ) || string.Equals( cc.isr.VI.Syntax.Tsp.Lua.NilValue, value, StringComparison.Ordinal ) )

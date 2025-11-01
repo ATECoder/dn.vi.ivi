@@ -23,8 +23,9 @@ internal static partial class Asserts
 
         if ( validateModel )
         {
-            string model = session.ResourceSettings.ResourceModel;
-            command = "_G.print(localnode.model)";
+            string model = session.AllSettings.ResourceSettings.ResourceModel;
+            // "_G.print(local node.model)";
+            command = cc.isr.VI.Syntax.Tsp.LocalNode.ModelQueryCommand;
             Asserts.AssertQueryReplyShouldBeValid( session, command, model, logEnabled );
         }
 
@@ -41,7 +42,8 @@ internal static partial class Asserts
         Asserts.AssertQueryReplyShouldBeValid( session, command, expectedValue, logEnabled );
 
         expectedInt = 60;
-        command = "_G.print(localnode.linefreq)";
+        // "_G.print(local node.line f r e q)";
+        command = cc.isr.VI.Syntax.Tsp.LocalNode.LineFrequencyQueryCommand;
         Asserts.AssertQueryReplyShouldBeValid( session, command, expectedInt, logEnabled );
 
         // *CLS
@@ -59,7 +61,8 @@ internal static partial class Asserts
         Asserts.AssertQueryReplyShouldBeValid( session, command, expectedValue, logEnabled );
 
         expectedValue = "1";
-        command = $"_G.errorqueue.clear() {cc.isr.VI.Syntax.Tsp.Lua.OperationCompletedQueryCommand} ";
+        // $"_G.error queue.clear() {cc.isr.VI.Syntax.Tsp.Lua.OperationCompletedQueryCommand} ";
+        command = cc.isr.VI.Syntax.Tsp.ErrorQueue.ClearErrorQueueOperationCompleteCommand;
         Asserts.AssertQueryReplyShouldBeValid( session, command, expectedValue, logEnabled );
 
         // !@#: @to_be_fixed
@@ -206,10 +209,11 @@ internal static partial class Asserts
             command = $"_G.ttm.legacyDriverSetter({expectedInt})";
             Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedInt, logEnabled );
 
-            string model = session.ResourceSettings.ResourceModel;
+            string model = session.AllSettings.ResourceSettings.ResourceModel;
             if ( validateModel )
             {
-                query = "_G.print(localnode.model)";
+                // "_G.print(local node.model)";
+                query = cc.isr.VI.Syntax.Tsp.LocalNode.ModelQueryCommand;
                 Asserts.AssertQueryReplyShouldBeValid( session, query, model, logEnabled );
             }
 
@@ -377,7 +381,7 @@ internal static partial class Asserts
         cc.isr.VI.Tsp.K2600.Ttm.TtmMeterSettings meterSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmMeterSettings;
         Assert.IsTrue( meterSettings.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmMeterSettings )} should exist." );
 
-        string model = session.ResourceSettings.ResourceModel;
+        string model = session.AllSettings.ResourceSettings.ResourceModel;
         query = "_G.print(localnode.model)";
         if ( validateModel )
             Asserts.AssertQueryReplyShouldBeValid( session, query, model, logEnabled );
@@ -706,7 +710,7 @@ internal static partial class Asserts
 
         if ( validateModel )
         {
-            string model = session.ResourceSettings.ResourceModel;
+            string model = session.AllSettings.ResourceSettings.ResourceModel;
             command = "_G.print(localnode.model)";
             Asserts.AssertQueryReplyShouldBeValid( session, command, model, logEnabled );
         }
@@ -818,7 +822,7 @@ internal static partial class Asserts
         Assert.IsTrue( traceSettings.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmTraceSettings )} should exist." );
         Assert.IsTrue( meterSettings.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmMeterSettings )} should exist." );
 
-        string model = session.ResourceSettings.ResourceModel;
+        string model = session.AllSettings.ResourceSettings.ResourceModel;
         query = "_G.print(localnode.model)";
         if ( validateModel )
             Asserts.AssertQueryReplyShouldBeValid( session, query, model, logEnabled );

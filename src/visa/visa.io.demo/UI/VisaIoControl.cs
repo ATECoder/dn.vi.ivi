@@ -28,7 +28,7 @@ public partial class VisaIoControl : UserControl
         _ = this.TreePanel.AddNode( "SimpleReadWrite", "Simple I/O", new SimpleWriteRead() );
         _ = this.TreePanel.AddNode( "ServiceRequest", "Service Request", new ServiceRequest() );
         _ = this.TreePanel.AddNode( "Settings", "Settings Editor",
-            new isr.Json.AppSettings.WinForms.JsonSettingsEditorControl( Properties.Settings.Scribe ) );
+            new isr.Json.AppSettings.WinForms.JsonSettingsEditorControl( Properties.Settings.Instance.Scribe ) );
 
         this._messagesBox = new();
         TreeNode messagesNode = this.TreePanel.AddNode( "Message Box", "Log", this._messagesBox );

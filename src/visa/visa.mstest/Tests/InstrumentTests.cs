@@ -4,7 +4,6 @@ namespace cc.isr.Visa.Tests;
 
 /// <summary>   (Unit Test Class) instrument tests base class. </summary>
 /// <remarks>   David, 2021-11-13. </remarks>
-[TestClass]
 public abstract partial class InstrumentTests
 {
     #region " construction and cleanup "
@@ -54,7 +53,6 @@ public abstract partial class InstrumentTests
     }
 
     /// <summary> Cleans up the test class instance after each test has run. </summary>
-    [TestCleanup()]
     public virtual void CleanupAfterEachTest()
     {
         Trace.Listeners.Clear();

@@ -37,6 +37,8 @@ public class VisaTreeViewTests : cc.isr.VI.DeviceWinControls.Tests.Base.IVisaVie
     [TestInitialize()]
     public override void InitializeBeforeEachTest()
     {
+        base.DefineTraceListener();
+
         Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
         cc.isr.VI.Device.Tests.Asserts.AssertVisaImplementationShouldBeLoaded();
         Console.WriteLine( $"\tTesting {typeof( cc.isr.VI.DeviceWinControls.VisaTreeView ).Assembly.FullName}" );
@@ -46,7 +48,7 @@ public class VisaTreeViewTests : cc.isr.VI.DeviceWinControls.Tests.Base.IVisaVie
         // _ = SessionLogger.Instance.LogCallerMessage( LogLevel.Information, $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
         // Console.WriteLine( $"\tLogging to {cc.isr.Logging.Orlog.HeaderWriter.FullFileName}" );
 
-        this.TestSiteSettings = AllSettings.Instance.TestSiteSettings;
+        this.LocationSettings = AllSettings.Instance.LocationSettings;
         this.ResourceSettings = AllSettings.Instance.ResourceSettings;
 
         VisaSession visaSession = new()
@@ -55,9 +57,9 @@ public class VisaTreeViewTests : cc.isr.VI.DeviceWinControls.Tests.Base.IVisaVie
         };
         Assert.IsNotNull( visaSession.Session );
         Assert.AreEqual( VI.Syntax.Ieee488Syntax.ClearExecutionStateCommand, visaSession.Session.ClearExecutionStateCommand );
-        visaSession.Session.ReadSettings( this.GetType().Assembly, ".Session", true, true );
-        Assert.IsTrue( visaSession.Session.TimingSettings.Exists,
-            $"{nameof( VisaSession )}.{nameof( VisaSession.Session )}.{nameof( VisaSession.Session.TimingSettings )} does not exist." );
+        visaSession.Session.ReadSettings( this.GetType(), ".Session", true, true );
+        Assert.IsTrue( visaSession.Session.AllSettings.TimingSettings.Exists,
+            $"{nameof( VisaSession )}.{nameof( VisaSession.Session )}.{nameof( VisaSession.Session.AllSettings.TimingSettings )} does not exist." );
 
         this.VisaSessionBase = visaSession;
 

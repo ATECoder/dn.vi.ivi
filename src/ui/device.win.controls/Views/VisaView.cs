@@ -161,10 +161,10 @@ public partial class VisaView : cc.isr.WinControls.ModelViewBase, IVisaView
         {
             if ( this.VisaSessionBase.Session is null )
                 throw new InvalidOperationException( $"The {nameof( VisaTreeView.VisaSessionBase )}.{nameof( VisaTreeView.VisaSessionBase.Session )} must be set." );
-            if ( !this.VisaSessionBase.Session.TimingSettings.Exists )
-                throw new InvalidOperationException( $"The {nameof( VisaTreeView.VisaSessionBase )}.{nameof( VisaTreeView.VisaSessionBase.Session )}.{nameof( VisaTreeView.VisaSessionBase.Session.TimingSettings )} must exists; Timing Settings were not read." );
-            if ( !this.VisaSessionBase.Session.RegistersBitmasksSettings.Exists )
-                throw new InvalidOperationException( $"The {nameof( VisaTreeView.VisaSessionBase )}.{nameof( VisaTreeView.VisaSessionBase.Session )}.{nameof( VisaTreeView.VisaSessionBase.Session.RegistersBitmasksSettings )} must exists; Registers Bitmasks Settings were not read." );
+            if ( !this.VisaSessionBase.Session.AllSettings.TimingSettings.Exists )
+                throw new InvalidOperationException( $"The {nameof( VisaTreeView.VisaSessionBase )}.{nameof( VisaTreeView.VisaSessionBase.Session )}.{nameof( VisaTreeView.VisaSessionBase.Session.AllSettings.TimingSettings )} must exists; Timing Settings were not read." );
+            if ( !this.VisaSessionBase.Session.AllSettings.RegistersBitmasksSettings.Exists )
+                throw new InvalidOperationException( $"The {nameof( VisaTreeView.VisaSessionBase )}.{nameof( VisaTreeView.VisaSessionBase.Session )}.{nameof( VisaTreeView.VisaSessionBase.Session.AllSettings.RegistersBitmasksSettings )} must exists; Registers Bitmasks Settings were not read." );
 
             this.VisaSessionBase.Opening += this.HandleDeviceOpening;
             this.VisaSessionBase.Opened += this.HandleDeviceOpened;

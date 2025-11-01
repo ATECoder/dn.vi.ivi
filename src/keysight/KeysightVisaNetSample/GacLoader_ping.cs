@@ -6,7 +6,7 @@ public static partial class GacLoader
     /// <summary>   Attempts to ping. </summary>
     /// <remarks>   2025-08-12. </remarks>
     /// <param name="resourceName"> Name of the resource. </param>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     public static bool TryPing( string resourceName, out string details )
     {
         bool outcome = false;

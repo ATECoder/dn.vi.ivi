@@ -1,5 +1,4 @@
 using System.ComponentModel;
-using cc.isr.Std;
 using cc.isr.Std.TaskExtensions;
 using cc.isr.VI.ExceptionExtensions;
 using cc.isr.VI.Pith;
@@ -335,11 +334,11 @@ public partial class VisaSessionBase : cc.isr.Std.Notifiers.OpenResourceBase
             }
             else if ( this.Session.Enabled )
             {
-                throw new OperationFailedException( $"Unable to open session to {resourceName};. " );
+                throw new InvalidOperationException( $"Unable to open session to {resourceName};. " );
             }
             else if ( !this.IsDeviceOpen )
             {
-                throw new OperationFailedException( $"Unable to emulate {resourceName};. " );
+                throw new InvalidOperationException( $"Unable to emulate {resourceName};. " );
             }
 
             if ( this.Session.IsSessionOpen || (this.IsDeviceOpen && !this.Session.Enabled) )
@@ -367,12 +366,12 @@ public partial class VisaSessionBase : cc.isr.Std.Notifiers.OpenResourceBase
                 }
                 else
                 {
-                    throw new OperationFailedException( $"{activity} failed;. " );
+                    throw new InvalidOperationException( $"{activity} failed;. " );
                 }
             }
             else
             {
-                throw new OperationFailedException( $"{activity} failed;. " );
+                throw new InvalidOperationException( $"{activity} failed;. " );
             }
 
             success = true;
@@ -432,12 +431,12 @@ public partial class VisaSessionBase : cc.isr.Std.Notifiers.OpenResourceBase
         catch ( NativeException ex )
         {
             _ = ex.AddExceptionData();
-            throw new OperationFailedException( $"Failed {activity} while closing the VISA session.", ex );
+            throw new InvalidOperationException( $"Failed {activity} while closing the VISA session.", ex );
         }
         catch ( Exception ex )
         {
             _ = ex.AddExceptionData();
-            throw new OperationFailedException( $"Exception occurred {activity} while closing the session.", ex );
+            throw new InvalidOperationException( $"Exception occurred {activity} while closing the session.", ex );
         }
     }
 
@@ -617,7 +616,7 @@ public partial class VisaSessionBase : cc.isr.Std.Notifiers.OpenResourceBase
             if ( !this.IsDeviceOpen )
                 details = $"failed {activity}";
         }
-        catch ( OperationFailedException ex )
+        catch ( Exception ex )
         {
             success = false;
             details = $"Exception {activity};. {ex.BuildMessage()}";

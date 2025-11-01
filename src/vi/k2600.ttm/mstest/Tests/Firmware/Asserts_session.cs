@@ -16,7 +16,7 @@ internal static partial class Asserts
         Assert.IsNotNull( session, $"{nameof( SessionFactory )} should provide a session." );
 
         // read settings and throw if not found.
-        session.ReadSettings( typeof( Asserts ).Assembly, ".Session", true, true );
+        session.ReadSettings( typeof( Asserts ), ".Session", true, true );
 
         session.OpenSession( resourceName );
 

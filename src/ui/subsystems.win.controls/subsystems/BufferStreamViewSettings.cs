@@ -1,15 +1,12 @@
 using System;
-using System.ComponentModel;
-using cc.isr.Json.AppSettings.Models;
-using System.Text.Json.Serialization;
-using cc.isr.Json.AppSettings.ViewModels;
 using System.Windows.Forms;
+using cc.isr.Json.AppSettings.ViewModels;
 
 namespace cc.isr.VI.SubsystemsWinControls;
 
-/// <summary>   A settings. </summary>
+/// <summary>   A buffer stream view settings. </summary>
 /// <remarks>   David, 2021-02-01. </remarks>
-public class BufferStreamViewSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
+public class BufferStreamViewSettings : cc.isr.Json.AppSettings.Settings.SettingsBase
 {
     #region " construction "
 
@@ -21,15 +18,30 @@ public class BufferStreamViewSettings : CommunityToolkit.Mvvm.ComponentModel.Obs
 
     #region " singleton "
 
+    /// <summary>   Creates the scribe. </summary>
+    /// <remarks>   2025-10-30. </remarks>
+    public override void CreateScribe()
+    {
+        this.Scribe = new( [this.SectionName], [this] );
+    }
+
     /// <summary>
-    /// Creates an instance of the <see cref="BufferStreamViewSettings"/> after restoring the application context
-    /// settings to both the user and all user files.
+    /// Creates an instance of the <see cref="BufferStreamViewSettings"/> pointing to the current assembly without reading the resources.
     /// </summary>
     /// <remarks>   2023-05-15. </remarks>
     /// <returns>   The new instance. </returns>
     private static BufferStreamViewSettings CreateInstance()
     {
-        BufferStreamViewSettings ti = new();
+        // Get the type of the class that declares this method.
+        Type declaringType = System.Reflection.MethodBase.GetCurrentMethod()!.DeclaringType!;
+
+        BufferStreamViewSettings ti = new()
+        {
+            SectionName = declaringType.Name
+        };
+
+        ti.ReadSettings( declaringType, ".Settings", System.Diagnostics.Debugger.IsAttached, System.Diagnostics.Debugger.IsAttached );
+
         return ti;
     }
 
@@ -37,69 +49,7 @@ public class BufferStreamViewSettings : CommunityToolkit.Mvvm.ComponentModel.Obs
     /// <value> The instance. </value>
     public static BufferStreamViewSettings Instance => _instance.Value;
 
-    private static readonly Lazy<BufferStreamViewSettings> _instance = new( CreateInstance, true );
-
-    #endregion
-
-    #region " scribe "
-
-    /// <summary>   Gets or sets the scribe. </summary>
-    /// <value> The scribe. </value>
-    [JsonIgnore]
-    public AppSettingsScribe? Scribe { get; set; }
-
-    /// <summary>   Initializes and reads the settings. </summary>
-    /// <remarks>   2024-08-05. </remarks>
-    /// <param name="callingEntity">        The calling entity. </param>
-    /// <param name="settingsFileSuffix">   The suffix of the assembly settings file, e.g.,
-    ///                                     '.session' in
-    ///                                     'cc.isr.VI.Tsp.K2600.Device.MSTest.Session.JSon' where
-    ///                                     cc.isr.VI.Tsp.K2600.Device.MSTest is the assembly name. </param>
-    /// <param name="overrideAllUsersFile"> (Optional) [false] True to override all users settings file. </param>
-    /// <param name="overrideThisUserFile"> (Optional) [false] True to override this user settings file. </param>
-    public void Initialize( Type callingEntity, string settingsFileSuffix, bool overrideAllUsersFile = false, bool overrideThisUserFile = false )
-    {
-        AssemblyFileInfo ai = new( callingEntity.Assembly, null, settingsFileSuffix, ".json" );
-
-        // copy application context settings if these do not exist; use restore if the settings are bad.
-
-        AppSettingsScribe.InitializeSettingsFiles( ai, overrideAllUsersFile, overrideThisUserFile );
-
-        this.Scribe = new( [_instance.Value], ai.AppContextAssemblyFilePath!, ai.AllUsersAssemblyFilePath! )
-        {
-            AllUsersSettingsPath = ai.AllUsersAssemblyFilePath,
-            ThisUserSettingsPath = ai.ThisUserAssemblyFilePath
-        };
-
-        this.Scribe.ReadSettings();
-
-        if ( _instance.Value is null || !_instance.Value.Exists )
-            throw new InvalidOperationException( $"{nameof( BufferStreamViewSettings )} was not found." );
-    }
-
-    /// <summary>   Check if the settings file exits. </summary>
-    /// <remarks>   2024-07-06. </remarks>
-    /// <returns>   True if it the settings file exists; otherwise false. </returns>
-    public bool SettingsFileExists()
-    {
-        return this.Scribe is not null && System.IO.File.Exists( this.Scribe.UserSettingsPath );
-    }
-
-    #endregion
-
-    #region " exists "
-
-    /// <summary>
-    /// Gets or sets a value indicating whether this settings section exists and the values were thus
-    /// fetched from the settings file.
-    /// </summary>
-    /// <value> True if this settings section exists in the settings file, false if not. </value>
-    [Description( "True if this settings section exists and was read from the JSon settings file." )]
-    public bool Exists
-    {
-        get;
-        set => _ = this.SetProperty( ref field, value );
-    }
+    private static readonly Lazy<BufferStreamViewSettings> _instance = new( BufferStreamViewSettings.CreateInstance, true );
 
     #endregion
 
@@ -224,7 +174,7 @@ public class BufferStreamViewSettings : CommunityToolkit.Mvvm.ComponentModel.Obs
     /// <summary>   Opens the settings editor. </summary>
     /// <remarks>
     /// David, 2021-12-08. <para>
-    /// The settings <see cref="BufferStreamViewSettings.Initialize(Type, string, bool, bool)"/></para>
+    /// The settings <see cref="cc.isr.Json.AppSettings.Settings.SettingsBase.ReadSettings(Type, string, bool, bool)"/></para>
     /// must be called before attempting to edit the settings.
     /// </remarks>
     /// <returns>   A System.Windows.Forms.DialogResult. </returns>

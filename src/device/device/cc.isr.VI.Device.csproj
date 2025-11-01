@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>preview</LangVersion>
@@ -53,6 +53,10 @@
     <None Include="readme.md" Pack="true" PackagePath="" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
+  </ItemGroup>
+
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);MYPROJREF;</DefineConstants>
   </PropertyGroup>
@@ -60,6 +64,7 @@
   <Choose>
     <When Condition="$(DefineConstants.Contains(';PROJREF;')) OR $(DefineConstants.Contains(';MYPROJREF;'))">
       <ItemGroup>
+        <ProjectReference Include="..\..\..\..\..\core\std\src\framework\framework\cc.isr.Std.Framework.csproj" />
         <ProjectReference Include="..\..\..\..\..\core\units.amounts\src\units.amounts\standard.units\cc.isr.UnitsAmounts.StandardUnits.csproj" /> 
         <ProjectReference Include="..\..\..\..\..\core\std\src\binding.lists\binding.lists\cc.isr.Std.BindingLists.csproj" />
         <ProjectReference Include="..\..\..\..\..\core\std\src\concurrent\concurrent\cc.isr.Std.Concurrent.csproj" />
@@ -80,10 +85,6 @@
       </ItemGroup>
     </Otherwise>
   </Choose>
-
-  <ItemGroup>
-    <Compile Include="..\..\items\ProductKey.cs" Link="Properties\ProductKey.cs" />
-  </ItemGroup>
 
   <ItemGroup>
     <!-- This service generates text from T4 text templates. -->

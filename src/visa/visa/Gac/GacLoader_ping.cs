@@ -8,7 +8,7 @@ public static partial class GacLoader
     /// <remarks>   2025-08-12. </remarks>
     /// <param name="resourceName"> Name of the resource. </param>
     /// <param name="details">      [out] The details. </param>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     public static bool TryPing( string resourceName, out string details )
     {
         bool outcome = false;

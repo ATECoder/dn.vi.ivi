@@ -183,7 +183,7 @@ public abstract class FirmwareScriptBase
     ///                                             null. </exception>
     /// <param name="scriptNames">  List of names of the scripts. </param>
     /// <param name="scriptName">   Specifies the script name. </param>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     public static bool ScriptNameExists( string? scriptNames, string scriptName )
     {
         if ( scriptNames is null ) throw new ArgumentNullException( nameof( scriptNames ) );
@@ -197,7 +197,7 @@ public abstract class FirmwareScriptBase
     ///                                             null. </exception>
     /// <param name="session">      The session. </param>
     /// <param name="nodeNumber">   The node number. </param>
-    /// <returns>   True if the script was embedded, false if it fails. </returns>
+    /// <returns>   True if the script was embedded; otherwise, false. </returns>
     public bool IsEmbedded( Pith.SessionBase session, int nodeNumber )
     {
         return session != null && session.IsEmbeddedScript( this.Name, nodeNumber );

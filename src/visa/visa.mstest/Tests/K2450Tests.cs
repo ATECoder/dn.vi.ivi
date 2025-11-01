@@ -46,7 +46,7 @@ public class K2450Tests : InstrumentTests
         this.EnableOperationCompletionEvent = "*ESE 1\n";
         this.OperationCompletionQueryCommand = "*OPC?\n";
         this.ExpectedServiceRequestMessage = "1\\n";
-        this.ServiceRequestTestRepeatCount = 1; // with keysight -- only a single repeat count
+        this.ServiceRequestTestRepeatCount = 1; // with Keysight -- only a single repeat count
         this.SessionOpenTimeout = TimeSpan.FromMilliseconds( 3000 );
         this.CommunicationTimeout = TimeSpan.FromMilliseconds( 300 );
         this.ReadAfterWriteDelay = TimeSpan.FromMilliseconds( 10 );

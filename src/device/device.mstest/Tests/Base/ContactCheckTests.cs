@@ -1,7 +1,8 @@
-using cc.isr.Std.Tests;
-using cc.isr.Std.Tests.Extensions;
-using cc.isr.VI.Device.Tests.Settings;
+using cc.isr.Std.Logging;
+using cc.isr.Std.Logging.ILoggerExtensions;
+using cc.isr.Std.Listeners;
 using cc.isr.VI.Pith.Settings;
+using cc.isr.VI.Device.Tests.Settings;
 
 namespace cc.isr.VI.Device.Tests.Base;
 
@@ -56,35 +57,41 @@ public abstract class ContactCheckTests
     /// <value> The trace listener. </value>
     public LoggerTraceListener<ContactCheckTests>? TraceListener { get; set; }
 
+    /// <summary> Initializes the trace listener and logger scope. </summary>
+    /// <remarks> call this method from the subclass. </remarks>
+    public void DefineTraceListener()
+    {
+        if ( ContactCheckTests.Logger is not null && this.TraceListener is null )
+        {
+            this._loggerScope = ContactCheckTests.Logger.BeginScope( this.TestContext?.TestName ?? string.Empty );
+            this.TraceListener = new LoggerTraceListener<ContactCheckTests>( ContactCheckTests.Logger );
+            _ = Trace.Listeners.Add( this.TraceListener );
+            Asserts.DefineTraceListener( this.TraceListener! );
+        }
+    }
+
     /// <summary> Initializes the test class instance before each test runs. </summary>
     public virtual void InitializeBeforeEachTest()
     {
+        this.DefineTraceListener();
+
         // assert reading of test settings from the configuration file.
-        Assert.IsNotNull( this.TestSiteSettings, $"{nameof( this.TestSiteSettings )} should not be null." );
-        Assert.IsTrue( this.TestSiteSettings.Exists, $"{nameof( this.TestSiteSettings )} should exist in the JSon file." );
+        Assert.IsNotNull( this.LocationSettings, $"{nameof( this.LocationSettings )} should not be null." );
+        Assert.IsTrue( this.LocationSettings.Exists, $"{nameof( this.LocationSettings )} should exist in the JSon file." );
         double expectedUpperLimit = 12d;
         Assert.IsLessThan( expectedUpperLimit,
-            Math.Abs( this.TestSiteSettings.TimeZoneOffset() ), $"{nameof( this.TestSiteSettings.TimeZoneOffset )} should be lower than {expectedUpperLimit}" );
+            Math.Abs( this.LocationSettings.TimeZoneOffset() ), $"{nameof( this.LocationSettings.TimeZoneOffset )} should be lower than {expectedUpperLimit}" );
         Assert.IsNotNull( this.ResourceSettings, $"{nameof( this.ResourceSettings )} should not be null." );
         Assert.IsTrue( this.ResourceSettings.Exists, $"{nameof( Pith.Settings.ResourceSettings )} should exist." );
 
         Assert.IsNotNull( this.VisaSessionBase );
         Assert.IsNotNull( this.VisaSessionBase.Session );
-        Assert.IsTrue( this.VisaSessionBase.Session.TimingSettings.Exists, $"{nameof( TimingSettings )} should exist." );
-        Assert.IsTrue( this.VisaSessionBase.Session.RegistersBitmasksSettings.Exists, $"{nameof( RegistersBitmasksSettings )} should exist." );
-
-        if ( Logger is not null )
-        {
-            this._loggerScope = Logger.BeginScope( this.TestContext?.TestName ?? string.Empty );
-            this.TraceListener = new LoggerTraceListener<ContactCheckTests>( Logger );
-            _ = Trace.Listeners.Add( this.TraceListener );
-        }
-
-        Asserts.DefineTraceListener( this.TraceListener! );
+        Assert.IsTrue( this.VisaSessionBase.Session.AllSettings.TimingSettings.Exists, $"{nameof( TimingSettings )} should exist." );
+        Assert.IsTrue( this.VisaSessionBase.Session.AllSettings.RegistersBitmasksSettings.Exists, $"{nameof( RegistersBitmasksSettings )} should exist." );
 
         // cc.isr.VI.Device.MSTest.Asserts.SetEntryAssembly( entryAssembly );
         // if setting the entry assembly as above, there is no need to set the log settings file name.
-        // cc.isr.Logging.TraceLog.Tracer.Instance.LogSettingsFileName = cc.isr.Logging.Orlog.Orlogger.BuildAppSettingsFileName( entryAssembly ); ;
+        // cc.isr.Logging.TraceLog.Tracer.Instance.LogSettingsFileName = cc.isr.Logging.Or log.Or logger.BuildAppSettingsFileName( entryAssembly ); ;
     }
 
     /// <summary> Cleans up the test class instance after each test has run. </summary>
@@ -123,9 +130,9 @@ public abstract class ContactCheckTests
     /// <value> The device errors settings. </value>
     protected DeviceErrorsSettings? DeviceErrorsSettings { get; set; }
 
-    /// <summary>   Gets or sets the test site settings. </summary>
-    /// <value> The test site settings. </value>
-    protected TestSiteSettings? TestSiteSettings { get; set; }
+    /// <summary>   Gets or sets the location settings. </summary>
+    /// <value> The location settings. </value>
+    protected Json.AppSettings.Settings.LocationSettings? LocationSettings { get; set; }
 
     /// <summary>   Gets or sets the resource settings. </summary>
     /// <value> The resource settings. </value>

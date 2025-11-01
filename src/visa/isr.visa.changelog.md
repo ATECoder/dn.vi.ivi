@@ -2,9 +2,33 @@
 All notable changes to these libraries will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-[8.0.2.9421]: https://www.github.com/atecoder/dn.vi.ivi
+[8.0.2.9435]: https://www.github.com/atecoder/dn.vi.ivi
 
 Current IVI Visa Compatibility: 8.0.2.9391
+
+## [8.0.2.9435] - 2025-10-31
+- Settings
+  - Override CreateScribe.
+  - Use Read Settings to initialize the settings instance.
+
+## [8.0.2.9431] - 2025-10-27
+- Settings
+  - Move Scribe creation to Create Instance.
+  - Define section name when construction a single settings scribe.
+  - Use the scribe for reading the settings.
+  - document creating the instance.
+  - Copy settings if debug or not existing.
+  - Use existence check from the scribe class.
+  - Replace the abstract read and save settings with implementations using the created scribe.
+
+## [8.0.2.9428] - 2025-10-24
+- Remove Std MSTest project from solution.
+- Add Exists to settings file and remove enabled and all from settigns files and classes.
+- MS Test:
+  - Remove reference to the cc.isr.Std.MSTest project.
+  - Replace test site settings with Location Settings subclass of the JSon location settings base.
+  - Use Settings base class from the JSon Application Settings library.
+  - Use Settings Container base class from the JSon Application Settings library.
 
 ## [8.0.2.9421] - 2025-10-17
 - Update packages:

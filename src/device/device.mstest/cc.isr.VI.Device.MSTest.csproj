@@ -50,7 +50,6 @@
   <Choose>
     <When Condition="$(DefineConstants.Contains(';PROJREF;')) OR $(DefineConstants.Contains(';MYPROJREF;'))">
       <ItemGroup>
-        <ProjectReference Include="..\..\..\..\..\core\std\src\mstest\mstest\cc.isr.Std.MSTest.csproj" />
         <ProjectReference Include="..\..\..\..\..\core\json\src\app.settings\app.settings.view.models\cc.isr.Json.AppSettings.ViewModels.csproj" />
         <ProjectReference Include="..\device\cc.isr.VI.Device.csproj" />
       </ItemGroup>
@@ -63,6 +62,7 @@
   </Choose>
 
   <PropertyGroup>
+
     <!--
       <RunSettingsFilePath>$(MSBuildProjectDirectory)\.runsettings</RunSettingsFilePath>
       Displays error on console in addition to the log file. Note that this feature comes with a performance impact.

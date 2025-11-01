@@ -25,7 +25,7 @@ internal static class Program
 #endif
         Application.EnableVisualStyles();
         Application.SetCompatibleTextRenderingDefault( false );
-        Properties.Settings.Scribe?.ReadSettings();
+        Properties.Settings.Instance.ReadSettings();
         Application.Run( new TtmForm() );
     }
 }

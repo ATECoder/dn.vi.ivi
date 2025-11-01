@@ -1,124 +1,122 @@
 {
-  "TestSiteSettings": {
-    "Exists": true,
-    "All": true,
-    "Enabled": true,
-    "TraceLevel": "Verbose",
-    "IPv4Prefixes": "192.168|10.1",
-    "TimeZones": "Pacific Standard Time|Central Standard Time",
-    "TimeZoneOffsets": "-8|-6"
-  },
-
-  "CommandsSettings": {
-    "Exists": true,
-    "KeepAliveQueryCommand": "*OPC?",
-    "KeepAliveCommand": "*OPC"
-  },
-
-  "DeviceErrorsSettings": {
-    "Exists": true,
-    "ErroneousCommand": "*CLL",
-    "ErrorAvailableMillisecondsDelay": 100,
-    "ExpectedCompoundErrorMessage": "-285,TSP Syntax Error at line 1: unexpected symbol near `*',level=20",
-    "ExpectedErrorNumber": -285,
-    "ExpectedErrorMessage": "TSP Syntax error at line 1: unexpected symbol near `*'",
-    "ExpectedErrorLevel": 20
-  },
-
-  "DigitalIOSettings": {
-    "Exists": true,
-    "DigitalOutputLineNumber": 1,
-    "DigitalInputLineNumber": 2,
-    "DigitalLineCount": 6
-  },
-
-  "IOSettings": {
-    "Exists": true,
-    "ReadTerminationEnabled": true,
-    "ReadTerminationCharacter": 10
-  },
-
-  "ResourceSettings": {
-    "Exists": true,
-    "ClosedCaption": "closed",
-    "FirmwareRevision": "2.2.6",
-    "Language": "TSP",
-    "PingTimeout": "00:00:01.0000000",
-    "PingHops": 2,
-    "ResourceModel": "2612A",
-    "ResourceName": "TCPIP0::192.168.0.150::inst0::INSTR",
-    "ResourceNameSelectionTimeout": "00:00:10"
-  },
-
-  "SystemSubsystemSettings": {
-    "Exists": true,
-    "LineFrequency": 60
-  },
-
-  "SenseResistanceSettings": {
-    "Exists": true,
-    "InitialPowerLineCycles": 1,
-    "InitialAutoZeroEnabled": true,
-    "InitialAutoRangeEnabled": true,
-    "InitialSenseFunction": "CurrentDC",
-    "InitialRemoteSenseSelected": false,
-    "AutoRangeEnabled": true,
-    "AutoZeroEnabled": true,
-    "PowerLineCycles": 1,
-    "SenseFunction": "Resistance"
-  },
-
-  "SourceResistanceSettings": {
-    "Exists": true,
-    "InitialFrontTerminalsSelected": true,
-    "InitialSourceFunction": "VoltageDC",
-    "InitialAutoDelayEnabled": true,
-    "InitialSourceLevel": 0,
-    "InitialSourceLimit": 0.000105,
-    "FrontTerminalsSelected": true,
-    "MaximumOutputPower": 22,
-    "RemoteSenseSelected": true,
-    "SourceFunction": "CurrentDC",
-    "SourceLevel": 0.02
-  },
-
-  "ResistanceSettings": {
-    "Exists": true,
-    "ExpectedResistance": 100,
-    "ResistanceTolerance": 0.01
-  },
-
-  "SenseVoltageSettings": {
-    "Exists": true,
-    "InitialPowerLineCycles": 1,
-    "InitialAutoZeroEnabled": true,
-    "InitialAutoRangeEnabled": true,
-    "InitialSenseFunction": "CurrentDC",
-    "InitialRemoteSenseSelected": false,
-    "AutoZeroEnabled": true,
-    "AutoRangeEnabled": true,
-    "SenseFunction": "VoltageDC",
-    "PowerLineCycles": 1
-  },
-
-  "SourceCurrentSettings": {
-    "Exists": true,
-    "InitialFrontTerminalsSelected": true,
-    "InitialSourceFunction": "VoltageDC",
-    "InitialAutoDelayEnabled": true,
-    "InitialSourceLevel": 0,
-    "InitialSourceLimit": 0.000105,
-    "FrontTerminalsSelected": true,
-    "MaximumOutputPower": 22,
-    "RemoteSenseSelected": true,
-    "SourceReadBackEnabled": true,
-    "SourceFunction": "CurrentDC",
-    "SourceLevel": 0.01
-  },
-
-  "CurrentSourceMeasureSettings": {
-    "Exists": true,
-    "LoadResistance": 100,
-    "MeasurementTolerance": 0.01
-  }
+    "LocationSettings": {
+        "Exists": true,
+        "TraceLevel": "Verbose",
+        "IPv4Prefixes": "192.168|10.1",
+        "TimeZones": "Pacific Standard Time|Central Standard Time",
+        "TimeZoneOffsets": "-8|-6"
+    },
+    
+    "CommandsSettings": {
+        "Exists": true,
+        "KeepAliveQueryCommand": "*OPC?",
+        "KeepAliveCommand": "*OPC"
+    },
+    
+    "DeviceErrorsSettings": {
+        "Exists": true,
+        "ErroneousCommand": "*CLL",
+        "ErrorAvailableMillisecondsDelay": 100,
+        "ExpectedCompoundErrorMessage": "-285,TSP Syntax Error at line 1: unexpected symbol near `*',level=20",
+        "ExpectedErrorNumber": -285,
+        "ExpectedErrorMessage": "TSP Syntax error at line 1: unexpected symbol near `*'",
+        "ExpectedErrorLevel": 20
+    },
+    
+    "DigitalIOSettings": {
+        "Exists": true,
+        "DigitalOutputLineNumber": 1,
+        "DigitalInputLineNumber": 2,
+        "DigitalLineCount": 6
+    },
+    
+    "IOSettings": {
+        "Exists": true,
+        "ReadTerminationEnabled": true,
+        "ReadTerminationCharacter": 10
+    },
+    
+    "ResourceSettings": {
+        "Exists": true,
+        "ClosedCaption": "closed",
+        "FirmwareRevision": "2.2.6",
+        "Language": "TSP",
+        "PingTimeout": "00:00:01.0000000",
+        "PingHops": 2,
+        "ResourceModel": "2612A",
+        "ResourceName": "TCPIP0::192.168.0.150::inst0::INSTR",
+        "ResourceNameSelectionTimeout": "00:00:10"
+    },
+    
+    "SystemSubsystemSettings": {
+        "Exists": true,
+        "LineFrequency": 60
+    },
+    
+    "SenseResistanceSettings": {
+        "Exists": true,
+        "InitialPowerLineCycles": 1,
+        "InitialAutoZeroEnabled": true,
+        "InitialAutoRangeEnabled": true,
+        "InitialSenseFunction": "CurrentDC",
+        "InitialRemoteSenseSelected": false,
+        "AutoRangeEnabled": true,
+        "AutoZeroEnabled": true,
+        "PowerLineCycles": 1,
+        "SenseFunction": "Resistance"
+    },
+    
+    "SourceResistanceSettings": {
+        "Exists": true,
+        "InitialFrontTerminalsSelected": true,
+        "InitialSourceFunction": "VoltageDC",
+        "InitialAutoDelayEnabled": true,
+        "InitialSourceLevel": 0,
+        "InitialSourceLimit": 0.000105,
+        "FrontTerminalsSelected": true,
+        "MaximumOutputPower": 22,
+        "RemoteSenseSelected": true,
+        "SourceFunction": "CurrentDC",
+        "SourceLevel": 0.02
+    },
+    
+    "ResistanceSettings": {
+        "Exists": true,
+        "ExpectedResistance": 100,
+        "ResistanceTolerance": 0.01
+    },
+    
+    "SenseVoltageSettings": {
+        "Exists": true,
+        "InitialPowerLineCycles": 1,
+        "InitialAutoZeroEnabled": true,
+        "InitialAutoRangeEnabled": true,
+        "InitialSenseFunction": "CurrentDC",
+        "InitialRemoteSenseSelected": false,
+        "AutoZeroEnabled": true,
+        "AutoRangeEnabled": true,
+        "SenseFunction": "VoltageDC",
+        "PowerLineCycles": 1
+    },
+    
+    "SourceCurrentSettings": {
+        "Exists": true,
+        "InitialFrontTerminalsSelected": true,
+        "InitialSourceFunction": "VoltageDC",
+        "InitialAutoDelayEnabled": true,
+        "InitialSourceLevel": 0,
+        "InitialSourceLimit": 0.000105,
+        "FrontTerminalsSelected": true,
+        "MaximumOutputPower": 22,
+        "RemoteSenseSelected": true,
+        "SourceReadBackEnabled": true,
+        "SourceFunction": "CurrentDC",
+        "SourceLevel": 0.01
+    },
+    
+    "CurrentSourceMeasureSettings": {
+        "Exists": true,
+        "LoadResistance": 100,
+        "MeasurementTolerance": 0.01
+    }
 }

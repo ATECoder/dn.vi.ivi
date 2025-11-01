@@ -271,7 +271,7 @@ public sealed partial class Asserts
         if ( device.Session is null ) throw new ArgumentException( $"{nameof( device )}.{nameof( device.Session )} is null." );
         if ( device.StatusSubsystemBase is null ) throw new ArgumentException( $"{nameof( device )}.{nameof( device.StatusSubsystemBase )} is null." );
 
-        _ = device.Session.TimingSettings.ReadAfterWriteDelay.AsyncWaitElapsed();
+        _ = device.Session.AllSettings.TimingSettings.ReadAfterWriteDelay.AsyncWaitElapsed();
 
         // read the service status byte; this should generate an error available
         // check the error available status
@@ -286,7 +286,7 @@ public sealed partial class Asserts
     public static void AssertSessionLastError( cc.isr.VI.Pith.SessionBase? session, ServiceRequests statusByte )
     {
         Assert.IsNotNull( session, $"{nameof( session )} should not be null." );
-        _ = SessionBase.AsyncDelay( session.TimingSettings.ReadAfterWriteDelay + session.StatusReadDelay );
+        _ = SessionBase.AsyncDelay( session.AllSettings.TimingSettings.ReadAfterWriteDelay + session.StatusReadDelay );
 
         Assert.IsFalse( session.IsErrorBitSet( statusByte ), $"{session.ResourceNameCaption} encountered an error {session.LastErrorCompoundErrorMessage}." );
     }

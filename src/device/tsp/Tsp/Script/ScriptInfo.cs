@@ -697,7 +697,7 @@ public class ScriptInfoBaseCollection<TItem> : System.Collections.ObjectModel.Ke
 
     /// <summary>   Determines if all scripts were loaded. </summary>
     /// <remarks>   2025-04-30. </remarks>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     public bool AllLoaded()
     {
         foreach ( ScriptInfo script in this.Items )
@@ -713,7 +713,7 @@ public class ScriptInfoBaseCollection<TItem> : System.Collections.ObjectModel.Ke
 
     /// <summary>   Determines if we can any scripts loaded. </summary>
     /// <remarks>   2025-04-30. </remarks>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     public bool AnyLoaded()
     {
         foreach ( ScriptInfo script in this.Items )
@@ -729,7 +729,7 @@ public class ScriptInfoBaseCollection<TItem> : System.Collections.ObjectModel.Ke
 
     /// <summary>   Determines if we can any activated. </summary>
     /// <remarks>   2025-04-30. </remarks>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     public bool AnyActivated()
     {
         foreach ( ScriptInfo script in this.Items )
@@ -745,7 +745,7 @@ public class ScriptInfoBaseCollection<TItem> : System.Collections.ObjectModel.Ke
 
     /// <summary>   Determines if any script is embedded. </summary>
     /// <remarks>   2025-04-30. </remarks>
-    /// <returns>   True if one or more scripts are embedded, false if it fails. </returns>
+    /// <returns>   True if one or more scripts are embedded; otherwise, false. </returns>
     public bool AnyEmbedded()
     {
         foreach ( ScriptInfo script in this.Items )
@@ -839,7 +839,7 @@ public class NodesScriptsCollection : Dictionary<int, ScriptInfoCollection>
 
     /// <summary>   Determines if we can all loaded. </summary>
     /// <remarks>   2025-04-30. </remarks>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     public bool AllLoaded()
     {
         foreach ( ScriptInfoCollection scriptInfoCollection in this.Values )
@@ -852,7 +852,7 @@ public class NodesScriptsCollection : Dictionary<int, ScriptInfoCollection>
 
     /// <summary>   Determines if we can any loaded. </summary>
     /// <remarks>   2025-04-30. </remarks>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     public bool AnyLoaded()
     {
         foreach ( ScriptInfoCollection scriptInfoCollection in this.Values )
@@ -865,7 +865,7 @@ public class NodesScriptsCollection : Dictionary<int, ScriptInfoCollection>
 
     /// <summary>   Determines if we can any activated. </summary>
     /// <remarks>   2025-04-30. </remarks>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     public bool AnyActivated()
     {
         foreach ( ScriptInfoCollection scriptInfoCollection in this.Values )
@@ -878,7 +878,7 @@ public class NodesScriptsCollection : Dictionary<int, ScriptInfoCollection>
 
     /// <summary>   Determines if we any script is embedded. </summary>
     /// <remarks>   2025-04-30. </remarks>
-    /// <returns>   True if one or more scripts are embedded, false if it fails. </returns>
+    /// <returns>   True if one or more scripts are embedded; otherwise, false. </returns>
     public bool AnyEmbedded()
     {
         foreach ( ScriptInfoCollection scriptInfoCollection in this.Values )
@@ -891,7 +891,7 @@ public class NodesScriptsCollection : Dictionary<int, ScriptInfoCollection>
 
     /// <summary>   Determines if we can all scripts are embedded. </summary>
     /// <remarks>   2025-04-30. </remarks>
-    /// <returns>   True if all scripts are embedded, false if it fails. </returns>
+    /// <returns>   True if all scripts are embedded; otherwise, false. </returns>
     public bool AllEmbedded()
     {
         foreach ( ScriptInfoCollection scriptInfoCollection in this.Values )

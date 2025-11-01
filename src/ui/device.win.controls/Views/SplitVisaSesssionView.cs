@@ -197,7 +197,7 @@ public class SplitVisaSessionView : WinControls.VisaTreePanel
 
     /// <summary>   Opens the settings editor. </summary>
     /// <remarks>   David, 2021-12-08. <para>
-    /// The settings <see cref="DisplayViewSettings.Initialize(Type, string, bool, bool )"/></para> must be called before attempting to edit the settings. </remarks>
+    /// The settings <see cref="cc.isr.Json.AppSettings.Settings.SettingsBase.ReadSettings(Type, string, bool, bool )"/></para> must be called before attempting to edit the settings. </remarks>
     /// <returns>   A System.Windows.Forms.DialogResult. </returns>
     public static DialogResult OpenSettingsEditor()
     {

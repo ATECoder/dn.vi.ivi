@@ -26,7 +26,7 @@ public partial class MeterMain : DeviceUnderTestElementBase, IEquatable<MeterMai
     /// <remarks>   2024-11-05. </remarks>
     /// <param name="value">    The value. </param>
     /// <param name="details">  [out] The details. </param>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     public static bool ValidateLegacyDriver( int value, out string details )
     {
         bool affirmative = value is >= 0 and <= 1;
@@ -43,7 +43,7 @@ public partial class MeterMain : DeviceUnderTestElementBase, IEquatable<MeterMai
     /// <remarks>   2024-11-05. </remarks>
     /// <param name="value">    The value. </param>
     /// <param name="details">  [out] The details. </param>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     public static bool ValidateContactThreshold( int value, out string details )
     {
         bool affirmative = value is >= 10 and <= 999;
@@ -60,7 +60,7 @@ public partial class MeterMain : DeviceUnderTestElementBase, IEquatable<MeterMai
     /// <remarks>   2024-11-05. </remarks>
     /// <param name="contactOption">    The contact option value. </param>
     /// <param name="details">  [out] The details. </param>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     public static bool ValidateContactCheckOptions( int contactOption, out string details )
     {
         bool affirmative = contactOption is 1 or 3 or 5 or 7;
@@ -77,7 +77,7 @@ public partial class MeterMain : DeviceUnderTestElementBase, IEquatable<MeterMai
     /// <param name="sourceMeasureUnitName">    The name of the source measure unit. </param>
     /// <param name="details">                  [out] The details. </param>
     /// <returns>
-    /// True if a source measure unit with the specified name exists, false if it fails.
+    /// True if a source measure unit with the specified name exists; otherwise, false.
     /// </returns>
     public static bool ValidateSourceMeasureUnitName( Pith.SessionBase session, string sourceMeasureUnitName, out string details )
     {

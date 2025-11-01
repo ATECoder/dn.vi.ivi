@@ -18,7 +18,7 @@ public static partial class SessionBaseMethods
     ///                                                 invalid. </exception>
     /// <param name="session">  The session. </param>
     /// <param name="itemName"> Name of the item. </param>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     public static bool LoadMenuItemExists( this SessionBase session, string itemName )
     {
         if ( session == null ) throw new ArgumentNullException( nameof( session ) );

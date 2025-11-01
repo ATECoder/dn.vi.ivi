@@ -34,6 +34,8 @@ public partial class VisaSessionTests : Device.Tests.Base.VisaSessionTests
     [TestInitialize()]
     public override void InitializeBeforeEachTest()
     {
+        base.DefineTraceListener();
+
         Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
         cc.isr.VI.Device.Tests.Asserts.AssertVisaImplementationShouldBeLoaded();
         Console.WriteLine( $"\tTesting {typeof( cc.isr.VI.Tsp.K2600.K2600Device ).Assembly.FullName}" );
@@ -41,13 +43,13 @@ public partial class VisaSessionTests : Device.Tests.Base.VisaSessionTests
         // create an instance of the session logger.
         SessionLogger.Instance.CreateLogger( typeof( VisaSessionTests ) );
 
-        this.TestSiteSettings = Settings.AllSettings.Instance.TestSiteSettings;
+        this.LocationSettings = Settings.AllSettings.Instance.LocationSettings;
         this.ResourceSettings = Settings.AllSettings.Instance.ResourceSettings;
         cc.isr.VI.Tsp.VisaSession visaSession = new();
         Assert.IsNotNull( visaSession.Session );
         Assert.AreEqual( Syntax.Tsp.Lua.ClearExecutionStateCommand, visaSession.Session.ClearExecutionStateCommand );
-        visaSession.Session.ReadSettings( this.GetType().Assembly, ".Session", true, true );
-        Assert.IsTrue( visaSession.Session.TimingSettings.Exists, $"{nameof( VisaSession )}.{nameof( K2600Device.Session )}.{nameof( VisaSession.Session.TimingSettings )} does not exist." );
+        visaSession.Session.ReadSettings( this.GetType(), ".Session", true, true );
+        Assert.IsTrue( visaSession.Session.AllSettings.TimingSettings.Exists, $"{nameof( VisaSession )}.{nameof( K2600Device.Session )}.{nameof( VisaSession.Session.AllSettings.TimingSettings )} does not exist." );
 
         this.VisaSessionBase = visaSession;
         base.InitializeBeforeEachTest();

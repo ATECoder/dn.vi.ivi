@@ -182,8 +182,8 @@ public abstract partial class StatusSubsystemBase : CommunityToolkit.Mvvm.Compon
         try
         {
             this.Session.SetLastAction( "defining wait complete bit masks with readback" );
-            this.Session.EnableServiceRequestOnOperationCompletion( this.Session.RegistersBitmasksSettings.StandardEventEnableOperationCompleteBitmask,
-                this.Session.RegistersBitmasksSettings.ServiceRequestEnableOperationCompleteBitmask, true );
+            this.Session.EnableServiceRequestOnOperationCompletion( this.Session.AllSettings.RegistersBitmasksSettings.StandardEventEnableOperationCompleteBitmask,
+                this.Session.AllSettings.RegistersBitmasksSettings.ServiceRequestEnableOperationCompleteBitmask, true );
         }
         catch ( Exception ex )
         {

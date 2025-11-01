@@ -56,7 +56,6 @@
     <When Condition="$(DefineConstants.Contains(';PROJREF;')) OR $(DefineConstants.Contains(';MYPROJREF;'))">
       <ItemGroup>
         <ProjectReference Include="..\win.controls\cc.isr.VI.WinControls.csproj" />
-        <ProjectReference Include="..\..\..\..\..\core\std\src\mstest\mstest\cc.isr.Std.MSTest.csproj" />
       </ItemGroup>
     </When>
     <Otherwise>
@@ -69,6 +68,7 @@
         </ProjectReference>
       </ItemGroup>
     </Otherwise>
+
   </Choose>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">

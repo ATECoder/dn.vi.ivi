@@ -96,7 +96,7 @@ public abstract partial class AccessSubsystemBase( StatusSubsystemBase statusSub
     /// </summary>
     /// <remarks>   2025-05-26. </remarks>
     /// <param name="details">          [out] The details. </param>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     public abstract bool TryRegisterAndCertify( out string details );
 
     /// <summary>
@@ -105,14 +105,14 @@ public abstract partial class AccessSubsystemBase( StatusSubsystemBase statusSub
     /// </summary>
     /// <remarks>   2024-12-09. </remarks>
     /// <param name="details">  [out] The details. </param>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     public abstract bool TryDecertify( out string details );
 
     /// <summary>   Attempts to register an instrument with the specified serial number. </summary>
     /// <remarks>   2024-12-12. </remarks>
     /// <param name="serialNumber">     The serial number. </param>
     /// <param name="details">          [out] The details. </param>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     public abstract bool TryRegister( string serialNumber, out string details );
 
     /// <summary>
@@ -122,7 +122,7 @@ public abstract partial class AccessSubsystemBase( StatusSubsystemBase statusSub
     /// <remarks>   2024-12-12. </remarks>
     /// <param name="serialNumber"> The serial number. </param>
     /// <param name="details">      [out] The details. </param>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     public abstract bool TryDeregister( string serialNumber, out string details );
 
     /// <summary>   Queries an instrument with the specified serial number is registered. </summary>

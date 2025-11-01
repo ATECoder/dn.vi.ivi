@@ -145,7 +145,7 @@ public abstract class ColdResistanceBase : MeasureBase, IEquatable<ColdResistanc
     /// <summary>   Configuration equals. </summary>
     /// <remarks>   2024-11-05. </remarks>
     /// <param name="other">    The cold resistance to compare to this object. </param>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     public bool ConfigurationEquals( ColdResistanceBase other )
     {
         return other is not null && base.ConfigurationEquals( other )

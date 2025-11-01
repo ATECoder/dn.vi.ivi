@@ -65,7 +65,7 @@ public interface IDevice : IApparatus
     /// <param name="lockLocal">        (Optional) When true, displays the title and locks the local
     ///                                 key. </param>
     /// <param name="onCompleteReply">  (Optional) The operation completion reply. </param>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     public bool PrepareForTrigger( bool lockLocal = false, string onCompleteReply = "OPC" );
 
     /// <summary> Reads the status byte and returns true if the message available bit is set. </summary>

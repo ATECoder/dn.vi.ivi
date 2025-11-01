@@ -55,7 +55,7 @@ public static partial class NodeMethods
     /// <param name="session">      The session. </param>
     /// <param name="nodeNumber">   Specifies the subsystem node. </param>
     /// <param name="scripts">      The scripts. </param>
-    /// <returns>   True if all scripts are embedded, false if it fails. </returns>
+    /// <returns>   True if all scripts are embedded; otherwise, false. </returns>
     public static bool AllEmbedded( this Pith.SessionBase session, int nodeNumber, ScriptInfoBaseCollection<ScriptInfo> scripts )
     {
         string scriptNames = session.FetchEmbeddedScriptsNames( nodeNumber );
@@ -80,7 +80,7 @@ public static partial class NodeMethods
     ///                                                 invalid. </exception>
     /// <param name="session">  The session. </param>
     /// <param name="scripts">  The scripts. </param>
-    /// <returns>   True if all scripts are embedded, false if it fails. </returns>
+    /// <returns>   True if all scripts are embedded; otherwise, false. </returns>
     public static bool AllEmbedded( this Pith.SessionBase session, NodesScriptsCollection scripts )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
@@ -147,7 +147,7 @@ public static partial class NodeMethods
     /// <param name="scriptName">   Name of the script. </param>
     ///
     /// ### <returns>
-    /// True if the script is no longer embedded on the node, false if it fails.
+    /// True if the script is no longer embedded on the node; otherwise, false.
     /// </returns>
     public static void DeleteEmbeddedScript( this Pith.SessionBase session, int nodeNumber, string? scriptName )
     {

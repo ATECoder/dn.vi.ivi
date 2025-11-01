@@ -49,7 +49,7 @@ public static partial class SessionBaseExtensionMethods
     ///                                             null. </exception>
     /// <param name="session">      The session to act on. </param>
     /// <param name="scriptName">   Name of the script. </param>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     public static bool IsScriptEmbedded( this SessionBase session, string scriptName )
     {
         if ( string.IsNullOrWhiteSpace( scriptName ) )
@@ -65,7 +65,7 @@ public static partial class SessionBaseExtensionMethods
     /// <param name="session">      The session to act on. </param>
     /// <param name="scripts">      The scripts. </param>
     /// <param name="consoleOut">   (Optional) True to console out. </param>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     public static bool AllEmbedded( this Pith.SessionBase session, ScriptInfoBaseCollection<ScriptInfo> scripts, bool consoleOut = false )
     {
         string scriptNames = session.FetchEmbeddedScriptsNames();

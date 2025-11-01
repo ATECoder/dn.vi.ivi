@@ -152,8 +152,8 @@ public partial class SessionBase
     /// <param name="readAfterWrite">   (Optional) True to read after write. </param>
     public void EnableServiceRequestOnOperationCompletion( bool readAfterWrite = false )
     {
-        this.EnableServiceRequestOnOperationCompletion( this.RegistersBitmasksSettings.StandardEventEnableOperationCompleteBitmask,
-            this.RegistersBitmasksSettings.ServiceRequestEnableOperationCompleteBitmask, readAfterWrite );
+        this.EnableServiceRequestOnOperationCompletion( this.AllSettings.RegistersBitmasksSettings.StandardEventEnableOperationCompleteBitmask,
+           this.AllSettings.RegistersBitmasksSettings.ServiceRequestEnableOperationCompleteBitmask, readAfterWrite );
     }
 
     /// <summary>

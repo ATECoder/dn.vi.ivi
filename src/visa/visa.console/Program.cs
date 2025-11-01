@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.Versioning;
-using System.Windows.Forms;
 using cc.isr.Logging.TraceLog;
 
 namespace cc.isr.Visa.Console;

@@ -314,7 +314,7 @@ public static partial class ExportExtensionsMethods
     /// <param name="filePath1">    The filePath1 to act on. </param>
     /// <param name="filePath2">    The second file path. </param>
     /// <param name="details">      [out] The details. </param>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     public static bool FileEqualsTo( this string filePath1, string filePath2, out string details )
     {
         if ( string.IsNullOrWhiteSpace( filePath1 ) ) throw new ArgumentNullException( nameof( filePath1 ) );
@@ -348,7 +348,7 @@ public static partial class ExportExtensionsMethods
     /// <param name="filePath1">    The filePath1 to act on. </param>
     /// <param name="filePath2">    The second file path. </param>
     /// <param name="details">      [out] The details. </param>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     public static bool CompareFilesIgnoreEnding( this string filePath1, string filePath2, out string details )
     {
         if ( string.IsNullOrWhiteSpace( filePath1 ) ) throw new ArgumentNullException( nameof( filePath1 ) );
@@ -391,7 +391,7 @@ public static partial class ExportExtensionsMethods
     /// <param name="compressor">   The compressor. </param>
     /// <param name="encryptor">    The encryptor. </param>
     /// <param name="details">      [out] The details. </param>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     public static bool CompressedFileEqualsIgnoreEnding( this string filePath1, string filePath2, IScriptCompressor compressor,
         IScriptEncryptor encryptor, out string details )
     {

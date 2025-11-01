@@ -80,8 +80,8 @@ public abstract partial class SessionBase
     /// <remarks> 3475. Add Or VI.Syntax2.ServiceRequests.OperationEvent. </remarks>
     public void ApplyStandardServiceRequestEnableBitmasks()
     {
-        this.ApplyStandardServiceRequestEnableBitmasks( this.RegistersBitmasksSettings.StandardEventEnableEventsBitmask,
-            this.RegistersBitmasksSettings.ServiceRequestEnableEventsBitmask );
+        this.ApplyStandardServiceRequestEnableBitmasks( this.AllSettings.RegistersBitmasksSettings.StandardEventEnableEventsBitmask,
+            this.AllSettings.RegistersBitmasksSettings.ServiceRequestEnableEventsBitmask );
     }
 
     /// <summary>
@@ -120,8 +120,8 @@ public abstract partial class SessionBase
     /// <remarks>   2024-09-17. </remarks>
     public void EnableStandardServiceRequestEvents()
     {
-        this.WriteStandardServiceRequestEnableBitmasks( this.RegistersBitmasksSettings.StandardEventEnableEventsBitmask,
-            this.RegistersBitmasksSettings.ServiceRequestEnableEventsBitmask );
+        this.WriteStandardServiceRequestEnableBitmasks( this.AllSettings.RegistersBitmasksSettings.StandardEventEnableEventsBitmask,
+            this.AllSettings.RegistersBitmasksSettings.ServiceRequestEnableEventsBitmask );
     }
 
     /// <summary>
@@ -135,8 +135,8 @@ public abstract partial class SessionBase
     /// <remarks>   2024-09-17. </remarks>
     public void WriteStandardServiceRequestEnableBitmasks()
     {
-        this.WriteStandardServiceRequestEnableBitmasks( this.RegistersBitmasksSettings.StandardEventEnableEventsBitmask,
-            this.RegistersBitmasksSettings.ServiceRequestEnableEventsBitmask );
+        this.WriteStandardServiceRequestEnableBitmasks( this.AllSettings.RegistersBitmasksSettings.StandardEventEnableEventsBitmask,
+            this.AllSettings.RegistersBitmasksSettings.ServiceRequestEnableEventsBitmask );
     }
 
     /// <summary>

@@ -257,7 +257,7 @@ public partial class LegacyDevice : CommunityToolkit.Mvvm.ComponentModel.Observa
     /// Modified to wait for message available. </para></remarks>
     /// <param name="timeout">  (Optional) The timeout to wait for the completion of triggered
     ///                         measurement. </param>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     public bool AbortMeasurement( double timeout = 1.0 )
     {
         if ( !this.IsConnected ) return false;
@@ -291,7 +291,7 @@ public partial class LegacyDevice : CommunityToolkit.Mvvm.ComponentModel.Observa
     /// <summary>   Sends a signal to abort the triggered measurement. </summary>
     /// <remarks>   2024-11-07. </remarks>
     /// <param name="duration">  (Optional) The expected measurement duration. </param>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     [Obsolete]
     public bool AbortMeasurementDeprecated( double duration = 0.4 )
     {
@@ -330,7 +330,7 @@ public partial class LegacyDevice : CommunityToolkit.Mvvm.ComponentModel.Observa
     /// <param name="lockLocal">        (Optional) When true, displays the title and locks the local
     ///                                 key. </param>
     /// <param name="onCompleteReply">  (Optional) The operation completion reply. </param>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     public bool PrepareForTrigger( bool lockLocal = false, string onCompleteReply = "OPC" )
     {
         if ( !this.IsConnected ) return false;

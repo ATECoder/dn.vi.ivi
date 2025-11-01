@@ -23,7 +23,7 @@ public partial class LegacyDevice : CommunityToolkit.Mvvm.ComponentModel.Observa
     /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
     ///                                                 invalid. </exception>
     /// <param name="value">    The value. </param>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     public bool ColdResistanceSourceOutputSetter( SourceOutputOption value )
     {
         if ( !this.IsConnected ) return false;
@@ -59,7 +59,7 @@ public partial class LegacyDevice : CommunityToolkit.Mvvm.ComponentModel.Observa
     /// <summary>   Cold resistance source output getter. </summary>
     /// <remarks>   2024-11-27. </remarks>
     /// <param name="value">    [out] The value. </param>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     public bool ColdResistanceSourceOutputGetter( out SourceOutputOption value )
     {
         if ( !this.IsConnected )
@@ -112,7 +112,7 @@ public partial class LegacyDevice : CommunityToolkit.Mvvm.ComponentModel.Observa
     /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
     ///                                                 invalid. </exception>
     /// <param name="value">    The value. </param>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     public bool ColdResistanceCurrentLimitSetter( double value )
     {
         if ( !this.IsConnected ) return false;
@@ -150,7 +150,7 @@ public partial class LegacyDevice : CommunityToolkit.Mvvm.ComponentModel.Observa
     /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
     ///                                                 invalid. </exception>
     /// <param name="value">    [out] The value. </param>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     public bool ColdResistanceCurrentLimitGetter( out double value )
     {
         if ( !this.IsConnected )
@@ -203,7 +203,7 @@ public partial class LegacyDevice : CommunityToolkit.Mvvm.ComponentModel.Observa
     /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
     ///                                                 invalid. </exception>
     /// <param name="value">    The value. </param>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     public bool ColdResistanceVoltageLevelSetter( double value )
     {
         if ( !this.IsConnected ) return false;
@@ -241,7 +241,7 @@ public partial class LegacyDevice : CommunityToolkit.Mvvm.ComponentModel.Observa
     /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
     ///                                                 invalid. </exception>
     /// <param name="value">    [out] The value. </param>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     public bool ColdResistanceVoltageLevelGetter( out double value )
     {
         if ( !this.IsConnected )

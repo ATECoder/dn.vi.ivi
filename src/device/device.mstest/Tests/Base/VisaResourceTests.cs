@@ -1,6 +1,7 @@
-using cc.isr.Std.Tests;
+using cc.isr.Std.Logging;
+using cc.isr.Std.Logging.ILoggerExtensions;
+using cc.isr.Std.Listeners;
 using cc.isr.VI.Pith;
-using cc.isr.Std.Tests.Extensions;
 namespace cc.isr.VI.Device.Tests.Base;
 
 /// <summary> The abstract VISA Resource Settings tests. </summary>
@@ -60,15 +61,30 @@ public abstract class VisaResourceTests
     /// <value> The trace listener. </value>
     public LoggerTraceListener<VisaResourceTests>? TraceListener { get; set; }
 
+    /// <summary> Initializes the trace listener and logger scope. </summary>
+    /// <remarks> call this method from the subclass. </remarks>
+    public void DefineTraceListener()
+    {
+        if ( VisaResourceTests.Logger is not null && this.TraceListener is null )
+        {
+            this._loggerScope = Logger.BeginScope( this.TestContext?.TestName ?? string.Empty );
+            this.TraceListener = new LoggerTraceListener<VisaResourceTests>( VisaResourceTests.Logger );
+            _ = Trace.Listeners.Add( this.TraceListener );
+            Asserts.DefineTraceListener( this.TraceListener! );
+        }
+    }
+
     /// <summary> Initializes the test class instance before each test runs. </summary>
     public virtual void InitializeBeforeEachTest()
     {
+        this.DefineTraceListener();
+
         // assert reading of test settings from the configuration file.
-        Assert.IsNotNull( this.TestSiteSettings );
-        Assert.IsTrue( this.TestSiteSettings.Exists );
+        Assert.IsNotNull( this.LocationSettings );
+        Assert.IsTrue( this.LocationSettings.Exists );
         double expectedUpperLimit = 12d;
         Assert.IsLessThan( expectedUpperLimit,
-            Math.Abs( this.TestSiteSettings.TimeZoneOffset() ), $"{nameof( this.TestSiteSettings.TimeZoneOffset )} should be lower than {expectedUpperLimit}" );
+            Math.Abs( this.LocationSettings.TimeZoneOffset() ), $"{nameof( this.LocationSettings.TimeZoneOffset )} should be lower than {expectedUpperLimit}" );
 
         if ( Logger is not null )
         {
@@ -105,9 +121,9 @@ public abstract class VisaResourceTests
 
     #region " settings "
 
-    /// <summary>   Gets or sets the test site settings. </summary>
-    /// <value> The test site settings. </value>
-    protected TestSiteSettings? TestSiteSettings { get; set; }
+    /// <summary>   Gets or sets the location settings. </summary>
+    /// <value> The location settings. </value>
+    protected Json.AppSettings.Settings.LocationSettings? LocationSettings { get; set; }
 
     #endregion
 

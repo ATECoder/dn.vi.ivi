@@ -69,10 +69,10 @@ public class FirmwareTests
         SessionLogger.Instance.CreateLogger( typeof( FirmwareTests ) );
 
         // read settings and throw if not found.
-        this.TestSiteSettings = Settings.AllSettings.Instance.TestSiteSettings;
+        this.LocationSettings = Settings.AllSettings.Instance.LocationSettings;
 
         // read the TTM Driver settings and throw if not found.
-        this.TtmSettings.ReadSettings( this.GetType().Assembly, ".Driver", true, true );
+        this.TtmSettings.ReadSettings( this.GetType(), ".Driver", true, true );
         cc.isr.VI.Tsp.K2600.Ttm.TtmMeterSettings meterSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmMeterSettings;
         Assert.IsTrue( meterSettings.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmMeterSettings )} should exist." );
         cc.isr.VI.Tsp.K2600.Ttm.TtmResistanceSettings resistanceSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmResistanceSettings;
@@ -85,8 +85,8 @@ public class FirmwareTests
         Assert.AreEqual( cc.isr.VI.Syntax.Tsp.Lua.ClearExecutionStateCommand, visaSession.Session.ClearExecutionStateCommand );
 
         // read settings and throw if not found.
-        visaSession.Session.ReadSettings( this.GetType().Assembly, ".Session", true, true );
-        this.ResourceSettings = visaSession.Session.ResourceSettings;
+        visaSession.Session.ReadSettings( this.GetType(), ".Session", true, true );
+        this.ResourceSettings = visaSession.Session.AllSettings.ResourceSettings;
 
         this.VisaSessionBase = visaSession;
     }
@@ -107,9 +107,9 @@ public class FirmwareTests
     /// <value> The ttm settings. </value>
     internal cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings TtmSettings { get; set; } = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance;
 
-    /// <summary>   Gets or sets the test site settings. </summary>
-    /// <value> The test site settings. </value>
-    internal Settings.TestSiteSettings TestSiteSettings { get; set; } = new();
+    /// <summary>   Gets or sets the location settings. </summary>
+    /// <value> The location settings. </value>
+    internal cc.isr.Json.AppSettings.Settings.LocationSettings LocationSettings { get; set; } = new();
 
     /// <summary>   Gets or sets the resource settings. </summary>
     /// <value> The resource settings. </value>

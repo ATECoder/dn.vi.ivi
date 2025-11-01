@@ -727,7 +727,7 @@ public partial class StatusView : cc.isr.WinControls.ModelViewBase
             // AddHandler visaSessionBase.Opened, AddressOf Me.HandleDeviceOpened
             visaSessionBase.Closed += this.HandleDeviceClosed;
             if ( this.VisaSessionBaseInternal.Session is not null )
-                this.SessionSettings = this.VisaSessionBaseInternal.Session.Scribe;
+                this.SessionSettings = this.VisaSessionBaseInternal.Session.AllSettings.Scribe;
             this.DeviceSettings = null;
             this.UserInterfaceSettings = null;
             this.BindVisaSessionViewModel( true, this.VisaSessionBase );
@@ -1137,7 +1137,7 @@ public partial class StatusView : cc.isr.WinControls.ModelViewBase
             {
                 this.Cursor = Cursors.WaitCursor;
                 this.InfoProvider?.Clear();
-                int bitmask = this.SessionBase.RegistersBitmasksSettings.ServiceRequestEnableEventsBitmask;
+                int bitmask = this.SessionBase.AllSettings.RegistersBitmasksSettings.ServiceRequestEnableEventsBitmask;
                 activity = $"{this.VisaSessionBase.ResourceNameCaption} applying service request enable bitmask 0x{bitmask:x2}";
                 this.SessionBase.StatusPrompt = activity;
                 _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"{activity};. " );
@@ -1510,7 +1510,7 @@ public partial class StatusView : cc.isr.WinControls.ModelViewBase
 
     /// <summary> Base settings menu item click. </summary>
     /// <remarks>   David, 2021-12-08. <para>
-    /// The settings <see cref="Views.DisplayViewSettings.Initialize(Type, string, bool, bool )"/></para> must be called before attempting to edit the settings. </remarks>
+    /// The settings <see cref="cc.isr.Json.AppSettings.Settings.SettingsBase.ReadSettings(Type, string, bool, bool )"/></para> must be called before attempting to edit the settings. </remarks>
     /// <param name="sender"> <see cref="object"/> instance of this
     /// <see cref="Control"/> </param>
     /// <param name="e">      Event information. </param>

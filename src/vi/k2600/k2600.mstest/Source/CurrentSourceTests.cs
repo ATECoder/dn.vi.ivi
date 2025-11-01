@@ -38,6 +38,8 @@ public class CurrentSourceTests : Device.Tsp.Tests.Base.TestBase
     [TestInitialize()]
     public override void InitializeBeforeEachTest()
     {
+        base.DefineTraceListener();
+
         Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
         cc.isr.VI.Device.Tests.Asserts.AssertVisaImplementationShouldBeLoaded();
         Console.WriteLine( $"\tTesting {typeof( cc.isr.VI.Tsp.K2600.CurrentSourceSubsystem ).Assembly.FullName}" );
@@ -45,12 +47,12 @@ public class CurrentSourceTests : Device.Tsp.Tests.Base.TestBase
         // create an instance of the session logger.
         SessionLogger.Instance.CreateLogger( typeof( CurrentSourceTests ) );
 
-        this.TestSiteSettings = Settings.AllSettings.Instance.TestSiteSettings;
+        this.LocationSettings = Settings.AllSettings.Instance.LocationSettings;
         this.ResourceSettings = Settings.AllSettings.Instance.ResourceSettings;
         this.Device = K2600Device.Create();
         Assert.IsNotNull( this.Device );
         Assert.IsNotNull( this.Device.Session );
-        this.Device.Session.ReadSettings( this.GetType().Assembly, ".Session", true, true );
+        this.Device.Session.ReadSettings( this.GetType(), ".Session", true, true );
         this.VisaSessionBase = this.Device;
         base.InitializeBeforeEachTest();
     }

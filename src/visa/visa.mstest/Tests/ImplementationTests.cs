@@ -65,7 +65,6 @@ public class ImplementationTests
     }
 
     /// <summary> Cleans up the test class instance after each test has run. </summary>
-    [TestCleanup()]
     public virtual void CleanupAfterEachTest()
     {
         Trace.Listeners.Clear();

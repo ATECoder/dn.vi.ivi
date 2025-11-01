@@ -17,11 +17,11 @@ public sealed partial class Asserts
     {
     }
 
-    private static cc.isr.Std.Tests.TraceMessageListener? TraceListener { get; set; }
+    private static cc.isr.Std.Listeners.TraceMessageListener? TraceListener { get; set; }
     /// <summary>   Defines the trace listener. </summary>
     /// <remarks>   David, 2021-06-29. </remarks>
     /// <param name="traceListener">    The trace listener. </param>
-    public static void DefineTraceListener( cc.isr.Std.Tests.TraceMessageListener traceListener )
+    public static void DefineTraceListener( cc.isr.Std.Listeners.TraceMessageListener traceListener )
     {
         Asserts.TraceListener = traceListener;
     }

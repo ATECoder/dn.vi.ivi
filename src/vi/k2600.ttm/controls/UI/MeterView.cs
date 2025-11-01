@@ -593,11 +593,12 @@ public partial class MeterView : cc.isr.WinControls.ModelViewBase
                 this._ttmConfigurationPanel.CopySettings();
                 this.CopyShuntSettings();
 
-                if ( this.Meter is not null && this.Meter.TspDevice is not null && this.Meter.TspDevice.Session is not null && this.Meter.TspDevice.Session.Scribe is not null
+                if ( this.Meter is not null && this.Meter.TspDevice is not null && this.Meter.TspDevice.Session is not null
+                    && this.Meter.TspDevice.Session.AllSettings.Scribe is not null
                     && this.ResourceName is not null && !string.IsNullOrWhiteSpace( this.ResourceName ) )
                 {
-                    this.Meter.TspDevice.Session.ResourceSettings.ResourceName = this.ResourceName;
-                    this.Meter.TspDevice.Session.Scribe.WriteSettings();
+                    this.Meter.TspDevice.Session.AllSettings.ResourceSettings.ResourceName = this.ResourceName;
+                    this.Meter.TspDevice.Session.AllSettings.Scribe!.WriteSettings();
                 }
 
                 // flush the log.
@@ -927,7 +928,7 @@ public partial class MeterView : cc.isr.WinControls.ModelViewBase
             this.Device.Initialized += this.DeviceInitialized;
             this.Device.Initializing += this.DeviceInitializing;
             this.Device.SessionFactory.PropertyChanged += this.SessionFactoryPropertyChanged;
-            this.Device.SessionFactory.CandidateResourceName = this.Device.Session is null ? "" : this.Device.Session.ResourceSettings.ResourceName;
+            this.Device.SessionFactory.CandidateResourceName = this.Device.Session is null ? "" : this.Device.Session.AllSettings.ResourceSettings.ResourceName;
             if ( this.Device.IsDeviceOpen )
             {
                 this.DeviceOpened( this.Device, EventArgs.Empty );

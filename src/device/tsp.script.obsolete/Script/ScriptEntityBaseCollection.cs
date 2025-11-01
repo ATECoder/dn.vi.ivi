@@ -378,7 +378,7 @@ public class ScriptEntityBaseCollection<TItem>( NodeEntityBase node ) : System.C
 
     /// <summary>   All embedded. </summary>
     /// <remarks>   2024-09-05. </remarks>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     public bool AllEmbedded()
     {
         bool affirmative = true;
@@ -401,7 +401,7 @@ public class ScriptEntityBaseCollection<TItem>( NodeEntityBase node ) : System.C
 
     /// <summary>   All scripts exist (loaded). </summary>
     /// <remarks>   2024-09-10. </remarks>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     public bool AllExist()
     {
         bool affirmative = true;
@@ -644,7 +644,7 @@ public class ScriptEntityBaseCollection<TItem>( NodeEntityBase node ) : System.C
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>
     /// <param name="session">  Specifies the <see cref="VI.Pith.SessionBase">TSP session.</see> </param>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     public bool QueryFirmwareVersions( Pith.SessionBase? session )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );

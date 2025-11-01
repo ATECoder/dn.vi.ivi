@@ -43,7 +43,7 @@ public static partial class SessionBaseExtensionMethods
     /// <param name="session">          The session. </param>
     /// <param name="codeChunkName">    Name of the code chunk. </param>
     /// <param name="details">          [out] The details. </param>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     public static bool IncludedInLoadedTable( this SessionBase session, string codeChunkName, out string details )
     {
         if ( session == null ) throw new ArgumentNullException( nameof( session ) );

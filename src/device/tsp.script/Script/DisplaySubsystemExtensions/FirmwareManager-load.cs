@@ -45,7 +45,7 @@ public static partial class FirmwareManager
     ///                                 subsystem</see>. </param>
     /// <param name="script">           Specifies the
     ///                                 <see cref="ScriptEntityBase">script</see>to delete. </param>
-    /// <returns>   True if it the script was loaded, false if it fails. </returns>
+    /// <returns>   True if it the script was loaded; otherwise, false. </returns>
     private static bool LoadUserScriptThis( this DisplaySubsystemBase? displaySubsystem, ScriptEntityBase script )
     {
         if ( script is null ) throw new ArgumentNullException( nameof( script ) );

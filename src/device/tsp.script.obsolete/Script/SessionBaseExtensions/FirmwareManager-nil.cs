@@ -10,7 +10,7 @@ public static partial class FirmwareManager
     ///                                             required type. </exception>
     /// <param name="session">      The session. </param>
     /// <param name="scriptName">   Specifies the script name. </param>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     private static bool NillScriptThis( this Pith.SessionBase? session, string scriptName )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
@@ -51,7 +51,7 @@ public static partial class FirmwareManager
     /// <param name="session">              The session. </param>
     /// <param name="nodeNumber">           Specifies the remote node number. </param>
     /// <param name="scriptName">           Specifies the script name. </param>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     private static bool NillScriptThis( this Pith.SessionBase? session, int nodeNumber, string? scriptName )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );

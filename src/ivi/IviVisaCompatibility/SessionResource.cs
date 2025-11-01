@@ -4,7 +4,7 @@ public class SessionResource
     /// <summary>   Attempts to enumerate resources. </summary>
     /// <remarks>   2025-09-09. </remarks>
     /// <param name="filter">   Specifies the filter. </param>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
     public static bool TryEnumerateResources( string filter )
     {
         _ = Ivi.VisaNet.GacLoader.TryLoadInstalledVisaAssemblies( out _ );

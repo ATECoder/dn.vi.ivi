@@ -28,6 +28,7 @@ public partial class DisplayView : cc.isr.WinControls.ModelViewBase
         this.InitializingComponents = true;
         // This call is required by the Windows Form Designer.
         this.InitializeComponent();
+        AllSettings.Instance.CreateScribe();
         this.BindSettings();
         this.InitializingComponents = false;
     }
@@ -79,93 +80,70 @@ public partial class DisplayView : cc.isr.WinControls.ModelViewBase
 
     #endregion
 
-    #region " scribe "
+    #region " settings class "
 
-    /// <summary>   Gets or sets the scribe. </summary>
-    /// <value> The scribe. </value>
-    [DesignerSerializationVisibility( DesignerSerializationVisibility.Hidden )]
-    [Browsable( false )]
-    public static AppSettingsScribe? Scribe { get; set; }
-
-    /// <summary>   Gets or sets the timing settings. </summary>
-    /// <value> The timing settings. </value>
-    [DesignerSerializationVisibility( DesignerSerializationVisibility.Hidden )]
-    [Browsable( false )]
-    public static Views.DisplayViewSettings DisplayViewSettings { get; private set; } = new Views.DisplayViewSettings();
-
-    /// <summary>   Creates a scribe. </summary>
-    /// <remarks>   2025-01-13. </remarks>
-    /// <param name="settingsAssembly">     The settings assembly. </param>
-    /// <param name="settingsFileSuffix">   (Optional) The suffix of the assembly settings file, e.g.,
-    ///                                     '.session' in
-    ///                                     'cc.isr.VI.Tsp.K2600.Device.MSTest.Session.JSon' where
-    ///                                     cc.isr.VI.Tsp.K2600.Device.MSTest is the assembly name. </param>
-    /// <param name="overrideAllUsersFile"> (Optional) [false] True to override all users settings file. </param>
-    /// <param name="overrideThisUserFile"> (Optional) [false] True to override this user settings file. </param>
-    public static void CreateScribe( System.Reflection.Assembly settingsAssembly, string settingsFileSuffix = ".DisplayView", bool overrideAllUsersFile = false, bool overrideThisUserFile = false )
+    /// <summary>   A settings container class for all settings. </summary>
+    /// <remarks>   2024-10-16. </remarks>
+    private sealed class AllSettings : cc.isr.Json.AppSettings.Settings.SettingsContainerBase
     {
-        AssemblyFileInfo ai = new( settingsAssembly, null, settingsFileSuffix, ".json" );
+        #region " construction "
 
-        // copy application context settings if these do not exist; use restore if the settings are bad.
+        /// <summary>
+        /// Constructor that prevents a default instance of this class from being created.
+        /// </summary>
+        /// <remarks>   2023-04-24. </remarks>
+        public AllSettings() { }
 
-        AppSettingsScribe.InitializeSettingsFiles( ai, overrideAllUsersFile, overrideThisUserFile );
+        #endregion
 
-        DisplayView.Scribe = new( [DisplayView.DisplayViewSettings],
-            ai.AppContextAssemblyFilePath!, ai.AllUsersAssemblyFilePath! )
+        #region " singleton "
+
+        /// <summary>   Gets the instance. </summary>
+        /// <value> The instance. </value>
+        public static AllSettings Instance => _instance.Value;
+
+        private static readonly Lazy<AllSettings> _instance = new( () => new AllSettings(), true );
+
+        #endregion
+
+        #region " create scribe "
+
+        /// <summary>   Creates a scribe. </summary>
+        /// <remarks>   2025-01-13. </remarks>
+        public override void CreateScribe()
         {
-            AllUsersSettingsPath = ai.AllUsersAssemblyFilePath,
-            ThisUserSettingsPath = ai.ThisUserAssemblyFilePath
-        };
-    }
+            this.DisplayViewSettings = new();
+            this.Scribe = new( [this.DisplayViewSettings] )
+            {
+                SerializerOptions = AppSettingsScribe.CsvRgbColorSerializerOptions
+            };
+        }
 
-    /// <summary>   Creates a scribe. </summary>
-    /// <remarks>   2025-01-13. </remarks>
-    /// <param name="callingEntity">        The calling entity. </param>
-    /// <param name="settingsFileSuffix">   The suffix of the assembly settings file, e.g.,
-    ///                                     '.session' in
-    ///                                     'cc.isr.VI.Tsp.K2600.Device.MSTest.Session.JSon' where
-    ///                                     cc.isr.VI.Tsp.K2600.Device.MSTest is the assembly name. </param>
-    /// <param name="overrideAllUsersFile"> (Optional) [false] True to override all users settings file. </param>
-    /// <param name="overrideThisUserFile"> (Optional) [false] True to override this user settings file. </param>
-    public static void CreateScribe( System.Type callingEntity, string settingsFileSuffix = ".DisplayView", bool overrideAllUsersFile = false, bool overrideThisUserFile = false )
-    {
-        DisplayView.CreateScribe( callingEntity.Assembly, settingsFileSuffix, overrideAllUsersFile, overrideThisUserFile );
-    }
+        /// <summary>   Reads the settings. </summary>
+        /// <remarks>   2024-08-17. <para>
+        /// Creates the scribe if null.</para>
+        /// </remarks>
+        /// <param name="declaringType">        The Type of the declaring object. </param>
+        /// <param name="settingsFileSuffix">   (Optional) [.settings] The suffix of the assembly settings file,
+        ///                                     e.g., '.settings' in 'cc.isr.VI.Tsp.K2600.Device.MSTest.Session.json'
+        ///                                     where cc.isr.VI.Tsp.K2600.Device.MSTest is the assembly name.<,/param>
+        /// <param name="overrideAllUsersFile"> (Optional) [false] True to override all users settings file. </param>
+        /// <param name="overrideThisUserFile"> (Optional) [false] True to override this user settings file. </param>
+        public override void ReadSettings( Type declaringType, string settingsFileSuffix = ".settings",
+            bool overrideAllUsersFile = false, bool overrideThisUserFile = false )
+        {
+            base.ReadSettings( declaringType, settingsFileSuffix, overrideAllUsersFile, overrideThisUserFile );
+        }
 
-    /// <summary>   Reads the settings. </summary>
-    /// <remarks>   2024-08-17. <para>
-    /// Creates the scribe if null.</para>
-    /// </remarks>
-    /// <param name="settingsAssembly">     The assembly where the settings fille is located.. </param>
-    /// <param name="settingsFileSuffix">   (Optional) The suffix of the assembly settings file, e.g.,
-    ///                                     '.session' in
-    ///                                     'cc.isr.VI.Tsp.K2600.Device.MSTest.Session.JSon' where
-    ///                                     cc.isr.VI.Tsp.K2600.Device.MSTest is the assembly name. </param>
-    /// <param name="overrideAllUsersFile"> (Optional) [false] True to override all users settings file. </param>
-    /// <param name="overrideThisUserFile"> (Optional) [false] True to override this user settings file. </param>
-    public static void ReadSettings( System.Reflection.Assembly settingsAssembly, string settingsFileSuffix = ".DisplayView", bool overrideAllUsersFile = false, bool overrideThisUserFile = false )
-    {
-        if ( DisplayView.Scribe is null )
-            DisplayView.CreateScribe( settingsAssembly, settingsFileSuffix, overrideAllUsersFile, overrideThisUserFile );
+        #endregion
 
-        DisplayView.Scribe!.ReadSettings();
-    }
+        #region " settings "
 
-    /// <summary>   Reads the settings. </summary>
-    /// <remarks>
-    /// 2024-08-05. <para>
-    /// Creates the scribe if null.</para>
-    /// </remarks>
-    /// <param name="callingEntity">        The calling entity. </param>
-    /// <param name="settingsFileSuffix">   (Optional) The suffix of the assembly settings file, e.g.,
-    ///                                     '.session' in
-    ///                                     'cc.isr.VI.Tsp.K2600.Device.MSTest.Session.JSon' where
-    ///                                     cc.isr.VI.Tsp.K2600.Device.MSTest is the assembly name. </param>
-    /// <param name="overrideAllUsersFile"> (Optional) [false] True to override all users settings file. </param>
-    /// <param name="overrideThisUserFile"> (Optional) [false] True to override this user settings file. </param>
-    public static void ReadSettings( System.Type callingEntity, string settingsFileSuffix = ".DisplayView", bool overrideAllUsersFile = false, bool overrideThisUserFile = false )
-    {
-        DisplayView.ReadSettings( callingEntity.Assembly, settingsFileSuffix, overrideAllUsersFile, overrideThisUserFile );
+        /// <summary>   Gets or sets the location settings. </summary>
+        /// <value> The location settings. </value>
+        public Views.DisplayViewSettings DisplayViewSettings { get; private set; } = new();
+
+        #endregion
     }
 
     #endregion
@@ -364,7 +342,7 @@ public partial class DisplayView : cc.isr.WinControls.ModelViewBase
     {
         _ = this.AddRemoveBinding( this._titleLabel, add, nameof( Control.Text ), viewModel, nameof( Pith.SessionBase.ResourceModelCaption ), DataSourceUpdateMode.Never );
         _ = this.AddRemoveBinding( this._statusRegisterLabel, add, nameof( Control.Text ), viewModel, nameof( Pith.SessionBase.StatusRegisterCaption ), DataSourceUpdateMode.Never );
-        if ( DisplayView.DisplayViewSettings.DisplayStandardServiceRequests )
+        if ( DisplayView.AllSettings.Instance.DisplayViewSettings.DisplayStandardServiceRequests )
         {
             this.BindVisibility( this._measurementEventBitLabel, add, viewModel, Pith.ServiceRequests.MeasurementEvent );
             this.BindVisibility( this._systemEventBitLabel, add, viewModel, Pith.ServiceRequests.SystemEvent );
@@ -1206,7 +1184,7 @@ public partial class DisplayView : cc.isr.WinControls.ModelViewBase
     /// <remarks>   2025-01-13. </remarks>
     public void SetCharcoalBackColor()
     {
-        this.SetBackColors( DisplayView.DisplayViewSettings.CharcoalColor );
+        this.SetBackColors( DisplayView.AllSettings.Instance.DisplayViewSettings.CharcoalColor );
     }
 
     /// <summary>   Sets back colors. </summary>
@@ -1233,38 +1211,38 @@ public partial class DisplayView : cc.isr.WinControls.ModelViewBase
     /// <summary> Bind settings. </summary>
     public void BindSettings()
     {
-        this._layout.BackColor = DisplayView.DisplayViewSettings.CharcoalColor;
-        Binding binding = new( nameof( this.BackColor ), DisplayView.DisplayViewSettings,
-            nameof( DisplayView.DisplayViewSettings.CharcoalColor ), true, DataSourceUpdateMode.OnPropertyChanged );
+        this._layout.BackColor = DisplayView.AllSettings.Instance.DisplayViewSettings.CharcoalColor;
+        Binding binding = new( nameof( this.BackColor ), DisplayView.AllSettings.Instance.DisplayViewSettings,
+            nameof( DisplayView.AllSettings.Instance.DisplayViewSettings.CharcoalColor ), true, DataSourceUpdateMode.OnPropertyChanged );
         CloneBinding( this._layout, binding );
         // if ( this._layout.DataBindings.Exists( binding ) ) { this._layout.DataBindings.Remove( binding ); }
         // this._layout.DataBindings.Add( binding );
 
-        this._sessionReadingStatusStrip.BackColor = DisplayView.DisplayViewSettings.CharcoalColor;
+        this._sessionReadingStatusStrip.BackColor = DisplayView.AllSettings.Instance.DisplayViewSettings.CharcoalColor;
         CloneBinding( this._sessionReadingStatusStrip, binding );
 
         // if ( this._sessionReadingStatusStrip.DataBindings.Exists( binding ) ) { this._layout.DataBindings.Remove( binding ); }
         // this._sessionReadingStatusStrip.DataBindings.Add( binding );
 
-        this._subsystemStatusStrip.BackColor = DisplayView.DisplayViewSettings.CharcoalColor;
+        this._subsystemStatusStrip.BackColor = DisplayView.AllSettings.Instance.DisplayViewSettings.CharcoalColor;
         CloneBinding( this._subsystemStatusStrip, binding );
 
         // if ( this._subsystemStatusStrip.DataBindings.Exists( binding ) ) { this._layout.DataBindings.Remove( binding ); }
         // this._subsystemStatusStrip.DataBindings.Add( binding );
 
-        this._titleStatusStrip.BackColor = DisplayView.DisplayViewSettings.CharcoalColor;
+        this._titleStatusStrip.BackColor = DisplayView.AllSettings.Instance.DisplayViewSettings.CharcoalColor;
         CloneBinding( this._titleStatusStrip, binding );
 
         // if ( this._titleStatusStrip.DataBindings.Exists( binding ) ) { this._layout.DataBindings.Remove( binding ); }
         // this._titleStatusStrip.DataBindings.Add( binding );
 
-        this._errorStatusStrip.BackColor = DisplayView.DisplayViewSettings.CharcoalColor;
+        this._errorStatusStrip.BackColor = DisplayView.AllSettings.Instance.DisplayViewSettings.CharcoalColor;
         CloneBinding( this._errorStatusStrip, binding );
 
         // if ( this._errorStatusStrip.DataBindings.Exists( binding ) ) { this._layout.DataBindings.Remove( binding ); }
         // this._errorStatusStrip.DataBindings.Add( binding );
 
-        this._statusStrip.BackColor = DisplayView.DisplayViewSettings.CharcoalColor;
+        this._statusStrip.BackColor = DisplayView.AllSettings.Instance.DisplayViewSettings.CharcoalColor;
         CloneBinding( this._statusStrip, binding );
 
         // if ( this._statusStrip.DataBindings.Exists( binding ) ) { this._layout.DataBindings.Remove( binding ); }
