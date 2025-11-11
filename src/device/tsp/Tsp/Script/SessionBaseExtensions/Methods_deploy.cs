@@ -229,7 +229,8 @@ public static partial class SessionBaseExtensionMethods
         ScriptInfoCollection embeddedScriptInfoCollection = new()
         {
             SerialNumber = scripts.SerialNumber,
-            ModelNumber = scripts.ModelNumber,
+            Model = scripts.Model,
+            ModelFamily = scripts.ModelFamily,
             NodeNumber = scripts.NodeNumber
         };
 

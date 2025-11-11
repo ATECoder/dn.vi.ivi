@@ -70,7 +70,7 @@ public abstract partial class VisaSessionBase : IDisposable
             ResourcesFilter = this.Session.ResourcesFilter!
         };
         this.PollTimerInternal = new System.Timers.Timer() { Enabled = false, AutoReset = true, Interval = 1000d };
-        this._pollEnabled = new Std.Concurrent.ConcurrentToken<bool>() { Value = false };
+        this._pollEnabled = new cc.isr.VI.Primitives.ConcurrentToken<bool>() { Value = false };
     }
 
     /// <summary>   Applies the default syntax. </summary>

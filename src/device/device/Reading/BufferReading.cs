@@ -562,7 +562,7 @@ public class BufferReading
 /// Licensed under The MIT License.</para><para>
 /// David, 2016-07-23 </para>
 /// </remarks>
-public class BufferReadingBindingList : Std.BindingLists.InvokingBindingList<BufferReading>
+public class BufferReadingBindingList : VI.Primitives.BindingLists.InvokingBindingList<BufferReading>
 {
     #region " construction "
 

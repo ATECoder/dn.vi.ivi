@@ -185,7 +185,7 @@ public abstract partial class SubsystemBase : CommunityToolkit.Mvvm.ComponentMod
     #region " service request handling option flags "
 
     /// <summary>   (Immutable) the service request handling options token. </summary>
-    private readonly Lazy<Std.Concurrent.ConcurrentToken<ServiceRequestHandlingOption>> _serviceRequestHandlingOptionsToken = new( () => new Std.Concurrent.ConcurrentToken<ServiceRequestHandlingOption>() );
+    private readonly Lazy<cc.isr.VI.Primitives.ConcurrentToken<ServiceRequestHandlingOption>> _serviceRequestHandlingOptionsToken = new( () => new cc.isr.VI.Primitives.ConcurrentToken<ServiceRequestHandlingOption>() );
 
     /// <summary>   Gets or sets the Service Request Fetch Reading enabled service request option. </summary>
     /// <presentValue> The Service Request Fetch Reading service request option enabled. </presentValue>

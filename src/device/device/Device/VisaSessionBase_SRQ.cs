@@ -4,7 +4,7 @@ namespace cc.isr.VI;
 
 public partial class VisaSessionBase
 {
-    private readonly Std.Concurrent.ConcurrentToken<string> _serviceRequestFailureMessageToken = new();
+    private readonly cc.isr.VI.Primitives.ConcurrentToken<string> _serviceRequestFailureMessageToken = new();
 
     /// <summary> Gets or sets a message describing the service request failure. </summary>
     /// <value> A message describing the service request failure. </value>
@@ -53,7 +53,7 @@ public partial class VisaSessionBase
     }
 
     /// <summary> The service request Status concurrent token. </summary>
-    private readonly Std.Concurrent.ConcurrentToken<int> _serviceRequestStatusToken = new();
+    private readonly cc.isr.VI.Primitives.ConcurrentToken<int> _serviceRequestStatusToken = new();
 
     /// <summary> Gets or sets the Service Request Status. </summary>
     /// <value> The Service Request Status. </value>
@@ -71,7 +71,7 @@ public partial class VisaSessionBase
     }
 
     /// <summary> The service request reading concurrent token. </summary>
-    private readonly Std.Concurrent.ConcurrentToken<string> _serviceRequestReadingToken = new();
+    private readonly cc.isr.VI.Primitives.ConcurrentToken<string> _serviceRequestReadingToken = new();
 
     /// <summary> Gets or sets the Service Request reading. </summary>
     /// <value> The Service Request reading. </value>
@@ -89,7 +89,7 @@ public partial class VisaSessionBase
     }
 
     /// <summary>   (Immutable) the lazy service request automatic read token. </summary>
-    private readonly Lazy<Std.Concurrent.ConcurrentToken<bool>> _lazyServiceRequestAutoReadToken = new( () => new Std.Concurrent.ConcurrentToken<bool>() );
+    private readonly Lazy<cc.isr.VI.Primitives.ConcurrentToken<bool>> _lazyServiceRequestAutoReadToken = new( () => new cc.isr.VI.Primitives.ConcurrentToken<bool>() );
 
     /// <summary> Gets or sets the automatic read Service Requesting option . </summary>
     /// <value> The automatic read service request option. </value>

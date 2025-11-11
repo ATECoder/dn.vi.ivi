@@ -4,7 +4,34 @@ namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
 public static partial class SessionBaseExtensionMethods
 {
-    /// <summary>   Fetches the names of the embedded scripts. </summary>
+    /// <summary>
+    /// A <see cref="Pith.SessionBase"/> extension method that queries if a script is embedded and byte code. </summary>
+    /// <remarks>   2025-10-04. </remarks>
+    /// <param name="session">      The session. </param>
+    /// <param name="scriptInfo">   Information describing the script. </param>
+    /// <param name="details">      [out] The details. </param>
+    /// <returns>   True if script embedded, false if not. </returns>
+    public static bool IsScriptEmbeddedAndByteCode( this Pith.SessionBase session, ScriptInfo scriptInfo, out string details )
+    {
+        if ( !session.IncludedInLoadedTable( scriptInfo.RequireChunkName, out details ) )
+            details = $"Script '{scriptInfo.Title}' is not embedded; {details}.";
+        else if ( !session.IsInLoaded( scriptInfo.RequiredChunkName, out details ) )
+            details = $"Script '{scriptInfo.Title}' is not embedded; {details}.";
+        else if ( !session.IsScriptEmbedded( scriptInfo.Title ) )
+            details = $"Script '{scriptInfo.Title}' is not embedded.";
+        else if ( !session.IsByteCodeScript( scriptInfo.Title ) )
+            details = $"Script '{scriptInfo.Title}' is not in byte code.";
+        else if ( scriptInfo.IsAutoexec && !session.IsAutoRun( scriptInfo.Title ) )
+            details = $"Script '{scriptInfo.Title}' is not set to auto run.";
+        else
+            details = string.Empty;
+        if ( string.IsNullOrEmpty( details ) )
+            SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tScript '{scriptInfo.Title}' is embedded;. " );
+        return string.IsNullOrWhiteSpace( details );
+    }
+
+    /// <summary>
+    /// A <see cref="Pith.SessionBase"/> extension method that fetches the names of the embedded scripts. </summary>
     /// <remarks>   2024-09-05. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>
@@ -40,8 +67,23 @@ public static partial class SessionBaseExtensionMethods
         return scriptNames;
     }
 
+    /// <summary>   
+    /// A <see cref="string"/> extension method that filters script names by prefix in this collection. </summary>
+    /// <remarks>   2025-11-06. </remarks>
+    /// <param name="scriptNames">  The scriptNames to act on. </param>
+    /// <param name="prefixFilter"> (Optional) A filter specifying the prefix. </param>
+    /// <returns>
+    /// An enumerator that allows foreach to be used to process filter script names by prefix in this
+    /// collection.
+    /// </returns>
+    public static IEnumerable<string> FilterScriptNamesByPrefix( this string scriptNames, string prefixFilter = "isr_" )
+    {
+        string[] filteredScriptNames = scriptNames.Split( ',' );
+        return filteredScriptNames.Where( name => name.StartsWith( prefixFilter, StringComparison.OrdinalIgnoreCase ) );
+    }
+
     /// <summary>
-    /// A <see cref="Pith.SessionBase"/> extension method that check if a script is included in the
+    /// A <see cref="Pith.SessionBase"/> extension method that checks if a script is included in the
     /// catalog of embedded scripts (TSP: _G.script.user.catalog()).
     /// </summary>
     /// <remarks>   2025-04-11. </remarks>

@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using cc.isr.Std.LineEndingExtensions;
 using cc.isr.VI.Tsp.Script.ExportExtensions;
 using cc.isr.VI.Tsp.Script.ScriptInfoExtensions;
 using cc.isr.VI.Tsp.SessionBaseExtensions;
@@ -113,7 +114,7 @@ public static partial class SessionBaseExtensionMethods
 
     /// <summary>
     /// A <see cref="cc.isr.VI.Tsp.Script.ScriptInfo"/> extension method that builds the script. The
-    /// script is trimmed and compressed and encrypted based on the <see cref="ScriptInfo"/>.<see cref="ScriptInfo.DeployFileFormat"/>
+    /// script is trimmed and compressed and encrypted based on the <see cref="ScriptInfo"/>.<see cref="ScriptInfo.DeployResourceFileFormat"/>
     /// unless the format is <see cref="ScriptFormats.ByteCode"/> in which case the script is
     /// compressed and encrypted after it is converted to byte code (compiled) by the
     ///  <see cref="CompileScript(Pith.SessionBase, ScriptInfo, string, string, bool, bool)"/> method.
@@ -133,7 +134,7 @@ public static partial class SessionBaseExtensionMethods
         string builtFilePath = Path.Combine( buildFolder, scriptInfo.BuiltFileName );
         string trimmedFilePath = Path.Combine( buildFolder, scriptInfo.TrimmedFileName );
         string compressedFilePath = Path.Combine( deployFolder, $"{scriptInfo.Title}{ScriptInfo.ScriptCompressedFileExtension}" );
-        string deployFilePath = Path.Combine( deployFolder, scriptInfo.DeployFileName );
+        string deployFilePath = Path.Combine( deployFolder, scriptInfo.DeployResourceFileName );
         string message;
         if ( System.IO.File.Exists( builtFilePath ) )
         {
@@ -144,10 +145,10 @@ public static partial class SessionBaseExtensionMethods
                 SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
             builtFilePath.TrimScript( trimmedFilePath, true );
 
-            if ( scriptInfo.DeployFileFormat.HasFlag( ScriptFormats.Compressed )
-                && !scriptInfo.DeployFileFormat.HasFlag( ScriptFormats.ByteCode ) )
+            if ( scriptInfo.DeployResourceFileFormat.HasFlag( ScriptFormats.Compressed )
+                && !scriptInfo.DeployResourceFileFormat.HasFlag( ScriptFormats.ByteCode ) )
             {
-                string filePath = scriptInfo.DeployFileFormat.HasFlag( ScriptFormats.Encrypted )
+                string filePath = scriptInfo.DeployResourceFileFormat.HasFlag( ScriptFormats.Encrypted )
                     ? compressedFilePath
                     : deployFilePath;
 
@@ -159,7 +160,7 @@ public static partial class SessionBaseExtensionMethods
 
                 System.IO.File.WriteAllText( filePath, scriptInfo.Compressor.CompressToBase64( System.IO.File.ReadAllText( trimmedFilePath ) ), System.Text.Encoding.Default );
 
-                if ( scriptInfo.DeployFileFormat.HasFlag( ScriptFormats.Encrypted ) )
+                if ( scriptInfo.DeployResourceFileFormat.HasFlag( ScriptFormats.Encrypted ) )
                 {
                     message = $"encrypting '{filePath}'\r\n\t\tto '{deployFilePath}'";
                     if ( consoleOut )
@@ -175,41 +176,39 @@ public static partial class SessionBaseExtensionMethods
     }
 
     /// <summary>
-    /// A <see cref="Pith.SessionBase"/> extension method that compiles and exports a loaded user script 
-    /// based on the <see cref="ScriptInfo"/>.<see cref="ScriptInfo.DeployFileFormat"/> if <see cref="ScriptFormats.ByteCode"/>.
+    /// A <see cref="Pith.SessionBase"/> extension method that exports a loaded script to a file
+    /// based on the <see cref="ScriptInfo"/>.<see cref="ScriptInfo.FileName"/> and <see cref="ScriptInfo"/>.
+    /// 
+    /// <see cref="ScriptInfo.FileFormat"/>.
     /// </summary>
-    /// <remarks>   2025-09-19. </remarks>
+    /// <remarks>
+    /// 2025-09-19. <para>
+    /// This method prevents exporting byte code scripts for deployment because the script must be
+    /// instrument independent whereas byte code is instrument dependent.
+    /// </para>
+    /// </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
     ///                                                 are null. </exception>
     /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
     ///                                                 invalid. </exception>
     /// <param name="session">      The session. </param>
     /// <param name="scriptInfo">   Information describing the script. </param>
-    /// <param name="deployFolder"> Pathname of the deploy folder. </param>
+    /// <param name="exportFolder"> Pathname of the export folder. </param>
+    /// <param name="validate">     (Optional) True to validate. </param>
     /// <param name="consoleOut">   (Optional) True to console out. </param>
-    public static void CompileLoadedScript( this Pith.SessionBase session, ScriptInfo scriptInfo, string deployFolder, bool consoleOut = false )
+    public static void ExportLoadedScript( this Pith.SessionBase session, ScriptInfo scriptInfo, string exportFolder, bool validate = true, bool consoleOut = false )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( scriptInfo is null ) throw new ArgumentNullException( nameof( scriptInfo ) );
 
         if ( !session.IsDeviceOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
 
-        if ( !scriptInfo.DeployFileFormat.HasFlag( ScriptFormats.ByteCode ) )
-            throw new InvalidOperationException( $"{nameof( scriptInfo )}.{nameof( scriptInfo.DeployFileFormat )} does include {nameof( ScriptFormats.ByteCode )}." );
+        ScriptFormats fileFormat = scriptInfo.FileFormat;
+        if ( !fileFormat.HasFlag( ScriptFormats.ByteCode ) && session.IsByteCodeScript( scriptInfo.Title ) )
+            _ = fileFormat != ScriptFormats.ByteCode;
 
-        string deployFilePath = Path.Combine( deployFolder, scriptInfo.DeployFileName );
+        string exportFilePath = Path.Combine( exportFolder, scriptInfo.FileName );
         string message;
-
-        // convert the script to byte code.
-        if ( scriptInfo.DeployFileFormat.HasFlag( ScriptFormats.ByteCode ) && !session.IsByteCodeScript( scriptInfo.Title ) )
-        {
-            message = $"converting to byte code '{scriptInfo.Title}'";
-            if ( consoleOut )
-                SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
-            else
-                SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
-            session.ConvertToByteCode( scriptInfo.Title );
-        }
 
         // run the script to ensure the code works.
         session.RunScript( scriptInfo.Title, scriptInfo.VersionGetterElement );
@@ -219,39 +218,61 @@ public static partial class SessionBaseExtensionMethods
         if ( string.IsNullOrWhiteSpace( scriptSource ) )
             throw new InvalidOperationException( $"The script {scriptInfo.Title} cannot be exported because it is empty." );
 
-        if ( scriptInfo.DeployFileFormat.HasFlag( ScriptFormats.Compressed ) )
+        // terminate the contents with a single line ending.
+        scriptSource = scriptSource.TrimMultipleLineEndings();
+
+        // replace line endings with Windows new line validating with the LineEndingExtensions.ReplaceLineEnding method
+        scriptSource = scriptSource.TerminateLines( validate );
+
+        string compressed = scriptSource;
+        if ( fileFormat.HasFlag( ScriptFormats.Compressed ) )
         {
             message = $"compressing '{scriptInfo.Title}'";
             if ( consoleOut )
                 SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
             else
                 SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
-            scriptSource = scriptInfo.Compressor.CompressToBase64( scriptSource );
+            compressed = scriptInfo.Compressor.CompressToBase64( compressed );
         }
 
-        if ( scriptInfo.DeployFileFormat.HasFlag( ScriptFormats.Encrypted ) )
+        if ( fileFormat.HasFlag( ScriptFormats.Encrypted ) )
         {
             message = $"encrypting '{scriptInfo.Title}'";
             if ( consoleOut )
                 SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
             else
                 SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
-            scriptSource = scriptInfo.Encryptor.EncryptToBase64( scriptSource );
+            compressed = scriptInfo.Encryptor.EncryptToBase64( compressed );
         }
 
-        message = $"exporting '{scriptInfo.Title}' to '{deployFilePath}'";
+        if ( validate && (fileFormat.HasFlag( ScriptFormats.Compressed ) || fileFormat.HasFlag( ScriptFormats.Encrypted )) )
+        {
+            string decompressed = compressed;
+            if ( fileFormat.HasFlag( ScriptFormats.Encrypted ) )
+                decompressed = scriptInfo.Encryptor.DecryptFromBase64( decompressed );
+            if ( fileFormat.HasFlag( ScriptFormats.Compressed ) )
+                decompressed = scriptInfo.Compressor.DecompressFromBase64( decompressed );
+
+            if ( scriptSource.Length != decompressed.Length )
+                throw new InvalidOperationException( $"The compressed script source could not be validated; the de-compressed length {decompressed.Length} does not match the end-of-line trimmed source length {scriptSource.Length}." );
+
+            if ( !scriptSource.Equals( decompressed, StringComparison.Ordinal ) )
+                throw new InvalidOperationException( $"The compressed script source could not be validated; the de-compressed content does not match the original source." );
+        }
+
+        message = $"exporting '{scriptInfo.Title}' to '{exportFilePath}'";
         if ( consoleOut )
             SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
         else
             SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
 
         // write the source to file.
-        System.IO.File.WriteAllText( deployFilePath, scriptSource, System.Text.Encoding.Default );
+        System.IO.File.WriteAllText( exportFilePath, scriptSource, System.Text.Encoding.Default );
     }
 
     /// <summary>
     /// A <see cref="Pith.SessionBase"/> extension method that trims, compressed and encrypts the
-    /// script based on the <see cref="ScriptInfo"/>.<see cref="ScriptInfo.DeployFileFormat"/>, loads
+    /// script based on the <see cref="ScriptInfo"/>.<see cref="ScriptInfo.DeployResourceFileFormat"/>, loads
     /// and runs the script and, optionally, exports the script to compressed and encrypted byte code.
     /// </summary>
     /// <remarks>
@@ -308,16 +329,11 @@ public static partial class SessionBaseExtensionMethods
 
         // run the script to ensure the code works.
         session.RunScript( scriptInfo.Title, scriptInfo.VersionGetterElement );
-
-        if ( scriptInfo.DeployFileFormat.HasFlag( ScriptFormats.ByteCode ) )
-            session.CompileLoadedScript( scriptInfo, deployFolder, consoleOut );
     }
 
     /// <summary>
-    /// A <see cref="Pith.SessionBase"/> extension method that trims, compressed and encrypts all
-    /// framework scripts based on the <see cref="ScriptInfo"/>.<see cref="ScriptInfo.DeployFileFormat"/>,
-    /// loads and runs each script and, optionally, exports the script to compressed and encrypted
-    /// byte code.
+    /// A <see cref="Pith.SessionBase"/> extension method that trims, loads, runs and exports the framework scripts 
+    /// based on the <see cref="ScriptInfo"/>.<see cref="ScriptInfo.DeployResourceFileFormat"/>.
     /// </summary>
     /// <remarks>
     /// 2025-04-22. <para>
@@ -326,13 +342,12 @@ public static partial class SessionBaseExtensionMethods
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>
     /// <param name="session">          The session. </param>
-    /// <param name="versionInfo">      The versionInfo to act on. </param>
     /// <param name="scripts">          The collection of scripts. </param>
     /// <param name="buildFolder">      Pathname of the build folder. </param>
     /// <param name="deployFolder">     Pathname of the deploy folder. </param>
     /// <param name="deleteExisting">   True to delete the existing script prior to building nad importing. </param>
     /// <param name="consoleOut">       True to console out. </param>
-    public static void CompileScripts( this Pith.SessionBase session, VersionInfoBase versionInfo, ScriptInfoCollection scripts,
+    public static void CompileScripts( this Pith.SessionBase session, ScriptInfoCollection scripts,
         string buildFolder, string deployFolder, bool deleteExisting, bool consoleOut )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
@@ -349,11 +364,15 @@ public static partial class SessionBaseExtensionMethods
                 if ( scriptInfo is null ) continue;
                 if ( scriptInfo.VersionGetter is null ) continue;
 
-                // build the deploy file name based on the FrameworkInfo default file format for this script.
-                _ = scriptInfo.BuildDeployFileName( versionInfo );
-
                 session.DisplayLine( $"Compiling {scriptInfo.Title} ...", 2, 1 );
                 session.CompileScript( scriptInfo, buildFolder, deployFolder, deleteExisting, consoleOut );
+
+                // set the script file name and format for export.
+                scriptInfo.FileName = scriptInfo.DeployResourceFileName;
+                scriptInfo.FileFormat = scriptInfo.DeployResourceFileFormat;
+
+                // export the loaded script to file.
+                session.ExportLoadedScript( scriptInfo, deployFolder, consoleOut );
             }
         }
         catch ( Exception )

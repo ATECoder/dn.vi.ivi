@@ -158,7 +158,7 @@ public sealed partial class Asserts
 
     /// <summary> Message describing the expected service request. </summary>
     private static string _expectedServiceRequestMessage = string.Empty;
-    private static readonly Std.Concurrent.ConcurrentToken<string> _serviceRequestReadingToken = new();
+    private static readonly cc.isr.VI.Primitives.ConcurrentToken<string> _serviceRequestReadingToken = new();
 
     /// <summary> Handles the service request. </summary>
     /// <param name="sender"> Source of the event. </param>

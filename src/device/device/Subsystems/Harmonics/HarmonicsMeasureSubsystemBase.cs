@@ -278,7 +278,7 @@ public abstract partial class HarmonicsMeasureSubsystemBase : SubsystemBase
 
     /// <summary>   Gets or sets a list of buffer readings bindings. </summary>
     /// <value> A list of buffer readings bindings. </value>
-    public Std.BindingLists.InvokingBindingList<MeasuredAmount> BufferReadingsBindingList { get; private set; } = [];
+    public VI.Primitives.BindingLists.InvokingBindingList<MeasuredAmount> BufferReadingsBindingList { get; private set; } = [];
 
     /// <summary>   Gets the number of buffer readings. </summary>
     /// <value> The number of buffer readings. </value>

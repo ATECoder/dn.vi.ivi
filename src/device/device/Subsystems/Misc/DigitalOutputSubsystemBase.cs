@@ -27,7 +27,7 @@ public abstract partial class DigitalOutputSubsystemBase : SubsystemBase, IDispo
         this.DigitalActiveLevelReadWrites = [];
         this.DefineDigitalActiveLevelReadWrites();
         this.DigitalOutputLines = [];
-        this.BinningStrobeTasker = new Std.Async.Tasker();
+        this.BinningStrobeTasker = new();
         // make sure the dispatcher is instantiated. This takes a bit of time the first time around
         VI.Pith.SessionBase.DoEventsAction?.Invoke();
     }
@@ -459,7 +459,7 @@ public abstract partial class DigitalOutputSubsystemBase : SubsystemBase, IDispo
 
     /// <summary> Gets or sets the tasker. </summary>
     /// <value> The tasker. </value>
-    public Std.Async.Tasker BinningStrobeTasker { get; private set; }
+    public cc.isr.Std.Async.Tasker BinningStrobeTasker { get; private set; }
 
     /// <summary> Starts strobe task. </summary>
     /// <remarks> David, 2020-07-17. </remarks>
@@ -471,7 +471,7 @@ public abstract partial class DigitalOutputSubsystemBase : SubsystemBase, IDispo
     public void StartStrobeTask( int strobeLine, TimeSpan strobeDuration, int binLine, TimeSpan binDuration )
     {
         if ( this.BinningStrobeTasker?.IsBusy() == true )
-            throw new InvalidOperationException( $"{nameof( Std.Async.Tasker )} is busy" );
+            throw new InvalidOperationException( $"{nameof( cc.isr.Std.Async.Tasker )} is busy" );
         this.BinningStrobeTasker?.StartAction( () => this.Strobe( strobeLine, strobeDuration, binLine, binDuration ) );
     }
 

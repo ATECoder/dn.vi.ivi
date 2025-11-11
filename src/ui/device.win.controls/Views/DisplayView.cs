@@ -126,7 +126,7 @@ public partial class DisplayView : cc.isr.WinControls.ModelViewBase
         /// <param name="declaringType">        The Type of the declaring object. </param>
         /// <param name="settingsFileSuffix">   (Optional) [.settings] The suffix of the assembly settings file,
         ///                                     e.g., '.settings' in 'cc.isr.VI.Tsp.K2600.Device.MSTest.Session.json'
-        ///                                     where cc.isr.VI.Tsp.K2600.Device.MSTest is the assembly name.<,/param>
+        ///                                     where cc.isr.VI.Tsp.K2600.Device.MSTest is the assembly name.</param>
         /// <param name="overrideAllUsersFile"> (Optional) [false] True to override all users settings file. </param>
         /// <param name="overrideThisUserFile"> (Optional) [false] True to override this user settings file. </param>
         public override void ReadSettings( Type declaringType, string settingsFileSuffix = ".Settings",

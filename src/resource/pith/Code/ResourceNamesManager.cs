@@ -491,6 +491,45 @@ public sealed class ResourceNamesManager
             || ResourceNamesManager.FastPing( ResourceNamesManager.ToIPAddress( resourceName ), timeoutMilliseconds, pingHops, doNotFragment );
     }
 
+    /// <summary>   Attempts to ping a TCP/IP VISA resource. </summary>
+    /// <remarks>   2025-11-10. </remarks>
+    /// <param name="resourceName">         The name of the resource. </param>
+    /// <param name="details">              [out] The details. </param>
+    /// <param name="timeoutMilliseconds">  (Optional) (1000) The timeout in milliseconds. </param>
+    /// <param name="pingHops">             (Optional) (2) The number of routing nodes that can
+    ///                                     forward the Ping data before it is discarded. </param>
+    /// <param name="doNotFragment">        (Optional) (true) a Boolean value that controls
+    ///                                     fragmentation of the data sent to the remote host. </param>
+    /// <returns>   True if it succeeds, false if it fails. </returns>
+    public static bool TryPingTcpIpResource( string resourceName, out string details, int timeoutMilliseconds = 1000, int pingHops = 2, bool doNotFragment = true )
+    {
+        if ( resourceName == null )
+        {
+            details = $"{nameof( resourceName )} argument is null.";
+            return false;
+        }
+        else if ( string.IsNullOrWhiteSpace( resourceName ) )
+        {
+            details = $"{nameof( resourceName )} argument is empty.";
+            return false;
+        }
+        else if ( ResourceNamesManager.IsTcpIpResource( resourceName ) )
+        {
+            details = $"{resourceName} is not a TCP/IP resource.";
+            return true;
+        }
+        else if ( !ResourceNamesManager.FastPing( ResourceNamesManager.ToIPAddress( resourceName ), timeoutMilliseconds, pingHops, doNotFragment ) )
+        {
+            details = $"Ping to {ResourceNamesManager.ToIPAddress( resourceName )} with {pingHops} hops timed out after {timeoutMilliseconds} ms.";
+            return false;
+        }
+        else
+        {
+            details = string.Empty;
+            return true;
+        }
+    }
+
     /// <summary>   Gets or sets the ping timeout. </summary>
     /// <value> The ping timeout. </value>
     public static TimeSpan PingTimeout { get; set; } = TimeSpan.FromMilliseconds( 1000 );

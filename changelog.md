@@ -2,9 +2,31 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9436]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9446]: https://www.github.com/atecoder/dn.vi.ivi
 
 Current IVI Visa Compatibility: 8.0.1.9391
+
+## [8.1.9446] - 2025-11-11
+- Device:
+  - Add concurrent token.
+  - Add invoking binding list.
+- Device TSP Script Session Extensions:
+  - Add method to filter script names by prefix.
+  - Add method to delete script.
+- Device Tsp
+  - Script info
+    - Make changes comensurate with deploying non-byte-code files.
+   - Remove the deploy file title.
+   - Rename the deploy file name to a read only EmbeddedResourceFileName.
+   - Add File Name and format properties for export and import.
+    - fix the script info deploy file name and file format.
+    - add ExportedFileFormat
+   - set deploy file format as readonly and set to not byte code.
+
+## [8.1.9440] - 2025-11-05
+- Device:
+  - Add concurrent token.
+  - Add invoking binding list.
 
 ## [8.1.9436] - 2025-11-01
 - Pith

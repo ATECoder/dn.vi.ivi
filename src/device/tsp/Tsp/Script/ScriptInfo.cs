@@ -24,25 +24,26 @@ public class ScriptInfo
     /// <param name="script">   The script. </param>
     public ScriptInfo( ScriptInfo script )
     {
-        this.Title = script.Title;
-        this.Encryptor = script.Encryptor;
+        this.BuiltFileName = script.BuiltFileName;
         this.Compressor = script.Compressor;
         this.EmbedAsByteCode = script.EmbedAsByteCode;
+        this.EmbeddedVersion = script.EmbeddedVersion;
+        this.Encryptor = script.Encryptor;
+        this.DeployResourceFileFormat = script.DeployResourceFileFormat;
+        this.DeployResourceFileName = script.DeployResourceFileName;
+        this.FileFormat = script.FileFormat;
+        this.FileName = script.FileName;
         this.IsAutoexec = script.IsAutoexec;
         this.IsEncrypted = script.IsEncrypted;
         this.IsPrimary = script.IsPrimary;
         this.IsSupport = script.IsSupport;
-        this.PriorVersion = script.PriorVersion;
         this.NextVersion = script.NextVersion;
-        this.EmbeddedVersion = script.EmbeddedVersion;
-        this.BuiltFileName = script.BuiltFileName;
-        this.TrimmedFileName = script.TrimmedFileName;
-        this.DeployFileTitle = script.DeployFileTitle;
-        this.DeployFileName = script.DeployFileName;
-        this.DeployFileFormat = script.DeployFileFormat;
+        this.PriorVersion = script.PriorVersion;
         this.RequireChunkName = script.RequireChunkName;
         this.RequiredChunkName = script.RequiredChunkName;
         this.ScriptStatus = script.ScriptStatus;
+        this.Title = script.Title;
+        this.TrimmedFileName = script.TrimmedFileName;
         this.VersionGetter = script.VersionGetter;
         this.VersionStatus = script.VersionStatus;
     }
@@ -98,11 +99,11 @@ public class ScriptInfo
                  : ScriptInfo.ScriptFileExtension;
     }
 
-    /// <summary>   Detect script file format. </summary>
+    /// <summary>   Parse the script format from the provided file extension. </summary>
     /// <remarks>   2025-09-30. </remarks>
     /// <param name="fileExtension">    The file extension. </param>
-    /// <returns>   The ScriptFormats. </returns>
-    public static ScriptFormats DetectScriptFileFormat( string fileExtension )
+    /// <returns>   The <see cref="ScriptFormats"/>. </returns>
+    public static ScriptFormats ParseFileFormats( string fileExtension )
     {
         return fileExtension.ToLowerInvariant() switch
         {
@@ -118,18 +119,6 @@ public class ScriptInfo
         };
     }
 
-    /// <summary>   Detect script file format. </summary>
-    /// <remarks>   2025-09-30. </remarks>
-    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
-    ///                                             null. </exception>
-    /// <param name="fileInfo"> Information describing the file. </param>
-    /// <returns>   The ScriptFormats. </returns>
-    public static ScriptFormats DetectScriptFileFormat( FileInfo fileInfo )
-    {
-        if ( fileInfo is null ) throw new ArgumentNullException( nameof( fileInfo ) );
-        return DetectScriptFileFormat( fileInfo.Extension );
-    }
-
     /// <summary>   Builds script file title. </summary>
     /// <remarks>   2025-04-05. </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
@@ -143,29 +132,28 @@ public class ScriptInfo
     ///                                     script file format. </param>
     /// <param name="scriptVersion">        (Optional) [empty] The release version. Specify the
     ///                                     version only with build files. </param>
-    /// <param name="baseModel">            (Optional) [empty] The base model. </param>
+    /// <param name="modelFamily">          (Optional) [empty] The model family, e.g., 2600A. </param>
     /// <param name="modelMajorVersion">    (Optional) [empty] The model major version. </param>
     /// <returns>   A string. </returns>
     public static string BuildScriptFileTitle( string baseTitle, ScriptFormats fileFormat = ScriptFormats.None,
-        string scriptVersion = "", string baseModel = "", string modelMajorVersion = "" )
+        string scriptVersion = "", string modelFamily = "", string modelMajorVersion = "" )
     {
         if ( string.IsNullOrWhiteSpace( baseTitle ) )
             throw new ArgumentNullException( nameof( baseTitle ) );
 
-        string title = baseTitle;
-
-        if ( string.IsNullOrWhiteSpace( scriptVersion ) )
-            title = $"{title}.{scriptVersion}";
+        string title = string.IsNullOrWhiteSpace( scriptVersion )
+            ? baseTitle
+            : $"{baseTitle}.{scriptVersion}";
 
 
         if ( ScriptFormats.ByteCode == (fileFormat & ScriptFormats.ByteCode) )
         {
             // byte code files are always deployed or loaded from a deployed file.
-            if ( string.IsNullOrWhiteSpace( baseModel ) )
-                throw new ArgumentNullException( nameof( baseModel ) );
+            if ( string.IsNullOrWhiteSpace( modelFamily ) )
+                throw new ArgumentNullException( nameof( modelFamily ) );
             if ( string.IsNullOrWhiteSpace( modelMajorVersion ) )
                 throw new ArgumentNullException( nameof( modelMajorVersion ) );
-            title = $"{title}.{baseModel}.{modelMajorVersion}";
+            title = $"{title}.{modelFamily}.{modelMajorVersion}";
         }
         return title;
     }
@@ -177,13 +165,13 @@ public class ScriptInfo
     ///                                     file format. </param>
     /// <param name="scriptVersion">        (Optional) [empty] The release version. Specify the
     ///                                     version only with build files. </param>
-    /// <param name="baseModel">            (Optional) [empty] The base model. </param>
+    /// <param name="modelFamily">          (Optional) [empty] The model family, e.g., 2600A. </param>
     /// <param name="modelMajorVersion">    (Optional) [empty] The model major version. </param>
     /// <returns>   A string. </returns>
     public static string BuildScriptFileName( string baseTitle, ScriptFormats fileFormat = ScriptFormats.None,
-        string scriptVersion = "", string baseModel = "", string modelMajorVersion = "" )
+        string scriptVersion = "", string modelFamily = "", string modelMajorVersion = "" )
     {
-        string title = ScriptInfo.BuildScriptFileTitle( baseTitle, fileFormat, scriptVersion, baseModel, modelMajorVersion );
+        string title = ScriptInfo.BuildScriptFileTitle( baseTitle, fileFormat, scriptVersion, modelFamily, modelMajorVersion );
         string ext = ScriptInfo.SelectScriptFileExtension( fileFormat );
         return $"{title}{ext}";
     }
@@ -299,17 +287,35 @@ public class ScriptInfo
     [Description( "The trimmed file name []" )]
     public virtual string TrimmedFileName { get; set; } = string.Empty;
 
-    /// <summary>   Gets or sets the deploy file title. </summary>
-    /// <value> The deploy file title. </value>
-    public virtual string DeployFileTitle { get; set; } = string.Empty;
+    /// <summary>   Gets or sets the deployed resource file name. </summary>
+    /// <value> The deployed resource file name. </value>
+    public virtual string DeployResourceFileName { get; private set; } = string.Empty;
 
-    /// <summary>   Gets or sets the deploy file name. </summary>
-    /// <value> The deploy file name. </value>
-    public virtual string DeployFileName { get; set; } = string.Empty;
+    /// <summary>   Gets or sets the deployed resource file format. </summary>
+    /// <value> The deployed resource file format. </value>
+    public virtual ScriptFormats DeployResourceFileFormat { get; private set; } = ScriptFormats.None;
 
-    /// <summary>   Gets or sets the deploy file format. </summary>
-    /// <value> The deploy file format. </value>
-    public virtual ScriptFormats DeployFileFormat { get; set; } = ScriptFormats.None;
+    /// <summary>   Sets deployed resource file format. </summary>
+    /// <remarks>   2025-11-08. </remarks>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <param name="format">   Describes the <see cref="ScriptFormats"/> in which to export the
+    ///                         script file to be included as a resource for deployment. </param>
+    public virtual void SetDeployResourceFileFormat( ScriptFormats format )
+    {
+        if ( format.HasFlag( ScriptFormats.ByteCode ) )
+            throw new InvalidOperationException( "Cannot set the deploy file format to byte code." );
+        this.DeployResourceFileFormat = format;
+        this.DeployResourceFileName = ScriptInfo.BuildScriptFileName( this.Title, format );
+    }
+
+    /// <summary>   Gets or sets the script file name as stored on disk for import and export. </summary>
+    /// <value> The script file name. </value>
+    public virtual string FileName { get; set; } = string.Empty;
+
+    /// <summary>   Gets or sets the script file format as stored on disk for import and export. </summary>
+    /// <value> The script file format. </value>
+    public virtual ScriptFormats FileFormat { get; set; } = ScriptFormats.None;
 
     /// <summary>   Gets or sets the Version Getter function of the script. </summary>
     /// <value> The version getter function of the script. </value>
@@ -342,53 +348,6 @@ public class ScriptInfo
     /// <summary>   Gets or sets the version status. </summary>
     /// <value> The version status. </value>
     public virtual FirmwareVersionStatus VersionStatus { get; set; } = FirmwareVersionStatus.Unknown;
-
-    #endregion
-
-    #region " file name builders "
-
-    /// <summary>   Builds the deploy file title. </summary>
-    /// <remarks>   2025-04-15. </remarks>
-    /// <param name="modelFamily">          Information describing the version. </param>
-    /// <param name="modelMajorVersion">    [empty] The model major version. </param>
-    /// <returns>   The deploy file title. </returns>
-    public virtual string BuildDeployFileTitle( string modelFamily, string modelMajorVersion )
-    {
-        this.DeployFileTitle = ScriptFormats.ByteCode == (this.DeployFileFormat & ScriptFormats.ByteCode)
-            ? $"{this.Title}.{modelFamily}.{modelMajorVersion}"
-            : this.Title;
-        return this.DeployFileTitle;
-    }
-
-    /// <summary>   Builds the deploy file title. </summary>
-    /// <remarks>   2025-04-15. </remarks>
-    /// <param name="versionInfo">  Information describing the version. </param>
-    /// <returns>   The deploy file title. </returns>
-    public virtual string BuildDeployFileTitle( VersionInfoBase versionInfo )
-    {
-        return this.BuildDeployFileTitle( versionInfo.ModelFamily, versionInfo.FirmwareVersion.Major.ToString( System.Globalization.CultureInfo.CurrentCulture ) );
-    }
-
-    /// <summary>   Builds deploy file name. </summary>
-    /// <remarks>   2025-04-16. </remarks>
-    /// <param name="modelFamily">          Information describing the version. </param>
-    /// <param name="modelMajorVersion">    [empty] The model major version. </param>
-    /// <returns>   A string. </returns>
-    public virtual string BuildDeployFileName( string modelFamily, string modelMajorVersion )
-    {
-        _ = this.BuildDeployFileTitle( modelFamily, modelMajorVersion );
-        this.DeployFileName = $"{this.DeployFileTitle}{ScriptInfo.SelectScriptFileExtension( this.DeployFileFormat )}";
-        return this.DeployFileName;
-    }
-
-    /// <summary>   Builds deploy file name. </summary>
-    /// <remarks>   2025-04-15. </remarks>
-    /// <param name="versionInfo">  Information describing the version. </param>
-    /// <returns>   A string. </returns>
-    public virtual string BuildDeployFileName( VersionInfoBase versionInfo )
-    {
-        return this.BuildDeployFileName( versionInfo.ModelFamily, versionInfo.FirmwareVersion.Major.ToString( System.Globalization.CultureInfo.CurrentCulture ) );
-    }
 
     #endregion
 
@@ -528,7 +487,8 @@ public class ScriptInfoBaseCollection<TItem> : System.Collections.ObjectModel.Ke
     public ScriptInfoBaseCollection( ScriptInfoBaseCollection<TItem> scripts )
     {
         this.NodeNumber = scripts.NodeNumber;
-        this.ModelNumber = scripts.ModelNumber;
+        this.Model = scripts.Model;
+        this.ModelFamily = scripts.ModelFamily;
         this.SerialNumber = scripts.SerialNumber;
         foreach ( ScriptInfo script in scripts )
             _ = this.AddScriptItem( new ScriptInfo( script ) );
@@ -597,9 +557,13 @@ public class ScriptInfoBaseCollection<TItem> : System.Collections.ObjectModel.Ke
     /// <value> The node number. </value>
     public int NodeNumber { get; set; } = 0;
 
-    /// <summary>   Gets or sets the model number. </summary>
-    /// <value> The model number. </value>
-    public string ModelNumber { get; set; } = string.Empty;
+    /// <summary>   Gets or sets the instrument model, e.g.,. 2612A. </summary>
+    /// <value> The instrument model. </value>
+    public string Model { get; set; } = string.Empty;
+
+    /// <summary>   Gets or sets the instrument model family, e.g.,. 2600A. </summary>
+    /// <value> The instrument model family. </value>
+    public string ModelFamily { get; set; } = string.Empty;
 
     /// <summary>   Gets or sets the serial number. </summary>
     /// <value> The serial number. </value>
@@ -612,32 +576,9 @@ public class ScriptInfoBaseCollection<TItem> : System.Collections.ObjectModel.Ke
     public void SetDeviceInfo( VersionInfoBase versionInfo, int nodeNumber )
     {
         this.NodeNumber = nodeNumber;
-        this.ModelNumber = versionInfo.Model;
+        this.Model = versionInfo.Model;
+        this.ModelFamily = versionInfo.ModelFamily;
         this.SerialNumber = versionInfo.SerialNumber;
-        this.BuildDeployFileNames( versionInfo );
-    }
-
-    /// <summary>   Builds deploy file names. </summary>
-    /// <remarks>   2025-05-08. </remarks>
-    /// <param name="version">  The framework version. </param>
-    public void BuildDeployFileNames( VersionInfoBase version )
-    {
-        foreach ( ScriptInfo scriptInfo in this )
-        {
-            scriptInfo.DeployFileName = scriptInfo.BuildDeployFileName( version );
-        }
-    }
-
-    /// <summary>   Builds deploy file names. </summary>
-    /// <remarks>   2025-05-26. </remarks>
-    /// <param name="modelFamily">          The model family. </param>
-    /// <param name="modelMajorVersion">    The model major version. </param>
-    public void BuildDeployFileNames( string modelFamily, string modelMajorVersion )
-    {
-        foreach ( ScriptInfo scriptInfo in this )
-        {
-            _ = scriptInfo.BuildDeployFileName( modelFamily, modelMajorVersion );
-        }
     }
 
     #endregion
@@ -652,7 +593,7 @@ public class ScriptInfoBaseCollection<TItem> : System.Collections.ObjectModel.Ke
     public string BuildScriptStateReport()
     {
         System.Text.StringBuilder builder = new();
-        _ = builder.AppendLine( $"Info for '{this.ModelNumber}' SN {this.SerialNumber} node {this.NodeNumber}:" );
+        _ = builder.AppendLine( $"Info for '{this.Model}' SN {this.SerialNumber} node {this.NodeNumber}:" );
         foreach ( ScriptInfo script in this.Items )
         {
             if ( !string.IsNullOrWhiteSpace( script.Title ) )

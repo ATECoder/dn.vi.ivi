@@ -159,6 +159,58 @@ public static partial class SessionBaseExtensionMethods
     }
 
     /// <summary>
+    /// A <see cref="Pith.SessionBase"/> extension method that deletes the scripts.
+    /// </summary>
+    /// <remarks>   2025-11-06. </remarks>
+    /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
+    ///                                                 are null. </exception>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <param name="session">      The session. </param>
+    /// <param name="scriptNames">  List of names of the scripts. </param>
+    /// <returns>   A Tuple. </returns>
+    public static (int TtmScriptCount, int deletedScriptCount) DeleteScripts( this SessionBase session, IEnumerable<string> scriptNames )
+    {
+        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
+        if ( scriptNames is null ) throw new ArgumentNullException( nameof( scriptNames ) );
+        if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
+
+        int removedCount = 0;
+        int scriptCount = scriptNames.Count();
+
+        if ( scriptCount == 0 )
+        {
+            session.DisplayLine( "No scripts to delete", 2 );
+            TraceLastAction( $"\r\n\tNo scripts to delete." );
+            return (scriptCount, removedCount);
+        }
+
+        session.TraceLastAction( "enabling service request on operation completion" );
+        session.EnableServiceRequestOnOperationCompletion();
+
+
+        session.DisplayLine( "Deleting scripts", 1 );
+
+        session.LastNodeNumber = default;
+        foreach ( string scriptName in scriptNames )
+        {
+            string scriptTitle = scriptName.Trim();
+
+            if ( string.IsNullOrWhiteSpace( scriptTitle ) )
+                continue;
+
+            removedCount += 1;
+            session.DisplayLine( $"Removing {scriptTitle}", 2 );
+            session.DeleteScript( scriptTitle, true );
+        }
+
+        string message = $"Removed {removedCount} of {scriptCount} TTM embedded scripts";
+        session.DisplayLine( message, 2 );
+        TraceLastAction( $"\r\n\t{message}" );
+        return (scriptCount, removedCount);
+    }
+
+    /// <summary>
     /// A <see cref="Pith.SessionBase"/> extension method that deletes the embedded scripts.
     /// </summary>
     /// <remarks>   2025-05-13. </remarks>
@@ -179,38 +231,16 @@ public static partial class SessionBaseExtensionMethods
 
         string embeddedScripts = session.FetchEmbeddedScriptsNames();
 
-        int removedCount = 0;
-        string[] scriptNames = embeddedScripts.Split( ',' );
-        int scriptCount = scriptNames.Length;
-
-        session.DisplayLine( "Deleting scripts", 1 );
-
-        session.LastNodeNumber = default;
-        foreach ( string scriptName in scriptNames )
+        if ( string.IsNullOrWhiteSpace( embeddedScripts ) )
         {
-            string scriptTitle = scriptName.Trim();
-
-            if ( string.IsNullOrWhiteSpace( scriptTitle ) )
-                continue;
-
-            if ( scriptTitle.StartsWith( prefixFilter ) )
-            {
-                removedCount += 1;
-                session.DisplayLine( $"Removing {scriptTitle}", 2 );
-                session.DeleteScript( scriptTitle, true );
-            }
-            else
-            {
-                // if the script is non isr script, decrement the script count and skip it.
-                session.DisplayLine( $"Skipping {scriptTitle} script", 2 );
-                scriptCount -= 1;
-            }
+            session.DisplayLine( "No embedded scripts to delete", 2 );
+            TraceLastAction( $"\r\n\tNo embedded scripts to delete." );
+            return (0, 0);
         }
 
-        string message = $"Removed {removedCount} of {scriptCount} TTM embedded scripts";
-        session.DisplayLine( message, 2 );
-        TraceLastAction( $"\r\n\t{message}" );
-        return (scriptCount, removedCount);
+        IEnumerable<string> scriptNames = embeddedScripts.FilterScriptNamesByPrefix( prefixFilter );
+
+        return session.DeleteScripts( scriptNames );
     }
 
     /// <summary>

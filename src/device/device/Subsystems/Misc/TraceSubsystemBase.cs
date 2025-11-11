@@ -24,14 +24,14 @@ public abstract partial class TraceSubsystemBase : SubsystemBase, IDisposable
         this.FeedSourceReadWrites = [];
         this.DefineFeedSourceReadWrites();
         this.BufferReadingsBindingList = [];
-        this.BusTriggerRequestedToken = new Std.Concurrent.ConcurrentToken<bool>();
-        this.BufferStreamingEnabledToken = new Std.Concurrent.ConcurrentToken<bool>();
-        this.BufferStreamingActiveToken = new Std.Concurrent.ConcurrentToken<bool>();
-        this.BufferStreamingAlertToken = new Std.Concurrent.ConcurrentToken<bool>();
-        this.BinningStrobeRequestedToken = new Std.Concurrent.ConcurrentToken<bool>();
+        this.BusTriggerRequestedToken = new cc.isr.VI.Primitives.ConcurrentToken<bool>();
+        this.BufferStreamingEnabledToken = new cc.isr.VI.Primitives.ConcurrentToken<bool>();
+        this.BufferStreamingActiveToken = new cc.isr.VI.Primitives.ConcurrentToken<bool>();
+        this.BufferStreamingAlertToken = new cc.isr.VI.Primitives.ConcurrentToken<bool>();
+        this.BinningStrobeRequestedToken = new cc.isr.VI.Primitives.ConcurrentToken<bool>();
         this.NewBufferReadingsQueue = new System.Collections.Concurrent.ConcurrentQueue<BufferReading>();
         this.MeasuredElementType = ReadingElementTypes.Voltage;
-        this.BufferStreamTasker = new Std.Async.Tasker();
+        this.BufferStreamTasker = new();
         this._lastBufferReading = new();
         this._bufferReadingUnit = new();
     }
@@ -940,7 +940,7 @@ public abstract partial class TraceSubsystemBase : SubsystemBase, IDisposable
 
     /// <summary> Gets or sets the binning strobe requested token. </summary>
     /// <value> The binning strobe requested token. </value>
-    private Std.Concurrent.ConcurrentToken<bool> BinningStrobeRequestedToken { get; set; }
+    private cc.isr.VI.Primitives.ConcurrentToken<bool> BinningStrobeRequestedToken { get; set; }
 
     /// <summary> Gets or sets the binning strobe requested. </summary>
     /// <value> The binning strobe requested. </value>
@@ -963,7 +963,7 @@ public abstract partial class TraceSubsystemBase : SubsystemBase, IDisposable
 
     /// <summary> Gets or sets the bus trigger requested token. </summary>
     /// <value> The bus trigger requested token. </value>
-    private Std.Concurrent.ConcurrentToken<bool> BusTriggerRequestedToken { get; set; }
+    private cc.isr.VI.Primitives.ConcurrentToken<bool> BusTriggerRequestedToken { get; set; }
 
     /// <summary> Gets or sets BUS Trigger Requested. </summary>
     /// <value> The Bus Trigger Requested value. </value>
@@ -982,7 +982,7 @@ public abstract partial class TraceSubsystemBase : SubsystemBase, IDisposable
 
     /// <summary> Gets or sets the buffer streaming enabled token. </summary>
     /// <value> The buffer streaming enabled token. </value>
-    private Std.Concurrent.ConcurrentToken<bool> BufferStreamingEnabledToken { get; set; }
+    private cc.isr.VI.Primitives.ConcurrentToken<bool> BufferStreamingEnabledToken { get; set; }
 
     /// <summary> Gets or sets the buffer streaming enabled. </summary>
     /// <value> The buffer streaming enabled. </value>
@@ -1002,7 +1002,7 @@ public abstract partial class TraceSubsystemBase : SubsystemBase, IDisposable
 
     /// <summary> Gets or sets the buffer streaming alert token. </summary>
     /// <value> The buffer streaming alert token. </value>
-    private Std.Concurrent.ConcurrentToken<bool> BufferStreamingAlertToken { get; set; }
+    private cc.isr.VI.Primitives.ConcurrentToken<bool> BufferStreamingAlertToken { get; set; }
 
     /// <summary> Gets or sets the buffer streaming Alert. </summary>
     /// <value> The buffer streaming Alert. </value>
@@ -1021,7 +1021,7 @@ public abstract partial class TraceSubsystemBase : SubsystemBase, IDisposable
 
     /// <summary> Gets or sets the buffer streaming active token. </summary>
     /// <value> The buffer streaming active token. </value>
-    private Std.Concurrent.ConcurrentToken<bool> BufferStreamingActiveToken { get; set; }
+    private cc.isr.VI.Primitives.ConcurrentToken<bool> BufferStreamingActiveToken { get; set; }
 
     /// <summary> Gets or sets the buffer streaming Active. </summary>
     /// <value> The buffer streaming Active. </value>
@@ -1130,7 +1130,7 @@ public abstract partial class TraceSubsystemBase : SubsystemBase, IDisposable
     /// <summary> Gets the buffer stream tasker. </summary>
     /// <exception cref="ArgumentNullException"> Thrown when one or more required arguments are null. </exception>
     /// <value> The buffer stream tasker. </value>
-    public Std.Async.Tasker BufferStreamTasker { get; private set; }
+    public cc.isr.Std.Async.Tasker BufferStreamTasker { get; private set; }
 
     /// <summary> Starts buffer stream. </summary>
     /// <remarks> David, 2020-07-20. </remarks>

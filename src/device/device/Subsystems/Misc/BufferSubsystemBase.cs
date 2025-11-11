@@ -756,7 +756,7 @@ public abstract class BufferSubsystemBase( StatusSubsystemBase statusSubsystem )
     }
 
     /// <summary> The buffer streaming enabled. </summary>
-    private readonly Std.Concurrent.ConcurrentToken<bool> _bufferStreamingEnabled = new();
+    private readonly cc.isr.VI.Primitives.ConcurrentToken<bool> _bufferStreamingEnabled = new();
 
     /// <summary> Gets or sets the buffer streaming enabled. </summary>
     /// <value> The buffer streaming enabled. </value>
@@ -774,7 +774,7 @@ public abstract class BufferSubsystemBase( StatusSubsystemBase statusSubsystem )
     }
 
     /// <summary> The buffer streaming active. </summary>
-    private readonly Std.Concurrent.ConcurrentToken<bool> _bufferStreamingActive = new();
+    private readonly cc.isr.VI.Primitives.ConcurrentToken<bool> _bufferStreamingActive = new();
 
     /// <summary> Gets or sets the buffer streaming Active. </summary>
     /// <value> The buffer streaming Active. </value>
@@ -792,7 +792,7 @@ public abstract class BufferSubsystemBase( StatusSubsystemBase statusSubsystem )
     }
 
     /// <summary> The buffer streaming alert. </summary>
-    private readonly Std.Concurrent.ConcurrentToken<bool> _bufferStreamingAlert = new();
+    private readonly cc.isr.VI.Primitives.ConcurrentToken<bool> _bufferStreamingAlert = new();
 
     /// <summary> Gets or sets the buffer streaming Alert. </summary>
     /// <value> The buffer streaming Alert. </value>
@@ -873,7 +873,7 @@ public abstract class BufferSubsystemBase( StatusSubsystemBase statusSubsystem )
 
     /// <summary> Gets or sets the buffer stream tasker. </summary>
     /// <value> The buffer stream tasker. </value>
-    public Std.Async.Tasker BufferStreamTasker { get; private set; } = new Std.Async.Tasker();
+    public Std.Async.Tasker BufferStreamTasker { get; private set; } = new();
 
     /// <summary> Starts buffer stream. </summary>
     /// <remarks> David, 2020-07-20. </remarks>

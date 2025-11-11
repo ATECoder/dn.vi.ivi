@@ -120,11 +120,12 @@ public static partial class SessionBaseMethods
     /// A <see cref="Pith.SessionBase"/> extension method that displays text on the instrument panel.
     /// </summary>
     /// <remarks>   2025-04-14. </remarks>
-    /// <param name="session">      The session. </param>
-    /// <param name="contents">     The contents. </param>
-    /// <param name="lineNumber">   (Optional) The line number. </param>
-    /// <param name="columnNumber"> (Optional) The column number. </param>
-    public static void DisplayLine( this Pith.SessionBase session, string contents, int lineNumber = 1, int columnNumber = 1 )
+    /// <param name="session">                  The session. </param>
+    /// <param name="contents">                 The contents. </param>
+    /// <param name="lineNumber">               (Optional) The line number. </param>
+    /// <param name="columnNumber">             (Optional) The column number. </param>
+    /// <param name="queryOperationComplete">   (Optional) True to query operation completion complete. </param>
+    public static void DisplayLine( this Pith.SessionBase session, string contents, int lineNumber = 1, int columnNumber = 1, bool queryOperationComplete = false )
     {
         // ignore empty strings.
         if ( string.IsNullOrWhiteSpace( contents ) )
@@ -144,7 +145,20 @@ public static partial class SessionBaseMethods
         int availableLength = length - columnNumber + 1;
         if ( contents.Length < availableLength )
             contents = contents.PadRight( availableLength );
-        _ = session.WriteLine( Syntax.Tsp.Display.SetTextCommandFormat, contents );
+        if ( queryOperationComplete )
+        {
+            string command = string.Format( Syntax.Tsp.Display.SetTextCommandFormat, contents );
+            command += " " + Syntax.Tsp.Lua.OperationCompletedQueryCommand;
+            _ = session.WriteLine( command );
+
+            // read query reply and throw if reply is not 1.
+            session.ReadAndThrowIfOperationIncomplete();
+
+            // throw if device errors
+            session.ThrowDeviceExceptionIfError();
+        }
+        else
+            _ = session.WriteLine( Syntax.Tsp.Display.SetTextCommandFormat, contents );
     }
 
     /// <summary>   A <see cref="Pith.SessionBase"/> extension method that displays text. </summary>

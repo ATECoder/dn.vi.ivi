@@ -67,7 +67,7 @@ public partial class VisaSessionBase
         }
     }
 
-    private Std.Concurrent.ConcurrentToken<bool>? _pollEnabled;
+    private cc.isr.VI.Primitives.ConcurrentToken<bool>? _pollEnabled;
 
     /// <summary> Gets or sets the poll enabled. </summary>
     /// <value> The poll enabled. </value>
