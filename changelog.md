@@ -2,254 +2,259 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9446]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9447]: https://www.github.com/atecoder/dn.vi.ivi
 
 Current IVI Visa Compatibility: 8.0.1.9391
 
+## [8.1.9447] - 2025-11-12
+Script Loader
+- Update package versions.
+- Implement command line changed due to change from 2.0.0.beta to 2.0.0.
+
 ## [8.1.9446] - 2025-11-11
-- Device:
-  - Add concurrent token.
-  - Add invoking binding list.
-- Device TSP Script Session Extensions:
-  - Add method to filter script names by prefix.
-  - Add method to delete script.
-- Device Tsp
-  - Script info
-    - Make changes comensurate with deploying non-byte-code files.
-   - Remove the deploy file title.
-   - Rename the deploy file name to a read only EmbeddedResourceFileName.
-   - Add File Name and format properties for export and import.
-    - fix the script info deploy file name and file format.
-    - add ExportedFileFormat
-   - set deploy file format as readonly and set to not byte code.
+Device:
+- Add concurrent token.
+- Add invoking binding list.
+Device TSP Script Session Extensions:
+- Add method to filter script names by prefix.
+- Add method to delete script.
+Device Tsp
+- Script info
+  - Make changes comensurate with deploying non-byte-code files.
+ - Remove the deploy file title.
+ - Rename the deploy file name to a read only EmbeddedResourceFileName.
+ - Add File Name and format properties for export and import.
+  - fix the script info deploy file name and file format.
+  - add ExportedFileFormat
+ - set deploy file format as readonly and set to not byte code.
 
 ## [8.1.9440] - 2025-11-05
-- Device:
-  - Add concurrent token.
-  - Add invoking binding list.
+Device:
+- Add concurrent token.
+- Add invoking binding list.
 
 ## [8.1.9436] - 2025-11-01
-- Pith
-  - Add Node and error queue commands.
 - Replace operation failed exception with Invalid Operation Exception.
-- Visa Console:
-  - support nullability.
-- Session:
-  - Move settings classes to an All Settings class.
-- Settings
-  - Move Scribe and Assembly File Info creation to Create Instance.
-  - Define section name when construction a single settings scribe.
-  - Use the scribe for reading the settings.
-  - Document creating the instance.
-  - Copy settings if debug or not existing.
-  - Use existence check from the scribe class.
-  - Replace the abstract read and save settings with implementations using the created scribe.
-  - Override CreateScribe.
-  - Use Read Settings to initialize the settings instance.
-- Tests
-  - Replace TestContext?.CancellationTokenSource.Token with TestContext?.CancellationToken.
-  - Remove  test class attributes from abstract test classes.
+Pith
+- Add Node and error queue commands.
+Visa Console:
+- support nullability.
+Session:
+- Move settings classes to an All Settings class.
+Settings
+- Move Scribe and Assembly File Info creation to Create Instance.
+- Define section name when construction a single settings scribe.
+- Use the scribe for reading the settings.
+- Document creating the instance.
+- Copy settings if debug or not existing.
+- Use existence check from the scribe class.
+- Replace the abstract read and save settings with implementations using the created scribe.
+- Override CreateScribe.
+- Use Read Settings to initialize the settings instance.
+Tests
+- Replace TestContext?.CancellationTokenSource.Token with TestContext?.CancellationToken.
+- Remove  test class attributes from abstract test classes.
 
 ## [8.1.9432] - 2025-10-28
 - Replace operation failed exception with Invalid Operation Exception.
-- Visa Console:
-  - support nullability.
-- Session:
-  - Move settings classes to an All Settings class.
-- Settings
-  - Move Scribe and Assembly File Info creation to Create Instance.
-  - Define section name when construction a single settings scribe.
-  - Use the scribe for reading the settings.
-  - document creating the instance.
-  - Copy settings if debug or not existing.
-  - Use existence check from the scribe class.
-  - Replace the abstract read and save settings with implementations using the created scribe.
-- All Settings
-  - Initialize default scribe and update when reading.
+Visa Console:
+- support nullability.
+Session:
+- Move settings classes to an All Settings class.
+Settings
+- Move Scribe and Assembly File Info creation to Create Instance.
+- Define section name when construction a single settings scribe.
+- Use the scribe for reading the settings.
+- document creating the instance.
+- Copy settings if debug or not existing.
+- Use existence check from the scribe class.
+- Replace the abstract read and save settings with implementations using the created scribe.
+All Settings
+- Initialize default scribe and update when reading.
 
 ## [8.1.9428] - 2025-10-24
 - Remove Std MSTest project from solution.
 - Add Exists to settings file and remove enabled and all from settigns files and classes.
-- MS Test:
-  - Remove reference to the cc.isr.Std.MSTest project.
-  - Replace test site settings with Location Settings subclass of the JSon location settings base.
-  - Use Settings base class from the JSon Application Settings library.
-  - Use Settings Container base class from the JSon Application Settings library.
+MS Test:
+- Remove reference to the cc.isr.Std.MSTest project.
+- Replace test site settings with Location Settings subclass of the JSon location settings base.
+- Use Settings base class from the JSon Application Settings library.
+- Use Settings Container base class from the JSon Application Settings library.
 
 ## [8.1.9424] - 2025-10-20
 - project files: cleanup.
 - Remove extra packages from test project files. 
 - Add bucket repository reference to the build properties.
-- Tsp.Script:
-  - Update code using the script compressor and encryptor interfaces.
-- Device MSTest
-  - Test Assert: Replace string format expressions with interpolated scripts.
+Tsp.Script:
+- Update code using the script compressor and encryptor interfaces.
+Device MSTest
+- Test Assert: Replace string format expressions with interpolated scripts.
 
 ## [8.1.9421] - 2025-10-17
-- Update packages:
-  - .NET Test SDK to 4.0.1.
-  - Microsoft Extensions to 9.0.10.
-  - XUnit from 3.1.4 to 3.1.5.
-  - Fluent Assertions from 8.6.0 to 8.7.1. 
-  - Microsoft.Net.Test.SDK from 17.14.1 to 18.0.0.
-  - BenchmarkDotNet from 0.14.0 to 0.15.4.
-- Test projects
-  - Use [TestMethod( DisplayName = "...']
-  - Change [ClassCleanup( ClassCleanupBehavior.EndOfClass )] to [ClassCleanup]
-  - Add parallelize to the assembly attributes.
-  - change Assert...( ..., format, args ); to Assert...(... string.Format( System.Globalization.CultureInfo.CurrentCulture, format, args ) );
-  - Use Assert.HasCount<T> in place of Assert.AreEquals( count, [T].Length ).
-- directory.build.props
-  - update packages.
-  - point to the current repository.
+Update packages:
+- .NET Test SDK to 4.0.1.
+- Microsoft Extensions to 9.0.10.
+- XUnit from 3.1.4 to 3.1.5.
+- Fluent Assertions from 8.6.0 to 8.7.1. 
+- Microsoft.Net.Test.SDK from 17.14.1 to 18.0.0.
+- BenchmarkDotNet from 0.14.0 to 0.15.4.
+Test projects
+- Use [TestMethod( DisplayName = "...']
+- Change [ClassCleanup( ClassCleanupBehavior.EndOfClass )] to [ClassCleanup]
+- Add parallelize to the assembly attributes.
+- change Assert...( ..., format, args ); to Assert...(... string.Format( System.Globalization.CultureInfo.CurrentCulture, format, args ) );
+- Use Assert.HasCount<T> in place of Assert.AreEquals( count, [T].Length ).
+directory.build.props
+- update packages.
+- point to the current repository.
 
 ## [8.1.9418] - 2025-10-14
-- Device.TSP
-  - Session Export Extensions: Add Model.Major to exported files.
+Device.TSP
+- Session Export Extensions: Add Model.Major to exported files.
 
 ## [8.1.9414] - 2025-10-10
-- Device.Tsp
-  - Load: Add load method with conversion to byte code.
-  - Export:
-    - Pass the export folder name as an argument to the export method.
+Device.Tsp
+- Load: Add load method with conversion to byte code.
+- Export:
+  - Pass the export folder name as an argument to the export method.
 
 ## [8.1.9412] - 2025-10-08
-- Visa
-  - Add KeysightVisa compilation condition to toggle between Keysight Visa and Kelary Visa packages.
-- Device.TSP
-  - Export: Export to FrameworkID\Boot Version\Instrument Model\SN\Date\
+Visa
+- Add KeysightVisa compilation condition to toggle between Keysight Visa and Kelary Visa packages.
+Device.TSP
+- Export: Export to FrameworkID\Boot Version\Instrument Model\SN\Date\
 
 ## [8.1.9411] - 2025-10-07
 - Update the versions to 8.1.9411.108
-- Device.TSP
-  - Session base extensions: 
-    - Add IsScriptExist method checking if the script is embedded or is a user script.
-    - Add IsScriptDeleted method.  
-	- Validate that script was deleted.
-  - Remove Ignore Existing from the script import and load methods.
+Device.TSP
+- Session base extensions: 
+  - Add IsScriptExist method checking if the script is embedded or is a user script.
+  - Add IsScriptDeleted method.  
+  - Validate that script was deleted.
+- Remove Ignore Existing from the script import and load methods.
 
 ## [8.1.9410] - 2025-10-06
 - Increment TTM firmware release version to 9410.
 - Increment project versions to 9410.
-- TTM Settings
-  - Set contact limit to 75.
-  - Set default contact limit to 75.
-- All tests passed.
+TTM Settings
+- Set contact limit to 75.
+- Set default contact limit to 75.
+All tests passed.
 
 ## [8.1.9409] - 2025-10-05
-- Device.tsp
-  - Session extensions
-    - Embed: Document that the scripts are Embedded as byte code.
-    - build: 
-	  - Compile to byte code only if script format so indicates.
-	  - Add argument for deleting the existing script.
-	- import: remove optional condition from the import method.
+vice.tsp
+- Session extensions
+  - Embed: Document that the scripts are Embedded as byte code.
+  - build: 
+    - Compile to byte code only if script format so indicates.
+    - Add argument for deleting the existing script.
+- import: remove optional condition from the import method.
 
 ## [8.1.9407] - 2025-10-03
-- Device.tsp Session Base Extensions
-  - Trim: Add trim script info extension method.
-  - Load: remove options from boolean arguments.
-  - Import: remove options from boolean arguments.
-  - Compile: Update the compile script: do not delete the script to allow compile and load over an existing script.
+Device.tsp Session Base Extensions
+- Trim: Add trim script info extension method.
+- Load: remove options from boolean arguments.
+- Import: remove options from boolean arguments.
+- Compile: Update the compile script: do not delete the script to allow compile and load over an existing script.
 
 ## [8.1.9405] - 2025-10-01
-- Device.TSP
-  - Update the display of firmware info.
-  - Update the exporting the embedded firmware.
-- Device MS Test
-  - Rename local time zone test method.
+Device.TSP
+- Update the display of firmware info.
+- Update the exporting the embedded firmware.
+Device MS Test
+- Rename local time zone test method.
 
 ## [8.1.9404] - 2025-09-30
-- Device TSP: 
-  - Rename Save to NVM to Embed.
-  - Add optional folder to GetTempFolder method.
-  - Rename Trim and Compress methods to Build
-  - Add Caller Member name to GetTempFolder method.
+Device TSP: 
+- Rename Save to NVM to Embed.
+- Add optional folder to GetTempFolder method.
+- Rename Trim and Compress methods to Build
+- Add Caller Member name to GetTempFolder method.
 
 ## [8.1.9401] - 2025-09-27
-- Device TSP
-  - Add compressor and encryptor to relevant import methods.
-  - Change decompress validation to compare the result with decomress(compress).
-- 2600 MS Test
-  - Add unit tests tot eh read-me file. 
-- 2600 TTM MS Test
-  - Add unit tests tot eh read-me file.
+Device TSP
+- Add compressor and encryptor to relevant import methods.
+- Change decompress validation to compare the result with decomress(compress).
+2600 MS Test
+- Add unit tests tot eh read-me file. 
+2600 TTM MS Test
+- Add unit tests tot eh read-me file.
 
 ## [8.1.9398] - 2025-09-24
-- TTM
-  - Rename latest, e.g., latest version, to present (e.g., present version).
-- Device TSP:
-  - Use ~cc.isr as a temporary folder.
+TTM
+- Rename latest, e.g., latest version, to present (e.g., present version).
+Device TSP:
+- Use ~cc.isr as a temporary folder.
 
 ## [8.1.9396] - 2025-09-22
 - Rename source and destination file arguments to input and output file arguments.
-- Device TSP
-   - update implementation of compression and encryption of script files.
+Device TSP
+ - update implementation of compression and encryption of script files.
 
 ## [8.1.9394] - 2025-09-20
-- Device.Tsp:
-  - Add script encryptor interface.
-  - Add encryption option to the build.
-  - Script Info: 
-    - Set the Is Encrypted value.
-	- Add I Compressor
-    - Rename Script File Format to Script Format.
-  - Add Script Info extension methods.
-- Encryptor Interface
-  - Remove code leaving only conversion to Base 64.
-- Implement I Encryptor.
-- K2600 MS Test
-  - Remove script tests, which are already in the Firmware project.
-  - Remove compression tests from script tests.
+Device.Tsp:
+- Add script encryptor interface.
+- Add encryption option to the build.
+- Script Info: 
+  - Set the Is Encrypted value.
+  - Add I Compressor
+  - Rename Script File Format to Script Format.
+- Add Script Info extension methods.
+Encryptor Interface
+- Remove code leaving only conversion to Base 64.
+Implement I Encryptor.
+K2600 MS Test
+- Remove script tests, which are already in the Firmware project.
+- Remove compression tests from script tests.
 
 ## [8.1.9393] - 2025-09-19
-- MS Tests:
-  - Remove duplicate check of loaded VISA implementation
-  - Add Assert method for checking the loaded visa implementation.
-  - Use Assert method to check the loaded visa implementation.
-- Device.Tsp:
-  - Add script encryptor interface.
-  - Add encryption option to the build.
-  - Script Info: 
-    - Rename Released Version to Prior version.
-    - Rename Latest Version to Next version.
-    - Rename Actual Version to Embedded version.
+MS Tests:
+- Remove duplicate check of loaded VISA implementation
+- Add Assert method for checking the loaded visa implementation.
+- Use Assert method to check the loaded visa implementation.
+Device.Tsp:
+- Add script encryptor interface.
+- Add encryption option to the build.
+- Script Info: 
+  - Rename Released Version to Prior version.
+  - Rename Latest Version to Next version.
+  - Rename Actual Version to Embedded version.
   
 ## [8.1.9392] - 2025-09-18
 - Requires Keysight IO Suite 21.2.207.
 - Uses KeySight Technologies VISA 18.6.6 package.
 - Move Kelary projects to the IVI Visa and IVI Visa app solutions.
 - Remove the VISA Apps and tests from the Device, 2600 and firmware solutions.
-- GAC Loader:
-  - Revamp the GAC loader to expose the loaded assemblies and report interface and vendor type session implementations.
-- Device MS Test:
-  - Add contact check tests.
-  - Update the TTM instrument guide.
-- Device Tsp:
-  - Rename isBinary and saveAsBinary to isByteCode and saveAsByteCode. 
-  - Add encrypted file format.
+GAC Loader:
+- Revamp the GAC loader to expose the loaded assemblies and report interface and vendor type session implementations.
+Device MS Test:
+- Add contact check tests.
+- Update the TTM instrument guide.
+Device Tsp:
+- Rename isBinary and saveAsBinary to isByteCode and saveAsByteCode. 
+- Add encrypted file format.
 
 ## [8.1.9386] - 2025-09-12
-- Resource:
-  - Add 'Add Load Menu Item Command format.
-- Device
-  - Move Tsp Session Base Extensions to the Device Tsp project.
-- Device Tsp
-  - Add method to add a load item.
+Resource:
+- Add 'Add Load Menu Item Command format.
+Device
+- Move Tsp Session Base Extensions to the Device Tsp project.
+Device Tsp
+- Add method to add a load item.
 
 ## [8.1.9385] - 2025-09-11
 - MSTest: Enable implicit using.
 - Add device TSP MS Test project.
 - Add ni.rohde solution.
 - Remove ni rohde projects from other solutions.
-- 2600.Ttm.sln:
-  - Remove unused and framework MS Test and Demo projects.
-- cc.isr.VI.Device:
-  - SourceSubsystemBase: 
-    - Set source function none to -1, current to 0 and voltage to 1.
-    - Parse source function query from a numeric reply.
-- K2600 MS Test
-  - Implement source function application tests.
+2600.Ttm.sln:
+- Remove unused and framework MS Test and Demo projects.
+cc.isr.VI.Device:
+- SourceSubsystemBase: 
+  - Set source function none to -1, current to 0 and voltage to 1.
+  - Parse source function query from a numeric reply.
+K2600 MS Test
+- Implement source function application tests.
 
 ## [8.1.9383] - 2025-09-09
 - Implement code analysis recommendations.
