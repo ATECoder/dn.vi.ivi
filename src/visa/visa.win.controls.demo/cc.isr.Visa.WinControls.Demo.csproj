@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net9.0-windows</TargetFramework>
+    <TargetFrameworks>net48;net10.0-windows</TargetFrameworks>
     <LangVersion>preview</LangVersion>
 
     <UseWindowsForms>true</UseWindowsForms>
@@ -83,6 +83,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Properties\favicon.ico" />
   </ItemGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)'=='net472' or '$(TargetFramework)'=='net48'">
+    <!-- Addresses failures to load assemblies due to manifest definition mismatch -->
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+  </PropertyGroup>
 
   <Import Project="..\visa.win.controls\version.build.props" />
 

@@ -65,7 +65,7 @@ internal static class Program
         Program.TraceLogger.CreateLogger( typeof( UI.VisaIoForm ) );
         Program.TraceLogger.MinimumLogLevel = Properties.Settings.Instance.ApplicationLogLevel;
 
-#if NET8_0_OR_GREATER
+#if NET5_0_OR_GREATER
         Application.SetHighDpiMode( HighDpiMode.SystemAware );
 #endif
         Application.EnableVisualStyles();

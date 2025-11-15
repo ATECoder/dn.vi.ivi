@@ -2,7 +2,7 @@
   <PropertyGroup>
     <EnablePreviewFeatures>true</EnablePreviewFeatures>
 
-    <TargetFrameworks>net9.0-windows</TargetFrameworks>
+    <TargetFrameworks>net10.0-windows</TargetFrameworks>
     <LangVersion>preview</LangVersion>
 
     <OutputType>WinExe</OutputType>
@@ -73,6 +73,7 @@
   <ItemGroup>
     <None Remove="cc.isr.VI.Tsp.K2600.Ttm.Console.Driver.json" />
     <None Remove="cc.isr.VI.Tsp.K2600.Ttm.Console.Lot.json" />
+    <None Remove="cc.isr.VI.Tsp.K2600.Ttm.Console.Session.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -105,6 +106,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="cc.isr.VI.Tsp.K2600.Ttm.Console.Lot.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="cc.isr.VI.Tsp.K2600.Ttm.Console.Session.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="cc.isr.VI.Tsp.K2600.Ttm.Console.Settings.json">

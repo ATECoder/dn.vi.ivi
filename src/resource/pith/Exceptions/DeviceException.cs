@@ -45,7 +45,7 @@ public class DeviceException : ExceptionBase
     /// <param name="context"> The <see cref="System.Runtime.Serialization.StreamingContext" />
     /// that contains contextual information about the source or destination.
     /// </param>
-#if NET8_0_OR_GREATER
+#if NET5_0_OR_GREATER
 #pragma warning disable CA1041 // Provide ObsoleteAttribute message
 [Obsolete( DiagnosticId = "SYSLIB0051" )] // add this attribute to the serialization ctor
 #pragma warning restore CA1041 // Provide ObsoleteAttribute message
@@ -66,7 +66,7 @@ public class DeviceException : ExceptionBase
     /// <param name="context"> The <see cref="System.Runtime.Serialization.StreamingContext">streaming
     /// context</see> for the exception. </param>
     [System.Security.Permissions.SecurityPermission( System.Security.Permissions.SecurityAction.Demand, SerializationFormatter = true )]
-#if NET8_0_OR_GREATER
+#if NET5_0_OR_GREATER
 #pragma warning disable CA1041 // Provide ObsoleteAttribute message
 [Obsolete( DiagnosticId = "SYSLIB0051" )] // add this attribute to the serialization ctor
 #pragma warning restore CA1041 // Provide ObsoleteAttribute message

@@ -1,15 +1,15 @@
-### Developer notes
+# Developer notes
 
 These libraries includes the source code for accessing the Virtual Instrument Software Architecture (VISA) implementation by the [IVI Foundation].
 
-#### Compatibility with IVI Visa
+## Compatibility with IVI Visa
 
 This [VI Repository] class libraries targets  VISA implementation such as [NI VISA] or [Keysight I/O Suite] from .NET Standard 2.0 using the [.Net Standard Compatibility Mode], which means that *... .NET Standard and .NET Core projects [can] reference .NET Framework libraries. Referencing .NET Framework libraries doesn't work for all projects, such as if the library uses Windows Presentation Foundation (WPF) APIs, but it does unblock many porting scenarios.*
 
 As noted by [Kelary.Ivi.Visa]
 > IVI can be called via the [Kelary.Ivi.Visa] package from .NET 5.0 and above by pre-loading the support libraries. This library demonstrated that Ivi.Visa can be called from .NET Standard 2.0 by pre-loading the support libraries.
 
-#### [Kelary Notes](https://www.nuget.org/packages/Kelary.Ivi.Visa)
+## [Kelary Notes](https://www.nuget.org/packages/Kelary.Ivi.Visa)
 
 In the traditional approach, [VISA.NET Shared Components] are distributed solely as part of a vendor's installer for its VISA implementation.
 
@@ -19,7 +19,7 @@ If a developed application is intended to work with various third-party VISA imp
 
 This is a simple example of an application bypassing those limitations by using the unofficial NuGet VISA.NET Shared Components distribution, [Kelary.Ivi.Visa].
 
-##### Using VISA.NET in .NET 5+ solutions ###
+### Using VISA.NET in .NET 5+ solutions
 
 .NET Standard, introduced in 2016, marked a pivotal moment in the evolution of the .NET ecosystem.
 Since then, many versions of .NET have emerged, diminishing the relevance of the traditional .NET Framework for new projects.

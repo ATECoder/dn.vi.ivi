@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 Current IVI Visa Compatibility: 8.0.2.9391
 
+## [8.0.2.9450] - 2025-11-15
+- Transition .NET 9.0 projects to .NET 10 and VS2026.
+
 ## [8.0.2.9421] - 2025-10-17
 - Create the Rohde Schwarz solution.
 - directory.build.props

@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net472;net48;net9.0-windows</TargetFrameworks>
+    <TargetFrameworks>net472;net48;net10.0-windows</TargetFrameworks>
     <LangVersion>preview</LangVersion>
 
     <UseWindowsForms>true</UseWindowsForms>
@@ -50,7 +50,7 @@
       is deserialized via BinaryFormatter at runtime. BinaryFormatter is deprecated due to possible security risks and will be removed with .NET 9.
       If you wish to continue using it, set property "GenerateResourceWarnOnBinaryFormatterUse" to false.
       More information: https://aka.ms/msbuild/net8-binaryformatter
-      cc.isr.VI.Tsp.K2600.Ttm.Controls (net9.0-windows)	C:\my\lib\vs\io\vi\src\vi\k2600.ttm\k2600.ttm.controls\UI\MeterView.resx	1	
+      cc.isr.VI.Tsp.K2600.Ttm.Controls (net10.0-windows)	C:\my\lib\vs\io\vi\src\vi\k2600.ttm\k2600.ttm.controls\UI\MeterView.resx	1	
     -->
 
   </PropertyGroup>

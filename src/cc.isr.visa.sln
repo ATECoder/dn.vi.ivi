@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.32112.339
+# Visual Studio Version 18
+VisualStudioVersion = 18.0.11205.157 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "`build", "`build", "{286AA6FE-67D4-4818-8C77-F3AFFF3CCD7D}"
 	ProjectSection(SolutionItems) = preProject
@@ -12,7 +12,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "`build", "`build", "{286AA6
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "`docs", "`docs", "{7DB60340-1A19-41FE-A38B-2C51C86D6B34}"
 	ProjectSection(SolutionItems) = preProject
-		..\developer.md = ..\developer.md
 		visa\isr.visa.changelog.md = visa\isr.visa.changelog.md
 		..\readme.md = ..\readme.md
 		..\todo.md = ..\todo.md
@@ -64,6 +63,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IviVisaCompatibilityTester", "ivi\IviVisaCompatibiityTester\IviVisaCompatibilityTester.csproj", "{B8D3A47C-0DE1-A63A-F204-524B40814D8C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cc.isr.Visa.Console", "visa\visa.console\cc.isr.Visa.Console.csproj", "{580FD653-64E2-62DB-1BF2-EDB88968E374}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cc.isr.Logging.Orlog", "..\..\..\core\logging\src\orlog\orlog\cc.isr.Logging.Orlog.csproj", "{2774B5CE-3C79-4E30-23CC-A63E20EF2466}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -303,6 +304,18 @@ Global
 		{580FD653-64E2-62DB-1BF2-EDB88968E374}.Release|x64.Build.0 = Release|Any CPU
 		{580FD653-64E2-62DB-1BF2-EDB88968E374}.Release|x86.ActiveCfg = Release|Any CPU
 		{580FD653-64E2-62DB-1BF2-EDB88968E374}.Release|x86.Build.0 = Release|Any CPU
+		{2774B5CE-3C79-4E30-23CC-A63E20EF2466}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2774B5CE-3C79-4E30-23CC-A63E20EF2466}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2774B5CE-3C79-4E30-23CC-A63E20EF2466}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2774B5CE-3C79-4E30-23CC-A63E20EF2466}.Debug|x64.Build.0 = Debug|Any CPU
+		{2774B5CE-3C79-4E30-23CC-A63E20EF2466}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2774B5CE-3C79-4E30-23CC-A63E20EF2466}.Debug|x86.Build.0 = Debug|Any CPU
+		{2774B5CE-3C79-4E30-23CC-A63E20EF2466}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2774B5CE-3C79-4E30-23CC-A63E20EF2466}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2774B5CE-3C79-4E30-23CC-A63E20EF2466}.Release|x64.ActiveCfg = Release|Any CPU
+		{2774B5CE-3C79-4E30-23CC-A63E20EF2466}.Release|x64.Build.0 = Release|Any CPU
+		{2774B5CE-3C79-4E30-23CC-A63E20EF2466}.Release|x86.ActiveCfg = Release|Any CPU
+		{2774B5CE-3C79-4E30-23CC-A63E20EF2466}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -327,6 +340,7 @@ Global
 		{AC3F3E9D-6F99-428E-A536-4A8A5DA4520E} = {D59B7EBC-91BB-406B-A4FE-133384A168A9}
 		{B8D3A47C-0DE1-A63A-F204-524B40814D8C} = {D77B2BC9-AA9C-4624-9AB9-6904E9061EDA}
 		{580FD653-64E2-62DB-1BF2-EDB88968E374} = {76EDB5EA-335F-4FD2-A5E9-096D58740739}
+		{2774B5CE-3C79-4E30-23CC-A63E20EF2466} = {D59B7EBC-91BB-406B-A4FE-133384A168A9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {629A4500-0A50-4F53-88C6-402E2360A282}

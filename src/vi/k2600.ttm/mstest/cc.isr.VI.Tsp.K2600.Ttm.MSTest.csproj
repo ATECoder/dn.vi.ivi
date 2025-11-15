@@ -1,9 +1,9 @@
 ﻿<Project Sdk="MSTest.Sdk">
   <PropertyGroup>
     <!-- update later - build often fails on FW 4.72 after running tests
-    <TargetFrameworks>net472;net48;net9.0</TargetFrameworks>
+    <TargetFrameworks>net472;net48;net10.0</TargetFrameworks>
     -->
-    <TargetFrameworks>net9.0</TargetFrameworks>
+    <TargetFrameworks>net10.0</TargetFrameworks>
     <LangVersion>preview</LangVersion>
 
     <ImplicitUsings>enable</ImplicitUsings>

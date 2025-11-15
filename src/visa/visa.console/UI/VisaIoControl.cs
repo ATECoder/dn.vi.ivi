@@ -17,7 +17,7 @@ public partial class VisaIoControl : UserControl
     /// <remarks>   David, 2021-07-26. </remarks>
     /// <param name="sender">   Source of the event. </param>
     /// <param name="e">        Event information. </param>
-#if NET8_0_OR_GREATER
+#if NET5_0_OR_GREATER
     [System.Runtime.Versioning.RequiresPreviewFeatures]
 #endif
     private void VisaIoControl_Load( object? sender, EventArgs e )

@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net9.0-windows</TargetFrameworks>
+    <TargetFrameworks>net48;net10.0-windows</TargetFrameworks>
     <LangVersion>preview</LangVersion>
 
     <OutputType>WinExe</OutputType>
@@ -113,7 +113,7 @@
   <PropertyGroup>
     <!-- WiX Toolset; See https://github.com/wixtoolset/issues/issues/5705
     See also Get Target Path below. -->
-    <_InstallerTargetFramework>net9.0-windows</_InstallerTargetFramework>
+    <_InstallerTargetFramework>net10.0-windows</_InstallerTargetFramework>
   </PropertyGroup>
     
   <Target Name="GetTargetPath" Returns="@(_FakeOutputPath)">
@@ -128,6 +128,12 @@
       <_FakeOutputPath Include="$(MSBuildProjectDirectory)\$(OutputPath)\$(_InstallerTargetFramework)\$(AssemblyName).exe" />
     </ItemGroup>
   </Target>
+
+  <PropertyGroup Condition="'$(TargetFramework)'=='net472' or '$(TargetFramework)'=='net48'">
+    <!-- Addresses failures to load assemblies due to manifest definition mismatch -->
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+  </PropertyGroup>
 
   <Import Project="..\visa.win.controls\version.build.props" />
 

@@ -23,11 +23,10 @@ public class Settings : cc.isr.Json.AppSettings.Settings.SettingsContainerBase
     public override void CreateScribe()
     {
         Settings.ConsoleSettings = new();
-        Settings.LotSettings = new();
         Settings.TtmSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance;
-        Settings.ControlSettings = Controls.Settings.Instance;
+        Settings.LotSettingsContainer = Controls.Settings.Instance;
 
-        this.Scribe = new( [Settings.ConsoleSettings, Settings.LotSettings, Settings.TtmSettings, Settings.ControlSettings] );
+        this.Scribe = new( [Settings.ConsoleSettings] );
     }
 
     /// <summary>
@@ -38,11 +37,11 @@ public class Settings : cc.isr.Json.AppSettings.Settings.SettingsContainerBase
     /// <returns>   The new instance. </returns>
     private static Settings CreateInstance()
     {
-        Settings.TtmSettings.ReadSettings( Settings.TtmSettings.GetType(), ".Driver" );
-        Settings.ControlSettings.ReadSettings( Settings.ControlSettings.GetType(), ".Lot" );
-
         // Get the type of the class that declares this method.
         Type declaringType = System.Reflection.MethodBase.GetCurrentMethod()!.DeclaringType!;
+
+        Settings.TtmSettings.ReadSettings( declaringType, ".Driver" );
+        Settings.LotSettingsContainer.ReadSettings( declaringType, ".Lot" );
 
         Settings ti = new();
 
@@ -65,17 +64,13 @@ public class Settings : cc.isr.Json.AppSettings.Settings.SettingsContainerBase
     /// <value> The console settings. </value>
     public static UI.ConsoleSettings ConsoleSettings { get; private set; } = new();
 
-    /// <summary>   Gets or sets the lot settings. </summary>
-    /// <value> The lot settings. </value>
-    public static LotSettings LotSettings { get; private set; } = new();
-
     /// <summary>   Gets or sets the ttm settings. </summary>
     /// <value> The ttm settings. </value>
     public static cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings TtmSettings { get; set; } = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance;
 
-    /// <summary>   Gets or sets the control settings. </summary>
-    /// <value> The control settings. </value>
-    public static Controls.Settings ControlSettings { get; set; } = Controls.Settings.Instance;
+    /// <summary>   Gets or sets the lot settings container. </summary>
+    /// <value> The lot settings container. </value>
+    public static Controls.Settings LotSettingsContainer { get; set; } = Controls.Settings.Instance;
 
     #endregion
 }

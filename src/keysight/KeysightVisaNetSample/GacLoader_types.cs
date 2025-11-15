@@ -5,6 +5,7 @@ using System.Text;
 #pragma warning disable CA1305  // Specify IFormatProvider
 
 namespace Ivi.VisaNet;
+
 public static partial class GacLoader
 {
     /// <summary>   Parse vendor name. </summary>

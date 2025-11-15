@@ -47,12 +47,10 @@ public class TtmForm : Form
     }
 
     /// <summary>
-    /// Raises the <see cref="System.Windows.Forms.Form.Closing" /> event. Releases all publishers.
+    /// Handles the form closing event. Releases all publishers.
     /// </summary>
     /// <remarks> David, 2020-10-11. </remarks>
-    /// <param name="e"> A <see cref="CancelEventArgs" /> that contains the
-    /// event data. </param>
-    protected override void OnClosing( System.ComponentModel.CancelEventArgs e )
+    protected void OnClosing()
     {
         string activity = string.Empty;
         try
@@ -74,9 +72,50 @@ public class TtmForm : Form
         finally
         {
             this.Cursor = Cursors.Default;
+        }
+    }
+
+    /// <summary>
+    /// Raises the <see cref="System.Windows.Forms.Form.Closing" /> event. Releases all publishers.
+    /// </summary>
+    /// <remarks> David, 2020-10-11. </remarks>
+    /// <param name="e"> A <see cref="CancelEventArgs" /> that contains the
+    /// event data. </param>
+#if NET10_0_OR_GREATER
+    protected override void OnFormClosing( System.Windows.Forms.FormClosingEventArgs e )
+    {
+        try
+        {
+            if ( e is not null && !e.Cancel )
+                this.OnClosing();
+        }
+        catch
+        {
+            throw;
+        }
+        finally
+        {
+            base.OnFormClosing( e );
+        }
+    }
+#else
+    protected override void OnClosing( System.ComponentModel.CancelEventArgs e )
+    {
+        try
+        {
+            if ( e is not null && !e.Cancel )
+                this.OnClosing();
+        }
+        catch
+        {
+            throw;
+        }
+        finally
+        {
             base.OnClosing( e );
         }
     }
+#endif
 
     /// <summary>
     /// Called upon receiving the <see cref="System.Windows.Forms.Form.Load" /> event.
@@ -167,8 +206,7 @@ public class TtmForm : Form
         finally
         {
             this.Cursor = Cursors.Default;
-            if ( this.MeterView is not null )
-                this.MeterView.Cursor = Cursors.Default;
+            _ = this.MeterView?.Cursor = Cursors.Default;
         }
     }
 

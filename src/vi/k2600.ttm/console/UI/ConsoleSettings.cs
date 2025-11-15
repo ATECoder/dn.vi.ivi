@@ -22,7 +22,6 @@ public partial class ConsoleSettings : CommunityToolkit.Mvvm.ComponentModel.Obse
 
     #endregion
 
-
     /// <summary>   Gets or sets the name of the resource. </summary>
     /// <value> The name of the resource. </value>
     [ObservableProperty]
@@ -92,5 +91,4 @@ public partial class ConsoleSettings : CommunityToolkit.Mvvm.ComponentModel.Obse
     }
 
     #endregion
-
 }
