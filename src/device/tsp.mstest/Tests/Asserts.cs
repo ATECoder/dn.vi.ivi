@@ -8,15 +8,8 @@ namespace cc.isr.VI.Device.Tsp.Tests;
 /// (c) 2019 Integrated Scientific Resources, Inc. All rights reserved. </para><para>
 /// Licensed under The MIT License.</para>
 /// </remarks>
-public sealed partial class Asserts
+public static partial class Asserts
 {
-    /// <summary>
-    /// Constructor that prevents a default instance of this class from being created.
-    /// </summary>
-    private Asserts()
-    {
-    }
-
     private static cc.isr.Std.Listeners.TraceMessageListener? TraceListener { get; set; }
     /// <summary>   Defines the trace listener. </summary>
     /// <remarks>   David, 2021-06-29. </remarks>
@@ -61,4 +54,22 @@ public sealed partial class Asserts
             $"\n{string.Join( "\n", [.. Asserts.TraceListener!.Messages[TraceEventType.Warning].ToArray()] )}" );
     }
 
+    /// <summary>   Gets temporary path under the '~cc.isr` and this class namespace folder name. </summary>
+    /// <remarks>   2025-06-03. </remarks>
+    /// <param name="firstSubfolderName">   (Optional) [CallerMemberName] Name of the second
+    ///                                     subfolder. </param>
+    /// <param name="secondSubfolderName">  (Optional) Name of the second subfolder. </param>
+    /// <returns>   The temporary path. </returns>
+    public static string GetTempPath( string[] subfolders )
+    {
+        string tempPath = Path.Combine( Path.GetTempPath(), "~cc.isr", "VI", "Device", "Tsp" );
+
+        foreach ( string subfolder in subfolders )
+        {
+            if ( !string.IsNullOrWhiteSpace( subfolder ) )
+                tempPath = Path.Combine( tempPath, subfolder );
+        }
+        _ = System.IO.Directory.CreateDirectory( tempPath );
+        return tempPath;
+    }
 }

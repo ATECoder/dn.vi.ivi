@@ -2,7 +2,7 @@ using cc.isr.VI.Tsp;
 
 namespace cc.isr.VI.Device.Tsp.Tests;
 
-public sealed partial class Asserts
+public static partial class Asserts
 {
     #region " source subsystem "
 

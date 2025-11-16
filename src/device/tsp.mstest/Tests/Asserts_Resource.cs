@@ -2,7 +2,7 @@ using cc.isr.VI.Device.Tsp.Tests.Base;
 
 namespace cc.isr.VI.Device.Tsp.Tests;
 
-public sealed partial class Asserts
+public static partial class Asserts
 {
     #region " device trace message test "
 

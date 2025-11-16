@@ -39,7 +39,7 @@ public class Settings : cc.isr.Json.AppSettings.Settings.SettingsBase
 
         // copy application context settings if files do not exist or to clear corrupted settings.
 
-        AppSettingsScribe.InitializeSettingsFiles( ai, System.Diagnostics.Debugger.IsAttached, System.Diagnostics.Debugger.IsAttached );
+        AppSettingsScribe.InitializeSettingsFiles( ai, true, true );
 
         Settings ti = new()
         {
