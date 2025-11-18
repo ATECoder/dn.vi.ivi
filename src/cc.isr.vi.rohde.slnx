@@ -1,0 +1,18 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/rohde/">
+    <Project Path="rohde/idn.query/Rohde.IdnQuery.csproj" />
+  </Folder>
+  <Folder Name="/`build/">
+    <File Path="global.json" />
+    <File Path="rohde/directory.build.props" />
+    <File Path="rohde/exclusion.dic" />
+  </Folder>
+  <Folder Name="/`docs/">
+    <File Path="rohde/IviVisaApps.rohde.changelog.md" />
+  </Folder>
+</Solution>

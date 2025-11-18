@@ -53,14 +53,14 @@ public class AllSettings : Json.AppSettings.Settings.SettingsContainerBase
     ///                                     '.session' in
     ///                                     'cc.isr.VI.Tsp.K2600.Device.MSTest.Session.json' where
     ///                                     cc.isr.VI.Tsp.K2600.Device.MSTest is the assembly name. </param>
-    /// <param name="overrideAllUsersFile"> (Optional) [false] True to override all users settings
+    /// <param name="overwriteAllUsersFile"> (Optional) [false] True to over-write all users settings
     ///                                     file. </param>
-    /// <param name="overrideThisUserFile"> (Optional) [false] True to override this user settings
+    /// <param name="overwriteThisUserFile"> (Optional) [false] True to over-write this user settings
     ///                                     file. </param>
     public override void ReadSettings( Type declaringType, string settingsFileSuffix = ".Session",
-        bool overrideAllUsersFile = false, bool overrideThisUserFile = false )
+        bool overwriteAllUsersFile = false, bool overwriteThisUserFile = false )
     {
-        base.ReadSettings( declaringType, settingsFileSuffix, overrideAllUsersFile, overrideThisUserFile );
+        base.ReadSettings( declaringType, settingsFileSuffix, overwriteAllUsersFile, overwriteThisUserFile );
     }
 
     #endregion

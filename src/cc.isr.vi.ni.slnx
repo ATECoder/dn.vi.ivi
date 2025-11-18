@@ -1,0 +1,22 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/ni/">
+    <Project Path="ni/find.resources/NI.FindResources.csproj" />
+    <Project Path="ni/register.based.operations/NI.RegisterBasedOperations.csproj" />
+    <Project Path="ni/service.request/NI.ServiceRequest.csproj" />
+    <Project Path="ni/simple.asynchronous.read.write/NI.SimpleAsynchronousReadWrite.csproj" />
+    <Project Path="ni/simple.read.write/NI.SimpleReadWrite.csproj" />
+  </Folder>
+  <Folder Name="/`build/">
+    <File Path="exclusion.dic" />
+    <File Path="global.json" />
+    <File Path="ni/directory.build.props" />
+  </Folder>
+  <Folder Name="/`docs/">
+    <File Path="ni/IviVisaApps.ni.changelog.md" />
+  </Folder>
+</Solution>

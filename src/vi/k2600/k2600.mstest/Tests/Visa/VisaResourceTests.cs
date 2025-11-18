@@ -51,7 +51,7 @@ public class VisaResourceTests : Device.Tests.Base.VisaResourceTests
         this.Device = K2600Device.Create();
         Assert.IsNotNull( this.Device );
         Assert.IsNotNull( this.Device.Session );
-        this.Device.Session.ReadSettings( this.GetType(), overrideAllUsersFile: true, overrideThisUserFile: true );
+        this.Device.Session.ReadSettings( this.GetType(), overwriteAllUsersFile: true, overwriteThisUserFile: true );
         base.InitializeBeforeEachTest();
     }
 

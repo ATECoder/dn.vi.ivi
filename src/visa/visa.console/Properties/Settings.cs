@@ -45,7 +45,9 @@ public class Settings : cc.isr.Json.AppSettings.Settings.SettingsBase
             SectionName = declaringType.Name
         };
 
-        ti.ReadSettings( declaringType, ".Settings", System.Diagnostics.Debugger.IsAttached, System.Diagnostics.Debugger.IsAttached );
+        bool overwrite = Json.AppSettings.Models.AppSettingsScribe.IsDebuggingOrTesting();
+
+        ti.ReadSettings( declaringType, ".Settings", overwrite, overwrite );
 
         return ti;
     }

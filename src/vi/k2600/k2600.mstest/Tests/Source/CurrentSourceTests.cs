@@ -52,7 +52,7 @@ public class CurrentSourceTests : Device.Tsp.Tests.Base.TestBase
         this.Device = K2600Device.Create();
         Assert.IsNotNull( this.Device );
         Assert.IsNotNull( this.Device.Session );
-        this.Device.Session.ReadSettings( this.GetType(), overrideAllUsersFile: true, overrideThisUserFile: true );
+        this.Device.Session.ReadSettings( this.GetType(), overwriteAllUsersFile: true, overwriteThisUserFile: true );
         this.VisaSessionBase = this.Device;
         base.InitializeBeforeEachTest();
     }

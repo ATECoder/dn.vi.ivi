@@ -55,7 +55,7 @@ public class SubsystemsTests : Device.Tests.Base.SubsystemsTests
         this.Device = K2600Device.Create();
         Assert.IsNotNull( this.Device );
         Assert.IsNotNull( this.Device.Session );
-        this.Device.Session.ReadSettings( this.GetType(), overrideAllUsersFile: true, overrideThisUserFile: true );
+        this.Device.Session.ReadSettings( this.GetType(), overwriteAllUsersFile: true, overwriteThisUserFile: true );
         Assert.IsTrue( this.Device.Session.AllSettings.TimingSettings.Exists, $"{nameof( K2600Device )}.{nameof( K2600Device.Session )}.{nameof( K2600Device.Session.AllSettings.TimingSettings )} does not exist." );
         this.VisaSessionBase = this.Device;
         base.InitializeBeforeEachTest();

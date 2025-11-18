@@ -1,0 +1,50 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/ivi/">
+    <File Path="ivi/IviVisaCompatibility.changelog.md" />
+    <Project Path="ivi/IviVisaCompatibiityTester/IviVisaCompatibilityTester.csproj" />
+    <Project Path="ivi/IviVisaCompatibility/IviVisaCompatibility.csproj" />
+    <Project Path="ivi/IviVisaCompatibilityDemo/IviVisaCompatibilityDemo.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="ivi/IviVisaNetSample/IviVisaNetSample.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+  </Folder>
+  <Folder Name="/visa/">
+    <Project Path="visa/visa.console/cc.isr.Visa.Console.csproj" />
+    <Project Path="visa/visa.io.demo/cc.isr.Visa.IO.Demo.csproj" />
+    <Project Path="visa/visa.mstest/cc.isr.Visa.MSTest.csproj" />
+    <Project Path="visa/visa.resource.explorer/cc.isr.Visa.ResourceExplorer.csproj" />
+    <Project Path="visa/visa.win.controls.demo/cc.isr.Visa.WinControls.Demo.csproj" />
+    <Project Path="visa/visa.win.controls/cc.isr.Visa.WinControls.csproj" />
+    <Project Path="visa/visa/cc.isr.Visa.csproj" />
+  </Folder>
+  <Folder Name="/`build/">
+    <File Path="directory.build.props" />
+    <File Path="exclusion.dic" />
+    <File Path="global.json" />
+  </Folder>
+  <Folder Name="/`docs/">
+    <File Path="../readme.md" />
+    <File Path="../todo.md" />
+    <File Path="visa/isr.visa.changelog.md" />
+  </Folder>
+  <Folder Name="/`framework/">
+    <Project Path="../../../core/json/src/app.settings/app.settings.view.models/cc.isr.Json.AppSettings.ViewModels.csproj" />
+    <Project Path="../../../core/json/src/app.settings/app.settings.win.forms/cc.isr.Json.AppSettings.WinForms.csproj" />
+    <Project Path="../../../core/logging/src/orlog/orlog/cc.isr.Logging.Orlog.csproj" />
+    <Project Path="../../../core/logging/src/serilog/enrichers.demystify/Serilog.Enrichers.Demystify.csproj" />
+    <Project Path="../../../core/logging/src/serilog/sinks.trace/Serilog.Sinks.Trace.csproj" />
+    <Project Path="../../../core/logging/src/tracelog/tracelog.win.forms/cc.isr.Logging.TraceLog.WinForms.csproj" />
+    <Project Path="../../../core/logging/src/tracelog/tracelog/cc.isr.Logging.TraceLog.csproj" />
+    <Project Path="../../../core/tracing/src/tracing/tracing/cc.isr.Tracing.csproj" />
+    <Project Path="../../../core/tracing/src/win.forms/tracing.win.forms/cc.isr.Tracing.WinForms.csproj" />
+  </Folder>
+</Solution>

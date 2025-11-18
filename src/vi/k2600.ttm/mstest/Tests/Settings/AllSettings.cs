@@ -38,7 +38,9 @@ public class AllSettings : cc.isr.Json.AppSettings.Settings.SettingsContainerBas
 
         AllSettings ti = new();
 
-        ti.ReadSettings( declaringType, ".Settings", System.Diagnostics.Debugger.IsAttached, System.Diagnostics.Debugger.IsAttached );
+        bool overwrite = Json.AppSettings.Models.AppSettingsScribe.IsDebuggingOrTesting();
+
+        ti.ReadSettings( declaringType, ".Settings", overwrite, overwrite );
 
         return ti;
     }

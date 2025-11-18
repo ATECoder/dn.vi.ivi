@@ -40,7 +40,9 @@ public class BufferStreamViewSettings : cc.isr.Json.AppSettings.Settings.Setting
             SectionName = declaringType.Name
         };
 
-        ti.ReadSettings( declaringType, ".Settings", System.Diagnostics.Debugger.IsAttached, System.Diagnostics.Debugger.IsAttached );
+        bool overwrite = Json.AppSettings.Models.AppSettingsScribe.IsDebuggingOrTesting();
+
+        ti.ReadSettings( declaringType, ".Settings", overwrite, overwrite );
 
         return ti;
     }

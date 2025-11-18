@@ -1,0 +1,89 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/device/">
+    <Project Path="device/device.mstest/cc.isr.VI.Device.MSTest.csproj" />
+    <Project Path="device/device/cc.isr.VI.Device.csproj" />
+    <Project Path="device/tsp.script/cc.isr.VI.Tsp.Script.csproj" />
+    <Project Path="device/tsp/cc.isr.VI.Device.Tsp.csproj" />
+  </Folder>
+  <Folder Name="/resource/">
+    <Project Path="resource/foundation/cc.isr.VI.Foundation.csproj" />
+    <Project Path="resource/pith/cc.isr.VI.Pith.csproj" />
+  </Folder>
+  <Folder Name="/ui/">
+    <Project Path="ui/device.win.controls.mstest/cc.isr.VI.DeviceWinControls.MSTest.csproj" />
+    <Project Path="ui/device.win.controls/cc.isr.VI.DeviceWinControls.csproj" />
+    <Project Path="ui/subsystems.win.controls/cc.isr.VI.SubsystemsWinControls.csproj" />
+    <Project Path="ui/win.controls.mstest/cc.isr.VI.WinControls.MSTest.csproj" />
+    <Project Path="ui/win.controls/cc.isr.VI.WinControls.csproj" />
+  </Folder>
+  <Folder Name="/visa/">
+    <Project Path="visa/visa/cc.isr.Visa.csproj" />
+  </Folder>
+  <Folder Name="/`build/">
+    <File Path="directory.build.props" />
+    <File Path="exclusion.dic" />
+    <File Path="global.json" />
+  </Folder>
+  <Folder Name="/`docs/">
+    <File Path="../changelog.md" />
+    <File Path="../developer.md" />
+    <File Path="../readme.md" />
+    <File Path="../todo.md" />
+  </Folder>
+  <Folder Name="/~framework/" />
+  <Folder Name="/~framework/arebis/">
+    <Project Path="../../../core/units.amounts/src/units.amounts/standard.units/cc.isr.UnitsAmounts.StandardUnits.csproj" />
+    <Project Path="../../../core/units.amounts/src/units.amounts/units.amounts/cc.isr.UnitsAmounts.csproj" />
+  </Folder>
+  <Folder Name="/~framework/json/">
+    <Project Path="../../../core/json/src/app.settings/app.settings.view.models/cc.isr.Json.AppSettings.ViewModels.csproj" />
+    <Project Path="../../../core/json/src/app.settings/app.settings.win.forms/cc.isr.Json.AppSettings.WinForms.csproj" />
+  </Folder>
+  <Folder Name="/~framework/logging/">
+    <Project Path="../../../core/logging/src/orlog/orlog/cc.isr.Logging.Orlog.csproj" />
+    <Project Path="../../../core/logging/src/tracelog/tracelog.win.forms/cc.isr.Logging.TraceLog.WinForms.csproj" />
+    <Project Path="../../../core/logging/src/tracelog/tracelog/cc.isr.Logging.TraceLog.csproj" />
+    <Project Path="../../../core/tracing/src/tracing/tracing/cc.isr.Tracing.csproj" />
+    <Project Path="../../../core/tracing/src/win.forms/tracing.win.forms/cc.isr.Tracing.WinForms.csproj" />
+  </Folder>
+  <Folder Name="/~framework/optima/">
+    <Project Path="../../../algorithms/numerical/src/optima/optima/cc.isr.Numerical.Optima.csproj" />
+  </Folder>
+  <Folder Name="/~framework/std/">
+    <Project Path="../../../core/enums/src/enums/enums/cc.isr.Enums.csproj" />
+    <Project Path="../../../core/enums/src/win.controls/win.controls/cc.isr.Enums.WinControls.csproj" />
+    <Project Path="../../../core/logging/src/serilog/enrichers.demystify/Serilog.Enrichers.Demystify.csproj" />
+    <Project Path="../../../core/logging/src/serilog/sinks.trace/Serilog.Sinks.Trace.csproj" />
+    <Project Path="../../../core/std/src/async/async/cc.isr.Std.Async.csproj" />
+    <Project Path="../../../core/std/src/cartesian/cartesian/cc.isr.Std.Cartesian.csproj" />
+    <Project Path="../../../core/std/src/event.context/event.context/cc.isr.Std.EventContext.csproj" />
+    <Project Path="../../../core/std/src/framework/framework/cc.isr.Std.Framework.csproj" />
+    <Project Path="../../../core/std/src/moving.filters/moving.filters/cc.isr.Std.MovingFilters.csproj" />
+    <Project Path="../../../core/std/src/notifiers/notifiers/cc.isr.Std.Notifiers.csproj" />
+    <Project Path="../../../core/std/src/primitives/primitives/cc.isr.Std.Primitives.csproj" />
+    <Project Path="../../../core/std/src/statistics/statistics/cc.isr.Std.Statistics.csproj" />
+    <Project Path="../../../core/std/src/timers/timers/cc.isr.Std.Timers.csproj" />
+  </Folder>
+  <Folder Name="/~framework/visual/">
+    <Project Path="../../../visual/charting/src/mixed/win.controls/ChartWin.csproj" />
+  </Folder>
+  <Folder Name="/~framework/winforms/">
+    <Project Path="../../../core/win.controls/src/binding/binding/cc.isr.WinControls.Binding.csproj" />
+    <Project Path="../../../core/win.controls/src/extended/extended/cc.isr.WinControls.Extended.csproj" />
+    <Project Path="../../../core/win.controls/src/extensions/extensions/cc.isr.WinControls.Extensions.csproj" />
+    <Project Path="../../../core/win.controls/src/metro/metro/cc.isr.WinControls.Metro.csproj" />
+    <Project Path="../../../core/win.controls/src/model.view.logger/model.view.logger/cc.isr.WinControls.ModelViewLogger.csproj" />
+    <Project Path="../../../core/win.controls/src/model.view/model.view/cc.isr.WinControls.ModelView.csproj" />
+    <Project Path="../../../core/win.controls/src/progress/progress/cc.isr.WinControls.Progress.csproj" />
+    <Project Path="../../../core/win.controls/src/selectors/selectors/cc.isr.WinControls.Selectors.csproj" />
+    <Project Path="../../../core/win.controls/src/tool.strips/tool.strips/cc.isr.WinControls.ToolStrips.csproj" />
+    <Project Path="../../../core/win.controls/src/trees/trees/cc.isr.WinControls.Trees.csproj" />
+    <Project Path="../../../core/win.forms/src/model.view.form/model.view.form/cc.isr.WinForms.ModelViewForm.csproj" />
+    <Project Path="../../../core/win/src/framework/framework/cc.isr.Win.Framework.csproj" />
+  </Folder>
+</Solution>
