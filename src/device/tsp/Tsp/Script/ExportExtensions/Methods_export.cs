@@ -1,3 +1,7 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// https://github.com/dotnet/runtime/blob/f21a2666c577306e437f80fe934d76cdb15072a5/src/libraries/Common/src/Interop/Windows/Shell32/Interop.SHGetKnownFolderPath.cs
+
 using cc.isr.Std.LineEndingExtensions;
 namespace cc.isr.VI.Tsp.Script.ExportExtensions;
 
@@ -100,34 +104,47 @@ public static partial class ExportExtensionsMethods
     ///                                                 present. </exception>
     /// <param name="scriptSource"> The script source. </param>
     /// <param name="filePath">     Full pathname of the file. </param>
-    /// <param name="overWrite">    (Optional) [false] True to over write. </param>
-    /// <param name="validate">     (Optional) True to validate. </param>
-    public static void ExportScript( this string scriptSource, string filePath, bool overWrite = false, bool validate = true )
+    /// <param name="overWrite">    True to over write. </param>
+    /// <param name="validate">     True to validate. </param>
+    /// <param name="details">      [out] The details. </param>
+    /// <returns>   True if it succeeds, false if it fails. </returns>
+    public static bool TryExportScript( this string scriptSource, string filePath, bool overWrite, bool validate, out string details )
     {
         if ( string.IsNullOrWhiteSpace( scriptSource ) ) throw new ArgumentNullException( nameof( scriptSource ) );
         if ( string.IsNullOrWhiteSpace( filePath ) ) throw new ArgumentNullException( nameof( filePath ) );
 
         if ( !overWrite && File.Exists( filePath ) )
-            throw new InvalidOperationException( $"The script source cannot be exported because the file '{filePath}' exists." );
+            details = $"The script source cannot be exported because the file '{filePath}' exists.";
+        else
+        {
+            details = string.Empty;
+            try
+            {
+                // ensure that the source ends with a single line termination.
+                scriptSource = scriptSource.TrimMultipleLineEndings();
 
-        // ensure that the source ends with a single line termination.
-        scriptSource = scriptSource.TrimMultipleLineEndings();
+                // Note that the actual output is not validated against the input because the line endings might change.
+                // Rather, what is validated is that the reader and writer are able to process the script source.
+                if ( validate )
+                    scriptSource.ValidateStringReaderStreamWriter();
 
-        // Note that the actual output is not validated against the input because the line endings might change.
-        // Rather, what is validated is that the reader and writer are able to process the script source.
-        if ( validate )
-            scriptSource.ValidateStringReaderStreamWriter();
+                using TextReader? reader = new StringReader( scriptSource )
+                    ?? throw new FileNotFoundException( $"Failed creating a reader from the script source" );
 
-        using TextReader? reader = new StringReader( scriptSource )
-            ?? throw new FileNotFoundException( $"Failed creating a reader from the script source" );
+                reader.ExportScript( filePath, overWrite );
 
-        reader.ExportScript( filePath, overWrite );
+                // check that the file size matches the source size.
+                FileInfo fileInfo = new( filePath );
 
-        // check that the file size matches the source size.
-        FileInfo fileInfo = new( filePath );
-        if ( fileInfo.Length < scriptSource.Length )
-            throw new InvalidOperationException(
-                $"The exported script source file '{filePath}' length {fileInfo.Length} is smaller that the script source length {scriptSource.Length}." );
+                if ( fileInfo.Length < scriptSource.Length )
+                    details = $"The exported script source file '{filePath}' length {fileInfo.Length} is smaller that the script source length {scriptSource.Length}.";
+            }
+            catch ( Exception ex )
+            {
+                details = ex.Message;
+            }
+        }
+        return string.IsNullOrWhiteSpace( details );
     }
 }
 

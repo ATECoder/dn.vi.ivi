@@ -1,3 +1,7 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// https://github.com/dotnet/runtime/blob/f21a2666c577306e437f80fe934d76cdb15072a5/src/libraries/Common/src/Interop/Windows/Shell32/Interop.SHGetKnownFolderPath.cs
+
 using cc.isr.Std.LineEndingExtensions;
 using cc.isr.VI.Pith;
 
@@ -29,6 +33,7 @@ public static partial class SessionBaseExtensionMethods
         _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay + session.StatusReadDelay );
 
         string scriptSource = session.ReadFreeLineTrimEnd();
+        _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay + session.StatusReadDelay );
 
         // throw if device error occurred
         session.ThrowDeviceExceptionIfError();
@@ -70,15 +75,17 @@ public static partial class SessionBaseExtensionMethods
         string rawScript = session.FetchRawScript( scriptName );
 
         if ( string.IsNullOrWhiteSpace( rawScript ) )
-            throw new InvalidOperationException( $"The script {scriptName} source is empty." );
+            return string.Empty;
+        else
+        {
+            // terminate the raw script with a single line ending.
+            rawScript = rawScript.TrimMultipleLineEndings();
 
-        // terminate the raw script with a single line ending.
-        rawScript = rawScript.TrimMultipleLineEndings();
+            // if ( rawScript.Contains( @"\u00A0" ) )
+            //     rawScript = rawScript.Replace( @"\u00A0", " " ); // replace non breaking space with space.
 
-        // if ( rawScript.Contains( @"\u00A0" ) )
-        //     rawScript = rawScript.Replace( @"\u00A0", " " ); // replace non breaking space with space.
-
-        // replace line endings with Windows new line validating with the LineEndingExtensions.ReplaceLineEnding method
-        return rawScript.TerminateLines( validate );
+            // replace line endings with Windows new line validating with the LineEndingExtensions.ReplaceLineEnding method
+            return rawScript.TerminateLines( validate );
+        }
     }
 }

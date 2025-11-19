@@ -1,4 +1,7 @@
-using System.Runtime.CompilerServices;
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// https://github.com/dotnet/runtime/blob/f21a2666c577306e437f80fe934d76cdb15072a5/src/libraries/Common/src/Interop/Windows/Shell32/Interop.SHGetKnownFolderPath.cs
+
 using cc.isr.Std.LineEndingExtensions;
 
 namespace cc.isr.VI.Tsp.Script.ExportExtensions;
@@ -7,34 +10,6 @@ namespace cc.isr.VI.Tsp.Script.ExportExtensions;
 /// <remarks>   2025-05-02. </remarks>
 public static partial class ExportExtensionsMethods
 {
-    #region " support methods "
-
-    /// <summary>   Gets temporary path under the '~cc.isr` and this class namespace folder name. </summary>
-    /// <remarks>   2025-06-03. </remarks>
-    /// <param name="firstSubfolderName">   (Optional) [CallerMemberName] Name of the second
-    ///                                     subfolder. </param>
-    /// <param name="secondSubfolderName">  (Optional) Name of the second subfolder. </param>
-    /// <returns>   The temporary path. </returns>
-    public static string GetTempPath( [CallerMemberName] string firstSubfolderName = "", string secondSubfolderName = "" )
-    {
-        string tempPath = Path.Combine( Path.GetTempPath(), "~cc.isr", "VI", "Tsp", "Script", "ExportExtensions" );
-
-        if ( !string.IsNullOrWhiteSpace( firstSubfolderName ) )
-        {
-            tempPath = Path.Combine( tempPath, firstSubfolderName );
-        }
-
-        if ( !string.IsNullOrWhiteSpace( secondSubfolderName ) )
-        {
-            tempPath = Path.Combine( tempPath, secondSubfolderName );
-        }
-
-        _ = System.IO.Directory.CreateDirectory( tempPath );
-        return tempPath;
-    }
-
-    #endregion
-
     /// <summary>   Query if 'source' is byte code. </summary>
     /// <remarks>   2024-10-11. </remarks>
     /// <param name="source">   specifies the source code for the script. </param>
@@ -400,7 +375,7 @@ public static partial class ExportExtensionsMethods
         if ( string.IsNullOrWhiteSpace( filePath1 ) ) throw new ArgumentNullException( nameof( filePath1 ) );
         if ( string.IsNullOrWhiteSpace( filePath2 ) ) throw new ArgumentNullException( nameof( filePath2 ) );
 
-        string outPath = ExportExtensionsMethods.GetTempPath();
+        string outPath = Path.Combine( System.IO.Path.GetTempPath(), "~cc.isr.vi.device.tsp", "exports" );
 
         string decompressedFile1 = Path.Combine( outPath, Path.GetFileName( filePath1 ) );
         string decompressedFile2 = Path.Combine( outPath, Path.GetFileName( filePath2 ) );

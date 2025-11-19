@@ -1,3 +1,7 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// https://github.com/dotnet/runtime/blob/f21a2666c577306e437f80fe934d76cdb15072a5/src/libraries/Common/src/Interop/Windows/Shell32/Interop.SHGetKnownFolderPath.cs
+
 using System.Text;
 using cc.isr.VI.Device.Tests.Base;
 using cc.isr.VI.Tsp.Script.ExportExtensions;
@@ -113,7 +117,8 @@ public class TspSessionScriptTests : Device.Tsp.Tests.Base.ScriptTests
             // write the source to file.
             string fileTitle = $"{scriptName}_code";
             string filePath = Path.Combine( folderPath, $"{fileTitle}{cc.isr.VI.Tsp.Script.ScriptInfo.ScriptFileExtension}" );
-            scriptSource.ToString().ExportScript( filePath, overWrite: true );
+            if ( !scriptSource.ToString().TryExportScript( filePath, true, true, out string details ) )
+                Assert.Fail( details );
 
             this.Device.Session.DeleteScript( scriptName, true );
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
@@ -159,7 +164,8 @@ public class TspSessionScriptTests : Device.Tsp.Tests.Base.ScriptTests
 
             filePath = Path.Combine( folderPath, $"{fileTitle}_exported{cc.isr.VI.Tsp.Script.ScriptInfo.ScriptByteCodeFileExtension}" );
             TestBase.ConsoleOutputMemberMessage( $"Exporting byte code script to '{filePath}' file." );
-            this.Device.Session.ExportScript( scriptName, filePath, true );
+            if ( !this.Device.Session.TryExportScript( scriptName, filePath, true, out details ) )
+                Assert.Fail( details );
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
 
@@ -206,7 +212,8 @@ public class TspSessionScriptTests : Device.Tsp.Tests.Base.ScriptTests
             // write the source to file.
             fileTitle = $"{fileTitle}_file";
             string filePath = Path.Combine( folderPath, $"{fileTitle}{cc.isr.VI.Tsp.Script.ScriptInfo.ScriptFileExtension}" );
-            scriptSource.ToString().ExportScript( filePath, overWrite: true );
+            if ( !scriptSource.ToString().TryExportScript( filePath, true, true, out string details ) )
+                Assert.Fail( details );
 
             this.Device.Session.DeleteScript( scriptName, true );
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
@@ -235,7 +242,9 @@ public class TspSessionScriptTests : Device.Tsp.Tests.Base.ScriptTests
 
             filePath = Path.Combine( folderPath, $"{fileTitle}_exported{cc.isr.VI.Tsp.Script.ScriptInfo.ScriptFileExtension}" );
 
-            this.Device.Session.ExportScript( scriptName, filePath, true );
+            if ( !this.Device.Session.TryExportScript( scriptName, filePath, true, out details ) )
+                Assert.Fail( details );
+
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
 
@@ -268,7 +277,9 @@ public class TspSessionScriptTests : Device.Tsp.Tests.Base.ScriptTests
 
             filePath = Path.Combine( folderPath, $"{fileTitle}_exported{cc.isr.VI.Tsp.Script.ScriptInfo.ScriptByteCodeFileExtension}" );
 
-            this.Device.Session.ExportScript( scriptName, filePath, true );
+            if ( !this.Device.Session.TryExportScript( scriptName, filePath, true, out details ) )
+                Assert.Fail( details );
+
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
 
@@ -323,7 +334,8 @@ public class TspSessionScriptTests : Device.Tsp.Tests.Base.ScriptTests
             // write the source to file.
             fileTitle += "_byte_code";
             string filePath = Path.Combine( folderPath, $"{fileTitle}{cc.isr.VI.Tsp.Script.ScriptInfo.ScriptByteCodeFileExtension}" );
-            scriptSource.ToString().ExportScript( filePath, overWrite: true );
+            if ( !scriptSource.ToString().TryExportScript( filePath, true, true, out string details ) )
+                Assert.Fail( details );
 
             this.Device.Session.DeleteScript( scriptName, true );
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
@@ -349,7 +361,9 @@ public class TspSessionScriptTests : Device.Tsp.Tests.Base.ScriptTests
             filePath = Path.Combine( folderPath, $"{fileTitle}_exported{cc.isr.VI.Tsp.Script.ScriptInfo.ScriptByteCodeFileExtension}" );
 
             TestBase.ConsoleOutputMemberMessage( $"Exporting to byte code '{filePath}' file" );
-            this.Device.Session.ExportScript( scriptName, filePath, true );
+            if ( !this.Device.Session.TryExportScript( scriptName, filePath, true, out details ) )
+                Assert.Fail( details );
+
             cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
 
