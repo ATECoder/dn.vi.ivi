@@ -1,7 +1,3 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// https://github.com/dotnet/runtime/blob/f21a2666c577306e437f80fe934d76cdb15072a5/src/libraries/Common/src/Interop/Windows/Shell32/Interop.SHGetKnownFolderPath.cs
-
 using System.Diagnostics;
 using cc.isr.Std.StackTraceExtensions;
 using cc.isr.VI.ExceptionExtensions;
@@ -808,64 +804,56 @@ public abstract class LinkSubsystemBase( LinkStatusSubsystem statusSubsystem ) :
         this.Session.ThrowDeviceExceptionIfError( statusByte );
     }
 
-    /// <summary> Reset TSP Link with error reporting. </summary>
+    /// <summary> Reset TSP Link with error throwing. </summary>
     /// <returns> <c>true</c> of okay; otherwise, <c>false</c>. </returns>
-    private bool TryResetTspLinkReportError()
+    private void ResetTspLink()
     {
         this.Session.LastNodeNumber = default;
         this.IsTspLinkOnline = new bool?();
         Pith.ServiceRequests statusByte;
         string details;
-        bool affirmative;
-        try
+
+        this.Session.SetLastAction( "enable service request on completion" );
+        this.Session.EnableServiceRequestOnOperationCompletion();
+        _ = SessionBase.AsyncDelay( this.Session.ReadAfterWriteDelay + this.Session.StatusReadDelay );
+        _ = this.Session.TraceInformation();
+        (statusByte, details) = this.Session.TraceDeviceExceptionIfError();
+        if ( this.Session.IsErrorBitSet( statusByte ) )
+            _ = cc.isr.VI.SessionLogger.Instance.LogWarning(
+                $"Instrument '{this.ResourceNameCaption}' failed resetting TSP Link;\n{details}\n{new StackFrame( true ).UserCallStack()}" );
+        else
         {
-            this.Session.SetLastAction( "enable service request on completion" );
-            this.Session.EnableServiceRequestOnOperationCompletion();
-            _ = SessionBase.AsyncDelay( this.Session.ReadAfterWriteDelay + this.Session.StatusReadDelay );
+            this.Session.SetLastAction( "awaiting status bitmask" );
+            (_, _, _) = this.Session.AwaitStatusBitmask( Pith.ServiceRequests.RequestingService,
+                TimeSpan.FromMilliseconds( 1000d ), TimeSpan.Zero, TimeSpan.FromMilliseconds( 10d ) );
             _ = this.Session.TraceInformation();
             (statusByte, details) = this.Session.TraceDeviceExceptionIfError();
-            affirmative = !this.Session.IsErrorBitSet( statusByte );
+            if ( this.Session.IsErrorBitSet( statusByte ) )
+                _ = cc.isr.VI.SessionLogger.Instance.LogWarning(
+                    $"Instrument '{this.ResourceNameCaption}' failed while awaiting status bitmask;\n{details}\n{new StackFrame( true ).UserCallStack()}" );
+
+        }
+    }
+
+    /// <summary> Reset TSP Link with error reporting. </summary>
+    /// <returns> <c>true</c> of okay; otherwise, <c>false</c>. </returns>
+    private bool TryResetTspLinkReportError()
+    {
+        try
+        {
+            this.ResetTspLink();
         }
         catch ( Pith.NativeException ex )
         {
             _ = this.Session.TraceException( ex );
-            affirmative = false;
+            return false;
         }
         catch ( Exception ex )
         {
             _ = this.Session.TraceException( ex );
-            affirmative = false;
+            return false;
         }
-
-        if ( affirmative )
-        {
-            try
-            {
-                this.Session.SetLastAction( "awaiting status bitmask" );
-                (bool timedOut, Pith.ServiceRequests status, TimeSpan elapsed) = this.Session.AwaitStatusBitmask( Pith.ServiceRequests.RequestingService,
-                    TimeSpan.FromMilliseconds( 1000d ), TimeSpan.Zero, TimeSpan.FromMilliseconds( 10d ) );
-                _ = this.Session.TraceInformation();
-                (statusByte, details) = this.Session.TraceDeviceExceptionIfError();
-                affirmative = !this.Session.IsErrorBitSet( statusByte );
-            }
-            catch ( Pith.NativeException ex )
-            {
-                _ = this.Session.TraceException( ex );
-                affirmative = false;
-            }
-            catch ( Exception ex )
-            {
-                _ = this.Session.TraceException( ex );
-                affirmative = false;
-            }
-        }
-        else
-        {
-            _ = cc.isr.VI.SessionLogger.Instance.LogWarning(
-                $"Instrument '{this.ResourceNameCaption}' failed resetting TSP Link;. \n{new StackFrame( true ).UserCallStack()}" );
-        }
-
-        return affirmative;
+        return true;
     }
 
     /// <summary> Resets the TSP link if not on line. </summary>

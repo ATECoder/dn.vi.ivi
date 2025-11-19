@@ -1,7 +1,3 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// https://github.com/dotnet/runtime/blob/f21a2666c577306e437f80fe934d76cdb15072a5/src/libraries/Common/src/Interop/Windows/Shell32/Interop.SHGetKnownFolderPath.cs
-
 using cc.isr.VI.Pith;
 using cc.isr.VI.Tsp.SessionBaseExtensions;
 
@@ -102,19 +98,16 @@ public static partial class SessionBaseExtensionMethods
         return !string.IsNullOrWhiteSpace( details );
     }
 
-    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that attempts to delete script. </summary>
-    /// <remarks>   2025-10-06. </remarks>
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that deletes the script. </summary>
+    /// <remarks>   2025-11-18. </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
     ///                                                 are null. </exception>
     /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
     ///                                                 invalid. </exception>
     /// <param name="session">      The session. </param>
-    /// <param name="scriptName">   Specifies the script name. </param>
+    /// <param name="scriptName">   Name of the script. </param>
     /// <param name="validate">     True to validate if the script was deleted. </param>
-    /// <param name="details">      [out] The details indicating if the script is either embedded, or
-    ///                             a user script or is not nil. </param>
-    /// <returns>   True if it succeeds; otherwise, false. </returns>
-    public static bool TryDeleteScript( this SessionBase session, string scriptName, bool validate, out string details )
+    public static void DeleteScript( this SessionBase session, string scriptName, bool validate )
     {
         if ( session == null ) throw new ArgumentNullException( nameof( session ) );
         if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
@@ -137,29 +130,36 @@ public static partial class SessionBaseExtensionMethods
         // nill the script if is is not nil.
         session.NillObject( scriptName );
 
-        details = string.Empty;
-        if ( validate && session.IsScriptExists( scriptName, out details ) )
-        {
-            details = $"The script '{scriptName}' was not deleted;. {details}";
-            return false;
-        }
-        return true;
+        if ( validate && session.IsScriptExists( scriptName, out string details ) )
+            throw new InvalidOperationException( $"The script '{scriptName}' was not deleted;. {details}" );
     }
 
 
-    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that deletes the script. </summary>
-    /// <remarks>   2025-04-10. </remarks>
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that attempts to delete script. </summary>
+    /// <remarks>   2025-10-06. </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
     ///                                                 are null. </exception>
     /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
     ///                                                 invalid. </exception>
     /// <param name="session">      The session. </param>
-    /// <param name="scriptName">   Name of the script. </param>
+    /// <param name="scriptName">   Specifies the script name. </param>
     /// <param name="validate">     True to validate if the script was deleted. </param>
-    public static void DeleteScript( this SessionBase session, string scriptName, bool validate )
+    /// <param name="details">      [out] The details indicating if the script is either embedded, or
+    ///                             a user script or is not nil. </param>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
+    public static bool TryDeleteScript( this SessionBase session, string scriptName, bool validate, out string details )
     {
-        if ( !session.TryDeleteScript( scriptName, validate, out string details ) )
-            throw new InvalidOperationException( details );
+        details = string.Empty;
+        try
+        {
+            session.DeleteScript( scriptName, validate );
+        }
+        catch ( Exception ex )
+        {
+            details = ex.Message;
+            return false;
+        }
+        return true;
     }
 
     /// <summary>
@@ -185,7 +185,7 @@ public static partial class SessionBaseExtensionMethods
         if ( scriptCount == 0 )
         {
             session.DisplayLine( "No scripts to delete", 2 );
-            TraceLastAction( $"\r\n\tNo scripts to delete." );
+            _ = TraceLastAction( $"\r\n\tNo scripts to delete." );
             return (scriptCount, removedCount);
         }
 
@@ -210,7 +210,7 @@ public static partial class SessionBaseExtensionMethods
 
         string message = $"Removed {removedCount} of {scriptCount} TTM embedded scripts";
         session.DisplayLine( message, 2 );
-        TraceLastAction( $"\r\n\t{message}" );
+        _ = TraceLastAction( $"\r\n\t{message}" );
         return (scriptCount, removedCount);
     }
 
@@ -238,7 +238,7 @@ public static partial class SessionBaseExtensionMethods
         if ( string.IsNullOrWhiteSpace( embeddedScripts ) )
         {
             session.DisplayLine( "No embedded scripts to delete", 2 );
-            TraceLastAction( $"\r\n\tNo embedded scripts to delete." );
+            _ = TraceLastAction( $"\r\n\tNo embedded scripts to delete." );
             return (0, 0);
         }
 
@@ -281,9 +281,9 @@ public static partial class SessionBaseExtensionMethods
         }
 
         if ( removedCount == 0 )
-            TraceLastAction( $"\r\n\tNo scripts to remove for {frameworkName}." );
+            _ = TraceLastAction( $"\r\n\tNo scripts to remove for {frameworkName}." );
         else
-            TraceLastAction( $"\r\n\t{removedCount} scripts were removed for {frameworkName}." );
+            _ = TraceLastAction( $"\r\n\t{removedCount} scripts were removed for {frameworkName}." );
     }
 
 }

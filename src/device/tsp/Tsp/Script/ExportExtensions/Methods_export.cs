@@ -1,7 +1,3 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// https://github.com/dotnet/runtime/blob/f21a2666c577306e437f80fe934d76cdb15072a5/src/libraries/Common/src/Interop/Windows/Shell32/Interop.SHGetKnownFolderPath.cs
-
 using cc.isr.Std.LineEndingExtensions;
 namespace cc.isr.VI.Tsp.Script.ExportExtensions;
 
@@ -104,47 +100,65 @@ public static partial class ExportExtensionsMethods
     ///                                                 present. </exception>
     /// <param name="scriptSource"> The script source. </param>
     /// <param name="filePath">     Full pathname of the file. </param>
-    /// <param name="overWrite">    True to over write. </param>
+    /// <param name="overwrite">    True to over write. </param>
     /// <param name="validate">     True to validate. </param>
-    /// <param name="details">      [out] The details. </param>
-    /// <returns>   True if it succeeds, false if it fails. </returns>
-    public static bool TryExportScript( this string scriptSource, string filePath, bool overWrite, bool validate, out string details )
+    public static void ExportScript( this string scriptSource, string filePath, bool overwrite, bool validate )
     {
         if ( string.IsNullOrWhiteSpace( scriptSource ) ) throw new ArgumentNullException( nameof( scriptSource ) );
         if ( string.IsNullOrWhiteSpace( filePath ) ) throw new ArgumentNullException( nameof( filePath ) );
 
-        if ( !overWrite && File.Exists( filePath ) )
-            details = $"The script source cannot be exported because the file '{filePath}' exists.";
-        else
+        if ( !overwrite && File.Exists( filePath ) )
+            throw new InvalidOperationException( $"The script source cannot be exported because the file '{filePath}' exists." );
+
+        // ensure that the source ends with a single line termination.
+        scriptSource = scriptSource.TrimMultipleLineEndings();
+
+        // Note that the actual output is not validated against the input because the line endings might change.
+        // Rather, what is validated is that the reader and writer are able to process the script source.
+        if ( validate )
+            scriptSource.ValidateStringReaderStreamWriter();
+
+        using TextReader? reader = new StringReader( scriptSource )
+            ?? throw new FileNotFoundException( $"Failed creating a reader from the script source" );
+
+        reader.ExportScript( filePath, overwrite );
+
+        // check that the file size matches the source size.
+        FileInfo fileInfo = new( filePath );
+
+        if ( fileInfo.Length < scriptSource.Length )
+            throw new InvalidOperationException( $"The exported script source file '{filePath}' length {fileInfo.Length} is smaller that the script source length {scriptSource.Length}." );
+    }
+
+    /// <summary>
+    /// A <see cref="Pith.SessionBase"/> extension method that exports a script to file.
+    /// </summary>
+    /// <remarks>   2025-04-10. </remarks>
+    /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
+    ///                                                 are null. </exception>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <exception cref="FileNotFoundException">        Thrown when the requested file is not
+    ///                                                 present. </exception>
+    /// <param name="scriptSource"> The script source. </param>
+    /// <param name="filePath">     Full pathname of the file. </param>
+    /// <param name="overwrite">    True to over write. </param>
+    /// <param name="validate">     True to validate. </param>
+    /// <param name="details">      [out] The details. </param>
+    /// <returns>   True if it succeeds, false if it fails. </returns>
+    public static bool TryExportScript( this string scriptSource, string filePath, bool overwrite, bool validate, out string details )
+    {
+        details = string.Empty;
+        try
         {
-            details = string.Empty;
-            try
-            {
-                // ensure that the source ends with a single line termination.
-                scriptSource = scriptSource.TrimMultipleLineEndings();
-
-                // Note that the actual output is not validated against the input because the line endings might change.
-                // Rather, what is validated is that the reader and writer are able to process the script source.
-                if ( validate )
-                    scriptSource.ValidateStringReaderStreamWriter();
-
-                using TextReader? reader = new StringReader( scriptSource )
-                    ?? throw new FileNotFoundException( $"Failed creating a reader from the script source" );
-
-                reader.ExportScript( filePath, overWrite );
-
-                // check that the file size matches the source size.
-                FileInfo fileInfo = new( filePath );
-
-                if ( fileInfo.Length < scriptSource.Length )
-                    details = $"The exported script source file '{filePath}' length {fileInfo.Length} is smaller that the script source length {scriptSource.Length}.";
-            }
-            catch ( Exception ex )
-            {
-                details = ex.Message;
-            }
+            scriptSource.ExportScript( filePath, overwrite, validate );
         }
-        return string.IsNullOrWhiteSpace( details );
+        catch ( Exception ex )
+        {
+            details = ex.Message;
+            return false;
+        }
+        return true;
     }
 }
 
