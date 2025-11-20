@@ -195,7 +195,7 @@ public partial class SessionBase
         {
             _ = ex.AddExceptionData();
             return cc.isr.VI.SessionLogger.Instance.LogError(
-                $"{(useLastActionDetails ? this.LastActionDetails : this.LastAction)} {failureMessage}: {ex.Message}\n\t{new StackFrame( true ).UserCallStack()}",
+                $"{(useLastActionDetails ? this.LastActionDetails : this.LastAction)} {failureMessage}: {ex.BuildMessage()}\n\t{new StackFrame( true ).UserCallStack()}",
                 memberName, sourcePath, sourceLineNumber );
         }
         else
@@ -219,7 +219,7 @@ public partial class SessionBase
         [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0 )
     {
         return cc.isr.VI.SessionLogger.Instance.LogWarning(
-            $"{(useLastActionDetails ? this.LastActionDetails : this.LastAction)} {failureMessage}: {ex.InnerError?.BuildErrorCodeDetails()}\n\t{new StackFrame( true ).UserCallStack()}",
+            $"{(useLastActionDetails ? this.LastActionDetails : this.LastAction)}\n\t{ex.BuildMessage()}\n\t{failureMessage}: {ex.InnerError?.BuildErrorCodeDetails()}\n\t{new StackFrame( true ).UserCallStack()}",
             memberName, sourcePath, sourceLineNumber );
     }
 

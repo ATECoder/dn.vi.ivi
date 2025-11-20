@@ -95,15 +95,23 @@ public static class ExceptionExtensionMethods
                AddExceptionData( exception, exception as DeviceException );
     }
 
-    /// <summary>   Builds a detailed exception message including stack trace and exception data. </summary>
+    /// <summary>
+    /// Builds a detailed exception message including stack trace and exception data.
+    /// </summary>
     /// <remarks>   David, 2020-09-15. </remarks>
-    /// <param name="exception">    The exception. </param>
+    /// <param name="exception">            The exception. </param>
+    /// <param name="includeStackTrace">    (Optional) [true] True to include, false to exclude the stack
+    ///                                     trace. </param>
     /// <returns>   An exception message including stack trace and exception data. </returns>
-    public static string BuildMessage( this Exception exception )
+    public static string BuildMessage( this Exception exception, bool includeStackTrace = true )
     {
         System.Text.StringBuilder builder = new();
-        string stackTrace = exception.StackTrace;
-        if ( !string.IsNullOrWhiteSpace( stackTrace ) ) _ = builder.AppendLine( stackTrace );
+        if ( includeStackTrace )
+        {
+            string stackTrace = exception.StackTrace;
+            if ( !string.IsNullOrWhiteSpace( stackTrace ) ) _ = builder.AppendLine( stackTrace );
+        }
+
         int counter = 1;
         _ = AppendExceptionInfo( builder, exception, counter );
         return builder.ToString().TrimEnd( Environment.NewLine.ToCharArray() );

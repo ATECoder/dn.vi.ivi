@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Diagnostics;
+using cc.isr.Std.ExceptionExtensions;
 using cc.isr.VI.Pith;
 
 namespace cc.isr.VI.Tsp.K2600.Ttm;
@@ -1287,11 +1288,13 @@ public partial class Meter : CommunityToolkit.Mvvm.ComponentModel.ObservableObje
 
     #region " check contacts "
 
-    /// <summary> Checks contact resistance. </summary>
-    /// <remarks> David, 2020-10-12. </remarks>
-    /// <exception cref="InvalidOperationException"> Thrown when operation failed to execute. </exception>
-    /// <param name="threshold"> The threshold. </param>
-    public void CheckContacts( int threshold )
+    /// <summary>   Checks contact resistance. </summary>
+    /// <remarks>   David, 2020-10-12. </remarks>
+    /// <exception cref="InvalidOperationException">    Thrown when operation failed to execute. </exception>
+    /// <exception cref="DeviceException">              Thrown when a Device error condition occurs. </exception>
+    /// <param name="threshold">    The threshold. </param>
+    /// <returns>   The contact resistances </returns>
+    public (bool? Okay, string? ContactResistances) CheckContacts( int threshold )
     {
         if ( this.TspDevice is null ) throw new InvalidOperationException( $"Meter {nameof( this.TspDevice )} is null." );
         if ( this.TspDevice.ContactSubsystem is null ) throw new InvalidOperationException( $"Meter {nameof( this.TspDevice )}.{nameof( this.TspDevice.ContactSubsystem )} is null." );
@@ -1299,8 +1302,12 @@ public partial class Meter : CommunityToolkit.Mvvm.ComponentModel.ObservableObje
         this.TspDevice.Session!.SetLastAction( "measuring contacts" );
 
         _ = this.TspDevice.ContactSubsystem.CheckContacts( threshold );
+
+        return (this.TspDevice.ContactSubsystem.ContactCheckOkay, this.TspDevice.ContactSubsystem.ContactResistances);
+
         if ( !this.TspDevice.ContactSubsystem.ContactCheckOkay.HasValue )
         {
+            return (null, null);
             throw new cc.isr.VI.Pith.DeviceException( this.TspDevice.ResourceNameCaption, "Failed Measuring contacts;. " );
         }
         else if ( !this.TspDevice.ContactSubsystem.ContactCheckOkay.Value )
@@ -1316,24 +1323,19 @@ public partial class Meter : CommunityToolkit.Mvvm.ComponentModel.ObservableObje
     /// <returns> <c>true</c> if contacts checked okay. </returns>
     public bool TryCheckContacts( int threshold, out string details )
     {
-        if ( this.TspDevice is null ) throw new InvalidOperationException( $"Meter {nameof( this.TspDevice )} is null." );
-        if ( this.TspDevice.ContactSubsystem is null ) throw new InvalidOperationException( $"Meter {nameof( this.TspDevice )}.{nameof( this.TspDevice.ContactSubsystem )} is null." );
-
-        this.TspDevice.Session!.SetLastAction( "measuring contacts" );
-        _ = this.TspDevice.ContactSubsystem.CheckContacts( threshold );
-        if ( !this.TspDevice.ContactSubsystem.ContactCheckOkay.HasValue )
+        try
         {
-            details = "Failed Measuring contacts;. ";
-            return false;
+            (bool? okay, string? contactResistances) = this.CheckContacts( threshold );
+            details = !okay.HasValue
+                ? "Failed measuring contacts."
+                : okay.Value
+                    ? string.Empty
+                    : $"High contact resistances;. Values: '{contactResistances}'";
+            return okay.GetValueOrDefault( false );
         }
-        else if ( this.TspDevice.ContactSubsystem.ContactCheckOkay.Value )
+        catch ( Exception ex )
         {
-            details = string.Empty;
-            return true;
-        }
-        else
-        {
-            details = $"High contact resistances;. Values: '{this.TspDevice.ContactSubsystem.ContactResistances}'";
+            details = ex.BuildMessage( false );
             return false;
         }
     }

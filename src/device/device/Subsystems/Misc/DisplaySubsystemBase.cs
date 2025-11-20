@@ -42,33 +42,36 @@ public abstract class DisplaySubsystemBase( StatusSubsystemBase statusSubsystem 
     public virtual void ClearDisplay()
     {
         if ( this.QueryExists().GetValueOrDefault( false ) )
+        {
+            this.Session.SetLastAction( "clearing display" );
             _ = this.Session.WriteLine( this.ClearCommand );
+            _ = this.Session.TraceInformation();
+            (Pith.ServiceRequests statusByte, string details) = this.Session.TraceDeviceExceptionIfError();
+            if ( this.Session.IsErrorBitSet( statusByte ) )
+                throw new Pith.DeviceException( details );
+        }
     }
 
     /// <summary> Clears the display without raising exceptions. </summary>
     /// <returns> <c>true</c> if okay; otherwise, <c>false</c>. </returns>
     public bool TryClearDisplay()
     {
-        Pith.ServiceRequests statusByte = Pith.ServiceRequests.None;
-        string details;
         try
         {
-            this.Session.SetLastAction( "clearing display" );
             this.ClearDisplay();
-            _ = this.Session.TraceInformation();
-            (statusByte, details) = this.Session.TraceDeviceExceptionIfError();
+            return true;
         }
         catch ( Pith.NativeException ex )
         {
             _ = this.Session.TraceException( ex );
+            return false;
         }
         catch ( Exception ex )
         {
             _ = ex.AddExceptionData();
             _ = this.Session.TraceException( ex );
+            return false;
         }
-
-        return !this.Session.IsErrorBitSet( statusByte );
     }
 
     #endregion

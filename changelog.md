@@ -8,6 +8,10 @@ Current IVI Visa Compatibility: 8.0.1.9391
 
 ## [8.1.9455] - 2025-11-20
 - Access subsystem base: update implementation.
+Exception extensions:
+- Add option to add stack trace to the message.
+- Add message to the trace of the native exception.
+
 
 ## [8.1.9454] - 2025-11-19
 Device Tsp

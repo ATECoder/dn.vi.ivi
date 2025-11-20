@@ -159,6 +159,10 @@ public abstract partial class AccessSubsystemBase( StatusSubsystemBase statusSub
 
     #region " registration "
 
+    /// <summary>   Gets a value indicating whether we can register. </summary>
+    /// <value> True if we can register, false if not. </value>
+    public abstract bool CanRegister { get; }
+
     /// <summary>   Queries an instrument with the specified serial number is registered. </summary>
     /// <remarks>   2024-08-24. </remarks>
     /// <param name="serialNumber"> The serial number. </param>
