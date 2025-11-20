@@ -12,7 +12,6 @@ Exception extensions:
 - Add option to add stack trace to the message.
 - Add message to the trace of the native exception.
 
-
 ## [8.1.9454] - 2025-11-19
 Device Tsp
 - Extensions
@@ -46,7 +45,7 @@ Device TSP Script Session Extensions:
 - Add method to delete script.
 Device Tsp
 - Script info
-  - Make changes comensurate with deploying non-byte-code files.
+  - Make changes commensurate with deploying non-byte-code files.
  - Remove the deploy file title.
  - Rename the deploy file name to a read only EmbeddedResourceFileName.
  - Add File Name and format properties for export and import.

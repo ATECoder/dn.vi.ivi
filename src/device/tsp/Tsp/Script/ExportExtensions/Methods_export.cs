@@ -1,4 +1,6 @@
+using cc.isr.VI.Pith.ExceptionExtensions;
 using cc.isr.Std.LineEndingExtensions;
+
 namespace cc.isr.VI.Tsp.Script.ExportExtensions;
 
 public static partial class ExportExtensionsMethods
@@ -153,12 +155,15 @@ public static partial class ExportExtensionsMethods
         {
             scriptSource.ExportScript( filePath, overwrite, validate );
         }
-        catch ( Exception ex )
+        catch ( InvalidOperationException ex )
         {
             details = ex.Message;
-            return false;
         }
-        return true;
+        catch ( Exception ex )
+        {
+            details = ex.BuildMessage();
+        }
+        return string.IsNullOrWhiteSpace( details );
     }
 }
 

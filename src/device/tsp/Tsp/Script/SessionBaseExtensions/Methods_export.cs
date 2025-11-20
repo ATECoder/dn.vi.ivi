@@ -1,4 +1,5 @@
 using cc.isr.VI.Pith;
+using cc.isr.VI.Pith.ExceptionExtensions;
 using cc.isr.VI.Tsp.Script.ExportExtensions;
 
 namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
@@ -61,10 +62,14 @@ public static partial class SessionBaseExtensionMethods
         }
         catch ( Exception ex )
         {
-            details = ex.Message;
-            return false;
+            if ( ex is IOException or InvalidOperationException )
+            {
+                details = ex.Message;
+            }
+            else
+                details = ex.BuildMessage();
         }
-        return true;
+        return string.IsNullOrWhiteSpace( details );
     }
 
     /// <summary>
@@ -202,10 +207,14 @@ public static partial class SessionBaseExtensionMethods
         }
         catch ( Exception ex )
         {
-            details = ex.Message;
-            return false;
+            if ( ex is IOException or InvalidOperationException )
+            {
+                details = ex.Message;
+            }
+            else
+                details = ex.BuildMessage();
         }
-        return true;
+        return string.IsNullOrWhiteSpace( details );
     }
 
     /// <summary>
@@ -308,10 +317,14 @@ public static partial class SessionBaseExtensionMethods
         }
         catch ( Exception ex )
         {
-            details = ex.Message;
-            return false;
+            if ( ex is IOException or InvalidOperationException )
+            {
+                details = ex.Message;
+            }
+            else
+                details = ex.BuildMessage();
         }
-        return true;
+        return string.IsNullOrWhiteSpace( details );
     }
 
     /// <summary>
@@ -402,10 +415,14 @@ public static partial class SessionBaseExtensionMethods
         }
         catch ( Exception ex )
         {
-            details = ex.Message;
-            return false;
+            if ( ex is IOException or InvalidOperationException )
+            {
+                details = ex.Message;
+            }
+            else
+                details = ex.BuildMessage();
         }
-        return true;
+        return string.IsNullOrWhiteSpace( details );
     }
 
 }

@@ -1,3 +1,4 @@
+using cc.isr.VI.ExceptionExtensions;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace cc.isr.VI;
@@ -90,10 +91,13 @@ public abstract partial class AccessSubsystemBase( StatusSubsystemBase statusSub
                    : $"The {this.Session.ResourceNameCaption} with serial number {this.StatusSubsystem.VersionInfoBase.SerialNumber} is not certified for API access."
                 : "Unable to determine the API certification because the certification script is not loaded.";
         }
-        catch ( Exception ex )
+        catch ( InvalidOperationException ex )
         {
             details = ex.Message;
-            throw;
+        }
+        catch ( Exception ex )
+        {
+            details = ex.BuildMessage();
         }
         return string.IsNullOrWhiteSpace( details );
     }
@@ -148,9 +152,13 @@ public abstract partial class AccessSubsystemBase( StatusSubsystemBase statusSub
         {
             this.Decertify();
         }
-        catch ( Exception ex )
+        catch ( InvalidOperationException ex )
         {
             details = ex.Message;
+        }
+        catch ( Exception ex )
+        {
+            details = ex.BuildMessage();
         }
         return string.IsNullOrWhiteSpace( details );
     }
@@ -215,10 +223,13 @@ public abstract partial class AccessSubsystemBase( StatusSubsystemBase statusSub
         {
             this.Deregister( serialNumber );
         }
-        catch ( Exception ex )
+        catch ( InvalidOperationException ex )
         {
             details = ex.Message;
-            throw;
+        }
+        catch ( Exception ex )
+        {
+            details = ex.BuildMessage();
         }
         return string.IsNullOrWhiteSpace( details );
     }
@@ -304,9 +315,13 @@ public abstract partial class AccessSubsystemBase( StatusSubsystemBase statusSub
                 ? string.Empty
                 : "Instrument is not certified for API access.";
         }
-        catch ( Exception ex )
+        catch ( InvalidOperationException ex )
         {
             details = ex.Message;
+        }
+        catch ( Exception ex )
+        {
+            details = ex.BuildMessage();
         }
         return string.IsNullOrWhiteSpace( details );
     }
@@ -336,9 +351,13 @@ public abstract partial class AccessSubsystemBase( StatusSubsystemBase statusSub
         {
             this.RegisterAndCertify();
         }
-        catch ( Exception ex )
+        catch ( InvalidOperationException ex )
         {
             details = ex.Message;
+        }
+        catch ( Exception ex )
+        {
+            details = ex.BuildMessage();
         }
         return string.IsNullOrWhiteSpace( details );
     }

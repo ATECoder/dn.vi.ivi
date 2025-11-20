@@ -154,12 +154,15 @@ public static partial class SessionBaseExtensionMethods
         {
             session.DeleteScript( scriptName, validate );
         }
-        catch ( Exception ex )
+        catch ( InvalidOperationException ex )
         {
             details = ex.Message;
-            return false;
         }
-        return true;
+        catch ( Exception ex )
+        {
+            details = ex.BuildMessage();
+        }
+        return string.IsNullOrWhiteSpace( details );
     }
 
     /// <summary>
