@@ -53,23 +53,4 @@ public static partial class Asserts
             $"{nameof( Asserts.TraceListener )} should have no {TraceEventType.Warning} messages:" +
             $"\n{string.Join( "\n", [.. Asserts.TraceListener!.Messages[TraceEventType.Warning].ToArray()] )}" );
     }
-
-    /// <summary>   Gets temporary path under the '~cc.isr` and this class namespace folder name. </summary>
-    /// <remarks>   2025-06-03. </remarks>
-    /// <param name="firstSubfolderName">   (Optional) [CallerMemberName] Name of the second
-    ///                                     subfolder. </param>
-    /// <param name="secondSubfolderName">  (Optional) Name of the second subfolder. </param>
-    /// <returns>   The temporary path. </returns>
-    public static string GetTempPath( string[] subfolders )
-    {
-        string tempPath = Path.Combine( Path.GetTempPath() );
-
-        foreach ( string subfolder in subfolders )
-        {
-            if ( !string.IsNullOrWhiteSpace( subfolder ) )
-                tempPath = Path.Combine( tempPath, subfolder );
-        }
-        _ = System.IO.Directory.CreateDirectory( tempPath );
-        return tempPath;
-    }
 }

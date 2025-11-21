@@ -351,10 +351,7 @@ public static partial class SessionBaseExtensionMethods
         if ( session is null ) throw new IOException( $"{nameof( session )} is null" );
         if ( !session.IsDeviceOpen ) throw new IOException( $"{nameof( session )} is not open" );
         if ( string.IsNullOrWhiteSpace( folderPath ) )
-        {
-            folderPath = System.IO.Path.GetTempPath();
-            folderPath = Path.Combine( folderPath, "~cc.isr", "exports" );
-        }
+            folderPath = cc.isr.Std.PathExtensions.PathMethods.GetTempPath( ["~cc.isr.vi.device.tdp"] );
 
         string embeddedScriptsNames = session.FetchEmbeddedScriptsNames().Trim();
 

@@ -1304,16 +1304,6 @@ public partial class Meter : CommunityToolkit.Mvvm.ComponentModel.ObservableObje
         _ = this.TspDevice.ContactSubsystem.CheckContacts( threshold );
 
         return (this.TspDevice.ContactSubsystem.ContactCheckOkay, this.TspDevice.ContactSubsystem.ContactResistances);
-
-        if ( !this.TspDevice.ContactSubsystem.ContactCheckOkay.HasValue )
-        {
-            return (null, null);
-            throw new cc.isr.VI.Pith.DeviceException( this.TspDevice.ResourceNameCaption, "Failed Measuring contacts;. " );
-        }
-        else if ( !this.TspDevice.ContactSubsystem.ContactCheckOkay.Value )
-        {
-            throw new cc.isr.VI.Pith.DeviceException( this.TspDevice.ResourceNameCaption, $"High contact resistances;. Values: '{this.TspDevice.ContactSubsystem.ContactResistances}'" );
-        }
     }
 
     /// <summary> Checks contact resistance. </summary>

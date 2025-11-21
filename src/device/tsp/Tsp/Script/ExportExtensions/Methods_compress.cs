@@ -310,17 +310,18 @@ public static partial class ExportExtensionsMethods
     }
 
     /// <summary>
-    /// A <see cref="string"/> extension method to compare files ignoring any difference in the file
-    /// ending because compression removes new lines from the end of the file.
+    /// A <see cref="string"/> extension method to compare files optionally ignoring any difference
+    /// in the file ending because compression removes new lines from the end of the file.
     /// </summary>
     /// <remarks>   2025-09-24. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>
     /// <param name="filePath1">    The filePath1 to act on. </param>
     /// <param name="filePath2">    The second file path. </param>
+    /// <param name="ignoreEnding"> True to ignore ending. </param>
     /// <param name="details">      [out] The details. </param>
     /// <returns>   True if it succeeds; otherwise, false. </returns>
-    public static bool CompareFilesIgnoreEnding( this string filePath1, string filePath2, out string details )
+    public static bool FileEquals( this string filePath1, string filePath2, bool ignoreEnding, out string details )
     {
         if ( string.IsNullOrWhiteSpace( filePath1 ) ) throw new ArgumentNullException( nameof( filePath1 ) );
         if ( string.IsNullOrWhiteSpace( filePath2 ) ) throw new ArgumentNullException( nameof( filePath2 ) );
@@ -335,8 +336,12 @@ public static partial class ExportExtensionsMethods
             return false;
         }
 
-        string contents1 = File.ReadAllText( filePath1 ).TrimEnd( Environment.NewLine.ToCharArray() );
-        string contents2 = File.ReadAllText( filePath1 ).TrimEnd( Environment.NewLine.ToCharArray() );
+        string contents1 = ignoreEnding
+            ? File.ReadAllText( filePath1 )
+            : File.ReadAllText( filePath1 ).TrimEnd( Environment.NewLine.ToCharArray() );
+        string contents2 = ignoreEnding
+            ? File.ReadAllText( filePath2 )
+            : File.ReadAllText( filePath2 ).TrimEnd( Environment.NewLine.ToCharArray() );
 
         if ( contents1.Equals( contents2, StringComparison.Ordinal ) )
         {
@@ -351,33 +356,37 @@ public static partial class ExportExtensionsMethods
     }
 
     /// <summary>
-    /// A <see cref="string"/> extension method that compressed files ignoring any differences in the
-    /// file endings because the compression process removed excess new lines from the end of the file.
+    /// A <see cref="string"/> extension method that compressed files optionally ignoring any
+    /// differences in the file endings because the compression process removed excess new lines from
+    /// the end of the file.
     /// </summary>
     /// <remarks>   2025-09-22. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>
     /// <param name="filePath1">    The flePath1 to act on. </param>
     /// <param name="filePath2">    The second file path. </param>
+    /// <param name="ignoreEnding"> True to ignore ending. </param>
     /// <param name="compressor">   The compressor. </param>
     /// <param name="encryptor">    The encryptor. </param>
     /// <param name="details">      [out] The details. </param>
     /// <returns>   True if it succeeds; otherwise, false. </returns>
-    public static bool CompressedFileEqualsIgnoreEnding( this string filePath1, string filePath2, IScriptCompressor compressor,
-        IScriptEncryptor encryptor, out string details )
+    public static bool CompressedFileEquals( this string filePath1, string filePath2,
+        bool ignoreEnding, IScriptCompressor compressor, IScriptEncryptor encryptor, out string details )
     {
         if ( compressor is null ) throw new ArgumentNullException( nameof( compressor ) );
         if ( encryptor is null ) throw new ArgumentNullException( nameof( encryptor ) );
         if ( string.IsNullOrWhiteSpace( filePath1 ) ) throw new ArgumentNullException( nameof( filePath1 ) );
         if ( string.IsNullOrWhiteSpace( filePath2 ) ) throw new ArgumentNullException( nameof( filePath2 ) );
 
-        string outPath = Path.Combine( System.IO.Path.GetTempPath(), "~cc.isr.vi.device.tsp", "exports" );
+        string outPath = cc.isr.Std.PathExtensions.PathMethods.GetTempPath( ["~cc.isr.vi.device.tsp"] );
+        if ( !Directory.Exists( outPath ) )
+            _ = Directory.CreateDirectory( outPath );
 
         string decompressedFile1 = Path.Combine( outPath, Path.GetFileName( filePath1 ) );
         string decompressedFile2 = Path.Combine( outPath, Path.GetFileName( filePath2 ) );
         filePath1.DecompressScriptFile( decompressedFile1, compressor, encryptor, true, false );
         filePath2.DecompressScriptFile( decompressedFile2, compressor, encryptor, true, false );
-        if ( decompressedFile1.CompareFilesIgnoreEnding( decompressedFile2, out details ) )
+        if ( decompressedFile1.FileEquals( decompressedFile2, ignoreEnding, out details ) )
             return true;
         else
         {
