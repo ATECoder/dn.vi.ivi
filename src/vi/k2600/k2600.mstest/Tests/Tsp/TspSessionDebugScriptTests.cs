@@ -1,4 +1,5 @@
-using cc.isr.VI.Device.Tests.Base;
+using cc.isr.VI.Device.Tsp.Tests;
+using cc.isr.VI.Device.Tsp.Tests.Base;
 using cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
 namespace cc.isr.VI.Tsp.K2600.Tests.Tsp;
@@ -129,7 +130,7 @@ public class TspSessionDebugScriptTests : Device.Tsp.Tests.Base.ScriptTests
 
         try
         {
-            cc.isr.VI.Device.Tests.Asserts.AssertDeviceShouldOpenWithoutDeviceErrors( this.Device, this.ResourceSettings );
+            Asserts.AssertDeviceShouldOpenWithoutDeviceErrors( this.Device, this.ResourceSettings );
             string scriptName = "isr_certify";
             string folderPath = "C:\\my\\private\\ttm\\debug\\9181";
             string fileTitle = "isr_certify.9181";
@@ -137,7 +138,7 @@ public class TspSessionDebugScriptTests : Device.Tsp.Tests.Base.ScriptTests
             string functionExpectedValue = "2.4.9181";
             string filePath = System.IO.Path.Combine( folderPath, fileTitle + cc.isr.VI.Tsp.Script.ScriptInfo.ScriptFileExtension );
             TspSessionDebugScriptTests.AssertScriptShouldImportAndRun( this.Device.Session, scriptName, filePath, scriptFunctionName, functionExpectedValue );
-            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
+            Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
         }
         catch
@@ -148,7 +149,7 @@ public class TspSessionDebugScriptTests : Device.Tsp.Tests.Base.ScriptTests
         {
             if ( this.Device.Session is not null && this.Device.Session.IsSessionOpen )
             {
-                cc.isr.VI.Device.Tests.Asserts.AssertDeviceShouldCloseWithoutErrors( this.Device );
+                Asserts.AssertDeviceShouldCloseWithoutErrors( this.Device );
             }
         }
     }
@@ -170,7 +171,7 @@ public class TspSessionDebugScriptTests : Device.Tsp.Tests.Base.ScriptTests
             string scriptFunctionName = "isr.version";
             string functionExpectedValue = "2.4.9181";
 
-            cc.isr.VI.Device.Tests.Asserts.AssertDeviceShouldOpenWithoutDeviceErrors( this.Device, this.ResourceSettings );
+            Asserts.AssertDeviceShouldOpenWithoutDeviceErrors( this.Device, this.ResourceSettings );
 
             if ( string.Equals( "2600A", this.Device.StatusSubsystemBase.VersionInfoBase.ModelFamily, StringComparison.OrdinalIgnoreCase ) )
                 fileTitle += ".2600A.2";
@@ -181,7 +182,7 @@ public class TspSessionDebugScriptTests : Device.Tsp.Tests.Base.ScriptTests
 
             string filePath = System.IO.Path.Combine( folderPath, fileTitle + cc.isr.VI.Tsp.Script.ScriptInfo.ScriptFileExtension );
             TspSessionDebugScriptTests.AssertScriptShouldImportAndRun( this.Device.Session, scriptName, filePath, scriptFunctionName, functionExpectedValue );
-            cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
+            Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
         }
         catch
@@ -192,9 +193,9 @@ public class TspSessionDebugScriptTests : Device.Tsp.Tests.Base.ScriptTests
         {
             if ( this.Device.Session is not null && this.Device.Session.IsSessionOpen )
             {
-                cc.isr.VI.Device.Tests.Asserts.AssertMessageQueue();
+                Asserts.AssertMessageQueue();
                 cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
-                cc.isr.VI.Device.Tests.Asserts.AssertDeviceShouldCloseWithoutErrors( this.Device );
+                Asserts.AssertDeviceShouldCloseWithoutErrors( this.Device );
             }
         }
     }

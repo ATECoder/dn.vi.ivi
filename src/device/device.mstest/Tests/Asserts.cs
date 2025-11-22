@@ -49,7 +49,7 @@ public sealed partial class Asserts
     /// <remarks>   David, 2021-06-29. </remarks>
     public static void AssertMessageQueue()
     {
-        Assert.IsNotNull( Asserts.TraceListener, nameof( Asserts.TraceListener ) );
+        Assert.IsNotNull( Asserts.TraceListener, $"{nameof( Asserts.TraceListener )} is not defined." );
         if ( Asserts.AssertIfTraceErrorMessages )
             Assert.IsFalse( Asserts.TraceListener.Any( TraceEventType.Error ),
                 $"{nameof( Asserts.TraceListener )} should have no {TraceEventType.Error} messages:" +

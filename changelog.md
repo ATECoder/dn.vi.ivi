@@ -10,6 +10,8 @@ Current IVI Visa Compatibility: 8.0.1.9391
 Device Tsp
 - Fix comparing files.
 - Move compressor and encryptor interfaces to the STD framework.
+K2600 MSTest
+- Call the Device Tsp test assertions from the Tsp tests.
 
 ## [8.1.9456] - 2025-11-21
 - Add Path extensions get temp folder.
