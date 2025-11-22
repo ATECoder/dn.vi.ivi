@@ -189,7 +189,7 @@ public abstract partial class SessionBase : CommunityToolkit.Mvvm.ComponentModel
         // IO PROPERTIES
 
         // The ASCII character used to end reading [10]
-        this.ReadTerminationCharacter = Std.EscapeSequencesExtensions.EscapeSequencesExtensionMethods.NEW_LINE_VALUE;
+        this.ReadTerminationCharacter = Std.EscapeSequencesExtensions.EscapeSequencesMethods.NEW_LINE_VALUE;
 
         // The value indicating whether the read operation ends when a termination character is received [true]
         this.ReadTerminationCharacterEnabled = true;
@@ -289,7 +289,7 @@ public abstract partial class SessionBase : CommunityToolkit.Mvvm.ComponentModel
         // IO PROPERTIES
 
         // The ASCII character used to end reading [10]
-        this.ReadTerminationCharacter = Std.EscapeSequencesExtensions.EscapeSequencesExtensionMethods.NEW_LINE_VALUE;
+        this.ReadTerminationCharacter = Std.EscapeSequencesExtensions.EscapeSequencesMethods.NEW_LINE_VALUE;
 
         // The value indicating whether the read operation ends when a termination character is received [true]
         this.ReadTerminationCharacterEnabled = true;
@@ -365,7 +365,7 @@ public abstract partial class SessionBase : CommunityToolkit.Mvvm.ComponentModel
     /// Delays operations by waiting for a task to complete. If defined and the <paramref name="delay"/>
     /// exceeds the <paramref name="doEventsDelayThreshold"/>, the <see cref="DoEventsAction"/>
     /// is invoked on each loop of the
-    /// <see cref="cc.isr.Std.StopwatchExtensions.StopwatchExtensionMethods.AsyncLetElapseUntil(Stopwatch, TimeSpan, TimeSpan, Func{bool}, Action?)"/>
+    /// <see cref="cc.isr.Std.StopwatchExtensions.StopwatchMethods.AsyncLetElapseUntil(Stopwatch, TimeSpan, TimeSpan, Func{bool}, Action?)"/>
     /// method.
     /// </summary>
     /// <remarks>   2024-07-05. </remarks>
@@ -393,7 +393,7 @@ public abstract partial class SessionBase : CommunityToolkit.Mvvm.ComponentModel
     /// Delays operations by waiting for a task to complete. If defined and the <paramref name="delay"/>
     /// exceeds the <see cref="SessionBase.DoEventsDelayThreshold"/>, the <see cref="DoEventsAction"/>
     /// is invoked on each loop of the
-    /// <see cref="cc.isr.Std.StopwatchExtensions.StopwatchExtensionMethods.AsyncLetElapseUntil(Stopwatch, TimeSpan, TimeSpan, Func{bool}, Action?)"/>
+    /// <see cref="cc.isr.Std.StopwatchExtensions.StopwatchMethods.AsyncLetElapseUntil(Stopwatch, TimeSpan, TimeSpan, Func{bool}, Action?)"/>
     /// method.
     /// </summary>
     /// <remarks>   2024-08-10. </remarks>
@@ -636,29 +636,29 @@ public abstract partial class SessionBase : CommunityToolkit.Mvvm.ComponentModel
     /// <remarks>   2024-09-04. </remarks>
     /// <param name="message">          The message. </param>
     /// <param name="memberName">       (Optional) Name of the member. </param>
-    /// <param name="sourcePath">       (Optional) full path name of the source file. </param>
-    /// <param name="sourceLineNumber"> (Optional) Source line number. </param>
+    /// <param name="filePath">       (Optional) full path name of the source file. </param>
+    /// <param name="lineNumber"> (Optional) Source line number. </param>
     /// <returns>   A string. </returns>
     public static string BuildCallerMemberMessage( string message,
         [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
-        [System.Runtime.CompilerServices.CallerFilePath] string sourcePath = "",
-        [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0 )
+        [System.Runtime.CompilerServices.CallerFilePath] string filePath = "",
+        [System.Runtime.CompilerServices.CallerLineNumber] int lineNumber = 0 )
     {
-        return $"{message} at [{sourcePath}].{memberName}.Line#{sourceLineNumber}";
+        return $"{message} at [{filePath}].{memberName}.Line#{lineNumber}";
     }
 
     /// <summary>   Sets the last action message. </summary>
     /// <remarks>   2024-09-04. </remarks>
     /// <param name="message">          The message. </param>
     /// <param name="memberName">       (Optional) Name of the member. </param>
-    /// <param name="sourcePath">       (Optional) full path name of the source file. </param>
-    /// <param name="sourceLineNumber"> (Optional) Source line number. </param>
+    /// <param name="filePath">       (Optional) full path name of the source file. </param>
+    /// <param name="lineNumber"> (Optional) Source line number. </param>
     public void SetLastAction( string message,
         [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
-        [System.Runtime.CompilerServices.CallerFilePath] string sourcePath = "",
-        [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0 )
+        [System.Runtime.CompilerServices.CallerFilePath] string filePath = "",
+        [System.Runtime.CompilerServices.CallerLineNumber] int lineNumber = 0 )
     {
-        this.LastAction = $"{this.ResourceNameNodeCaption} {message} at [{sourcePath}].{memberName}.Line#{sourceLineNumber}";
+        this.LastAction = $"{this.ResourceNameNodeCaption} {message} at [{filePath}].{memberName}.Line#{lineNumber}";
     }
 
     /// <summary> Gets or sets the last action. </summary>
@@ -673,14 +673,14 @@ public abstract partial class SessionBase : CommunityToolkit.Mvvm.ComponentModel
     /// <remarks>   2025-04-11. </remarks>
     /// <param name="message">          The message. </param>
     /// <param name="memberName">       (Optional) Name of the member. </param>
-    /// <param name="sourcePath">       (Optional) Full pathname of the source file. </param>
-    /// <param name="sourceLineNumber"> (Optional) Source line number. </param>
+    /// <param name="filePath">       (Optional) Full pathname of the source file. </param>
+    /// <param name="lineNumber"> (Optional) Source line number. </param>
     public void TraceLastAction( string message,
         [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
-        [System.Runtime.CompilerServices.CallerFilePath] string sourcePath = "",
-        [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0 )
+        [System.Runtime.CompilerServices.CallerFilePath] string filePath = "",
+        [System.Runtime.CompilerServices.CallerLineNumber] int lineNumber = 0 )
     {
-        System.Diagnostics.Trace.WriteLine( message, $"[{sourcePath}].{memberName}.Line#{sourceLineNumber}" );
+        System.Diagnostics.Trace.WriteLine( message, $"[{filePath}].{memberName}.Line#{lineNumber}" );
         this.SetLastAction( message );
     }
 
@@ -688,14 +688,14 @@ public abstract partial class SessionBase : CommunityToolkit.Mvvm.ComponentModel
     /// <remarks>   2024-09-04. </remarks>
     /// <param name="message">          The detailed message. </param>
     /// <param name="memberName">       (Optional) Name of the member. </param>
-    /// <param name="sourcePath">       (Optional) full path name of the source file. </param>
-    /// <param name="sourceLineNumber"> (Optional) Source line number. </param>
+    /// <param name="filePath">       (Optional) full path name of the source file. </param>
+    /// <param name="lineNumber"> (Optional) Source line number. </param>
     public void SetLastActionDetails( string message,
         [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
-        [System.Runtime.CompilerServices.CallerFilePath] string sourcePath = "",
-        [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0 )
+        [System.Runtime.CompilerServices.CallerFilePath] string filePath = "",
+        [System.Runtime.CompilerServices.CallerLineNumber] int lineNumber = 0 )
     {
-        this.LastActionDetails = $"{this.ResourceNameNodeCaption} {message} at [{sourcePath}].{memberName}.Line#{sourceLineNumber}";
+        this.LastActionDetails = $"{this.ResourceNameNodeCaption} {message} at [{filePath}].{memberName}.Line#{lineNumber}";
     }
 
     /// <summary> Gets or sets the last Action detailed message. </summary>
@@ -710,14 +710,14 @@ public abstract partial class SessionBase : CommunityToolkit.Mvvm.ComponentModel
     /// <remarks>   2025-04-11. </remarks>
     /// <param name="message">          The message. </param>
     /// <param name="memberName">       (Optional) Name of the member. </param>
-    /// <param name="sourcePath">       (Optional) Full pathname of the source file. </param>
-    /// <param name="sourceLineNumber"> (Optional) Source line number. </param>
+    /// <param name="filePath">       (Optional) Full pathname of the source file. </param>
+    /// <param name="lineNumber"> (Optional) Source line number. </param>
     public void TraceLastActionDetails( string message,
         [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
-        [System.Runtime.CompilerServices.CallerFilePath] string sourcePath = "",
-        [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0 )
+        [System.Runtime.CompilerServices.CallerFilePath] string filePath = "",
+        [System.Runtime.CompilerServices.CallerLineNumber] int lineNumber = 0 )
     {
-        System.Diagnostics.Trace.WriteLine( message, $"[{sourcePath}].{memberName}.Line#{sourceLineNumber}" );
+        System.Diagnostics.Trace.WriteLine( message, $"[{filePath}].{memberName}.Line#{lineNumber}" );
         this.SetLastActionDetails( message );
     }
 
@@ -889,7 +889,7 @@ public abstract partial class SessionBase : CommunityToolkit.Mvvm.ComponentModel
         set => _ = base.SetProperty( ref this._communicationTimeout, value );
     }
 
-    private byte _readTerminationCharacter = Std.EscapeSequencesExtensions.EscapeSequencesExtensionMethods.NEW_LINE_VALUE;
+    private byte _readTerminationCharacter = Std.EscapeSequencesExtensions.EscapeSequencesMethods.NEW_LINE_VALUE;
 
     /// <summary> Gets the ASCII character used to end reading. </summary>
     /// <value> The read termination character. </value>

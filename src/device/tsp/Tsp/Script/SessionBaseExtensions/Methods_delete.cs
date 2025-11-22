@@ -4,7 +4,7 @@ using cc.isr.VI.Tsp.SessionBaseExtensions;
 
 namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
-public static partial class SessionBaseExtensionMethods
+public static partial class SessionBaseMethods
 {
     /// <summary>
     /// A <see cref="Pith.SessionBase"/> extension method that query if <paramref name="scriptName"/>
@@ -189,7 +189,7 @@ public static partial class SessionBaseExtensionMethods
         if ( scriptCount == 0 )
         {
             session.DisplayLine( "No scripts to delete", 2 );
-            _ = TraceLastAction( $"\r\n\tNo scripts to delete." );
+            _ = cc.isr.Std.TraceExtensions.TraceMethods.TraceMemberMessage( $"\r\n\tNo scripts to delete." );
             return (scriptCount, removedCount);
         }
 
@@ -214,7 +214,7 @@ public static partial class SessionBaseExtensionMethods
 
         string message = $"Removed {removedCount} of {scriptCount} TTM embedded scripts";
         session.DisplayLine( message, 2 );
-        _ = TraceLastAction( $"\r\n\t{message}" );
+        _ = cc.isr.Std.TraceExtensions.TraceMethods.TraceMemberMessage( $"\r\n\t{message}" );
         return (scriptCount, removedCount);
     }
 
@@ -242,7 +242,7 @@ public static partial class SessionBaseExtensionMethods
         if ( string.IsNullOrWhiteSpace( embeddedScripts ) )
         {
             session.DisplayLine( "No embedded scripts to delete", 2 );
-            _ = TraceLastAction( $"\r\n\tNo embedded scripts to delete." );
+            _ = cc.isr.Std.TraceExtensions.TraceMethods.TraceMemberMessage( $"\r\n\tNo embedded scripts to delete." );
             return (0, 0);
         }
 
@@ -285,9 +285,9 @@ public static partial class SessionBaseExtensionMethods
         }
 
         if ( removedCount == 0 )
-            _ = TraceLastAction( $"\r\n\tNo scripts to remove for {frameworkName}." );
+            _ = cc.isr.Std.TraceExtensions.TraceMethods.TraceMemberMessage( $"\r\n\tNo scripts to remove for {frameworkName}." );
         else
-            _ = TraceLastAction( $"\r\n\t{removedCount} scripts were removed for {frameworkName}." );
+            _ = cc.isr.Std.TraceExtensions.TraceMethods.TraceMemberMessage( $"\r\n\t{removedCount} scripts were removed for {frameworkName}." );
     }
 
 }

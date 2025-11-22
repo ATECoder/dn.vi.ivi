@@ -1,10 +1,11 @@
+using cc.isr.Std;
+using cc.isr.Std.ReaderExtensions;
 using cc.isr.VI.Pith;
 using cc.isr.VI.Pith.ExceptionExtensions;
-using cc.isr.VI.Tsp.Script.ExportExtensions;
 
 namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
-public static partial class SessionBaseExtensionMethods
+public static partial class SessionBaseMethods
 {
     /// <summary>
     /// A <see cref="Pith.SessionBase"/> extension method that fetches and exports a script to file.
@@ -92,8 +93,8 @@ public static partial class SessionBaseExtensionMethods
     /// <param name="fileFormat">   The file format. </param>
     /// <param name="overwrite">    True to overwrite, false to preserve. </param>
     /// <param name="validate">     True to validate. </param>
-    public static void ExportScript( this Pith.SessionBase session, IScriptCompressor compressor, IScriptEncryptor encryptor,
-        string scriptTitle, string filePath, ScriptFormats fileFormat, bool overwrite, bool validate )
+    public static void ExportScript( this Pith.SessionBase session, IStringCompressor compressor, IStringEncryptor encryptor,
+        string scriptTitle, string filePath, FileFormats fileFormat, bool overwrite, bool validate )
     {
         if ( session is null ) throw new IOException( $"{nameof( session )} is null" );
         if ( !session.IsDeviceOpen ) throw new IOException( $"{nameof( session )} is not open" );
@@ -103,24 +104,24 @@ public static partial class SessionBaseExtensionMethods
             throw new IOException( $"The script {scriptTitle} cannot be exported because the file '{filePath}' exists." );
 
         string message = $"Finding '{scriptTitle}'";
-        // _ = SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
+        // _ = cc.isr.Std.ConsoleExtensions.ConsoleMethods.ConsoleOutputMemberMessage( message );
         _ = SessionLogger.Instance.LogDebug( message );
 
         if ( session.IsNil( scriptTitle ) )
             throw new IOException( $"Failed exporting script {scriptTitle};. The script is not loaded." );
 
         message = $"Fetching '{scriptTitle}'";
-        // _ = SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
+        // _ = cc.isr.Std.ConsoleExtensions.ConsoleMethods.ConsoleOutputMemberMessage( message );
         _ = SessionLogger.Instance.LogDebug( message );
 
         string scriptSource = session.FetchScript( scriptTitle );
         if ( string.IsNullOrWhiteSpace( scriptSource ) )
             throw new IOException( $"Failed fetching script {scriptTitle} source;. " );
 
-        if ( fileFormat.HasFlag( ScriptFormats.Compressed ) )
+        if ( fileFormat.HasFlag( FileFormats.Compressed ) )
         {
             message = $"Compressing '{scriptTitle}'";
-            // _ = SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
+            // _ = cc.isr.Std.ConsoleExtensions.ConsoleMethods.ConsoleOutputMemberMessage( message );
             _ = SessionLogger.Instance.LogDebug( message );
 
             scriptSource = compressor.CompressToBase64( scriptSource );
@@ -134,10 +135,10 @@ public static partial class SessionBaseExtensionMethods
             }
         }
 
-        if ( fileFormat.HasFlag( ScriptFormats.Encrypted ) )
+        if ( fileFormat.HasFlag( FileFormats.Encrypted ) )
         {
             message = $"Encrypting '{scriptTitle}'";
-            // _ = SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
+            // _ = cc.isr.Std.ConsoleExtensions.ConsoleMethods.ConsoleOutputMemberMessage( message );
             _ = SessionLogger.Instance.LogDebug( message );
 
             scriptSource = encryptor.EncryptToBase64( scriptSource );
@@ -153,22 +154,22 @@ public static partial class SessionBaseExtensionMethods
         }
 
         message = $"Exporting '{scriptTitle}'\r\n\t\tto '{filePath}'";
-        // _ = SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
+        // _ = cc.isr.Std.ConsoleExtensions.ConsoleMethods.ConsoleOutputMemberMessage( message );
         _ = SessionLogger.Instance.LogDebug( message );
 
-        scriptSource.ExportScript( filePath, overwrite, validate );
+        scriptSource.ExportToFile( filePath, overwrite, validate );
 
         if ( validate )
         {
             message = $"Validating '{scriptTitle}'\r\n\t\tfrom '{filePath}'";
-            // _ = SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
+            // _ = cc.isr.Std.ConsoleExtensions.ConsoleMethods.ConsoleOutputMemberMessage( message );
             _ = SessionLogger.Instance.LogDebug( message );
 
             scriptSource = session.FetchScript( scriptTitle );
             string importedContents = System.IO.File.ReadAllText( filePath );
-            if ( fileFormat.HasFlag( ScriptFormats.Encrypted ) )
+            if ( fileFormat.HasFlag( FileFormats.Encrypted ) )
                 importedContents = encryptor.DecryptFromBase64( importedContents );
-            if ( fileFormat.HasFlag( ScriptFormats.Compressed ) )
+            if ( fileFormat.HasFlag( FileFormats.Compressed ) )
                 importedContents = compressor.DecompressFromBase64( importedContents );
             if ( !string.Equals( scriptSource, importedContents, StringComparison.Ordinal ) )
                 throw new IOException( $"Failed validating the the exported script {scriptTitle} source;. " );
@@ -197,8 +198,8 @@ public static partial class SessionBaseExtensionMethods
     /// <param name="overwrite">    True to overwrite, false to preserve. </param>
     /// <param name="validate">     True to validate. </param>
     /// <param name="details">      [out] The details. </param>
-    public static bool TryExportScript( this Pith.SessionBase session, IScriptCompressor compressor, IScriptEncryptor encryptor,
-        string scriptTitle, string filePath, ScriptFormats fileFormat, bool overwrite, bool validate, out string details )
+    public static bool TryExportScript( this Pith.SessionBase session, IStringCompressor compressor, IStringEncryptor encryptor,
+        string scriptTitle, string filePath, FileFormats fileFormat, bool overwrite, bool validate, out string details )
     {
         details = string.Empty;
         try
@@ -239,16 +240,16 @@ public static partial class SessionBaseExtensionMethods
     /// <param name="fileFormat">           The file format. </param>
     /// <param name="overwrite">            True to overwrite, false to preserve. </param>
     /// <param name="validate">             True to validate compression and encryption. </param>
-    public static void ExportScript( this Pith.SessionBase session, IScriptCompressor compressor, IScriptEncryptor encryptor,
+    public static void ExportScript( this Pith.SessionBase session, IStringCompressor compressor, IStringEncryptor encryptor,
         string scriptTitle, string scriptVersionGetter, VersionInfoBase versionInfo,
-        string folderPath, ScriptFormats fileFormat, bool overwrite, bool validate )
+        string folderPath, FileFormats fileFormat, bool overwrite, bool validate )
     {
         if ( session is null ) throw new IOException( $"{nameof( session )} is null" );
         if ( !session.IsDeviceOpen ) throw new IOException( $"{nameof( session )} is not open" );
         if ( string.IsNullOrWhiteSpace( folderPath ) ) throw new IOException( $"{nameof( folderPath )} is null or empty" );
 
         string message = $"Fetching '{scriptTitle}'";
-        // _ = SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
+        // _ = cc.isr.Std.ConsoleExtensions.ConsoleMethods.ConsoleOutputMemberMessage( message );
         _ = SessionLogger.Instance.LogDebug( message );
 
         if ( session.IsNil( scriptTitle ) )
@@ -263,8 +264,8 @@ public static partial class SessionBaseExtensionMethods
             : actualVersion;
 
         // Correcting the assignment to use the appropriate method to select the file extension
-        ScriptFormats exportFileFormat = session.IsByteCodeScript( scriptTitle )
-                ? fileFormat | ScriptFormats.ByteCode
+        FileFormats exportFileFormat = session.IsByteCodeScript( scriptTitle )
+                ? fileFormat | FileFormats.ByteCode
                 : fileFormat;
 
         string buildNumber = new Version( actualVersion ).Build.ToString( System.Globalization.CultureInfo.CurrentCulture );
@@ -306,9 +307,9 @@ public static partial class SessionBaseExtensionMethods
     /// <param name="validate">             True to validate compression and encryption. </param>
     /// <param name="details">              [out] The details. </param>
     /// <returns>   True if it succeeds, false if it fails. </returns>
-    public static bool TryExportScript( this Pith.SessionBase session, IScriptCompressor compressor, IScriptEncryptor encryptor,
+    public static bool TryExportScript( this Pith.SessionBase session, IStringCompressor compressor, IStringEncryptor encryptor,
         string scriptTitle, string scriptVersionGetter, VersionInfoBase versionInfo,
-        string folderPath, ScriptFormats fileFormat, bool overwrite, bool validate, out string details )
+        string folderPath, FileFormats fileFormat, bool overwrite, bool validate, out string details )
     {
         details = string.Empty;
         try
@@ -344,9 +345,9 @@ public static partial class SessionBaseExtensionMethods
     /// <param name="overwrite">                True to overwrite, false to preserve. </param>
     /// <param name="validate">                 True to validate. </param>
     /// <returns>   True if it succeeds, false if it fails. </returns>
-    public static void ExportEmbeddedScripts( this Pith.SessionBase session, IScriptCompressor compressor, IScriptEncryptor encryptor,
+    public static void ExportEmbeddedScripts( this Pith.SessionBase session, IStringCompressor compressor, IStringEncryptor encryptor,
         string[] scriptsNames, string[] scriptsVersionGetters, VersionInfoBase versionInfo,
-        string folderPath, ScriptFormats fileFormat, bool overwrite, bool validate )
+        string folderPath, FileFormats fileFormat, bool overwrite, bool validate )
     {
         if ( session is null ) throw new IOException( $"{nameof( session )} is null" );
         if ( !session.IsDeviceOpen ) throw new IOException( $"{nameof( session )} is not open" );
@@ -358,7 +359,7 @@ public static partial class SessionBaseExtensionMethods
         string message = "No embedded scripts were found.";
         if ( string.IsNullOrWhiteSpace( embeddedScriptsNames ) )
         {
-            // _ = SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
+            // _ = cc.isr.Std.ConsoleExtensions.ConsoleMethods.ConsoleOutputMemberMessage( message );
             _ = SessionLogger.Instance.LogDebug( message );
             throw new IOException( message );
         }
@@ -400,9 +401,9 @@ public static partial class SessionBaseExtensionMethods
     /// <param name="validate">                 True to validate. </param>
     /// <param name="details">                  [out] The details. </param>
     /// <returns>   True if it succeeds, false if it fails. </returns>
-    public static bool TryExportEmbeddedScripts( this Pith.SessionBase session, IScriptCompressor compressor, IScriptEncryptor encryptor,
+    public static bool TryExportEmbeddedScripts( this Pith.SessionBase session, IStringCompressor compressor, IStringEncryptor encryptor,
         string[] scriptsNames, string[] scriptsVersionGetters, VersionInfoBase versionInfo,
-        string folderPath, ScriptFormats fileFormat, bool overwrite, bool validate, out string details )
+        string folderPath, FileFormats fileFormat, bool overwrite, bool validate, out string details )
     {
         details = string.Empty;
         try

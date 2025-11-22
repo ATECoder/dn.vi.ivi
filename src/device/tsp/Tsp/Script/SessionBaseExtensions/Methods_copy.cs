@@ -3,7 +3,7 @@ using System.Text;
 
 namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
-public static partial class SessionBaseExtensionMethods
+public static partial class SessionBaseMethods
 {
     /// <summary>   Copies a script source. </summary>
     /// <remarks>

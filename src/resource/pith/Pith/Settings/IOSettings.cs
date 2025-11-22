@@ -27,7 +27,7 @@ public partial class IOSettings() : CommunityToolkit.Mvvm.ComponentModel.Observa
     {
         get;
         set => _ = this.SetProperty( ref field, value );
-    } = Std.EscapeSequencesExtensions.EscapeSequencesExtensionMethods.NEW_LINE_VALUE;
+    } = Std.EscapeSequencesExtensions.EscapeSequencesMethods.NEW_LINE_VALUE;
 
     /// <summary>
     /// Gets the value indicating whether the read operation ends when a termination character is received.

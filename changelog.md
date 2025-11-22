@@ -6,6 +6,11 @@ Notable changes to the `cc.isr.vi` solution are documented in this file using th
 
 Current IVI Visa Compatibility: 8.0.1.9391
 
+## [8.1.9457] - 2025-11-22
+Device Tsp
+- Fix comparing files.
+- Move compressor and encryptor interfaces to the STD framework.
+
 ## [8.1.9456] - 2025-11-21
 - Add Path extensions get temp folder.
 - Add ignore ending to file comparizones and rename methods.

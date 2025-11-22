@@ -841,7 +841,7 @@ public partial class StatusView : cc.isr.WinControls.ModelViewBase
 
         _ = this.AddRemoveBinding( this._traceShowLevelComboBox, add, nameof( ToolStripComboBox.SelectedItem ),
             cc.isr.VI.SessionLogger.Instance, nameof( cc.isr.VI.SessionLogger.Instance.TraceEventWriterTraceEventType ) );
-        cc.isr.WinControls.ComboBoxExtensions.ComboBoxExtensionsMethods.SelectItem( this._traceShowLevelComboBox, cc.isr.VI.SessionLogger.Instance.TraceEventWriterTraceEventType );
+        cc.isr.WinControls.ComboBoxExtensions.ComboBoxMethods.SelectItem( this._traceShowLevelComboBox, cc.isr.VI.SessionLogger.Instance.TraceEventWriterTraceEventType );
 
         // trace log level
         binding = this.AddRemoveBinding( this._traceLogLevelComboBox.ComboBox, add, nameof( this.Enabled ), viewModel, nameof( VI.VisaSessionBase.IsSessionOpen ) );
@@ -863,7 +863,7 @@ public partial class StatusView : cc.isr.WinControls.ModelViewBase
 
         _ = this.AddRemoveBinding( this._traceLogLevelComboBox, add, nameof( ToolStripComboBox.SelectedItem ), cc.isr.VI.SessionLogger.Instance,
             nameof( cc.isr.VI.SessionLogger.Instance.TraceEventWriterTraceEventType ) );
-        cc.isr.WinControls.ComboBoxExtensions.ComboBoxExtensionsMethods.SelectItem( this._traceLogLevelComboBox, cc.isr.VI.SessionLogger.Instance.TraceEventWriterTraceEventType );
+        cc.isr.WinControls.ComboBoxExtensions.ComboBoxMethods.SelectItem( this._traceLogLevelComboBox, cc.isr.VI.SessionLogger.Instance.TraceEventWriterTraceEventType );
         binding = this.AddRemoveBinding( this._usingStatusSubsystemMenuItem, add, nameof( ToolStripMenuItem.Enabled ), viewModel, nameof( VI.VisaSessionBase.IsSessionOpen ) );
         binding.DataSourceUpdateMode = DataSourceUpdateMode.Never;
         if ( add )

@@ -2,7 +2,7 @@ using cc.isr.VI.Pith;
 
 namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
-public static partial class SessionBaseExtensionMethods
+public static partial class SessionBaseMethods
 {
     /// <summary>
     /// A <see cref="Pith.SessionBase"/> extension method that enumerate the loaded table.

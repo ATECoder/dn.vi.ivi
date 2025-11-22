@@ -2,7 +2,7 @@ namespace cc.isr.VI.Foundation.ExceptionExtensions;
 /// <summary>
 /// Exception methods for adding exception data and building a detailed exception message.
 /// </summary>
-public static class ExceptionExtensionMethods
+public static class ExceptionMethods
 {
     /// <summary> Adds an exception data to 'exception'. </summary>
     /// <param name="value">     The value. </param>
@@ -27,7 +27,7 @@ public static class ExceptionExtensionMethods
     public static bool AddExceptionData( this Exception exception )
     {
         return AddExceptionData( exception, exception as Ivi.Visa.NativeVisaException ) ||
-              cc.isr.VI.Pith.ExceptionExtensions.ExceptionExtensionMethods.AddExceptionData( exception );
+              cc.isr.VI.Pith.ExceptionExtensions.ExceptionMethods.AddExceptionData( exception );
     }
 
     /// <summary>   An Exception extension method that builds a message. </summary>
@@ -36,6 +36,6 @@ public static class ExceptionExtensionMethods
     /// <returns>   A <see cref="string" />. </returns>
     public static string BuildMessage( this Exception exception )
     {
-        return cc.isr.VI.Pith.ExceptionExtensions.ExceptionExtensionMethods.BuildMessage( exception );
+        return cc.isr.VI.Pith.ExceptionExtensions.ExceptionMethods.BuildMessage( exception );
     }
 }

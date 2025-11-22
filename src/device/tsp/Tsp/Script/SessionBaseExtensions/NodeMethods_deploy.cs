@@ -174,7 +174,7 @@ public static partial class NodeMethods
                 embeddedScript.ScriptStatus |= ScriptStatuses.Embedded;
             }
         }
-        embeddedScript.VersionStatus = SessionBaseExtensionMethods.ParseFirmwareVersionStatis( embeddedScript );
+        embeddedScript.VersionStatus = SessionBaseMethods.ParseFirmwareVersionStatis( embeddedScript );
         return embeddedScript;
     }
 

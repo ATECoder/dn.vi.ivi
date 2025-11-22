@@ -1,6 +1,8 @@
+using cc.isr.Std;
+
 namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
-public static partial class SessionBaseExtensionMethods
+public static partial class SessionBaseMethods
 {
 
     /// <summary>
@@ -81,14 +83,14 @@ public static partial class SessionBaseExtensionMethods
     /// <param name="compressor">   The compressor. </param>
     /// <param name="encryptor">    The encryptor. </param>
     /// <returns>   The script. </returns>
-    public static string ReadScript( this string filePath, IScriptCompressor compressor, IScriptEncryptor encryptor )
+    public static string ReadScript( this string filePath, IStringCompressor compressor, IStringEncryptor encryptor )
     {
         if ( string.IsNullOrWhiteSpace( filePath ) ) throw new ArgumentNullException( nameof( filePath ) );
 
         using StreamReader? reader = new System.IO.StreamReader( filePath ) ??
             throw new FileNotFoundException( $"Failed opening script file '{filePath}'" );
 
-        string source = SessionBaseExtensionMethods.ReadScript( filePath );
+        string source = SessionBaseMethods.ReadScript( filePath );
 
         if ( source is null || string.IsNullOrWhiteSpace( source ) )
             throw new InvalidOperationException( $"Failed reading script;. file '{filePath}' includes no source;. " );
@@ -120,7 +122,7 @@ public static partial class SessionBaseExtensionMethods
     /// <param name="lineDelay">                The line delay. </param>
     /// <param name="runScriptAfterLoading">    True to run script after loading. </param>
     /// <param name="deleteExisting">           True to delete the existing script prior to loading the new script. </param>
-    public static void ImportScript( this Pith.SessionBase session, IScriptCompressor compressor, IScriptEncryptor encryptor,
+    public static void ImportScript( this Pith.SessionBase session, IStringCompressor compressor, IStringEncryptor encryptor,
         string scriptName, string filePath, TimeSpan lineDelay, bool runScriptAfterLoading, bool deleteExisting )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );

@@ -3,7 +3,7 @@ using cc.isr.VI.Tsp.SessionBaseExtensions;
 
 namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
-public static partial class SessionBaseExtensionMethods
+public static partial class SessionBaseMethods
 {
     /// <summary>   Query if 'source' is byte code. </summary>
     /// <remarks>   2024-10-11. </remarks>
@@ -64,7 +64,7 @@ public static partial class SessionBaseExtensionMethods
     /// <returns>   <c>true</c> if the script is a byte code script; otherwise, <c>false</c>. </returns>
     public static bool IsByteCodeScript( this Pith.SessionBase session, int nodeNumber, ScriptInfo script, bool usingSupportScript = false )
     {
-        return SessionBaseExtensionMethods.IsByteCodeScript( session, nodeNumber, script.Title, usingSupportScript );
+        return SessionBaseMethods.IsByteCodeScript( session, nodeNumber, script.Title, usingSupportScript );
     }
 
     /// <summary>

@@ -7,11 +7,4 @@ using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage( "Style", "IDE1006:Naming Styles", Justification = "<Pending>", Scope = "namespace", Target = "~N:cc.isr" )]
 [assembly: SuppressMessage( "Style", "IDE1006:Naming Styles", Justification = "<Pending>", Scope = "namespace", Target = "~N:cc.isr.VI.Tsp.K2600.Tests" )]
-[assembly: SuppressMessage( "Style", "IDE1006:Naming Styles", Justification = "<Pending>", Scope = "namespace", Target = "~N:cc.isr.VI.Tsp.K2600.MSTest.Measure" )]
-[assembly: SuppressMessage( "Style", "IDE1006:Naming Styles", Justification = "<Pending>", Scope = "namespace", Target = "~N:cc.isr.VI.Tsp.K2600.MSTest.Resource" )]
-[assembly: SuppressMessage( "Style", "IDE1006:Naming Styles", Justification = "<Pending>", Scope = "namespace", Target = "~N:cc.isr.VI.Tsp.K2600.MSTest.Settings" )]
-[assembly: SuppressMessage( "Style", "IDE1006:Naming Styles", Justification = "<Pending>", Scope = "namespace", Target = "~N:cc.isr.VI.Tsp.K2600.MSTest.Source" )]
-[assembly: SuppressMessage( "Style", "IDE1006:Naming Styles", Justification = "<Pending>", Scope = "namespace", Target = "~N:cc.isr.VI.Tsp.K2600.MSTest.Status" )]
-[assembly: SuppressMessage( "Style", "IDE1006:Naming Styles", Justification = "<Pending>", Scope = "namespace", Target = "~N:cc.isr.VI.Tsp.K2600.MSTest.Subsystems" )]
-[assembly: SuppressMessage( "Style", "IDE1006:Naming Styles", Justification = "<Pending>", Scope = "namespace", Target = "~N:cc.isr.VI.Tsp.K2600.MSTest.Tsp" )]
-[assembly: SuppressMessage( "Style", "IDE1006:Naming Styles", Justification = "<Pending>", Scope = "namespace", Target = "~N:cc.isr.VI.Tsp.K2600.MSTest.Visa" )]
+[assembly: SuppressMessage( "Style", "IDE1006:Naming Styles", Justification = "<Pending>", Scope = "namespace", Target = "~N:cc.isr.VI.Tsp.K2600.Tests.Tsp" )]

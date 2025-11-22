@@ -1,6 +1,6 @@
 using System.Text;
 using cc.isr.VI.Device.Tests.Base;
-using cc.isr.VI.Tsp.Script.ExportExtensions;
+using cc.isr.Std.ReaderExtensions;
 using cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
 namespace cc.isr.VI.Tsp.K2600.Tests.Tsp;
@@ -113,7 +113,7 @@ public class TspSessionScriptTests : Device.Tsp.Tests.Base.ScriptTests
             // write the source to file.
             string fileTitle = $"{scriptName}_code";
             string filePath = Path.Combine( folderPath, $"{fileTitle}{cc.isr.VI.Tsp.Script.ScriptInfo.ScriptFileExtension}" );
-            if ( !scriptSource.ToString().TryExportScript( filePath, true, true, out string details ) )
+            if ( !scriptSource.ToString().TryExportToFile( filePath, true, true, out string details ) )
                 Assert.Fail( details );
 
             this.Device.Session.DeleteScript( scriptName, true );
@@ -208,7 +208,7 @@ public class TspSessionScriptTests : Device.Tsp.Tests.Base.ScriptTests
             // write the source to file.
             fileTitle = $"{fileTitle}_file";
             string filePath = Path.Combine( folderPath, $"{fileTitle}{cc.isr.VI.Tsp.Script.ScriptInfo.ScriptFileExtension}" );
-            if ( !scriptSource.ToString().TryExportScript( filePath, true, true, out string details ) )
+            if ( !scriptSource.ToString().TryExportToFile( filePath, true, true, out string details ) )
                 Assert.Fail( details );
 
             this.Device.Session.DeleteScript( scriptName, true );
@@ -330,7 +330,7 @@ public class TspSessionScriptTests : Device.Tsp.Tests.Base.ScriptTests
             // write the source to file.
             fileTitle += "_byte_code";
             string filePath = Path.Combine( folderPath, $"{fileTitle}{cc.isr.VI.Tsp.Script.ScriptInfo.ScriptByteCodeFileExtension}" );
-            if ( !scriptSource.ToString().TryExportScript( filePath, true, true, out string details ) )
+            if ( !scriptSource.ToString().TryExportToFile( filePath, true, true, out string details ) )
                 Assert.Fail( details );
 
             this.Device.Session.DeleteScript( scriptName, true );

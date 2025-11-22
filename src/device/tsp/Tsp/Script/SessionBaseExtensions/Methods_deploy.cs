@@ -2,7 +2,7 @@ using cc.isr.VI.Pith;
 
 namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
-public static partial class SessionBaseExtensionMethods
+public static partial class SessionBaseMethods
 {
     /// <summary>
     /// A <see cref="Pith.SessionBase"/> extension method that queries if the script is set to run when
@@ -207,7 +207,7 @@ public static partial class SessionBaseExtensionMethods
                 embeddedScript.ScriptStatus |= ScriptStatuses.Embedded;
             }
         }
-        embeddedScript.VersionStatus = SessionBaseExtensionMethods.ParseFirmwareVersionStatis( embeddedScript );
+        embeddedScript.VersionStatus = SessionBaseMethods.ParseFirmwareVersionStatis( embeddedScript );
         return embeddedScript;
     }
 

@@ -2,6 +2,7 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.Versioning;
 using System.Text;
+using cc.isr.Std;
 using cc.isr.Std.Logging;
 using cc.isr.VI.Tsp.Script;
 using Microsoft.Extensions.Logging;
@@ -173,16 +174,16 @@ public class TspScriptTests
     /// <remarks>   2025-09-18. </remarks>
     /// <param name="format">   Describes the format to use. </param>
     /// <param name="expected"> The expected. </param>
-    [DataRow( ScriptFormats.None, ScriptInfo.ScriptFileExtension )]
-    [DataRow( ScriptFormats.Encrypted, ScriptInfo.ScriptEncryptedFileExtension )]
-    [DataRow( ScriptFormats.Compressed, ScriptInfo.ScriptCompressedFileExtension )]
-    [DataRow( ScriptFormats.Compressed | ScriptFormats.Encrypted, ScriptInfo.ScriptCompressedEncryptedFileExtension )]
-    [DataRow( ScriptFormats.ByteCode, ScriptInfo.ScriptByteCodeFileExtension )]
-    [DataRow( ScriptFormats.ByteCode | ScriptFormats.Encrypted, ScriptInfo.ScriptByteCodeEncryptedFileExtension )]
-    [DataRow( ScriptFormats.ByteCode | ScriptFormats.Compressed, ScriptInfo.ScriptByteCodeCompressedFileExtension )]
-    [DataRow( ScriptFormats.ByteCode | ScriptFormats.Compressed | ScriptFormats.Encrypted, ScriptInfo.ScriptByteCodeCompressedEncryptedFileExtension )]
+    [DataRow( FileFormats.None, ScriptInfo.ScriptFileExtension )]
+    [DataRow( FileFormats.Encrypted, ScriptInfo.ScriptEncryptedFileExtension )]
+    [DataRow( FileFormats.Compressed, ScriptInfo.ScriptCompressedFileExtension )]
+    [DataRow( FileFormats.Compressed | FileFormats.Encrypted, ScriptInfo.ScriptCompressedEncryptedFileExtension )]
+    [DataRow( FileFormats.ByteCode, ScriptInfo.ScriptByteCodeFileExtension )]
+    [DataRow( FileFormats.ByteCode | FileFormats.Encrypted, ScriptInfo.ScriptByteCodeEncryptedFileExtension )]
+    [DataRow( FileFormats.ByteCode | FileFormats.Compressed, ScriptInfo.ScriptByteCodeCompressedFileExtension )]
+    [DataRow( FileFormats.ByteCode | FileFormats.Compressed | FileFormats.Encrypted, ScriptInfo.ScriptByteCodeCompressedEncryptedFileExtension )]
     [TestMethod()]
-    public void ScriptFormatShouldParse( ScriptFormats format, string expected )
+    public void ScriptFormatShouldParse( FileFormats format, string expected )
     {
         Assembly assembly = typeof( cc.isr.VI.Tsp.Script.ScriptInfo ).Assembly;
         Console.WriteLine( $"\t{assembly.FullName} {assembly.GetCustomAttribute<TargetFrameworkAttribute>()?.FrameworkName}" );

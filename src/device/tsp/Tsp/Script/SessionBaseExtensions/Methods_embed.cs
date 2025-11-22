@@ -2,7 +2,7 @@ using cc.isr.VI.Pith;
 
 namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
-public static partial class SessionBaseExtensionMethods
+public static partial class SessionBaseMethods
 {
     /// <summary>
     /// A <see cref="Pith.SessionBase"/> extension method that queries if a script is embedded and byte code. </summary>
@@ -26,7 +26,7 @@ public static partial class SessionBaseExtensionMethods
         else
             details = string.Empty;
         if ( string.IsNullOrEmpty( details ) )
-            SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tScript '{scriptInfo.Title}' is embedded;. " );
+            _ = cc.isr.Std.TraceExtensions.TraceMethods.TraceMemberMessage( $"\r\n\tScript '{scriptInfo.Title}' is embedded;. " );
         return string.IsNullOrWhiteSpace( details );
     }
 
@@ -45,9 +45,9 @@ public static partial class SessionBaseExtensionMethods
         string scriptNames;
         string message = "fetching the names of the embedded scripts";
         if ( consoleOut )
-            SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
+            _ = cc.isr.Std.ConsoleExtensions.ConsoleMethods.ConsoleOutputMemberMessage( message );
         else
-            SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
+            _ = cc.isr.Std.TraceExtensions.TraceMethods.TraceMemberMessage( $"\r\n\t{message}" );
 
         _ = session.WriteLine( "do {0} print( names ) end ", Syntax.Tsp.Script.ScriptCatalogGetterCommand );
         _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay );
@@ -119,9 +119,9 @@ public static partial class SessionBaseExtensionMethods
             {
                 string message = $"script {script.Title} is not embedded;. ";
                 if ( consoleOut )
-                    SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
+                    _ = cc.isr.Std.ConsoleExtensions.ConsoleMethods.ConsoleOutputMemberMessage( message );
                 else
-                    SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
+                    _ = cc.isr.Std.TraceExtensions.TraceMethods.TraceMemberMessage( $"\r\n\t{message}" );
                 break;
             }
         }
@@ -156,9 +156,9 @@ public static partial class SessionBaseExtensionMethods
         {
             message = $"removing the '{scriptName}' script from the embedded script catalog;. ";
             if ( consoleOut )
-                SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
+                _ = cc.isr.Std.ConsoleExtensions.ConsoleMethods.ConsoleOutputMemberMessage( message );
             else
-                SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
+                _ = cc.isr.Std.TraceExtensions.TraceMethods.TraceMemberMessage( $"\r\n\t{message}" );
 
             _ = session.WriteLine( $"script.delete('{scriptName}')" );
             _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay + session.StatusReadDelay );
@@ -175,12 +175,12 @@ public static partial class SessionBaseExtensionMethods
 
             message = $"checking if the '{scriptName}' script is no longer embedded;. ";
             if ( consoleOut )
-                SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
+                _ = cc.isr.Std.ConsoleExtensions.ConsoleMethods.ConsoleOutputMemberMessage( message );
             else
-                SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
+                _ = cc.isr.Std.TraceExtensions.TraceMethods.TraceMemberMessage( $"\r\n\t{message}" );
 
             if ( !session.IsScriptEmbedded( scriptName ) )
-                SessionBaseExtensionMethods.TraceLastAction( "script is not longer embedded;. " );
+                _ = cc.isr.Std.TraceExtensions.TraceMethods.TraceMemberMessage( "script is not longer embedded;. " );
             else
                 throw new InvalidOperationException( $"Removing the '{scriptName}' script for the embedded catalog. The script still exists among the embedded scripts;. " );
 
@@ -220,9 +220,9 @@ public static partial class SessionBaseExtensionMethods
 
         string message = $"checking if the '{scriptName}' script was loaded;. ";
         if ( consoleOut )
-            SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
+            _ = cc.isr.Std.ConsoleExtensions.ConsoleMethods.ConsoleOutputMemberMessage( message );
         else
-            SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
+            _ = cc.isr.Std.TraceExtensions.TraceMethods.TraceMemberMessage( $"\r\n\t{message}" );
 
         session.LastNodeNumber = default;
         if ( session.IsNil( scriptName ) )
@@ -230,27 +230,27 @@ public static partial class SessionBaseExtensionMethods
 
         message = $"checking if the '{scriptName}' script exists;. ";
         if ( consoleOut )
-            SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
+            _ = cc.isr.Std.ConsoleExtensions.ConsoleMethods.ConsoleOutputMemberMessage( message );
         else
-            SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
+            _ = cc.isr.Std.TraceExtensions.TraceMethods.TraceMemberMessage( $"\r\n\t{message}" );
         session.LastNodeNumber = default;
 
         if ( embedByteCode && !session.IsByteCodeScript( scriptName ) )
         {
             message = $"converting '{scriptName}' script to byte code;. ";
             if ( consoleOut )
-                SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
+                _ = cc.isr.Std.ConsoleExtensions.ConsoleMethods.ConsoleOutputMemberMessage( message );
             else
-                SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
+                _ = cc.isr.Std.TraceExtensions.TraceMethods.TraceMemberMessage( $"\r\n\t{message}" );
             _ = session.WriteLine( $"{scriptName}.source=nil" );
             _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay + session.StatusReadDelay );
         }
 
         message = $"Embedding the '{scriptName}' script;. ";
         if ( consoleOut )
-            SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
+            _ = cc.isr.Std.ConsoleExtensions.ConsoleMethods.ConsoleOutputMemberMessage( message );
         else
-            SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
+            _ = cc.isr.Std.TraceExtensions.TraceMethods.TraceMemberMessage( $"\r\n\t{message}" );
 
         _ = session.WriteLine( $"{scriptName}.save()" );
         _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay + session.StatusReadDelay );

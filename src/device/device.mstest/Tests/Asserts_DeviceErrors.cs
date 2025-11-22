@@ -16,18 +16,18 @@ public sealed partial class Asserts
     /// <param name="withPath">         (Optional) True to with path. </param>
     /// <param name="withFileName">     (Optional) True to with file name. </param>
     /// <param name="memberName">       (Optional) Name of the member. </param>
-    /// <param name="sourcePath">       (Optional) Full pathname of the source file. </param>
-    /// <param name="sourceLineNumber"> (Optional) Source line number. </param>
+    /// <param name="filePath">       (Optional) Full pathname of the source file. </param>
+    /// <param name="lineNumber"> (Optional) Source line number. </param>
     public static void AssertOrphanMessages( Pith.SessionBase? session, bool withPath = false, bool withFileName = true,
         [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
-        [System.Runtime.CompilerServices.CallerFilePath] string sourcePath = "",
-        [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0 )
+        [System.Runtime.CompilerServices.CallerFilePath] string filePath = "",
+        [System.Runtime.CompilerServices.CallerLineNumber] int lineNumber = 0 )
     {
         string member = withPath
-            ? $"[{sourcePath}].{memberName}.Line#{sourceLineNumber}"
+            ? $"[{filePath}].{memberName}.Line#{lineNumber}"
             : withFileName
-              ? $"{System.IO.Path.GetFileNameWithoutExtension( sourcePath )}.{memberName}.Line#{sourceLineNumber}"
-              : $"{memberName}.Line#{sourceLineNumber}";
+              ? $"{System.IO.Path.GetFileNameWithoutExtension( filePath )}.{memberName}.Line#{lineNumber}"
+              : $"{memberName}.Line#{lineNumber}";
 
         Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
         Assert.IsTrue( session.IsDeviceOpen, $"VISA session to '{nameof( session.ResourceNameCaption )}' must be open." );
@@ -42,18 +42,18 @@ public sealed partial class Asserts
     /// <param name="withPath">         (Optional) True to with path. </param>
     /// <param name="withFileName">     (Optional) True to with file name. </param>
     /// <param name="memberName">       (Optional) Name of the member. </param>
-    /// <param name="sourcePath">       (Optional) Full pathname of the source file. </param>
-    /// <param name="sourceLineNumber"> (Optional) Source line number. </param>
+    /// <param name="filePath">       (Optional) Full pathname of the source file. </param>
+    /// <param name="lineNumber"> (Optional) Source line number. </param>
     public static void ThrowIfDeviceErrors( Pith.SessionBase? session, string message, bool withPath = false, bool withFileName = true,
         [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
-        [System.Runtime.CompilerServices.CallerFilePath] string sourcePath = "",
-        [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0 )
+        [System.Runtime.CompilerServices.CallerFilePath] string filePath = "",
+        [System.Runtime.CompilerServices.CallerLineNumber] int lineNumber = 0 )
     {
         string member = withPath
-            ? $"[{sourcePath}].{memberName}.Line#{sourceLineNumber}"
+            ? $"[{filePath}].{memberName}.Line#{lineNumber}"
             : withFileName
-              ? $"{System.IO.Path.GetFileNameWithoutExtension( sourcePath )}.{memberName}.Line#{sourceLineNumber}"
-              : $"{memberName}.Line#{sourceLineNumber}";
+              ? $"{System.IO.Path.GetFileNameWithoutExtension( filePath )}.{memberName}.Line#{lineNumber}"
+              : $"{memberName}.Line#{lineNumber}";
         Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
         session.ThrowDeviceExceptionIfError( failureMessage: $"{member}:\r\n\t{message}" );
     }

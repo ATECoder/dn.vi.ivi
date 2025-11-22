@@ -8,7 +8,7 @@ namespace cc.isr.VI.WinControls.DataGridViewExtensions;
 
 /// <summary>   A data grid view extensions methods. </summary>
 /// <remarks>   David, 2020-12-04. </remarks>
-public static class DataGridViewExtensionsMethods
+public static class DataGridViewMethods
 {
     #region " buffer readings "
 

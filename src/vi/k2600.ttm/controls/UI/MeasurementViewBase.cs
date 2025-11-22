@@ -1053,12 +1053,12 @@ public partial class MeasurementViewBase : cc.isr.WinControls.ModelViewBase
     /// <remarks> David, 2020-10-12. </remarks>
     private void EnableTraceLevelControls()
     {
-        cc.isr.WinControls.ComboBoxExtensions.ComboBoxExtensionsMethods.ListTraceEventLevels( this._logTraceLevelComboBox.ComboBox, cc.isr.Logging.TraceLog.TraceEventSelector.TraceEventValueNamePairs );
+        cc.isr.WinControls.ComboBoxExtensions.ComboBoxMethods.ListTraceEventLevels( this._logTraceLevelComboBox.ComboBox, cc.isr.Logging.TraceLog.TraceEventSelector.TraceEventValueNamePairs );
         this._logTraceLevelComboBox.ComboBox.SelectedValueChanged += this.LogTraceLevelComboBox_SelectedIndexChanged;
-        cc.isr.WinControls.ComboBoxExtensions.ComboBoxExtensionsMethods.ListTraceEventLevels( this._displayTraceLevelComboBox.ComboBox, cc.isr.Logging.TraceLog.TraceEventSelector.TraceEventValueNamePairs );
+        cc.isr.WinControls.ComboBoxExtensions.ComboBoxMethods.ListTraceEventLevels( this._displayTraceLevelComboBox.ComboBox, cc.isr.Logging.TraceLog.TraceEventSelector.TraceEventValueNamePairs );
         this._displayTraceLevelComboBox.ComboBox.SelectedValueChanged += this.DisplayTraceLevelComboBox_SelectedIndexChanged;
-        cc.isr.WinControls.ComboBoxExtensions.ComboBoxExtensionsMethods.SelectItem( this._logTraceLevelComboBox, cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TraceLogSettings.TraceLogLevel );
-        cc.isr.WinControls.ComboBoxExtensions.ComboBoxExtensionsMethods.SelectItem( this._displayTraceLevelComboBox, cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TraceLogSettings.TraceShowLevel );
+        cc.isr.WinControls.ComboBoxExtensions.ComboBoxMethods.SelectItem( this._logTraceLevelComboBox, cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TraceLogSettings.TraceLogLevel );
+        cc.isr.WinControls.ComboBoxExtensions.ComboBoxMethods.SelectItem( this._displayTraceLevelComboBox, cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TraceLogSettings.TraceShowLevel );
     }
 
     /// <summary>

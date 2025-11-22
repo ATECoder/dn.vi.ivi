@@ -10,20 +10,20 @@ public partial class SessionBase
     /// <param name="communicationTimeoutMilliseconds"> (Optional) (10000) The communication timeout in
     ///                                                 milliseconds. </param>
     /// <param name="memberName">                       (Optional) Name of the member. </param>
-    /// <param name="sourcePath">                       (Optional) full path name of the source file. </param>
-    /// <param name="sourceLineNumber">                 (Optional) Source line number. </param>
+    /// <param name="filePath">                       (Optional) full path name of the source file. </param>
+    /// <param name="lineNumber">                 (Optional) Source line number. </param>
     public void QueryAndThrowIfOperationIncomplete( string failureMessage = "",
         int readAfterWriteDelayMilliseconds = 0,
         int communicationTimeoutMilliseconds = 10000,
         [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
-        [System.Runtime.CompilerServices.CallerFilePath] string sourcePath = "",
-        [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0 )
+        [System.Runtime.CompilerServices.CallerFilePath] string filePath = "",
+        [System.Runtime.CompilerServices.CallerLineNumber] int lineNumber = 0 )
     {
         _ = SessionBase.AsyncDelay( this.ReadAfterWriteDelay + this.StatusReadDelay );
         _ = this.WriteLine( this.OperationCompletedQueryCommand );
 
         // read query reply and throw if reply is not 1.
-        this.ReadAndThrowIfOperationIncomplete( failureMessage, readAfterWriteDelayMilliseconds, communicationTimeoutMilliseconds, memberName, sourcePath, sourceLineNumber );
+        this.ReadAndThrowIfOperationIncomplete( failureMessage, readAfterWriteDelayMilliseconds, communicationTimeoutMilliseconds, memberName, filePath, lineNumber );
 
         // throw if device errors
         this.ThrowDeviceExceptionIfError();
@@ -39,14 +39,14 @@ public partial class SessionBase
     /// <param name="communicationTimeoutMilliseconds"> (Optional) (10000) The communication timeout
     ///                                                 in milliseconds. </param>
     /// <param name="memberName">                       (Optional) Name of the member. </param>
-    /// <param name="sourcePath">                       (Optional) full path name of the source file. </param>
-    /// <param name="sourceLineNumber">                 (Optional) Source line number. </param>
+    /// <param name="filePath">                       (Optional) full path name of the source file. </param>
+    /// <param name="lineNumber">                 (Optional) Source line number. </param>
     public void ReadAndThrowIfOperationIncomplete( string failureMessage = "",
         int readAfterWriteDelayMilliseconds = 0,
         int communicationTimeoutMilliseconds = 10000,
         [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
-        [System.Runtime.CompilerServices.CallerFilePath] string sourcePath = "",
-        [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0 )
+        [System.Runtime.CompilerServices.CallerFilePath] string filePath = "",
+        [System.Runtime.CompilerServices.CallerLineNumber] int lineNumber = 0 )
     {
         _ = readAfterWriteDelayMilliseconds == 0
             ? SessionBase.AsyncDelay( this.ReadAfterWriteDelay + this.StatusReadDelay )
@@ -59,7 +59,7 @@ public partial class SessionBase
             string reply = this.ReadLineTrimEnd();
             if ( cc.isr.VI.Syntax.ScpiSyntax.OperationCompletedValue != reply )
             {
-                string location = $"at [{sourcePath}].{memberName}.Line#{sourceLineNumber}";
+                string location = $"at [{filePath}].{memberName}.Line#{lineNumber}";
                 if ( string.IsNullOrWhiteSpace( failureMessage ) )
                     failureMessage = $"operation incomplete (replied '{reply}' instead of '{cc.isr.VI.Syntax.ScpiSyntax.OperationCompletedValue}')";
                 throw new NativeException( $"{this.ResourceNameNodeCaption} {failureMessage} after {this.LastAction}\n\t{location}" );
@@ -85,16 +85,16 @@ public partial class SessionBase
     /// <param name="useLastActionDetails"> (Optional) (false) True to use last action details. </param>
     /// <param name="failureMessage">       (Optional) (empty) Message describing the failure. </param>
     /// <param name="memberName">           (Optional) Name of the member. </param>
-    /// <param name="sourcePath">           (Optional) full path name of the source file. </param>
-    /// <param name="sourceLineNumber">     (Optional) Source line number. </param>
+    /// <param name="filePath">           (Optional) full path name of the source file. </param>
+    /// <param name="lineNumber">     (Optional) Source line number. </param>
     public void ThrowDeviceExceptionIfError( TimeSpan messageBitTimeout, bool useLastActionDetails = false,
         string failureMessage = "failed",
         [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
-        [System.Runtime.CompilerServices.CallerFilePath] string sourcePath = "",
-        [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0 )
+        [System.Runtime.CompilerServices.CallerFilePath] string filePath = "",
+        [System.Runtime.CompilerServices.CallerLineNumber] int lineNumber = 0 )
     {
         _ = SessionBase.AsyncDelay( this.ReadAfterWriteDelay + this.StatusReadDelay );
-        this.ThrowDeviceExceptionIfError( this.ReadStatusByte(), messageBitTimeout, useLastActionDetails, failureMessage, memberName, sourcePath, sourceLineNumber );
+        this.ThrowDeviceExceptionIfError( this.ReadStatusByte(), messageBitTimeout, useLastActionDetails, failureMessage, memberName, filePath, lineNumber );
     }
 
     /// <summary>
@@ -107,13 +107,13 @@ public partial class SessionBase
     /// <param name="useLastActionDetails"> (Optional) (false) True to use last action details. </param>
     /// <param name="failureMessage">       (Optional) (empty) Message describing the failure. </param>
     /// <param name="memberName">           (Optional) Name of the member. </param>
-    /// <param name="sourcePath">           (Optional) full path name of the source file. </param>
-    /// <param name="sourceLineNumber">     (Optional) Source line number. </param>
+    /// <param name="filePath">           (Optional) full path name of the source file. </param>
+    /// <param name="lineNumber">     (Optional) Source line number. </param>
     public void ThrowDeviceExceptionIfError( ServiceRequests statusByte, TimeSpan messageBitTimeout, bool useLastActionDetails = false,
         string failureMessage = "failed",
         [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
-        [System.Runtime.CompilerServices.CallerFilePath] string sourcePath = "",
-        [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0 )
+        [System.Runtime.CompilerServices.CallerFilePath] string filePath = "",
+        [System.Runtime.CompilerServices.CallerLineNumber] int lineNumber = 0 )
     {
         if ( this.IsErrorBitSet( statusByte ) )
         {
@@ -121,7 +121,7 @@ public partial class SessionBase
 
             _ = this.QueryDeviceErrors( statusByte );
 
-            this.ThrowDeviceException( useLastActionDetails, failureMessage, memberName, sourcePath, sourceLineNumber );
+            this.ThrowDeviceException( useLastActionDetails, failureMessage, memberName, filePath, lineNumber );
         }
     }
 
@@ -133,16 +133,16 @@ public partial class SessionBase
     /// <param name="useLastActionDetails"> (Optional) (false) True to use last action detains. </param>
     /// <param name="failureMessage">       (Optional) (empty) The failure message. </param>
     /// <param name="memberName">           (Optional) Name of the member. </param>
-    /// <param name="sourcePath">           (Optional) full path name of the source file. </param>
-    /// <param name="sourceLineNumber">     (Optional) Source line number. </param>
+    /// <param name="filePath">           (Optional) full path name of the source file. </param>
+    /// <param name="lineNumber">     (Optional) Source line number. </param>
     public void ThrowDeviceExceptionIfError( bool useLastActionDetails = false,
         string failureMessage = "failed",
         [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
-        [System.Runtime.CompilerServices.CallerFilePath] string sourcePath = "",
-        [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0 )
+        [System.Runtime.CompilerServices.CallerFilePath] string filePath = "",
+        [System.Runtime.CompilerServices.CallerLineNumber] int lineNumber = 0 )
     {
         _ = SessionBase.AsyncDelay( this.ReadAfterWriteDelay + this.StatusReadDelay );
-        this.ThrowDeviceExceptionIfError( this.ReadStatusByte(), useLastActionDetails, failureMessage, memberName, sourcePath, sourceLineNumber );
+        this.ThrowDeviceExceptionIfError( this.ReadStatusByte(), useLastActionDetails, failureMessage, memberName, filePath, lineNumber );
     }
 
     /// <summary>
@@ -155,19 +155,19 @@ public partial class SessionBase
     /// <param name="useLastActionDetails"> (Optional) (false) True to use last action detains. </param>
     /// <param name="failureMessage">       (Optional) (empty) The failure message. </param>
     /// <param name="memberName">           (Optional) Name of the member. </param>
-    /// <param name="sourcePath">           (Optional) full path name of the source file. </param>
-    /// <param name="sourceLineNumber">     (Optional) Source line number. </param>
+    /// <param name="filePath">           (Optional) full path name of the source file. </param>
+    /// <param name="lineNumber">     (Optional) Source line number. </param>
     public void ThrowDeviceExceptionIfError( ServiceRequests statusByte, bool useLastActionDetails = false,
         string failureMessage = "failed",
         [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
-        [System.Runtime.CompilerServices.CallerFilePath] string sourcePath = "",
-        [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0 )
+        [System.Runtime.CompilerServices.CallerFilePath] string filePath = "",
+        [System.Runtime.CompilerServices.CallerLineNumber] int lineNumber = 0 )
     {
         if ( this.IsErrorBitSet( statusByte ) )
         {
             _ = this.QueryDeviceErrors( statusByte );
 
-            this.ThrowDeviceException( useLastActionDetails, failureMessage, memberName, sourcePath, sourceLineNumber );
+            this.ThrowDeviceException( useLastActionDetails, failureMessage, memberName, filePath, lineNumber );
         }
     }
 
@@ -177,14 +177,14 @@ public partial class SessionBase
     /// <param name="useLastActionDetails"> (Optional) (false) True to use last action detains. </param>
     /// <param name="failureMessage">       (Optional) (empty) The failure message. </param>
     /// <param name="memberName">           (Optional) Name of the member. </param>
-    /// <param name="sourcePath">           (Optional) full path name of the source file. </param>
-    /// <param name="sourceLineNumber">     (Optional) Source line number. </param>
+    /// <param name="filePath">           (Optional) full path name of the source file. </param>
+    /// <param name="lineNumber">     (Optional) Source line number. </param>
     public void ThrowDeviceException( bool useLastActionDetails = false, string failureMessage = "failed ",
         [System.Runtime.CompilerServices.CallerMemberName] string memberName = "",
-        [System.Runtime.CompilerServices.CallerFilePath] string sourcePath = "",
-        [System.Runtime.CompilerServices.CallerLineNumber] int sourceLineNumber = 0 )
+        [System.Runtime.CompilerServices.CallerFilePath] string filePath = "",
+        [System.Runtime.CompilerServices.CallerLineNumber] int lineNumber = 0 )
     {
-        string location = $"at [{sourcePath}].{memberName}.Line#{sourceLineNumber}";
+        string location = $"at [{filePath}].{memberName}.Line#{lineNumber}";
 
         if ( this.HasErrorReport )
             throw new DeviceException( this.ResourceNameCaption ?? string.Empty,

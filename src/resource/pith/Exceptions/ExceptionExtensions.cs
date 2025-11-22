@@ -2,7 +2,7 @@ namespace cc.isr.VI.Pith.ExceptionExtensions;
 /// <summary>
 /// Exception methods for adding exception data and building a detailed exception message.
 /// </summary>
-public static class ExceptionExtensionMethods
+public static class ExceptionMethods
 {
     /// <summary> Adds an exception data to 'exception'. </summary>
     /// <param name="value">     The value. </param>

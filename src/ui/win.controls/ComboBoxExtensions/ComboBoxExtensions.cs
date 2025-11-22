@@ -8,7 +8,7 @@ namespace cc.isr.VI.WinControls.ComboBoxExtensions;
 
 /// <summary>   A combo box extensions methods. </summary>
 /// <remarks>   David, 2020-12-04. </remarks>
-public static partial class ComboBoxExtensionsMethods
+public static partial class ComboBoxMethods
 {
     #region " arm sources "
 
@@ -339,7 +339,7 @@ public static partial class ComboBoxExtensionsMethods
         if ( multimeterFunctionMode.HasValue && multimeterFunctionMode.Value != MultimeterFunctionModes.None && multimeterFunctionMode.Value != comboBox.SelectedMultimeterFunctionMode() )
         {
             if ( comboBox.InvokeRequired )
-                _ = comboBox.Invoke( new Func<ComboBox, MultimeterFunctionModes?, MultimeterFunctionModes>( ComboBoxExtensionsMethods.SafeSelectMultimeterFunctionMode ), [comboBox, multimeterFunctionMode] );
+                _ = comboBox.Invoke( new Func<ComboBox, MultimeterFunctionModes?, MultimeterFunctionModes>( ComboBoxMethods.SafeSelectMultimeterFunctionMode ), [comboBox, multimeterFunctionMode] );
             else
                 comboBox.SelectedItem = multimeterFunctionMode.Value.ValueDescriptionPair();
         }
@@ -357,7 +357,7 @@ public static partial class ComboBoxExtensionsMethods
     /// <param name="excludeMask"> The exclude mask. </param>
     public static void ListReadingElementTypes( this ComboBox comboBox, ReadingElementTypes includeMask, ReadingElementTypes excludeMask )
     {
-        ComboBoxExtensionsMethods.ListSupportedReadingElementTypes( comboBox, includeMask & ~excludeMask );
+        ComboBoxMethods.ListSupportedReadingElementTypes( comboBox, includeMask & ~excludeMask );
     }
 
     /// <summary> List supported reading Element types. </summary>
@@ -433,7 +433,7 @@ public static partial class ComboBoxExtensionsMethods
         if ( readingElementType.HasValue && readingElementType.Value != ReadingElementTypes.None && readingElementType.Value != comboBox.SelectedReadingElementType() )
         {
             if ( comboBox.InvokeRequired )
-                _ = comboBox.Invoke( new Func<ComboBox, ReadingElementTypes?, ReadingElementTypes>( ComboBoxExtensionsMethods.SafeSelectReadingElementType ), [comboBox, readingElementType] );
+                _ = comboBox.Invoke( new Func<ComboBox, ReadingElementTypes?, ReadingElementTypes>( ComboBoxMethods.SafeSelectReadingElementType ), [comboBox, readingElementType] );
             else
                 comboBox.SelectedItem = readingElementType.Value.ValueDescriptionPair();
         }
@@ -658,7 +658,7 @@ public static partial class ComboBoxExtensionsMethods
         if ( senseFunctionModes.HasValue && senseFunctionModes.Value != SenseFunctionModes.None && senseFunctionModes.Value != comboBox.SelectedSenseFunctionModes() )
         {
             if ( comboBox.InvokeRequired )
-                _ = comboBox.Invoke( new Func<ComboBox, SenseFunctionModes?, SenseFunctionModes>( ComboBoxExtensionsMethods.SafeSelectSenseFunctionModes ), [comboBox, senseFunctionModes] );
+                _ = comboBox.Invoke( new Func<ComboBox, SenseFunctionModes?, SenseFunctionModes>( ComboBoxMethods.SafeSelectSenseFunctionModes ), [comboBox, senseFunctionModes] );
             else
                 comboBox.SelectedItem = senseFunctionModes.Value.ValueDescriptionPair();
         }
@@ -743,7 +743,7 @@ public static partial class ComboBoxExtensionsMethods
         if ( sourceFunctionModes.HasValue && sourceFunctionModes.Value != SourceFunctionModes.None && sourceFunctionModes.Value != comboBox.SelectedSourceFunctionModes() )
         {
             if ( comboBox.InvokeRequired )
-                _ = comboBox.Invoke( new Func<ComboBox, SourceFunctionModes?, SourceFunctionModes>( ComboBoxExtensionsMethods.SafeSelectSourceFunctionModes ), [comboBox, sourceFunctionModes] );
+                _ = comboBox.Invoke( new Func<ComboBox, SourceFunctionModes?, SourceFunctionModes>( ComboBoxMethods.SafeSelectSourceFunctionModes ), [comboBox, sourceFunctionModes] );
             else
                 comboBox.SelectedItem = sourceFunctionModes.Value.ValueDescriptionPair();
         }
@@ -828,7 +828,7 @@ public static partial class ComboBoxExtensionsMethods
         if ( triggerEvent.HasValue && triggerEvent.Value != TriggerEvents.None && triggerEvent.Value != comboBox.SelectedTriggerEvent() )
         {
             if ( comboBox.InvokeRequired )
-                _ = comboBox.Invoke( new Func<ComboBox, TriggerEvents?, TriggerEvents>( ComboBoxExtensionsMethods.SafeSelectTriggerEvent ), [comboBox, triggerEvent] );
+                _ = comboBox.Invoke( new Func<ComboBox, TriggerEvents?, TriggerEvents>( ComboBoxMethods.SafeSelectTriggerEvent ), [comboBox, triggerEvent] );
             else
                 comboBox.SelectedItem = triggerEvent.Value.ValueDescriptionPair();
         }
@@ -913,7 +913,7 @@ public static partial class ComboBoxExtensionsMethods
         if ( triggerSources.HasValue && triggerSources.Value != TriggerSources.None && triggerSources.Value != comboBox.SelectedTriggerSources() )
         {
             if ( comboBox.InvokeRequired )
-                _ = comboBox.Invoke( new Func<ComboBox, TriggerSources?, TriggerSources>( ComboBoxExtensionsMethods.SafeSelectTriggerSources ), [comboBox, triggerSources] );
+                _ = comboBox.Invoke( new Func<ComboBox, TriggerSources?, TriggerSources>( ComboBoxMethods.SafeSelectTriggerSources ), [comboBox, triggerSources] );
             else
                 comboBox.SelectedItem = triggerSources.Value.ValueDescriptionPair();
         }
@@ -1016,7 +1016,7 @@ public static partial class ComboBoxExtensionsMethods
         if ( traceParameters.HasValue && traceParameters.Value != TraceParameters.None && traceParameters.Value != comboBox.SelectedTraceParameters() )
         {
             if ( comboBox.InvokeRequired )
-                _ = comboBox.Invoke( new Func<ComboBox, TraceParameters?, TraceParameters>( ComboBoxExtensionsMethods.SafeSelectTraceParameters ), [comboBox, traceParameters] );
+                _ = comboBox.Invoke( new Func<ComboBox, TraceParameters?, TraceParameters>( ComboBoxMethods.SafeSelectTraceParameters ), [comboBox, traceParameters] );
             else
                 comboBox.SelectedItem = traceParameters.Value.ValueDescriptionPair();
         }

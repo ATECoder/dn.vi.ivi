@@ -3,7 +3,7 @@ using cc.isr.VI.Pith;
 
 namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
-public static partial class SessionBaseExtensionMethods
+public static partial class SessionBaseMethods
 {
     /// <summary>   A <see cref="Pith.SessionBase"/> extension method that fetches the raw script source, which has a Linux line endings. </summary>
     /// <remarks>   2025-04-10. </remarks>

@@ -1,13 +1,13 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using cc.isr.Std;
+using cc.isr.Std.CompressExtensions;
 using cc.isr.Std.LineEndingExtensions;
-using cc.isr.VI.Tsp.Script.ExportExtensions;
-using cc.isr.VI.Tsp.Script.ScriptInfoExtensions;
 using cc.isr.VI.Tsp.SessionBaseExtensions;
 
 namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
 
-public static partial class SessionBaseExtensionMethods
+public static partial class SessionBaseMethods
 {
     /// <summary>   A <see cref="string"/> extension method that trims a script file. </summary>
     /// <remarks>   2024-09-05. </remarks>
@@ -35,8 +35,8 @@ public static partial class SessionBaseExtensionMethods
     /// <param name="outputFolder"> Full pathname of the output folder where the compressed and
     ///                             encrypted script will reside. Set to the <paramref name="inputFolder"/>
     ///                             if null or empty. </param>
-    /// <param name="overWrite">    (Optional) True to over write. </param>
-    public static void TrimScript( this ScriptInfo scriptInfo, string inputFolder, string outputFolder, bool overWrite = true )
+    /// <param name="overwrite">    (Optional) True to overwrite an exiting file. </param>
+    public static void TrimScript( this ScriptInfo scriptInfo, string inputFolder, string outputFolder, bool overwrite = true )
     {
         if ( scriptInfo is null ) throw new ArgumentNullException( nameof( scriptInfo ) );
         if ( string.IsNullOrWhiteSpace( inputFolder ) ) throw new ArgumentNullException( nameof( inputFolder ) ); ;
@@ -44,14 +44,14 @@ public static partial class SessionBaseExtensionMethods
         if ( string.IsNullOrWhiteSpace( outputFolder ) ) outputFolder = inputFolder;
         string outFilePath = Path.Combine( outputFolder, scriptInfo.TrimmedFileName );
 
-        if ( !overWrite && System.IO.File.Exists( outFilePath ) )
+        if ( !overwrite && System.IO.File.Exists( outFilePath ) )
             throw new ValidationException( $"The file '{outFilePath}' already exists." );
 
         string inputFilePath = Path.Combine( inputFolder, scriptInfo.BuiltFileName );
 
         if ( System.IO.File.Exists( inputFilePath ) )
         {
-            SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tTrimming script file '{inputFilePath}'\r\n\t\tto '{outFilePath}'" );
+            _ = cc.isr.Std.TraceExtensions.TraceMethods.TraceMemberMessage( $"\r\n\tTrimming script file '{inputFilePath}'\r\n\t\tto '{outFilePath}'" );
             inputFilePath.TrimScript( outFilePath, true );
         }
         else
@@ -74,10 +74,10 @@ public static partial class SessionBaseExtensionMethods
     ///                                 encrypted script will reside. Set to the <paramref name="inputFolder"/>
     ///                                 if null or empty. </param>
     /// <param name="scriptFileFormat"> The script file format. </param>
-    /// <param name="overWrite">        (Optional) True to over write. </param>
+    /// <param name="overwrite">        (Optional) True to over write an exiting file. </param>
     /// <param name="validate">         (Optional) True to validate. </param>
     public static void BuildScript( this ScriptInfo scriptInfo, string inputFolder, string outputFolder,
-        ScriptFormats scriptFileFormat, bool overWrite = true, bool validate = true )
+        FileFormats scriptFileFormat, bool overwrite = true, bool validate = true )
     {
         if ( scriptInfo is null ) throw new ArgumentNullException( nameof( scriptInfo ) );
         if ( string.IsNullOrWhiteSpace( inputFolder ) ) throw new ArgumentNullException( nameof( inputFolder ) ); ;
@@ -85,27 +85,27 @@ public static partial class SessionBaseExtensionMethods
         if ( string.IsNullOrWhiteSpace( outputFolder ) ) outputFolder = inputFolder;
         string outFilePath = Path.Combine( outputFolder, scriptInfo.TrimmedFileName );
 
-        if ( !overWrite && System.IO.File.Exists( outFilePath ) )
+        if ( !overwrite && System.IO.File.Exists( outFilePath ) )
             throw new ValidationException( $"The file '{outFilePath}' already exists." );
 
         string inputFilePath = Path.Combine( inputFolder, scriptInfo.BuiltFileName );
 
-        if ( !overWrite && System.IO.File.Exists( outFilePath ) )
+        if ( !overwrite && System.IO.File.Exists( outFilePath ) )
             throw new ValidationException( $"The file '{outFilePath}' already exists." );
 
         if ( System.IO.File.Exists( inputFilePath ) )
         {
-            SessionBaseExtensionMethods.TraceLastAction( $"\r\n\tTrimming script file '{inputFilePath}'\r\n\t\tto '{outFilePath}'" );
+            _ = cc.isr.Std.TraceExtensions.TraceMethods.TraceMemberMessage( $"\r\n\tTrimming script file '{inputFilePath}'\r\n\t\tto '{outFilePath}'" );
             inputFilePath.TrimScript( outFilePath, true );
 
             inputFilePath = outFilePath;
 
             outFilePath = Path.Combine( outputFolder, scriptInfo.Title + ScriptInfo.SelectScriptFileExtension( scriptFileFormat ) );
-            if ( scriptFileFormat.HasFlag( ScriptFormats.Compressed ) || scriptFileFormat.HasFlag( ScriptFormats.Encrypted ) )
+            if ( scriptFileFormat.HasFlag( FileFormats.Compressed ) || scriptFileFormat.HasFlag( FileFormats.Encrypted ) )
             {
-                string action = scriptFileFormat.HasFlag( ScriptFormats.Encrypted ) ? "Compressing and encrypting" : "Compressing";
-                SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{action} '{inputFilePath}'\r\n\t\tto '{outFilePath}'" );
-                inputFilePath.CompressScriptFile( outFilePath, scriptFileFormat, scriptInfo.Compressor, scriptInfo.Encryptor, overWrite, validate );
+                string action = scriptFileFormat.HasFlag( FileFormats.Encrypted ) ? "Compressing and encrypting" : "Compressing";
+                _ = cc.isr.Std.TraceExtensions.TraceMethods.TraceMemberMessage( $"\r\n\t{action} '{inputFilePath}'\r\n\t\tto '{outFilePath}'" );
+                inputFilePath.CompressToFile( outFilePath, scriptFileFormat, scriptInfo.Compressor, scriptInfo.Encryptor, overwrite, validate );
             }
         }
         else
@@ -115,7 +115,7 @@ public static partial class SessionBaseExtensionMethods
     /// <summary>
     /// A <see cref="cc.isr.VI.Tsp.Script.ScriptInfo"/> extension method that builds the script. The
     /// script is trimmed and compressed and encrypted based on the <see cref="ScriptInfo"/>.<see cref="ScriptInfo.DeployResourceFileFormat"/>
-    /// unless the format is <see cref="ScriptFormats.ByteCode"/> in which case the script is
+    /// unless the format is <see cref="FileFormats.ByteCode"/> in which case the script is
     /// compressed and encrypted after it is converted to byte code (compiled) by the
     ///  <see cref="CompileScript(Pith.SessionBase, ScriptInfo, string, string, bool, bool)"/> method.
     /// </summary>
@@ -140,33 +140,33 @@ public static partial class SessionBaseExtensionMethods
         {
             message = $"Trimming script file\r\n\t\tfrom '{builtFilePath}'\r\n\t\tto '{trimmedFilePath}'";
             if ( consoleOut )
-                SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
+                _ = cc.isr.Std.ConsoleExtensions.ConsoleMethods.ConsoleOutputMemberMessage( message );
             else
-                SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
+                _ = cc.isr.Std.TraceExtensions.TraceMethods.TraceMemberMessage( $"\r\n\t{message}" );
             builtFilePath.TrimScript( trimmedFilePath, true );
 
-            if ( scriptInfo.DeployResourceFileFormat.HasFlag( ScriptFormats.Compressed )
-                && !scriptInfo.DeployResourceFileFormat.HasFlag( ScriptFormats.ByteCode ) )
+            if ( scriptInfo.DeployResourceFileFormat.HasFlag( FileFormats.Compressed )
+                && !scriptInfo.DeployResourceFileFormat.HasFlag( FileFormats.ByteCode ) )
             {
-                string filePath = scriptInfo.DeployResourceFileFormat.HasFlag( ScriptFormats.Encrypted )
+                string filePath = scriptInfo.DeployResourceFileFormat.HasFlag( FileFormats.Encrypted )
                     ? compressedFilePath
                     : deployFilePath;
 
                 message = $"Compressing '{trimmedFilePath}'\r\n\t\tto '{filePath}'";
                 if ( consoleOut )
-                    SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
+                    _ = cc.isr.Std.ConsoleExtensions.ConsoleMethods.ConsoleOutputMemberMessage( message );
                 else
-                    SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
+                    _ = cc.isr.Std.TraceExtensions.TraceMethods.TraceMemberMessage( $"\r\n\t{message}" );
 
                 System.IO.File.WriteAllText( filePath, scriptInfo.Compressor.CompressToBase64( System.IO.File.ReadAllText( trimmedFilePath ) ), System.Text.Encoding.Default );
 
-                if ( scriptInfo.DeployResourceFileFormat.HasFlag( ScriptFormats.Encrypted ) )
+                if ( scriptInfo.DeployResourceFileFormat.HasFlag( FileFormats.Encrypted ) )
                 {
                     message = $"encrypting '{filePath}'\r\n\t\tto '{deployFilePath}'";
                     if ( consoleOut )
-                        SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
+                        _ = cc.isr.Std.ConsoleExtensions.ConsoleMethods.ConsoleOutputMemberMessage( message );
                     else
-                        SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
+                        _ = cc.isr.Std.TraceExtensions.TraceMethods.TraceMemberMessage( $"\r\n\t{message}" );
                     System.IO.File.WriteAllText( deployFilePath, scriptInfo.Encryptor.EncryptToBase64( System.IO.File.ReadAllText( filePath ) ), System.Text.Encoding.Default );
                 }
             }
@@ -203,9 +203,9 @@ public static partial class SessionBaseExtensionMethods
 
         if ( !session.IsDeviceOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
 
-        ScriptFormats fileFormat = scriptInfo.FileFormat;
-        if ( !fileFormat.HasFlag( ScriptFormats.ByteCode ) && session.IsByteCodeScript( scriptInfo.Title ) )
-            _ = fileFormat != ScriptFormats.ByteCode;
+        FileFormats fileFormat = scriptInfo.FileFormat;
+        if ( !fileFormat.HasFlag( FileFormats.ByteCode ) && session.IsByteCodeScript( scriptInfo.Title ) )
+            _ = fileFormat != FileFormats.ByteCode;
 
         string exportFilePath = Path.Combine( exportFolder, scriptInfo.FileName );
         string message;
@@ -225,32 +225,32 @@ public static partial class SessionBaseExtensionMethods
         scriptSource = scriptSource.TerminateLines( validate );
 
         string compressed = scriptSource;
-        if ( fileFormat.HasFlag( ScriptFormats.Compressed ) )
+        if ( fileFormat.HasFlag( FileFormats.Compressed ) )
         {
             message = $"compressing '{scriptInfo.Title}'";
             if ( consoleOut )
-                SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
+                _ = cc.isr.Std.ConsoleExtensions.ConsoleMethods.ConsoleOutputMemberMessage( message );
             else
-                SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
+                _ = cc.isr.Std.TraceExtensions.TraceMethods.TraceMemberMessage( $"\r\n\t{message}" );
             compressed = scriptInfo.Compressor.CompressToBase64( compressed );
         }
 
-        if ( fileFormat.HasFlag( ScriptFormats.Encrypted ) )
+        if ( fileFormat.HasFlag( FileFormats.Encrypted ) )
         {
             message = $"encrypting '{scriptInfo.Title}'";
             if ( consoleOut )
-                SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
+                _ = cc.isr.Std.ConsoleExtensions.ConsoleMethods.ConsoleOutputMemberMessage( message );
             else
-                SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
+                _ = cc.isr.Std.TraceExtensions.TraceMethods.TraceMemberMessage( $"\r\n\t{message}" );
             compressed = scriptInfo.Encryptor.EncryptToBase64( compressed );
         }
 
-        if ( validate && (fileFormat.HasFlag( ScriptFormats.Compressed ) || fileFormat.HasFlag( ScriptFormats.Encrypted )) )
+        if ( validate && (fileFormat.HasFlag( FileFormats.Compressed ) || fileFormat.HasFlag( FileFormats.Encrypted )) )
         {
             string decompressed = compressed;
-            if ( fileFormat.HasFlag( ScriptFormats.Encrypted ) )
+            if ( fileFormat.HasFlag( FileFormats.Encrypted ) )
                 decompressed = scriptInfo.Encryptor.DecryptFromBase64( decompressed );
-            if ( fileFormat.HasFlag( ScriptFormats.Compressed ) )
+            if ( fileFormat.HasFlag( FileFormats.Compressed ) )
                 decompressed = scriptInfo.Compressor.DecompressFromBase64( decompressed );
 
             if ( scriptSource.Length != decompressed.Length )
@@ -262,9 +262,9 @@ public static partial class SessionBaseExtensionMethods
 
         message = $"exporting '{scriptInfo.Title}' to '{exportFilePath}'";
         if ( consoleOut )
-            SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
+            _ = cc.isr.Std.ConsoleExtensions.ConsoleMethods.ConsoleOutputMemberMessage( message );
         else
-            SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
+            _ = cc.isr.Std.TraceExtensions.TraceMethods.TraceMemberMessage( $"\r\n\t{message}" );
 
         // write the source to file.
         System.IO.File.WriteAllText( exportFilePath, scriptSource, System.Text.Encoding.Default );
@@ -306,26 +306,26 @@ public static partial class SessionBaseExtensionMethods
         {
             message = $"Deleting '{scriptInfo.Title}';. {details}";
             if ( consoleOut )
-                SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
+                _ = cc.isr.Std.ConsoleExtensions.ConsoleMethods.ConsoleOutputMemberMessage( message );
             else
-                SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
+                _ = cc.isr.Std.TraceExtensions.TraceMethods.TraceMemberMessage( $"\r\n\t{message}" );
             session.DeleteScript( scriptInfo.Title, true );
         }
 
         string trimmedFilePath = Path.Combine( buildFolder, scriptInfo.TrimmedFileName );
         message = $"Importing script from trimmed '{trimmedFilePath}' file";
         if ( consoleOut )
-            SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
+            _ = cc.isr.Std.ConsoleExtensions.ConsoleMethods.ConsoleOutputMemberMessage( message );
         else
-            SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
+            _ = cc.isr.Std.TraceExtensions.TraceMethods.TraceMemberMessage( $"\r\n\t{message}" );
 
         session.ImportScript( scriptInfo.Title, trimmedFilePath, TimeSpan.Zero, false, false );
 
         message = $"Running script '{scriptInfo.Title}'";
         if ( consoleOut )
-            SessionBaseExtensionMethods.ConsoleOutputMemberMessage( message );
+            _ = cc.isr.Std.ConsoleExtensions.ConsoleMethods.ConsoleOutputMemberMessage( message );
         else
-            SessionBaseExtensionMethods.TraceLastAction( $"\r\n\t{message}" );
+            _ = cc.isr.Std.TraceExtensions.TraceMethods.TraceMemberMessage( $"\r\n\t{message}" );
 
         // run the script to ensure the code works.
         session.RunScript( scriptInfo.Title, scriptInfo.VersionGetterElement );
@@ -420,7 +420,7 @@ public static partial class SessionBaseExtensionMethods
     public static (string scriptName, string scriptFunctionName) LoadTimeDisplayClearScript( this Pith.SessionBase session )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
-        (string scriptName, string scriptSource, string scriptFunctionName) = SessionBaseExtensionMethods.BuildTimeDisplayClearScript();
+        (string scriptName, string scriptSource, string scriptFunctionName) = SessionBaseMethods.BuildTimeDisplayClearScript();
         if ( session.IsScriptExists( scriptName, out string details ) )
         {
             session.TraceLastAction( $"\r\n\tDeleting {scriptName} script;. {details}" );

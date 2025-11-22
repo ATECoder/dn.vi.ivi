@@ -1458,7 +1458,7 @@ public partial class SessionBase
 
         return string.IsNullOrWhiteSpace( currentValue )
             ? value
-            : Std.ParseExtensions.ParseExtensionMethods.IsNumber( currentValue! )
+            : Std.ParseExtensions.ParseMethods.IsNumber( currentValue! )
                 ? ( T ) ( object ) int.Parse( currentValue )
                 : SessionBase.ParseContained<T>( currentValue!.BuildDelimitedValue() );
     }
@@ -1481,7 +1481,7 @@ public partial class SessionBase
 
         return string.IsNullOrWhiteSpace( currentValue )
             ? value
-            : Std.ParseExtensions.ParseExtensionMethods.IsNumber( currentValue! )
+            : Std.ParseExtensions.ParseMethods.IsNumber( currentValue! )
                 ? ( T ) ( object ) int.Parse( currentValue )
                 : SessionBase.ParseContained<T>( currentValue!.BuildDelimitedValue() );
     }

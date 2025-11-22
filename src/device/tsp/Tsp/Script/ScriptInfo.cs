@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using cc.isr.Std;
 using cc.isr.Std.TrimExtensions;
 
 namespace cc.isr.VI.Tsp.Script;
@@ -13,7 +14,7 @@ public class ScriptInfo
     /// <remarks>   2025-09-19. </remarks>
     /// <param name="compressor">   The compressor. </param>
     /// <param name="encryptor">    The encryptor. </param>
-    public ScriptInfo( IScriptCompressor compressor, IScriptEncryptor encryptor )
+    public ScriptInfo( IStringCompressor compressor, IStringEncryptor encryptor )
     {
         this.Encryptor = encryptor;
         this.Compressor = compressor;
@@ -80,21 +81,21 @@ public class ScriptInfo
     /// <remarks>   2025-04-05. </remarks>
     /// <param name="fileFormat">   The script file format. </param>
     /// <returns>   A string. </returns>
-    public static string SelectScriptFileExtension( ScriptFormats fileFormat )
+    public static string SelectScriptFileExtension( FileFormats fileFormat )
     {
-        return (ScriptFormats.ByteCode == (fileFormat & ScriptFormats.ByteCode))
-            ? (ScriptFormats.Compressed == (fileFormat & ScriptFormats.Compressed))
-              ? (ScriptFormats.Encrypted == (fileFormat & ScriptFormats.Encrypted))
+        return (FileFormats.ByteCode == (fileFormat & FileFormats.ByteCode))
+            ? (FileFormats.Compressed == (fileFormat & FileFormats.Compressed))
+              ? (FileFormats.Encrypted == (fileFormat & FileFormats.Encrypted))
                  ? ScriptInfo.ScriptByteCodeCompressedEncryptedFileExtension
                  : ScriptInfo.ScriptByteCodeCompressedFileExtension
-              : (ScriptFormats.Encrypted == (fileFormat & ScriptFormats.Encrypted))
+              : (FileFormats.Encrypted == (fileFormat & FileFormats.Encrypted))
                  ? ScriptInfo.ScriptByteCodeEncryptedFileExtension
                  : ScriptInfo.ScriptByteCodeFileExtension
-            : (ScriptFormats.Compressed == (fileFormat & ScriptFormats.Compressed))
-              ? (ScriptFormats.Encrypted == (fileFormat & ScriptFormats.Encrypted))
+            : (FileFormats.Compressed == (fileFormat & FileFormats.Compressed))
+              ? (FileFormats.Encrypted == (fileFormat & FileFormats.Encrypted))
                  ? ScriptInfo.ScriptCompressedEncryptedFileExtension
                  : ScriptInfo.ScriptCompressedFileExtension
-              : (ScriptFormats.Encrypted == (fileFormat & ScriptFormats.Encrypted))
+              : (FileFormats.Encrypted == (fileFormat & FileFormats.Encrypted))
                  ? ScriptInfo.ScriptEncryptedFileExtension
                  : ScriptInfo.ScriptFileExtension;
     }
@@ -102,20 +103,20 @@ public class ScriptInfo
     /// <summary>   Parse the script format from the provided file extension. </summary>
     /// <remarks>   2025-09-30. </remarks>
     /// <param name="fileExtension">    The file extension. </param>
-    /// <returns>   The <see cref="ScriptFormats"/>. </returns>
-    public static ScriptFormats ParseFileFormats( string fileExtension )
+    /// <returns>   The <see cref="FileFormats"/>. </returns>
+    public static FileFormats ParseFileFormats( string fileExtension )
     {
         return fileExtension.ToLowerInvariant() switch
         {
-            ScriptInfo.ScriptFileExtension => ScriptFormats.None,
-            ScriptInfo.ScriptEncryptedFileExtension => ScriptFormats.Encrypted,
-            ScriptInfo.ScriptCompressedFileExtension => ScriptFormats.Compressed,
-            ScriptInfo.ScriptCompressedEncryptedFileExtension => ScriptFormats.Compressed | ScriptFormats.Encrypted,
-            ScriptInfo.ScriptByteCodeFileExtension => ScriptFormats.ByteCode,
-            ScriptInfo.ScriptByteCodeEncryptedFileExtension => ScriptFormats.ByteCode | ScriptFormats.Encrypted,
-            ScriptInfo.ScriptByteCodeCompressedFileExtension => ScriptFormats.ByteCode | ScriptFormats.Compressed,
-            ScriptInfo.ScriptByteCodeCompressedEncryptedFileExtension => ScriptFormats.ByteCode | ScriptFormats.Compressed | ScriptFormats.Encrypted,
-            _ => ScriptFormats.None,
+            ScriptInfo.ScriptFileExtension => FileFormats.None,
+            ScriptInfo.ScriptEncryptedFileExtension => FileFormats.Encrypted,
+            ScriptInfo.ScriptCompressedFileExtension => FileFormats.Compressed,
+            ScriptInfo.ScriptCompressedEncryptedFileExtension => FileFormats.Compressed | FileFormats.Encrypted,
+            ScriptInfo.ScriptByteCodeFileExtension => FileFormats.ByteCode,
+            ScriptInfo.ScriptByteCodeEncryptedFileExtension => FileFormats.ByteCode | FileFormats.Encrypted,
+            ScriptInfo.ScriptByteCodeCompressedFileExtension => FileFormats.ByteCode | FileFormats.Compressed,
+            ScriptInfo.ScriptByteCodeCompressedEncryptedFileExtension => FileFormats.ByteCode | FileFormats.Compressed | FileFormats.Encrypted,
+            _ => FileFormats.None,
         };
     }
 
@@ -128,14 +129,14 @@ public class ScriptInfo
     /// <exception cref="FileNotFoundException">        Thrown when the requested file is not
     ///                                                 present. </exception>
     /// <param name="baseTitle">            The base title. </param>
-    /// <param name="fileFormat">           (Optional) [<see cref="ScriptFormats.None"/>] The
+    /// <param name="fileFormat">           (Optional) [<see cref="FileFormats.None"/>] The
     ///                                     script file format. </param>
     /// <param name="scriptVersion">        (Optional) [empty] The release version. Specify the
     ///                                     version only with build files. </param>
     /// <param name="modelFamily">          (Optional) [empty] The model family, e.g., 2600A. </param>
     /// <param name="modelMajorVersion">    (Optional) [empty] The model major version. </param>
     /// <returns>   A string. </returns>
-    public static string BuildScriptFileTitle( string baseTitle, ScriptFormats fileFormat = ScriptFormats.None,
+    public static string BuildScriptFileTitle( string baseTitle, FileFormats fileFormat = FileFormats.None,
         string scriptVersion = "", string modelFamily = "", string modelMajorVersion = "" )
     {
         if ( string.IsNullOrWhiteSpace( baseTitle ) )
@@ -146,7 +147,7 @@ public class ScriptInfo
             : $"{baseTitle}.{scriptVersion}";
 
 
-        if ( ScriptFormats.ByteCode == (fileFormat & ScriptFormats.ByteCode) )
+        if ( FileFormats.ByteCode == (fileFormat & FileFormats.ByteCode) )
         {
             // byte code files are always deployed or loaded from a deployed file.
             if ( string.IsNullOrWhiteSpace( modelFamily ) )
@@ -161,14 +162,14 @@ public class ScriptInfo
     /// <summary>   Builds script file name. </summary>
     /// <remarks>   2025-04-05. </remarks>
     /// <param name="baseTitle">            The base title. </param>
-    /// <param name="fileFormat">           (Optional) [<see cref="ScriptFormats.None"/>] The script
+    /// <param name="fileFormat">           (Optional) [<see cref="FileFormats.None"/>] The script
     ///                                     file format. </param>
     /// <param name="scriptVersion">        (Optional) [empty] The release version. Specify the
     ///                                     version only with build files. </param>
     /// <param name="modelFamily">          (Optional) [empty] The model family, e.g., 2600A. </param>
     /// <param name="modelMajorVersion">    (Optional) [empty] The model major version. </param>
     /// <returns>   A string. </returns>
-    public static string BuildScriptFileName( string baseTitle, ScriptFormats fileFormat = ScriptFormats.None,
+    public static string BuildScriptFileName( string baseTitle, FileFormats fileFormat = FileFormats.None,
         string scriptVersion = "", string modelFamily = "", string modelMajorVersion = "" )
     {
         string title = ScriptInfo.BuildScriptFileTitle( baseTitle, fileFormat, scriptVersion, modelFamily, modelMajorVersion );
@@ -213,12 +214,12 @@ public class ScriptInfo
     /// <summary>   Gets the encryption engine. </summary>
     /// <value> The encryptor. </value>
     [Description( "Implements encryption" )]
-    public virtual IScriptEncryptor Encryptor { get; }
+    public virtual IStringEncryptor Encryptor { get; }
 
     /// <summary>   Implements compression. </summary>
     /// <value> The compressor. </value>
     [Description( "Implements compression" )]
-    public virtual IScriptCompressor Compressor { get; }
+    public virtual IStringCompressor Compressor { get; }
 
     /// <summary>
     /// Gets or sets a value indicating whether this script automatically executes.
@@ -293,17 +294,17 @@ public class ScriptInfo
 
     /// <summary>   Gets or sets the deployed resource file format. </summary>
     /// <value> The deployed resource file format. </value>
-    public virtual ScriptFormats DeployResourceFileFormat { get; private set; } = ScriptFormats.None;
+    public virtual FileFormats DeployResourceFileFormat { get; private set; } = FileFormats.None;
 
     /// <summary>   Sets deployed resource file format. </summary>
     /// <remarks>   2025-11-08. </remarks>
     /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
     ///                                                 invalid. </exception>
-    /// <param name="format">   Describes the <see cref="ScriptFormats"/> in which to export the
+    /// <param name="format">   Describes the <see cref="FileFormats"/> in which to export the
     ///                         script file to be included as a resource for deployment. </param>
-    public virtual void SetDeployResourceFileFormat( ScriptFormats format )
+    public virtual void SetDeployResourceFileFormat( FileFormats format )
     {
-        if ( format.HasFlag( ScriptFormats.ByteCode ) )
+        if ( format.HasFlag( FileFormats.ByteCode ) )
             throw new InvalidOperationException( "Cannot set the deploy file format to byte code." );
         this.DeployResourceFileFormat = format;
         this.DeployResourceFileName = ScriptInfo.BuildScriptFileName( this.Title, format );
@@ -315,7 +316,7 @@ public class ScriptInfo
 
     /// <summary>   Gets or sets the script file format as stored on disk for import and export. </summary>
     /// <value> The script file format. </value>
-    public virtual ScriptFormats FileFormat { get; set; } = ScriptFormats.None;
+    public virtual FileFormats FileFormat { get; set; } = FileFormats.None;
 
     /// <summary>   Gets or sets the Version Getter function of the script. </summary>
     /// <value> The version getter function of the script. </value>
