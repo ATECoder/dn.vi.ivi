@@ -9,6 +9,8 @@ Current IVI Visa Compatibility: 8.0.1.9391
 ## [8.1.9478] - 2025-12-13
 Device Tsp
 - Condition getting script info state on previous scripts.
+MS Test
+- Update test names.
 
 ## [8.1.9457] - 2025-11-22
 Device Tsp
