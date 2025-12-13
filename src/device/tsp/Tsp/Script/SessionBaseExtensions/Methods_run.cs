@@ -145,7 +145,7 @@ public static partial class SessionBaseMethods
         else
         {
             session.SetLastAction( $"running the anonymous script;. " );
-            _ = session.WriteLine( $"scrip.run()" );
+            _ = session.WriteLine( $"script.run()" );
         }
         _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay + session.StatusReadDelay );
 

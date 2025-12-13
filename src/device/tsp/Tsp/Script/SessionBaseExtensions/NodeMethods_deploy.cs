@@ -226,7 +226,7 @@ public static partial class NodeMethods
             if ( scriptInfoCollection is not null )
             {
                 ScriptInfoCollection embeddedScriptInfoCollection = (scriptInfoCollection.NodeNumber == 0) || (scriptInfoCollection.NodeNumber == session.QueryControllerNodeNumber())
-                    ? session.ReadScriptState( scriptInfoCollection )
+                    ? session.ReadScriptsState( scriptInfoCollection, true )
                     : session.ReadScriptState( scriptInfoCollection.NodeNumber, scriptInfoCollection );
                 embeddedNodeScripts.Add( scriptInfoCollection.NodeNumber, embeddedScriptInfoCollection );
             }

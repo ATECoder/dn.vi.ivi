@@ -164,23 +164,20 @@ public static partial class SessionBaseMethods
         }
     }
 
-    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that reads script state running the script if it was not run. </summary>
+    /// <summary>
+    /// A <see cref="Pith.SessionBase"/> extension method that reads script state running the script
+    /// if it was not run.
+    /// </summary>
     /// <remarks>   2025-04-25. </remarks>
     /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
     ///                                             null. </exception>
-    /// <param name="session">      The session. </param>
-    /// <param name="script">       The script. </param>
+    /// <param name="session">          The session. </param>
+    /// <param name="script">           The script. </param>
+    /// <param name="embeddedScript">   The embedded script. </param>
     /// <returns>   The script state. </returns>
-    public static ScriptInfo ReadScriptState( this Pith.SessionBase session, ScriptInfo script )
+    public static ScriptInfo ReadScriptState( this Pith.SessionBase session, ScriptInfo script, ScriptInfo embeddedScript )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
-
-        ScriptInfo embeddedScript = new( script )
-        {
-            // clear the script state
-            ScriptStatus = ScriptStatuses.Unknown,
-            EmbeddedVersion = string.Empty
-        };
 
         if ( !session.IsNil( embeddedScript.Title ) )
         {
@@ -211,16 +208,19 @@ public static partial class SessionBaseMethods
         return embeddedScript;
     }
 
-    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that reads script state. </summary>
+    /// <summary>
+    /// A <see cref="Pith.SessionBase"/> extension method that reads the firmware scripts state.
+    /// </summary>
     /// <remarks>   2025-04-26. </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
     ///                                                 are null. </exception>
     /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
     ///                                                 invalid. </exception>
-    /// <param name="session">  The session. </param>
-    /// <param name="scripts">  The scripts. </param>
+    /// <param name="session">                  The session. </param>
+    /// <param name="scripts">                  The scripts. </param>
+    /// <param name="previousScriptsMustExist"> True if previous scripts must exist for getting each script state. </param>
     /// <returns>   The script state. </returns>
-    public static ScriptInfoCollection ReadScriptState( this SessionBase session, ScriptInfoCollection scripts )
+    public static ScriptInfoCollection ReadScriptsState( this SessionBase session, ScriptInfoCollection scripts, bool previousScriptsMustExist )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
@@ -234,9 +234,24 @@ public static partial class SessionBaseMethods
             NodeNumber = scripts.NodeNumber
         };
 
-        foreach ( ScriptInfo script in scripts )
+        bool scriptRunnable = true;
+
+        foreach ( ScriptInfo scriptInfo in scripts )
         {
-            embeddedScriptInfoCollection.Add( session.ReadScriptState( script ) );
+            ScriptInfo embeddedScript = new( scriptInfo )
+            {
+                // clear the script state
+                ScriptStatus = ScriptStatuses.Unknown,
+                EmbeddedVersion = string.Empty
+            };
+
+            if ( scriptRunnable && previousScriptsMustExist )
+                scriptRunnable = !session.IsNil( scriptInfo.Title );
+
+            if ( scriptRunnable )
+                embeddedScriptInfoCollection.Add( session.ReadScriptState( scriptInfo, embeddedScript ) );
+            else
+                embeddedScriptInfoCollection.Add( embeddedScript );
         }
         return embeddedScriptInfoCollection;
     }
