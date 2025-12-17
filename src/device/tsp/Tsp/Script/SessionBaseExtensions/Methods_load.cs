@@ -56,7 +56,7 @@ public static partial class SessionBaseMethods
     ///                                             null. </exception>
     /// <param name="session">      The session. </param>
     /// <param name="consoleOut">   (Optional) True to console out. </param>
-    /// <returns>   The user scripts names. </returns>
+    /// <returns>   The user scripts names or empty if no user scripts are loaded. </returns>
     public static string FetchUserScriptsNames( this Pith.SessionBase session, bool consoleOut = false )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
@@ -73,6 +73,10 @@ public static partial class SessionBaseMethods
 
         scriptNames = session.ReadLineTrimEnd();
 
+        scriptNames = string.Equals( scriptNames, cc.isr.VI.Syntax.Tsp.Lua.NilValue, StringComparison.OrdinalIgnoreCase )
+            ? string.Empty
+            : scriptNames;
+
         // throw if device error occurred
         session.ThrowDeviceExceptionIfError();
 
@@ -82,6 +86,29 @@ public static partial class SessionBaseMethods
 
         // throw if device error occurred
         session.ThrowDeviceExceptionIfError();
+
+        return scriptNames;
+    }
+
+    /// <summary>
+    /// A <see cref="Pith.SessionBase"/> extension method that fetches the author user scripts names.
+    /// </summary>
+    /// <remarks>   2025-12-16. </remarks>
+    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
+    ///                                             null. </exception>
+    /// <param name="session">      The session. </param>
+    /// <param name="prefixFilter"> (Optional) A filter specifying the prefix. </param>
+    /// <param name="consoleOut">   (Optional) True to console out. </param>
+    /// <returns>   The user scripts names filter by the author prefix or empty if no user scripts are loaded. </returns>
+    public static string FetchAuthorUserScriptsNames( this Pith.SessionBase session, string prefixFilter = "isr_", bool consoleOut = false )
+    {
+        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
+
+        string scriptNames = session.FetchUserScriptsNames( consoleOut );
+
+        scriptNames = string.IsNullOrWhiteSpace( scriptNames )
+            ? string.Empty
+            : string.Join( ",", scriptNames.FilterScriptNamesByPrefix( prefixFilter ) );
 
         return scriptNames;
     }

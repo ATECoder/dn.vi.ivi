@@ -1,3 +1,4 @@
+using cc.isr.Std.IEnumerableExtensions;
 using cc.isr.VI.Pith;
 
 namespace cc.isr.VI.Tsp.Script.SessionBaseExtensions;
@@ -37,7 +38,7 @@ public static partial class SessionBaseMethods
     ///                                             null. </exception>
     /// <param name="session">      The session. </param>
     /// <param name="consoleOut">   (Optional) True to console out. </param>
-    /// <returns>   The embedded scripts. </returns>
+    /// <returns>   The embedded script names or empty if no user scripts are embedded (saved in non-volatile-memory). </returns>
     public static string FetchEmbeddedScriptsNames( this Pith.SessionBase session, bool consoleOut = false )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
@@ -54,6 +55,10 @@ public static partial class SessionBaseMethods
 
         scriptNames = session.ReadLineTrimEnd();
 
+        scriptNames = string.Equals( scriptNames, cc.isr.VI.Syntax.Tsp.Lua.NilValue, StringComparison.OrdinalIgnoreCase )
+            ? string.Empty
+            : scriptNames;
+
         // throw if device error occurred
         session.ThrowDeviceExceptionIfError();
 
@@ -63,6 +68,29 @@ public static partial class SessionBaseMethods
 
         // throw if device error occurred
         session.ThrowDeviceExceptionIfError();
+
+        return scriptNames;
+    }
+
+    /// <summary>
+    /// A <see cref="Pith.SessionBase"/> extension method that fetches author embedded scripts names.
+    /// </summary>
+    /// <remarks>   2025-12-17. </remarks>
+    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
+    ///                                             null. </exception>
+    /// <param name="session">      The session. </param>
+    /// <param name="prefixFilter"> (Optional) A filter specifying the prefix. </param>
+    /// <param name="consoleOut">   (Optional) True to console out. </param>
+    /// <returns>   The author embedded scripts names filtered by the author prefix or empty. </returns>
+    public static string FetchAuthorEmbeddedScriptsNames( this Pith.SessionBase session, string prefixFilter = "isr_", bool consoleOut = false )
+    {
+        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
+
+        string scriptNames = session.FetchEmbeddedScriptsNames( consoleOut );
+
+        scriptNames = string.IsNullOrWhiteSpace( scriptNames )
+            ? string.Empty
+            : string.Join( ",", scriptNames.FilterScriptNamesByPrefix( prefixFilter ) );
 
         return scriptNames;
     }
@@ -111,7 +139,26 @@ public static partial class SessionBaseMethods
     public static bool AllEmbedded( this Pith.SessionBase session, ScriptInfoBaseCollection<ScriptInfo> scripts, bool consoleOut = false )
     {
         string scriptNames = session.FetchEmbeddedScriptsNames();
-        bool affirmative = true;
+        bool affirmative = scripts.IsEmpty() || !string.IsNullOrEmpty( scriptNames );
+        if ( !affirmative )
+        {
+            string message = "no embedded scripts were found.";
+            if ( consoleOut )
+                _ = cc.isr.Std.ConsoleExtensions.ConsoleMethods.ConsoleOutputMemberMessage( message );
+            else
+                _ = cc.isr.Std.TraceExtensions.TraceMethods.TraceMemberMessage( $"\r\n\t{message}" );
+            return false;
+        }
+        else if ( scripts.IsEmpty() )
+        {
+            string message = $"{nameof( scripts )} argument is empty.";
+            if ( consoleOut )
+                _ = cc.isr.Std.ConsoleExtensions.ConsoleMethods.ConsoleOutputMemberMessage( message );
+            else
+                _ = cc.isr.Std.TraceExtensions.TraceMethods.TraceMemberMessage( $"\r\n\t{message}" );
+            return true;
+        }
+
         foreach ( ScriptInfo script in scripts )
         {
             affirmative = scriptNames.Contains( $"{script.Title}," );

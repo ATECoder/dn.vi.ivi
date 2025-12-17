@@ -11,6 +11,9 @@ Pith
 - Add script names getter command.
 Device.Tsp.Script
 - Add fetch user scripts names.
+- Fetch script names: return empty if getting 'nil'.
+- Add author script name fetchers.
+- Add Delete Author User Scripts.
 
 ## [8.1.9478] - 2025-12-13
 Device Tsp

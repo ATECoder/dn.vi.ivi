@@ -13,7 +13,7 @@ public static partial class NodeMethods
     ///                                                 the required range. </exception>
     /// <param name="session">      The session. </param>
     /// <param name="nodeNumber">   Specifies the subsystem node. </param>
-    /// <returns>   The names of the embedded scripts. </returns>
+    /// <returns>   The names of the embedded scripts or empty if no embedded scripts exist. </returns>
     public static string FetchEmbeddedScriptsNames( this Pith.SessionBase session, int nodeNumber )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
@@ -34,7 +34,11 @@ public static partial class NodeMethods
             _ = session.WriteLine( Syntax.Tsp.Node.EmbeddedScriptGetterCommand( nodeNumber ) );
             _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay );
 
-            string embeddedNodeScriptNames = session.ReadLineTrimEnd();
+            string scriptNames = session.ReadLineTrimEnd();
+
+            scriptNames = string.Equals( scriptNames, cc.isr.VI.Syntax.Tsp.Lua.NilValue, StringComparison.OrdinalIgnoreCase )
+                ? string.Empty
+                : scriptNames;
 
             // throw if device error occurred
             session.ThrowDeviceExceptionIfError();
@@ -46,7 +50,7 @@ public static partial class NodeMethods
             // throw if device error occurred
             session.ThrowDeviceExceptionIfError();
 
-            return embeddedNodeScriptNames;
+            return scriptNames;
         }
     }
 

@@ -176,8 +176,8 @@ public static partial class SessionBaseMethods
     ///                                                 invalid. </exception>
     /// <param name="session">      The session. </param>
     /// <param name="scriptNames">  List of names of the scripts. </param>
-    /// <returns>   A Tuple. </returns>
-    public static (int TtmScriptCount, int deletedScriptCount) DeleteScripts( this SessionBase session, IEnumerable<string> scriptNames )
+    /// <returns>   A Tuple: script count, deleted scripts count. </returns>
+    public static (int scriptsCount, int deletedScripstCount) DeleteScripts( this SessionBase session, IEnumerable<string> scriptNames )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( scriptNames is null ) throw new ArgumentNullException( nameof( scriptNames ) );
@@ -219,7 +219,40 @@ public static partial class SessionBaseMethods
     }
 
     /// <summary>
-    /// A <see cref="Pith.SessionBase"/> extension method that deletes the embedded scripts.
+    /// A <see cref="Pith.SessionBase"/> extension method that deletes the user scripts identified
+    /// with the author <paramref name="prefixFilter"/>.
+    /// </summary>
+    /// <remarks>   2025-12-17. </remarks>
+    /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
+    ///                                                 are null. </exception>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <param name="session">      The session. </param>
+    /// <param name="prefixFilter"> (Optional) A filter specifying the prefix. </param>
+    /// <returns>   A Tuple: script count, deleted scripts count. </returns>
+    public static (int scriptsCount, int deletedScriptsCount) DeleteAuthorUserScripts( this SessionBase session, string prefixFilter = "isr_" )
+    {
+        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
+        if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
+
+        session.TraceLastAction( "enabling service request on operation completion" );
+        session.EnableServiceRequestOnOperationCompletion();
+
+        string scriptNames = session.FetchAuthorUserScriptsNames( prefixFilter );
+
+        if ( string.IsNullOrWhiteSpace( scriptNames ) )
+        {
+            session.DisplayLine( "No scripts to delete", 2 );
+            _ = cc.isr.Std.TraceExtensions.TraceMethods.TraceMemberMessage( $"\r\n\tNo scripts to delete." );
+            return (0, 0);
+        }
+
+        return session.DeleteScripts( scriptNames.Split( ',' ) );
+    }
+
+    /// <summary>
+    /// A <see cref="Pith.SessionBase"/> extension method that deletes the embedded scripts
+    /// identified with the author <paramref name="prefixFilter"/>.
     /// </summary>
     /// <remarks>   2025-05-13. </remarks>
     /// <exception cref="ArgumentNullException">        Thrown when one or more required arguments
@@ -228,8 +261,8 @@ public static partial class SessionBaseMethods
     ///                                                 invalid. </exception>
     /// <param name="session">      The session. </param>
     /// <param name="prefixFilter"> (Optional) A filter specifying the prefix. </param>
-    /// <returns>   A tuple: TTM embedded script count, Deleted Scripts count). </returns>
-    public static (int TtmScriptCount, int deletedScriptCount) DeleteEmbeddedScripts( this SessionBase session, string prefixFilter = "isr_" )
+    /// <returns>   A Tuple: (script count, deleted scripts count). </returns>
+    public static (int scriptsCount, int deletedScriptsCount) DeleteAuthorEmbeddedScripts( this SessionBase session, string prefixFilter = "isr_" )
     {
         if ( session is null ) throw new ArgumentNullException( nameof( session ) );
         if ( !session.IsSessionOpen ) throw new InvalidOperationException( $"{nameof( session )} is not open." );
@@ -237,18 +270,16 @@ public static partial class SessionBaseMethods
         session.TraceLastAction( "enabling service request on operation completion" );
         session.EnableServiceRequestOnOperationCompletion();
 
-        string embeddedScripts = session.FetchEmbeddedScriptsNames();
+        string embeddedScripts = session.FetchAuthorEmbeddedScriptsNames( prefixFilter );
 
         if ( string.IsNullOrWhiteSpace( embeddedScripts ) )
         {
-            session.DisplayLine( "No embedded scripts to delete", 2 );
-            _ = cc.isr.Std.TraceExtensions.TraceMethods.TraceMemberMessage( $"\r\n\tNo embedded scripts to delete." );
+            session.DisplayLine( "No scripts to delete", 2 );
+            _ = cc.isr.Std.TraceExtensions.TraceMethods.TraceMemberMessage( $"\r\n\tNo scripts to delete." );
             return (0, 0);
         }
 
-        IEnumerable<string> scriptNames = embeddedScripts.FilterScriptNamesByPrefix( prefixFilter );
-
-        return session.DeleteScripts( scriptNames );
+        return session.DeleteScripts( embeddedScripts.Split( ',' ) );
     }
 
     /// <summary>
