@@ -50,6 +50,42 @@ public static partial class SessionBaseMethods
         return affirmative;
     }
 
+    /// <summary>   A <see cref="Pith.SessionBase"/> extension method that fetches user scripts names. </summary>
+    /// <remarks>   2025-12-16. </remarks>
+    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
+    ///                                             null. </exception>
+    /// <param name="session">      The session. </param>
+    /// <param name="consoleOut">   (Optional) True to console out. </param>
+    /// <returns>   The user scripts names. </returns>
+    public static string FetchUserScriptsNames( this Pith.SessionBase session, bool consoleOut = false )
+    {
+        if ( session is null ) throw new ArgumentNullException( nameof( session ) );
+        session.LastNodeNumber = default;
+        string scriptNames;
+        string message = "fetching the names of the user scripts";
+        if ( consoleOut )
+            _ = cc.isr.Std.ConsoleExtensions.ConsoleMethods.ConsoleOutputMemberMessage( message );
+        else
+            _ = cc.isr.Std.TraceExtensions.TraceMethods.TraceMemberMessage( $"\r\n\t{message}" );
+
+        _ = session.WriteLine( "do {0} print( names ) end ", Syntax.Tsp.Script.UserScriptsGetterCommand );
+        _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay );
+
+        scriptNames = session.ReadLineTrimEnd();
+
+        // throw if device error occurred
+        session.ThrowDeviceExceptionIfError();
+
+        // query and throw if operation complete query failed
+        session.QueryAndThrowIfOperationIncomplete();
+        _ = SessionBase.AsyncDelay( session.ReadAfterWriteDelay + session.StatusReadDelay );
+
+        // throw if device error occurred
+        session.ThrowDeviceExceptionIfError();
+
+        return scriptNames;
+    }
+
     /// <summary>   A <see cref="Pith.SessionBase"/> extension method that loads a script. </summary>
     /// <remarks>   2025-04-20. <para>
     /// Notes:</para><para>

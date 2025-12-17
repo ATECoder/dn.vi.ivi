@@ -41,9 +41,20 @@ public static class Script
     public const string CopyScriptToNodeCommandFormat = "node[{0}].execute('waitcomplete() {2}=script.new({1}.source,[[{2}]])') waitcomplete({0}) waitcomplete()";
 
     /// <summary>
-    /// Gets a command to retrieve a catalog from the local node.
-    /// This command must be enclosed in a 'do end' construct.
-    /// a print(names) or dataqueue.add(names) needs to be added to get the data through.
+    /// (Immutable) Gets a command to retrieve the comma-delimited list of user scripts from the
+    /// local node. <para>
+    /// This command must be enclosed in a 'do end' construct such as stringFormat( "do {0} print(
+    /// names ) end ", Syntax.Tsp.Script.UserScriptsGetterCommand) using print(names) or
+    /// dataqueue.add(names) to get the data through.</para>
+    /// </summary>
+    public const string UserScriptsGetterCommand = "local names=nil for name, value in pairs(_G.script.user.scripts) do if names then names = names .. ',' .. name else names = name end end";
+
+    /// <summary>
+    /// (Immutable) Gets a command to retrieve the comma-delimited list of the saved user scripts
+    /// (user catalog) from the local node. <para>
+    /// This command must be enclosed in a 'do end' construct such as stringFormat( "do {0} print(
+    /// names ) end ", Syntax.Tsp.Script.ScriptCatalogGetterCommand) using print(names) or
+    /// dataqueue.add(names) to get the data through.</para>
     /// </summary>
     public const string ScriptCatalogGetterCommand = "local names for name in _G.script.user.catalog() do if names then names = names .. ',' .. name else names = name end end";
 
