@@ -30,17 +30,14 @@ public partial class SessionBase
         return this.ElapsedTimeStopwatch.Elapsed;
     }
 
-    /// <summary> The elapsed time. </summary>
-    private TimeSpan _elapsedTime;
-
     /// <summary> Gets or sets the elapsed time. </summary>
     /// <value> The elapsed time. </value>
     public TimeSpan ElapsedTime
     {
-        get => this._elapsedTime;
+        get;
         set
         {
-            if ( _ = base.SetProperty( ref this._elapsedTime, value ) )
+            if ( _ = base.SetProperty( ref field, value ) )
             {
                 base.OnPropertyChanged( new System.ComponentModel.PropertyChangedEventArgs( nameof( this.ElapsedTimeCaption ) ) );
             }
@@ -65,7 +62,7 @@ public partial class SessionBase
 
     /// <summary> Gets the elapsed time caption. </summary>
     /// <value> The elapsed time caption. </value>
-    public string ElapsedTimeCaption => this._elapsedTime.ToString( this.ElapsedTimeFormat );
+    public string ElapsedTimeCaption => this.ElapsedTime.ToString( this.ElapsedTimeFormat );
 
     /// <summary> Number of elapsed times. </summary>
     private int _elapsedTimeCount;

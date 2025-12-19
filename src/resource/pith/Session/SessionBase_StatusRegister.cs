@@ -496,14 +496,13 @@ public partial class SessionBase
     #region " srq wait for "
 
     /// <summary> The status read turnaround time. </summary>
-    private TimeSpan _statusReadTurnaroundTime;
 
     /// <summary> Gets or sets the status read turnaround time. </summary>
     /// <statusByte> The status read turnaround time. </statusByte>
     public TimeSpan StatusReadTurnaroundTime
     {
-        get => this._statusReadTurnaroundTime;
-        set => _ = base.SetProperty( ref this._statusReadTurnaroundTime, value );
+        get;
+        set => _ = base.SetProperty( ref field, value );
     }
 
     /// <summary>   Await service request. </summary>

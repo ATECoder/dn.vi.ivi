@@ -2,6 +2,7 @@ using System.ComponentModel;
 using cc.isr.Std.TimeSpanExtensions;
 using cc.isr.Std.EscapeSequencesExtensions;
 using cc.isr.VI.Pith.ExceptionExtensions;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace cc.isr.VI.Pith;
 
@@ -1182,15 +1183,12 @@ public abstract partial class SessionBase : CommunityToolkit.Mvvm.ComponentModel
     /// <value> <c>true</c> if supports clearing the interface. </value>
     public bool SupportsClearInterface => this.ResourceNameInfo is not null && (HardwareInterfaceType.Gpib == this.ResourceNameInfo.InterfaceType);
 
-    /// <summary> The interface clear refractory period. </summary>
-    private TimeSpan _interfaceClearRefractoryPeriod;
-
     /// <summary> Gets or sets the Interface clear refractory period. </summary>
     /// <value> The Interface clear refractory period. </value>
     public TimeSpan InterfaceClearRefractoryPeriod
     {
-        get => this._interfaceClearRefractoryPeriod;
-        set => _ = base.SetProperty( ref this._interfaceClearRefractoryPeriod, value );
+        get;
+        set => _ = base.SetProperty( ref field, value );
     }
 
     /// <summary> Clears the interface. </summary>
@@ -1270,52 +1268,36 @@ public abstract partial class SessionBase : CommunityToolkit.Mvvm.ComponentModel
         _ = this.QueryOperationCompleted();
     }
 
-    /// <summary> The device clear delay period. </summary>
-    private TimeSpan _deviceClearDelayPeriod;
-
     /// <summary> Gets or sets the device clear Delay period. </summary>
     /// <value> The device clear Delay period. </value>
     public TimeSpan DeviceClearDelayPeriod
     {
-        get => this._deviceClearDelayPeriod;
-        set => _ = base.SetProperty( ref this._deviceClearDelayPeriod, value );
+        get;
+        set => _ = base.SetProperty( ref field, value );
     }
-
-    /// <summary> The device clear refractory period. </summary>
-    private TimeSpan _deviceClearRefractoryPeriod;
 
     /// <summary> Gets or sets the device clear refractory period. </summary>
     /// <value> The device clear refractory period. </value>
     public TimeSpan DeviceClearRefractoryPeriod
     {
-        get => this._deviceClearRefractoryPeriod;
-        set => _ = base.SetProperty( ref this._deviceClearRefractoryPeriod, value );
+        get;
+        set => _ = base.SetProperty( ref field, value );
     }
-
-    private TimeSpan _operationCompletionRefractoryPeriod;
 
     /// <summary>
     /// Gets or sets the operation completion awaitStatusTimeout (was status subsystem initialize refractory
     /// period) for instruments that do not support operation completion.
     /// </summary>
     /// <value> The operation completion awaitStatusTimeout. </value>
-    public TimeSpan OperationCompletionRefractoryPeriod
-    {
-        get => this._operationCompletionRefractoryPeriod;
-        set => this.SetProperty( ref this._operationCompletionRefractoryPeriod, value );
-    }
-
-    private TimeSpan _initKnownStateTimeout;
+    [ObservableProperty]
+    public partial TimeSpan OperationCompletionRefractoryPeriod { get; set; }
 
     /// <summary>
     /// Gets or sets the initialization awaitStatusTimeout, which is use to initialize TSP nodes.
     /// </summary>
     /// <value> The initialize awaitStatusTimeout. </value>
-    public TimeSpan InitKnownStateTimeout
-    {
-        get => this._initKnownStateTimeout;
-        set => this.SetProperty( ref this._initKnownStateTimeout, value );
-    }
+    [ObservableProperty]
+    public partial TimeSpan InitKnownStateTimeout { get; set; }
 
     #endregion
 
@@ -2413,14 +2395,12 @@ public abstract partial class SessionBase : CommunityToolkit.Mvvm.ComponentModel
     /// <value> The timeouts. </value>
     protected Stack<TimeSpan> CommunicationTimeouts { get; private set; }
 
-    private TimeSpan _timeoutCandidate;
-
     /// <summary> Gets or sets the milliseconds awaitStatusTimeout candidate. </summary>
     /// <value> The milliseconds awaitStatusTimeout candidate. </value>
     public TimeSpan TimeoutCandidate
     {
-        get => this._timeoutCandidate;
-        set => _ = base.SetProperty( ref this._timeoutCandidate, value );
+        get;
+        set => _ = base.SetProperty( ref field, value );
     }
 
     /// <summary> Restores the last awaitStatusTimeout from the stack. </summary>

@@ -62,16 +62,14 @@ public partial class ResourceSettings() : CommunityToolkit.Mvvm.ComponentModel.O
     [Description( "The caption to display when the resource is closed" )]
     public partial string ClosedCaption { get; set; } = "closed";
 
-    private TimeSpan _resourceNameSelectionTimeout = TimeSpan.FromSeconds( 10 );
-
     /// <summary>   Gets or sets the resource name selection timeout. </summary>
     /// <value> The resource name selection timeout. </value>
     [Description( "Specifies the time to wait when selecting a resource name [10s]" )]
     public TimeSpan ResourceNameSelectionTimeout
     {
-        get => this._resourceNameSelectionTimeout;
-        set => _ = this.SetProperty( ref this._resourceNameSelectionTimeout, value );
-    }
+        get;
+        set => _ = this.SetProperty( ref field, value );
+    } = TimeSpan.FromSeconds( 10 );
 
     #endregion
 
@@ -103,16 +101,12 @@ public partial class ResourceSettings() : CommunityToolkit.Mvvm.ComponentModel.O
 
     #region " ping "
 
-    private TimeSpan _pingTimeout = TimeSpan.FromMilliseconds( 5 );
 
     /// <summary>   Gets or sets the ping timeout. </summary>
     /// <value> The ping timeout. </value>
+    [ObservableProperty]
     [Description( "The time to allow for ping results to come back [sms]" )]
-    public TimeSpan PingTimeout
-    {
-        get => this._pingTimeout;
-        set => this.SetProperty( ref this._pingTimeout, value );
-    }
+    public partial TimeSpan PingTimeout { get; set; } = TimeSpan.FromMilliseconds( 5 );
 
     /// <summary>   Gets or sets the PingHops. </summary>
     /// <value> The PingHops. </value>

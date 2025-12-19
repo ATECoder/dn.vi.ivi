@@ -16,8 +16,6 @@ public partial class SessionBase
         }
     }
 
-    private TimeSpan _keepAliveInterval = TimeSpan.Zero;
-
     /// <summary>
     /// Gets the keep alive interval. Must be smaller or equal to half the communication timeout
     /// interval.
@@ -26,7 +24,7 @@ public partial class SessionBase
     /// <value> The keep alive interval. </value>
     public TimeSpan KeepAliveInterval
     {
-        get => this._keepAliveInterval;
+        get;
         set
         {
             if ( value != this.KeepAliveInterval )
@@ -44,11 +42,11 @@ public partial class SessionBase
                     this.KeepAliveTimer.Interval = value.TotalMilliseconds;
                     this.KeepAliveTimer.Start();
                 }
-                this._keepAliveInterval = value;
+                field = value;
                 this.OnPropertyChanged( new System.ComponentModel.PropertyChangedEventArgs( nameof( this.KeepAliveInterval ) ) );
             }
         }
-    }
+    } = TimeSpan.Zero;
 
     private readonly Lazy<System.Timers.Timer> _lazyKeepAliveTimer = new();
 
@@ -90,14 +88,12 @@ public partial class SessionBase
         }
     }
 
-    private TimeSpan _keepAliveLockTimeout;
-
     /// <summary>   Gets or sets the keep alive lock timeout. </summary>
     /// <value> The keep alive lock timeout. </value>
     public TimeSpan KeepAliveLockTimeout
     {
-        get => this._keepAliveLockTimeout;
-        set => _ = base.SetProperty( ref this._keepAliveLockTimeout, value );
+        get;
+        set => _ = base.SetProperty( ref field, value );
     }
 
     /// <summary>   Keep alive. </summary>

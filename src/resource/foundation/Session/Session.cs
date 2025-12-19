@@ -144,7 +144,9 @@ public partial class Session : Pith.SessionBase
         {
             this.DisposeSession();
             this.LastNativeError = new NativeError( ex.ErrorCode, resourceName, "@opening", "opening session" );
-            throw new Pith.NativeException( this.LastNativeError, ex );
+            Pith.NativeException exception = new( this.LastNativeError, ex );
+            exception.AddExceptionData( ex );
+            throw exception;
         }
         catch
         {

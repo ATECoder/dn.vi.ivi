@@ -35,15 +35,12 @@ public partial class SessionBase
         set => _ = this.SetProperty( ref field, value );
     } = true;
 
-    /// <summary> The clear refractory period. </summary>
-    private TimeSpan _clearRefractoryPeriod;
-
     /// <summary> Gets or sets the clear refractory period. </summary>
     /// <value> The clear refractory period. </value>
     public TimeSpan ClearRefractoryPeriod
     {
-        get => this._clearRefractoryPeriod;
-        set => _ = base.SetProperty( ref this._clearRefractoryPeriod, value );
+        get;
+        set => _ = base.SetProperty( ref field, value );
     }
 
     /// <summary> Gets the clear execution state command. </summary>
@@ -174,14 +171,13 @@ public partial class SessionBase
     #region " rst "
 
     /// <summary> The reset refractory period. </summary>
-    private TimeSpan _resetRefractoryPeriod;
 
     /// <summary> Gets or sets the reset refractory period. </summary>
     /// <value> The reset refractory period. </value>
     public TimeSpan ResetRefractoryPeriod
     {
-        get => this._resetRefractoryPeriod;
-        set => _ = base.SetProperty( ref this._resetRefractoryPeriod, value );
+        get;
+        set => _ = base.SetProperty( ref field, value );
     }
 
     /// <summary> Gets the reset known state command. </summary>
@@ -239,7 +235,6 @@ public partial class SessionBase
 
     #region " status and read delays "
 
-    private TimeSpan _readAfterWriteDelay;
 
     /// <summary>
     /// Gets or sets the to delay time to apply when reading immediately after a write.
@@ -247,11 +242,9 @@ public partial class SessionBase
     /// <value> The read delay. </value>
     public TimeSpan ReadAfterWriteDelay
     {
-        get => this._readAfterWriteDelay;
-        set => _ = base.SetProperty( ref this._readAfterWriteDelay, value );
+        get;
+        set => _ = base.SetProperty( ref field, value );
     }
-
-    private TimeSpan _statusReadDelay;
 
     /// <summary>
     /// Gets or sets the to delay time to apply when reading the status byte after a write.
@@ -259,22 +252,21 @@ public partial class SessionBase
     /// <value> The read delay. </value>
     public TimeSpan StatusReadDelay
     {
-        get => this._statusReadDelay;
-        set => _ = base.SetProperty( ref this._statusReadDelay, value );
+        get;
+        set => _ = base.SetProperty( ref field, value );
     }
 
     #endregion
 
     #region " resource selection "
 
-    private TimeSpan _resourceNameSelectionTimeout;
 
     /// <summary>   Gets or sets the resource name selection timeout. </summary>
     /// <value> The resource name selection timeout. </value>
     public TimeSpan ResourceNameSelectionTimeout
     {
-        get => this._resourceNameSelectionTimeout;
-        set => _ = base.SetProperty( ref this._resourceNameSelectionTimeout, value );
+        get;
+        set => _ = base.SetProperty( ref field, value );
     }
 
     #endregion

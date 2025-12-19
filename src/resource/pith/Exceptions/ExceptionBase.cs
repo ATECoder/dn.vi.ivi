@@ -69,7 +69,7 @@ public abstract class ExceptionBase : Exception
         }
 
         this.MachineName = info.GetString( nameof( this.MachineName ) );
-        this._createdDateTime = info.GetDateTime( nameof( this.CreatedDateTime ) );
+        this.CreatedDateTime = info.GetDateTime( nameof( this.CreatedDateTime ) );
         this.AppDomainName = info.GetString( nameof( this.AppDomainName ) );
         this.ThreadIdentityName = info.GetString( nameof( this.ThreadIdentityName ) );
         this.UserName = info.GetString( nameof( this.UserName ) );
@@ -130,12 +130,9 @@ public abstract class ExceptionBase : Exception
     /// <value> The name of the application domain. </value>
     public string? AppDomainName { get; private set; }
 
-    /// <summary> The created date time. </summary>
-    private DateTimeOffset _createdDateTime = DateTimeOffset.Now;
-
     /// <summary> Date and Time <see cref="DateTimeOffset"/> the exception was created. </summary>
     /// <value> The created date time. </value>
-    public DateTimeOffset CreatedDateTime => this._createdDateTime;
+    public DateTimeOffset CreatedDateTime { get; private set; } = DateTimeOffset.Now;
 
     /// <summary> Machine name where the Exception occurred. </summary>
     /// <value> The name of the machine. </value>
@@ -158,7 +155,7 @@ public abstract class ExceptionBase : Exception
     private void ObtainEnvironmentInformation()
     {
         const string unknown = "N/A";
-        this._createdDateTime = DateTimeOffset.Now;
+        this.CreatedDateTime = DateTimeOffset.Now;
         this.MachineName = Environment.MachineName;
         if ( string.IsNullOrWhiteSpace( this.MachineName ) )
             this.MachineName = unknown;

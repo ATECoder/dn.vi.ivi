@@ -513,7 +513,7 @@ public sealed class ResourceNamesManager
             details = $"{nameof( resourceName )} argument is empty.";
             return false;
         }
-        else if ( ResourceNamesManager.IsTcpIpResource( resourceName ) )
+        else if ( !ResourceNamesManager.IsTcpIpResource( resourceName ) )
         {
             details = $"{resourceName} is not a TCP/IP resource.";
             return true;

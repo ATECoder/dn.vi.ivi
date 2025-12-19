@@ -154,7 +154,7 @@ public static class ExceptionMethods
         const int width = 8;
         _ = builder.AppendLine( $"{prefix}{nameof( System.Type ),width}: {exception.GetType()}" );
         if ( !string.IsNullOrWhiteSpace( exception.Message ) )
-            _ = builder.AppendLine( $"{prefix}{nameof( Exception.Message ),width}: {exception.Message}" );
+            _ = builder.AppendLine( $"{prefix}{nameof( Exception.Message ),width}: {exception.Message.Replace( Environment.NewLine, "; " )}" );
 
         if ( !string.IsNullOrWhiteSpace( exception.Source ) )
             _ = builder.AppendLine( $"{prefix}{nameof( Exception.Source ),width}: {exception.Source}" );

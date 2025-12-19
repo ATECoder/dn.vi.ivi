@@ -31,7 +31,7 @@ public class DeviceError
         this._errorLevel = 0;
         this.ErrorMessage = VI.Syntax.ScpiSyntax.NoErrorMessage;
         this.Severity = TraceEventType.Verbose;
-        this._timestamp = DateTimeOffset.Now;
+        this.Timestamp = DateTimeOffset.Now;
     }
 
     /// <summary> Initializes a new instance of the <see cref="DeviceError" /> class. </summary>
@@ -52,7 +52,7 @@ public class DeviceError
             this.ErrorMessage = value.ErrorMessage;
             this.ErrorNumber = value.ErrorNumber;
             this._errorLevel = value.ErrorLevel;
-            this._timestamp = value.Timestamp;
+            this.Timestamp = value.Timestamp;
         }
     }
 
@@ -256,17 +256,9 @@ public class DeviceError
         return this.CompoundErrorMessage;
     }
 
-    /// <summary> The error Level. </summary>
-    private DateTimeOffset _timestamp;
-
     /// <summary> Gets or sets the timestamp. </summary>
     /// <value> The timestamp. </value>
-    public DateTimeOffset Timestamp
-    {
-        get => this._timestamp;
-
-        protected set => this._timestamp = value;
-    }
+    public DateTimeOffset Timestamp { get; protected set; }
 
     #endregion
 
