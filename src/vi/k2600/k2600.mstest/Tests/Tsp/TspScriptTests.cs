@@ -103,7 +103,7 @@ public class TspScriptTests
 
     /// <summary>   (Unit Test Method) Assets that tests should initialize. </summary>
     /// <remarks>   2024-08-17. </remarks>
-    [TestMethod( DisplayName = "00. Tests should initialize" )]
+    [TestMethod( DisplayName = "00. Init: Tests should initialize" )]
     public void TestsShouldInitialize()
     {
     }

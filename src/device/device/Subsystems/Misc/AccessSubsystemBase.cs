@@ -46,7 +46,7 @@ public abstract partial class AccessSubsystemBase( StatusSubsystemBase statusSub
     [ObservableProperty]
     public partial bool? Certified { get; protected set; }
 
-    /// <summary>   Rerturns the certification state. </summary>
+    /// <summary>   Returns the certification state. </summary>
     /// <remarks>   2025-11-19. </remarks>
     /// <returns>   A string. </returns>
     public string CertificationState()
@@ -102,23 +102,23 @@ public abstract partial class AccessSubsystemBase( StatusSubsystemBase statusSub
         return string.IsNullOrWhiteSpace( details );
     }
 
-    /// <summary>   Validates the cached certification value. </summary>
+    /// <summary>   Validates the embedded certification value. </summary>
     /// <remarks>   2025-06-02. </remarks>
     /// <param name="details">  [out] The details. </param>
-    /// <returns>   True if the certification is cached and is valid, otherwise, false. </returns>
+    /// <returns>   True if the certification is embedded and is valid, otherwise, false. </returns>
     public abstract bool ValidateCertification( out string details );
 
-    /// <summary>   Queries if the connected instrument certification cached in the connected instrument. </summary>
+    /// <summary>   Queries if the connected instrument certification code is embedded in the connected instrument. </summary>
     /// <remarks>   2025-06-02. </remarks>
-    /// <returns>   <c>true</c> if the instrument certification code is cached in the instrument user string. </returns>
-    public abstract bool IsCertificationCached( out string details );
+    /// <returns>   <c>true</c> if the instrument certification code is embedded the instrument user string. </returns>
+    public abstract bool IsCertificationEmbedded( out string details );
 
     /// <summary>   Reads certification codes. </summary>
     /// <remarks>   2025-06-02. </remarks>
-    /// <returns>   The certification codes. </returns>
+    /// <returns>   A tuple of the enrollment (release) and certification (version) codes. </returns>
     public abstract (string releaseCode, string versionCode) ReadCertificationCodes();
 
-    /// <summary>   Export certification codes. </summary>
+    /// <summary>   Export certification codes and verify by reading back. </summary>
     /// <remarks>   2025-06-02. </remarks>
     /// <param name="filePath"> Full pathname of the file. </param>
     public abstract void ExportCertificationCodes( string filePath );
@@ -134,13 +134,13 @@ public abstract partial class AccessSubsystemBase( StatusSubsystemBase statusSub
     /// <param name="filePath"> Full pathname of the file. </param>
     public abstract void ImportCertificationCodes( string filePath );
 
-    /// <summary>   Decertifies this object. </summary>
+    /// <summary>   Decertifies this instrument. </summary>
     /// <remarks>   2025-11-19. </remarks>
     public abstract void Decertify();
 
     /// <summary>
     /// Tries to decertify the connected instrument. This does not remove the instrument from the
-    /// registration dictionary.
+    /// API roster.
     /// </summary>
     /// <remarks>   2024-12-09. </remarks>
     /// <param name="details">  [out] The details. </param>
@@ -165,63 +165,59 @@ public abstract partial class AccessSubsystemBase( StatusSubsystemBase statusSub
 
     #endregion
 
-    #region " registration "
+    #region " enrollement "
 
-    /// <summary>   Gets a value indicating whether we can register. </summary>
-    /// <value> True if we can register, false if not. </value>
-    public abstract bool CanRegister { get; }
-
-    /// <summary>   Queries an instrument with the specified serial number is registered. </summary>
+    /// <summary>   Queries if an instrument with the specified serial number is enrolled in the roster. </summary>
     /// <remarks>   2024-08-24. </remarks>
     /// <param name="serialNumber"> The serial number. </param>
     /// <param name="details">      [out] The details. </param>
-    /// <returns>   <c>true</c> if the instrument is certified; otherwise, false. </returns>
-    public abstract bool IsRegistered( string serialNumber, out string details );
+    /// <returns>   <c>true</c> if the instrument is enrolled; otherwise, false. </returns>
+    public abstract bool IsEnrolled( string serialNumber, out string details );
 
-    /// <summary>   Queries if the connected instrument is registered. </summary>
+    /// <summary>   Queries if the connected instrument is enrolled in the API roster. </summary>
     /// <remarks>   2024-12-13. </remarks>
     /// <param name="details">  [out] The details. </param>
-    /// <returns>   <c>true</c> if the instrument is certified; otherwise, false. </returns>
-    public bool IsRegistered( out string details )
+    /// <returns>   <c>true</c> if the instrument is enrolled in the API roster; otherwise, false. </returns>
+    public bool IsEnrolled( out string details )
     {
-        return this.IsRegistered( this.Session.QueryTrimEnd( cc.isr.VI.Syntax.Tsp.LocalNode.SerialNumberFormattedQueryCommand ), out details );
+        return this.IsEnrolled( this.Session.QueryTrimEnd( cc.isr.VI.Syntax.Tsp.LocalNode.SerialNumberFormattedQueryCommand ), out details );
     }
 
-    /// <summary>   Attempts to register an instrument with the specified serial number. </summary>
+    /// <summary>   Attempts to enroll an instrument with the specified serial number in the API roster. </summary>
     /// <remarks>   2024-12-12. </remarks>
     /// <param name="serialNumber">     The serial number. </param>
     /// <param name="details">          [out] The details. </param>
     /// <returns>   True if it succeeds; otherwise, false. </returns>
-    public abstract bool TryRegister( string serialNumber, out string details );
+    public abstract bool TryEnroll( string serialNumber, out string details );
 
-    /// <summary>   Attempts to register a connected instrument instrument. </summary>
+    /// <summary>   Attempts to enroll a connected instrument with the specified serial number in the API roster. </summary>
     /// <remarks>   2024-12-13. </remarks>
     /// <param name="details">          [out] The details. </param>
     /// <returns>   True if it succeeds; otherwise, false. </returns>
-    public bool TryRegister( out string details )
+    public bool TryEnroll( out string details )
     {
-        return this.TryRegister( this.Session.QueryTrimEnd( cc.isr.VI.Syntax.Tsp.LocalNode.SerialNumberFormattedQueryCommand ), out details );
+        return this.TryEnroll( this.Session.QueryTrimEnd( cc.isr.VI.Syntax.Tsp.LocalNode.SerialNumberFormattedQueryCommand ), out details );
     }
 
-    /// <summary>   Deregisters this object. </summary>
+    /// <summary>   Removes the instrument from the API roster. </summary>
     /// <remarks>   2025-11-19. </remarks>
     /// <param name="serialNumber"> The serial number. </param>
-    public abstract void Deregister( string serialNumber );
+    public abstract void Disenroll( string serialNumber );
 
     /// <summary>
-    /// Attempts to deregister an instrument with the specified serial number by removing this instrument from the
-    /// registration dictionary but not removing the API access code from the current instrument.
+    /// Attempts to remove an instrument with the specified serial number from the ApI roster without
+    /// removing the instrument certification.
     /// </summary>
     /// <remarks>   2024-12-12. </remarks>
     /// <param name="serialNumber"> The serial number. </param>
     /// <param name="details">      [out] The details. </param>
     /// <returns>   True if it succeeds; otherwise, false. </returns>
-    public bool TryDeregister( string serialNumber, out string details )
+    public bool TryDisenroll( string serialNumber, out string details )
     {
         details = string.Empty;
         try
         {
-            this.Deregister( serialNumber );
+            this.Disenroll( serialNumber );
         }
         catch ( InvalidOperationException ex )
         {
@@ -235,45 +231,49 @@ public abstract partial class AccessSubsystemBase( StatusSubsystemBase statusSub
     }
 
     /// <summary>
-    /// Attempts to deregister the active instrument by removing it instrument from the
-    /// registration dictionary but not removing the API access code from the current instrument.
+    /// Attempts to remove the current instrument with the specified serial number from the ApI roster without
+    /// removing the instrument certification.
     /// </summary>
     /// <remarks>   2024-12-13. </remarks>
     /// <param name="details">  [out] The details. </param>
     /// <returns>   True if it succeeds; otherwise, false. </returns>
-    public bool TryDeregister( out string details )
+    public bool TryDisenroll( out string details )
     {
-        return this.TryDeregister( this.Session.QueryTrimEnd( cc.isr.VI.Syntax.Tsp.LocalNode.SerialNumberFormattedQueryCommand ), out details );
+        return this.TryDisenroll( this.Session.QueryTrimEnd( cc.isr.VI.Syntax.Tsp.LocalNode.SerialNumberFormattedQueryCommand ), out details );
     }
 
-    /// <summary>   Validates the cached registration value. </summary>
+    /// <summary>   Validates the enrollment code embedded in the instrument. </summary>
     /// <remarks>   2025-06-02. </remarks>
     /// <param name="details">  [out] The details. </param>
-    /// <returns>   True if the registration is cached and is valid, otherwise, false. </returns>
-    public abstract bool ValidateRegistration( out string details );
+    /// <returns>   True if the enrollment code is embedded and is valid, otherwise, false. </returns>
+    public abstract bool ValidateEnrollment( out string details );
 
-    /// <summary>   Queries if the connected instrument registration is cached in the connected instrument. </summary>
+    /// <summary>   Queries if an enrollment code is embedded in the connected instrument. </summary>
     /// <remarks>   2025-06-02. </remarks>
     /// <param name="details">      [out] The details. </param>
-    /// <returns>   <c>true</c> if the instrument registration code is cached in the instrument user string. </returns>
-    public abstract bool IsRegistrationCached( out string details );
+    /// <returns>   <c>true</c> if the an enrollment code is embedded in the instrument user string. </returns>
+    public abstract bool IsEnrollmentEmbedded( out string details );
 
     #endregion
 
     #region " registration and certification "
 
-    /// <summary>   Queries if the instrument is registered and certified for API access. </summary>
+    /// <summary>   Gets a value indicating whether we can enroll in the roster and certify . </summary>
+    /// <value> True if we can enroll in the roster and the certify, false if not. </value>
+    public abstract bool CanEnrollAndCertify { get; }
+
+    /// <summary>   Queries if the instrument is enrolled in the API roster and certified for API access. </summary>
     /// <remarks>   2025-05-26. </remarks>
     /// <param name="details">  [out] The details. </param>
-    /// <returns>   True if registered and certified, false if not. </returns>
-    public abstract bool IsRegisteredAndCertified( out string details );
+    /// <returns>   True if enrolled and certified, false if not. </returns>
+    public abstract bool IsEnrolledAndCertified( out string details );
 
-    /// <summary>   Queries if the instrument is registered and certified for API access. </summary>
+    /// <summary>   Queries if the instrument is enrolled in the API roster and certified for API access. </summary>
     /// <remarks>   2025-06-03. </remarks>
     /// <param name="serialNumber"> The serial number. </param>
     /// <param name="details">      [out] The details. </param>
-    /// <returns>   True if registered and certified, false if not. </returns>
-    public bool IsRegisteredAndCertified( string serialNumber, out string details )
+    /// <returns>   True if enrolled and certified, false if not. </returns>
+    public bool IsEnrolledAndCertified( string serialNumber, out string details )
     {
         // If the serial number is not specified, use the connected instrument's serial number.
         if ( string.IsNullOrEmpty( serialNumber ) )
@@ -288,29 +288,29 @@ public abstract partial class AccessSubsystemBase( StatusSubsystemBase statusSub
             details = $"Serial number '{serialNumber}' does not match the connected instrument's serial number '{this.StatusSubsystem.VersionInfoBase.SerialNumber}'.";
             return false;
         }
-        return this.IsRegistered( serialNumber, out details )
+        return this.IsEnrolled( serialNumber, out details )
             && this.TryCheckCertification( out details );
     }
 
-    /// <summary>   Certify if registered. </summary>
+    /// <summary>   Certify if enrolled. </summary>
     /// <remarks>   2025-11-19. </remarks>
     /// <param name="serialNumber"> The serial number. </param>
     /// <param name="functionName"> Name of the function. </param>
-    public abstract void CertifyIfRegistered( string serialNumber, string functionName );
+    public abstract void CertifyIfEnrolled( string serialNumber, string functionName );
 
-    /// <summary>   Certify if registered. </summary>
+    /// <summary>   Certify if enrolled. </summary>
     /// <remarks>   2025-11-19. </remarks>
-    public abstract void CertifyIfRegistered();
+    public abstract void CertifyIfEnrolled();
 
-    /// <summary>   Attempts to certifies the connected instrument for Api access if it is registered. </summary>
+    /// <summary>   Attempts to certifies the connected instrument for Api access if it is enrolled in the API roster. </summary>
     /// <remarks>   2024-08-24. </remarks>
     /// <param name="details">          [out] The details. </param>
     /// <returns>   <c>true</c> if the instrument is certified; otherwise, false. </returns>
-    public virtual bool TryCertifyIfRegistered( out string details )
+    public virtual bool TryCertifyIfEnrolled( out string details )
     {
         try
         {
-            this.CertifyIfRegistered();
+            this.CertifyIfEnrolled();
             details = this.Certified.GetValueOrDefault( false )
                 ? string.Empty
                 : "Instrument is not certified for API access.";
@@ -326,30 +326,30 @@ public abstract partial class AccessSubsystemBase( StatusSubsystemBase statusSub
         return string.IsNullOrWhiteSpace( details );
     }
 
-    /// <summary>   Registers the controller instrument and certifies is for API access. </summary>
+    /// <summary>   Enroll the instrument in the API roster and certify it for API access. </summary>
     /// <remarks>   2024-12-11. </remarks>
-    public void RegisterAndCertify()
+    public void EnrollAndCertify()
     {
-        if ( this.TryRegister( this.Session.QueryTrimEnd( cc.isr.VI.Syntax.Tsp.LocalNode.SerialNumberFormattedQueryCommand ), out string details ) )
+        if ( this.TryEnroll( this.Session.QueryTrimEnd( cc.isr.VI.Syntax.Tsp.LocalNode.SerialNumberFormattedQueryCommand ), out string details ) )
         {
-            this.CertifyIfRegistered();
+            this.CertifyIfEnrolled();
         }
         else
             throw new InvalidOperationException( details );
     }
 
     /// <summary>
-    /// Attempts to register and certify a connected instrument.
+    /// Attempts to enroll the connected instrument in the API roster and embed its certification code.
     /// </summary>
     /// <remarks>   2025-05-26. </remarks>
     /// <param name="details">          [out] The details. </param>
     /// <returns>   True if it succeeds; otherwise, false. </returns>
-    public virtual bool TryRegisterAndCertify( out string details )
+    public virtual bool TryEnrollAndCertify( out string details )
     {
         details = string.Empty;
         try
         {
-            this.RegisterAndCertify();
+            this.EnrollAndCertify();
         }
         catch ( InvalidOperationException ex )
         {

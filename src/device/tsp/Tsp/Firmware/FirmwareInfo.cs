@@ -50,9 +50,9 @@ public class FirmwareInfo
     /// <value> True if not all loaded scripts were embedded, false if not. </value>
     public bool MustEmbed { get; set; }
 
-    /// <summary>   Gets or sets a value indicating whether or not the instrument was registered. </summary>
-    /// <value> True if the instrument was registered; otherwise, false. </value>
-    public bool? Registered { get; set; }
+    /// <summary>   Gets or sets a value indicating whether or not the instrument was enrolled in the API roster. </summary>
+    /// <value> True if the instrument was enrolled in the API roster; otherwise, false. </value>
+    public bool? Enrolled { get; set; }
 
     /// <summary>   Gets or sets a value indicating whether or not the instrument was certified. </summary>
     /// <value> True if the instrument was certified; false if not or unknow if null. </value>
@@ -92,7 +92,7 @@ public class FirmwareInfo
         bool mayDelete = false;
         bool mustLoad = false;
         bool mustEmbed = false;
-        bool? registered = false;
+        bool? enrolled = false;
         bool? certified = null;
         string requiredAction = "None";
         FirmwareStatus firmwareStatus = FirmwareStatus.Current;
@@ -107,12 +107,12 @@ public class FirmwareInfo
         }
         else
         {
-            registered = accessSubsystem.IsRegistered( serialNumber, out string details );
-            if ( !registered.GetValueOrDefault( false ) )
+            enrolled = accessSubsystem.IsEnrolled( serialNumber, out string details );
+            if ( !enrolled.GetValueOrDefault( false ) )
             {
                 _ = cc.isr.VI.SessionLogger.Instance.LogWarning( details );
                 _ = statusBuilder.AppendLine( details );
-                requiredAction = "Register this instrument";
+                requiredAction = "Enroll this instrument";
             }
 
             // must load if any firmware does not exist.
@@ -139,13 +139,13 @@ public class FirmwareInfo
             {
                 string scriptName = supportScriptInfo.Title;
                 session.RunScript( scriptName );
-                certified = accessSubsystem.TryCertifyIfRegistered( out details );
+                certified = accessSubsystem.TryCertifyIfEnrolled( out details );
                 // if the Support Firmware Script exists, we can check for the certification.
                 if ( !certified.GetValueOrDefault( false ) )
                 {
                     _ = cc.isr.VI.SessionLogger.Instance.LogWarning( details );
                     _ = statusBuilder.AppendLine( details );
-                    requiredAction = "Register this instrument";
+                    requiredAction = "Certify this instrument";
                 }
 
                 // read the firmware versions
@@ -232,7 +232,7 @@ public class FirmwareInfo
             MustLoad = mustLoad,
             MayDelete = mayDelete,
             MustEmbed = mustEmbed,
-            Registered = registered,
+            Enrolled = enrolled,
             Certified = certified,
             FirmwareStatus = firmwareStatus,
             EmbeddedVersion = embeddedVersion,
@@ -264,8 +264,8 @@ public class FirmwareInfo
         _ = sb.AppendLine( $"   Must load, i.e., not all scripts loaded: {this.MustLoad}." );
         _ = sb.AppendLine( $"  Must embed, i.e., not all loaded scripts were embedded: {this.MustEmbed}." );
         _ = sb.AppendLine( $"API access status:" );
-        _ = sb.AppendLine( $"  Registered: {(this.Registered.HasValue ? this.Registered.Value ? "True" : "False" : "Unknown")}." );
-        _ = sb.Append( $"   Certified: {(this.Certified.HasValue ? this.Certified.Value ? "True" : "False" : "Unknown")}." );
+        _ = sb.AppendLine( $"  Enrolled: {(this.Enrolled.HasValue ? this.Enrolled.Value ? "True" : "False" : "Unknown")}." );
+        _ = sb.Append( $" Certified: {(this.Certified.HasValue ? this.Certified.Value ? "True" : "False" : "Unknown")}." );
         return sb.ToString();
     }
 }
