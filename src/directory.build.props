@@ -73,7 +73,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <None Include="C:\my\lib\vs\io\vi\src\items\ms-icon-70x70.png">
+    <None Include="..\..\items\ms-icon-70x70.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
       <Visible>false</Visible>

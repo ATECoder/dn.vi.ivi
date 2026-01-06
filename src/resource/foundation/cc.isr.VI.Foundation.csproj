@@ -73,7 +73,7 @@
         <!-- NuGet
         <PackageReference Include="cc.isr.Visa" Version="5.11.8115" />
         -->
-        <ProjectReference Include="C:\my\lib\vs\io\visa\src\isr\visa\cc.isr.Visa.csproj" />
+        <ProjectReference Include="..\..\visa\visa\cc.isr.Visa.csproj" />
         <PackageReference Include="cc.isr.VI.Pith" Version="8.0.8120" />
         <Content Update="C:\Users\David\.nuget\packages\cc.isr.vi.pith\8.0.8120\contentFiles\any\netstandard2.0\cc.isr.VI.Pith.Settings.json">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
