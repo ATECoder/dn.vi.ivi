@@ -2,9 +2,19 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9489]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9503]: https://www.github.com/atecoder/dn.vi.ivi
 
 Current IVI Visa Compatibility: 8.0.1.9391
+
+## [8.1.9503] - 2026-01-07
+Update change log.
+K2600 Tests
+  - Output generated scripts to the isr.cc temp folders.
+
+## [8.1.9502] - 2026-01-06
+Directory.Build.Props: Fix reference to ms-icon-70x70.png
+Foundation
+- Fix project file reference to the isr visa project.
 
 ## [8.1.9489] - 2025-12-24
 Access subsystem

@@ -61,7 +61,7 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <DefineConstants>$(DefineConstants);IviVisa;</DefineConstants>
+    <DefineConstants>$(DefineConstants);KeysightVisa;</DefineConstants>
   </PropertyGroup>
 
   <Choose>

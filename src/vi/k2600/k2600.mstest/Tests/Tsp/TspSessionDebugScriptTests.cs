@@ -87,8 +87,9 @@ public class TspSessionDebugScriptTests : Device.Tsp.Tests.Base.ScriptTests
     /// <param name="filePath">                 Full pathname of the file. </param>
     /// <param name="scriptFunctionName">       Name of the script function. </param>
     /// <param name="functionExpectedValue">    The function expected value. </param>
+    /// <param name="deleteOnExit">             True to delete the on exit. </param>
     public static void AssertScriptShouldImportAndRun( Pith.SessionBase session, string scriptName,
-        string filePath, string scriptFunctionName, string functionExpectedValue )
+        string filePath, string scriptFunctionName, string functionExpectedValue, bool deleteOnExit )
     {
         Assert.IsNotNull( session );
         Assert.IsTrue( session.IsDeviceOpen );
@@ -110,7 +111,7 @@ public class TspSessionDebugScriptTests : Device.Tsp.Tests.Base.ScriptTests
         }
         finally
         {
-            if ( session is not null && session.IsSessionOpen )
+            if ( deleteOnExit && session is not null && session.IsSessionOpen )
                 session.DeleteScript( scriptName, true );
         }
     }
@@ -131,13 +132,17 @@ public class TspSessionDebugScriptTests : Device.Tsp.Tests.Base.ScriptTests
         try
         {
             Asserts.AssertDeviceShouldOpenWithoutDeviceErrors( this.Device, this.ResourceSettings );
-            string scriptName = "isr_certify";
-            string folderPath = "C:\\my\\private\\ttm\\debug\\9181";
-            string fileTitle = "isr_certify.9181";
-            string scriptFunctionName = "isr.version";
-            string functionExpectedValue = "2.4.9181";
-            string filePath = System.IO.Path.Combine( folderPath, fileTitle + cc.isr.VI.Tsp.Script.ScriptInfo.ScriptFileExtension );
-            TspSessionDebugScriptTests.AssertScriptShouldImportAndRun( this.Device.Session, scriptName, filePath, scriptFunctionName, functionExpectedValue );
+
+            string inFolderPath = "C:\\my\\lib\\tsp\\tsp.1\\core\\tests";
+            string fileTitle = "timeDisplayClearFunctions";
+            string scriptName = fileTitle;
+            // string timerElapsedFunctionName = "timerElapsed";
+            string versionFunctionName = "getVersion";
+            string versionValue = "2.4.9181";
+            string inFilePath = System.IO.Path.Combine( inFolderPath, fileTitle + cc.isr.VI.Tsp.Script.ScriptInfo.ScriptFileExtension );
+
+            TspSessionDebugScriptTests.AssertScriptShouldImportAndRun( this.Device.Session, scriptName, inFilePath, versionFunctionName, versionValue, true );
+
             Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
         }
@@ -165,23 +170,47 @@ public class TspSessionDebugScriptTests : Device.Tsp.Tests.Base.ScriptTests
 
         try
         {
-            string scriptName = "isr_certify";
-            string folderPath = "C:\\my\\private\\ttm\\debug\\9181";
-            string fileTitle = "isr_certify.9181";
-            string scriptFunctionName = "isr.version";
-            string functionExpectedValue = "2.4.9181";
 
             Asserts.AssertDeviceShouldOpenWithoutDeviceErrors( this.Device, this.ResourceSettings );
 
+            string outFolderPath = cc.isr.Std.PathExtensions.PathMethods.GetTempPath( ["~cc.isr", "vi.tsp.k2600",
+                nameof( TspSessionDebugScriptTests ), nameof( TspSessionDebugScriptTests.ScriptShouldImportAndRun )] );
+
+            string inFolderPath = "C:\\my\\lib\\tsp\\tsp.1\\core\\tests";
+            string fileTitle = "timeDisplayClearFunctions";
+            string scriptName = fileTitle;
+            // string timerElapsedFunctionName = "timerElapsed";
+            string versionFunctionName = "getVersion";
+            string versionValue = "2.4.9181";
+            string inFilePath = System.IO.Path.Combine( inFolderPath, fileTitle + cc.isr.VI.Tsp.Script.ScriptInfo.ScriptFileExtension );
+
+            TspSessionDebugScriptTests.AssertScriptShouldImportAndRun( this.Device.Session, scriptName, inFilePath, versionFunctionName, versionValue, false );
+
+            this.Device.Session.ConvertToByteCode( scriptName );
+            Asserts.AssertMessageQueue();
+            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
+
+            this.Device.Session.RunScript( scriptName, versionFunctionName );
+            Asserts.AssertMessageQueue();
+            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
+
             if ( string.Equals( "2600A", this.Device.StatusSubsystemBase.VersionInfoBase.ModelFamily, StringComparison.OrdinalIgnoreCase ) )
-                fileTitle += ".2600A.2";
+                fileTitle += "_2600A";
             else if ( string.Equals( "2600B", this.Device.StatusSubsystemBase.VersionInfoBase.ModelFamily, StringComparison.OrdinalIgnoreCase ) )
-                fileTitle += ".2600B.3";
+                fileTitle += "_2600B";
             else
                 Assert.Fail( $"The model family {this.Device.StatusSubsystemBase.VersionInfoBase.ModelFamily} is not supported." );
 
-            string filePath = System.IO.Path.Combine( folderPath, fileTitle + cc.isr.VI.Tsp.Script.ScriptInfo.ScriptFileExtension );
-            TspSessionDebugScriptTests.AssertScriptShouldImportAndRun( this.Device.Session, scriptName, filePath, scriptFunctionName, functionExpectedValue );
+            string outFilePath = Path.Combine( outFolderPath, $"{fileTitle}{cc.isr.VI.Tsp.Script.ScriptInfo.ScriptByteCodeFileExtension}" );
+
+            if ( !this.Device.Session.TryExportScript( scriptName, outFilePath, true, out string details ) )
+                Assert.Fail( details );
+
+            Asserts.AssertMessageQueue();
+            cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
+
+            TspSessionDebugScriptTests.AssertScriptShouldImportAndRun( this.Device.Session, scriptName, inFilePath, versionFunctionName, versionValue, true );
+
             Asserts.AssertMessageQueue();
             cc.isr.VI.Device.Tests.Asserts.AssertOnDeviceErrors( this.Device );
         }
