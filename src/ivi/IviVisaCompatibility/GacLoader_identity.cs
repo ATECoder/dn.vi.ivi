@@ -2,6 +2,7 @@ using System.Reflection;
 using Ivi.Visa;
 
 namespace Ivi.VisaNet;
+
 public static partial class GacLoader
 {
     /// <summary>   Queries the instrument identity string. </summary>
@@ -22,6 +23,7 @@ public static partial class GacLoader
         if ( verbose ) Console.WriteLine( $"\tIvi.Visa.{nameof( GlobalResourceManager )}.{nameof( GlobalResourceManager.SpecificationVersion )}:{GlobalResourceManager.SpecificationVersion}" );
         using Ivi.Visa.IVisaSession visaSession = Ivi.Visa.GlobalResourceManager.Open( resourceName, Ivi.Visa.AccessModes.ExclusiveLock, 2000 )
             ?? throw new InvalidOperationException( $"\tFailed to open VISA session for resource '{resourceName}'." );
+
         if ( verbose ) Console.WriteLine( $"\tVISA Session open by {visaSession.ResourceManufacturerName} VISA.NET Implementation version {visaSession.ResourceImplementationVersion}" );
         if ( visaSession is Ivi.Visa.IMessageBasedSession messageBasedSession )
         {
@@ -30,6 +32,7 @@ public static partial class GacLoader
             // Request information about an instrument.
             if ( verbose ) Console.WriteLine( "\tReading instrument identification string..." );
             messageBasedSession.FormattedIO.WriteLine( "\t*IDN?" );
+
             return messageBasedSession.FormattedIO.ReadLine();
         }
         else
@@ -68,6 +71,11 @@ public static partial class GacLoader
                 {
                     // Vendor-specific VISA.NET implementation is not available.
                     Console.WriteLine( $"VISA implementation compatible with VISA.NET Shared Components {visaNetSharedComponentsVersion} not found. Please install corresponding vendor-specific VISA implementation first." );
+                }
+                else if ( exception is VisaException )
+                {
+                    // General VISA Exception.
+                    Console.WriteLine( $"VISA Exception: {exception}" );
                 }
                 else if ( exception is EntryPointNotFoundException )
                 {

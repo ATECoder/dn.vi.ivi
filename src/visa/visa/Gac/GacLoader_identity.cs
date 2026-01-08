@@ -71,6 +71,11 @@ public static partial class GacLoader
                     // Vendor-specific VISA.NET implementation is not available.
                     Console.WriteLine( $"VISA implementation compatible with VISA.NET Shared Components {visaNetSharedComponentsVersion} not found. Please install corresponding vendor-specific VISA implementation first." );
                 }
+                else if ( exception is VisaException )
+                {
+                    // General VISA Exception.
+                    Console.WriteLine( $"VISA Exception: {exception}" );
+                }
                 else if ( exception is EntryPointNotFoundException )
                 {
                     // Installed VISA Shared Components are not compatible with VISA.NET Shared Components.
