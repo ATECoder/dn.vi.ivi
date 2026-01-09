@@ -7,7 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 Current IVI Visa Compatibility: 8.0.2.9391
 
 ## [8.0.2.9504] - 2026-01-08
-- Gac Loader
+- GAC Loader
   - Add full report in case a visa exception occurred.
 
 ## [8.0.2.9449] - 2025-11-14

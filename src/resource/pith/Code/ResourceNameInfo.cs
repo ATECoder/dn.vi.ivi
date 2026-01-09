@@ -196,7 +196,7 @@ public class ResourceNameInfoCollection : System.Collections.ObjectModel.KeyedCo
         this.Keys = [];
         this.DefaultFileName = "VisaResources.txt";
         this.BackupFileName = "VisaResourcesBackup.txt";
-        this.DefaultFolderName = Path.Combine( Environment.GetFolderPath( Environment.SpecialFolder.CommonApplicationData ), "cc.isr.visa" );
+        this.DefaultFolderName = Path.Combine( Environment.GetFolderPath( Environment.SpecialFolder.CommonApplicationData ), "isr.cc", "visa" );
     }
 
     /// <summary>
@@ -378,7 +378,6 @@ public class ResourceNameInfoCollection : System.Collections.ObjectModel.KeyedCo
                 }
                 isHeaderRow = false;
             }
-
         }
         catch
         {
