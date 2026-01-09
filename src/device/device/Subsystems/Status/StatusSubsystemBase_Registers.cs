@@ -21,7 +21,7 @@ public partial class StatusSubsystemBase
         this.OperationEventStatus = 0;
         this.QuestionableEventEnableBitmask = 0;
         this.QuestionableEventStatus = 0;
-        this.Session.StandardEventStatus = new Pith.StandardEvents?();
+        _ = (this.Session?.StandardEventStatus = new Pith.StandardEvents?());
     }
 
     /// <summary>
@@ -30,6 +30,12 @@ public partial class StatusSubsystemBase
     /// </summary>
     public virtual void ReadStandardEventRegisters()
     {
+        if ( this.Session is null )
+            throw new InvalidOperationException( "VISA session is null." );
+
+        if ( !this.Session.IsDeviceOpen )
+            throw new InvalidOperationException( "Visa session is not open." );
+
         if ( this.Session.HasStandardEvent )
             _ = this.Session.QueryStandardEventStatus();
         if ( this.Session.HasMeasurementEvent )
@@ -126,10 +132,14 @@ public partial class StatusSubsystemBase
     /// <returns> The mask to use for enabling the events; nothing if unknown. </returns>
     public int? QueryMeasurementEventEnableBitmask()
     {
+        if ( this.Session is null )
+            throw new InvalidOperationException( "VISA session is null." );
+
+        if ( !this.Session.IsDeviceOpen )
+            throw new InvalidOperationException( "Visa session is not open." );
+
         if ( !string.IsNullOrWhiteSpace( this.MeasurementEventEnableQueryCommand ) )
-        {
             this.MeasurementEventEnableBitmask = this.Session.Query( 0, this.MeasurementEventEnableQueryCommand );
-        }
 
         return this.MeasurementEventEnableBitmask;
     }
@@ -151,10 +161,14 @@ public partial class StatusSubsystemBase
     /// <returns> The mask to use for enabling the events; nothing if unknown. </returns>
     public virtual int? WriteMeasurementEventEnableBitmask( int value )
     {
+        if ( this.Session is null )
+            throw new InvalidOperationException( "VISA session is null." );
+
+        if ( !this.Session.IsDeviceOpen )
+            throw new InvalidOperationException( "Visa session is not open." );
+
         if ( !string.IsNullOrWhiteSpace( this.MeasurementEventEnableCommandFormat ) )
-        {
             _ = this.Session.WriteLine( this.MeasurementEventEnableCommandFormat, value );
-        }
 
         this.MeasurementEventEnableBitmask = value;
         return this.MeasurementEventEnableBitmask;
@@ -218,10 +232,14 @@ public partial class StatusSubsystemBase
     /// <returns> The mask to use for enabling the events; nothing if unknown. </returns>
     public int? QueryMeasurementEventPositiveTransitionBitmask()
     {
+        if ( this.Session is null )
+            throw new InvalidOperationException( "VISA session is null." );
+
+        if ( !this.Session.IsDeviceOpen )
+            throw new InvalidOperationException( "Visa session is not open." );
+
         if ( !string.IsNullOrWhiteSpace( this.MeasurementEventPositiveTransitionQueryCommand ) )
-        {
             this.MeasurementEventPositiveTransitionBitmask = this.Session.Query( 0, this.MeasurementEventPositiveTransitionQueryCommand );
-        }
 
         return this.MeasurementEventPositiveTransitionBitmask;
     }
@@ -244,10 +262,14 @@ public partial class StatusSubsystemBase
     /// <returns> The mask to use for enabling the events; nothing if unknown. </returns>
     public virtual int? WriteMeasurementEventPositiveTransitionBitmask( int value )
     {
+        if ( this.Session is null )
+            throw new InvalidOperationException( "VISA session is null." );
+
+        if ( !this.Session.IsDeviceOpen )
+            throw new InvalidOperationException( "Visa session is not open." );
+
         if ( !string.IsNullOrWhiteSpace( this.MeasurementEventPositiveTransitionCommandFormat ) )
-        {
             _ = this.Session.WriteLine( this.MeasurementEventPositiveTransitionCommandFormat, value );
-        }
 
         this.MeasurementEventPositiveTransitionBitmask = value;
         return this.MeasurementEventPositiveTransitionBitmask;
@@ -304,10 +326,14 @@ public partial class StatusSubsystemBase
     /// <returns> The mask to use for enabling the events; nothing if unknown. </returns>
     public int? QueryMeasurementEventNegativeTransitionBitmask()
     {
+        if ( this.Session is null )
+            throw new InvalidOperationException( "Visa session is null." );
+
+        if ( !this.Session.IsDeviceOpen )
+            throw new InvalidOperationException( "Visa session is not open." );
+
         if ( !string.IsNullOrWhiteSpace( this.MeasurementEventNegativeTransitionQueryCommand ) )
-        {
             this.MeasurementEventNegativeTransitionBitmask = this.Session.Query( 0, this.MeasurementEventNegativeTransitionQueryCommand );
-        }
 
         return this.MeasurementEventNegativeTransitionBitmask;
     }
@@ -330,10 +356,14 @@ public partial class StatusSubsystemBase
     /// <returns> The mask to use for enabling the events; nothing if unknown. </returns>
     public virtual int? WriteMeasurementEventNegativeTransitionBitmask( int value )
     {
+        if ( this.Session is null )
+            throw new InvalidOperationException( "Visa session is null." );
+
+        if ( !this.Session.IsDeviceOpen )
+            throw new InvalidOperationException( "Visa session is not open." );
+
         if ( !string.IsNullOrWhiteSpace( this.MeasurementEventNegativeTransitionCommandFormat ) )
-        {
             _ = this.Session.WriteLine( this.MeasurementEventNegativeTransitionCommandFormat, value );
-        }
 
         this.MeasurementEventNegativeTransitionBitmask = value;
         return this.MeasurementEventNegativeTransitionBitmask;
@@ -373,10 +403,14 @@ public partial class StatusSubsystemBase
     /// <returns> System.Nullable{System.Int32}. </returns>
     public virtual int? QueryMeasurementEventCondition()
     {
+        if ( this.Session is null )
+            throw new InvalidOperationException( "Visa session is null." );
+
+        if ( !this.Session.IsDeviceOpen )
+            throw new InvalidOperationException( "Visa session is not open." );
+
         if ( !string.IsNullOrWhiteSpace( this.MeasurementEventConditionQueryCommand ) )
-        {
             this.MeasurementEventCondition = this.Session.Query( 0, this.MeasurementEventConditionQueryCommand );
-        }
 
         return this.MeasurementEventCondition;
     }
@@ -412,10 +446,14 @@ public partial class StatusSubsystemBase
     /// <returns> System.Nullable{System.Int32}. </returns>
     public virtual int? QueryMeasurementEventStatus()
     {
+        if ( this.Session is null )
+            throw new InvalidOperationException( "Visa session is null." );
+
+        if ( !this.Session.IsDeviceOpen )
+            throw new InvalidOperationException( "Visa session is not open." );
+
         if ( !string.IsNullOrWhiteSpace( this.MeasurementStatusQueryCommand ) )
-        {
             this.MeasurementEventStatus = this.Session.Query( 0, this.MeasurementStatusQueryCommand );
-        }
 
         return this.MeasurementEventStatus;
     }
@@ -506,10 +544,14 @@ public partial class StatusSubsystemBase
     /// <returns> The mask to use for enabling the events; nothing if unknown. </returns>
     public int? QueryOperationEventEnableBitmask()
     {
+        if ( this.Session is null )
+            throw new InvalidOperationException( "Visa session is null." );
+
+        if ( !this.Session.IsDeviceOpen )
+            throw new InvalidOperationException( "Visa session is not open." );
+
         if ( !string.IsNullOrWhiteSpace( this.OperationEventEnableQueryCommand ) )
-        {
             this.OperationEventEnableBitmask = this.Session.Query( 0, this.OperationEventEnableQueryCommand );
-        }
 
         return this.OperationEventEnableBitmask;
     }
@@ -531,10 +573,14 @@ public partial class StatusSubsystemBase
     /// <returns> The mask to use for enabling the events; nothing if unknown. </returns>
     public virtual int? WriteOperationEventEnableBitmask( int value )
     {
+        if ( this.Session is null )
+            throw new InvalidOperationException( "Visa session is null." );
+
+        if ( !this.Session.IsDeviceOpen )
+            throw new InvalidOperationException( "Visa session is not open." );
+
         if ( !string.IsNullOrWhiteSpace( this.OperationEventEnableCommandFormat ) )
-        {
             _ = this.Session.WriteLine( this.OperationEventEnableCommandFormat, value );
-        }
 
         this.OperationEventEnableBitmask = value;
         return this.OperationEventEnableBitmask;
@@ -578,6 +624,12 @@ public partial class StatusSubsystemBase
     /// <returns> The mask to use for enabling the events; nothing if unknown. </returns>
     public virtual int? QueryOperationNegativeTransitionEventEnableBitmask()
     {
+        if ( this.Session is null )
+            throw new InvalidOperationException( "Visa session is null." );
+
+        if ( !this.Session.IsDeviceOpen )
+            throw new InvalidOperationException( "Visa session is not open." );
+
         this.OperationNegativeTransitionEventEnableBitmask = this.Session.Query( this.OperationNegativeTransitionEventEnableBitmask.GetValueOrDefault( 0 ), ":STAT:OPER:NTR?" );
         return this.OperationNegativeTransitionEventEnableBitmask;
     }
@@ -604,6 +656,12 @@ public partial class StatusSubsystemBase
     /// <returns> The mask to use for enabling the events; nothing if unknown. </returns>
     public virtual int? WriteOperationNegativeTransitionEventEnableBitmask( int value )
     {
+        if ( this.Session is null )
+            throw new InvalidOperationException( "Visa session is null." );
+
+        if ( !this.Session.IsDeviceOpen )
+            throw new InvalidOperationException( "Visa session is not open." );
+
         _ = this.Session.WriteLine( ":STAT:OPER:NTR {0:D}", value );
         this.OperationNegativeTransitionEventEnableBitmask = value;
         return this.OperationNegativeTransitionEventEnableBitmask;
@@ -649,6 +707,12 @@ public partial class StatusSubsystemBase
     /// <returns> The mask to use for enabling the events; nothing if unknown. </returns>
     public virtual int? QueryOperationPositiveTransitionEventEnableBitmask()
     {
+        if ( this.Session is null )
+            throw new InvalidOperationException( "Visa session is null." );
+
+        if ( !this.Session.IsDeviceOpen )
+            throw new InvalidOperationException( "Visa session is not open." );
+
         this.OperationPositiveTransitionEventEnableBitmask = this.Session.Query( this.OperationPositiveTransitionEventEnableBitmask.GetValueOrDefault( 0 ), ":STAT:OPER:PTR?" );
         return this.OperationPositiveTransitionEventEnableBitmask;
     }
@@ -675,6 +739,12 @@ public partial class StatusSubsystemBase
     /// <returns> The mask to use for enabling the events; nothing if unknown. </returns>
     public virtual int? WriteOperationPositiveTransitionEventEnableBitmask( int value )
     {
+        if ( this.Session is null )
+            throw new InvalidOperationException( "Visa session is null." );
+
+        if ( !this.Session.IsDeviceOpen )
+            throw new InvalidOperationException( "Visa session is not open." );
+
         _ = this.Session.WriteLine( ":STAT:OPER:PTR {0:D}", value );
         this.OperationPositiveTransitionEventEnableBitmask = value;
         return this.OperationPositiveTransitionEventEnableBitmask;
@@ -725,10 +795,14 @@ public partial class StatusSubsystemBase
     /// <returns> The operation event condition. </returns>
     public virtual int? QueryOperationEventCondition()
     {
+        if ( this.Session is null )
+            throw new InvalidOperationException( "Visa session is null." );
+
+        if ( !this.Session.IsDeviceOpen )
+            throw new InvalidOperationException( "Visa session is not open." );
+
         if ( !string.IsNullOrWhiteSpace( this.OperationEventConditionQueryCommand ) )
-        {
             this.OperationEventCondition = this.Session.Query( this.OperationEventCondition.GetValueOrDefault( 0 ), this.OperationEventConditionQueryCommand );
-        }
 
         return this.OperationEventCondition;
     }
@@ -776,10 +850,14 @@ public partial class StatusSubsystemBase
     /// <returns> <c>null</c> if value is not known;. </returns>
     public virtual int? QueryOperationEventStatus()
     {
+        if ( this.Session is null )
+            throw new InvalidOperationException( "Visa session is null." );
+
+        if ( !this.Session.IsDeviceOpen )
+            throw new InvalidOperationException( "Visa session is not open." );
+
         if ( !string.IsNullOrWhiteSpace( this.OperationEventStatusQueryCommand ) )
-        {
             this.OperationEventStatus = this.Session.Query( 0, this.OperationEventStatusQueryCommand );
-        }
 
         return this.OperationEventStatus;
     }
@@ -848,10 +926,14 @@ public partial class StatusSubsystemBase
     /// <returns> The event map or nothing if not known. </returns>
     public virtual string QueryOperationEventMap( int bitNumber )
     {
+        if ( this.Session is null )
+            throw new InvalidOperationException( "Visa session is null." );
+
+        if ( !this.Session.IsDeviceOpen )
+            throw new InvalidOperationException( "Visa session is not open." );
+
         if ( !string.IsNullOrWhiteSpace( this.OperationEventMapQueryCommand ) )
-        {
             this.OperationEventMap[bitNumber] = this.Session.QueryTrimEnd( string.Format( this.OperationEventMapQueryCommand, bitNumber ) );
-        }
 
         return this.OperationEventMap[bitNumber];
     }
@@ -875,10 +957,14 @@ public partial class StatusSubsystemBase
     /// <returns> The event map or nothing if not known. </returns>
     public virtual string WriteOperationEventMap( int bitNumber, int setEventNumber, int clearEventNumber )
     {
+        if ( this.Session is null )
+            throw new InvalidOperationException( "Visa session is null." );
+
+        if ( !this.Session.IsDeviceOpen )
+            throw new InvalidOperationException( "Visa session is not open." );
+
         if ( !string.IsNullOrWhiteSpace( this.OperationEventMapCommandFormat ) )
-        {
             _ = this.Session.WriteLine( this.OperationEventMapCommandFormat, bitNumber, setEventNumber, clearEventNumber );
-        }
 
         this.OperationEventMap[bitNumber] = $"{setEventNumber},{clearEventNumber}";
         return this.OperationEventMap[bitNumber];
@@ -943,6 +1029,12 @@ public partial class StatusSubsystemBase
     /// <returns> <c>null</c> if value is not known;. </returns>
     public virtual int? QueryQuestionableEventEnableBitmask()
     {
+        if ( this.Session is null )
+            throw new InvalidOperationException( "Visa session is null." );
+
+        if ( !this.Session.IsDeviceOpen )
+            throw new InvalidOperationException( "Visa session is not open." );
+
         this.QuestionableEventEnableBitmask = this.Session.Query( this.QuestionableEventEnableBitmask.GetValueOrDefault( 0 ), ":STAT:QUES:ENAB?" );
         return this.QuestionableEventEnableBitmask;
     }
@@ -964,6 +1056,12 @@ public partial class StatusSubsystemBase
     /// <returns> The bit mask or nothing if not known. </returns>
     public virtual int? WriteQuestionableEventEnableBitmask( int value )
     {
+        if ( this.Session is null )
+            throw new InvalidOperationException( "Visa session is null." );
+
+        if ( !this.Session.IsDeviceOpen )
+            throw new InvalidOperationException( "Visa session is not open." );
+
         _ = this.Session.WriteLine( ":STAT:QUES:ENAB {0:D}", value );
         this.QuestionableEventEnableBitmask = value;
         return this.QuestionableEventEnableBitmask;
@@ -1009,6 +1107,12 @@ public partial class StatusSubsystemBase
     /// <returns> The questionable event condition. </returns>
     public virtual int? QueryQuestionableEventCondition()
     {
+        if ( this.Session is null )
+            throw new InvalidOperationException( "Visa session is null." );
+
+        if ( !this.Session.IsDeviceOpen )
+            throw new InvalidOperationException( "Visa session is not open." );
+
         this.QuestionableEventCondition = this.Session.Query( this.QuestionableEventCondition.GetValueOrDefault( 0 ), ":STAT:QUES:COND?" );
         return this.QuestionableEventCondition;
     }
@@ -1047,10 +1151,14 @@ public partial class StatusSubsystemBase
     /// <returns> System.Nullable{System.Int32}. </returns>
     public virtual int? QueryQuestionableEventStatus()
     {
+        if ( this.Session is null )
+            throw new InvalidOperationException( "Visa session is null." );
+
+        if ( !this.Session.IsDeviceOpen )
+            throw new InvalidOperationException( "Visa session is not open." );
+
         if ( !string.IsNullOrWhiteSpace( this.QuestionableStatusQueryCommand ) )
-        {
             this.QuestionableEventStatus = this.Session.Query( 0, this.QuestionableStatusQueryCommand );
-        }
 
         return this.QuestionableEventStatus;
     }
@@ -1120,10 +1228,14 @@ public partial class StatusSubsystemBase
     /// <returns> The event map or nothing if not known. </returns>
     public virtual string QueryQuestionableEventMap( int bitNumber )
     {
+        if ( this.Session is null )
+            throw new InvalidOperationException( "Visa session is null." );
+
+        if ( !this.Session.IsDeviceOpen )
+            throw new InvalidOperationException( "Visa session is not open." );
+
         if ( !string.IsNullOrWhiteSpace( this.QuestionableEventMapQueryCommand ) )
-        {
             this.QuestionableEventMap[bitNumber] = this.Session.QueryTrimEnd( string.Format( this.QuestionableEventMapQueryCommand, bitNumber ) );
-        }
 
         return this.QuestionableEventMap[bitNumber];
     }
@@ -1147,10 +1259,14 @@ public partial class StatusSubsystemBase
     /// <returns> The event map or nothing if not known. </returns>
     public virtual string WriteQuestionableEventMap( int bitNumber, int setEventNumber, int clearEventNumber )
     {
+        if ( this.Session is null )
+            throw new InvalidOperationException( "Visa session is null." );
+
+        if ( !this.Session.IsDeviceOpen )
+            throw new InvalidOperationException( "Visa session is not open." );
+
         if ( !string.IsNullOrWhiteSpace( this.QuestionableEventMapCommandFormat ) )
-        {
             _ = this.Session.WriteLine( this.QuestionableEventMapCommandFormat, bitNumber, setEventNumber, clearEventNumber );
-        }
 
         this.QuestionableEventMap[bitNumber] = $"{setEventNumber},{clearEventNumber}";
         return this.QuestionableEventMap[bitNumber];
@@ -1170,6 +1286,12 @@ public partial class StatusSubsystemBase
     /// <param name="usingNegativeTransitions"> True to using negative transitions. </param>
     public void ToggleEndOfScanService( bool isOn, bool usingNegativeTransitions )
     {
+        if ( this.Session is null )
+            throw new InvalidOperationException( "Visa session is null." );
+
+        if ( !this.Session.IsDeviceOpen )
+            throw new InvalidOperationException( "Visa session is not open." );
+
         this.ToggleEndOfScanService( isOn, usingNegativeTransitions, this.Session.OperationServiceRequestEnableBitmask );
     }
 
@@ -1217,6 +1339,12 @@ public partial class StatusSubsystemBase
     /// flags</see> </param>
     public void ToggleServiceRequest( bool turnOn, Pith.ServiceRequests serviceRequestMask )
     {
+        if ( this.Session is null )
+            throw new InvalidOperationException( "Visa session is null." );
+
+        if ( !this.Session.IsDeviceOpen )
+            throw new InvalidOperationException( "Visa session is not open." );
+
         this.Session.ApplyStatusByteEnableBitmask( ( int ) (turnOn ? serviceRequestMask : Pith.ServiceRequests.None) );
     }
 

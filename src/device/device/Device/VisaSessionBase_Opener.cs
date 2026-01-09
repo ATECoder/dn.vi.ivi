@@ -418,13 +418,16 @@ public partial class VisaSessionBase : cc.isr.Std.Notifiers.OpenResourceBase
                 activity = $"{this.CandidateResourceModel} removing service request handler";
                 this.RemoveServiceRequestEventHandler();
 
-                activity = $"{this.CandidateResourceModel} disabling service request handler";
-                this.Session?.DisableServiceRequestEventHandler();
+                if ( this.IsSessionOwner )
+                {
+                    activity = $"{this.CandidateResourceModel} disabling service request handler";
+                    this.Session?.DisableServiceRequestEventHandler();
 
-                activity = $"{this.CandidateResourceModel} closing session";
-                this.Session?.CloseSession();
+                    activity = $"{this.CandidateResourceModel} closing session";
+                    this.Session?.CloseSession();
+                }
 
-                activity = $"{this.CandidateResourceModel} handling closed actions";
+                this.Assign_Session( null, false );
                 this.OnClosed( EventArgs.Empty );
             }
         }

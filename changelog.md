@@ -9,6 +9,12 @@ Current IVI Visa Compatibility: 8.0.1.9391
 ## [8.1.9505] - 2026-01-09
 - Resource Name Info
   - Use ProgramData\cc.isr\visa as the default folder for the visa resource names.
+- Status SubsystemBase
+  - Implement IDisposable to close the session.
+- Simplify null check.
+- Remove empty top lines.
+- Check visa session open status on queries.
+- Remove DebuggerNonUserCode() attributes from the displose methods to permit debugging.
 
 ## [8.1.9503] - 2026-01-07
 Update change log.

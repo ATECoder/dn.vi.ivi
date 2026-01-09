@@ -1123,6 +1123,9 @@ public abstract partial class HarmonicsMeasureSubsystemBase : SubsystemBase
     /// <returns>   A tuple: (int SentValue, WriteInfo{int} WriteInfo) </returns>
     public (int SentValue, WriteInfo<int> WriteInfo) WriteImpedanceRangeMode( int value, bool checkStatus = false )
     {
+        if ( this.StatusSubsystem.Session is null )
+            throw new InvalidOperationException( "Status subsystem session is null." );
+
         if ( checkStatus )
         {
             ExecuteInfo executeInfo = this.Session.WriteStatusReady( TimeSpan.FromMilliseconds( 100 ), string.Format( this.ImpedanceRangeModeCommandFormat, value ) );
@@ -1826,6 +1829,12 @@ public abstract partial class HarmonicsMeasureSubsystemBase : SubsystemBase
     /// <returns>   A tuple: (double sentValue, <see cref="WriteInfo{T}"/> writeInfo) </returns>
     public virtual (double sentValue, WriteInfo<double> writeInfo) WriteVoltmeterRange( double value, bool checkStatus = false )
     {
+        if ( this.StatusSubsystem.Session is null )
+            throw new InvalidOperationException( "Status subsystem session is null." );
+
+        if ( !this.StatusSubsystem.Session.IsDeviceOpen )
+            throw new InvalidOperationException( "Status subsystem session is not open." );
+
         (double sentValue, WriteInfo<double> writeInfo) reply = this.WriteScaledVoltmeterRange( value, checkStatus );
         (_, int statusByte1, _) = this.Session.AwaitStatus( this.VoltmeterRangeRefractoryTimeSpan );
         (bool hasError, string details, int statusByte) = this.StatusSubsystem.Session.IsStatusError( statusByte1 );

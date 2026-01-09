@@ -76,7 +76,6 @@ public partial class Meter : CommunityToolkit.Mvvm.ComponentModel.ObservableObje
     /// <remarks> David, 2020-10-12. </remarks>
     /// <param name="disposing"> true to release both managed and unmanaged resources; false to
     ///                          release only unmanaged resources. </param>
-    [DebuggerNonUserCode()]
     protected virtual void Dispose( bool disposing )
     {
         if ( this.IsDisposed )

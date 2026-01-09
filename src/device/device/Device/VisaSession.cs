@@ -46,7 +46,6 @@ public class VisaSession : VisaSessionBase
     /// </summary>
     /// <param name="disposing"> true to release both managed and unmanaged resources; false to
     /// release only unmanaged resources. </param>
-    [DebuggerNonUserCode()]
     protected override void Dispose( bool disposing )
     {
         if ( this.IsDisposed ) return;

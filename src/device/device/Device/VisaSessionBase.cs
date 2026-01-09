@@ -26,7 +26,11 @@ public abstract partial class VisaSessionBase : IDisposable
         // initialize the collection of presettable subsystems with the status subsystem.
         this.Subsystems = [statusSubsystem];
         this.StatusSubsystemBase = statusSubsystem;
-        this.NewThis( StatusSubsystemBase.Validated( statusSubsystem ).Session, false );
+        SessionBase? session = StatusSubsystemBase.Validated( statusSubsystem ).Session;
+        if ( session is null )
+            this.NewThis( SessionFactory.Instance.Factory.Session(), true );
+        else
+            this.NewThis( session, false );
     }
 
     /// <summary> Initializes a new instance of the <see cref="VisaSessionBase" /> class. </summary>
@@ -105,7 +109,6 @@ public abstract partial class VisaSessionBase : IDisposable
     /// </summary>
     /// <param name="disposing"> true to release both managed and unmanaged resources; false to
     /// release only unmanaged resources. </param>
-    [DebuggerNonUserCode()]
     protected virtual void Dispose( bool disposing )
     {
         if ( this.IsDisposed ) return;
@@ -128,20 +131,7 @@ public abstract partial class VisaSessionBase : IDisposable
                 this.RemoveClosedEventHandlers();
                 this.RemoveInitializingEventHandlers();
                 this.RemoveInitializedEventHandlers();
-                if ( this.IsSessionOwner )
-                {
-                    try
-                    {
-                        this.CloseSession();
-                        this.Session = null;
-                        // this.Assign_Session( null, true );
-                    }
-                    catch ( ObjectDisposedException ex )
-                    {
-                        Debug.Assert( !Debugger.IsAttached, ex.BuildMessage() );
-                    }
-                }
-
+                this.CloseSession();
                 this.StatusSubsystemBase = null;
                 this.Subsystems.Clear();
             }
@@ -431,7 +421,7 @@ public abstract partial class VisaSessionBase : IDisposable
 
     /// <summary> true if this object is session owner. </summary>
     /// <value> The is session owner. </value>
-    private bool IsSessionOwner { get; set; }
+    protected bool IsSessionOwner { get; set; }
 
     /// <summary> Gets the session. </summary>
     /// <value> The session. </value>
@@ -443,7 +433,7 @@ public abstract partial class VisaSessionBase : IDisposable
     /// <param name="session">        The value. </param>
     /// <param name="isSessionOwner"> true if this object is session owner. </param>
     [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
-    private void Assign_Session( SessionBase session, bool isSessionOwner )
+    protected void Assign_Session( SessionBase? session, bool isSessionOwner )
     {
         if ( this.Session is not null )
         {
@@ -459,7 +449,7 @@ public abstract partial class VisaSessionBase : IDisposable
             }
         }
 
-        this.IsSessionOwner = isSessionOwner;
+        this.IsSessionOwner = session is not null && isSessionOwner;
         this.Session = session;
         if ( this.Session is not null )
         {

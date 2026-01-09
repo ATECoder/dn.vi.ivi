@@ -33,6 +33,12 @@ public abstract class StatusSubsystemBase( Pith.SessionBase session ) : VI.Statu
     /// <remarks>   2024-09-17. </remarks>
     public override void InitKnownState()
     {
+        if ( this.Session is null )
+            throw new InvalidOperationException( "Status subsystem base Visa session is null." );
+
+        if ( !this.Session.IsDeviceOpen )
+            throw new InvalidOperationException( "Status subsystem base Visa session is not open." );
+
         base.InitKnownState();
         this.SerialNumber = new long?();
         this.SerialNumberReading = string.Empty;
@@ -184,6 +190,12 @@ public abstract class StatusSubsystemBase( Pith.SessionBase session ) : VI.Statu
     /// <returns>   A <see cref="string" />. </returns>
     public override string QueryIdentity()
     {
+        if ( this.Session is null )
+            throw new InvalidOperationException( "Status subsystem base Visa session is null." );
+
+        if ( !this.Session.IsDeviceOpen )
+            throw new InvalidOperationException( "Status subsystem base Visa session is not open." );
+
         if ( !string.IsNullOrWhiteSpace( this.IdentificationQueryCommand ) )
         {
             _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"Requesting identity;. " );

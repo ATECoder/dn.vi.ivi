@@ -1,5 +1,7 @@
 using System.ComponentModel;
+using System.Diagnostics;
 using cc.isr.Std.EscapeSequencesExtensions;
+using cc.isr.VI.ExceptionExtensions;
 using cc.isr.VI.Pith;
 using cc.isr.VI.Subsystem;
 
@@ -12,7 +14,7 @@ namespace cc.isr.VI;
 /// David, 2012-09-26, 1.0.4652. </para>
 /// </remarks>
 [CLSCompliant( false )]
-public abstract partial class StatusSubsystemBase : CommunityToolkit.Mvvm.ComponentModel.ObservableObject, IPresettable
+public abstract partial class StatusSubsystemBase : CommunityToolkit.Mvvm.ComponentModel.ObservableObject, IPresettable, IDisposable
 {
     #region " construction and cleanup "
 
@@ -31,6 +33,7 @@ public abstract partial class StatusSubsystemBase : CommunityToolkit.Mvvm.Compon
         if ( string.IsNullOrWhiteSpace( session.ResourcesFilter ) )
             session.ResourcesFilter = SessionFactory.Instance.Factory.ResourcesProvider().ResourceFinder!.BuildMinimalResourcesFilter();
 
+        this.IsSessionOwner = false;
         this.Session = session;
         this.Session.PropertyChanged += this.SessionPropertyChanged;
         this.Session.DeviceErrorOccurred += this.HandleDeviceErrorOccurred;
@@ -55,6 +58,68 @@ public abstract partial class StatusSubsystemBase : CommunityToolkit.Mvvm.Compon
     public static VI.StatusSubsystemBase Validated( VI.StatusSubsystemBase statusSubsystemBase )
     {
         return statusSubsystemBase is null ? throw new ArgumentNullException( nameof( statusSubsystemBase ) ) : statusSubsystemBase;
+    }
+
+    #endregion
+
+    #region " i disposable support "
+
+    /// <summary>
+    /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged
+    /// resources.
+    /// </summary>
+    /// <remarks>
+    /// Do not make this method Overridable (virtual) because a derived class should not be able to
+    /// override this method.
+    /// </remarks>
+    public void Dispose()
+    {
+        this.Dispose( true );
+        // Take this object off the finalization(Queue) and prevent finalization code
+        // from executing a second time.
+        GC.SuppressFinalize( this );
+    }
+
+    /// <summary> Gets the disposed status. </summary>
+    /// <exception cref="ArgumentNullException"> Thrown when one or more required arguments are null. </exception>
+    /// <value> The is disposed. </value>
+    public bool IsDisposed { get; private set; }
+
+    /// <summary>
+    /// Releases the unmanaged resources used by the object and optionally releases the managed resources.
+    /// </summary>
+    /// <remarks> David, 2020-10-12. </remarks>
+    /// <param name="disposing"> true to release both managed and unmanaged resources; false to
+    ///                          release only unmanaged resources. </param>
+    protected virtual void Dispose( bool disposing )
+    {
+        if ( this.IsDisposed )
+            return;
+        try
+        {
+            if ( disposing )
+            {
+                this.CloseSession();
+            }
+        }
+        catch ( Exception ex )
+        {
+            Debug.Assert( !Debugger.IsAttached, $"Exception disposing {nameof( StatusSubsystemBase )}", ex.ToString() );
+        }
+        finally
+        {
+            this.IsDisposed = true;
+        }
+    }
+
+    /// <summary> Finalizes this object. </summary>
+    /// <remarks>
+    /// Overrides should Dispose(disposing As Boolean) has code to free unmanaged resources.
+    /// </remarks>
+    ~StatusSubsystemBase()
+    {
+        // Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
+        this.Dispose( false );
     }
 
     #endregion
@@ -97,6 +162,9 @@ public abstract partial class StatusSubsystemBase : CommunityToolkit.Mvvm.Compon
     /// </remarks>
     public virtual void OnDeviceOpen()
     {
+        if ( this.Session is null || !this.Session.IsSessionOpen )
+            throw new InvalidOperationException( "Session is not open." );
+
         // clear the device active state
         this.Session.ClearActiveState();
 
@@ -250,6 +318,9 @@ public abstract partial class StatusSubsystemBase : CommunityToolkit.Mvvm.Compon
     /// <remarks> Clears the queues and sets all registers to zero. </remarks>
     public void DefineKnownResetState()
     {
+        if ( this.Session is null || !this.Session.IsSessionOpen )
+            throw new InvalidOperationException( "Session is not open." );
+
         this.Identity = string.Empty;
 
         this.Session.SetLastAction( "resetting registered known state" );
@@ -287,7 +358,7 @@ public abstract partial class StatusSubsystemBase : CommunityToolkit.Mvvm.Compon
     /// </remarks>
     public void PresetKnownState()
     {
-        if ( this.Session.IsDeviceOpen && !string.IsNullOrWhiteSpace( this.PresetCommand ) )
+        if ( this.Session is not null && this.Session.IsDeviceOpen && !string.IsNullOrWhiteSpace( this.PresetCommand ) )
         {
             this.PresetRegistersKnownState();
             this.Session.OperationCompleted = new bool?();
@@ -310,10 +381,57 @@ public abstract partial class StatusSubsystemBase : CommunityToolkit.Mvvm.Compon
 
     #region " session "
 
+    /// <summary> true if this object is session owner. </summary>
+    /// <value> The is session owner. </value>
+    public bool IsSessionOwner { get; set; }
+
     /// <summary> Gets the session. </summary>
     /// <exception cref="ArgumentNullException"> Thrown when one or more required arguments are null. </exception>
     /// <presentValue> The session. </presentValue>
-    public Pith.SessionBase Session { get; private set; }
+    public Pith.SessionBase? Session { get; private set; }
+
+    /// <summary> Closes the session. </summary>
+    /// <exception cref="InvalidOperationException"> Thrown when operation failed to execute. </exception>
+    public virtual void CloseSession()
+    {
+        string activity = string.Empty;
+        try
+        {
+            // check if already closed.
+            if ( this.IsDisposed || !this.IsDeviceOpen )
+                return;
+
+            this.Session?.PropertyChanged -= this.SessionPropertyChanged;
+            this.Session?.DeviceErrorOccurred -= this.HandleDeviceErrorOccurred;
+
+            if ( this.IsSessionOwner )
+            {
+                try
+                {
+                    activity = $"{this.Session?.ResourceNameCaption} disabling service request handler";
+                    this.Session?.DisableServiceRequestEventHandler();
+
+                    activity = $"{this.Session?.ResourceNameCaption} closing session";
+                    this.Session?.CloseSession();
+                }
+                catch ( ObjectDisposedException ex )
+                {
+                    Debug.Assert( !Debugger.IsAttached, ex.BuildMessage() );
+                }
+            }
+            this.Session = null;
+        }
+        catch ( NativeException ex )
+        {
+            _ = ex.AddExceptionData();
+            throw new InvalidOperationException( $"Failed {activity} while closing the VISA session.", ex );
+        }
+        catch ( Exception ex )
+        {
+            _ = ex.AddExceptionData();
+            throw new InvalidOperationException( $"Exception occurred {activity} while closing the session.", ex );
+        }
+    }
 
     /// <summary> Handles the Session property changed event. </summary>
     /// <param name="sender"> Source of the event. </param>
@@ -554,6 +672,9 @@ public abstract partial class StatusSubsystemBase : CommunityToolkit.Mvvm.Compon
     /// <remarks> This is required for systems which require asynchronous communication. </remarks>
     public void WriteIdentificationQueryCommand()
     {
+        if ( this.Session is null || !this.Session.IsSessionOpen )
+            throw new InvalidOperationException( "Session is not open." );
+
         _ = this.Session.WriteLine( this.IdentificationQueryCommand );
     }
 
@@ -631,6 +752,9 @@ public abstract partial class StatusSubsystemBase : CommunityToolkit.Mvvm.Compon
     /// <exception cref="VI.Pith.NativeException"> Thrown when a Visa error condition occurs. </exception>
     public string? QuerySerialNumber()
     {
+        if ( this.Session is null || !this.Session.IsSessionOpen )
+            throw new InvalidOperationException( "Session is not open." );
+
         if ( !string.IsNullOrWhiteSpace( this.SerialNumberQueryCommand ) )
         {
             this.Session.LastNodeNumber = default;
@@ -776,6 +900,9 @@ public abstract partial class StatusSubsystemBase : CommunityToolkit.Mvvm.Compon
     /// <returns> The Language or Empty if not required or unknown. </returns>
     public virtual string? QueryLanguage()
     {
+        if ( this.Session is null || !this.Session.IsSessionOpen )
+            throw new InvalidOperationException( "Session is not open." );
+
         this.Language = string.IsNullOrWhiteSpace( this.LanguageQueryCommand )
             ? string.Empty
             : this.Session.QueryTrimEnd( this.LanguageQueryCommand );
@@ -795,6 +922,9 @@ public abstract partial class StatusSubsystemBase : CommunityToolkit.Mvvm.Compon
     /// <returns> The Language or Empty if not required or unknown. </returns>
     public string? WriteLanguage( string? value )
     {
+        if ( this.Session is null || !this.Session.IsSessionOpen )
+            throw new InvalidOperationException( "Session is not open." );
+
         this.Language = string.IsNullOrWhiteSpace( this.LanguageCommandFormat )
             ? value
             : value is null
@@ -837,6 +967,9 @@ public abstract partial class StatusSubsystemBase : CommunityToolkit.Mvvm.Compon
     /// <returns> System.Nullable{System.Double}. </returns>
     public double? QueryLineFrequency()
     {
+        if ( this.Session is null || !this.Session.IsSessionOpen )
+            throw new InvalidOperationException( "Session is not open." );
+
         if ( !this.LineFrequency.HasValue )
         {
             this.LineFrequency = string.IsNullOrWhiteSpace( this.LineFrequencyQueryCommand )

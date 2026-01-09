@@ -1,4 +1,3 @@
-
 namespace cc.isr.VI.Tsp.K2600.Ttm;
 
 public partial class MeterMain : DeviceUnderTestElementBase, IEquatable<MeterMain>

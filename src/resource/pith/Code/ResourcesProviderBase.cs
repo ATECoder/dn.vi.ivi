@@ -189,7 +189,6 @@ public abstract class ResourcesProviderBase : IDisposable
     /// </summary>
     /// <param name="disposing"> true to release both managed and unmanaged resources; false to
     /// release only unmanaged resources. </param>
-    [DebuggerNonUserCode()]
     protected virtual void Dispose( bool disposing )
     {
         if ( this.IsDisposed ) return;

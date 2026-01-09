@@ -1,4 +1,3 @@
-
 namespace cc.isr.VI.Tsp.K2600.Ttm.Legacy;
 
 /// <summary> Defines thermal resistance configuration element. </summary>

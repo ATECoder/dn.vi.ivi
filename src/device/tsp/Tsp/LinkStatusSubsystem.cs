@@ -58,6 +58,9 @@ public class LinkStatusSubsystem( Pith.SessionBase session ) : Tsp.StatusSubsyst
     /// <returns> The error count. </returns>
     public int QueryErrorQueueCount( NodeEntityBase node )
     {
+        if ( this.Session is null || !this.Session.IsSessionOpen )
+            throw new InvalidOperationException( "Session is not open." );
+
         int? count;
         if ( node is null ) throw new ArgumentNullException( nameof( node ) );
         this.ErrorQueueCountQueryCommand = node.IsController
@@ -86,10 +89,11 @@ public class LinkStatusSubsystem( Pith.SessionBase session ) : Tsp.StatusSubsyst
     /// <param name="nodeNumber"> The node number. </param>
     private void ClearErrorQueue( int nodeNumber )
     {
+        if ( this.Session is null || !this.Session.IsSessionOpen )
+            throw new InvalidOperationException( "Session is not open." );
+
         if ( !this.NodeExists( nodeNumber ) )
-        {
             _ = this.Session.WriteLine( "node[{0}].errorqueue.clear() waitcomplete({0})", nodeNumber );
-        }
     }
 
     /// <summary> Gets or sets the cached error queue count. </summary>
@@ -103,6 +107,9 @@ public class LinkStatusSubsystem( Pith.SessionBase session ) : Tsp.StatusSubsyst
     /// <summary> Clears the error queue. </summary>
     public void ClearErrorQueue()
     {
+        if ( this.Session is null || !this.Session.IsSessionOpen )
+            throw new InvalidOperationException( "Session is not open." );
+
         if ( this.NodeEntities is null )
         {
             this.ClearErrorCache();
@@ -135,6 +142,9 @@ public class LinkStatusSubsystem( Pith.SessionBase session ) : Tsp.StatusSubsyst
     {
         if ( node is null ) throw new ArgumentNullException( nameof( node ) );
 
+        if ( this.Session is null || !this.Session.IsSessionOpen )
+            throw new InvalidOperationException( "Session is not open." );
+
         cc.isr.VI.Syntax.Tsp.TspDeviceError err = new( this.Session.NoErrorCompoundMessage );
         this.Session.LastNodeNumber = node.Number;
         this.Session.SetLastAction( "querying queued device errors" );
@@ -159,6 +169,10 @@ public class LinkStatusSubsystem( Pith.SessionBase session ) : Tsp.StatusSubsyst
     private void QueryDeviceErrors( NodeEntityBase node, ServiceRequests statusByte )
     {
         if ( node is null ) throw new ArgumentNullException( nameof( node ) );
+
+        if ( this.Session is null || !this.Session.IsSessionOpen )
+            throw new InvalidOperationException( "Session is not open." );
+
         cc.isr.VI.Syntax.Tsp.TspDeviceError deviceError;
         do
         {
@@ -184,6 +198,9 @@ public class LinkStatusSubsystem( Pith.SessionBase session ) : Tsp.StatusSubsyst
     /// <returns>   <c>true</c> if device has errors, <c>false</c> otherwise. </returns>
     protected string QueryDeviceErrorsThis( ServiceRequests statusByte, string indent = "\t" )
     {
+        if ( this.Session is null || !this.Session.IsSessionOpen )
+            throw new InvalidOperationException( "Session is not open." );
+
         this.ClearErrorCache();
         StringBuilder builder = new();
         string value;
@@ -240,6 +257,9 @@ public class LinkStatusSubsystem( Pith.SessionBase session ) : Tsp.StatusSubsyst
     /// <returns>   A <see cref="string" />. </returns>
     public override string QueryIdentity()
     {
+        if ( this.Session is null || !this.Session.IsSessionOpen )
+            throw new InvalidOperationException( "Session is not open." );
+
         if ( !string.IsNullOrWhiteSpace( this.IdentificationQueryCommand ) )
         {
             _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"Requesting identity;. " );

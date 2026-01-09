@@ -61,6 +61,11 @@ public sealed partial class Asserts
     /// <param name="subsystem"> The subsystem. </param>
     public static void AssertOrphanMessagesShouldBeEmpty( StatusSubsystemBase subsystem )
     {
+        if ( subsystem.Session is null )
+            throw new InvalidOperationException( "Status subsystem base Visa session is null." );
+
+        if ( !subsystem.Session.IsDeviceOpen )
+            throw new InvalidOperationException( "Status subsystem base Visa session is not open." );
 
         Assert.IsNotNull( subsystem, $"{nameof( subsystem )} should not be null." );
         string orphanMessages = subsystem.Session.DiscardedData;
@@ -72,6 +77,12 @@ public sealed partial class Asserts
     /// <param name="subsystem">    The subsystem. </param>
     public static void AssertKeepAliveMessageCouldBeSent( StatusSubsystemBase subsystem )
     {
+        if ( subsystem.Session is null )
+            throw new InvalidOperationException( "Status subsystem base Visa session is null." );
+
+        if ( !subsystem.Session.IsDeviceOpen )
+            throw new InvalidOperationException( "Status subsystem base Visa session is not open." );
+
         Assert.IsNotNull( subsystem, $"{nameof( subsystem )} should not be null." );
         subsystem.Session.KeepAliveLockTimeout = TimeSpan.FromMilliseconds( 12 );
         System.Diagnostics.Stopwatch sw = System.Diagnostics.Stopwatch.StartNew();

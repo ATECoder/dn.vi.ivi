@@ -68,6 +68,12 @@ public sealed partial class Asserts
     /// <param name="deviceErrorSettings">  Information describing the device errors for testing. </param>
     public static void AssertDeviceErrorsShouldMatch( StatusSubsystemBase subsystem, DeviceErrorsSettings? deviceErrorSettings )
     {
+        if ( subsystem.Session is null )
+            throw new InvalidOperationException( "Status subsystem base Visa session is null." );
+
+        if ( !subsystem.Session.IsDeviceOpen )
+            throw new InvalidOperationException( "Status subsystem base Visa session is not open." );
+
         Assert.IsNotNull( subsystem, $"{nameof( subsystem )} should not be null." );
         Assert.IsNotNull( deviceErrorSettings, $"{nameof( deviceErrorSettings )} should not be null." );
         string propertyName = nameof( cc.isr.VI.Pith.ServiceRequests.ErrorAvailable ).SplitWords();
