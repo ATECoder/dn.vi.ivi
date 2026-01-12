@@ -2,9 +2,13 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9505]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9508]: https://www.github.com/atecoder/dn.vi.ivi
 
 Current IVI Visa Compatibility: 8.0.1.9391
+
+## [8.1.9508] - 2026-01-12
+- K2600.Device
+  - Add Status Subsystem disposal.
 
 ## [8.1.9505] - 2026-01-09
 - Resource Name Info

@@ -83,6 +83,7 @@ public class K2600Device : VisaSessionBase
                 if ( this.IsDeviceOpen )
                 {
                     this.OnClosing( new System.ComponentModel.CancelEventArgs() );
+                    this.StatusSubsystem?.Dispose();
                     this.StatusSubsystem = null;
                 }
             }
@@ -126,6 +127,7 @@ public class K2600Device : VisaSessionBase
             this.BindLocalNodeSubsystem( null );
             this.BindSourceSubsystem( null );
             this.BindSystemSubsystem( null );
+            this.StatusSubsystem?.CloseSession();
         }
     }
 
