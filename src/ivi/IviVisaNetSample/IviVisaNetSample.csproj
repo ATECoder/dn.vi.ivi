@@ -26,9 +26,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="KeysightTechnologies.Visa" Version="18.6.6 " />
-    <!--
     <PackageReference Include="IviFoundation.Visa" Version="8.0.2" />
+    <!--
+    <PackageReference Include="KeysightTechnologies.Visa" Version="18.6.6 " />
     <Reference Include="Ivi.Visa">
       <HintPath>..\..\..\runtimes\Ivi.Visa.dll</HintPath>
     </Reference>

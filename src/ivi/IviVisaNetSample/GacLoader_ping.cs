@@ -1,6 +1,7 @@
 using System.Net;
 
 namespace Ivi.VisaNet;
+
 public static partial class GacLoader
 {
     /// <summary>   Attempts to ping. </summary>
@@ -32,7 +33,7 @@ public static partial class GacLoader
         }
         catch ( Exception )
         {
-            details = $"Exception occurred pinging {resourceName}; .";
+            details = $"*** Exception occurred pinging {resourceName}; .";
         }
         return outcome;
     }

@@ -2,9 +2,13 @@
 All notable changes to these libraries will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-[8.0.2.9504]: https://www.github.com/atecoder/dn.vi.ivi
+[8.0.2.9509]: https://www.github.com/atecoder/dn.vi.ivi
 
 Current IVI Visa Compatibility: 8.0.2.9391
+
+## [8.0.2.9509] - 2026-01-12
+- IviVisaNetSample
+  - Successfully use IviFoundation.Visa package 8.0.2 by allowing it to load it's associated Keysight assembly.
 
 ## [8.0.2.9504] - 2026-01-08
 - GAC Loader

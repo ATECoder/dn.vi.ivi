@@ -1,10 +1,12 @@
 using System.Reflection;
 using System.Text;
+using Ivi.Visa.ConflictManager;
 
 #pragma warning disable IDE0079 // Remove unnecessary suppression
 #pragma warning disable CA1305  // Specify IFormatProvider
 
 namespace Ivi.VisaNet;
+
 public static partial class GacLoader
 {
     /// <summary>   Parse vendor name. </summary>
@@ -179,7 +181,7 @@ public static partial class GacLoader
         }
         catch ( Exception ex )
         {
-            _ = sb.Append( $"\tException handling '{interfaceName}':\n\t\t{ex.Message}." );
+            _ = sb.Append( $"\t*** Exception handling '{interfaceName}':\n\t\t{ex.Message}." );
         }
         details = sb.ToString();
         return reply;
@@ -240,7 +242,7 @@ public static partial class GacLoader
         }
         catch ( Exception ex )
         {
-            details = $"\tException handling '{typeName}':\n\t\t{ex.Message}.";
+            details = $"\t*** Exception handling '{typeName}':\n\t\t{ex.Message}.";
         }
         return reply;
     }
@@ -278,7 +280,7 @@ public static partial class GacLoader
         }
         catch ( Exception ex )
         {
-            details = $"\tException handling '{vendorTypeName}':\n\t\t{ex.Message}.";
+            details = $"\t*** Exception handling '{vendorTypeName}':\n\t\t{ex.Message}.";
         }
         return reply;
     }
@@ -358,7 +360,7 @@ public static partial class GacLoader
 
         System.Text.StringBuilder sb = new();
 
-        _ = sb.AppendLine( $"\nIdentifying session implementations by type names:" );
+        _ = sb.AppendLine( $"Identifying session implementations by type names:" );
 
         string[] interfaces = ["Ivi.Visa.IVisaSession", "Ivi.Visa.IMessageBasedSession",
             "Ivi.Visa.ITcpipSession", "Ivi.Visa.ITcpipSession2", "Ivi.Visa.ITcpipSocketSession", "Ivi.Visa.ITcpipSocketSession2",
@@ -384,6 +386,13 @@ public static partial class GacLoader
 
     }
 
+    /// <summary>   Builds session types report. </summary>
+    /// <remarks>   2026-01-12. </remarks>
+    /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
+    ///                                             null. </exception>
+    /// <param name="installedAssembly">    The installed assembly. </param>
+    /// <param name="visaSession">          The visa session. </param>
+    /// <returns>   A string. </returns>
     [CLSCompliant( false )]
     public static string BuildSessionTypesReport( System.Reflection.Assembly? installedAssembly, Ivi.Visa.IVisaSession? visaSession )
     {
@@ -419,6 +428,68 @@ public static partial class GacLoader
         }
 
         return sb.ToString();
+    }
+
+    /// <summary>   Builds session identity report. </summary>
+    /// <remarks>   2026-01-12. </remarks>
+    /// <param name="visaSession">  The visa session. </param>
+    /// <returns>   A string. </returns>
+    [CLSCompliant( false )]
+    public static string BuildSessionIdentityReport( Ivi.Visa.IVisaSession? visaSession )
+    {
+        StringBuilder sb = new();
+        foreach ( Ivi.Visa.ConflictManager.VisaImplementation visaLibrary in new Ivi.Visa.ConflictManager.ConflictManager().GetInstalledVisas( ApiType.DotNet ) )
+        {
+            try
+            {
+                string fileName =
+#if NET20_OR_GREATER
+                visaLibrary.Location.Substring( visaLibrary.Location.IndexOf( ',' ) + 1 );
+#else
+                visaLibrary.Location[(visaLibrary.Location.IndexOf( ',' ) + 1)..];
+#endif
+                sb.AppendLine( $"Loading assembly from '{fileName}'..." );
+                using AssemblyLoader assemblyLoader = new();
+                Assembly? installedAssembly = assemblyLoader.LoadAssembly( visaLibrary );
+                if ( installedAssembly is null )
+                {
+                    sb.AppendLine( $"*** Failed to load assembly from {fileName}." );
+                    continue;
+                }
+                else
+                {
+                    Version? installedVersion = installedAssembly.GetName().Version;
+                    sb.AppendLine( $"\tLoaded {installedAssembly.FullName}." );
+                    sb.AppendLine( $"\tVersion: {System.Diagnostics.FileVersionInfo.GetVersionInfo( installedAssembly.Location ).FileVersion}." );
+                    sb.AppendLine( GacLoader.BuildSessionTypesReport( installedAssembly, visaSession ) );
+                }
+            }
+            catch ( Exception exception )
+            {
+                Console.WriteLine( $"\t*** Failed to load assembly {visaLibrary.FriendlyName}: {exception.Message}" );
+            }
+            sb.AppendLine( $"\tUnloading assembly." );
+        }
+        return sb.ToString();
+    }
+
+    /// <summary>   Identify visa session. </summary>
+    /// <remarks>   2026-01-12. </remarks>
+    /// <param name="resourceName"> Name of the resource. </param>
+    /// <param name="details">      [out] The details. </param>
+    /// <returns>   A string. </returns>
+    [CLSCompliant( false )]
+    public static Ivi.Visa.IVisaSession? IdentifyVisaSession( string resourceName, out string details )
+    {
+        if ( string.IsNullOrWhiteSpace( resourceName ) )
+        {
+            details = $"{nameof( resourceName )} is null or empty or white space.";
+            return null;
+        }
+        Ivi.Visa.IVisaSession visaSession = Ivi.Visa.GlobalResourceManager.Open( resourceName, Ivi.Visa.AccessModes.ExclusiveLock, 2000 );
+
+        details = GacLoader.BuildSessionInterfaceImplementationReport( visaSession );
+        return visaSession;
     }
 
     /// <summary>   Identify visa session. </summary>
