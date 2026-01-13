@@ -7,19 +7,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 Current IVI Visa Compatibility: 8.0.2.9509
 
 ## [8.0.2.9509] - 2029-01-13
-- Copy Gac Loader from IviVisaNetSampe to IviVisaCompatibility.
-- Set package to the IviFoundation.Visa
-- Update the Test and the Demo apps.
-- Test and record results in the Readme files.
-- Copy Gac Loader from IviVisaNetSample to isr.Visa
-- Test adn record results in the read me file.
-- Run the isr Visa unit tests.
-- Run the 2600 Unit tests.
-- Run the TTM Unit Tests
-- If all works:
-  - Increment the Compatibility version 
-  - Increment the isr.Visa version.
-- Update the SRS scripts to change from Keysight.Visa to the IviFoundation Visa package. 
+- IviVisaNetSample
+  - Split off the gac assembly loader from the assembly loader class.
+- IviVisaCompatibility
+  - Copy Gac Loader from IviVisaNetSampe.
+  - Set package to the IviFoundation.Visa
+- Ivi Apps
+  - Update program class,
 
 ## [8.0.2.9508] - 2026-01-12
 - IviVisaNetSample
