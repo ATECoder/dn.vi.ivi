@@ -18,12 +18,12 @@ public static partial class GacLoader
     {
         if ( string.IsNullOrWhiteSpace( resourceName ) )
             throw new ArgumentException( $"{nameof( resourceName )} cannot be null or empty.", nameof( resourceName ) );
-        if ( verbose ) Console.WriteLine( $"\tOpening a VISA session to '{resourceName}' by:" );
+        // Connect to the instrument.
+        if ( verbose ) Console.WriteLine( $"Opening a VISA session to '{resourceName}' by:" );
         if ( verbose ) Console.WriteLine( $"\tIvi.Visa.{nameof( GlobalResourceManager )}.{nameof( GlobalResourceManager.ImplementationVersion )}:{GlobalResourceManager.ImplementationVersion}" );
         if ( verbose ) Console.WriteLine( $"\tIvi.Visa.{nameof( GlobalResourceManager )}.{nameof( GlobalResourceManager.SpecificationVersion )}:{GlobalResourceManager.SpecificationVersion}" );
         using Ivi.Visa.IVisaSession visaSession = Ivi.Visa.GlobalResourceManager.Open( resourceName, Ivi.Visa.AccessModes.ExclusiveLock, 2000 )
-            ?? throw new InvalidOperationException( $"\tFailed to open VISA session for resource '{resourceName}'." );
-
+            ?? throw new InvalidOperationException( $"\t*** Failed to open VISA session for resource '{resourceName}'." );
         if ( verbose ) Console.WriteLine( $"\tVISA Session open by {visaSession.ResourceManufacturerName} VISA.NET Implementation version {visaSession.ResourceImplementationVersion}" );
         if ( visaSession is Ivi.Visa.IMessageBasedSession messageBasedSession )
         {
@@ -32,7 +32,6 @@ public static partial class GacLoader
             // Request information about an instrument.
             if ( verbose ) Console.WriteLine( "\tReading instrument identification string..." );
             messageBasedSession.FormattedIO.WriteLine( "\t*IDN?" );
-
             return messageBasedSession.FormattedIO.ReadLine();
         }
         else
@@ -40,6 +39,52 @@ public static partial class GacLoader
             throw new InvalidOperationException( "Not a message-based session." );
         }
     }
+
+    /// <summary>   Attempts to query identity. </summary>
+    /// <remarks>   2026-01-12. </remarks>
+    /// <param name="visaSession">  The visa session. </param>
+    /// <param name="details">      [out] The details. </param>
+    /// <returns>   True if it succeeds; otherwise, false. </returns>
+    [CLSCompliant( false )]
+    public static string TryQueryIdentity( Ivi.Visa.IVisaSession? visaSession, out string details )
+    {
+        if ( visaSession is null )
+        {
+            details = "VISA session is null.";
+            return string.Empty;
+        }
+
+        if ( visaSession is Ivi.Visa.IMessageBasedSession messageBasedSession )
+        {
+            try
+            {
+                // Ensure termination character is enabled as here in example we use a SOCKET connection.
+                messageBasedSession.TerminationCharacterEnabled = true;
+
+                // Request information about an instrument.
+                messageBasedSession.FormattedIO.WriteLine( "*IDN?" );
+                string identity = messageBasedSession.FormattedIO.ReadLine();
+                if ( string.IsNullOrWhiteSpace( identity ) )
+                {
+                    details = "Received empty or whitespace response from the instrument.";
+                    return string.Empty;
+                }
+                details = string.Empty;
+                return identity;
+            }
+            catch ( Exception ex )
+            {
+                details = GacLoader.BuildErrorMessage( ex );
+                throw;
+            }
+        }
+        else
+        {
+            details = $"{visaSession.GetType()} Not a message-based session.";
+            return string.Empty;
+        }
+    }
+
 
     /// <summary>   Attempts to query identity. </summary>
     /// <remarks>   2025-08-14. </remarks>
@@ -62,37 +107,13 @@ public static partial class GacLoader
             }
             catch ( Exception exception )
             {
-                if ( exception is TypeInitializationException && exception.InnerException is DllNotFoundException )
-                {
-                    // VISA Shared Components is not installed.
-                    Console.WriteLine( $"VISA implementation compatible with VISA.NET Shared Components {visaNetSharedComponentsVersion} not found. Please install corresponding vendor-specific VISA implementation first." );
-                }
-                else if ( exception is VisaException && exception.Message == "No vendor-specific VISA .NET implementation is installed." )
-                {
-                    // Vendor-specific VISA.NET implementation is not available.
-                    Console.WriteLine( $"VISA implementation compatible with VISA.NET Shared Components {visaNetSharedComponentsVersion} not found. Please install corresponding vendor-specific VISA implementation first." );
-                }
-                else if ( exception is VisaException )
-                {
-                    // General VISA Exception.
-                    Console.WriteLine( $"VISA Exception: {exception}" );
-                }
-                else if ( exception is EntryPointNotFoundException )
-                {
-                    // Installed VISA Shared Components are not compatible with VISA.NET Shared Components.
-                    Console.WriteLine( $"Installed VISA Shared Components version {visaNetSharedComponentsVersion} does not support VISA.NET. Please upgrade VISA implementation." );
-                }
-                else
-                {
-                    // Handle remaining errors.
-                    Console.WriteLine( $"Exception: {exception.Message}" );
-                }
+                Console.WriteLine( GacLoader.BuildErrorMessage( exception ) );
             }
 
         }
         catch ( Exception ex )
         {
-            Console.WriteLine( $"Failed getting Visa.NET Shared Components Version;\n{ex.Message}." );
+            Console.WriteLine( $"*** Failed getting Visa.NET Shared Components Version;\n{ex.Message}." );
         }
         return false;
     }

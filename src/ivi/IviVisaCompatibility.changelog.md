@@ -2,9 +2,28 @@
 All notable changes to these libraries will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-[8.0.2.9448]: https://www.github.com/atecoder/dn.vi.ivi
+[8.0.2.9509]: https://www.github.com/atecoder/dn.vi.ivi
 
-Current IVI Visa Compatibility: 8.0.2.9391
+Current IVI Visa Compatibility: 8.0.2.9509
+
+## [8.0.2.9509] - 2029-01-13
+- Copy Gac Loader from IviVisaNetSampe to IviVisaCompatibility.
+- Set package to the IviFoundation.Visa
+- Update the Test and the Demo apps.
+- Test and record results in the Readme files.
+- Copy Gac Loader from IviVisaNetSample to isr.Visa
+- Test adn record results in the read me file.
+- Run the isr Visa unit tests.
+- Run the 2600 Unit tests.
+- Run the TTM Unit Tests
+- If all works:
+  - Increment the Compatibility version 
+  - Increment the isr.Visa version.
+- Update the SRS scripts to change from Keysight.Visa to the IviFoundation Visa package. 
+
+## [8.0.2.9508] - 2026-01-12
+- IviVisaNetSample
+  - Successfully use IviFoundation.Visa package 8.0.2 by allowing it to load it's associated Keysight assembly.
 
 ## [8.0.2.9448] - 2025-11-13
 - Add .NET 10.0 targets.
@@ -23,7 +42,7 @@ Current IVI Visa Compatibility: 8.0.2.9391
 - Update to Keysight IO Suite 21.1.209 and use KeySight Technologies VISA 18.5.73 package.
 
 ## [7.2.9220] - 2025-03-30
-- Replace tabs with spaces.
+- Replace tabs with spaces.s
 - Remove trailing spaces 
 - Update change log.
 - Update revisions to 9220.

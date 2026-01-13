@@ -449,7 +449,7 @@ public static partial class GacLoader
                 visaLibrary.Location[(visaLibrary.Location.IndexOf( ',' ) + 1)..];
 #endif
                 sb.AppendLine( $"Loading assembly from '{fileName}'..." );
-                using AssemblyLoader assemblyLoader = new();
+                using GacAssemblyLoader assemblyLoader = new();
                 Assembly? installedAssembly = assemblyLoader.LoadAssembly( visaLibrary );
                 if ( installedAssembly is null )
                 {

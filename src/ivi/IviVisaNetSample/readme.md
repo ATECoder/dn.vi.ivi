@@ -22,6 +22,7 @@
 The VISA implementation picks up Keysight 18.6.5 from the GAC which is compiled against .NET 4.0.
 
 ```
+Turn on the instrument at tcpip0::192.168.0.150::inst0::instr and press any key »
 IviVisaNetSample, Version=8.0.2.9509, Culture=neutral, PublicKeyToken=null
         Running under .NETFramework,Version=v4.8 runtime .NET Framework 4.8.9221.0
 Runtime Information:
@@ -99,9 +100,10 @@ Closing session to 'tcpip0::192.168.0.150::inst0::instr'...
 
 The VISA implementation picks up Keysight 18.6.6 from the GAC which is compiled against .NET 10. 
 
-However, the Gac Loader class loads Keysight 18..6.5, which is not compatible with .NET 10.0 and results in a TypeLoadException when trying to load the assembly.
+However, the Gac Loader class loads Keysight 18.6.5, which is not compatible with .NET 10.0 and results in a TypeLoadException when trying to load the assembly.
 
 ```
+Turn on the instrument at tcpip0::192.168.0.150::inst0::instr and press any key »
 IviVisaNetSample, Version=8.0.2.9509, Culture=neutral, PublicKeyToken=null
         Running under .NETCoreApp,Version=v10.0 runtime .NET 10.0.1
 Runtime Information:
@@ -179,6 +181,9 @@ Identifying session interface implementations by vendor type names:
         is a 'Keysight.Visa.IKeysightNativeVisaSession'.
 
         Unloading assembly.
+
+
+Closing session to 'tcpip0::192.168.0.150::inst0::instr'...
 ```
 
 ### IVIFoundation.Visa 8.0.2 Package .NET 9.0
