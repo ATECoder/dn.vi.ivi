@@ -73,8 +73,8 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <PackageReference Include="Kelary.Ivi.Visa" Version="7.2.0" />
         <!--
+          <PackageReference Include="Kelary.Ivi.Visa" Version="7.2.0" />
           <PackageReference Include="IviFoundation.Visa" Version="8.0.2" />
           <Reference Include="Ivi.Visa">
             <HintPath>..\..\..\runtimes\Ivi.Visa.dll</HintPath>
@@ -82,6 +82,22 @@
         -->
       </ItemGroup>
     </Otherwise>
+  </Choose>
+
+  <Choose>
+    <When Condition="$(DefineConstants.Contains(';KelaryVisa;'))">
+      <ItemGroup>
+        <PackageReference Include="Kelary.Ivi.Visa" Version="7.2.0" />
+      </ItemGroup>
+    </When>
+  </Choose>
+
+  <Choose>
+    <When Condition="$(DefineConstants.Contains(';IviVisa;'))">
+      <ItemGroup>
+        <PackageReference Include="IviFoundation.Visa" Version="8.0.2" />
+      </ItemGroup>
+    </When>
   </Choose>
 
   <ItemGroup>

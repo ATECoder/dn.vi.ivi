@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.Versioning;
 using System.Windows.Forms;
@@ -30,25 +29,6 @@ catch ( System.IO.IOException ex )
 {
     Console.WriteLine();
     Console.WriteLine( ex.ToString() );
-    return;
-}
-
-// preload the VISA assemblies.
-if ( cc.isr.Visa.Gac.GacLoader.TryLoadInstalledVisaAssemblies( out string details ) is IList<Assembly> installedAssemblies && installedAssemblies.Count > 0 )
-{
-    int count = installedAssemblies.Count;
-    if ( count > 1 )
-        Console.WriteLine( $"\nLoaded multiple ({count}) VISA .NET implementation assemblies:\n\t{details}" );
-    else
-        Console.WriteLine( $"\nLoaded VISA .NET implementation assembly:\n\t{details}" );
-    // foreach ( Assembly assembly in assemblies )
-    // {
-    //     Console.WriteLine( $"\t{assembly.FullName}, {System.Diagnostics.FileVersionInfo.GetVersionInfo( assembly.Location ).FileVersion}" );
-    // }
-}
-else
-{
-    Console.WriteLine( $"\nNo VISA .NET implementation assemblies loaded:\n\t{details}" );
     return;
 }
 

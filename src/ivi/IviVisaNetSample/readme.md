@@ -22,8 +22,7 @@
 The VISA implementation picks up Keysight 18.6.5 from the GAC which is compiled against .NET 4.0.
 
 ```
-Turn on the instrument at tcpip0::192.168.0.150::inst0::instr and press any key »
-IviVisaNetSample, Version=8.0.2.9509, Culture=neutral, PublicKeyToken=null
+IviVisaNetSample, Version=8.0.2.9510, Culture=neutral, PublicKeyToken=null
         Running under .NETFramework,Version=v4.8 runtime .NET Framework 4.8.9221.0
 Runtime Information:
         Framework Description: .NET Framework 4.8.9221.0
@@ -64,9 +63,7 @@ Identifying session implementations by type names:
         is not a 'Ivi.Visa.IVxiMemorySession'.
         is not a 'Ivi.Visa.IVxiSession'.
 
-AppDomain unloaded.
-Loading assembly from ' Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73'...
-        Loaded Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73.
+Loaded Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73.
         Version: 18.6.5.0.
 
 Identifying session types by vendor type names:
@@ -89,7 +86,6 @@ Identifying session types by vendor type names:
 Identifying session interface implementations by vendor type names:
         is a 'Keysight.Visa.IKeysightNativeVisaSession'.
 
-        Unloading assembly.
 
 
 Closing session to 'tcpip0::192.168.0.150::inst0::instr'...
@@ -98,16 +94,13 @@ Closing session to 'tcpip0::192.168.0.150::inst0::instr'...
 
 ### IVIFoundation.Visa 8.0.2 Package .NET 10.0
 
-The VISA implementation picks up Keysight 18.6.6 from the GAC which is compiled against .NET 10. 
-
-However, the Gac Loader class loads Keysight 18.6.5, which is not compatible with .NET 10.0 and results in a TypeLoadException when trying to load the assembly.
+The VISA implementation picks up Keysight 18.6.5 from the GAC which is compiled against .NET 10. 
 
 ```
-Turn on the instrument at tcpip0::192.168.0.150::inst0::instr and press any key »
-IviVisaNetSample, Version=8.0.2.9509, Culture=neutral, PublicKeyToken=null
-        Running under .NETCoreApp,Version=v10.0 runtime .NET 10.0.1
+IviVisaNetSample, Version=8.0.2.9510, Culture=neutral, PublicKeyToken=null
+        Running under .NETCoreApp,Version=v10.0 runtime .NET 10.0.2
 Runtime Information:
-        Framework Description: .NET 10.0.1
+        Framework Description: .NET 10.0.2
               OS Architecture: X64
                OS Description: Microsoft Windows 10.0.26200 (is Windows 11 if build >= 22000)
          Process Architecture: X64
@@ -146,78 +139,33 @@ Identifying session implementations by type names:
         is not a 'Ivi.Visa.IVxiMemorySession'.
         is not a 'Ivi.Visa.IVxiSession'.
 
-Assembly loaded into context:
-Assembly unload initiated and garbage collection run.
-Loading assembly from ' Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73'...
-        Loaded Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73.
+Loaded Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73.
         Version: 18.6.5.0.
 
 Identifying session types by vendor type names:
-        is not a 'Keysight.Visa.MessageBasedSession'.
-        *** Exception handling 'Keysight.Visa.GpibInterfaceSession':
-                Method 'Read' in type 'Keysight.Visa.GpibInterfaceSession' from assembly 'Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73' does not have an implementation..
-        *** Exception handling 'Keysight.Visa.GpibSession':
-                Method 'Read' in type 'Keysight.Visa.GpibSession' from assembly 'Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73' does not have an implementation..
+        is a 'Keysight.Visa.MessageBasedSession'.
+        is not a 'Keysight.Visa.GpibInterfaceSession'.
+        is not a 'Keysight.Visa.GpibSession'.
         is not a 'Keysight.Visa.PxiBackplaneSession'.
         is not a 'Keysight.Visa.PxiMemorySession'.
-        *** Exception handling 'Keysight.Visa.PxiSession':
-                Could not load type 'Ivi.Visa.IPxiSession2' from assembly 'Ivi.Visa, Version=8.0.0.0, Culture=neutral, PublicKeyToken=a128c98f1d7717c1'..
+        is not a 'Keysight.Visa.PxiSession'.
         is not a 'Keysight.Visa.RegisterBasedSession'.
-        *** Exception handling 'Keysight.Visa.SerialSession':
-                Method 'Read' in type 'Keysight.Visa.SerialSession' from assembly 'Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73' does not have an implementation..
-        *** Exception handling 'Keysight.Visa.TcpipSession':
-                Could not load type 'Ivi.Visa.ITcpipSession2' from assembly 'Ivi.Visa, Version=8.0.0.0, Culture=neutral, PublicKeyToken=a128c98f1d7717c1'..
-        *** Exception handling 'Keysight.Visa.TcpipSocketSession':
-                Could not load type 'Ivi.Visa.ITcpipSocketSession2' from assembly 'Ivi.Visa, Version=8.0.0.0, Culture=neutral, PublicKeyToken=a128c98f1d7717c1'..
-        *** Exception handling 'Keysight.Visa.UsbSession':
-                Method 'Read' in type 'Keysight.Visa.UsbSession' from assembly 'Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73' does not have an implementation..
-        is not a 'Keysight.Visa.VisaSession'.
+        is not a 'Keysight.Visa.SerialSession'.
+        is a 'Keysight.Visa.TcpipSession'.
+        is not a 'Keysight.Visa.TcpipSocketSession'.
+        is not a 'Keysight.Visa.UsbSession'.
+        is a 'Keysight.Visa.VisaSession'.
         is not a 'Keysight.Visa.VxiBackplaneSession'.
         is not a 'Keysight.Visa.VxiMemorySession'.
-        *** Exception handling 'Keysight.Visa.VxiSession':
-                Method 'Read' in type 'Keysight.Visa.VxiSession' from assembly 'Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73' does not have an implementation..
+        is not a 'Keysight.Visa.VxiSession'.
 
 Identifying session interface implementations by vendor type names:
         is a 'Keysight.Visa.IKeysightNativeVisaSession'.
 
-        Unloading assembly.
 
 
 Closing session to 'tcpip0::192.168.0.150::inst0::instr'...
-```
 
-### IVIFoundation.Visa 8.0.2 Package .NET 9.0
-
-The VISA implementation picks up Keysight 18.6.5 from the GAC which is compiled against .NET 4.8 and does not support .NET 9.0.
-
-```
-IviVisaNetSample, Version=8.0.2.9391, Culture=neutral, PublicKeyToken=null
-        Running under .NETCoreApp,Version=v9.0 runtime .NET 9.0.9
-Runtime Information:
-        Framework Description: .NET 9.0.9
-              OS Architecture: X64
-               OS Description: Microsoft Windows 10.0.22631 (is Windows 11 if build >= 22000)
-         Process Architecture: X64
-           Runtime Identifier: win-x64
-
-VISA.NET Shared Components Ivi.Visa, Version=8.0.0.0, Culture=neutral, PublicKeyToken=a128c98f1d7717c1.
-        Version: 8.0.7803.0.
-        visaConfMgr version 8.0.7331.0 detected.
-
-Loading VISA implementation assemblies
-        Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73, 18.6.5.0
-        Loaded Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73.
-        Version: 18.6.5.0.
-
-Pinging 'tcpip0::192.168.0.150::inst0::instr'...
-
-Unhandled exception. System.TypeLoadException: Method 'Read' in type 'Keysight.Visa.UsbSession' from assembly 'Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73' does not have an implementation.
-   at Ivi.Visa.GlobalResourceManager.Open(String resourceName, AccessModes accessModes, Int32 timeoutMilliseconds, ResourceOpenStatus& openStatus)
-   at Ivi.Visa.GlobalResourceManager.Open(String resourceName, AccessModes accessModes, Int32 timeoutMilliseconds)
-   at Ivi.VisaNet.GacLoader.IdentifyVisaSession(Assembly installedAssembly, String resourceName) in C:\my\lib\vs\vi\vi\src\ivi\IviVisaNetSample\GacLoader_types.cs:line 436
-   at Program.<Main>$(String[] args) in C:\my\lib\vs\vi\vi\src\ivi\IviVisaNetSample\Program.cs:line 96
-
-C:\my\lib\vs\vi\vi\src\ivi\IviVisaNetSample\bin\Debug\net9.0\IviVisaNetSample.exe (process 6924) exited with code 0 (0x0).
 ```
 
 ## Status running under the Keysight IO Suite 21.2.207

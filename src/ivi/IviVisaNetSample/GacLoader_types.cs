@@ -1,6 +1,5 @@
 using System.Reflection;
 using System.Text;
-using Ivi.Visa.ConflictManager;
 
 #pragma warning disable IDE0079 // Remove unnecessary suppression
 #pragma warning disable CA1305  // Specify IFormatProvider
@@ -32,7 +31,7 @@ public static partial class GacLoader
     ///                                             unsupported or illegal values. </exception>
     /// <param name="assembly"> The assembly. </param>
     /// <param name="typeName"> Name of the type. </param>
-    /// <returns>   True if type exists, false if not. </returns>
+    /// <returns>   True if type exists; otherwise false. </returns>
     public static bool IsTypeExists( System.Reflection.Assembly? assembly, string typeName )
     {
         if ( assembly is null ) throw new ArgumentNullException( nameof( assembly ), $"{nameof( assembly )} cannot be null." );
@@ -49,7 +48,7 @@ public static partial class GacLoader
     /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
     ///                                                 invalid. </exception>
     /// <param name="typeName"> Name of the type. </param>
-    /// <returns>   True if type exists, false if not. </returns>
+    /// <returns>   True if type exists; otherwise false. </returns>
     public static bool IsIviVisaTypeExists( string typeName )
     {
         if ( string.IsNullOrWhiteSpace( typeName ) ) throw new ArgumentException( $"{nameof( typeName )} cannot be null or empty.", nameof( typeName ) );
@@ -68,7 +67,7 @@ public static partial class GacLoader
     ///                                                 invalid. </exception>
     /// <param name="visaSession">      The visa session. </param>
     /// <param name="interfaceName">    Name of the interface. </param>
-    /// <returns>   True if interface implemented, false if not. </returns>
+    /// <returns>   True if interface implemented; otherwise false. </returns>
     [CLSCompliant( false )]
     public static bool IsInterfaceImplemented( Ivi.Visa.IVisaSession visaSession, string interfaceName )
     {
@@ -127,7 +126,7 @@ public static partial class GacLoader
     /// <param name="installedAssembly">    The installed assembly. </param>
     /// <param name="visaSession">          The visa session. </param>
     /// <param name="interfaceName">        Name of the interface. </param>
-    /// <returns>   True if interface implemented, false if not. </returns>
+    /// <returns>   True if interface implemented; otherwise false. </returns>
     [CLSCompliant( false )]
     public static bool IsInterfaceImplemented( System.Reflection.Assembly? installedAssembly, Ivi.Visa.IVisaSession visaSession, string interfaceName )
     {
@@ -199,7 +198,7 @@ public static partial class GacLoader
     ///                                     where the vendor name is replaced by the parsed vendor name
     ///                                     of the installed assembly. </param>
     /// <param name="details">              [out] The details. </param>
-    /// <returns>   True if vendor interface implemented, false if not. </returns>
+    /// <returns>   True if vendor interface implemented; otherwise false. </returns>
     [CLSCompliant( false )]
     public static bool IsVendorInterfaceImplemented( System.Reflection.Assembly? installedAssembly, Ivi.Visa.IVisaSession visaSession,
         string keysightInterfaceName, out string details )
@@ -222,7 +221,7 @@ public static partial class GacLoader
     /// <param name="visaSession">          The visa session. </param>
     /// <param name="typeName">             The name of the type. </param>
     /// <param name="details">              [out] The details. </param>
-    /// <returns>   True if instance of type, false if not. </returns>
+    /// <returns>   True if instance of type; otherwise false. </returns>
     [CLSCompliant( false )]
     public static bool IsInstanceOfType( Assembly installedAssembly, Ivi.Visa.IVisaSession visaSession, string typeName, out string details )
     {
@@ -258,7 +257,7 @@ public static partial class GacLoader
     ///                                     where the vendor name is replaced by the parsed vendor name
     ///                                     of the installed assembly. </param>
     /// <param name="details">              [out] The details. </param>
-    /// <returns>   True if instance of type, false if not. </returns>
+    /// <returns>   True if instance of type; otherwise false. </returns>
     [CLSCompliant( false )]
     public static bool IsInstanceOfVendorType( Assembly installedAssembly, Ivi.Visa.IVisaSession visaSession, string keySightTypeName, out string details )
     {
@@ -435,40 +434,34 @@ public static partial class GacLoader
     /// <param name="visaSession">  The visa session. </param>
     /// <returns>   A string. </returns>
     [CLSCompliant( false )]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0057:Use range operator", Justification = "<Pending>" )]
     public static string BuildSessionIdentityReport( Ivi.Visa.IVisaSession? visaSession )
     {
         StringBuilder sb = new();
-        foreach ( Ivi.Visa.ConflictManager.VisaImplementation visaLibrary in new Ivi.Visa.ConflictManager.ConflictManager().GetInstalledVisas( ApiType.DotNet ) )
+        foreach ( Ivi.Visa.ConflictManager.VisaImplementation visaLibrary in new Ivi.Visa.ConflictManager.ConflictManager().GetInstalledVisas( Ivi.Visa.ConflictManager.ApiType.DotNet ) )
         {
             try
             {
-                string fileName =
-#if NET20_OR_GREATER
-                visaLibrary.Location.Substring( visaLibrary.Location.IndexOf( ',' ) + 1 );
-#else
-                visaLibrary.Location[(visaLibrary.Location.IndexOf( ',' ) + 1)..];
-#endif
-                sb.AppendLine( $"Loading assembly from '{fileName}'..." );
-                using GacAssemblyLoader assemblyLoader = new();
-                Assembly? installedAssembly = assemblyLoader.LoadAssembly( visaLibrary );
-                if ( installedAssembly is null )
+                string fullName = visaLibrary.Location.Substring( visaLibrary.Location.IndexOf( ',' ) + 1 );
+                string fileName = fullName.Substring( 0, fullName.IndexOf( ',' ) ).Trim();
+
+                // because we have a session, the implementation must be loaded now.
+                (Assembly? loadedAssembly, string details) = Ivi.VisaNet.GacLoader.TryFindLoadedAssemblyByFriendlyName( fileName );
+                if ( loadedAssembly is null )
                 {
-                    sb.AppendLine( $"*** Failed to load assembly from {fileName}." );
-                    continue;
+                    Console.WriteLine( $"\n*** {details}" );
                 }
                 else
                 {
-                    Version? installedVersion = installedAssembly.GetName().Version;
-                    sb.AppendLine( $"\tLoaded {installedAssembly.FullName}." );
-                    sb.AppendLine( $"\tVersion: {System.Diagnostics.FileVersionInfo.GetVersionInfo( installedAssembly.Location ).FileVersion}." );
-                    sb.AppendLine( GacLoader.BuildSessionTypesReport( installedAssembly, visaSession ) );
+                    _ = sb.AppendLine( $"Loaded {loadedAssembly.GetName().FullName}." );
+                    _ = sb.AppendLine( $"\tVersion: {System.Diagnostics.FileVersionInfo.GetVersionInfo( loadedAssembly.Location ).FileVersion}." );
+                    _ = sb.AppendLine( GacLoader.BuildSessionTypesReport( loadedAssembly, visaSession ) );
                 }
             }
             catch ( Exception exception )
             {
-                Console.WriteLine( $"\t*** Failed to load assembly {visaLibrary.FriendlyName}: {exception.Message}" );
+                Console.WriteLine( $"\t*** Failed building session identity report for {visaLibrary.FriendlyName}:\n\t*** {GacLoader.BuildErrorMessage( exception )}" );
             }
-            sb.AppendLine( $"\tUnloading assembly." );
         }
         return sb.ToString();
     }

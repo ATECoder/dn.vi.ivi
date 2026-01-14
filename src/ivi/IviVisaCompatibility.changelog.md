@@ -4,7 +4,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 [8.0.2.9509]: https://www.github.com/atecoder/dn.vi.ivi
 
-Current IVI Visa Compatibility: 8.0.2.9509
+Current IVI Visa Compatibility: 8.0.2.9510
+
+## [8.0.2.9510] - 2029-01-14
+- Add VisaLibraryInfo class.
+- Gac Loaders
+  - Remove the load methods.
+  - Add config manager file to the class.
+  - Move code from cc.isr.Visa vendor to the config manager file.
+  - Vendor Session Identities
+    - Use the loaded assembly for the open session to enumerate the vendor session types.
 
 ## [8.0.2.9509] - 2029-01-13
 - IviVisaNetSample

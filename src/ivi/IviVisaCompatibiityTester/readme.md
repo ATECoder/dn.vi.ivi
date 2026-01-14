@@ -30,10 +30,11 @@ VISA.NET Shared Components Ivi.Visa, Version=8.0.0.0, Culture=neutral, PublicKey
 
 ### Identify
 ```
-IviVisaCompatibilityTester, Version=8.0.2.9391, Culture=neutral, PublicKeyToken=456c916a0c4a68ef
-        Running under .NETCoreApp,Version=v10.0 runtime .NET 10.0.1
+Turn on the instrument at TCPIP0::192.168.0.150::inst0::INSTR and press any key »
+IviVisaCompatibilityTester, Version=8.0.2.9510, Culture=neutral, PublicKeyToken=456c916a0c4a68ef
+        Running under .NETCoreApp,Version=v10.0 runtime .NET 10.0.2
 Runtime Information:
-        Framework Description: .NET 10.0.1
+        Framework Description: .NET 10.0.2
               OS Architecture: X64
                OS Description: Microsoft Windows 10.0.26200 (is Windows 11 if build >= 22000)
          Process Architecture: X64
@@ -72,9 +73,29 @@ Identifying session implementations by type names:
         is not a 'Ivi.Visa.IVxiMemorySession'.
         is not a 'Ivi.Visa.IVxiSession'.
 
-        *** Failed to load assembly Keysight VISA.NET: Secondary AppDomains are not supported on this platform.
-Loading assembly from ' Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73'...
-        Unloading assembly.
+Loaded Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73.
+        Version: 18.6.5.0.
+
+Identifying session types by vendor type names:
+        is a 'Keysight.Visa.MessageBasedSession'.
+        is not a 'Keysight.Visa.GpibInterfaceSession'.
+        is not a 'Keysight.Visa.GpibSession'.
+        is not a 'Keysight.Visa.PxiBackplaneSession'.
+        is not a 'Keysight.Visa.PxiMemorySession'.
+        is not a 'Keysight.Visa.PxiSession'.
+        is not a 'Keysight.Visa.RegisterBasedSession'.
+        is not a 'Keysight.Visa.SerialSession'.
+        is a 'Keysight.Visa.TcpipSession'.
+        is not a 'Keysight.Visa.TcpipSocketSession'.
+        is not a 'Keysight.Visa.UsbSession'.
+        is a 'Keysight.Visa.VisaSession'.
+        is not a 'Keysight.Visa.VxiBackplaneSession'.
+        is not a 'Keysight.Visa.VxiMemorySession'.
+        is not a 'Keysight.Visa.VxiSession'.
+
+Identifying session interface implementations by vendor type names:
+        is a 'Keysight.Visa.IKeysightNativeVisaSession'.
+
 
 
 Closing session to 'TCPIP0::192.168.0.150::inst0::INSTR'...

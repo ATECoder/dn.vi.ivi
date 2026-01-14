@@ -1,6 +1,5 @@
 using System.Reflection;
 using System.Text;
-using Ivi.Visa.ConflictManager;
 
 #pragma warning disable IDE0079 // Remove unnecessary suppression
 #pragma warning disable CA1305
@@ -14,12 +13,6 @@ namespace Ivi.VisaNet;
 /// </summary>
 public static partial class GacLoader
 {
-    /// <summary>
-    /// Gets or sets a value indicating whether this object has dot net implementations.
-    /// </summary>
-    /// <value> True if this object has dot net implementations, false if not. </value>
-    public static bool? HasDotNetImplementations { get; private set; }
-
     /// <summary>   Bytes to hexadecimal. </summary>
     /// <remarks>   2024-07-01. </remarks>
     /// <param name="byteArray">    Array of bytes. </param>
@@ -50,7 +43,7 @@ public static partial class GacLoader
     /// <param name="str">          The string to act on. </param>
     /// <param name="substring">    The substring. </param>
     /// <param name="comp">         The string comparison option. </param>
-    /// <returns>   True if the substring is contained in the String, false if not. </returns>
+    /// <returns>   True if the substring is contained in the String; otherwise false. </returns>
 #if NET20_OR_GREATER
     private static bool Contains( this string str, string substring, StringComparison comp )
     {
@@ -110,31 +103,25 @@ public static partial class GacLoader
     {
         StringBuilder sb = new();
         IList<Assembly> installedAssemblies = [];
-        GacLoader.HasDotNetImplementations = false;
         GacLoader.LoadedImplementationFriendlyNames.Clear();
         GacLoader.LoadedImplementationFileNames.Clear();
 
-        foreach ( Ivi.Visa.ConflictManager.VisaImplementation visaLibrary in new Ivi.Visa.ConflictManager.ConflictManager().GetInstalledVisas( ApiType.DotNet ) )
+        if ( !GacLoader.TryEnumerateInstalledVisaAssemblies( out details ) )
+            _ = sb.AppendLine( details );
+
+        foreach ( string fileName in GacLoader.VisaImplementationFileNames )
         {
             try
             {
-                string fileName =
-#if NET20_OR_GREATER
-                visaLibrary.Location.Substring( visaLibrary.Location.IndexOf( ',' ) + 1 );
-#else
-                visaLibrary.Location[(visaLibrary.Location.IndexOf( ',' ) + 1)..];
-#endif
                 Assembly installedAssembly = GacLoader.Load( new System.Reflection.AssemblyName( fileName ) );
                 _ = sb.Append( $"{installedAssembly.FullName}, {System.Diagnostics.FileVersionInfo.GetVersionInfo( installedAssembly.Location ).FileVersion}" );
                 installedAssemblies.Add( installedAssembly );
-
-                GacLoader.HasDotNetImplementations = true;
-                GacLoader.LoadedImplementationFriendlyNames.Add( visaLibrary.FriendlyName );
+                GacLoader.LoadedImplementationFriendlyNames.Add( fileName );
                 GacLoader.LoadedImplementationFileNames.Add( fileName );
             }
             catch ( Exception exception )
             {
-                _ = sb.Append( $"*** Failed to load assembly {visaLibrary.FriendlyName}: {exception.Message}" );
+                _ = sb.Append( $"*** Failed to load assembly {fileName}: {exception.Message}" );
             }
         }
         details = sb.ToString();
@@ -150,6 +137,65 @@ public static partial class GacLoader
         if ( GacLoader.TryLoadInstalledVisaAssemblies( out string details ) is not IList<Assembly> assemblies || (assemblies.Count == 0) )
         {
             throw new InvalidOperationException( $"\nNo VISA .NET implementation assemblies loaded: {details}" );
+        }
+    }
+
+    /// <summary>   Checks if an assembly with the specified full name exists in the specified path. </summary>
+    /// <remarks>   2024-07-13. </remarks>
+    /// <param name="path">             full path name of the file. </param>
+    /// <param name="fileName">         Filename of the file. </param>
+    /// <param name="expectedFullName"> The expected full name of the assembly. </param>
+    /// <returns>   A Tuple. </returns>
+    public static (bool Success, string Details) IsAssemblyExists( string path, string fileName, string expectedFullName )
+    {
+        if ( string.IsNullOrWhiteSpace( path ) )
+            return (false, "The provided path is null or white space.");
+        else
+        {
+            FileInfo? fi = new( System.IO.Path.Combine( path, fileName ) );
+            if ( fi is not null && fi.Exists )
+            {
+                System.Reflection.Assembly? candidateAssembly = System.Reflection.Assembly.LoadFile( fi.FullName );
+                Console.Out.WriteLine( candidateAssembly.FullName );
+                return string.Equals( expectedFullName, candidateAssembly.FullName, StringComparison.Ordinal )
+                    ? (true, string.Empty)
+                    : (false, $"Mismatch between expected {expectedFullName} and actual {candidateAssembly.FullName} assembly full name.");
+            }
+            else
+                return (false, $"Expected assembly {path} was not found.");
+
+        }
+    }
+
+    /// <summary>   Checks if an assembly with the specified full name exists in the current execution path. </summary>
+    /// <remarks>   2024-07-13. </remarks>
+    /// <param name="fileName">         Filename of the file. </param>
+    /// <param name="expectedFullName"> The expected full name of the assembly. </param>
+    /// <returns>   A Tuple. </returns>
+    public static (bool Success, string Details) IsAssemblyExists( string fileName, string expectedFullName )
+    {
+        string? path;
+        System.Reflection.Assembly? executingAssembly = System.Reflection.Assembly.GetExecutingAssembly();
+        if ( executingAssembly is null )
+        {
+            return (false, "Failed getting the executing assembly.");
+        }
+        else
+        {
+            FileInfo? fi = new( executingAssembly.Location );
+            if ( fi is null )
+                return (false, "Failed getting the executing assembly file information.");
+            else
+                path = fi.Directory!.FullName;
+        }
+
+        if ( string.IsNullOrWhiteSpace( path ) )
+        {
+            return (false, "Failed getting the executing assembly path.");
+        }
+        else
+        {
+            return GacLoader.IsAssemblyExists( path, fileName, expectedFullName );
         }
     }
 }

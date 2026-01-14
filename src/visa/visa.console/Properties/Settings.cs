@@ -133,7 +133,7 @@ public class Settings : cc.isr.Json.AppSettings.Settings.SettingsBase
     #region " custom settings "
 
     /// <summary>   Gets or sets a value indicating whether the multi session is enabled. </summary>
-    /// <value> True if multi session enabled, false if not. </value>
+    /// <value> True if multi session enabled; otherwise false. </value>
     [Description( "Enabled selecting multiple sessions" )]
     public bool MultiSessionEnabled
     {
@@ -144,7 +144,7 @@ public class Settings : cc.isr.Json.AppSettings.Settings.SettingsBase
     /// <summary>
     /// Gets or sets a value indicating whether the service request is enabled.
     /// </summary>
-    /// <value> True if service request enabled, false if not. </value>
+    /// <value> True if service request enabled; otherwise false. </value>
     [Description( "Enables service request handling" )]
     public bool ServiceRequestEnabled
     {

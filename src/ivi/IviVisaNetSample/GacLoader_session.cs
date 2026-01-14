@@ -56,27 +56,27 @@ public static partial class GacLoader
         if ( exception is TypeInitializationException && exception.InnerException is DllNotFoundException )
         {
             // VISA Shared Components is not installed.
-            return $"*** VISA implementation compatible with VISA.NET Shared Components {visaNetSharedComponentsVersion} not found. Please install corresponding vendor-specific VISA implementation first.";
+            return $"VISA implementation compatible with VISA.NET Shared Components {visaNetSharedComponentsVersion} not found. Please install corresponding vendor-specific VISA implementation first.";
         }
         else if ( exception is VisaException && exception.Message == "No vendor-specific VISA .NET implementation is installed." )
         {
             // Vendor-specific VISA.NET implementation is not available.
-            return $"*** VISA implementation compatible with VISA.NET Shared Components {visaNetSharedComponentsVersion} not found. Please install corresponding vendor-specific VISA implementation first.";
+            return $"VISA implementation compatible with VISA.NET Shared Components {visaNetSharedComponentsVersion} not found. Please install corresponding vendor-specific VISA implementation first.";
         }
         else if ( exception is VisaException )
         {
             // General VISA Exception.
-            return $"*** VISA Exception: {exception}";
+            return $"VISA Exception: {exception}";
         }
         else if ( exception is EntryPointNotFoundException )
         {
             // Installed VISA Shared Components are not compatible with VISA.NET Shared Components.
-            return $"*** Installed VISA Shared Components version {visaNetSharedComponentsVersion} does not support VISA.NET. Please upgrade VISA implementation.";
+            return $"Installed VISA Shared Components version {visaNetSharedComponentsVersion} does not support VISA.NET. Please upgrade VISA implementation.";
         }
         else
         {
             // Handle remaining errors.
-            return $"*** Exception: {exception}";
+            return $"Exception: {exception}";
         }
     }
 }

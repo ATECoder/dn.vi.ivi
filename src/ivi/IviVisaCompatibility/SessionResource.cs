@@ -1,4 +1,5 @@
 namespace Ivi.VisaNet;
+
 public class SessionResource
 {
     /// <summary>   Attempts to enumerate resources. </summary>
@@ -7,7 +8,6 @@ public class SessionResource
     /// <returns>   True if it succeeds; otherwise, false. </returns>
     public static bool TryEnumerateResources( string filter )
     {
-        _ = Ivi.VisaNet.GacLoader.TryLoadInstalledVisaAssemblies( out _ );
         List<string>? resources = [.. Ivi.Visa.GlobalResourceManager.Find( filter )];
         return resources?.Count > 0;
     }

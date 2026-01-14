@@ -1,70 +1,596 @@
-<!DOCTYPE html []>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="author" content="MarkdownViewer++" />
-    <title>VISA Compatibility Tester Guide.md</title>
-    <style type="text/css">
-            
-/* Avoid page breaks inside the most common attributes, especially for exports (i.e. PDF) */
-td, h1, h2, h3, h4, h5, p, ul, ol, li {
-    page-break-inside: avoid; 
+<!DOCTYPE html>
+            <html>
+                <head>                    
+                    <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+                    <meta http-equiv="content-type" content="text/html; charset=utf-8"></meta>
+                    <title>VISA Compatibility Tester Guide.md</title>
+                    <style type="text/css">
+                    /*
+Copyright (c) 2017 Chris Patuzzo
+https://twitter.com/chrispatuzzo
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px;
+  color: #333;
 }
 
-        </style>
-  </head>
-  <body>
-    <h1 id="visa-compatibility-tester-guide">VISA Compatibility Tester Guide</h1>
-    <h2 id="table-of-contents">Table of Contents</h2>
-    <ul>
-      <li>
-        <a href="#About">About</a>
-      </li>
-      <li>
-        <a href="#VISA-Runtime">VISA Runtime</a>
-      </li>
-      <li>
-        <a href="#Command-Line">Command Line</a>
-        <ul>
-          <li>
-            <a href="#Find-Implementation">Find Implementation</a>
-          </li>
-          <li>
-            <a href="#Identify">Identify</a>
-          </li>
-        </ul>
-      </li>
-      <li>
-        <a href="#Attributions">Attributions</a>
-      </li>
-    </ul>
-    <p>
-      <a name="About"></a>
-    </p>
-    <h2 id="about">About</h2>
-    <p>This guide describes how to use the <code>cc.isr.Visa.Compatibility.Tester</code> application to lookup and check the compatibility of the current instance of the <a href="https://www,ivi.org">IVI VISA</a> implementation.</p>
-    <p>
-      <a name="Command-Line"></a>
-    </p>
-    <h2 id="command-line">Command Line</h2>
-    <p>The <code>cc.isr.Visa.Compatibility.Tester</code> is run from the Windows Command Line.</p>
-    <p>
-      <a name="Find-Implementation"></a>
-    </p>
-    <h3 id="find-implementation">Find Implementation</h3>
-    <p>Enter the following command:</p>
-    <pre>
-      <code>cc.isr.Visa.Compatibility.Tester
-</code>
-    </pre>
-    <p>or</p>
-    <pre>
-      <code>.\cmds\check.bat
-</code>
-    </pre>
-    <p>The following outcome:</p>
-    <pre>
-      <code>Checking IVI VISA Compatibility
+body > *:first-child {
+  margin-top: 0 !important;
+}
+
+body > *:last-child {
+  margin-bottom: 0 !important;
+}
+
+a {
+  color: #4183C4;
+  text-decoration: none;
+}
+
+a.absent {
+  color: #cc0000;
+}
+
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative;
+}
+
+h2:first-child, h1:first-child, h1:first-child + h2, h3:first-child, h4:first-child, h5:first-child, h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  text-decoration: none;
+}
+
+h1 tt, h1 code {
+  font-size: inherit;
+}
+
+h2 tt, h2 code {
+  font-size: inherit;
+}
+
+h3 tt, h3 code {
+  font-size: inherit;
+}
+
+h4 tt, h4 code {
+  font-size: inherit;
+}
+
+h5 tt, h5 code {
+  font-size: inherit;
+}
+
+h6 tt, h6 code {
+  font-size: inherit;
+}
+
+h1 {
+  font-size: 28px;
+  color: black;
+}
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h6 {
+  color: #777777;
+  font-size: 14px;
+}
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0;
+}
+
+/*
+hr {
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0;
+}
+*/
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+body > h1:first-child + h2 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0;
+}
+
+li p.first {
+  display: inline-block;
+}
+
+ul, ol {
+  padding-left: 30px;
+}
+
+ul :first-child, ol :first-child {
+  margin-top: 0;
+}
+
+ul :last-child, ol :last-child {
+  margin-bottom: 0;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  padding: 0;
+  margin: 15px 0 5px;
+}
+
+dl dt:first-child {
+  padding: 0;
+}
+
+dl dt > :first-child {
+  margin-top: 0;
+}
+
+dl dt > :last-child {
+  margin-bottom: 0;
+}
+
+dl dd {
+  margin: 0 0 15px;
+  padding: 0 15px;
+}
+
+dl dd > :first-child {
+  margin-top: 0;
+}
+
+dl dd > :last-child {
+  margin-bottom: 0;
+}
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777;
+}
+
+blockquote > :first-child {
+  margin-top: 0;
+}
+
+blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+table {
+  padding: 0;
+}
+table tr {
+  border-top: 1px solid #cccccc;
+  background-color: white;
+  margin: 0;
+  padding: 0;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+table tr th {
+  font-weight: bold;
+  border: 1px solid #cccccc;
+  text-align: left;
+  margin: 0;
+  padding: 6px 13px;
+}
+
+table tr td {
+  border: 1px solid #cccccc;
+  text-align: left;
+  margin: 0;
+  padding: 6px 13px;
+}
+
+table tr th :first-child, table tr td :first-child {
+  margin-top: 0;
+}
+
+table tr th :last-child, table tr td :last-child {
+  margin-bottom: 0;
+}
+
+img {
+  max-width: 100%;
+}
+
+span.frame {
+  display: block;
+  overflow: hidden;
+}
+
+span.frame > span {
+  border: 1px solid #dddddd;
+  display: block;
+  float: left;
+  overflow: hidden;
+  margin: 13px 0 0;
+  padding: 7px;
+  width: auto;
+}
+
+span.frame span img {
+  display: block;
+  float: left;
+}
+
+span.frame span span {
+  clear: both;
+  color: #333333;
+  display: block;
+  padding: 5px 0 0;
+}
+
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both;
+}
+
+span.align-center > span {
+  display: block;
+  overflow: hidden;
+  margin: 13px auto 0;
+  text-align: center;
+}
+
+span.align-center span img {
+  margin: 0 auto;
+  text-align: center;
+}
+
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both;
+}
+
+span.align-right > span {
+  display: block;
+  overflow: hidden;
+  margin: 13px 0 0;
+  text-align: right;
+}
+
+span.align-right span img {
+  margin: 0;
+  text-align: right;
+}
+
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left;
+}
+
+span.float-left span {
+  margin: 13px 0 0;
+}
+
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right;
+}
+
+span.float-right > span {
+  display: block;
+  overflow: hidden;
+  margin: 13px auto 0;
+  text-align: right;
+}
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+}
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent;
+}
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+pre code, pre tt {
+  background-color: transparent;
+  border: none;
+}
+
+/* Syntax Highlighting */
+
+.plainText {
+ background-color: #FFFFFF;
+ color: #000000;
+}
+.htmlServerSideScript {
+ background-color: #FFFF00;
+}
+.htmlComment {
+ color: #008000;
+}
+.htmlTagDelimiter {
+ color: #0000FF;
+}
+.htmlElementName {
+ color: #A31515;
+}
+.htmlAttributeName {
+ color: #FF0000;
+}
+.htmlAttributeValue {
+ color: #0000FF;
+}
+.htmlOperator {
+ color: #0000FF;
+}
+.comment {
+ color: #008000;
+}
+.xmlDocTag {
+ color: #808080;
+}
+.xmlDocComment {
+ color: #008000;
+}
+.string {
+ color: #A31515;
+}
+.stringCSharpVerbatim {
+ color: #A31515;
+}
+.keyword {
+ color: #0000FF;
+}
+.preprocessorKeyword {
+ color: #0000FF;
+}
+.htmlEntity {
+ color: #FF0000;
+}
+.xmlAttribute {
+ color: #FF0000;
+}
+.xmlAttributeQuotes {
+ color: #000000;
+}
+.xmlAttributeValue {
+ color: #0000FF;
+}
+.xmlCDataSection {
+ color: #808080;
+}
+.xmlComment {
+ color: #008000;
+}
+.xmlDelimiter {
+ color: #0000FF;
+}
+.xmlName {
+ color: #A31515;
+}
+.className {
+ color: #48D1CC;
+}
+.cssSelector {
+ color: #A31515;
+}
+.cssPropertyName {
+ color: #FF0000;
+}
+.cssPropertyValue {
+ color: #0000FF;
+}
+.sqlSystemFunction {
+ color: #FF00FF;
+}
+.powershellAttribute {
+ color: #B0E0E6;
+}
+.powershellOperator {
+ color: #808080;
+}
+.powershellType {
+ color: #008080;
+}
+.powershellVariable {
+ color: #FF4500;
+}
+.type {
+ color: #008080;
+}
+.typeVariable {
+ color: #008080;
+ font-style: italic;
+}
+.namespace {
+ color: #000080;
+}
+.constructor {
+ color: #800080;
+}
+.predefined {
+ color: #000080;
+}
+.pseudoKeyword {
+ color: #000080;
+}
+.stringEscape {
+ color: #808080;
+}
+.controlKeyword {
+ color: #0000FF;
+}
+.number {
+}
+.operator {
+}
+.delimiter {
+}
+.markdownHeader {
+ font-weight: bold;
+}
+.markdownCode {
+ color: #008080;
+}
+.markdownListItem {
+ font-weight: bold;
+}
+.italic {
+ font-style: italic;
+}
+.bold {
+ font-weight: bold;
+}
+
+                    </style>
+                </head>
+                <body class="markdown-body" style="">
+                <h1 id="0">VISA Compatibility Tester Guide</h1>
+<h2 id="2">Table of Contents</h2>
+<ul id="4">
+<li id="4"><a href="#About">About</a></li>
+<li id="5"><a href="#VISA-Runtime">VISA Runtime</a></li>
+<li id="6"><a href="#Command-Line">Command Line</a>
+<ul id="7">
+<li id="7"><a href="#Find-Implementation">Find Implementation</a></li>
+<li id="8"><a href="#Identify">Identify</a></li>
+</ul>
+</li>
+<li id="9"><a href="#Attributions">Attributions</a></li>
+</ul>
+<p id="11"><a name="About"></a></p>
+<h2 id="12">About</h2>
+<p id="14">This guide describes how to use the <code>cc.isr.Visa.Compatibility.Tester</code> application to lookup and check the compatibility of the current instance of the <a href="https://www,ivi.org">IVI VISA</a> implementation.</p>
+<p id="16"><a name="Command-Line"></a></p>
+<h2 id="17">Command Line</h2>
+<p id="19">The <code>cc.isr.Visa.Compatibility.Tester</code> is run from the Windows Command Line.</p>
+<p id="21"><a name="Find-Implementation"></a></p>
+<h3 id="22">Find Implementation</h3>
+<p id="24">Enter the following command:</p>
+<pre><code id="25">cc.isr.Visa.Compatibility.Tester
+</code></pre>
+<p id="29">or</p>
+<pre><code id="31">.\cmds\check.bat
+</code></pre>
+<p id="35">The following outcome:</p>
+<pre><code id="36">Checking IVI VISA Compatibility
 
 Checking IVI VISA Compatibility
 
@@ -75,86 +601,108 @@ VISA.NET Shared Components Ivi.Visa, Version=8.0.0.0, Culture=neutral, PublicKey
         Version: 8.0.7511.0.
         visaConfMgr version 8.0.7331.0 detected.
 Loaded Keysight.Visa, Version=18.5.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73, 18.5.73.0
-</code>
-    </pre>
-    <p>Shows that the program found a compatible implementation.</p>
-    <p>The following outcome:</p>
-    <pre>
-      <code>TBD
-</code>
-    </pre>
-    <p>Shows that the program failed to find a compatible implementation</p>
-    <p>
-      <a name="Identify"></a>
-    </p>
-    <h3 id="identify">Identify</h3>
-    <p>Enter the following command:</p>
-    <pre>
-      <code>cc.isr.Visa.Compatibility.Tester TCPIP::192.168.0.150:inst0:INSTR
-</code>
-    </pre>
-    <p>or</p>
-    <pre>
-      <code>.\cmds\identify.bat
-</code>
-    </pre>
-    <p>The following outcome:</p>
-    <pre>
-      <code>Checking IVI VISA Compatibility
+</code></pre>
+<p id="50">Shows that the program found a compatible implementation.</p>
+<p id="52">The following outcome:</p>
+<pre><code id="53">TBD
+</code></pre>
+<p id="57">Shows that the program failed to find a compatible implementation</p>
+<p id="59"><a name="Identify"></a></p>
+<h3 id="60">Identify</h3>
+<p id="62">Enter the following command:</p>
+<pre><code id="63">cc.isr.Visa.Compatibility.Tester TCPIP::192.168.0.150:inst0:INSTR
+</code></pre>
+<p id="67">or</p>
+<pre><code id="69">.\cmds\identify.bat
+</code></pre>
+<p id="74">The following outcome:</p>
+<pre><code id="75">Checking IVI VISA Compatibility
 Command: TCPIP0::192.168.0.150::inst0::INSTR;
 
-Make sure that the instrument at TCPIP0::192.168.0.150::inst0::INSTR is turned on.
-
-IviVisaCompatibilityTester, Version=8.0.1.9356, Culture=neutral, PublicKeyToken=456c916a0c4a68ef
-        Running under .NETCoreApp,Version=v9.0 runtime .NET 9.0.8
+Turn on the instrument at TCPIP0::192.168.0.150::inst0::INSTR and press any key »
+IviVisaCompatibilityTester, Version=8.0.2.9510, Culture=neutral, PublicKeyToken=456c916a0c4a68ef
+        Running under .NETCoreApp,Version=v10.0 runtime .NET 10.0.2
+Runtime Information:
+        Framework Description: .NET 10.0.2
+              OS Architecture: X64
+               OS Description: Microsoft Windows 10.0.26200 (is Windows 11 if build &gt;= 22000)
+         Process Architecture: X64
+           Runtime Identifier: win-x64
 
 VISA.NET Shared Components Ivi.Visa, Version=8.0.0.0, Culture=neutral, PublicKeyToken=a128c98f1d7717c1.
-        Version: 8.0.7511.0.
+        Version: 8.0.7803.0.
         visaConfMgr version 8.0.7331.0 detected.
-Loaded Keysight.Visa, Version=18.5.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73, 18.5.73.0
-Opening a VISA session to 'TCPIP0::192.168.0.150::inst0::INSTR'...
-        Reading instrument identification string...
-ID: Keithley Instruments Inc., Model 2612A, 1214466, 2.2.6
-</code>
-    </pre>
-    <p>Shows that the program found the instrument with the specified resources name.</p>
-    <p>Enter the following command:</p>
-    <pre>
-      <code>cc.isr.Visa.Compatibility.Tester TCPIP::192.168.1.150:inst0:INSTR
-</code>
-    </pre>
-    <p>The following outcome:</p>
-    <pre>
-      <code>Checking IVI VISA Compatibility
-Command: tcpip0::192.168.1.150::inst0::instr;
 
-Make sure that the instrument at tcpip0::192.168.1.150::inst0::instr is turned on.
+Opening a VISA session to 'TCPIP0::192.168.0.150::inst0::INSTR' by:
+        Ivi.Visa.GlobalResourceManager.ImplementationVersion:8.0.0.0
+        Ivi.Visa.GlobalResourceManager.SpecificationVersion:7.4.0.0
+        Keysight.Visa.TcpipSession Visa session opened to 'TCPIP0::192.168.0.150::inst0::INSTR'.
 
-IviVisaCompatibilityTester, Version=8.0.1.9352, Culture=neutral, PublicKeyToken=456c916a0c4a68ef
-Running under .NETCoreApp,Version=v9.0.
-VISA.NET Shared Components version 8.0.0.0.
-VISA Shared Components version 8.0.7331.0 detected.
-Loaded Keysight.Visa, Version=18.5.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73.
-Attempt Ping instrument at '192.168.1.150' failed.
-</code>
-    </pre>
-    <p>Shows that the program could not find the instrument with the specified resources name.</p>
-    <p>
-      <a name="VISA_Runtime"></a>
-    </p>
-    <h2 id="visa-runtime">VISA Runtime</h2>
-    <p>The Visa Compatibility API uses the Virtual Instruments (VISA) framework from the <a href="https://www,ivi.org">IVI Foundation</a> for communicating with the TTM instrument. <a href="https://www,ivi.org">IVI VISA</a> is installed by members of the <a href="https://www,ivi.org">IVI Foundation</a> such as Keysight, Rohde-Schwartz and NI (former National Instruments). Implementations such as the <a href="https://www.keysight.com/en/pd-1985909/io-libraries-suite">IO Suite</a> from Keysight or <a href="http://ftp.ni.com/support/softlib/visa/VISA%20Run-Time%20Engine">NI Visa</a> from NI must be installed for running applications based on <a href="https://www,ivi.org">IVI VISA</a>.</p>
-    <p>The current TTM software was developed based on version 8.0.2 of <a href="https://www,ivi.org">IVI VISA</a> with Keysight VISA version 18.6.6.</p>
-    <p>Because the Keysight I/O Suite starting with version 21.1.209 requires also the Keysight.VISA DLL, the tester may not work with other VISA implementations.</p>
-    <p>
-      <a name="Attributions"></a>
-    </p>
-    <h2 id="attributions">Attributions</h2>
-    <p>Last Updated 2025-09-16</p>
-    <p>© 2011 by Integrated Scientific Resources, Inc.</p>
-    <p>This information is provided "AS IS" WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.</p>
-    <p>Licensed under <a href="http://opensource.org/licenses/MIT">MIT</a> License.</p>
-    <p>Unless required by applicable law or agreed to in writing, this software is provided "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</p>
-    <p>Source code is hosted on <a href="https://www.github.com/ATECoder">GitHub</a></p>
-  </body>
-</html>
+Reading 'TCPIP0::192.168.0.150::inst0::INSTR' identity...
+        VISA resource 'TCPIP0::192.168.0.150::inst0::INSTR' identified as:
+        Keithley Instruments Inc., Model 2612A, 1214466, 2.2.6
+
+Identifying session implementations by type names:
+        is a 'Ivi.Visa.IVisaSession'.
+        is a 'Ivi.Visa.IMessageBasedSession'.
+        is not a 'Ivi.Visa.ITcpipSession'.
+        The 'Ivi.Visa.ITcpipSession2' type does not exist in 'Ivi.Visa'.
+        is not a 'Ivi.Visa.ITcpipSocketSession'.
+        The 'Ivi.Visa.ITcpipSocketSession2' type does not exist in 'Ivi.Visa'.
+        is not a 'Ivi.Visa.IGpibInterfaceSession'.
+        is not a 'Ivi.Visa.IGpibSession'.
+        is a 'Ivi.Visa.INativeVisaSession'.
+        is not a 'Ivi.Visa.IPxiBackplaneSession'.
+        is not a 'Ivi.Visa.IPxiMemorySession'.
+        is not a 'Ivi.Visa.IPxiSession'.
+        The 'Ivi.Visa.IPxiSession2' type does not exist in 'Ivi.Visa'.
+        is not a 'Ivi.Visa.IRegisterBasedSession'.
+        is not a 'Ivi.Visa.ISerialSession'.
+        is not a 'Ivi.Visa.IVxiBackplaneSession'.
+        is not a 'Ivi.Visa.IVxiMemorySession'.
+        is not a 'Ivi.Visa.IVxiSession'.
+
+Loaded Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73.
+        Version: 18.6.5.0.
+
+Identifying session types by vendor type names:
+        is a 'Keysight.Visa.MessageBasedSession'.
+        is not a 'Keysight.Visa.GpibInterfaceSession'.
+        is not a 'Keysight.Visa.GpibSession'.
+        is not a 'Keysight.Visa.PxiBackplaneSession'.
+        is not a 'Keysight.Visa.PxiMemorySession'.
+        is not a 'Keysight.Visa.PxiSession'.
+        is not a 'Keysight.Visa.RegisterBasedSession'.
+        is not a 'Keysight.Visa.SerialSession'.
+        is a 'Keysight.Visa.TcpipSession'.
+        is not a 'Keysight.Visa.TcpipSocketSession'.
+        is not a 'Keysight.Visa.UsbSession'.
+        is a 'Keysight.Visa.VisaSession'.
+        is not a 'Keysight.Visa.VxiBackplaneSession'.
+        is not a 'Keysight.Visa.VxiMemorySession'.
+        is not a 'Keysight.Visa.VxiSession'.
+
+Identifying session interface implementations by vendor type names:
+        is a 'Keysight.Visa.IKeysightNativeVisaSession'.
+
+
+
+Closing session to 'TCPIP0::192.168.0.150::inst0::INSTR'...
+</code></pre>
+<p id="150">Shows that the program found the instrument with the specified resources name.</p>
+<p id="152"><a name="VISA_Runtime"></a></p>
+<h2 id="153">VISA Runtime</h2>
+<p id="155">The Visa Compatibility API uses the Virtual Instruments (VISA) framework from the <a href="https://www,ivi.org">IVI Foundation</a> for communicating with the TTM instrument. <a href="https://www,ivi.org">IVI VISA</a> is installed by members of the <a href="https://www,ivi.org">IVI Foundation</a> such as Keysight, Rohde-Schwartz and NI (former National Instruments). Implementations such as the <a href="https://www.keysight.com/en/pd-1985909/io-libraries-suite">IO Suite</a> from Keysight or <a href="http://ftp.ni.com/support/softlib/visa/VISA%20Run-Time%20Engine">NI Visa</a> from NI must be installed for running applications based on <a href="https://www,ivi.org">IVI VISA</a>.</p>
+<p id="157">The current TTM software was developed based on version 8.0.2 of <a href="https://www,ivi.org">IVI VISA</a>, which loades Keysight VISA version 18.6.5 from the GAC.</p>
+<p id="159"><a name="Attributions"></a></p>
+<h2 id="160">Attributions</h2>
+<p id="162">Last Updated 2026-01-14</p>
+<p id="164">© 2011 by Integrated Scientific Resources, Inc.</p>
+<p id="166">This information is provided &quot;AS IS&quot; WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.</p>
+<p id="168">Licensed under <a href="http://opensource.org/licenses/MIT">MIT</a> License.</p>
+<p id="170">Unless required by applicable law or agreed to in writing, this software is provided &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</p>
+<p id="172">Source code is hosted on <a href="https://www.github.com/ATECoder">GitHub</a></p>
+
+                </body>
+            </html>
+            

@@ -2,9 +2,20 @@
 All notable changes to these libraries will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-[8.0.2.9509]: https://www.github.com/atecoder/dn.vi.ivi
+[8.0.2.9510]: https://www.github.com/atecoder/dn.vi.ivi
 
-Current IVI Visa Compatibility: 8.0.2.9391
+Current IVI Visa Compatibility: 8.0.2.9510
+
+## [8.0.2.9510] - 2026-01-14
+- Gac Loader
+  - Remove the load methods.
+  - Remove isntrument identity query.
+  - Add open session method.
+  - Remove Vendor files
+  - Add Visa Assembly Info class.
+  - Move vendor code to the Visa assembly info class.
+- Visa Apps
+  - Remove pre-loading of the Visa implementation.
 
 ## [8.0.2.9504] - 2026-01-08
 - GAC Loader

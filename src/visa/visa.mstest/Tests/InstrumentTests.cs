@@ -20,7 +20,7 @@ public abstract partial class InstrumentTests
         string methodFullName = $"{testContext.FullyQualifiedTestClassName}.{System.Reflection.MethodBase.GetCurrentMethod()?.Name}";
         try
         {
-            _ = Gac.GacLoader.TryLoadInstalledVisaAssemblies( out _ );
+            Assert.IsTrue( Gac.GacLoader.TryEnumerateInstalledVisaAssemblies( out string details ), details );
         }
         catch ( Exception ex )
         {
@@ -47,9 +47,9 @@ public abstract partial class InstrumentTests
     [TestInitialize()]
     public virtual void InitializeBeforeEachTest()
     {
-        Console.WriteLine( $"\t{typeof( Gac.Vendor ).Assembly.FullName}" );
-        Console.WriteLine( $"\t{string.Join( ",", cc.isr.Visa.Gac.GacLoader.LoadedImplementationFriendlyNames )}." );
-        Console.WriteLine( $"\t{string.Join( Environment.NewLine, cc.isr.Visa.Gac.GacLoader.LoadedImplementationFileNames )}." );
+        Console.WriteLine( $"\t{typeof( Gac.GacLoader ).Assembly.FullName}" );
+        Console.WriteLine( $"\t{string.Join( ",", cc.isr.Visa.Gac.GacLoader.VisaImplementationFriendlyNames )}." );
+        // Console.WriteLine( $"\t{string.Join( Environment.NewLine, cc.isr.Visa.Gac.GacLoader.VisaImplementationFileNames )}." );
     }
 
     /// <summary> Cleans up the test class instance after each test has run. </summary>
@@ -292,7 +292,7 @@ public abstract partial class InstrumentTests
 
     /// <summary>   Query if this object is write completed. </summary>
     /// <remarks>   David, 2021-11-13. </remarks>
-    /// <returns>   True if write completed, false if not. </returns>
+    /// <returns>   True if write completed; otherwise false. </returns>
     private bool IsWriteCompleted()
     {
         return this._actualWriteMessageLength > 0;
@@ -338,7 +338,7 @@ public abstract partial class InstrumentTests
 
     /// <summary>   Query if this object is read completed. </summary>
     /// <remarks>   David, 2021-11-13. </remarks>
-    /// <returns>   True if read completed, false if not. </returns>
+    /// <returns>   True if read completed; otherwise false. </returns>
     private bool IsReadCompleted()
     {
         return this._actualReceivedMessageLength > 0;

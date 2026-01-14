@@ -66,7 +66,7 @@ public static partial class GacLoader
                 string identity = messageBasedSession.FormattedIO.ReadLine();
                 if ( string.IsNullOrWhiteSpace( identity ) )
                 {
-                    details = "Received empty or whitespace response from the instrument.";
+                    details = "*** Received empty or whitespace response from the instrument.";
                     return string.Empty;
                 }
                 details = string.Empty;
@@ -74,13 +74,13 @@ public static partial class GacLoader
             }
             catch ( Exception ex )
             {
-                details = GacLoader.BuildErrorMessage( ex );
+                details = $"*** {GacLoader.BuildErrorMessage( ex )}";
                 throw;
             }
         }
         else
         {
-            details = $"{visaSession.GetType()} Not a message-based session.";
+            details = $"*** {visaSession.GetType()} Not a message-based session.";
             return string.Empty;
         }
     }
@@ -107,13 +107,13 @@ public static partial class GacLoader
             }
             catch ( Exception exception )
             {
-                Console.WriteLine( GacLoader.BuildErrorMessage( exception ) );
+                Console.WriteLine( $"*** {GacLoader.BuildErrorMessage( exception )}" );
             }
 
         }
         catch ( Exception ex )
         {
-            Console.WriteLine( $"*** Failed getting Visa.NET Shared Components Version;\n{ex.Message}." );
+            Console.WriteLine( $"*** Failed getting Visa.NET Shared Components Version;\n{GacLoader.BuildErrorMessage( ex )}." );
         }
         return false;
     }

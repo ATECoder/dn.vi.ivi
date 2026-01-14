@@ -77,57 +77,90 @@ The following outcome:
 Checking IVI VISA Compatibility
 Command: TCPIP0::192.168.0.150::inst0::INSTR;
 
-Make sure that the instrument at TCPIP0::192.168.0.150::inst0::INSTR is turned on.
-
-IviVisaCompatibilityTester, Version=8.0.1.9356, Culture=neutral, PublicKeyToken=456c916a0c4a68ef
-        Running under .NETCoreApp,Version=v9.0 runtime .NET 9.0.8
+Turn on the instrument at TCPIP0::192.168.0.150::inst0::INSTR and press any key »
+IviVisaCompatibilityTester, Version=8.0.2.9510, Culture=neutral, PublicKeyToken=456c916a0c4a68ef
+        Running under .NETCoreApp,Version=v10.0 runtime .NET 10.0.2
+Runtime Information:
+        Framework Description: .NET 10.0.2
+              OS Architecture: X64
+               OS Description: Microsoft Windows 10.0.26200 (is Windows 11 if build >= 22000)
+         Process Architecture: X64
+           Runtime Identifier: win-x64
 
 VISA.NET Shared Components Ivi.Visa, Version=8.0.0.0, Culture=neutral, PublicKeyToken=a128c98f1d7717c1.
-        Version: 8.0.7511.0.
+        Version: 8.0.7803.0.
         visaConfMgr version 8.0.7331.0 detected.
-Loaded Keysight.Visa, Version=18.5.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73, 18.5.73.0
-Opening a VISA session to 'TCPIP0::192.168.0.150::inst0::INSTR'...
-        Reading instrument identification string...
-ID: Keithley Instruments Inc., Model 2612A, 1214466, 2.2.6
+
+Opening a VISA session to 'TCPIP0::192.168.0.150::inst0::INSTR' by:
+        Ivi.Visa.GlobalResourceManager.ImplementationVersion:8.0.0.0
+        Ivi.Visa.GlobalResourceManager.SpecificationVersion:7.4.0.0
+        Keysight.Visa.TcpipSession Visa session opened to 'TCPIP0::192.168.0.150::inst0::INSTR'.
+
+Reading 'TCPIP0::192.168.0.150::inst0::INSTR' identity...
+        VISA resource 'TCPIP0::192.168.0.150::inst0::INSTR' identified as:
+        Keithley Instruments Inc., Model 2612A, 1214466, 2.2.6
+
+Identifying session implementations by type names:
+        is a 'Ivi.Visa.IVisaSession'.
+        is a 'Ivi.Visa.IMessageBasedSession'.
+        is not a 'Ivi.Visa.ITcpipSession'.
+        The 'Ivi.Visa.ITcpipSession2' type does not exist in 'Ivi.Visa'.
+        is not a 'Ivi.Visa.ITcpipSocketSession'.
+        The 'Ivi.Visa.ITcpipSocketSession2' type does not exist in 'Ivi.Visa'.
+        is not a 'Ivi.Visa.IGpibInterfaceSession'.
+        is not a 'Ivi.Visa.IGpibSession'.
+        is a 'Ivi.Visa.INativeVisaSession'.
+        is not a 'Ivi.Visa.IPxiBackplaneSession'.
+        is not a 'Ivi.Visa.IPxiMemorySession'.
+        is not a 'Ivi.Visa.IPxiSession'.
+        The 'Ivi.Visa.IPxiSession2' type does not exist in 'Ivi.Visa'.
+        is not a 'Ivi.Visa.IRegisterBasedSession'.
+        is not a 'Ivi.Visa.ISerialSession'.
+        is not a 'Ivi.Visa.IVxiBackplaneSession'.
+        is not a 'Ivi.Visa.IVxiMemorySession'.
+        is not a 'Ivi.Visa.IVxiSession'.
+
+Loaded Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73.
+        Version: 18.6.5.0.
+
+Identifying session types by vendor type names:
+        is a 'Keysight.Visa.MessageBasedSession'.
+        is not a 'Keysight.Visa.GpibInterfaceSession'.
+        is not a 'Keysight.Visa.GpibSession'.
+        is not a 'Keysight.Visa.PxiBackplaneSession'.
+        is not a 'Keysight.Visa.PxiMemorySession'.
+        is not a 'Keysight.Visa.PxiSession'.
+        is not a 'Keysight.Visa.RegisterBasedSession'.
+        is not a 'Keysight.Visa.SerialSession'.
+        is a 'Keysight.Visa.TcpipSession'.
+        is not a 'Keysight.Visa.TcpipSocketSession'.
+        is not a 'Keysight.Visa.UsbSession'.
+        is a 'Keysight.Visa.VisaSession'.
+        is not a 'Keysight.Visa.VxiBackplaneSession'.
+        is not a 'Keysight.Visa.VxiMemorySession'.
+        is not a 'Keysight.Visa.VxiSession'.
+
+Identifying session interface implementations by vendor type names:
+        is a 'Keysight.Visa.IKeysightNativeVisaSession'.
+
+
+
+Closing session to 'TCPIP0::192.168.0.150::inst0::INSTR'...
 ```
 
 Shows that the program found the instrument with the specified resources name.
-
-Enter the following command:
-```
-cc.isr.Visa.Compatibility.Tester TCPIP::192.168.1.150:inst0:INSTR
-```
-
-The following outcome:
-```
-Checking IVI VISA Compatibility
-Command: tcpip0::192.168.1.150::inst0::instr;
-
-Make sure that the instrument at tcpip0::192.168.1.150::inst0::instr is turned on.
-
-IviVisaCompatibilityTester, Version=8.0.1.9352, Culture=neutral, PublicKeyToken=456c916a0c4a68ef
-Running under .NETCoreApp,Version=v9.0.
-VISA.NET Shared Components version 8.0.0.0.
-VISA Shared Components version 8.0.7331.0 detected.
-Loaded Keysight.Visa, Version=18.5.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73.
-Attempt Ping instrument at '192.168.1.150' failed.
-```
-
-Shows that the program could not find the instrument with the specified resources name.
 
 <a name="VISA_Runtime"></a>
 ## VISA Runtime
 
 The Visa Compatibility API uses the Virtual Instruments (VISA) framework from the [IVI Foundation] for communicating with the TTM instrument. [IVI VISA] is installed by members of the [IVI Foundation] such as Keysight, Rohde-Schwartz and NI (former National Instruments). Implementations such as the [IO Suite] from Keysight or [NI Visa] from NI must be installed for running applications based on [IVI VISA].
 
-The current TTM software was developed based on version 8.0.2 of [IVI VISA] with Keysight VISA version 18.6.6. 
-
-Because the Keysight I/O Suite starting with version 21.1.209 requires also the Keysight.VISA DLL, the tester may not work with other VISA implementations.
+The current TTM software was developed based on version 8.0.2 of [IVI VISA], which loades Keysight VISA version 18.6.5 from the GAC.
 
 <a name="Attributions"></a>
 ## Attributions
 
-Last Updated 2025-09-16
+Last Updated 2026-01-14
 
 &copy; 2011 by Integrated Scientific Resources, Inc.  
 

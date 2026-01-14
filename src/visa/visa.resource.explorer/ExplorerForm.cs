@@ -44,7 +44,7 @@ public partial class ExplorerForm : Form
 #endif
     private void ImplementationsListAllMenuItem_Click( object? sender, EventArgs e )
     {
-        System.Collections.Generic.IEnumerable<VisaImplementation> installedVisas = cc.isr.Visa.Gac.Vendor.EnumerateDotNetImplementations();
+        System.Collections.Generic.IEnumerable<VisaImplementation> installedVisas = Gac.GacLoader.EnumerateDotNetImplementations();
         System.Text.StringBuilder builder = new();
         if ( installedVisas is object )
         {

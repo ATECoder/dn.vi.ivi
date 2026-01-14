@@ -38,7 +38,7 @@ public class K2600Tests : InstrumentTests
     {
         Console.WriteLine( $"{this.TestContext?.FullyQualifiedTestClassName}: {DateTime.Now} {System.TimeZoneInfo.Local}" );
         Asserts.AssertVisaImplementationShouldBeLoaded();
-        Console.WriteLine( $"\tTesting {string.Join( ",", cc.isr.Visa.Gac.GacLoader.LoadedImplementationFriendlyNames )}." );
+        Console.WriteLine( $"\tTesting {string.Join( ",", cc.isr.Visa.Gac.GacLoader.VisaImplementationFriendlyNames )}." );
 
         // inst0 must be lower case
         // this.ResourceName = "TCPIP0::192.168.0.150::inst0::INSTR";

@@ -4,7 +4,6 @@ namespace cc.isr.Visa.Gac;
 
 public static partial class GacLoader
 {
-
     /// <summary>   Attempts to ping. </summary>
     /// <remarks>   2025-08-12. </remarks>
     /// <param name="resourceName"> Name of the resource. </param>
@@ -35,7 +34,7 @@ public static partial class GacLoader
         }
         catch ( Exception )
         {
-            details = $"Exception occurred pinging {resourceName}; .";
+            details = $"*** Exception occurred pinging {resourceName}; .";
         }
         return outcome;
     }

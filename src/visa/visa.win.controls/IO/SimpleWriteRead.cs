@@ -417,7 +417,7 @@ public partial class SimpleWriteRead : UserControl
 
     /// <summary> Sets up the control state. </summary>
     /// <remarks> David, 2020-10-11. </remarks>
-    /// <param name="isSessionOpen"> True if session is open, false if not. </param>
+    /// <param name="isSessionOpen"> True if session is open; otherwise false. </param>
     private void SetupControlState( bool isSessionOpen )
     {
         this.OpenSessionButton.Enabled = !isSessionOpen;

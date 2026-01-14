@@ -13,17 +13,6 @@ namespace Ivi.VisaNet;
 /// </remarks>
 public static partial class GacLoader
 {
-    /// <summary>   (Immutable) the visa configuration management assembly name. </summary>
-    public const string VisaConfigManagerFileName = "visaConfMgr.dll";
-
-    /// <summary>   Gets the file version information of the visa configuration manager. </summary>
-    /// <remarks>   2024-07-02. </remarks>
-    /// <returns>   The file version information of the visa configuration manager. </returns>
-    public static System.Diagnostics.FileVersionInfo? VisaConfigManagerFileVersionInfo()
-    {
-        return System.Diagnostics.FileVersionInfo.GetVersionInfo( System.IO.Path.Combine( Environment.SystemDirectory, GacLoader.VisaConfigManagerFileName ) );
-    }
-
     private static System.Reflection.Assembly? _visaNetShareComponentsAssembly;
     /// <summary>   Gets visa net share components assembly. </summary>
     /// <remarks>   2024-07-02. </remarks>
@@ -104,6 +93,5 @@ public static partial class GacLoader
         }
 
         return visaNetSharedComponentsVersion;
-
     }
 }

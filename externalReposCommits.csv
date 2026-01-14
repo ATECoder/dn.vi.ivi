@@ -5,7 +5,7 @@ e34773f698addd376e98f07cd08022973f00b60b,json,lib\vs\core
 bc22a138197071c3baf3c45f4cb811af35d545a6,tracing,lib\vs\core
 e7f6d5b067581d1c9f428ae76cc49770db68602d,std,lib\vs\core
 bc22a138197071c3baf3c45f4cb811af35d545a6,tracing,lib\vs\core
-48bc4b4204ba3d654e1f31c8d11d9057381db58d,vi,lib\vs\vi
+e59b03d3b4fbb63677d89fb6d428e18b0ee5e652,vi,lib\vs\vi
 e969bcfd97935b0364d290aab8c4bc486bc49eb2,visa,lib\vs\io
 ced724cc3b90b70a6373e1782a79786546f0f098,ide,libraries\vs\core
 5ea133a6a6153353ef8e1a3cbbecc5a1288c7744,wix,libraries\vs\core

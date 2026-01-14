@@ -32,7 +32,7 @@ public class GacAssemblyLoader : AssemblyLoader
     /// <param name="str">          The string. </param>
     /// <param name="substring">    The substring. </param>
     /// <param name="comp">         The component. </param>
-    /// <returns>   True if the object is in this collection, false if not. </returns>
+    /// <returns>   True if the object is in this collection; otherwise false. </returns>
     [System.Diagnostics.CodeAnalysis.SuppressMessage( "Usage", "CA2249:Consider using 'string.Contains' instead of 'string.IndexOf'", Justification = "<Pending>" )]
     [System.Diagnostics.CodeAnalysis.SuppressMessage( "Usage", "CA2263:Prefer generic overload when type is known", Justification = "<Pending>" )]
     private static bool Contains( string str, string substring, StringComparison comp )

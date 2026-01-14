@@ -181,7 +181,7 @@ public partial class TreePanel : SplitContainer
     }
 
     /// <summary>   Gets a value indicating whether the tree is pinned. </summary>
-    /// <value> True if pinned, false if not. </value>
+    /// <value> True if pinned; otherwise false. </value>
     public bool Pinned => this.pinButton.Checked;
 
     /// <summary>   Event handler. Called by NavigatorTreeView for mouse enter events. </summary>

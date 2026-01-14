@@ -1,7 +1,7 @@
 using System.Reflection;
 using Ivi.Visa;
 
-namespace Ivi.VisaNet;
+namespace cc.isr.Visa.Gac;
 
 public static partial class GacLoader
 {

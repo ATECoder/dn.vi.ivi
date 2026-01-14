@@ -76,7 +76,7 @@ else
 
             if ( string.IsNullOrWhiteSpace( resourceName ) )
             {
-                Console.WriteLine( $"*** {nameof( resourceName )} cannot be null or empty." );
+                Console.WriteLine( $"\n*** {nameof( resourceName )} cannot be null or empty." );
             }
             else
             {
