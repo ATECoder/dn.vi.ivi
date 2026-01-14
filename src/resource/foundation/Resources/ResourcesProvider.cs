@@ -72,9 +72,9 @@ public class ResourcesProvider : Pith.ResourcesProviderBase
         }
         catch ( MissingMethodException ex )
         {
-            if ( Ivi.Visa.GlobalResourceManager.ImplementationVersion < new Version( cc.isr.Visa.Gac.Vendor.IVI_VISA_IMPLEMENTATION_VERSION ) )
+            if ( Ivi.Visa.GlobalResourceManager.ImplementationVersion < new Version( cc.isr.Visa.Gac.GacLoader.IviVisaAssemblyInfo.ImplementationVersion ) )
             {
-                throw new InvalidOperationException( $"Failed {activity}; Expecting {cc.isr.Visa.Gac.Vendor.IVI_VISA_IMPLEMENTATION_VERSION} implementation and {cc.isr.Visa.Gac.Vendor.IVI_VISA_SPECIFICATION_VERSION} specification versions.", ex );
+                throw new InvalidOperationException( $"Failed {activity}; Expecting {cc.isr.Visa.Gac.GacLoader.IviVisaAssemblyInfo.ImplementationVersion} implementation and {cc.isr.Visa.Gac.GacLoader.IviVisaAssemblyInfo.SpecificationVersion} specification versions.", ex );
             }
             else
             {

@@ -70,12 +70,12 @@
   </Choose>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="10.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="10.0.2" />
     <!-- Suppress warning about newton soft 9.0.1 which is part of the .net fx testing extensions code coverage.
       <NuGetAuditSuppress Include="https://github.com/advisories/GHSA-5crp-9r3c-p9vr" />
     -->
     <!-- Already included with the default profile of the MSTest.SDK
-      <PackageReference Update="Microsoft.Testing.Extensions.CodeCoverage" />
+      <PackageReference Update="Microsoft.Testing.Extensions.CodeCoverage" Version="18.3.2" />
     -->
   </ItemGroup>
 

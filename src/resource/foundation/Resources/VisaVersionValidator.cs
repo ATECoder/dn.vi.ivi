@@ -20,10 +20,10 @@ public sealed class VisaVersionValidator
     /// <returns> The (Success As Boolean, Details As String) </returns>
     public static (bool Success, string Details) ValidateFunctionalVisaVersions()
     {
-        return VisaVersionValidator.ImplementationVersion < new Version( cc.isr.Visa.Gac.Vendor.IVI_VISA_IMPLEMENTATION_VERSION )
-            ? (false, $"IVI VISA implementation version {VisaVersionValidator.ImplementationVersion} is lower than expected {cc.isr.Visa.Gac.Vendor.IVI_VISA_IMPLEMENTATION_VERSION} version")
-            : VisaVersionValidator.SpecificationVersion < new Version( cc.isr.Visa.Gac.Vendor.IVI_VISA_SPECIFICATION_VERSION )
-            ? (false, $"IVI VISA Specification version {VisaVersionValidator.SpecificationVersion} is lower than expected {cc.isr.Visa.Gac.Vendor.IVI_VISA_SPECIFICATION_VERSION} version")
+        return VisaVersionValidator.ImplementationVersion < new Version( cc.isr.Visa.Gac.GacLoader.IviVisaAssemblyInfo.ImplementationVersion )
+            ? (false, $"IVI VISA implementation version {VisaVersionValidator.ImplementationVersion} is lower than expected {cc.isr.Visa.Gac.GacLoader.IviVisaAssemblyInfo.ImplementationVersion} version")
+            : VisaVersionValidator.SpecificationVersion < new Version( cc.isr.Visa.Gac.GacLoader.IviVisaAssemblyInfo.SpecificationVersion )
+            ? (false, $"IVI VISA Specification version {VisaVersionValidator.SpecificationVersion} is lower than expected {cc.isr.Visa.Gac.GacLoader.IviVisaAssemblyInfo.SpecificationVersion} version")
             : (true, string.Empty);
     }
 

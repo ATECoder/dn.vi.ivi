@@ -10,7 +10,7 @@ namespace cc.isr.VI.Foundation;
 public class SessionFactory : Pith.SessionFactoryBase
 {
     /// <summary> Initializes a new instance of the <see cref="SessionFactory" /> class. </summary>
-    public SessionFactory() : base() => cc.isr.Visa.Gac.GacLoader.LoadInstalledVisaAssemblies();
+    public SessionFactory() : base() => cc.isr.Visa.Gac.GacLoader.HasDotNetImplementations();
 
     /// <summary> Creates GPIB interface session. </summary>
     /// <returns> The new GPIB interface session. </returns>

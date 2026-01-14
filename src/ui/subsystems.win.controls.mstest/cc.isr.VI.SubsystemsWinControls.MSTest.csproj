@@ -91,7 +91,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <!-- Already included with the default profile of the MSTest.SDK
-      <PackageReference Update="Microsoft.Testing.Extensions.CodeCoverage" />
+      <PackageReference Update="Microsoft.Testing.Extensions.CodeCoverage" Version="18.3.2" />
     -->
   </ItemGroup>
 

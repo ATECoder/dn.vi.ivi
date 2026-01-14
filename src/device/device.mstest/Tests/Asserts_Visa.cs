@@ -20,7 +20,7 @@ public sealed partial class Asserts
         else
             Assert.Fail( $"{nameof( Ivi.Visa.IMessageBasedSession )} assembly not found." );
 
-        if ( typeof( cc.isr.Visa.Gac.Vendor ).Assembly is System.Reflection.Assembly vendorVisaAssembly )
+        if ( typeof( cc.isr.Visa.Gac.GacLoader ).Assembly is System.Reflection.Assembly vendorVisaAssembly )
         {
             if ( verbose )
             {
@@ -29,7 +29,7 @@ public sealed partial class Asserts
             }
         }
         else
-            Assert.Fail( $"{nameof( cc.isr.Visa.Gac.Vendor )} VISA assembly not found." );
+            Assert.Fail( $"{nameof( cc.isr.Visa.Gac.GacLoader )} assembly not found." );
     }
 
     #endregion
