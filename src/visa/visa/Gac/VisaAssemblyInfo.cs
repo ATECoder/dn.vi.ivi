@@ -36,6 +36,10 @@ public class VisaAssemblyInfo
     /// <value> The specification version. </value>
     public string SpecificationVersion { get; set; } = string.Empty;
 
+    /// <summary>   Gets or sets the file version. </summary>
+    /// <value> The file version. </value>
+    public string FileVersion { get; set; } = string.Empty;
+
     /// <summary>   Gets or sets a value indicating whether this object is a vendor implementation. </summary>
     /// <value> True if this object is a vendor implementation; otherwise false. </value>
     public bool IsVendorImplementation { get; set; } = false;

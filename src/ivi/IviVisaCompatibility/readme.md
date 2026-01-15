@@ -58,4 +58,10 @@ IVI Foundation announces in [VPP-4.3.6] that the *VISA.NET* shared components ve
 [VISA.NET Shared Components]: https://www.ivifoundation.org/Shared-Components/default.html#visa-and-visanet-shared-components
 [VPP-4.3.6]: https://www.ivifoundation.org/downloads/VISA/vpp436_2024-02-08.pdf
 [.Net Stadnard Compatibility Mode]: https://learn.microsoft.com/en-us/dotnet/core/porting/third-party-deps#net-framework-compatibility-mode
-
+[Keysight IO Suite 21.1.17 2024-11-20]: https://www.keysight.com/us/en/software/keysight-io-suite.html
+[Keysight IO Suite 21.1.209 2025-04-25]: https://www.keysight.com/us/en/software/keysight-io-suite.html
+[Keysight IO Suite Suite 21.2.207 2025-09-10]: https://www.keysight.com/us/en/software/keysight-io-suite.html
+[IviFoundation.Visa 8.0.2]: https://www.nuget.org/packages/IviFoundation.Visa/
+[KeysightTechnologies.Visa 18.5.73]: https://www.nuget.org/packages/KeysightTechnologies.Visa/
+[KeysightTechnologies.Visa 18.6.6]: https://www.nuget.org/packages/KeysightTechnologies.Visa/
+[Kelary.Ivi.Visa 7.2.0]: https://www.nuget.org/packages/Kelary.Ivi.Visa

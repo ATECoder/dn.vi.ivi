@@ -20,7 +20,6 @@ public static partial class GacLoader
         }
         System.Globalization.CultureInfo culture = System.Globalization.CultureInfo.CurrentCulture;
         System.Text.StringBuilder sb = new();
-        _ = sb.AppendLine( "" );
         string line = $"Opening a VISA session to '{resourceName}' by:";
         _ = sb.AppendLine( line );
         line = $"\tIvi.Visa.{nameof( GlobalResourceManager )}.{nameof( GlobalResourceManager.ImplementationVersion )}:{GlobalResourceManager.ImplementationVersion}";

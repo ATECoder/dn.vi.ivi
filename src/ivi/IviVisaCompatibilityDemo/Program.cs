@@ -1,6 +1,7 @@
 using System.Reflection;
 using System.Runtime.Versioning;
 using Ivi.Visa;
+using Ivi.VisaNet;
 
 string resourceName = args[0];
 
@@ -47,22 +48,34 @@ Version? visaNetSharedComponentsVersion = visaNetSharedComponentsAssembly?.GetNa
 Console.WriteLine();
 
 if ( visaNetSharedComponentsAssembly is null )
-{
     Console.WriteLine( $"*** VISA.NET Shared Components assembly not found. Please install a vendor-specific VISA implementation." );
-}
 else
 {
     Console.WriteLine( $"VISA.NET Shared Components {visaNetSharedComponentsAssembly.GetName()}." );
     Console.WriteLine( $"\tVersion: {System.Diagnostics.FileVersionInfo.GetVersionInfo( typeof( GlobalResourceManager ).Assembly.Location ).FileVersion}." );
 
+    // Get the version of the VISA Configuration Manager File Version Info.
+    System.Diagnostics.FileVersionInfo? visaConfigManagerFileVersionInfo = Ivi.VisaNet.GacLoader.VisaConfigManagerFileVersionInfo();
+    if ( visaConfigManagerFileVersionInfo is not null )
+    {
+        Console.WriteLine( $"\n{visaConfigManagerFileVersionInfo.InternalName} file: {visaConfigManagerFileVersionInfo.FileName}" );
+        Console.WriteLine( $"\t version: {visaConfigManagerFileVersionInfo.ProductVersion}" );
+    }
+    else
+        Console.WriteLine( $"\n*** Failed getting the VISA Config Manager {Ivi.VisaNet.GacLoader.VisaConfigManagerFileName} info." );
+
+    // force loading the vendor implementation assembly
+    Assembly? loadedAssembly = GacLoader.TryFindLoadedImplementation( out string findDetails );
+    Console.WriteLine();
+    if ( loadedAssembly is null )
+        Console.WriteLine( $"*** {findDetails}" );
+    else
+        Console.WriteLine( findDetails );
+
     try
     {
-        // Get the version of the VISA Configuration Manager File Version Info.
-        System.Diagnostics.FileVersionInfo? visaConfigManagerFileVersionInfo = Ivi.VisaNet.GacLoader.VisaConfigManagerFileVersionInfo();
         if ( visaConfigManagerFileVersionInfo is not null )
         {
-            Console.WriteLine( $"\t{visaConfigManagerFileVersionInfo.InternalName} version {visaConfigManagerFileVersionInfo.ProductVersion} detected." );
-
             if ( string.IsNullOrWhiteSpace( resourceName ) )
             {
                 Console.WriteLine( $"\n*** {nameof( resourceName )} cannot be null or empty." );
@@ -82,14 +95,22 @@ else
 
                     Console.WriteLine( Ivi.VisaNet.GacLoader.BuildSessionInterfaceImplementationReport( session ) );
 
-                    Console.WriteLine( Ivi.VisaNet.GacLoader.BuildSessionIdentityReport( session ) );
+                    if ( loadedAssembly is null )
+                    {
+                        loadedAssembly = GacLoader.TryFindLoadedImplementation( out details );
+                        if ( loadedAssembly is null )
+                            Console.WriteLine( $"\n*** {details}" );
+                        else
+                            Console.WriteLine( details );
+                    }
+
+                    if ( loadedAssembly is not null )
+                        Console.WriteLine( Ivi.VisaNet.GacLoader.BuildSessionTypesReport( loadedAssembly, session ) );
 
                     Console.WriteLine( $"\nClosing session to '{resourceName}'..." );
                 }
             }
         }
-        else
-            Console.WriteLine( $"\t*** Failed getting the VISA Config Manager {Ivi.VisaNet.GacLoader.VisaConfigManagerFileName} info." );
     }
     catch ( FileNotFoundException )
     {

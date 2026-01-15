@@ -10,6 +10,7 @@ public partial class VisaIoForm : Form
     {
         this.InitializeComponent();
         this.Icon = cc.isr.Visa.Console.Properties.Resources.favicon;
+        this.Text = $"Visa Interactive IO: {Gac.GacLoader.VisaPackageSource}";
     }
 
     protected override void OnLoad( EventArgs e )

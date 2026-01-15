@@ -374,15 +374,7 @@ public static partial class GacLoader
         {
             _ = sb.AppendLine( GacLoader.IsInterfaceImplemented( visaSession, interfaceName, out string details ) ? details : details );
         }
-
-# if false
-        _ = sb.Append( visaSession is Ivi.Visa.IVisaSession
-            ? $"\tis"
-            : $"\tis not" );
-        _ = sb.AppendLine( $" a '{nameof( Ivi )}.{nameof( Ivi.Visa )}.{nameof( Ivi.Visa.IVisaSession )}'." );
-#endif
         return sb.ToString();
-
     }
 
     /// <summary>   Builds session types report. </summary>

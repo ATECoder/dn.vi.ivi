@@ -1,3 +1,5 @@
+using System.Reflection;
+
 namespace cc.isr.Visa.Gac;
 
 /// <summary>
@@ -84,6 +86,14 @@ public static partial class GacLoader
         {
             throw;
         }
+
+        // force loading the vendor implementation assembly
+        Assembly? loadedAssembly = GacLoader.TryFindLoadedImplementation( out string findDetails );
+        Console.WriteLine();
+        if ( loadedAssembly is null )
+            throw new System.IO.IOException( $"*** {findDetails}" );
+        else
+            Console.WriteLine( findDetails );
 
         return visaNetSharedComponentsVersion;
     }

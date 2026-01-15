@@ -15,6 +15,7 @@ public static partial class GacLoader
         ResourceManagerTypeName = string.Empty,
         ImplementationVersion = "8.0.0.0",
         SpecificationVersion = "7.4.0.0",
+        FileVersion = "8.0.2.0",
         IsVendorImplementation = false
     };
 
@@ -23,12 +24,13 @@ public static partial class GacLoader
     public static VisaAssemblyInfo KeysightVisaAssemblyInfo => new()
     {
         FriendlyName = "Keysight.Visa",
-        FolderPath = @"C:\Windows\assembly\GAC_MSIL\Keysight.Visa\18.6.0.0__7a01cdb2a9131f73",
+        FolderPath = @"C:\Program Files\IVI Foundation\VISA\Microsoft.NET\VendorAssemblies\kt\8.0\Keysight.Visa\Keysight.Visa.dll",
         FileName = "Keysight.Visa.dll",
         FullName = "Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73",
         ResourceManagerTypeName = "Keysight.Visa.ResourceManager, Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73",
         ImplementationVersion = "18.6.0.0",
         SpecificationVersion = "7.4.0.0",
+        FileVersion = "18.6.5.0",
         IsVendorImplementation = true
     };
 
@@ -37,12 +39,13 @@ public static partial class GacLoader
     public static VisaAssemblyInfo NIVisaAssemblyInfo => new()
     {
         FriendlyName = "NationalInstruments.Visa",
-        FolderPath = @"C:\Windows\assembly\GAC_MSIL\NationalInstruments.Visa\21.0.0.0__2eaa5af0834e221d",
+        FolderPath = @"C:\Program Files\IVI Foundation\VISA\Microsoft.NET\VendorAssemblies\kt\25.0\NI.Visa\NI.Visa.dll",
         FileName = "NationalInstruments.Visa.dll",
-        FullName = "NationalInstruments.Visa, Version=21.0.0.0, Culture=neutral, PublicKeyToken=2eaa5af0834e221d",
+        FullName = "NationalInstruments.Visa, Version=25.0.0.0, Culture=neutral, PublicKeyToken=2eaa5af0834e221d",
         ResourceManagerTypeName = "NationalInstruments.Visa.ResourceManager, NationalInstruments.Visa, Version=21.0.0.49304, Culture=neutral, PublicKeyToken=2eaa5af0834e221d",
-        ImplementationVersion = "21.0.0.0",
+        ImplementationVersion = "25.5.0.0",
         SpecificationVersion = "7.4.0.0",
+        FileVersion = "25.5.0.0",
         IsVendorImplementation = true
     };
 

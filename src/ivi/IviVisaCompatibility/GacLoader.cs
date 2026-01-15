@@ -1,6 +1,8 @@
 #pragma warning disable IDE0079 // Remove unnecessary suppression
 #pragma warning disable CA1305
 
+using System.Reflection;
+
 namespace Ivi.VisaNet;
 #pragma warning restore IDE0079 // Remove unnecessary suppression
 
@@ -91,6 +93,14 @@ public static partial class GacLoader
         {
             throw;
         }
+
+        // force loading the vendor implementation assembly
+        Assembly? loadedAssembly = GacLoader.TryFindLoadedImplementation( out string findDetails );
+        Console.WriteLine();
+        if ( loadedAssembly is null )
+            throw new System.IO.IOException( $"*** {findDetails}" );
+        else
+            Console.WriteLine( findDetails );
 
         return visaNetSharedComponentsVersion;
     }

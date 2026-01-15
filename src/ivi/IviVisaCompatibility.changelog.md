@@ -2,9 +2,16 @@
 All notable changes to these libraries will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-[8.0.2.9509]: https://www.github.com/atecoder/dn.vi.ivi
+[8.0.2.9511]: https://www.github.com/atecoder/dn.vi.ivi
 
-Current IVI Visa Compatibility: 8.0.2.9510
+Current IVI Visa Compatibility: 8.0.2.9511
+
+## [8.0.2.9511] - 2029-01-15
+- Gac Loader
+  - Add method to try loading the VISA implementation by parsing a resource name.
+ - Add the loading method to the vvalidation method.
+- Apps
+  - Report loading the visa implementation.
 
 ## [8.0.2.9510] - 2029-01-14
 - Add VisaLibraryInfo class.

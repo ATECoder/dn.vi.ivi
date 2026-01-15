@@ -1,12 +1,15 @@
 # IVI Visa Net Sample
 
-## VISA
+## VISA Installations
 
-- [Keysight VISA.NET 21.1.209](https://www.keysight.com/us/en/software/keysight-io-suite.html)
+- [Keysight IO Suite 21.1.209 2025-04-25]
+- [Keysight IO Suite Suite 21.2.207 2025-09-10]
 
-## Required Packages
-- [Ivi.Visa 8.0.2](https://www.nuget.org/packages/Ivi.Visa/)
-- [KeysightTechnologies.Visa 18.5.73](https://www.nuget.org/packages/KeysightTechnologies.Visa/)
+## Visa Packages
+- [IviFoundation.Visa 8.0.2]
+- [KeysightTechnologies.Visa 18.5.73]
+- [KeysightTechnologies.Visa 18.6.6]
+- [Kelary.Ivi.Visa 7.2.0]
 
 ## Directions
 
@@ -15,14 +18,15 @@
 1. Run the program from the IDE or the command window.
 1. Command: IviVisualStudioCompatibilityDemo tcpip0::192.168.0.144::inst0::instr 
 
-## Status running under the Keysight IO Suite 21.2.207
+## Status running under the [Keysight IO Suite Suite 21.2.207 2025-09-10]
 
-### IVIFoundation.Visa 8.0.2 Package .NET 4.8
+The Keysight VISA implementation 18.6.5 is picked up from the IVI foundation vendor assemblies folder
+`C:\Program Files\IVI Foundation\VISA\Microsoft.NET\VendorAssemblies`.
 
-The VISA implementation picks up Keysight 18.6.5 from the GAC which is compiled against .NET 4.0.
+### [IviFoundation.Visa 8.0.2] Package .NET 4.8
 
 ```
-IviVisaNetSample, Version=8.0.2.9510, Culture=neutral, PublicKeyToken=null
+IviVisaNetSample, Version=8.0.2.9511, Culture=neutral, PublicKeyToken=null
         Running under .NETFramework,Version=v4.8 runtime .NET Framework 4.8.9221.0
 Runtime Information:
         Framework Description: .NET Framework 4.8.9221.0
@@ -32,7 +36,13 @@ Runtime Information:
 
 VISA.NET Shared Components Ivi.Visa, Version=8.0.0.0, Culture=neutral, PublicKeyToken=a128c98f1d7717c1.
         Version: 8.0.7511.0.
-        visaConfMgr version 8.0.7331.0 detected.
+
+visaConfMgr file: C:\WINDOWS\system32\visaConfMgr.dll
+         version: 8.0.7331.0
+
+Loaded Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73.
+        C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\Keysight.Visa\v4.0_18.6.0.0__7a01cdb2a9131f73\Keysight.Visa.dll.
+        Version 18.6.5.0.
 
 Opening a VISA session to 'tcpip0::192.168.0.150::inst0::instr' by:
         Ivi.Visa.GlobalResourceManager.ImplementationVersion:8.0.0.0
@@ -63,8 +73,6 @@ Identifying session implementations by type names:
         is not a 'Ivi.Visa.IVxiMemorySession'.
         is not a 'Ivi.Visa.IVxiSession'.
 
-Loaded Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73.
-        Version: 18.6.5.0.
 
 Identifying session types by vendor type names:
         is a 'Keysight.Visa.MessageBasedSession'.
@@ -87,17 +95,14 @@ Identifying session interface implementations by vendor type names:
         is a 'Keysight.Visa.IKeysightNativeVisaSession'.
 
 
-
 Closing session to 'tcpip0::192.168.0.150::inst0::instr'...
 
 ```
 
-### IVIFoundation.Visa 8.0.2 Package .NET 10.0
-
-The VISA implementation picks up Keysight 18.6.5 from the GAC which is compiled against .NET 10. 
+###  [IviFoundation.Visa 8.0.2] Package .NET 10.0
 
 ```
-IviVisaNetSample, Version=8.0.2.9510, Culture=neutral, PublicKeyToken=null
+IviVisaNetSample, Version=8.0.2.9511, Culture=neutral, PublicKeyToken=null
         Running under .NETCoreApp,Version=v10.0 runtime .NET 10.0.2
 Runtime Information:
         Framework Description: .NET 10.0.2
@@ -108,7 +113,13 @@ Runtime Information:
 
 VISA.NET Shared Components Ivi.Visa, Version=8.0.0.0, Culture=neutral, PublicKeyToken=a128c98f1d7717c1.
         Version: 8.0.7803.0.
-        visaConfMgr version 8.0.7331.0 detected.
+
+visaConfMgr file: C:\WINDOWS\system32\visaConfMgr.dll
+         version: 8.0.7331.0
+
+Loaded Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73.
+        C:\Program Files\IVI Foundation\VISA\Microsoft.NET\VendorAssemblies\kt\8.0\Keysight.Visa\Keysight.Visa.dll.
+        Version 18.6.5.0.
 
 Opening a VISA session to 'tcpip0::192.168.0.150::inst0::instr' by:
         Ivi.Visa.GlobalResourceManager.ImplementationVersion:8.0.0.0
@@ -139,8 +150,6 @@ Identifying session implementations by type names:
         is not a 'Ivi.Visa.IVxiMemorySession'.
         is not a 'Ivi.Visa.IVxiSession'.
 
-Loaded Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73.
-        Version: 18.6.5.0.
 
 Identifying session types by vendor type names:
         is a 'Keysight.Visa.MessageBasedSession'.
@@ -162,15 +171,13 @@ Identifying session types by vendor type names:
 Identifying session interface implementations by vendor type names:
         is a 'Keysight.Visa.IKeysightNativeVisaSession'.
 
-
-
 Closing session to 'tcpip0::192.168.0.150::inst0::instr'...
 
 ```
 
-## Status running under the Keysight IO Suite 21.2.207
+## Status running under the [Keysight IO Suite Suite 21.2.207 2025-09-10]
 
-### Keysight 18.6.6 Package .NET 4.8 output
+### [KeysightTechnologies.Visa 18.6.6] Package .NET 4.8 output
 
 ```
 IviVisaNetSample, Version=8.0.2.9391, Culture=neutral, PublicKeyToken=null
@@ -246,7 +253,7 @@ Opening a VISA session to 'tcpip0::192.168.0.150::inst0::instr' by:
         Keithley Instruments Inc., Model 2612A, 1214466, 2.2.6
 ```
 
-### Keysight 18.6.6 Package .NET 9.0 output
+### [KeysightTechnologies.Visa 18.6.6] Package .NET 9.0 output
 ```
 IviVisaNetSample, Version=8.0.2.9391, Culture=neutral, PublicKeyToken=null
         Running under .NETCoreApp,Version=v9.0 runtime .NET 9.0.9
@@ -322,9 +329,9 @@ Opening a VISA session to 'tcpip0::192.168.0.150::inst0::instr' by:
         Keithley Instruments Inc., Model 2612A, 1214466, 2.2.6
 ```
 
-## Status running under the Keysight IO Suite 21.1.209
+## Status running under the [Keysight IO Suite 21.1.209 2025-04-25]
 
-### .NET 4.8 output
+### [KeysightTechnologies.Visa 18.5.73] .NET 4.8 output
 ```
 IviVisaNetSample, Version=8.0.1.9356, Culture=neutral, PublicKeyToken=null
         Running under .NETFramework,Version=v4.8 runtime .NET Framework 4.8.9310.0
@@ -349,7 +356,7 @@ tcpip0::192.168.0.150::inst0::instr Identification string:
 Keithley Instruments Inc., Model 2612A, 1214466, 2.2.6
 ```
 
-### .NET 9.0 output
+### [KeysightTechnologies.Visa 18.5.73] .NET 9.0 output
 ```
 IviVisaNetSample, Version=8.0.1.9356, Culture=neutral, PublicKeyToken=null
         Running under .NETCoreApp,Version=v9.0 runtime .NET 9.0.8
@@ -374,3 +381,12 @@ tcpip0::192.168.0.150::inst0::instr Identification string:
 
 Keithley Instruments Inc., Model 2612A, 1214466, 2.2.6
 ```
+
+[VI Repository]: https://www.github.com/atecoder/ds.vi.ivi
+[Keysight IO Suite 21.1.17 2024-11-20]: https://www.keysight.com/us/en/software/keysight-io-suite.html
+[Keysight IO Suite 21.1.209 2025-04-25]: https://www.keysight.com/us/en/software/keysight-io-suite.html
+[Keysight IO Suite Suite 21.2.207 2025-09-10]: https://www.keysight.com/us/en/software/keysight-io-suite.html
+[IviFoundation.Visa 8.0.2]: https://www.nuget.org/packages/IviFoundation.Visa/
+[KeysightTechnologies.Visa 18.5.73]: https://www.nuget.org/packages/KeysightTechnologies.Visa/
+[KeysightTechnologies.Visa 18.6.6]: https://www.nuget.org/packages/KeysightTechnologies.Visa/
+[Kelary.Ivi.Visa 7.2.0]: https://www.nuget.org/packages/Kelary.Ivi.Visa

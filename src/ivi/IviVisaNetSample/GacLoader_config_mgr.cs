@@ -112,6 +112,26 @@ public static partial class GacLoader
         return conflictManager.GetInstalledVisas( Ivi.Visa.ConflictManager.ApiType.DotNet ).Count > 0;
     }
 
+    public static bool TryValidateLoadedImplementation( out string details )
+    {
+        System.Text.StringBuilder sb = new();
+        bool reply = false;
+        if ( !GacLoader.HasDotNetImplementations() )
+            _ = sb.AppendLine( "No VISA .NET implementations were found." );
+        else
+        {
+            string line = $"\tIvi.Visa.{nameof( GlobalResourceManager )}.{nameof( GlobalResourceManager.ImplementationVersion )}:{GlobalResourceManager.ImplementationVersion}";
+            _ = sb.AppendLine( line );
+            line = $"\tIvi.Visa.{nameof( GlobalResourceManager )}.{nameof( GlobalResourceManager.SpecificationVersion )}:{GlobalResourceManager.SpecificationVersion}";
+            _ = sb.AppendLine( line );
+
+
+            reply = true;
+        }
+        details = sb.ToString();
+        return reply;
+    }
+
     /// <summary>   Try find implementation. </summary>
     /// <remarks>   2024-07-13. </remarks>
     /// <param name="friendlyName"> Name of the friendly. </param>
@@ -209,6 +229,51 @@ public static partial class GacLoader
         }
         return (null, $"No assembly with the friendly name '{friendlyName}' was found among the loaded assemblies.");
     }
+
+    /// <summary>   Try find loaded implementation. </summary>
+    /// <remarks>   2026-01-14. </remarks>
+    /// <param name="details">  [out] The details. </param>
+    /// <returns>   An Assembly? </returns>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0057:Use range operator", Justification = "<Pending>" )]
+    public static Assembly? TryFindLoadedImplementation( out string details )
+    {
+        Assembly? loadedAssembly = null;
+        StringBuilder failureBuilder = new();
+        StringBuilder sb = new();
+
+        // use this method to force loading the vendor implementation assembly
+        _ = Ivi.Visa.GlobalResourceManager.TryParse( "GPIB::24::INST", out _ );
+
+        foreach ( Ivi.Visa.ConflictManager.VisaImplementation visaLibrary in new Ivi.Visa.ConflictManager.ConflictManager().GetInstalledVisas( Ivi.Visa.ConflictManager.ApiType.DotNet ) )
+        {
+            string line;
+            try
+            {
+                string fullName = visaLibrary.Location.Substring( visaLibrary.Location.IndexOf( ',' ) + 1 );
+                string fileName = fullName.Substring( 0, fullName.IndexOf( ',' ) ).Trim();
+
+                // because we have a session, the implementation must be loaded now.
+                (loadedAssembly, line) = Ivi.VisaNet.GacLoader.TryFindLoadedAssemblyByFriendlyName( fileName );
+                if ( loadedAssembly is null )
+                    _ = failureBuilder.AppendLine( line );
+                else
+                {
+                    line = $"Loaded {loadedAssembly.GetName().FullName}.";
+                    _ = sb.AppendLine( line );
+                    line = $"\t{loadedAssembly.Location}.";
+                    _ = sb.AppendLine( line );
+                    line = $"\tVersion {System.Diagnostics.FileVersionInfo.GetVersionInfo( loadedAssembly.Location ).ProductVersion}.";
+                    _ = sb.AppendLine( line );
+                }
+            }
+            catch ( Exception exception )
+            {
+                line = $"Failed building session identity report for {visaLibrary.FriendlyName}:\n\t*** {GacLoader.BuildErrorMessage( exception )}";
+                _ = failureBuilder.AppendLine( line );
+            }
+        }
+        details = loadedAssembly is null ? failureBuilder.ToString() : sb.ToString();
+        return loadedAssembly;
+    }
+
 }
-
-

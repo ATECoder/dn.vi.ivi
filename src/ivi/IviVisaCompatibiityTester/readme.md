@@ -7,7 +7,7 @@
   1. check.bat
   1. identify.bat
 
-## Keysight VISA 21.2.207 2025-09-10 .NET 10
+## [Keysight IO Suite Suite 21.2.207 2025-09-10] .NET 10
 
 ### Check
 ```
@@ -30,8 +30,7 @@ VISA.NET Shared Components Ivi.Visa, Version=8.0.0.0, Culture=neutral, PublicKey
 
 ### Identify
 ```
-Turn on the instrument at TCPIP0::192.168.0.150::inst0::INSTR and press any key »
-IviVisaCompatibilityTester, Version=8.0.2.9510, Culture=neutral, PublicKeyToken=456c916a0c4a68ef
+IviVisaCompatibilityTester, Version=8.0.2.9511, Culture=neutral, PublicKeyToken=456c916a0c4a68ef
         Running under .NETCoreApp,Version=v10.0 runtime .NET 10.0.2
 Runtime Information:
         Framework Description: .NET 10.0.2
@@ -39,10 +38,15 @@ Runtime Information:
                OS Description: Microsoft Windows 10.0.26200 (is Windows 11 if build >= 22000)
          Process Architecture: X64
            Runtime Identifier: win-x64
-
 VISA.NET Shared Components Ivi.Visa, Version=8.0.0.0, Culture=neutral, PublicKeyToken=a128c98f1d7717c1.
         Version: 8.0.7803.0.
-        visaConfMgr version 8.0.7331.0 detected.
+
+visaConfMgr file: C:\WINDOWS\system32\visaConfMgr.dll
+         version: 8.0.7331.0
+
+Loaded Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73.
+        C:\Program Files\IVI Foundation\VISA\Microsoft.NET\VendorAssemblies\kt\8.0\Keysight.Visa\Keysight.Visa.dll.
+        Version 18.6.5.0.
 
 Opening a VISA session to 'TCPIP0::192.168.0.150::inst0::INSTR' by:
         Ivi.Visa.GlobalResourceManager.ImplementationVersion:8.0.0.0
@@ -73,8 +77,6 @@ Identifying session implementations by type names:
         is not a 'Ivi.Visa.IVxiMemorySession'.
         is not a 'Ivi.Visa.IVxiSession'.
 
-Loaded Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73.
-        Version: 18.6.5.0.
 
 Identifying session types by vendor type names:
         is a 'Keysight.Visa.MessageBasedSession'.
@@ -96,12 +98,10 @@ Identifying session types by vendor type names:
 Identifying session interface implementations by vendor type names:
         is a 'Keysight.Visa.IKeysightNativeVisaSession'.
 
-
-
 Closing session to 'TCPIP0::192.168.0.150::inst0::INSTR'...
 ```
 
-## Keysight VISA 21.2.207 2025-09-10 .NET 9
+## [Keysight IO Suite Suite 21.2.207 2025-09-10] .NET 9
 
 ### Check
 ```
@@ -201,7 +201,7 @@ Reading 'TCPIP0::192.168.0.150::inst0::INSTR' identity...
         Keithley Instruments Inc., Model 2612A, 1214466, 2.2.6
 ```
 
-## Keysight VISA 21.1.209 2025-04-25 .NET 9
+## [Keysight IO Suite 21.1.209 2025-04-25] .NET 9
 
 
 ### Check
@@ -242,4 +242,10 @@ IviVisaComparibilityTester is released as open source under the MIT license.
 Bug reports and contributions are welcome at the [VI Repository].
 
 [VI Repository]: https://www.github.com/atecoder/ds.vi.ivi
-
+[Keysight IO Suite 21.1.17 2024-11-20]: https://www.keysight.com/us/en/software/keysight-io-suite.html
+[Keysight IO Suite 21.1.209 2025-04-25]: https://www.keysight.com/us/en/software/keysight-io-suite.html
+[Keysight IO Suite Suite 21.2.207 2025-09-10]: https://www.keysight.com/us/en/software/keysight-io-suite.html
+[IviFoundation.Visa 8.0.2]: https://www.nuget.org/packages/IviFoundation.Visa/
+[KeysightTechnologies.Visa 18.5.73]: https://www.nuget.org/packages/KeysightTechnologies.Visa/
+[KeysightTechnologies.Visa 18.6.6]: https://www.nuget.org/packages/KeysightTechnologies.Visa/
+[Kelary.Ivi.Visa 7.2.0]: https://www.nuget.org/packages/Kelary.Ivi.Visa
