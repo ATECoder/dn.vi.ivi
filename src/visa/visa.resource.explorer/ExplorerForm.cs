@@ -19,7 +19,7 @@ public partial class ExplorerForm : Form
     {
         try
         {
-            this.Text = "Visa Resources Explorer";
+            this.Text = $"Visa Resource Explorer: {Gac.GacLoader.VisaPackageSource}";
         }
         catch ( Exception )
         {

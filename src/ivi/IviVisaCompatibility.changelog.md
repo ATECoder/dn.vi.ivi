@@ -7,9 +7,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 Current IVI Visa Compatibility: 8.0.2.9511
 
 ## [8.0.2.9511] - 2029-01-15
-- Gac Loader
+- GacLoaders
   - Add method to try loading the VISA implementation by parsing a resource name.
- - Add the loading method to the vvalidation method.
+  - Add the loading method to the vvalidation method.
+  - Add a verfify file.
+    - Add Verify method with reporting of the shared components, configuration, and loaded assemblies.
 - Apps
   - Report loading the visa implementation.
 

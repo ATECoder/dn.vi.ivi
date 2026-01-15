@@ -9,7 +9,11 @@ Current IVI Visa Compatibility: 8.0.2.9511
 ## [8.0.2.9511] - 2026-01-15
 - Gac Loader
   - Add method to try loading the VISA implementation by parsing a resource name.
- - Add the loading method to the vvalidation method.
+  - Add the loading method to the vvalidation method.
+  - Add a verfify file.
+    - Add Verify method with reporting of the shared components, configuration, and loaded assemblies.
+MS Test
+  - Validate Visa at static test class construction.
 
 ## [8.0.2.9510] - 2026-01-14
 - Gac Loader

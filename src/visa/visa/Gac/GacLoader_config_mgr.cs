@@ -209,6 +209,7 @@ public static partial class GacLoader
         }
         return (null, $"No assembly with the friendly name '{friendlyName}' was found among the loaded assemblies.");
     }
+
     /// <summary>   Try find loaded implementation. </summary>
     /// <remarks>   2026-01-14. </remarks>
     /// <param name="details">  [out] The details. </param>
@@ -237,12 +238,14 @@ public static partial class GacLoader
                     _ = failureBuilder.AppendLine( line );
                 else
                 {
-                    line = $"Loaded {loadedAssembly.GetName().FullName}.";
-                    _ = sb.AppendLine( line );
-                    line = $"\t{loadedAssembly.Location}.";
-                    _ = sb.AppendLine( line );
-                    line = $"\tVersion {System.Diagnostics.FileVersionInfo.GetVersionInfo( loadedAssembly.Location ).ProductVersion}.";
-                    _ = sb.AppendLine( line );
+                    FileInfo fileInfo = new( loadedAssembly.Location );
+                    System.Diagnostics.FileVersionInfo versionInfo = System.Diagnostics.FileVersionInfo.GetVersionInfo( loadedAssembly.Location );
+                    _ = sb.AppendLine( "Loaded vendor implementation assembly:" );
+                    _ = sb.AppendLine( $"\tFull Name: {loadedAssembly.GetName().FullName}." );
+                    _ = sb.AppendLine( $"\tLocation:  {fileInfo.DirectoryName}." );
+                    _ = sb.AppendLine( $"\tFile Name: {fileInfo.Name}{fileInfo.Extension}." );
+                    _ = sb.AppendLine( $"\tProduct:   {versionInfo.ProductVersion}." );
+                    _ = sb.AppendLine( $"\tFile:      {versionInfo.FileVersion}." );
                 }
             }
             catch ( Exception exception )

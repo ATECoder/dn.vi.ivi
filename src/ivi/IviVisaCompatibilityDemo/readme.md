@@ -13,30 +13,41 @@
 ```
 IviVisaCompatibilityDemo, Version=8.0.2.9511, Culture=neutral, PublicKeyToken=null
         Running under .NETFramework,Version=v4.7.2 runtime .NET Framework 4.8.9221.0
+
 Runtime Information:
         Framework Description: .NET Framework 4.8.9221.0
               OS Architecture: X64
                OS Description: Microsoft Windows 10.0.26200  (is Windows 11 if build >= 22000)
          Process Architecture: X64
 
-VISA.NET Shared Components Ivi.Visa, Version=8.0.0.0, Culture=neutral, PublicKeyToken=a128c98f1d7717c1.
-        Version: 8.0.7511.0.
+VISA implementation verified successfully.
 
-visaConfMgr file: C:\WINDOWS\system32\visaConfMgr.dll
-         version: 8.0.7331.0
+VISA.NET Shared Components assembly:
+        Full name: Ivi.Visa, Version=8.0.0.0, Culture=neutral, PublicKeyToken=a128c98f1d7717c1.
+        Version: 8.0.0.0.
+        Product: 8.0.7511.0.
+        File:    8.0.7511.0.
 
-Loaded Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73.
-        C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\Keysight.Visa\v4.0_18.6.0.0__7a01cdb2a9131f73\Keysight.Visa.dll.
-        Version 18.6.5.0.
+visaConfMgr assembly:
+        Location: C:\WINDOWS\system32\visaConfMgr.dll
+        Product:  8.0.7331.0
+        File:     8.0.7331.0
+
+Loaded vendor implementation assembly:
+        Full Name: Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73.
+        Location:  C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\Keysight.Visa\v4.0_18.6.0.0__7a01cdb2a9131f73.
+        File Name: Keysight.Visa.dll.dll.
+        Product:   18.6.5.0.
+        File:      18.6.5.0.
 
 Opening a VISA session to 'TCPIP0::192.168.0.150::inst0::INSTR' by:
         Ivi.Visa.GlobalResourceManager.ImplementationVersion:8.0.0.0
         Ivi.Visa.GlobalResourceManager.SpecificationVersion:7.4.0.0
         Keysight.Visa.TcpipSession Visa session opened to 'TCPIP0::192.168.0.150::inst0::INSTR'.
 
-Reading 'TCPIP0::192.168.0.150::inst0::INSTR' identity...
-        VISA resource 'TCPIP0::192.168.0.150::inst0::INSTR' identified as:
-        Keithley Instruments Inc., Model 2612A, 1214466, 2.2.6
+Reading instrument identity...
+        Resource: TCPIP0::192.168.0.150::inst0::INSTR
+        Identity: Keithley Instruments Inc., Model 2612A, 1214466, 2.2.6
 
 Identifying session implementations by type names:
         is a 'Ivi.Visa.IVisaSession'.
@@ -78,7 +89,6 @@ Identifying session types by vendor type names:
 
 Identifying session interface implementations by vendor type names:
         is a 'Keysight.Visa.IKeysightNativeVisaSession'.
-
 
 Closing session to 'TCPIP0::192.168.0.150::inst0::INSTR'...
 
@@ -88,30 +98,41 @@ Closing session to 'TCPIP0::192.168.0.150::inst0::INSTR'...
 ```
 IviVisaCompatibilityDemo, Version=8.0.2.9511, Culture=neutral, PublicKeyToken=null
         Running under .NETFramework,Version=v4.8 runtime .NET Framework 4.8.9221.0
+
 Runtime Information:
         Framework Description: .NET Framework 4.8.9221.0
               OS Architecture: X64
                OS Description: Microsoft Windows 10.0.26200  (is Windows 11 if build >= 22000)
          Process Architecture: X64
 
-VISA.NET Shared Components Ivi.Visa, Version=8.0.0.0, Culture=neutral, PublicKeyToken=a128c98f1d7717c1.
-        Version: 8.0.7511.0.
+VISA implementation verified successfully.
 
-visaConfMgr file: C:\WINDOWS\system32\visaConfMgr.dll
-         version: 8.0.7331.0
+VISA.NET Shared Components assembly:
+        Full name: Ivi.Visa, Version=8.0.0.0, Culture=neutral, PublicKeyToken=a128c98f1d7717c1.
+        Version: 8.0.0.0.
+        Product: 8.0.7511.0.
+        File:    8.0.7511.0.
 
-Loaded Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73.
-        C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\Keysight.Visa\v4.0_18.6.0.0__7a01cdb2a9131f73\Keysight.Visa.dll.
-        Version 18.6.5.0.
+visaConfMgr assembly:
+        Location: C:\WINDOWS\system32\visaConfMgr.dll
+        Product:  8.0.7331.0
+        File:     8.0.7331.0
+
+Loaded vendor implementation assembly:
+        Full Name: Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73.
+        Location:  C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\Keysight.Visa\v4.0_18.6.0.0__7a01cdb2a9131f73.
+        File Name: Keysight.Visa.dll.dll.
+        Product:   18.6.5.0.
+        File:      18.6.5.0.
 
 Opening a VISA session to 'TCPIP0::192.168.0.150::inst0::INSTR' by:
         Ivi.Visa.GlobalResourceManager.ImplementationVersion:8.0.0.0
         Ivi.Visa.GlobalResourceManager.SpecificationVersion:7.4.0.0
         Keysight.Visa.TcpipSession Visa session opened to 'TCPIP0::192.168.0.150::inst0::INSTR'.
 
-Reading 'TCPIP0::192.168.0.150::inst0::INSTR' identity...
-        VISA resource 'TCPIP0::192.168.0.150::inst0::INSTR' identified as:
-        Keithley Instruments Inc., Model 2612A, 1214466, 2.2.6
+Reading instrument identity...
+        Resource: TCPIP0::192.168.0.150::inst0::INSTR
+        Identity: Keithley Instruments Inc., Model 2612A, 1214466, 2.2.6
 
 Identifying session implementations by type names:
         is a 'Ivi.Visa.IVisaSession'.
@@ -154,14 +175,15 @@ Identifying session types by vendor type names:
 Identifying session interface implementations by vendor type names:
         is a 'Keysight.Visa.IKeysightNativeVisaSession'.
 
-
 Closing session to 'TCPIP0::192.168.0.150::inst0::INSTR'...
+
 ```
 
 ### [IviFoundation.Visa 8.0.2] package .NET 10
 ```
 IviVisaCompatibilityDemo, Version=8.0.2.9511, Culture=neutral, PublicKeyToken=null
         Running under .NETCoreApp,Version=v10.0 runtime .NET 10.0.2
+
 Runtime Information:
         Framework Description: .NET 10.0.2
               OS Architecture: X64
@@ -169,24 +191,34 @@ Runtime Information:
          Process Architecture: X64
            Runtime Identifier: win-x64
 
-VISA.NET Shared Components Ivi.Visa, Version=8.0.0.0, Culture=neutral, PublicKeyToken=a128c98f1d7717c1.
-        Version: 8.0.7803.0.
+VISA implementation verified successfully.
 
-visaConfMgr file: C:\WINDOWS\system32\visaConfMgr.dll
-         version: 8.0.7331.0
+VISA.NET Shared Components assembly:
+        Full name: Ivi.Visa, Version=8.0.0.0, Culture=neutral, PublicKeyToken=a128c98f1d7717c1.
+        Version: 8.0.0.0.
+        Product: 8.0.7803.0.
+        File:    8.0.7803.0.
 
-Loaded Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73.
-        C:\Program Files\IVI Foundation\VISA\Microsoft.NET\VendorAssemblies\kt\8.0\Keysight.Visa\Keysight.Visa.dll.
-        Version 18.6.5.0.
+visaConfMgr assembly:
+        Location: C:\WINDOWS\system32\visaConfMgr.dll
+        Product:  8.0.7331.0
+        File:     8.0.7331.0
+
+Loaded vendor implementation assembly:
+        Full Name: Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73.
+        Location:  C:\Program Files\IVI Foundation\VISA\Microsoft.NET\VendorAssemblies\kt\8.0\Keysight.Visa.
+        File Name: Keysight.Visa.dll.dll.
+        Product:   18.6.5.0.
+        File:      18.6.5.0.
 
 Opening a VISA session to 'TCPIP0::192.168.0.150::inst0::INSTR' by:
         Ivi.Visa.GlobalResourceManager.ImplementationVersion:8.0.0.0
         Ivi.Visa.GlobalResourceManager.SpecificationVersion:7.4.0.0
         Keysight.Visa.TcpipSession Visa session opened to 'TCPIP0::192.168.0.150::inst0::INSTR'.
 
-Reading 'TCPIP0::192.168.0.150::inst0::INSTR' identity...
-        VISA resource 'TCPIP0::192.168.0.150::inst0::INSTR' identified as:
-        Keithley Instruments Inc., Model 2612A, 1214466, 2.2.6
+Reading instrument identity...
+        Resource: TCPIP0::192.168.0.150::inst0::INSTR
+        Identity: Keithley Instruments Inc., Model 2612A, 1214466, 2.2.6
 
 Identifying session implementations by type names:
         is a 'Ivi.Visa.IVisaSession'.
@@ -228,7 +260,6 @@ Identifying session types by vendor type names:
 
 Identifying session interface implementations by vendor type names:
         is a 'Keysight.Visa.IKeysightNativeVisaSession'.
-
 
 Closing session to 'TCPIP0::192.168.0.150::inst0::INSTR'...
 

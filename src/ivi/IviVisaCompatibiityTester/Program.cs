@@ -17,6 +17,7 @@ if ( args is not null && args.Length > 0 )
 
     Console.Write( $"\nTurn on the instrument at {resourceName} and press any key »" );
     _ = Console.ReadKey();
+    Console.WriteLine();
 }
 
 TargetFrameworkAttribute? framework = Assembly.GetEntryAssembly()?.GetCustomAttribute<TargetFrameworkAttribute>();
@@ -39,7 +40,7 @@ Console.WriteLine( $"\tRunning under {framework?.FrameworkName
 //
 // These will show the actual runtime in use, not the value from `App.config`. If you need the config value, you must manually parse `App.config` as an XML file.
 
-Console.WriteLine( "Runtime Information:" );
+Console.WriteLine( "\nRuntime Information:" );
 Console.WriteLine( $"\tFramework Description: {System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription}" );
 Console.WriteLine( $"\t      OS Architecture: {System.Runtime.InteropServices.RuntimeInformation.OSArchitecture}" );
 Console.WriteLine( $"\t       OS Description: {System.Runtime.InteropServices.RuntimeInformation.OSDescription} (is Windows 11 if build >= 22000)" );
@@ -52,72 +53,39 @@ Console.WriteLine( $"\t   Runtime Identifier: {System.Runtime.InteropServices.Ru
 // If access VISA.NET without the visaConfMgr.dll library, an unhandled exception will
 // be thrown during termination process due to a bug in the implementation of the
 // VISA.NET Shared Components, and the application will crash.
-Assembly? visaNetSharedComponentsAssembly = Ivi.VisaNet.GacLoader.GetVisaNetShareComponentsAssembly();
 
-// Get VISA.NET Shared Components version.
-Version? visaNetSharedComponentsVersion = visaNetSharedComponentsAssembly?.GetName().Version;
-if ( visaNetSharedComponentsAssembly is null )
-    Console.WriteLine( $"*** VISA.NET Shared Components assembly not found. Please install a vendor-specific VISA implementation." );
+System.Reflection.Assembly? loadedAssembly = Ivi.VisaNet.GacLoader.TryVerifyVisaImplementation( out string details );
+
+if ( loadedAssembly is null )
+    Console.WriteLine( $"\n*** VISA implementation verification failed.\n{details}" );
 else
 {
-    Console.WriteLine( $"VISA.NET Shared Components {visaNetSharedComponentsAssembly.GetName()}." );
-    Console.WriteLine( $"\tVersion: {System.Diagnostics.FileVersionInfo.GetVersionInfo( typeof( GlobalResourceManager ).Assembly.Location ).FileVersion}." );
-
-    // Get the version of the VISA Configuration Manager File Version Info.
-    System.Diagnostics.FileVersionInfo? visaConfigManagerFileVersionInfo = Ivi.VisaNet.GacLoader.VisaConfigManagerFileVersionInfo();
-    if ( visaConfigManagerFileVersionInfo is not null )
-    {
-        Console.WriteLine( $"\n{visaConfigManagerFileVersionInfo.InternalName} file: {visaConfigManagerFileVersionInfo.FileName}" );
-        Console.WriteLine( $"\t version: {visaConfigManagerFileVersionInfo.ProductVersion}" );
-    }
-    else
-        Console.WriteLine( $"\n*** Failed getting the VISA Config Manager {Ivi.VisaNet.GacLoader.VisaConfigManagerFileName} info." );
-
-    // force loading the vendor implementation assembly
-    Assembly? loadedAssembly = GacLoader.TryFindLoadedImplementation( out string findDetails );
-    Console.WriteLine();
-    if ( loadedAssembly is null )
-        Console.WriteLine( $"*** {findDetails}" );
-    else
-        Console.WriteLine( findDetails );
+    Console.WriteLine( $"\nVISA implementation verified successfully.\n\n{details}" );
 
     try
     {
-        if ( visaConfigManagerFileVersionInfo is not null )
+        if ( string.IsNullOrWhiteSpace( resourceName ) )
         {
-            if ( string.IsNullOrWhiteSpace( resourceName ) )
+            Console.WriteLine( $"\n*** {nameof( resourceName )} cannot be null or empty." );
+        }
+        else
+        {
+            using Ivi.Visa.IVisaSession? session = Ivi.VisaNet.GacLoader.TryOpenSession( resourceName, out details );
+            Console.WriteLine( details );
+            if ( session is not null )
             {
-                Console.WriteLine( $"\n*** {nameof( resourceName )} cannot be null or empty." );
-            }
-            else
-            {
-                using Ivi.Visa.IVisaSession? session = Ivi.VisaNet.GacLoader.TryOpenSession( resourceName, out string details );
-                Console.WriteLine( details );
-                if ( session is not null )
-                {
-                    Console.WriteLine( $"Reading '{resourceName}' identity..." );
-                    string identity = Ivi.VisaNet.GacLoader.TryQueryIdentity( session, out details );
-                    if ( string.IsNullOrWhiteSpace( identity ) )
-                        Console.WriteLine( $"\t*** Failed to identify VISA resource '{resourceName}'.\n{details}" );
-                    else
-                        Console.WriteLine( $"\tVISA resource '{resourceName}' identified as:\n\t{identity}" );
+                Console.WriteLine( $"Reading instrument identity..." );
+                string identity = Ivi.VisaNet.GacLoader.TryQueryIdentity( session, out details );
+                if ( string.IsNullOrWhiteSpace( identity ) )
+                    Console.WriteLine( $"\t*** Failed to identify VISA resource '{resourceName}'.\n{details}" );
+                else
+                    Console.WriteLine( $"\tResource: {resourceName}\n\tIdentity: {identity}" );
 
-                    Console.WriteLine( Ivi.VisaNet.GacLoader.BuildSessionInterfaceImplementationReport( session ) );
+                Console.WriteLine( Ivi.VisaNet.GacLoader.BuildSessionInterfaceImplementationReport( session ) );
 
-                    if ( loadedAssembly is null )
-                    {
-                        loadedAssembly = GacLoader.TryFindLoadedImplementation( out details );
-                        if ( loadedAssembly is null )
-                            Console.WriteLine( $"\n*** {details}" );
-                        else
-                            Console.WriteLine( details );
-                    }
+                Console.WriteLine( Ivi.VisaNet.GacLoader.BuildSessionTypesReport( loadedAssembly, session ) );
 
-                    if ( loadedAssembly is not null )
-                        Console.WriteLine( Ivi.VisaNet.GacLoader.BuildSessionTypesReport( loadedAssembly, session ) );
-
-                    Console.WriteLine( $"\nClosing session to '{resourceName}'..." );
-                }
+                Console.WriteLine( $"Closing session to '{resourceName}'..." );
             }
         }
     }

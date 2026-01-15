@@ -20,7 +20,7 @@ public abstract partial class InstrumentTests
         string methodFullName = $"{testContext.FullyQualifiedTestClassName}.{System.Reflection.MethodBase.GetCurrentMethod()?.Name}";
         try
         {
-            Assert.IsTrue( Gac.GacLoader.TryEnumerateInstalledVisaAssemblies( out string details ), details );
+            Assert.IsNotNull( Gac.GacLoader.TryVerifyVisaImplementation( out string details ), details );
         }
         catch ( Exception ex )
         {

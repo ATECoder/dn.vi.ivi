@@ -6,16 +6,13 @@ public partial class VisaIoForm : Form
 {
     /// <summary>   Default constructor. </summary>
     /// <remarks>   David, 2021-07-16. </remarks>
-    public VisaIoForm()
-    {
-        this.InitializeComponent();
-        this.Icon = cc.isr.Visa.Console.Properties.Resources.favicon;
-        this.Text = $"Visa Interactive IO: {Gac.GacLoader.VisaPackageSource}";
-    }
+    public VisaIoForm() => this.InitializeComponent();
 
     protected override void OnLoad( EventArgs e )
     {
         base.OnLoad( e );
+        this.Icon = cc.isr.Visa.Console.Properties.Resources.favicon;
+        this.Text = $"Visa Interactive IO: {Gac.GacLoader.VisaPackageSource}";
         _ = Program.TraceLogger.LogVerbose( "VISA IO Form loaded" );
     }
 
