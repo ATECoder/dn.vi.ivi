@@ -31,4 +31,17 @@ public static partial class GacLoader
         System.Reflection.Assembly? assembly = GacLoader.GetVisaNetShareComponentsAssembly();
         return assembly?.GetName().Version;
     }
+
+    /// <summary>   Gets visa net share components product version. </summary>
+    /// <remarks>   2026-01-16. </remarks>
+    /// <returns>   The visa net share components product version. </returns>
+    public static System.Version? GetVisaNetShareComponentsProductVersion()
+    {
+        System.Reflection.Assembly? assembly = GacLoader.GetVisaNetShareComponentsAssembly();
+        if ( assembly is null )
+            return null;
+
+        System.Diagnostics.FileVersionInfo versionInfo = System.Diagnostics.FileVersionInfo.GetVersionInfo( assembly.Location );
+        return versionInfo.ProductVersion is not null ? new System.Version( versionInfo.ProductVersion ) : null;
+    }
 }

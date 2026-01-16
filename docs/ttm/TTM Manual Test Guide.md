@@ -1,4 +1,6 @@
-# Thermal Transient Meter&trade; (TTM) Manual Test Guide
+# Thermal Transient Meter&trade; Manual Test Guide
+
+Last updated: 2024-12-30
 
 <a name="Startup"></a>
 ## Startup

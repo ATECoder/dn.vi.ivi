@@ -1,5 +1,7 @@
 # Thermal Transient Meter&trade; Instrument User's Guide
 
+Last Updated: 2025-09-12
+
 ## Table of Contents
 
 - [This Guide](#Guide)
@@ -949,8 +951,6 @@ The following digital lines are provided
 
 <a name="Attributions"></a>
 ## Attributions
-
-Last Updated 2024-10-10
 
 &copy; 2011 by Integrated Scientific Resources, Inc.  
 

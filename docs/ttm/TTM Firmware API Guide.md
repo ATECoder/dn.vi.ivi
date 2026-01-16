@@ -2,6 +2,9 @@
 
 The guide contains the Firmware level application programming interface for the Thermal Transient Meter&trade;
 
+Last Updated: 2025-09-29
+
+
 ## Work In Progress
 
 This document includes a partial description of the TTM firmware and is work in progress. 
@@ -341,8 +344,6 @@ Firmware version 2.4 and up.
 
 <a name="Attributions"></a>
 ## Attributions
-
-Last Updated 2024-10-30
 
 &copy; 2011 by Integrated Scientific Resources, Inc.  
 

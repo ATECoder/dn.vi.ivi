@@ -7,8 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 Current IVI Visa Compatibility: 8.0.2.9512
 
 ## [8.0.2.9512] - 2026-01-16
-cc.isr.Visa
-  - Load implementation from the Gac in case Kelary Visa is used.
+- Load implementation from the Gac for IVI.Visa prior to 8.x in case the implementation is not found otherwise.
 
 ## [8.0.2.9511] - 2026-01-15
 - Gac Loader

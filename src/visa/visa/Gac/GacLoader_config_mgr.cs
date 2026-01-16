@@ -210,12 +210,12 @@ public static partial class GacLoader
         return (null, $"No assembly with the friendly name '{friendlyName}' was found among the loaded assemblies.");
     }
 
-    /// <summary>   Try find loaded implementation. </summary>
+    /// <summary>   Try to find a loaded implementation after parsing a resource name. </summary>
     /// <remarks>   2026-01-14. </remarks>
     /// <param name="details">  [out] The details. </param>
     /// <returns>   An Assembly? </returns>
     [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0057:Use range operator", Justification = "<Pending>" )]
-    public static Assembly? TryFindLoadedImplementation( out string details )
+    public static Assembly? TryFindImplementation( out string details )
     {
         Assembly? loadedAssembly = null;
         StringBuilder failureBuilder = new();
@@ -254,8 +254,45 @@ public static partial class GacLoader
                 _ = failureBuilder.AppendLine( line );
             }
         }
+
         details = loadedAssembly is null ? failureBuilder.ToString() : sb.ToString();
         return loadedAssembly;
     }
 
+    /// <summary>   Try to find loaded implementation. </summary>
+    /// <remarks>
+    /// 2026-01-16. <para>
+    /// If not found, the method will attempt to load the installed VISA implementations and try
+    /// again. If still not found, the details will contain the failure information.
+    /// </para>
+    /// </remarks>
+    /// <param name="details">  [out] The details. </param>
+    /// <returns>   An Assembly? </returns>
+    public static Assembly? TryFindLoadedImplementation( out string details )
+    {
+        Assembly? loadedAssembly = GacLoader.TryFindImplementation( out details );
+
+        if ( loadedAssembly is null )
+        {
+            Version? version = GacLoader.GetVisaNetShareComponentsVersion();
+            if ( version is null )
+            {
+                details = $"Failed getting the shared Visa.Net version. Most likely, a vendor-specific VISA implementation such as Keysight I/O Suite or NI.VISA was not installed.";
+            }
+            else if ( version.Major < 8 )
+            {
+                // If not found and using visa earlier than 8.0.0, try loading the installed VISA implementations and try again.
+                IEnumerable<Assembly> loadedAssemblies = GacLoader.TryLoadInstalledVisaAssemblies( out details );
+                if ( loadedAssemblies.Any() )
+                    loadedAssembly = GacLoader.TryFindLoadedImplementation( out details );
+                else
+                    details = $"No VISA implementation assemblies were found in the GAC.\n\t{details}.\n\tMost likely, a vendor-specific VISA implementation such as Keysight I/O Suite or NI.VISA was not installed.";
+            }
+            else
+            {
+                details = $"Failed finding a loaded vendor implementation; VISA.NET Shared Components version: {version}.\n{details}";
+            }
+        }
+        return loadedAssembly;
+    }
 }

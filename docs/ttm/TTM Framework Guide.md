@@ -1,5 +1,7 @@
 # Thermal Transient Meter&trade; Framework Guide
 
+Last Updated: 2025-09-16
+
 ## Table of Contents
 
 - [Components](#Components)
@@ -148,8 +150,6 @@ If is not clear at this time if [NI Visa] can be used because, starting with [Ke
 
 <a name="Attributions"></a>
 ## Attributions
-
-Last Updated 2024-12-21 12:57:26
 
 &copy; 2011 by Integrated Scientific Resources, Inc.  
 

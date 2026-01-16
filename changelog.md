@@ -4,7 +4,7 @@ Notable changes to the `cc.isr.vi` solution are documented in this file using th
 
 [8.1.9511]: https://www.github.com/atecoder/dn.vi.ivi
 
-Current IVI Visa Compatibility: 8.0.2.9511
+Current IVI Visa Compatibility: 8.0.2.9512
 
 ## [8.2.9511] - 2026-01-15
 - Session Factory:

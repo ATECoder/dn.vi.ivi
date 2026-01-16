@@ -1,5 +1,7 @@
 # ISR Thermal Transient Meter<sup>&trade;</sup> Driver API Changes
 
+Last Updated: 2024-12-09
+
 * [Description](#Description)
 * [Namespaces and Construction](#Namespaces_Construction)
 * [Legacy Device Methods](#name=Legacy_Device_Methods)
@@ -99,7 +101,5 @@ The `Setting Assembly Member Type` tells the `Meter` class where to look for the
 |                        | Meter.FinalResistance | LowLeadsResistance | The contact resistance of the low leads as measured before taking the final resistance reading. |
 |                        | Meter.ThermalTransient | LowLeadsResistance | The contact resistance of the low leads as measured before taking the final resistance reading. |
 | High Contact Resistance | Meter.InitialResistance | HighLeadsResistance | The contact resistance of the high leads as measured before taking the initial resistance reading. |
-
-
 
 

@@ -73,15 +73,6 @@ public static partial class GacLoader
         if ( visaConfigManagerFileVersionInfo is null )
             throw new System.IO.IOException( $"Failed getting the VISA Config Manager {GacLoader.VisaConfigManagerFileName} info. Most likely, a vendor-specific VISA implementation such as Keysight I/O Suite or NI.Visa was not installed." );
 
-#if NET5_0_OR_GREATER
-#if KelaryVisa
-        if ( !GacLoader.TryLoadInstalledVisaAssemblies( out details ).Any() )
-        {
-            throw new System.IO.IOException( $"No VISA implementation assemblies were found in the GAC.\n\t{details}.\n\tMost likely, a vendor-specific VISA implementation such as Keysight I/O Suite or NI.VISA was not installed." );
-        }
-#endif
-#endif
-
         // get the information from the vendor-specific VISA implementation that gets loaded upon calling the IVI.Visa Resource Manager parse method.
         System.Reflection.Assembly? loadedAssembly = null;
         string findDetails = string.Empty;

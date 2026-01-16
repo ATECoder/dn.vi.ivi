@@ -1,7 +1,8 @@
 # Thermal Transient Meter&trade; Driver API Guide
-# Thermal Transient Meter&trade; Driver API Guide
 
 Application programming interface for the Thermal Transient Meter&trade;
+
+Last Updated: 2024-10-09
 
 Applicable TTM firmware version: 2.4.x
 Applicable Virtual Instrument (VI) Framework version: 8.1.x
