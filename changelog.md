@@ -2,13 +2,17 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9511]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9512]: https://www.github.com/atecoder/dn.vi.ivi
 
 Current IVI Visa Compatibility: 8.0.2.9512
 
+## [8.2.9512] - 2026-01-16
+- Update IVI Compatibility version to 8.0.2.9512
+- Add release notes to the TTM documents
+
 ## [8.2.9511] - 2026-01-15
 - Session Factory:
-  - Call the Gac Loader verify upon construction.
+  - Call the GAC Loader verify upon construction.
 - MS Test
   - Validate Visa at static test class construction.
 
