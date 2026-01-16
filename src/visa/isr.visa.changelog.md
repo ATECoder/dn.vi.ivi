@@ -2,9 +2,13 @@
 All notable changes to these libraries will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-[8.0.2.9511]: https://www.github.com/atecoder/dn.vi.ivi
+[8.0.2.9512]: https://www.github.com/atecoder/dn.vi.ivi
 
-Current IVI Visa Compatibility: 8.0.2.9511
+Current IVI Visa Compatibility: 8.0.2.9512
+
+## [8.0.2.9512] - 2026-01-16
+cc.isr.Visa
+  - Load implementation from the Gac in case Kelary Visa is used.
 
 ## [8.0.2.9511] - 2026-01-15
 - Gac Loader

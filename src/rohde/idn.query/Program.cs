@@ -42,11 +42,6 @@ internal sealed class Program
             return;
         }
 
-#if NET5_0_OR_GREATER
-        Console.WriteLine( "\nPreloading VISA implementation assembly" );
-        Ivi.VisaNet.GacLoader.LoadInstalledVisaAssemblies();
-#endif
-
         try
         {
             string filter = "TCPIP?*INSTR";

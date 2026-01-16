@@ -30,7 +30,7 @@ VISA.NET Shared Components Ivi.Visa, Version=8.0.0.0, Culture=neutral, PublicKey
 
 ### Identify
 ```
-IviVisaCompatibilityTester, Version=8.0.2.9511, Culture=neutral, PublicKeyToken=456c916a0c4a68ef
+IviVisaCompatibilityTester, Version=8.0.2.9512, Culture=neutral, PublicKeyToken=456c916a0c4a68ef
         Running under .NETCoreApp,Version=v10.0 runtime .NET 10.0.2
 
 Runtime Information:
@@ -44,9 +44,11 @@ VISA implementation verified successfully.
 
 VISA.NET Shared Components assembly:
         Full name: Ivi.Visa, Version=8.0.0.0, Culture=neutral, PublicKeyToken=a128c98f1d7717c1.
-        Version: 8.0.0.0.
-        Product: 8.0.7803.0.
-        File:    8.0.7803.0.
+        File name: Ivi.Visa.dll.
+        Location:  C:\my\lib\vs\vi\vi\src\ivi\IviVisaCompatibiityTester\bin\Debug\net10.0\win-x64.
+        Version:   8.0.0.0.
+        Product:   8.0.7803.0.
+        File:      8.0.7803.0.
 
 visaConfMgr assembly:
         Location: C:\WINDOWS\system32\visaConfMgr.dll
@@ -54,11 +56,11 @@ visaConfMgr assembly:
         File:     8.0.7331.0
 
 Loaded vendor implementation assembly:
-        Full Name: Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73.
-        Location:  C:\Program Files\IVI Foundation\VISA\Microsoft.NET\VendorAssemblies\kt\8.0\Keysight.Visa.
-        File Name: Keysight.Visa.dll.dll.
-        Product:   18.6.5.0.
-        File:      18.6.5.0.
+        Full Name: Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73
+        File Name: Keysight.Visa.dll
+        Location:  C:\Program Files\IVI Foundation\VISA\Microsoft.NET\VendorAssemblies\kt\8.0\Keysight.Visa
+        Product:   18.6.5.0
+        File:      18.6.5.0
 
 Opening a VISA session to 'TCPIP0::192.168.0.150::inst0::INSTR' by:
         Ivi.Visa.GlobalResourceManager.ImplementationVersion:8.0.0.0
@@ -111,7 +113,6 @@ Identifying session interface implementations by vendor type names:
         is a 'Keysight.Visa.IKeysightNativeVisaSession'.
 
 Closing session to 'TCPIP0::192.168.0.150::inst0::INSTR'...
-
 ```
 
 ## [Keysight IO Suite Suite 21.2.207 2025-09-10] .NET 9

@@ -6,6 +6,14 @@
 
     <OutputType>Exe</OutputType>
 
+    <!--
+    To Address the following warning:
+    Warning As Error: Package 'Kelary.Ivi.Visa 7.2.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7,
+    .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework
+    'net10.0'. This package may not be fully compatible with your project.    
+    -->
+    <NoWarn>NU1701</NoWarn>
+
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
@@ -25,16 +33,39 @@
     </AssemblyAttribute>
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="IviFoundation.Visa" Version="8.0.2" />
-    <!--
-    <PackageReference Include="KeysightTechnologies.Visa" Version="18.6.6" />
-    <Reference Include="Ivi.Visa">
-      <HintPath>..\..\..\runtimes\Ivi.Visa.dll</HintPath>
-    </Reference>
-    <PackageReference Include="Kelary.Ivi.Visa" Version="7.2.0" />
-    -->
-  </ItemGroup>
+  <PropertyGroup>
+    <DefineConstants>$(DefineConstants);IviVisa;</DefineConstants>
+  </PropertyGroup>
+
+  <Choose>
+    <When Condition="$(DefineConstants.Contains(';KeysightVisa;'))">
+      <ItemGroup>
+        <!-- IviFoundation.Visa is included in KeysightTechnologies.Visa -->
+        <PackageReference Include="KeysightTechnologies.Visa" Version="18.6.6" />
+      </ItemGroup>
+    </When>
+  </Choose>
+
+  <Choose>
+    <When Condition="$(DefineConstants.Contains(';KelaryVisa;'))">
+      <ItemGroup>
+        <PackageReference Include="Kelary.Ivi.Visa" Version="7.2.0" />
+      </ItemGroup>
+    </When>
+  </Choose>
+
+  <Choose>
+    <When Condition="$(DefineConstants.Contains(';IviVisa;'))">
+      <ItemGroup>
+        <PackageReference Include="IviFoundation.Visa" Version="8.0.2" />
+        <!--
+        <Reference Include="Ivi.Visa">
+          <HintPath>..\..\..\runtimes\Ivi.Visa.dll</HintPath>
+        </Reference>
+        -->
+      </ItemGroup>
+    </When>
+  </Choose>
 
   <ItemGroup>
     <None Update="cmds\test.bat">

@@ -71,17 +71,6 @@
         <PackageReference Include="KeysightTechnologies.Visa" Version="18.6.6" />
       </ItemGroup>
     </When>
-    <Otherwise>
-      <ItemGroup>
-        <!--
-          <PackageReference Include="Kelary.Ivi.Visa" Version="7.2.0" />
-          <PackageReference Include="IviFoundation.Visa" Version="8.0.2" />
-          <Reference Include="Ivi.Visa">
-            <HintPath>..\..\..\runtimes\Ivi.Visa.dll</HintPath>
-          </Reference>
-        -->
-      </ItemGroup>
-    </Otherwise>
   </Choose>
 
   <Choose>

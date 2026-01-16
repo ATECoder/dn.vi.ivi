@@ -23,11 +23,15 @@ public static partial class GacLoader
             visaNetShareComponentsAssembly = GacLoader.GetVisaNetShareComponentsAssembly();
             if ( visaNetShareComponentsAssembly is not null )
             {
+                FileInfo fileInfo = new( visaNetShareComponentsAssembly.Location );
+                System.Diagnostics.FileVersionInfo versionInfo = System.Diagnostics.FileVersionInfo.GetVersionInfo( visaNetShareComponentsAssembly.Location );
                 _ = stringBuilder.AppendLine( "VISA.NET Shared Components assembly:" );
-                _ = stringBuilder.AppendLine( $"Full name: {visaNetShareComponentsAssembly.GetName().FullName}." );
-                _ = stringBuilder.AppendLine( $"\tVersion: {visaNetShareComponentsAssembly.GetName().Version}." );
-                _ = stringBuilder.AppendLine( $"\tProduct: {System.Diagnostics.FileVersionInfo.GetVersionInfo( visaNetShareComponentsAssembly.Location ).ProductVersion}." );
-                _ = stringBuilder.AppendLine( $"\tFile:    {System.Diagnostics.FileVersionInfo.GetVersionInfo( visaNetShareComponentsAssembly.Location ).FileVersion}." );
+                _ = stringBuilder.AppendLine( $"\tFull name: {visaNetShareComponentsAssembly.GetName().FullName}" );
+                _ = stringBuilder.AppendLine( $"\tFile name: {fileInfo.Name}" );
+                _ = stringBuilder.AppendLine( $"\tLocation:  {fileInfo.DirectoryName}" );
+                _ = stringBuilder.AppendLine( $"\tVersion:   {visaNetShareComponentsAssembly.GetName().Version}" );
+                _ = stringBuilder.AppendLine( $"\tProduct:   {versionInfo.ProductVersion}" );
+                _ = stringBuilder.AppendLine( $"\tFile:      {versionInfo.FileVersion}" );
             }
         }
         catch ( Exception ex )
@@ -69,6 +73,15 @@ public static partial class GacLoader
         if ( visaConfigManagerFileVersionInfo is null )
             throw new System.IO.IOException( $"Failed getting the VISA Config Manager {GacLoader.VisaConfigManagerFileName} info. Most likely, a vendor-specific VISA implementation such as Keysight I/O Suite or NI.Visa was not installed." );
 
+#if NET5_0_OR_GREATER
+#if KelaryVisa
+        if ( !GacLoader.TryLoadInstalledVisaAssemblies( out details ).Any() )
+        {
+            throw new System.IO.IOException( $"No VISA implementation assemblies were found in the GAC.\n\t{details}.\n\tMost likely, a vendor-specific VISA implementation such as Keysight I/O Suite or NI.VISA was not installed." );
+        }
+#endif
+#endif
+
         // get the information from the vendor-specific VISA implementation that gets loaded upon calling the IVI.Visa Resource Manager parse method.
         System.Reflection.Assembly? loadedAssembly = null;
         string findDetails = string.Empty;
@@ -83,11 +96,11 @@ public static partial class GacLoader
                 FileInfo fileInfo = new( loadedAssembly.Location );
                 System.Diagnostics.FileVersionInfo versionInfo = System.Diagnostics.FileVersionInfo.GetVersionInfo( loadedAssembly.Location );
                 _ = stringBuilder.AppendLine( "\nLoaded vendor implementation assembly:" );
-                _ = stringBuilder.AppendLine( $"\tFull Name: {loadedAssembly.GetName().FullName}." );
-                _ = stringBuilder.AppendLine( $"\tLocation:  {fileInfo.DirectoryName}." );
-                _ = stringBuilder.AppendLine( $"\tFile Name: {fileInfo.Name}{fileInfo.Extension}." );
-                _ = stringBuilder.AppendLine( $"\tProduct:   {versionInfo.ProductVersion}." );
-                _ = stringBuilder.AppendLine( $"\tFile:      {versionInfo.FileVersion}." );
+                _ = stringBuilder.AppendLine( $"\tFull Name: {loadedAssembly.GetName().FullName}" );
+                _ = stringBuilder.AppendLine( $"\tFile name: {fileInfo.Name}" );
+                _ = stringBuilder.AppendLine( $"\tLocation:  {fileInfo.DirectoryName}" );
+                _ = stringBuilder.AppendLine( $"\tProduct:   {versionInfo.ProductVersion}" );
+                _ = stringBuilder.AppendLine( $"\tFile:      {versionInfo.FileVersion}" );
             }
         }
         catch ( Exception ex )

@@ -11,7 +11,7 @@
 
 ### [IviFoundation.Visa 8.0.2] package .NET 4.7.2
 ```
-IviVisaCompatibilityDemo, Version=8.0.2.9511, Culture=neutral, PublicKeyToken=null
+IviVisaCompatibilityDemo, Version=8.0.2.9512, Culture=neutral, PublicKeyToken=null
         Running under .NETFramework,Version=v4.7.2 runtime .NET Framework 4.8.9221.0
 
 Runtime Information:
@@ -24,9 +24,11 @@ VISA implementation verified successfully.
 
 VISA.NET Shared Components assembly:
         Full name: Ivi.Visa, Version=8.0.0.0, Culture=neutral, PublicKeyToken=a128c98f1d7717c1.
-        Version: 8.0.0.0.
-        Product: 8.0.7511.0.
-        File:    8.0.7511.0.
+        File name: Ivi.Visa.dll.
+        Location:  C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\Ivi.Visa\v4.0_8.0.0.0__a128c98f1d7717c1.
+        Version:   8.0.0.0.
+        Product:   8.0.7511.0.
+        File:      8.0.7511.0.
 
 visaConfMgr assembly:
         Location: C:\WINDOWS\system32\visaConfMgr.dll
@@ -34,11 +36,11 @@ visaConfMgr assembly:
         File:     8.0.7331.0
 
 Loaded vendor implementation assembly:
-        Full Name: Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73.
-        Location:  C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\Keysight.Visa\v4.0_18.6.0.0__7a01cdb2a9131f73.
-        File Name: Keysight.Visa.dll.dll.
-        Product:   18.6.5.0.
-        File:      18.6.5.0.
+        Full Name: Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73
+        File Name: Keysight.Visa.dll
+        Location:  C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\Keysight.Visa\v4.0_18.6.0.0__7a01cdb2a9131f73
+        Product:   18.6.5.0
+        File:      18.6.5.0
 
 Opening a VISA session to 'TCPIP0::192.168.0.150::inst0::INSTR' by:
         Ivi.Visa.GlobalResourceManager.ImplementationVersion:8.0.0.0
@@ -96,7 +98,7 @@ Closing session to 'TCPIP0::192.168.0.150::inst0::INSTR'...
 
 ### [IviFoundation.Visa 8.0.2] package .NET 4.8
 ```
-IviVisaCompatibilityDemo, Version=8.0.2.9511, Culture=neutral, PublicKeyToken=null
+IviVisaCompatibilityDemo, Version=8.0.2.9512, Culture=neutral, PublicKeyToken=null
         Running under .NETFramework,Version=v4.8 runtime .NET Framework 4.8.9221.0
 
 Runtime Information:
@@ -109,9 +111,11 @@ VISA implementation verified successfully.
 
 VISA.NET Shared Components assembly:
         Full name: Ivi.Visa, Version=8.0.0.0, Culture=neutral, PublicKeyToken=a128c98f1d7717c1.
-        Version: 8.0.0.0.
-        Product: 8.0.7511.0.
-        File:    8.0.7511.0.
+        File name: Ivi.Visa.dll.
+        Location:  C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\Ivi.Visa\v4.0_8.0.0.0__a128c98f1d7717c1.
+        Version:   8.0.0.0.
+        Product:   8.0.7511.0.
+        File:      8.0.7511.0.
 
 visaConfMgr assembly:
         Location: C:\WINDOWS\system32\visaConfMgr.dll
@@ -119,11 +123,11 @@ visaConfMgr assembly:
         File:     8.0.7331.0
 
 Loaded vendor implementation assembly:
-        Full Name: Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73.
-        Location:  C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\Keysight.Visa\v4.0_18.6.0.0__7a01cdb2a9131f73.
-        File Name: Keysight.Visa.dll.dll.
-        Product:   18.6.5.0.
-        File:      18.6.5.0.
+        Full Name: Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73
+        File Name: Keysight.Visa.dll
+        Location:  C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\Keysight.Visa\v4.0_18.6.0.0__7a01cdb2a9131f73
+        Product:   18.6.5.0
+        File:      18.6.5.0
 
 Opening a VISA session to 'TCPIP0::192.168.0.150::inst0::INSTR' by:
         Ivi.Visa.GlobalResourceManager.ImplementationVersion:8.0.0.0
@@ -181,7 +185,7 @@ Closing session to 'TCPIP0::192.168.0.150::inst0::INSTR'...
 
 ### [IviFoundation.Visa 8.0.2] package .NET 10
 ```
-IviVisaCompatibilityDemo, Version=8.0.2.9511, Culture=neutral, PublicKeyToken=null
+IviVisaCompatibilityDemo, Version=8.0.2.9512, Culture=neutral, PublicKeyToken=null
         Running under .NETCoreApp,Version=v10.0 runtime .NET 10.0.2
 
 Runtime Information:
@@ -195,9 +199,11 @@ VISA implementation verified successfully.
 
 VISA.NET Shared Components assembly:
         Full name: Ivi.Visa, Version=8.0.0.0, Culture=neutral, PublicKeyToken=a128c98f1d7717c1.
-        Version: 8.0.0.0.
-        Product: 8.0.7803.0.
-        File:    8.0.7803.0.
+        File name: Ivi.Visa.dll.
+        Location:  C:\my\lib\vs\vi\vi\src\ivi\IviVisaCompatibilityDemo\bin\Debug\net10.0.
+        Version:   8.0.0.0.
+        Product:   8.0.7803.0.
+        File:      8.0.7803.0.
 
 visaConfMgr assembly:
         Location: C:\WINDOWS\system32\visaConfMgr.dll
@@ -205,11 +211,11 @@ visaConfMgr assembly:
         File:     8.0.7331.0
 
 Loaded vendor implementation assembly:
-        Full Name: Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73.
-        Location:  C:\Program Files\IVI Foundation\VISA\Microsoft.NET\VendorAssemblies\kt\8.0\Keysight.Visa.
-        File Name: Keysight.Visa.dll.dll.
-        Product:   18.6.5.0.
-        File:      18.6.5.0.
+        Full Name: Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73
+        File Name: Keysight.Visa.dll
+        Location:  C:\Program Files\IVI Foundation\VISA\Microsoft.NET\VendorAssemblies\kt\8.0\Keysight.Visa
+        Product:   18.6.5.0
+        File:      18.6.5.0
 
 Opening a VISA session to 'TCPIP0::192.168.0.150::inst0::INSTR' by:
         Ivi.Visa.GlobalResourceManager.ImplementationVersion:8.0.0.0

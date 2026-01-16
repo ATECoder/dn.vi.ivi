@@ -2,9 +2,12 @@
 All notable changes to these libraries will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-[8.0.2.9421]: https://www.github.com/atecoder/dn.vi.ivi
+[8.0.2.9512]: https://www.github.com/atecoder/dn.vi.ivi
 
-Current IVI Visa Compatibility: 8.0.2.9391
+Current IVI Visa Compatibility: 8.0.2.9512
+
+## [8.0.2.9512] - 2026-01-16
+- Remove the gac loader.
 
 ## [8.0.2.9450] - 2025-11-15
 - Transition .NET 9.0 projects to .NET 10 and VS2026.

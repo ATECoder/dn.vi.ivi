@@ -44,13 +44,6 @@ internal static class Program
         }
 
 #if NET5_0_OR_GREATER
-        Console.WriteLine();
-        // Preloading installed VISA implementation assemblies for NET 5+
-        Ivi.VisaNet.GacLoader.LoadInstalledVisaAssemblies();
-#endif
-
-
-#if NET5_0_OR_GREATER
         Application.SetHighDpiMode( HighDpiMode.SystemAware );
 #endif
         Application.EnableVisualStyles();

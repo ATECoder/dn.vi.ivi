@@ -1,9 +1,6 @@
 #pragma warning disable IDE0079 // Remove unnecessary suppression
 #pragma warning disable CA1305
 
-using System.Reflection;
-using System.Text;
-
 namespace Ivi.VisaNet;
 #pragma warning restore IDE0079 // Remove unnecessary suppression
 

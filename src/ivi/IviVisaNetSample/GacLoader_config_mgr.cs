@@ -275,5 +275,4 @@ public static partial class GacLoader
         details = loadedAssembly is null ? failureBuilder.ToString() : sb.ToString();
         return loadedAssembly;
     }
-
 }

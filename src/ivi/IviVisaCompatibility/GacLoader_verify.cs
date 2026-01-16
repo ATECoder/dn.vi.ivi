@@ -1,5 +1,3 @@
-using System.Text;
-
 namespace Ivi.VisaNet;
 
 public static partial class GacLoader
@@ -13,7 +11,7 @@ public static partial class GacLoader
     [System.Diagnostics.CodeAnalysis.SuppressMessage( "Globalization", "CA1305:Specify IFormatProvider", Justification = "<Pending>" )]
     public static System.Reflection.Assembly? VerifyVisaImplementation( out string details )
     {
-        StringBuilder stringBuilder = new();
+        System.Text.StringBuilder stringBuilder = new();
 
         // get the VISa.NET shared components info.
         System.Reflection.Assembly? visaNetShareComponentsAssembly = null;
@@ -23,11 +21,15 @@ public static partial class GacLoader
             visaNetShareComponentsAssembly = GacLoader.GetVisaNetShareComponentsAssembly();
             if ( visaNetShareComponentsAssembly is not null )
             {
+                FileInfo fileInfo = new( visaNetShareComponentsAssembly.Location );
+                System.Diagnostics.FileVersionInfo versionInfo = System.Diagnostics.FileVersionInfo.GetVersionInfo( visaNetShareComponentsAssembly.Location );
                 _ = stringBuilder.AppendLine( "VISA.NET Shared Components assembly:" );
                 _ = stringBuilder.AppendLine( $"\tFull name: {visaNetShareComponentsAssembly.GetName().FullName}." );
-                _ = stringBuilder.AppendLine( $"\tVersion: {visaNetShareComponentsAssembly.GetName().Version}." );
-                _ = stringBuilder.AppendLine( $"\tProduct: {System.Diagnostics.FileVersionInfo.GetVersionInfo( visaNetShareComponentsAssembly.Location ).ProductVersion}." );
-                _ = stringBuilder.AppendLine( $"\tFile:    {System.Diagnostics.FileVersionInfo.GetVersionInfo( visaNetShareComponentsAssembly.Location ).FileVersion}." );
+                _ = stringBuilder.AppendLine( $"\tFile name: {fileInfo.Name}." );
+                _ = stringBuilder.AppendLine( $"\tLocation:  {fileInfo.DirectoryName}." );
+                _ = stringBuilder.AppendLine( $"\tVersion:   {visaNetShareComponentsAssembly.GetName().Version}." );
+                _ = stringBuilder.AppendLine( $"\tProduct:   {versionInfo.ProductVersion}." );
+                _ = stringBuilder.AppendLine( $"\tFile:      {versionInfo.FileVersion}." );
             }
         }
         catch ( Exception ex )
@@ -83,11 +85,11 @@ public static partial class GacLoader
                 FileInfo fileInfo = new( loadedAssembly.Location );
                 System.Diagnostics.FileVersionInfo versionInfo = System.Diagnostics.FileVersionInfo.GetVersionInfo( loadedAssembly.Location );
                 _ = stringBuilder.AppendLine( "\nLoaded vendor implementation assembly:" );
-                _ = stringBuilder.AppendLine( $"\tFull Name: {loadedAssembly.GetName().FullName}." );
-                _ = stringBuilder.AppendLine( $"\tLocation:  {fileInfo.DirectoryName}." );
-                _ = stringBuilder.AppendLine( $"\tFile Name: {fileInfo.Name}{fileInfo.Extension}." );
-                _ = stringBuilder.AppendLine( $"\tProduct:   {versionInfo.ProductVersion}." );
-                _ = stringBuilder.AppendLine( $"\tFile:      {versionInfo.FileVersion}." );
+                _ = stringBuilder.AppendLine( $"\tFull Name: {loadedAssembly.GetName().FullName}" );
+                _ = stringBuilder.AppendLine( $"\tFile Name: {fileInfo.Name}" );
+                _ = stringBuilder.AppendLine( $"\tLocation:  {fileInfo.DirectoryName}" );
+                _ = stringBuilder.AppendLine( $"\tProduct:   {versionInfo.ProductVersion}" );
+                _ = stringBuilder.AppendLine( $"\tFile:      {versionInfo.FileVersion}" );
             }
         }
         catch ( Exception ex )

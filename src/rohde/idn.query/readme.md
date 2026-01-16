@@ -28,6 +28,41 @@ The list of resources consists of the resources that are explicitly defined in t
 
 ## Outputs
 
+# .NET Framework 4.7.2
+```
+Running under .NETFramework,Version=v4.7.2 runtime .NET Framework 4.8.9221.0
+
+VISA.NET Shared Components version 8.0.0.0.
+VISA Shared Components version 8.0.7331.0 detected.
+
+Executing GlobalResourceManager.Find( "TCPIP?*INSTR"  )
+
+IVI GlobalResourceManager ImplementationVersion:8.0.0.0 SpecificationVersion:7.4.0.0
+Selected the VISA.NET Implementation by Keysight Technologies, Inc. version 18.6.0.0
+
+
+tcpip0::192.168.0.150::inst0::instr Identification string:
+
+Keithley Instruments Inc., Model 2612A, 1214466, 2.2.6
+```
+
+# .NET 10.0
+```
+Running under .NETCoreApp,Version=v10.0 runtime .NET 10.0.2
+
+VISA.NET Shared Components version 8.0.0.0.
+VISA Shared Components version 8.0.7331.0 detected.
+
+Executing GlobalResourceManager.Find( "TCPIP?*INSTR"  )
+
+IVI GlobalResourceManager ImplementationVersion:8.0.0.0 SpecificationVersion:7.4.0.0
+Selected the VISA.NET Implementation by Keysight Technologies, Inc. version 18.6.0.0
+
+
+tcpip0::192.168.0.150::inst0::instr Identification string:
+
+Keithley Instruments Inc., Model 2612A, 1214466, 2.2.6```
+
 # .NET 9.0
 ```
 Running under .NETCoreApp,Version=v9.0.

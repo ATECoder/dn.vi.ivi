@@ -23,6 +23,7 @@
     <OptionInfer>Off</OptionInfer>
 
     <!-- Signature -->
+
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\..\items\keyPair.snk</AssemblyOriginatorKeyFile>
     <DelaySign>false</DelaySign>

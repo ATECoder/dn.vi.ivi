@@ -26,7 +26,7 @@ The Keysight VISA implementation 18.6.5 is picked up from the IVI foundation ven
 ### [IviFoundation.Visa 8.0.2] Package .NET 4.8
 
 ```
-IviVisaNetSample, Version=8.0.2.9511, Culture=neutral, PublicKeyToken=null
+IviVisaNetSample, Version=8.0.2.9512, Culture=neutral, PublicKeyToken=null
         Running under .NETFramework,Version=v4.8 runtime .NET Framework 4.8.9221.0
 
 Runtime Information:
@@ -38,10 +38,12 @@ Runtime Information:
 VISA implementation verified successfully.
 
 VISA.NET Shared Components assembly:
-Full name: Ivi.Visa, Version=8.0.0.0, Culture=neutral, PublicKeyToken=a128c98f1d7717c1.
-        Version: 8.0.0.0.
-        Product: 8.0.7511.0.
-        File:    8.0.7511.0.
+        Full name: Ivi.Visa, Version=8.0.0.0, Culture=neutral, PublicKeyToken=a128c98f1d7717c1
+        File name: Ivi.Visa.dll
+        Location:  C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\Ivi.Visa\v4.0_8.0.0.0__a128c98f1d7717c1
+        Version:   8.0.0.0
+        Product:   8.0.7511.0
+        File:      8.0.7511.0
 
 visaConfMgr assembly:
         Location: C:\WINDOWS\system32\visaConfMgr.dll
@@ -49,11 +51,11 @@ visaConfMgr assembly:
         File:     8.0.7331.0
 
 Loaded vendor implementation assembly:
-        Full Name: Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73.
-        Location:  C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\Keysight.Visa\v4.0_18.6.0.0__7a01cdb2a9131f73.
-        File Name: Keysight.Visa.dll.dll.
-        Product:   18.6.5.0.
-        File:      18.6.5.0.
+        Full Name: Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73
+        File name: Keysight.Visa.dll
+        Location:  C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\Keysight.Visa\v4.0_18.6.0.0__7a01cdb2a9131f73
+        Product:   18.6.5.0
+        File:      18.6.5.0
 
 Opening a VISA session to 'tcpip0::192.168.0.150::inst0::instr' by:
         Ivi.Visa.GlobalResourceManager.ImplementationVersion:8.0.0.0
@@ -106,13 +108,12 @@ Identifying session interface implementations by vendor type names:
         is a 'Keysight.Visa.IKeysightNativeVisaSession'.
 
 Closing session to 'tcpip0::192.168.0.150::inst0::instr'...
-
 ```
 
 ###  [IviFoundation.Visa 8.0.2] Package .NET 10.0
 
 ```
-IviVisaNetSample, Version=8.0.2.9511, Culture=neutral, PublicKeyToken=null
+IviVisaNetSample, Version=8.0.2.9512, Culture=neutral, PublicKeyToken=null
         Running under .NETCoreApp,Version=v10.0 runtime .NET 10.0.2
 
 Runtime Information:
@@ -125,10 +126,12 @@ Runtime Information:
 VISA implementation verified successfully.
 
 VISA.NET Shared Components assembly:
-Full name: Ivi.Visa, Version=8.0.0.0, Culture=neutral, PublicKeyToken=a128c98f1d7717c1.
-        Version: 8.0.0.0.
-        Product: 8.0.7803.0.
-        File:    8.0.7803.0.
+        Full name: Ivi.Visa, Version=8.0.0.0, Culture=neutral, PublicKeyToken=a128c98f1d7717c1
+        File name: Ivi.Visa.dll
+        Location:  C:\my\lib\vs\vi\vi\src\ivi\IviVisaNetSample\bin\Debug\net10.0
+        Version:   8.0.0.0
+        Product:   8.0.7803.0
+        File:      8.0.7803.0
 
 visaConfMgr assembly:
         Location: C:\WINDOWS\system32\visaConfMgr.dll
@@ -136,11 +139,11 @@ visaConfMgr assembly:
         File:     8.0.7331.0
 
 Loaded vendor implementation assembly:
-        Full Name: Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73.
-        Location:  C:\Program Files\IVI Foundation\VISA\Microsoft.NET\VendorAssemblies\kt\8.0\Keysight.Visa.
-        File Name: Keysight.Visa.dll.dll.
-        Product:   18.6.5.0.
-        File:      18.6.5.0.
+        Full Name: Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73
+        File name: Keysight.Visa.dll
+        Location:  C:\Program Files\IVI Foundation\VISA\Microsoft.NET\VendorAssemblies\kt\8.0\Keysight.Visa
+        Product:   18.6.5.0
+        File:      18.6.5.0
 
 Opening a VISA session to 'tcpip0::192.168.0.150::inst0::instr' by:
         Ivi.Visa.GlobalResourceManager.ImplementationVersion:8.0.0.0
@@ -193,6 +196,139 @@ Identifying session interface implementations by vendor type names:
         is a 'Keysight.Visa.IKeysightNativeVisaSession'.
 
 Closing session to 'tcpip0::192.168.0.150::inst0::instr'...
+
+```
+
+###  [Kelary.Ivi.Visa 7.2.0] Package .NET 4.8
+
+```
+IviVisaNetSample, Version=8.0.2.9512, Culture=neutral, PublicKeyToken=null
+        Running under .NETFramework,Version=v4.8 runtime .NET Framework 4.8.9221.0
+
+Runtime Information:
+        Framework Description: .NET Framework 4.8.9221.0
+              OS Architecture: X64
+               OS Description: Microsoft Windows 10.0.26200  (is Windows 11 if build >= 22000)
+         Process Architecture: X64
+
+VISA implementation verified successfully.
+
+VISA.NET Shared Components assembly:
+        Full name: Ivi.Visa, Version=8.0.0.0, Culture=neutral, PublicKeyToken=a128c98f1d7717c1
+        File name: Ivi.Visa.dll
+        Location:  C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\Ivi.Visa\v4.0_8.0.0.0__a128c98f1d7717c1
+        Version:   8.0.0.0
+        Product:   8.0.7511.0
+        File:      8.0.7511.0
+
+visaConfMgr assembly:
+        Location: C:\WINDOWS\system32\visaConfMgr.dll
+        Product:  8.0.7331.0
+        File:     8.0.7331.0
+
+Loaded vendor implementation assembly:
+        Full Name: Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73
+        File name: Keysight.Visa.dll
+        Location:  C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL\Keysight.Visa\v4.0_18.6.0.0__7a01cdb2a9131f73
+        Product:   18.6.5.0
+        File:      18.6.5.0
+
+Opening a VISA session to 'tcpip0::192.168.0.150::inst0::instr' by:
+        Ivi.Visa.GlobalResourceManager.ImplementationVersion:8.0.0.0
+        Ivi.Visa.GlobalResourceManager.SpecificationVersion:7.4.0.0
+        Keysight.Visa.TcpipSession Visa session opened to 'tcpip0::192.168.0.150::inst0::instr'.
+
+Reading instrument identity...
+        Resource: tcpip0::192.168.0.150::inst0::instr
+        Identity: Keithley Instruments Inc., Model 2612A, 1214466, 2.2.6
+
+Identifying session implementations by type names:
+        is a 'Ivi.Visa.IVisaSession'.
+        is a 'Ivi.Visa.IMessageBasedSession'.
+        is a 'Ivi.Visa.ITcpipSession'.
+        is a 'Ivi.Visa.ITcpipSession2'.
+        is not a 'Ivi.Visa.ITcpipSocketSession'.
+        is not a 'Ivi.Visa.ITcpipSocketSession2'.
+        is not a 'Ivi.Visa.IGpibInterfaceSession'.
+        is not a 'Ivi.Visa.IGpibSession'.
+        is a 'Ivi.Visa.INativeVisaSession'.
+        is not a 'Ivi.Visa.IPxiBackplaneSession'.
+        is not a 'Ivi.Visa.IPxiMemorySession'.
+        is not a 'Ivi.Visa.IPxiSession'.
+        is not a 'Ivi.Visa.IPxiSession2'.
+        is not a 'Ivi.Visa.IRegisterBasedSession'.
+        is not a 'Ivi.Visa.ISerialSession'.
+        is not a 'Ivi.Visa.IVxiBackplaneSession'.
+        is not a 'Ivi.Visa.IVxiMemorySession'.
+        is not a 'Ivi.Visa.IVxiSession'.
+
+
+Identifying session types by vendor type names:
+        is a 'Keysight.Visa.MessageBasedSession'.
+        is not a 'Keysight.Visa.GpibInterfaceSession'.
+        is not a 'Keysight.Visa.GpibSession'.
+        is not a 'Keysight.Visa.PxiBackplaneSession'.
+        is not a 'Keysight.Visa.PxiMemorySession'.
+        is not a 'Keysight.Visa.PxiSession'.
+        is not a 'Keysight.Visa.RegisterBasedSession'.
+        is not a 'Keysight.Visa.SerialSession'.
+        is a 'Keysight.Visa.TcpipSession'.
+        is not a 'Keysight.Visa.TcpipSocketSession'.
+        is not a 'Keysight.Visa.UsbSession'.
+        is a 'Keysight.Visa.VisaSession'.
+        is not a 'Keysight.Visa.VxiBackplaneSession'.
+        is not a 'Keysight.Visa.VxiMemorySession'.
+        is not a 'Keysight.Visa.VxiSession'.
+
+Identifying session interface implementations by vendor type names:
+        is a 'Keysight.Visa.IKeysightNativeVisaSession'.
+
+Closing session to 'tcpip0::192.168.0.150::inst0::instr'...
+```
+
+###  [Kelary.Ivi.Visa 7.2.0] Package .NET 10.0
+
+```
+IviVisaNetSample, Version=8.0.2.9512, Culture=neutral, PublicKeyToken=null
+        Running under .NETCoreApp,Version=v10.0 runtime .NET 10.0.2
+
+Runtime Information:
+        Framework Description: .NET 10.0.2
+              OS Architecture: X64
+               OS Description: Microsoft Windows 10.0.26200 (is Windows 11 if build >= 22000)
+         Process Architecture: X64
+           Runtime Identifier: win-x64
+
+VISA implementation verified successfully.
+
+VISA.NET Shared Components assembly:
+        Full name: Ivi.Visa, Version=7.2.0.0, Culture=neutral, PublicKeyToken=a128c98f1d7717c1
+        File name: Ivi.Visa.dll
+        Location:  C:\my\lib\vs\vi\vi\src\ivi\IviVisaNetSample\bin\Debug\net10.0
+        Version:   7.2.0.0
+        Product:   7.2.7619.0
+        File:      7.2.7619.0
+
+visaConfMgr assembly:
+        Location: C:\WINDOWS\system32\visaConfMgr.dll
+        Product:  8.0.7331.0
+        File:     8.0.7331.0
+
+Loaded vendor implementation assembly:
+        Full Name: Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73
+        File name: Keysight.Visa.dll
+        Location:  C:\WINDOWS\Microsoft.NET\assembly\GAC_MSIL\Keysight.Visa\v4.0_18.6.0.0__7a01cdb2a9131f73
+        Product:   18.6.5.0
+        File:      18.6.5.0
+
+Opening a VISA session to 'tcpip0::192.168.0.150::inst0::instr' by:
+        Ivi.Visa.GlobalResourceManager.ImplementationVersion:7.2.0.0
+        Ivi.Visa.GlobalResourceManager.SpecificationVersion:7.2.0.0
+*** Failed opening session to 'tcpip0::192.168.0.150::inst0::instr'; VISA Exception: Ivi.Visa.VisaException: Failed to parse tcpip0::192.168.0.150::inst0::instr
+   at Ivi.Visa.GlobalResourceManager.Parse(String resourceName, SrmDictionary srms)
+   at Ivi.Visa.GlobalResourceManager.Open(String resourceName, AccessModes accessModes, Int32 timeoutMilliseconds, ResourceOpenStatus& openStatus)
+   at Ivi.Visa.GlobalResourceManager.Open(String resourceName, AccessModes accessModes, Int32 timeoutMilliseconds)
+   at Ivi.VisaNet.GacLoader.TryOpenSession(String resourceName, String& details) in C:\my\lib\vs\vi\vi\src\ivi\IviVisaNetSample\GacLoader_session.cs:line 31
 
 ```
 

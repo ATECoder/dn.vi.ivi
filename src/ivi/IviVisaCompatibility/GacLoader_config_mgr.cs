@@ -209,6 +209,7 @@ public static partial class GacLoader
         }
         return (null, $"No assembly with the friendly name '{friendlyName}' was found among the loaded assemblies.");
     }
+
     /// <summary>   Try find loaded implementation. </summary>
     /// <remarks>   2026-01-14. </remarks>
     /// <param name="details">  [out] The details. </param>

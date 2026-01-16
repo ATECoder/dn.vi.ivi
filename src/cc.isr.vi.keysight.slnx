@@ -4,19 +4,6 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Folder Name="/ivi/">
-    <File Path="ivi/IviVisaCompatibility.changelog.md" />
-    <Project Path="ivi/IviVisaCompatibiityTester/IviVisaCompatibilityTester.csproj" />
-    <Project Path="ivi/IviVisaCompatibility/IviVisaCompatibility.csproj" />
-    <Project Path="ivi/IviVisaCompatibilityDemo/IviVisaCompatibilityDemo.csproj">
-      <Platform Solution="*|x64" Project="x64" />
-      <Platform Solution="*|x86" Project="x86" />
-    </Project>
-    <Project Path="ivi/IviVisaNetSample/IviVisaNetSample.csproj">
-      <Platform Solution="*|x64" Project="x64" />
-      <Platform Solution="*|x86" Project="x86" />
-    </Project>
-  </Folder>
   <Folder Name="/keysight/">
     <Project Path="keysight/KeysightVisaNetSample/KeysightVisaNetSample.csproj">
       <Platform Solution="*|x64" Project="x64" />
