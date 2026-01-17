@@ -151,7 +151,7 @@ public abstract class VisaResourceTests
     public void VisaImplementationVersionShouldExist()
     {
         Version expectedVersion = new( Visa.Gac.GacLoader.IviVisaAssemblyInfo.ImplementationVersion );
-        Version? actualVersion = Visa.Gac.GacLoader.VerifyVisaImplementationPresence();
+        Version? actualVersion = Visa.Gac.GacLoader.GetVisaNetShareComponentsVersion();
 
         Assert.IsNotNull( actualVersion, "No Visa implementations were found." );
         Assert.AreEqual( expectedVersion, actualVersion );
