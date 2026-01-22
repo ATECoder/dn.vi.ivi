@@ -62,19 +62,25 @@ else
 {
     Console.WriteLine( $"\nVISA implementation verified successfully.\n\n{details}" );
 
-    try
+    if ( string.IsNullOrWhiteSpace( resourceName ) )
+        Console.WriteLine( $"*** {nameof( resourceName )} cannot be null or empty." );
+    else
     {
-        if ( string.IsNullOrWhiteSpace( resourceName ) )
-        {
-            Console.WriteLine( $"\n*** {nameof( resourceName )} cannot be null or empty." );
-        }
-        else
+        try
         {
             using Ivi.Visa.IVisaSession? session = Ivi.VisaNet.GacLoader.TryOpenSession( resourceName, out details );
-            Console.WriteLine( details );
-            if ( session is not null )
+            if ( session is null )
+                Console.WriteLine( $"*** {details}" );
+            else
             {
-                Console.WriteLine( $"Reading instrument identity..." );
+                Console.WriteLine( details );
+                Console.WriteLine( $"Resource information:" );
+                Console.WriteLine( $"\tName: {session.ResourceName}" );
+                Console.WriteLine( $"\nVisa information:" );
+                Console.WriteLine( $"\tManufacturer:   {session.ResourceManufacturerName}" );
+                Console.WriteLine( $"\tImplementation: {session.ResourceImplementationVersion}" );
+
+                Console.WriteLine( $"\nReading instrument identity..." );
                 string identity = Ivi.VisaNet.GacLoader.TryQueryIdentity( session, out details );
                 if ( string.IsNullOrWhiteSpace( identity ) )
                     Console.WriteLine( $"\t*** Failed to identify VISA resource '{resourceName}'.\n{details}" );
@@ -88,10 +94,10 @@ else
                 Console.WriteLine( $"Closing session to '{resourceName}'..." );
             }
         }
-    }
-    catch ( FileNotFoundException )
-    {
-        Console.WriteLine( $"\n*** VISA Config Manager {Ivi.VisaNet.GacLoader.VisaConfigManagerFileName} not found. Please install a vendor-specific VISA implementation." );
+        catch ( Exception ex )
+        {
+            Console.WriteLine( $"\n*** Exception occurred reading resource identity or reporting session details;\n{GacLoader.BuildErrorMessage( ex )}." );
+        }
     }
 }
 

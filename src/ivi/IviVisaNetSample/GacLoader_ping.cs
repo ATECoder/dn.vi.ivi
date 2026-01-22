@@ -33,7 +33,7 @@ public static partial class GacLoader
         }
         catch ( Exception )
         {
-            details = $"*** Exception occurred pinging {resourceName}; .";
+            details = $"Exception occurred pinging {resourceName}; .";
         }
         return outcome;
     }

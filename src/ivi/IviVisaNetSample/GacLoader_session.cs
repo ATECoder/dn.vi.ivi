@@ -18,6 +18,7 @@ public static partial class GacLoader
             details = $"{nameof( resourceName )} is null or empty or white space.";
             return null;
         }
+
         System.Globalization.CultureInfo culture = System.Globalization.CultureInfo.CurrentCulture;
         System.Text.StringBuilder sb = new();
         string line = $"Opening a VISA session to '{resourceName}' by:";
@@ -36,7 +37,7 @@ public static partial class GacLoader
         }
         catch ( Exception ex )
         {
-            line = $"*** Failed opening session to '{resourceName}'; {GacLoader.BuildErrorMessage( ex )}";
+            line = $"Failed opening session to '{resourceName}'; {GacLoader.BuildErrorMessage( ex )}";
             _ = sb.AppendLine( line );
             details = sb.ToString();
             return null;

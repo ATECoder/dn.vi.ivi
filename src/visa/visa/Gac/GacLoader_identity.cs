@@ -1,4 +1,4 @@
-namespace Ivi.VisaNet;
+namespace cc.isr.Visa.Gac;
 
 public static partial class GacLoader
 {
@@ -36,13 +36,13 @@ public static partial class GacLoader
             }
             catch ( Exception ex )
             {
-                details = $"{GacLoader.BuildErrorMessage( ex )}";
+                details = GacLoader.BuildErrorMessage( ex );
                 throw;
             }
         }
         else
         {
-            details = $"{visaSession.GetType()} Not a message-based session.";
+            details = $"{visaSession.GetType()} is not a message-based session.";
             return string.Empty;
         }
     }

@@ -412,7 +412,7 @@ public static partial class GacLoader
 
         string[] vendorInterfaceNames = ["Keysight.Visa.IKeysightNativeVisaSession"];
 
-        _ = sb.AppendLine( $"\nIdentifying session types by vendor type names:" );
+        _ = sb.AppendLine( $"Identifying session types by vendor type names:" );
 
         foreach ( string vendorTypeName in vendorTypeNames )
         {

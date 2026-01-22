@@ -119,7 +119,7 @@ public static partial class GacLoader
             }
             catch ( Exception exception )
             {
-                _ = sb.Append( $"*** Failed to load assembly {fileName}: {exception.Message}" );
+                _ = sb.Append( $"Failed to load assembly {fileName}: {exception.Message}" );
             }
         }
         details = sb.ToString();
@@ -134,7 +134,7 @@ public static partial class GacLoader
     {
         if ( GacLoader.TryLoadInstalledVisaAssemblies( out string details ) is not IList<Assembly> assemblies || (assemblies.Count == 0) )
         {
-            throw new InvalidOperationException( $"\nNo VISA .NET implementation assemblies loaded: {details}" );
+            throw new InvalidOperationException( $"*** No VISA .NET implementation assemblies loaded:\n{details}" );
         }
     }
 

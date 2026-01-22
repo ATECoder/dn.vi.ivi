@@ -52,7 +52,7 @@ public static partial class GacLoader
             }
             catch ( Exception exception )
             {
-                details = $"*** Failed to enumerate VISA Implementation {visaLibrary.FriendlyName}: {GacLoader.BuildErrorMessage( exception )}";
+                _ = sb.AppendLine( $"Failed to enumerate VISA Implementation {visaLibrary.FriendlyName}: {GacLoader.BuildErrorMessage( exception )}" );
             }
         }
         details = sb.ToString();

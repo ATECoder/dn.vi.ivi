@@ -32,6 +32,9 @@ public static partial class GacLoader
     /// <summary>   Enumerate the installed VISA implementation assemblies. </summary>
     /// <remarks>   2025-09-17. </remarks>
     /// <param name="details">  [out] The details. </param>
+#if NET5_0_OR_GREATER
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Globalization", "CA1305:Specify IFormatProvider", Justification = "<Pending>" )]
+#endif
     [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0057:Use range operator", Justification = "<Pending>" )]
     public static bool TryEnumerateInstalledVisaAssemblies( out string details )
     {
@@ -52,7 +55,7 @@ public static partial class GacLoader
             }
             catch ( Exception exception )
             {
-                details = $"*** Failed to enumerate VISA Implementation {visaLibrary.FriendlyName}: {GacLoader.BuildErrorMessage( exception )}";
+                _ = sb.AppendLine( $"Failed to enumerate VISA Implementation {visaLibrary.FriendlyName}: {GacLoader.BuildErrorMessage( exception )}" );
             }
         }
         details = sb.ToString();

@@ -13,24 +13,49 @@
 ```
 Checking IVI VISA Compatibility
 
-IviVisaCompatibilityTester, Version=8.0.2.9391, Culture=neutral, PublicKeyToken=456c916a0c4a68ef
-        Running under .NETCoreApp,Version=v10.0 runtime .NET 10.0.1
+viVisaCompatibilityTester, Version=8.0.2.9518, Culture=neutral, PublicKeyToken=456c916a0c4a68ef
+        Running under .NETCoreApp,Version=v10.0 runtime .NET 10.0.2
+
 Runtime Information:
-        Framework Description: .NET 10.0.1
+        Framework Description: .NET 10.0.2
               OS Architecture: X64
                OS Description: Microsoft Windows 10.0.26200 (is Windows 11 if build >= 22000)
          Process Architecture: X64
            Runtime Identifier: win-x64
 
-VISA.NET Shared Components Ivi.Visa, Version=8.0.0.0, Culture=neutral, PublicKeyToken=a128c98f1d7717c1.
-        Version: 8.0.7803.0.
-        visaConfMgr version 8.0.7331.0 detected.
+VISA implementation verified successfully.
+
+VISA.NET Shared Components assembly:
+        Full name: Ivi.Visa, Version=8.0.0.0, Culture=neutral, PublicKeyToken=a128c98f1d7717c1.
+        File name: Ivi.Visa.dll.
+        Location:  C:\my\lib\vs\vi\vi\src\ivi\IviVisaCompatibiityTester\bin\Debug\net10.0\win-x64.
+        Version:   8.0.0.0.
+        Product:   8.0.7803.0.
+        File:      8.0.7803.0.
+
+visaConfMgr assembly:
+        Location: C:\WINDOWS\system32\visaConfMgr.dll
+        Product:  8.0.7331.0
+        File:     8.0.7331.0
+
+Loaded vendor implementation assembly:
+        Full Name: Keysight.Visa, Version=18.6.0.0, Culture=neutral, PublicKeyToken=7a01cdb2a9131f73
+        File Name: Keysight.Visa.dll
+        Location:  C:\Program Files\IVI Foundation\VISA\Microsoft.NET\VendorAssemblies\kt\8.0\Keysight.Visa
+        Product:   18.6.5.0
+        File:      18.6.5.0
+
 *** resourceName cannot be null or empty.
 ```
 
 ### Identify
 ```
-IviVisaCompatibilityTester, Version=8.0.2.9512, Culture=neutral, PublicKeyToken=456c916a0c4a68ef
+Checking IVI VISA Compatibility
+Command: TCPIP0::192.168.0.150::inst0::INSTR;
+
+Turn on the instrument at TCPIP0::192.168.0.150::inst0::INSTR and press any key »
+
+IviVisaCompatibilityTester, Version=8.0.2.9518, Culture=neutral, PublicKeyToken=456c916a0c4a68ef
         Running under .NETCoreApp,Version=v10.0 runtime .NET 10.0.2
 
 Runtime Information:
@@ -63,9 +88,16 @@ Loaded vendor implementation assembly:
         File:      18.6.5.0
 
 Opening a VISA session to 'TCPIP0::192.168.0.150::inst0::INSTR' by:
-        Ivi.Visa.GlobalResourceManager.ImplementationVersion:8.0.0.0
-        Ivi.Visa.GlobalResourceManager.SpecificationVersion:7.4.0.0
+        Ivi.Visa.GlobalResourceManager.ImplementationVersion: 8.0.0.0
+        Ivi.Visa.GlobalResourceManager.SpecificationVersion:  7.4.0.0
         Keysight.Visa.TcpipSession Visa session opened to 'TCPIP0::192.168.0.150::inst0::INSTR'.
+
+Resource information:
+        Name: TCPIP0::192.168.0.150::inst0::INSTR
+
+Visa information:
+        Manufacturer:   Keysight Technologies, Inc.
+        Implementation: 18.6.0.0
 
 Reading instrument identity...
         Resource: TCPIP0::192.168.0.150::inst0::INSTR
@@ -91,7 +123,6 @@ Identifying session implementations by type names:
         is not a 'Ivi.Visa.IVxiMemorySession'.
         is not a 'Ivi.Visa.IVxiSession'.
 
-
 Identifying session types by vendor type names:
         is a 'Keysight.Visa.MessageBasedSession'.
         is not a 'Keysight.Visa.GpibInterfaceSession'.
@@ -113,6 +144,7 @@ Identifying session interface implementations by vendor type names:
         is a 'Keysight.Visa.IKeysightNativeVisaSession'.
 
 Closing session to 'TCPIP0::192.168.0.150::inst0::INSTR'...
+
 ```
 
 ## [Keysight IO Suite Suite 21.2.207 2025-09-10] .NET 9

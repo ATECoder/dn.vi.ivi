@@ -22,9 +22,9 @@ public static partial class GacLoader
         System.Text.StringBuilder sb = new();
         string line = $"Opening a VISA session to '{resourceName}' by:";
         _ = sb.AppendLine( line );
-        line = $"\tIvi.Visa.{nameof( GlobalResourceManager )}.{nameof( GlobalResourceManager.ImplementationVersion )}:{GlobalResourceManager.ImplementationVersion}";
+        line = $"\tIvi.Visa.{nameof( GlobalResourceManager )}.{nameof( GlobalResourceManager.ImplementationVersion )}: {GlobalResourceManager.ImplementationVersion}";
         _ = sb.AppendLine( line );
-        line = $"\tIvi.Visa.{nameof( GlobalResourceManager )}.{nameof( GlobalResourceManager.SpecificationVersion )}:{GlobalResourceManager.SpecificationVersion}";
+        line = $"\tIvi.Visa.{nameof( GlobalResourceManager )}.{nameof( GlobalResourceManager.SpecificationVersion )}:  {GlobalResourceManager.SpecificationVersion}";
         _ = sb.AppendLine( line );
         try
         {
@@ -36,7 +36,7 @@ public static partial class GacLoader
         }
         catch ( Exception ex )
         {
-            line = $"*** Failed opening session to '{resourceName}'; {GacLoader.BuildErrorMessage( ex )}";
+            line = $"Failed opening session to '{resourceName}'; {GacLoader.BuildErrorMessage( ex )}";
             _ = sb.AppendLine( line );
             details = sb.ToString();
             return null;

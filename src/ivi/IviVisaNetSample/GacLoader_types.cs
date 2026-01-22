@@ -180,7 +180,7 @@ public static partial class GacLoader
         }
         catch ( Exception ex )
         {
-            _ = sb.Append( $"\t*** Exception handling '{interfaceName}':\n\t\t{ex.Message}." );
+            _ = sb.Append( $"\tException handling '{interfaceName}':\n\t\t{ex.Message}." );
         }
         details = sb.ToString();
         return reply;
@@ -241,7 +241,7 @@ public static partial class GacLoader
         }
         catch ( Exception ex )
         {
-            details = $"\t*** Exception handling '{typeName}':\n\t\t{ex.Message}.";
+            details = $"\tException handling '{typeName}':\n\t\t{ex.Message}.";
         }
         return reply;
     }
@@ -279,7 +279,7 @@ public static partial class GacLoader
         }
         catch ( Exception ex )
         {
-            details = $"\t*** Exception handling '{vendorTypeName}':\n\t\t{ex.Message}.";
+            details = $"\tException handling '{vendorTypeName}':\n\t\t{ex.Message}.";
         }
         return reply;
     }
@@ -404,7 +404,7 @@ public static partial class GacLoader
 
         string[] vendorInterfaceNames = ["Keysight.Visa.IKeysightNativeVisaSession"];
 
-        _ = sb.AppendLine( $"\nIdentifying session types by vendor type names:" );
+        _ = sb.AppendLine( $"Identifying session types by vendor type names:" );
 
         foreach ( string vendorTypeName in vendorTypeNames )
         {

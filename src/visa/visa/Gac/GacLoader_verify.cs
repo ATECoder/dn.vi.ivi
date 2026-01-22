@@ -96,11 +96,11 @@ public static partial class GacLoader
         }
         catch ( Exception ex )
         {
-            throw new System.IO.IOException( $"Failed finding a loaded vendor implementation; {findDetails}", ex );
+            throw new System.IO.IOException( $"Failed finding a loaded vendor implementation;\n{findDetails}", ex );
         }
 
         if ( loadedAssembly is null )
-            throw new System.IO.IOException( $"Failed finding a loaded vendor implementation; {findDetails}" );
+            throw new System.IO.IOException( $"Failed finding a loaded vendor implementation;\n{findDetails}" );
 
         details = stringBuilder.ToString();
         return loadedAssembly;

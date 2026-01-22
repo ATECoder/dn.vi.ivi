@@ -119,7 +119,7 @@ public static partial class GacLoader
             }
             catch ( Exception exception )
             {
-                _ = sb.Append( $"*** Failed to load assembly {fileName}: {exception.Message}" );
+                _ = sb.Append( $"Failed to load assembly {fileName}: {exception.Message}" );
             }
         }
         details = sb.ToString();

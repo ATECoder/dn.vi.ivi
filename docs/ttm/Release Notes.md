@@ -17,6 +17,21 @@ Last update: 2026-01-16 11:15:48
 
 ## Releases
 
+### 2026-01-22
+
+| Item               | Info                                | Notes                                                         |
+|:-------------------|:------------------------------------|:--------------------------------------------------------------|
+| Loader             | Ttmware.Loader.8.1.9518.2.4.9410.7z |                                                               |
+| Source code        | Ttmware.code.8.1.9518.2.4.9410.7z   |                                                               |
+| Firmware           | 2.4.9410                            |                                                               |
+| .NET               | Modern .NET 10.                     | Required                                                      |
+| IVI-Visa           | 8.0.2                               | Included in the published package                             |
+| Keysight I/O Suite | 21.2.207                            | Required                                                      |
+
+The command file `00_make_cc_isr_settings_dir` must be run with administrator credential the first time this version is installed. This command creates the application settings folder under the shared `c:\ProgramData` folder.
+
+The _TTM Firmware Command Line Loader Guide_ was updated with installation instruction of the required modern .NET and IVI Foundation VISA implementation.
+
 ### 2026-01-16
 
 | Item               | Info                                | Notes                                                         |

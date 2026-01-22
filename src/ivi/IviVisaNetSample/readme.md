@@ -26,7 +26,7 @@ The Keysight VISA implementation 18.6.5 is picked up from the IVI foundation ven
 ### [IviFoundation.Visa 8.0.2] Package .NET 4.8
 
 ```
-IviVisaNetSample, Version=8.0.2.9512, Culture=neutral, PublicKeyToken=null
+IviVisaNetSample, Version=8.0.2.9518, Culture=neutral, PublicKeyToken=null
         Running under .NETFramework,Version=v4.8 runtime .NET Framework 4.8.9221.0
 
 Runtime Information:
@@ -62,6 +62,13 @@ Opening a VISA session to 'tcpip0::192.168.0.150::inst0::instr' by:
         Ivi.Visa.GlobalResourceManager.SpecificationVersion:7.4.0.0
         Keysight.Visa.TcpipSession Visa session opened to 'tcpip0::192.168.0.150::inst0::instr'.
 
+Resource information:
+        Name: TCPIP0::192.168.0.150::inst0::INSTR
+
+Visa information:
+        Manufacturer:   Keysight Technologies, Inc.
+        Implementation: 18.6.0.0
+
 Reading instrument identity...
         Resource: tcpip0::192.168.0.150::inst0::instr
         Identity: Keithley Instruments Inc., Model 2612A, 1214466, 2.2.6
@@ -86,7 +93,6 @@ Identifying session implementations by type names:
         is not a 'Ivi.Visa.IVxiMemorySession'.
         is not a 'Ivi.Visa.IVxiSession'.
 
-
 Identifying session types by vendor type names:
         is a 'Keysight.Visa.MessageBasedSession'.
         is not a 'Keysight.Visa.GpibInterfaceSession'.
@@ -108,12 +114,13 @@ Identifying session interface implementations by vendor type names:
         is a 'Keysight.Visa.IKeysightNativeVisaSession'.
 
 Closing session to 'tcpip0::192.168.0.150::inst0::instr'...
+
 ```
 
 ###  [IviFoundation.Visa 8.0.2] Package .NET 10.0
 
 ```
-IviVisaNetSample, Version=8.0.2.9512, Culture=neutral, PublicKeyToken=null
+IviVisaNetSample, Version=8.0.2.9518, Culture=neutral, PublicKeyToken=null
         Running under .NETCoreApp,Version=v10.0 runtime .NET 10.0.2
 
 Runtime Information:
@@ -150,6 +157,13 @@ Opening a VISA session to 'tcpip0::192.168.0.150::inst0::instr' by:
         Ivi.Visa.GlobalResourceManager.SpecificationVersion:7.4.0.0
         Keysight.Visa.TcpipSession Visa session opened to 'tcpip0::192.168.0.150::inst0::instr'.
 
+Resource information:
+        Name: TCPIP0::192.168.0.150::inst0::INSTR
+
+Visa information:
+        Manufacturer:   Keysight Technologies, Inc.
+        Implementation: 18.6.0.0
+
 Reading instrument identity...
         Resource: tcpip0::192.168.0.150::inst0::instr
         Identity: Keithley Instruments Inc., Model 2612A, 1214466, 2.2.6
@@ -174,7 +188,6 @@ Identifying session implementations by type names:
         is not a 'Ivi.Visa.IVxiMemorySession'.
         is not a 'Ivi.Visa.IVxiSession'.
 
-
 Identifying session types by vendor type names:
         is a 'Keysight.Visa.MessageBasedSession'.
         is not a 'Keysight.Visa.GpibInterfaceSession'.
@@ -196,7 +209,6 @@ Identifying session interface implementations by vendor type names:
         is a 'Keysight.Visa.IKeysightNativeVisaSession'.
 
 Closing session to 'tcpip0::192.168.0.150::inst0::instr'...
-
 ```
 
 ###  [Kelary.Ivi.Visa 7.2.0] Package .NET 4.8

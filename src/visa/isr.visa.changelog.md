@@ -2,9 +2,15 @@
 All notable changes to these libraries will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-[8.0.2.9512]: https://www.github.com/atecoder/dn.vi.ivi
+[8.0.2.9518]: https://www.github.com/atecoder/dn.vi.ivi
 
-Current IVI Visa Compatibility: 8.0.2.9512
+Current IVI Visa Compatibility: 8.0.2.9518
+
+## [8.0.2.9518] - 2026-01-22
+- GacLoader:
+  - TryEnumerateInstalledVisaAssemblies
+   - Append all errors into the output.
+  - Addd Query Identity:
 
 ## [8.0.2.9512] - 2026-01-16
 - Load implementation from the Gac for IVI.Visa prior to 8.x in case the implementation is not found otherwise.
