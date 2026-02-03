@@ -49,7 +49,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!--
     <PackageReference Include="KeysightTechnologies.Visa" Version="18.6.6" />
+    -->
+    <PackageReference Include="IviFoundation.Visa" Version="8.0.2" />
   </ItemGroup>
 
   <ItemGroup>

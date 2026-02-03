@@ -404,7 +404,7 @@ public partial class MainForm : Form
         Cursor.Current = Cursors.WaitCursor;
         try
         {
-            this._readTextBox.AppendText( "Status: " );
+            this._readTextBox.AppendText( "»Read STB\n" );
             short? status = ( short? ) this._session?.ReadStatusByte();
             if ( status is null )
             {
@@ -412,7 +412,7 @@ public partial class MainForm : Form
             }
             else
             {
-                this._readTextBox.AppendText( $"0x{( int ) status:X2}\n" );
+                this._readTextBox.AppendText( $"«0x{( int ) status:X2}\n" );
             }
             this._readTextBox.SelectionStart = this._readTextBox.Text.Length;
         }
