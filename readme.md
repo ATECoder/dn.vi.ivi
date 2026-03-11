@@ -5,6 +5,7 @@ Virtual Instruments (VI) libraries using the [IVI Foundation] VISA.
 * [Supported .NET Frameworks](#Supported-Dot-Net-Frameworks)
 * [Runtime Pre-Requisites](#Runtime-Pre-Requisites)
 * Project README files:
+  * [cc.isr.Visa](/src/visa/visa/readme.md) 
   * [cc.isr.VI.Device](/src/device/device/readme.md) 
   * [cc.isr.VI.Tsp](/src/device/tsp/readme.md) 
   * [cc.isr.VI.Device.Tsp.Script](/src/device/tsp.script/readme.md) 
@@ -73,18 +74,11 @@ The following [Microsoft .NET Framework] are supported:
 <a name="Runtime-Pre-Requisites"></a>
 ## Runtime Pre-Requisites
 
-### IVI Visa
-[IVI Foundation] 5.11 and above is required for accessing devices.
-The IVI VISA implementation can be obtained from either one of the following vendors: 
-* Compiled using VISA Shared Components version: 5.12.0
-
-### Keysight I/O Suite
-The [Keysight I/O Suite] version 18.1 and above is recommended.
-* Compiled using I/O Library Suite revision: 18.1.26209.5 released 2020-10-15.
-
-### NI VISA 
-* [NI VISA] revision 19.0 and above can be used.
-* Tested with [NI VISA] 20.0 and 21.0.
+### Compatible [IVI Foundation] Visa Versions:
+* 7.2
+  * Requires [Keysight I/O Suite] earlier than 21.2.207 or [NI VISA] earlier than 2024.1
+* 8.0.2  
+  * Requires [Keysight I/O Suite] 21.2.207 or later or [NI VISA] 2025.1 or later.
 
 [Creative Commons Attribution 4.0 International Public License]: https://github.com/ATECoder/dn.vi.ivi/blob/main/license
 [MIT License]: https://github.com/ATECoder/dn.vi.ivi/blob/main/license-code
@@ -96,4 +90,3 @@ The [Keysight I/O Suite] version 18.1 and above is recommended.
 [NI VISA]: https://www.ni.com/en-us/support/downloads/drivers/download.ni-visa.html#346210
 [Test Script Builder]: https://www.tek.com/keithley-test-script-builder
 [Microsoft .NET Framework]: https://dotnet.microsoft.com/download
-
