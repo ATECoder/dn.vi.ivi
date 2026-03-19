@@ -5,12 +5,12 @@ namespace cc.isr.VI.Tsp.K2600.Ttm.Tests.Firmware;
 
 internal static partial class Asserts
 {
-    /// <summary>   Assert tsp syntax should not fail. </summary>
+    /// <summary>   Assert tsp syntax should execute. </summary>
     /// <remarks>   2024-11-02. </remarks>
     /// <param name="session">      The session. </param>
     /// <param name="validateModel">  (Optional) [false] True to validate the instrument model. </param>
     /// <param name="logEnabled">     (Optional) [false] True to enable, false to disable the log. </param>
-    public static void AssertTspSyntaxShouldNotFail( Pith.SessionBase? session, bool validateModel = false, bool logEnabled = false )
+    public static void AssertTspSyntaxShouldExecute( Pith.SessionBase? session, bool validateModel = false, bool logEnabled = false )
     {
         Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
         Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
@@ -88,13 +88,14 @@ internal static partial class Asserts
         _ = Asserts.AssertQueryShouldExecute( session, command, logEnabled );
     }
 
-    /// <summary>   Assert meter value should reset. </summary>
+    /// <summary>   Assert meter settings should change. </summary>
     /// <remarks>   2024-11-02. </remarks>
     /// <param name="session">          The session. </param>
     /// <param name="checkSmuSetter">   (Optional) True to check smu setter. </param>
     /// <param name="validateModel">    (Optional) [false] True to validate the instrument model. </param>
     /// <param name="logEnabled">       (Optional) True to enable, false to disable the log. </param>
-    public static void AssertMeterValueShouldReset( Pith.SessionBase? session, bool checkSmuSetter = false, bool validateModel = false, bool logEnabled = false )
+    public static void AssertMeterSettingsShouldChange( Pith.SessionBase? session,
+        bool checkSmuSetter = false, bool validateModel = false, bool logEnabled = false )
     {
         Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
         Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
@@ -130,6 +131,7 @@ internal static partial class Asserts
         command = $"_G.ttm.postTransientDelaySetter({expectedDouble})";
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.0001, logEnabled );
 
+        // restore initial value
         expectedDouble = postTransientDelay;
         command = $"_G.ttm.postTransientDelaySetter({expectedDouble})";
         Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedDouble, 0.0001, logEnabled );
@@ -159,54 +161,63 @@ internal static partial class Asserts
             command = $"_G.ttm.contactLimitSetter({expectedInt})";
             Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedInt, logEnabled );
 
-            int contactOptions; // = 7;
+            int defaultContactCheckOptions; // = 15;
             query = "_G.print(string.format('%d',_G.ttm.meterDefaults.contactCheckOptions))";
-            contactOptions = session.QueryIntegerThrowIfError( query, "default contact check options" );
-            Assert.AreEqual( ( int ) meterSettings.ContactCheckOptionsDefault, contactOptions, $"{nameof( contactOptions )} should equal the settings value." );
-            Asserts.LogIT( $"{query} returned {contactOptions}" );
+            defaultContactCheckOptions = session.QueryIntegerThrowIfError( query, "default contact check options" );
+            Assert.AreEqual( ( int ) meterSettings.ContactCheckOptionsDefault, defaultContactCheckOptions, $"{nameof( defaultContactCheckOptions )} should equal the settings value." );
+            Asserts.LogIT( $"{query} returned {defaultContactCheckOptions}" );
 
             // get actual value
             query = "_G.print(string.format('%d',_G.ttm.contactCheckOptionsGetter()))";
-            int initialContactOptions = session.QueryIntegerThrowIfError( query, "actual contact check options" );
+            int actualContactCheckOptions = session.QueryIntegerThrowIfError( query, "actual contact check options" );
 
-            // change after updating the deployed version;
-            expectedInt = initialContactOptions == 1 ? 7 : 1;
+            // set a new contact check option;
+            expectedInt = actualContactCheckOptions == 1 ? 15 : 1;
             query = "_G.print(string.format('%d',_G.ttm.contactCheckOptionsGetter()))";
             command = $"_G.ttm.contactCheckOptionsSetter({expectedInt})";
             Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedInt, logEnabled );
 
             // restore value
-            expectedInt = initialContactOptions;
+            expectedInt = actualContactCheckOptions;
             command = $"_G.ttm.contactCheckOptionsSetter({expectedInt})";
             Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedInt, logEnabled );
 
-            expectedBoolean = ( int ) ContactCheckOptions.Initial == (contactOptions & ( int ) ContactCheckOptions.Initial);
+            // validate contact check options: before start
+            expectedBoolean = ( int ) ContactCheckOptions.Start == (actualContactCheckOptions & ( int ) ContactCheckOptions.Start);
+            query = "_G.print(_G.ttm.checkContactsBeforeStart())";
+            Asserts.AssertQueryReplyShouldBeValid( session, query, expectedBoolean, logEnabled );
+
+            // validate contact check options: before IR
+            expectedBoolean = ( int ) ContactCheckOptions.Initial == (actualContactCheckOptions & ( int ) ContactCheckOptions.Initial);
             query = "_G.print(_G.ttm.checkContactsBeforeInitialResistance())";
             Asserts.AssertQueryReplyShouldBeValid( session, query, expectedBoolean, logEnabled );
 
-            // change after updating the deployed version;
-            expectedBoolean = ( int ) ContactCheckOptions.Trace == (contactOptions & ( int ) ContactCheckOptions.Trace);
+            // validate contact check options: before Trace
+            expectedBoolean = ( int ) ContactCheckOptions.Trace == (actualContactCheckOptions & ( int ) ContactCheckOptions.Trace);
             query = "_G.print(_G.ttm.checkContactsBeforeThermalTransient())";
             Asserts.AssertQueryReplyShouldBeValid( session, query, expectedBoolean, logEnabled );
 
-            // change after updating the deployed version;
-            expectedBoolean = ( int ) ContactCheckOptions.Final == (contactOptions & ( int ) ContactCheckOptions.Final);
+            // validate contact check options: before FR
+            expectedBoolean = ( int ) ContactCheckOptions.Final == (actualContactCheckOptions & ( int ) ContactCheckOptions.Final);
             query = "_G.print(_G.ttm.checkContactsBeforeFinalResistance())";
             Asserts.AssertQueryReplyShouldBeValid( session, query, expectedBoolean, logEnabled );
 
-            int legacyDriver; // = 1;
+            int defaultLegacyDriverOption; // = 1;
             query = "_G.print(string.format('%d',_G.ttm.meterDefaults.legacyDriver))";
-            legacyDriver = session.QueryIntegerThrowIfError( query, "legacy driver" );
-            Assert.AreEqual( meterSettings.LegacyDriverDefault, legacyDriver, $"{nameof( legacyDriver )} should equal the settings value." );
-            Asserts.LogIT( $"{query} returned {legacyDriver}" );
+            defaultLegacyDriverOption = session.QueryIntegerThrowIfError( query, "legacy driver" );
+            Assert.AreEqual( meterSettings.LegacyDriverDefault, defaultLegacyDriverOption, $"{nameof( defaultLegacyDriverOption )} should equal the settings value." );
+            Asserts.LogIT( $"{query} returned {defaultLegacyDriverOption}" );
 
-            expectedInt = legacyDriver == 1 ? 0 : 1;
             query = "_G.print(string.format('%d',_G.ttm.legacyDriverGetter()))";
+            int actualLegacyDriverOption = session.QueryIntegerThrowIfError( query, "actual legacy driver option" );
+
+            // set a new legacy driver option;
+            expectedInt = actualLegacyDriverOption == 1 ? 0 : 1;
             command = $"_G.ttm.legacyDriverSetter({expectedInt})";
             Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedInt, logEnabled );
 
-            // restore value
-            expectedInt = legacyDriver;
+            // restore the legacy driver option;
+            expectedInt = actualLegacyDriverOption;
             command = $"_G.ttm.legacyDriverSetter({expectedInt})";
             Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedInt, logEnabled );
 
@@ -355,14 +366,14 @@ internal static partial class Asserts
         }
     }
 
-    /// <summary>   Assert initial resistance commands should execute. </summary>
+    /// <summary>   Assert initial resistance settings should change. </summary>
     /// <remarks>   2024-11-03. </remarks>
     /// <param name="session">              The session. </param>
     /// <param name="coldResistanceType">   (Optional) (ir) Type of the cold resistance. </param>
     /// <param name="validateModel">        (Optional) [false] True to validate the instrument model. </param>
     /// <param name="checkSmuSetter">       (Optional) [false] True to check smu setter. </param>
     /// <param name="logEnabled">           (Optional) [false] True to enable, false to disable the log. </param>
-    public static void AssertColdResistanceShouldReset( Pith.SessionBase? session, string coldResistanceType = "ir", bool validateModel = false, bool checkSmuSetter = false, bool logEnabled = false )
+    public static void AssertColdResistanceSettingsShouldChange( Pith.SessionBase? session, string coldResistanceType = "ir", bool validateModel = false, bool checkSmuSetter = false, bool logEnabled = false )
     {
         Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
         Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
@@ -487,7 +498,7 @@ internal static partial class Asserts
 
         bool isVoltageSource = !MeterSubsystem.LegacyFirmware && session.QueryBoolThrowIfError( $"_G.print(_G.ttm.{coldResistanceType}:sourceVoltage())", "source voltage method" );
 
-        Asserts.AssertColdResistanceShouldSet( session, isVoltageSource, coldResistanceType, logEnabled );
+        Asserts.AssertColdResistanceSourceSettingsShouldChange( session, isVoltageSource, coldResistanceType, logEnabled );
 
         if ( !MeterSubsystem.LegacyFirmware )
         {
@@ -499,7 +510,7 @@ internal static partial class Asserts
                 : $"_G.ttm.{coldResistanceType}:sourceOutputSetter(_G.ttm.SourceOutputs.current)";
             Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, expectedBoolean, logEnabled );
 
-            Asserts.AssertColdResistanceShouldSet( session, expectedBoolean, coldResistanceType, logEnabled );
+            Asserts.AssertColdResistanceSourceSettingsShouldChange( session, expectedBoolean, coldResistanceType, logEnabled );
 
             // restore actual value
             expectedBoolean = isVoltageSource;
@@ -512,14 +523,14 @@ internal static partial class Asserts
     }
 
     /// <summary>
-    /// Asserts that the cold resistance voltage source level and limits should be set.
+    /// Asserts that the cold resistance source settings should change.
     /// </summary>
     /// <remarks>   2025-02-03. </remarks>
     /// <param name="session">              The session. </param>
     /// <param name="isVoltageSource">      True if is voltage source, false if not. </param>
     /// <param name="coldResistanceType">   (Optional) (ir) Type of the cold resistance. </param>
     /// <param name="logEnabled">           (Optional) True to enable, false to disable the log. </param>
-    public static void AssertColdResistanceShouldSet( Pith.SessionBase? session, bool isVoltageSource, string coldResistanceType = "ir", bool logEnabled = false )
+    public static void AssertColdResistanceSourceSettingsShouldChange( Pith.SessionBase? session, bool isVoltageSource, string coldResistanceType = "ir", bool logEnabled = false )
     {
         Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
         Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
@@ -656,11 +667,11 @@ internal static partial class Asserts
         }
     }
 
-    /// <summary>   Assert estimator should reset. </summary>
+    /// <summary>   Assert estimator settings should change. </summary>
     /// <remarks>   2024-11-03. </remarks>
     /// <param name="session">      The session. </param>
     /// <param name="logEnabled">   (Optional) True to enable, false to disable the log. </param>
-    public static void AssertEstimatorShouldReset( Pith.SessionBase? session, bool logEnabled = false )
+    public static void AssertEstimatorSettingsShouldChange( Pith.SessionBase? session, bool logEnabled = false )
     {
         Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
         Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
@@ -802,13 +813,13 @@ internal static partial class Asserts
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedDouble, 0.000001, logEnabled );
     }
 
-    /// <summary>   Assert thermal transient should reset. </summary>
+    /// <summary>   Assert thermal transient settings should change. </summary>
     /// <remarks>   2024-11-03. </remarks>
     /// <param name="session">          The session. </param>
     /// <param name="validateModel">    (Optional) [false] True to validate the instrument model. </param>
     /// <param name="checkSmuSetter">   (Optional) [false] True to check smu setter. </param>
     /// <param name="logEnabled">       (Optional) [false ] True to enable, false to disable the log. </param>
-    public static void AssertThermalTransientShouldReset( Pith.SessionBase? session, bool validateModel = false, bool checkSmuSetter = false, bool logEnabled = false )
+    public static void AssertThermalTransientSettingsShouldChange( Pith.SessionBase? session, bool validateModel = false, bool checkSmuSetter = false, bool logEnabled = false )
     {
         Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
         Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );

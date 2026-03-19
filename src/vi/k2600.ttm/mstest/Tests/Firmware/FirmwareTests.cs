@@ -1,9 +1,14 @@
 namespace cc.isr.VI.Tsp.K2600.Ttm.Tests.Firmware;
 
 /// <summary>
-/// This is a test class for the TTM Firmware.
+
+/// This is a test class for the TTM Firmware. These tests call the internal TTM firmware methods
+/// and properties to verify that the firmware is functioning as expected. These tests are not
+/// intended to be exhaustive, but rather to provide a basic level of confidence in the
+/// firmware's functionality. These tests may be run on a regular basis to ensure that the
+/// firmware continues to function as expected as changes are made to the codebase.
 /// </summary>
-/// <remarks> David, 2020-10-12. </remarks>
+/// <remarks>   David, 2020-10-12. </remarks>
 [TestClass]
 [TestCategory( "k2600" )]
 public class FirmwareTests
@@ -164,29 +169,29 @@ public class FirmwareTests
         }
     }
 
-    /// <summary>   (Unit Test Method) tsp syntax should not fail. </summary>
+    /// <summary>   (Unit Test Method) tsp syntax should execute. </summary>
     /// <remarks>   2025-02-06. </remarks>
-    [TestMethod( DisplayName = "04. TSP syntax should not fail" )]
-    public void TspSyntaxShouldNotFail()
+    [TestMethod( DisplayName = "04. TSP syntax should execute" )]
+    public void TspSyntaxShouldExecute()
     {
         string resourceName = this.ResourceSettings.ResourceName;
         using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( resourceName );
 
-        Asserts.AssertTspSyntaxShouldNotFail( session, false, true );
+        Asserts.AssertTspSyntaxShouldExecute( session, false, true );
 
         VI.Device.Tests.Asserts.AssertOrphanMessages( session );
         VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
     }
 
-    /// <summary>   (Unit Test Method) meter value should reset. </summary>
+    /// <summary>   (Unit Test Method) meter settings should change. </summary>
     /// <remarks>   2025-02-06. </remarks>
-    [TestMethod( DisplayName = "05. Meter value should reset" )]
-    public void MeterValueShouldReset()
+    [TestMethod( DisplayName = "05. Meter settings should change" )]
+    public void MeterSettingsShouldChange()
     {
         string resourceName = this.ResourceSettings.ResourceName;
         using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( resourceName );
 
-        Asserts.AssertMeterValueShouldReset( session );
+        Asserts.AssertMeterSettingsShouldChange( session );
 
         VI.Device.Tests.Asserts.AssertOrphanMessages( session );
         VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
@@ -206,39 +211,43 @@ public class FirmwareTests
         VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
     }
 
-    /// <summary>   (Unit Test Method) initial resistance should reset. </summary>
+    /// <summary>   (Unit Test Method) initial resistance settings should change. </summary>
     /// <remarks>   2025-02-06. </remarks>
-    [TestMethod( DisplayName = "07. Initial resistance should reset" )]
-    public void InitialResistanceShouldReset()
+    [TestMethod( DisplayName = "07. Initial resistance settings should change" )]
+    public void InitialResistanceSettingsShouldChange()
     {
         string resourceName = this.ResourceSettings.ResourceName;
         using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( resourceName );
 
-        Asserts.AssertColdResistanceShouldReset( session, Asserts.IR );
+        Asserts.AssertColdResistanceSettingsShouldChange( session, Asserts.IR );
 
         VI.Device.Tests.Asserts.AssertOrphanMessages( session );
         VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
     }
 
-    [TestMethod( DisplayName = "08. Final resistance should reset" )]
-    public void FinalResistanceShouldReset()
+    /// <summary>   (Unit Test Method) final resistance settings should change. </summary>
+    /// <remarks>   2026-03-18. </remarks>
+    [TestMethod( DisplayName = "08. Final resistance settings should change" )]
+    public void FinalResistanceSettingsShouldChange()
     {
         string resourceName = this.ResourceSettings.ResourceName;
         using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( resourceName );
 
-        Asserts.AssertColdResistanceShouldReset( session, Asserts.FR );
+        Asserts.AssertColdResistanceSettingsShouldChange( session, Asserts.FR );
 
         VI.Device.Tests.Asserts.AssertOrphanMessages( session );
         VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
     }
 
-    [TestMethod( DisplayName = "09. Estimator should reset" )]
-    public void EstimatorShouldReset()
+    /// <summary>   (Unit Test Method) estimator settings should change. </summary>
+    /// <remarks>   2026-03-18. </remarks>
+    [TestMethod( DisplayName = "09. Estimator settings should change" )]
+    public void EstimatorSettingsShouldChange()
     {
         string resourceName = this.ResourceSettings.ResourceName;
         using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( resourceName );
 
-        Asserts.AssertEstimatorShouldReset( session, true );
+        Asserts.AssertEstimatorSettingsShouldChange( session, true );
 
         VI.Device.Tests.Asserts.AssertOrphanMessages( session );
         VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
@@ -258,15 +267,15 @@ public class FirmwareTests
         VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
     }
 
-    /// <summary>   (Unit Test Method) thermal transient should reset. </summary>
+    /// <summary>   (Unit Test Method) thermal transient settings should change. </summary>
     /// <remarks>   2025-02-18. </remarks>
-    [TestMethod( DisplayName = "11. Thermal transient should reset" )]
-    public void ThermalTransientShouldReset()
+    [TestMethod( DisplayName = "11. Thermal transient settings should change" )]
+    public void ThermalTransientSettingsShouldChange()
     {
         string resourceName = this.ResourceSettings.ResourceName;
         using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( resourceName );
 
-        Asserts.AssertThermalTransientShouldReset( session );
+        Asserts.AssertThermalTransientSettingsShouldChange( session );
 
         VI.Device.Tests.Asserts.AssertOrphanMessages( session );
         VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );

@@ -2,11 +2,18 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9566]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9574]: https://www.github.com/atecoder/dn.vi.ivi
 
 Current IVI Visa Compatibility: 8.0.2.9518
 
-## [8.1.9566] - 2026-03-102
+## [8.1.9574] - 2026-03-19
+- TTM.MSTest
+  - Rename a few test methods.
+  - Meter Settings Test:
+    - Update for 4 contact check options.
+    - Restore legacy driver option.
+
+## [8.1.9566] - 2026-03-10
 - Add IviVisaNetServiceRequest project.
 
 ## [8.1.9518] - 2026-01-22

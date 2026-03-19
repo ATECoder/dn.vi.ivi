@@ -1,9 +1,12 @@
 namespace cc.isr.VI.Tsp.K2600.Ttm.Tests.Driver;
 
 /// <summary>
-/// This is a test class for the TTM Meter.
+/// This is a test class for the TTM Meter. These tests address the TTM firmware by way of the
+/// TTM driver <see cref="cc.isr.VI.Tsp.K2600.Ttm"/>. The tests are not intended to be exhaustive
+/// but rather to provide a sanity check on the basic functionality of the driver and to provide
+/// a framework for adding additional tests in the future.
 /// </summary>
-/// <remarks> David, 2020-10-12. </remarks>
+/// <remarks>   David, 2020-10-12. </remarks>
 [TestClass]
 [TestCategory( "k2600" )]
 public class MeterTests
