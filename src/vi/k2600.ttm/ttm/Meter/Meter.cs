@@ -23,8 +23,7 @@ public partial class Meter : CommunityToolkit.Mvvm.ComponentModel.ObservableObje
     public Meter() : base()
     {
         this.TspDeviceInternal = new K2600Device();
-        this.ConfigInfo = new DeviceUnderTest();
-        if ( this.ConfigInfo is null ) throw new InvalidOperationException( $"Meter {nameof( this.ConfigInfo )} is null." );
+        this.ConfigInfo = new DeviceUnderTest() ?? throw new InvalidOperationException( $"Meter {nameof( this.ConfigInfo )} is null." );
         if ( this.ConfigInfo.InitialResistance is null ) throw new InvalidOperationException( $"Meter {nameof( this.ConfigInfo )}.{nameof( this.ConfigInfo.InitialResistance )} is null." );
         if ( this.ConfigInfo.FinalResistance is null ) throw new InvalidOperationException( $"Meter {nameof( this.ConfigInfo )}.{nameof( this.ConfigInfo.FinalResistance )} is null." );
         if ( this.ConfigInfo.ThermalTransient is null ) throw new InvalidOperationException( $"Meter {nameof( this.ConfigInfo )}.{nameof( this.ConfigInfo.ThermalTransient )} is null." );
@@ -1457,12 +1456,10 @@ public partial class Meter : CommunityToolkit.Mvvm.ComponentModel.ObservableObje
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( field is not null )
-                field.PropertyChanged -= this.MeasureSequencer_PropertyChanged;
+            field?.PropertyChanged -= this.MeasureSequencer_PropertyChanged;
 
             field = value;
-            if ( field is not null )
-                field.PropertyChanged += this.MeasureSequencer_PropertyChanged;
+            field?.PropertyChanged += this.MeasureSequencer_PropertyChanged;
         }
     }
 
@@ -1668,12 +1665,10 @@ public partial class Meter : CommunityToolkit.Mvvm.ComponentModel.ObservableObje
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( field is not null )
-                field.PropertyChanged -= this.TriggerSequencer_PropertyChanged;
+            field?.PropertyChanged -= this.TriggerSequencer_PropertyChanged;
 
             field = value;
-            if ( field is not null )
-                field.PropertyChanged += this.TriggerSequencer_PropertyChanged;
+            field?.PropertyChanged += this.TriggerSequencer_PropertyChanged;
         }
     }
 

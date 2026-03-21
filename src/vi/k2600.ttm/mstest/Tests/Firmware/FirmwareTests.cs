@@ -177,10 +177,39 @@ public class FirmwareTests
         string resourceName = this.ResourceSettings.ResourceName;
         using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( resourceName );
 
-        Asserts.AssertTspSyntaxShouldExecute( session, false, true );
+        static void AssertExecute( Pith.SessionBase? session, bool validateModel = false, bool logEnabled = false )
+        {
+            Asserts.AssertTspSyntaxShouldExecute( session, validateModel, logEnabled );
 
-        VI.Device.Tests.Asserts.AssertOrphanMessages( session );
-        VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
+            VI.Device.Tests.Asserts.AssertOrphanMessages( session );
+            VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session,
+                $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
+        }
+
+        int initialLegacyDriverOption = Asserts.AssertGetLegacyDriverOption( session );
+        int legacyDriverOption = initialLegacyDriverOption;
+        string caption = cc.isr.VI.Tsp.K2600.Ttm.Syntax.ThermalTransient.LegacyDriverCaption( legacyDriverOption );
+        Asserts.LogIT( $"\n{caption}\n{new string( '=', caption.Length )}" );
+
+        try
+        {
+            AssertExecute( session, false, true );
+
+            legacyDriverOption = legacyDriverOption == 0 ? 1 : 0;
+            caption = cc.isr.VI.Tsp.K2600.Ttm.Syntax.ThermalTransient.LegacyDriverCaption( legacyDriverOption );
+            Asserts.LogIT( $"\n{caption}\n{new string( '=', caption.Length )}" );
+            Asserts.AssertSetLegacyDriverOption( session, legacyDriverOption, true );
+
+            AssertExecute( session, false, true );
+        }
+        catch ( Exception )
+        {
+            throw;
+        }
+        finally
+        {
+            Asserts.AssertSetLegacyDriverOption( session, initialLegacyDriverOption, true );
+        }
     }
 
     /// <summary>   (Unit Test Method) meter settings should change. </summary>
@@ -191,10 +220,39 @@ public class FirmwareTests
         string resourceName = this.ResourceSettings.ResourceName;
         using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( resourceName );
 
-        Asserts.AssertMeterSettingsShouldChange( session );
+        static void AssertExecute( Pith.SessionBase? session, bool checkSmuSetter = false, bool validateModel = false, bool logEnabled = false )
+        {
+            Asserts.AssertMeterSettingsShouldChange( session, checkSmuSetter, validateModel, logEnabled );
 
-        VI.Device.Tests.Asserts.AssertOrphanMessages( session );
-        VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
+            VI.Device.Tests.Asserts.AssertOrphanMessages( session );
+            VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session,
+                $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
+        }
+
+        int initialLegacyDriverOption = Asserts.AssertGetLegacyDriverOption( session );
+        int legacyDriverOption = initialLegacyDriverOption;
+        string caption = cc.isr.VI.Tsp.K2600.Ttm.Syntax.ThermalTransient.LegacyDriverCaption( legacyDriverOption );
+        Asserts.LogIT( $"\n{caption}\n{new string( '=', caption.Length )}" );
+
+        try
+        {
+            AssertExecute( session, logEnabled: true );
+
+            legacyDriverOption = legacyDriverOption == 0 ? 1 : 0;
+            caption = cc.isr.VI.Tsp.K2600.Ttm.Syntax.ThermalTransient.LegacyDriverCaption( legacyDriverOption );
+            Asserts.LogIT( $"\n{caption}\n{new string( '=', caption.Length )}" );
+            Asserts.AssertSetLegacyDriverOption( session, legacyDriverOption, true );
+
+            AssertExecute( session, logEnabled: true );
+        }
+        catch ( Exception )
+        {
+            throw;
+        }
+        finally
+        {
+            Asserts.AssertSetLegacyDriverOption( session, initialLegacyDriverOption, true );
+        }
     }
 
     /// <summary>   (Unit Test Method) cold resistance defaults should equal settings. </summary>
@@ -205,10 +263,42 @@ public class FirmwareTests
         string resourceName = this.ResourceSettings.ResourceName;
         using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( resourceName );
 
-        Asserts.AssertColdResistanceDefaultsShouldEqualSettings( session );
+        static void AssertExecute( Pith.SessionBase? session, bool logEnabled = false )
+        {
+            Asserts.AssertColdResistanceDefaultsShouldEqualSettings( session, logEnabled );
 
-        VI.Device.Tests.Asserts.AssertOrphanMessages( session );
-        VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
+            VI.Device.Tests.Asserts.AssertOrphanMessages( session );
+            VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session,
+                $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
+
+        }
+
+        int initialLegacyDriverOption = Asserts.AssertGetLegacyDriverOption( session );
+        int legacyDriverOption = initialLegacyDriverOption;
+        string caption = cc.isr.VI.Tsp.K2600.Ttm.Syntax.ThermalTransient.LegacyDriverCaption( legacyDriverOption );
+        Asserts.LogIT( $"\n{caption}\n{new string( '=', caption.Length )}" );
+
+        try
+        {
+            AssertExecute( session, logEnabled: true );
+
+            legacyDriverOption = legacyDriverOption == 0 ? 1 : 0;
+            caption = cc.isr.VI.Tsp.K2600.Ttm.Syntax.ThermalTransient.LegacyDriverCaption( legacyDriverOption );
+            Asserts.LogIT( $"\n{caption}\n{new string( '=', caption.Length )}" );
+            Asserts.AssertSetLegacyDriverOption( session, legacyDriverOption, true );
+
+            AssertExecute( session, logEnabled: true );
+        }
+        catch ( Exception )
+        {
+            throw;
+        }
+        finally
+        {
+            Asserts.AssertSetLegacyDriverOption( session, initialLegacyDriverOption, true );
+        }
+
+
     }
 
     /// <summary>   (Unit Test Method) initial resistance settings should change. </summary>
@@ -219,10 +309,39 @@ public class FirmwareTests
         string resourceName = this.ResourceSettings.ResourceName;
         using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( resourceName );
 
-        Asserts.AssertColdResistanceSettingsShouldChange( session, Asserts.IR );
+        static void AssertExecute( Pith.SessionBase? session, bool checkSmuSetter = false, bool validateModel = false, bool logEnabled = false )
+        {
+            Asserts.AssertColdResistanceSettingsShouldChange( session, Asserts.IR, checkSmuSetter, validateModel, logEnabled );
 
-        VI.Device.Tests.Asserts.AssertOrphanMessages( session );
-        VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
+            VI.Device.Tests.Asserts.AssertOrphanMessages( session );
+            VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session,
+                $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
+        }
+
+        int initialLegacyDriverOption = Asserts.AssertGetLegacyDriverOption( session );
+        int legacyDriverOption = initialLegacyDriverOption;
+        string caption = cc.isr.VI.Tsp.K2600.Ttm.Syntax.ThermalTransient.LegacyDriverCaption( legacyDriverOption );
+        Asserts.LogIT( $"\n{caption}\n{new string( '=', caption.Length )}" );
+
+        try
+        {
+            AssertExecute( session, logEnabled: true );
+
+            legacyDriverOption = legacyDriverOption == 0 ? 1 : 0;
+            caption = cc.isr.VI.Tsp.K2600.Ttm.Syntax.ThermalTransient.LegacyDriverCaption( legacyDriverOption );
+            Asserts.LogIT( $"\n{caption}\n{new string( '=', caption.Length )}" );
+            Asserts.AssertSetLegacyDriverOption( session, legacyDriverOption, true );
+
+            AssertExecute( session, logEnabled: true );
+        }
+        catch ( Exception )
+        {
+            throw;
+        }
+        finally
+        {
+            Asserts.AssertSetLegacyDriverOption( session, initialLegacyDriverOption, true );
+        }
     }
 
     /// <summary>   (Unit Test Method) final resistance settings should change. </summary>
@@ -233,10 +352,39 @@ public class FirmwareTests
         string resourceName = this.ResourceSettings.ResourceName;
         using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( resourceName );
 
-        Asserts.AssertColdResistanceSettingsShouldChange( session, Asserts.FR );
+        static void AssertExecute( Pith.SessionBase? session, bool checkSmuSetter = false, bool validateModel = false, bool logEnabled = false )
+        {
+            Asserts.AssertColdResistanceSettingsShouldChange( session, Asserts.FR, checkSmuSetter, validateModel, logEnabled );
 
-        VI.Device.Tests.Asserts.AssertOrphanMessages( session );
-        VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
+            VI.Device.Tests.Asserts.AssertOrphanMessages( session );
+            VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session,
+                $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
+        }
+
+        int initialLegacyDriverOption = Asserts.AssertGetLegacyDriverOption( session );
+        int legacyDriverOption = initialLegacyDriverOption;
+        string caption = cc.isr.VI.Tsp.K2600.Ttm.Syntax.ThermalTransient.LegacyDriverCaption( legacyDriverOption );
+        Asserts.LogIT( $"\n{caption}\n{new string( '=', caption.Length )}" );
+
+        try
+        {
+            AssertExecute( session, logEnabled: true );
+
+            legacyDriverOption = legacyDriverOption == 0 ? 1 : 0;
+            caption = cc.isr.VI.Tsp.K2600.Ttm.Syntax.ThermalTransient.LegacyDriverCaption( legacyDriverOption );
+            Asserts.LogIT( $"\n{caption}\n{new string( '=', caption.Length )}" );
+            Asserts.AssertSetLegacyDriverOption( session, legacyDriverOption, true );
+
+            AssertExecute( session, logEnabled: true );
+        }
+        catch ( Exception )
+        {
+            throw;
+        }
+        finally
+        {
+            Asserts.AssertSetLegacyDriverOption( session, initialLegacyDriverOption, true );
+        }
     }
 
     /// <summary>   (Unit Test Method) estimator settings should change. </summary>
@@ -247,10 +395,39 @@ public class FirmwareTests
         string resourceName = this.ResourceSettings.ResourceName;
         using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( resourceName );
 
-        Asserts.AssertEstimatorSettingsShouldChange( session, true );
+        static void AssertExecute( Pith.SessionBase? session, bool logEnabled = false )
+        {
+            Asserts.AssertEstimatorSettingsShouldChange( session, logEnabled );
 
-        VI.Device.Tests.Asserts.AssertOrphanMessages( session );
-        VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
+            VI.Device.Tests.Asserts.AssertOrphanMessages( session );
+            VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session,
+                $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
+        }
+
+        int initialLegacyDriverOption = Asserts.AssertGetLegacyDriverOption( session );
+        int legacyDriverOption = initialLegacyDriverOption;
+        string caption = cc.isr.VI.Tsp.K2600.Ttm.Syntax.ThermalTransient.LegacyDriverCaption( legacyDriverOption );
+        Asserts.LogIT( $"\n{caption}\n{new string( '=', caption.Length )}" );
+
+        try
+        {
+            AssertExecute( session, logEnabled: true );
+
+            legacyDriverOption = legacyDriverOption == 0 ? 1 : 0;
+            caption = cc.isr.VI.Tsp.K2600.Ttm.Syntax.ThermalTransient.LegacyDriverCaption( legacyDriverOption );
+            Asserts.LogIT( $"\n{caption}\n{new string( '=', caption.Length )}" );
+            Asserts.AssertSetLegacyDriverOption( session, legacyDriverOption, true );
+
+            AssertExecute( session, logEnabled: true );
+        }
+        catch ( Exception )
+        {
+            throw;
+        }
+        finally
+        {
+            Asserts.AssertSetLegacyDriverOption( session, initialLegacyDriverOption, true );
+        }
     }
 
     /// <summary>   (Unit Test Method) thermal transient defaults should equal settings. </summary>
@@ -261,10 +438,39 @@ public class FirmwareTests
         string resourceName = this.ResourceSettings.ResourceName;
         using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( resourceName );
 
-        Asserts.AssertThermalTransientDefaultsShouldEqualSettings( session );
+        static void AssertExecute( Pith.SessionBase? session, bool validateModel = false, bool logEnabled = false )
+        {
+            Asserts.AssertThermalTransientDefaultsShouldEqualSettings( session, validateModel, logEnabled );
 
-        VI.Device.Tests.Asserts.AssertOrphanMessages( session );
-        VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
+            VI.Device.Tests.Asserts.AssertOrphanMessages( session );
+            VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session,
+                $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
+        }
+
+        int initialLegacyDriverOption = Asserts.AssertGetLegacyDriverOption( session );
+        int legacyDriverOption = initialLegacyDriverOption;
+        string caption = cc.isr.VI.Tsp.K2600.Ttm.Syntax.ThermalTransient.LegacyDriverCaption( legacyDriverOption );
+        Asserts.LogIT( $"\n{caption}\n{new string( '=', caption.Length )}" );
+
+        try
+        {
+            AssertExecute( session, logEnabled: true );
+
+            legacyDriverOption = legacyDriverOption == 0 ? 1 : 0;
+            caption = cc.isr.VI.Tsp.K2600.Ttm.Syntax.ThermalTransient.LegacyDriverCaption( legacyDriverOption );
+            Asserts.LogIT( $"\n{caption}\n{new string( '=', caption.Length )}" );
+            Asserts.AssertSetLegacyDriverOption( session, legacyDriverOption, true );
+
+            AssertExecute( session, logEnabled: true );
+        }
+        catch ( Exception )
+        {
+            throw;
+        }
+        finally
+        {
+            Asserts.AssertSetLegacyDriverOption( session, initialLegacyDriverOption, true );
+        }
     }
 
     /// <summary>   (Unit Test Method) thermal transient settings should change. </summary>
@@ -275,10 +481,39 @@ public class FirmwareTests
         string resourceName = this.ResourceSettings.ResourceName;
         using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( resourceName );
 
-        Asserts.AssertThermalTransientSettingsShouldChange( session );
+        static void AssertExecute( Pith.SessionBase? session, bool checkSmuSetter = false, bool validateModel = false, bool logEnabled = false )
+        {
+            Asserts.AssertThermalTransientSettingsShouldChange( session, checkSmuSetter, validateModel, logEnabled );
 
-        VI.Device.Tests.Asserts.AssertOrphanMessages( session );
-        VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
+            VI.Device.Tests.Asserts.AssertOrphanMessages( session );
+            VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session,
+                $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
+        }
+
+        int initialLegacyDriverOption = Asserts.AssertGetLegacyDriverOption( session );
+        int legacyDriverOption = initialLegacyDriverOption;
+        string caption = cc.isr.VI.Tsp.K2600.Ttm.Syntax.ThermalTransient.LegacyDriverCaption( legacyDriverOption );
+        Asserts.LogIT( $"\n{caption}\n{new string( '=', caption.Length )}" );
+
+        try
+        {
+            AssertExecute( session, logEnabled: true );
+
+            legacyDriverOption = legacyDriverOption == 0 ? 1 : 0;
+            caption = cc.isr.VI.Tsp.K2600.Ttm.Syntax.ThermalTransient.LegacyDriverCaption( legacyDriverOption );
+            Asserts.LogIT( $"\n{caption}\n{new string( '=', caption.Length )}" );
+            Asserts.AssertSetLegacyDriverOption( session, legacyDriverOption, true );
+
+            AssertExecute( session, logEnabled: true );
+        }
+        catch ( Exception )
+        {
+            throw;
+        }
+        finally
+        {
+            Asserts.AssertSetLegacyDriverOption( session, initialLegacyDriverOption, true );
+        }
     }
 
     /// <summary>   (Unit Test Method) framework should clear known state. </summary>
@@ -289,25 +524,58 @@ public class FirmwareTests
         string resourceName = this.ResourceSettings.ResourceName;
         using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( resourceName );
 
-        Asserts.AssertTtmElementReadings( session, Asserts.IR );
+        static void AssertExecute( Pith.SessionBase? session, bool logEnabled = false )
+        {
+            if ( logEnabled ) Asserts.LogIT( $"{Asserts.TtmElementName( Asserts.IR )} values" );
+            Asserts.AssertTtmElementReadings( session, Asserts.IR, logEnabled );
 
-        VI.Device.Tests.Asserts.AssertOrphanMessages( session );
-        VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
+            VI.Device.Tests.Asserts.AssertOrphanMessages( session );
+            VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
 
-        Asserts.AssertTtmElementReadings( session, Asserts.TR );
+            if ( logEnabled ) Asserts.LogIT( $"{Asserts.TtmElementName( Asserts.TR )} values" );
+            Asserts.AssertTtmElementReadings( session, Asserts.TR, logEnabled );
 
-        VI.Device.Tests.Asserts.AssertOrphanMessages( session );
-        VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
+            VI.Device.Tests.Asserts.AssertOrphanMessages( session );
+            VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
 
-        Asserts.AssertTtmElementReadings( session, Asserts.FR );
+            if ( logEnabled ) Asserts.LogIT( $"{Asserts.TtmElementName( Asserts.FR )} values" );
+            Asserts.AssertTtmElementReadings( session, Asserts.FR, logEnabled );
 
-        VI.Device.Tests.Asserts.AssertOrphanMessages( session );
-        VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
+            VI.Device.Tests.Asserts.AssertOrphanMessages( session );
+            VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
 
-        Asserts.AssertEstimatesShouldRead( session );
+            Asserts.AssertEstimatesShouldRead( session, logEnabled );
 
-        VI.Device.Tests.Asserts.AssertOrphanMessages( session );
-        VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
+            VI.Device.Tests.Asserts.AssertOrphanMessages( session );
+            VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
+
+        }
+
+        int initialLegacyDriverOption = Asserts.AssertGetLegacyDriverOption( session );
+        int legacyDriverOption = initialLegacyDriverOption;
+        string caption = cc.isr.VI.Tsp.K2600.Ttm.Syntax.ThermalTransient.LegacyDriverCaption( legacyDriverOption );
+        Asserts.LogIT( $"\n{caption}\n{new string( '=', caption.Length )}" );
+
+        try
+        {
+            AssertExecute( session, true );
+
+            legacyDriverOption = legacyDriverOption == 0 ? 1 : 0;
+            caption = cc.isr.VI.Tsp.K2600.Ttm.Syntax.ThermalTransient.LegacyDriverCaption( legacyDriverOption );
+            Asserts.LogIT( $"\n{caption}\n{new string( '=', caption.Length )}" );
+            Asserts.AssertSetLegacyDriverOption( session, legacyDriverOption, true );
+
+            AssertExecute( session, true );
+        }
+        catch ( Exception )
+        {
+            throw;
+        }
+        finally
+        {
+            Asserts.AssertSetLegacyDriverOption( session, initialLegacyDriverOption, true );
+        }
+
     }
 
 
@@ -319,38 +587,75 @@ public class FirmwareTests
         string resourceName = this.ResourceSettings.ResourceName;
         using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( resourceName );
 
-        TimeSpan timeout = TimeSpan.FromSeconds( 1 );
-        Asserts.AssertTriggerCycleShouldStart( session, timeout, true );
-
-        VI.Device.Tests.Asserts.AssertOrphanMessages( session );
-        VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
-
-        Asserts.AssertTtmElementReadings( session, Asserts.IR );
-
-        VI.Device.Tests.Asserts.AssertOrphanMessages( session );
-        VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
-
-        Asserts.AssertTtmElementReadings( session, Asserts.TR );
-
-        VI.Device.Tests.Asserts.AssertOrphanMessages( session );
-        VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
-
-        Asserts.AssertTtmElementReadings( session, Asserts.FR );
-
-        VI.Device.Tests.Asserts.AssertOrphanMessages( session );
-        VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
-
-        Asserts.AssertEstimatesShouldRead( session );
-
-        VI.Device.Tests.Asserts.AssertOrphanMessages( session );
-        VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
-
-        if ( !MeterSubsystem.LegacyFirmware )
+        static void AssertExecute( Pith.SessionBase? session, bool logEnabled = false )
         {
-            Asserts.AssertEstimatesShouldEstimate( session );
+
+            TimeSpan timeout = TimeSpan.FromSeconds( 1 );
+            Asserts.AssertTriggerCycleShouldStart( session, timeout, true );
 
             VI.Device.Tests.Asserts.AssertOrphanMessages( session );
             VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
+
+            if ( logEnabled ) Asserts.LogIT( $"{Asserts.TtmElementName( Asserts.IR )} values" );
+            Asserts.AssertTtmElementReadings( session, Asserts.IR, logEnabled );
+
+            VI.Device.Tests.Asserts.AssertOrphanMessages( session );
+            VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
+
+            if ( logEnabled ) Asserts.LogIT( $"{Asserts.TtmElementName( Asserts.TR )} values" );
+            Asserts.AssertTtmElementReadings( session, Asserts.TR, logEnabled );
+
+            VI.Device.Tests.Asserts.AssertOrphanMessages( session );
+            VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
+
+            if ( logEnabled ) Asserts.LogIT( $"{Asserts.TtmElementName( Asserts.FR )} values" );
+            Asserts.AssertTtmElementReadings( session, Asserts.FR, logEnabled );
+
+            VI.Device.Tests.Asserts.AssertOrphanMessages( session );
+            VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
+
+            Asserts.AssertEstimatesShouldRead( session, logEnabled );
+
+            VI.Device.Tests.Asserts.AssertOrphanMessages( session );
+            VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
+
+            if ( !MeterSubsystem.LegacyFirmware )
+            {
+                Asserts.AssertEstimatesShouldEstimate( session, logEnabled );
+
+                VI.Device.Tests.Asserts.AssertOrphanMessages( session );
+                VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
+            }
+
+            VI.Device.Tests.Asserts.AssertOrphanMessages( session );
+            VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session,
+                $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
         }
+
+        int initialLegacyDriverOption = Asserts.AssertGetLegacyDriverOption( session );
+        int legacyDriverOption = initialLegacyDriverOption;
+        string caption = cc.isr.VI.Tsp.K2600.Ttm.Syntax.ThermalTransient.LegacyDriverCaption( legacyDriverOption );
+        Asserts.LogIT( $"\n{caption}\n{new string( '=', caption.Length )}" );
+
+        try
+        {
+            AssertExecute( session, true );
+
+            legacyDriverOption = legacyDriverOption == 0 ? 1 : 0;
+            caption = cc.isr.VI.Tsp.K2600.Ttm.Syntax.ThermalTransient.LegacyDriverCaption( legacyDriverOption );
+            Asserts.LogIT( $"\n{caption}\n{new string( '=', caption.Length )}" );
+            Asserts.AssertSetLegacyDriverOption( session, legacyDriverOption, true );
+
+            AssertExecute( session, true );
+        }
+        catch ( Exception )
+        {
+            throw;
+        }
+        finally
+        {
+            Asserts.AssertSetLegacyDriverOption( session, initialLegacyDriverOption, true );
+        }
+
     }
 }

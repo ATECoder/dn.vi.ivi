@@ -1,7 +1,7 @@
 using System.Diagnostics;
-using cc.isr.VI.Tsp.SessionBaseExtensions;
-using cc.isr.VI.Tsp.K2600.Ttm.Syntax;
 using cc.isr.VI.Pith;
+using cc.isr.VI.Tsp.K2600.Ttm.Syntax;
+using cc.isr.VI.Tsp.SessionBaseExtensions;
 
 namespace cc.isr.VI.Tsp.K2600.Ttm.Tests.Firmware;
 /// <summary>   An asserts. </summary>
@@ -176,8 +176,9 @@ internal static partial class Asserts
 
     /// <summary>   Assert estimates should read. </summary>
     /// <remarks>   2025-02-07. </remarks>
-    /// <param name="session">  The session. </param>
-    public static void AssertEstimatesShouldRead( Pith.SessionBase? session )
+    /// <param name="session">      The session. </param>
+    /// <param name="logEnabled">   (Optional) True to enable, false to disable the log. </param>
+    public static void AssertEstimatesShouldRead( Pith.SessionBase? session, bool logEnabled = false )
     {
         Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
         Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
@@ -193,6 +194,15 @@ internal static partial class Asserts
         Assert.IsNotNull( finalVoltage, $"{nameof( finalVoltage )} should not be null." );
         double? voltageChange = session.QueryNullableDoubleThrowIfError( $"print(ttm.{ttmElement}.voltageChange) ", $"{ttmElementName} Voltage Change" );
         Assert.IsNotNull( voltageChange, $"{nameof( voltageChange )} should not be null." );
+
+        if ( logEnabled )
+        {
+            Asserts.LogIT( $"{ttmElementName} values" );
+            Asserts.LogIT( $"       {nameof( outcome )}: {outcome}" );
+            Asserts.LogIT( $"{nameof( initialVoltage )}: {initialVoltage}" );
+            Asserts.LogIT( $"  {nameof( finalVoltage )}: {finalVoltage}" );
+            Asserts.LogIT( $" {nameof( voltageChange )}: {voltageChange}" );
+        }
 
         if ( ( int ) FirmwareOutcomes.Unknown == (outcome.Value & ( int ) FirmwareOutcomes.Unknown) )
         {
@@ -217,8 +227,9 @@ internal static partial class Asserts
 
     /// <summary>   Assert estimates should estimate. </summary>
     /// <remarks>   2025-02-07. </remarks>
-    /// <param name="session">  The session. </param>
-    public static void AssertEstimatesShouldEstimate( Pith.SessionBase? session )
+    /// <param name="session">      The session. </param>
+    /// <param name="logEnabled">   (Optional) True to enable, false to disable the log. </param>
+    public static void AssertEstimatesShouldEstimate( Pith.SessionBase? session, bool logEnabled = false )
     {
         Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
         Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
@@ -260,6 +271,21 @@ internal static partial class Asserts
         Assert.IsNotNull( thermalTimeConstant, $"{nameof( thermalTimeConstant )} should not be null." );
         double? thermalCapacitance = session.QueryNullableDoubleThrowIfError( $"print(ttm.{ttmElement}.thermalCapacitance) ", $"{ttmElementName} Thermal Capacitance" );
         Assert.IsNotNull( thermalCapacitance, $"{nameof( thermalCapacitance )} should not be null." );
+
+        if ( logEnabled )
+        {
+            Asserts.LogIT( $"{ttmElementName} values" );
+            Asserts.LogIT( $"       {nameof( outcome )}: {outcome}" );
+            Asserts.LogIT( $"{nameof( initialVoltage )}: {initialVoltage}" );
+            Asserts.LogIT( $"  {nameof( finalVoltage )}: {finalVoltage}" );
+            Asserts.LogIT( $" {nameof( voltageChange )}: {voltageChange}" );
+            Asserts.LogIT( $"{ttmElementName} estimated values" );
+            Asserts.LogIT( $"  {nameof( temperatureChange )}: {temperatureChange}" );
+            Asserts.LogIT( $" {nameof( thermalConductance )}: {thermalConductance}" );
+            Asserts.LogIT( $"{nameof( thermalTimeConstant )}: {thermalTimeConstant}" );
+            Asserts.LogIT( $" {nameof( thermalCapacitance )}: {thermalCapacitance}" );
+        }
+
         if ( ( int ) FirmwareOutcomes.Unknown == (outcome.Value & ( int ) FirmwareOutcomes.Unknown) )
         {
             Assert.AreEqual( 0, initialVoltage, $"{nameof( initialVoltage )} {initialVoltage} should be zero if {nameof( outcome )} is not known." );
@@ -486,16 +512,18 @@ internal static partial class Asserts
 
     /// <summary>   Assert contact check should conform. </summary>
     /// <remarks>   2024-10-31. </remarks>
-    /// <param name="outcomes">     The outcomes. </param>
-    /// <param name="options">      Options for controlling the operation. </param>
-    /// <param name="option">       The option. </param>
-    /// <param name="limit">        The limit. </param>
-    /// <param name="leadsStatus">  True to okay. </param>
-    /// <param name="lowR">         True to low. </param>
-    /// <param name="highR">        True to high. </param>
-    /// <param name="dutR">         The dut r. </param>
-    public static void AssertContactCheckShouldConform( int? outcomes, int? options, ContactCheckOptions option, double? limit,
-        int? leadsStatus, double? lowR, double? highR, double? dutR )
+    /// <param name="outcomes">             The outcomes. </param>
+    /// <param name="options">              Options for controlling the operation. </param>
+    /// <param name="contactCheckOptions">  The contact check options. </param>
+    /// <param name="limit">                The limit. </param>
+    /// <param name="leadsStatus">          True to okay. </param>
+    /// <param name="lowR">                 True to low. </param>
+    /// <param name="highR">                True to high. </param>
+    /// <param name="dutR">                 The dut r. </param>
+    /// <param name="logEnabled">           (Optional) True to enable, false to disable the log. </param>
+    public static void AssertContactCheckShouldConform( int? outcomes, int? options,
+        ContactCheckOptions contactCheckOptions, double? limit,
+        int? leadsStatus, double? lowR, double? highR, double? dutR, bool logEnabled = false )
     {
         Assert.IsNotNull( options, $"Meter Contact Check {nameof( options )} should not be null." );
         Assert.IsNotNull( limit, $"Leads resistance {nameof( limit )} should not be null." );
@@ -505,29 +533,42 @@ internal static partial class Asserts
         Assert.IsNotNull( highR, $"{nameof( highR )} must have a value." );
         Assert.IsNotNull( dutR, $"{nameof( dutR )} must have a value." );
 
-        if ( 0 == (options.Value & ( int ) option) )
+        if ( logEnabled )
+        {
+            Asserts.LogIT( $"Contact check values" );
+            Asserts.LogIT( $"           {nameof( outcomes )}: {outcomes}" );
+            Asserts.LogIT( $"            {nameof( options )}: {options}" );
+            Asserts.LogIT( $"{nameof( contactCheckOptions )}: {contactCheckOptions}" );
+            Asserts.LogIT( $"              {nameof( limit )}: {limit}" );
+            Asserts.LogIT( $"        {nameof( leadsStatus )}: {leadsStatus}" );
+            Asserts.LogIT( $"               {nameof( lowR )}: {lowR}" );
+            Asserts.LogIT( $"              {nameof( highR )}: {highR}" );
+            Asserts.LogIT( $"               {nameof( dutR )}: {dutR}" );
+        }
+
+        if ( 0 == (options.Value & ( int ) contactCheckOptions) )
         {
             // if the specified option is net enabled the contact check values should be unknown.
-            Assert.AreEqual( ( int ) LeadsStatusBits.Unknown, leadsStatus.Value, $"{nameof( leadsStatus )} value {leadsStatus} must be unknow if the options {options} do not include {option}." );
+            Assert.AreEqual( ( int ) LeadsStatusBits.Unknown, leadsStatus.Value, $"{nameof( leadsStatus )} value {leadsStatus} must be unknow if the options {options} do not include {contactCheckOptions}." );
             Assert.AreEqual( cc.isr.VI.Syntax.ScpiSyntax.NotANumber, lowR.Value, 0.001 * cc.isr.VI.Syntax.ScpiSyntax.NotANumber,
-                $"{nameof( lowR )} contact resistance value should be unknown if the options {options} do not include {option}." );
+                $"{nameof( lowR )} contact resistance value should be unknown if the options {options} do not include {contactCheckOptions}." );
             Assert.AreEqual( cc.isr.VI.Syntax.ScpiSyntax.NotANumber, highR.Value, 0.001 * cc.isr.VI.Syntax.ScpiSyntax.NotANumber,
-                $"{nameof( highR )} contact resistance value should be unknown if the options {options} do not include {option}." );
+                $"{nameof( highR )} contact resistance value should be unknown if the options {options} do not include {contactCheckOptions}." );
             Assert.AreEqual( cc.isr.VI.Syntax.ScpiSyntax.NotANumber, dutR.Value, 0.001 * cc.isr.VI.Syntax.ScpiSyntax.NotANumber,
-                $"{nameof( dutR )} contact resistance value should be unknown if the options {options} do not include {option}." );
+                $"{nameof( dutR )} contact resistance value should be unknown if the options {options} do not include {contactCheckOptions}." );
         }
         else
         {
             if ( ( int ) FirmwareOutcomes.Unknown == (outcomes & ( int ) FirmwareOutcomes.Unknown) )
             {
                 // if outcome is not known, measurements were not started.
-                Assert.AreEqual( ( int ) LeadsStatusBits.Unknown, leadsStatus.Value, $"{nameof( leadsStatus )} value {leadsStatus} must be unknow if the options {options} do not include {option}." );
+                Assert.AreEqual( ( int ) LeadsStatusBits.Unknown, leadsStatus.Value, $"{nameof( leadsStatus )} value {leadsStatus} must be unknow if the options {options} do not include {contactCheckOptions}." );
                 Assert.AreEqual( cc.isr.VI.Syntax.ScpiSyntax.NotANumber, lowR.Value, 0.001 * cc.isr.VI.Syntax.ScpiSyntax.NotANumber,
-                    $"{nameof( lowR )} contact resistance value should be unknown if the options {options} do not include {option}." );
+                    $"{nameof( lowR )} contact resistance value should be unknown if the options {options} do not include {contactCheckOptions}." );
                 Assert.AreEqual( cc.isr.VI.Syntax.ScpiSyntax.NotANumber, highR.Value, 0.001 * cc.isr.VI.Syntax.ScpiSyntax.NotANumber,
-                    $"{nameof( highR )} contact resistance value should be unknown if the options {options} do not include {option}." );
+                    $"{nameof( highR )} contact resistance value should be unknown if the options {options} do not include {contactCheckOptions}." );
                 Assert.AreEqual( cc.isr.VI.Syntax.ScpiSyntax.NotANumber, dutR.Value, 0.001 * cc.isr.VI.Syntax.ScpiSyntax.NotANumber,
-                    $"{nameof( dutR )} contact resistance value should be unknown if the options {options} do not include {option}." );
+                    $"{nameof( dutR )} contact resistance value should be unknown if the options {options} do not include {contactCheckOptions}." );
             }
             else if ( ( int ) FirmwareOutcomes.OpenLeads == (outcomes & ( int ) FirmwareOutcomes.OpenLeads) )
             {
@@ -558,9 +599,24 @@ internal static partial class Asserts
     /// <param name="low">          True to low. </param>
     /// <param name="high">         True to high. </param>
     /// <param name="pass">         True to pass. </param>
+    /// <param name="logEnabled">   (Optional) True to enable, false to disable the log. </param>
     public static void AssertMeasurementShouldConform( int? outcome, int? status, bool okayAndPass,
-        double? measurement, double lowLimit, double highLimit, bool? low, bool? high, bool? pass )
+        double? measurement, double lowLimit, double highLimit, bool? low, bool? high, bool? pass, bool logEnabled = false )
     {
+        if ( logEnabled )
+        {
+            Asserts.LogIT( $"Measurement values" );
+            Asserts.LogIT( $"    {nameof( outcome )}: {outcome}" );
+            Asserts.LogIT( $"     {nameof( status )}: {status}" );
+            Asserts.LogIT( $"{nameof( okayAndPass )}: {okayAndPass}" );
+            Asserts.LogIT( $"{nameof( measurement )}: {measurement}" );
+            Asserts.LogIT( $"   {nameof( lowLimit )}: {lowLimit}" );
+            Asserts.LogIT( $"  {nameof( highLimit )}: {highLimit}" );
+            Asserts.LogIT( $"        {nameof( low )}: {low}" );
+            Asserts.LogIT( $"       {nameof( high )}: {high}" );
+            Asserts.LogIT( $"       {nameof( pass )}: {pass}" );
+        }
+
         if ( outcome.HasValue )
         {
             FirmwareOutcomes firmwareOutcome = ( FirmwareOutcomes ) outcome.Value;
@@ -617,8 +673,21 @@ internal static partial class Asserts
     /// <param name="low">          True to low. </param>
     /// <param name="high">         True to high. </param>
     /// <param name="pass">         True to pass. </param>
-    public static void AssertMeasurementShouldConformOnNotOkay( int? status, bool okayAndPass, double? measurement, bool? low, bool? high, bool? pass )
+    /// <param name="logEnabled">   (Optional) True to enable, false to disable the log. </param>
+    public static void AssertMeasurementShouldConformOnNotOkay( int? status, bool okayAndPass,
+        double? measurement, bool? low, bool? high, bool? pass, bool logEnabled = false )
     {
+        if ( logEnabled )
+        {
+            Asserts.LogIT( $"Measurement values" );
+            Asserts.LogIT( $"     {nameof( status )}: {status}" );
+            Asserts.LogIT( $"{nameof( okayAndPass )}: {okayAndPass}" );
+            Asserts.LogIT( $"{nameof( measurement )}: {measurement}" );
+            Asserts.LogIT( $"        {nameof( low )}: {low}" );
+            Asserts.LogIT( $"       {nameof( high )}: {high}" );
+            Asserts.LogIT( $"       {nameof( pass )}: {pass}" );
+        }
+
         // the TTM initializes pass and measurement to NaN
         Assert.IsTrue( measurement.HasValue, $"'{nameof( measurement )}' should have a value." );
         Assert.AreEqual( cc.isr.VI.Syntax.ScpiSyntax.NotANumber, measurement.Value, 0.001 * cc.isr.VI.Syntax.ScpiSyntax.NotANumber,
@@ -653,9 +722,10 @@ internal static partial class Asserts
 
     /// <summary>   Assert TTM Element has readings. </summary>
     /// <remarks>   2024-10-26. </remarks>
-    /// <param name="session">              The session. </param>
+    /// <param name="session">      The session. </param>
     /// <param name="ttmElement">   TTM Element abbreviation, e.g., ir, fr, tr or est. </param>
-    public static void AssertTtmElementReadings( Pith.SessionBase? session, string ttmElement )
+    /// <param name="logEnabled">   (Optional) True to enable, false to disable the log. </param>
+    public static void AssertTtmElementReadings( Pith.SessionBase? session, string ttmElement, bool logEnabled = false )
     {
         Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
         Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
@@ -671,6 +741,7 @@ internal static partial class Asserts
 
         (int? outcome, int? status, bool okayAndPass, double? measurement) = Asserts.AssertTtmElementShouldBeFetched( session, ttmElement );
         (bool? low, bool? high, bool? pass) = Asserts.AssertTtmElementShouldReadLowHighPass( session, ttmElement );
+
         (double lowLimit, double highLimit) = Asserts.AssertTtmElementShouldReadLimits( session, ttmElement );
         Assert.IsNotNull( measurement, $"{nameof( measurement )} must not be null." );
 
@@ -683,7 +754,7 @@ internal static partial class Asserts
             }
         }
 
-        Asserts.AssertMeasurementShouldConform( outcome, status, okayAndPass, measurement, lowLimit, highLimit, low, high, pass );
+        Asserts.AssertMeasurementShouldConform( outcome, status, okayAndPass, measurement, lowLimit, highLimit, low, high, pass, logEnabled );
 
         if ( !outcome.HasValue )
             // status is initialized to nil with cold resistance
@@ -696,7 +767,8 @@ internal static partial class Asserts
             int? contactOptions = Asserts.AssertMeterShouldReadContactCheckOptions( session );
             double? limit = Asserts.AssertMeterShouldReadContactCheckLimit( session );
             (int? leadsStatus, double? lowR, double? highR, double? dutR) = Asserts.AssertTtmElementShouldReadContactCheck( session, ttmElement );
-            Asserts.AssertContactCheckShouldConform( outcome, contactOptions, ContactCheckOptions.Initial, limit, leadsStatus, lowR, highR, dutR );
+            Asserts.AssertContactCheckShouldConform( outcome, contactOptions, ContactCheckOptions.Initial, limit,
+                leadsStatus, lowR, highR, dutR, logEnabled );
 
             ContactCheckOptions contactCheckOption = Asserts.ContactCheckOption( ttmElement );
 

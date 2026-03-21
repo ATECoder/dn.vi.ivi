@@ -76,4 +76,12 @@ public static partial class ThermalTransient
     /// <value> The name of the outcome bits open leads. </value>
     public static string OutcomeBitsOpenLeadsName => MeterSubsystem.LegacyFirmware ? "" : "_G.ttm.OutcomeBits.openLeads";
 
+    /// <summary>   Legacy driver caption. </summary>
+    /// <remarks>   2026-03-19. </remarks>
+    /// <param name="legacyDriverOption">   The legacy driver option. </param>
+    /// <returns>   A string. </returns>
+    public static string LegacyDriverCaption( int legacyDriverOption )
+    {
+        return legacyDriverOption == 1 ? "Legacy driver enabled" : "Legacy driver disabled";
+    }
 }

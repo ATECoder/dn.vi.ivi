@@ -1,252 +1,717 @@
-<!DOCTYPE html []>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="author" content="MarkdownViewer++" />
-    <title>TTM Framework Guide.md</title>
-    <style type="text/css">
-            
-/* Avoid page breaks inside the most common attributes, especially for exports (i.e. PDF) */
-td, h1, h2, h3, h4, h5, p, ul, ol, li {
-    page-break-inside: avoid; 
+<!DOCTYPE html>
+            <html>
+                <head>                    
+                    <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+                    <meta http-equiv="content-type" content="text/html; charset=utf-8"></meta>
+                    <title>TTM Framework Guide.md</title>
+                    <style type="text/css">
+                    /*
+Copyright (c) 2017 Chris Patuzzo
+https://twitter.com/chrispatuzzo
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+
+body {
+  font-family: Helvetica, arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  padding: 30px;
+  color: #333;
 }
 
-        </style>
-  </head>
-  <body>
-    <h1 id="thermal-transient-metertm-framework-guide">Thermal Transient Meter™ Framework Guide</h1>
-    <h2 id="table-of-contents">Table of Contents</h2>
-    <ul>
-      <li>
-        <a href="#Components">Components</a>
-        <ul>
-          <li>
-            <a href="#Meter">Meter</a>
-          </li>
-          <li>[TTM-Firmware](#TTM Firmware)</li>
-          <li>
-            <a href="#Loader">Loader</a>
-          </li>
-          <li>
-            <a href="#API">API</a>
-          </li>
-          <li>
-            <a href="#Console">Console</a>
-          </li>
-          <li>
-            <a href="#Visa-Compatibility-Tester">VISA Compatibility Tester</a>
-          </li>
-        </ul>
-      </li>
-      <li>
-        <a href="#Revisions">Revisions</a>
-      </li>
-      <li>
-        <a href="#Terminology">Terminology</a>
-        <ul>
-          <li>
-            <a href="#Firmware">Firmware</a>
-          </li>
-          <li>
-            <a href="#Loading">Loading</a>
-          </li>
-          <li>
-            <a href="#Memory">Memory</a>
-          </li>
-          <li>
-            <a href="#Startup">Startup</a>
-          </li>
-        </ul>
-      </li>
-      <li>
-        <a href="#Using_the_Framework">Using the Framework</a>
-      </li>
-      <li>
-        <a href="#Requirements_and_Resources">Requirements and Resources</a>
-        <ul>
-          <li>
-            <a href="#FTP_Site">FTP Site</a>
-          </li>
-          <li>
-            <a href="#Microsoft_.NET_Framework">Microsoft .NET Framework</a>
-          </li>
-          <li>
-            <a href="#VISA_Runtime">VISA Runtime</a>
-          </li>
-        </ul>
-      </li>
-      <li>
-        <a href="#Attributions">Attributions</a>
-      </li>
-    </ul>
-    <p>
-      <a name="Components"></a>
-    </p>
-    <h2 id="components">Components</h2>
-    <p>The ISR Thermal Transient Meter™ (TTM) Framework consists of the following components, programs and documents:</p>
-    <ul>
-      <li>
-        <a href="#Meter">Meter</a> - The ISR Thermal Transient Meter (TTM) Instrument.</li>
-      <li>
-        <a href="#TTM-Firmware">TTM Firmware</a> - The ISR Thermal Transient Meter (TTM) <a href="#firmware">Firmware</a> that is loaded onto the <a href="#Meter">Meter</a>.</li>
-      <li>
-        <a href="#Loader">Loader</a> - An application that loads the custom TTM firmware onto the <a href="https://www.tek.com/en/products/keithley/source-measure-units/2600b-series-sourcemeter">Keithley series 2600</a> instruments.</li>
-      <li>
-        <a href="#API">API</a> - A <a href="https://en.wikipedia.org/wiki/.NET_Framework">Microsoft .NET</a> library for communicating with the instrument over TCP/IP, USB or GPIB interfaces.</li>
-      <li>
-        <a href="#Console">Console</a> - A stand-alone <a href="https://en.wikipedia.org/wiki/.NET_Framework">Microsoft .NET</a> application for making Thermal Transient measurements.</li>
-      <li>
-        <a href="#VISA-Compatibility-Tester">VISA Compatibility Tester</a> - A stand-alone <a href="https://en.wikipedia.org/wiki/.NET_Framework">Microsoft .NET</a> application for looking for and checking the compatibility of the <a href="https://www,ivi.org">IVI VISA</a> implementation on this computer.</li>
-    </ul>
-    <p>
-      <a name="Meter"></a>
-    </p>
-    <h3 id="meter">Meter</h3>
-    <p>The ISR Thermal Transient Meter (TTM) Instrument is at the core of the framework. This instrument measures the thermal transient response of a resistive element to short current pulses. The instrument is capable of applying current pulses over a wide range of current levels and pulse widths. The instrument also measures the resistances before and after applying the current pulse. The instrument displays measurement values and outputs a digital word that can be used for binning the tested device.</p>
-    <p>The instrument consists of a <a href="https://www.tek.com/en/products/keithley/source-measure-units/2600b-series-sourcemeter">Keithley series 2600</a> instrument and a custom embedded <a href="#TTM-Firmware">TTM Firmware</a>, which extends the capabilities of the instrument for measuring thermal transients.</p>
-    <p>The <a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/ttm/TTM%20Instrument%20Guide.html">TTM Instrument Guide</a> describes the usage of the TTM as a stand-alone instrument.</p>
-    <p>
-      <a name="TTM-Firmware"></a>
-    </p>
-    <h3 id="ttm-firmware">TTM Firmware</h3>
-    <p>The ISR Thermal Transient Meter (TTM) <a href="#firmware">Firmware</a> is loaded is a custom embedded firmware, which extends the capabilities of the native <a href="https://www.tek.com/en/products/keithley/source-measure-units/2600b-series-sourcemeter">Keithley series 2600</a> meter for measuring thermal transients.</p>
-    <p>
-      <a name="Loader"></a>
-    </p>
-    <h3 id="loader">Loader</h3>
-    <p>The ISR Thermal Transient Meter (TTM) Firmware Loader is a Windows program that loads the custom TTM firmware onto the <a href="https://www.tek.com/en/products/keithley/source-measure-units/2600b-series-sourcemeter">Keithley series 2600</a> instrument.</p>
-    <p>
-      <a name="API"></a>
-    </p>
-    <h3 id="api">API</h3>
-    <p>The ISR Thermal Transient Meter (TTM) Application Programming Interface (API) is a .NET library (also called Driver) that can be used to communicate with the TTM instrument. The library is provided both as a dynamic link library (DLL) and a Visual Studio project with source code.</p>
-    <p>The <a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/ttm/TTM%20Driver%20API%20Guide.html">TTM Driver API Guide</a> describes how to use the TTM API to interface with the instrument remotely from a Windows computer.</p>
-    <p>
-      <a name="Console"></a>
-    </p>
-    <h3 id="console">Console</h3>
-    <p>The ISR Thermal Transient Meter (TTM) Console (or Driver Console) is an application program for testing resistive devices using the TTM instrument. The Console is included as part of the TTM Framework both as an application program executable and a Visual Studio project with source code.</p>
-    <p>The <a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/ttm/TTM%20Console%20Guide.html">TTM Console Guide</a> describes how to use the Console.</p>
-    <p>
-      <a name="Visa-Compatibility-Tester"></a>
-    </p>
-    <h3 id="visa-compatibility-tester">VISA Compatibility Tester</h3>
-    <p>The TTM Framework <a href="https://en.wikipedia.org/wiki/.NET_Framework">Microsoft .NET</a> API uses the Virtual Instruments (VISA) framework from the <a href="https://www,ivi.org">IVI Foundation</a> for communicating with the TTM instrument. The <a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/kelary/Visa%20Compatibility%20Tester%20Guide.html">VISA Compatibility Tester Guide</a> describes how to use the Visa Compatibility Tester to determine if <a href="https://www,ivi.org">IVI VISA</a> is installed on the computer and is compatible with the TTM .NET libraries and applications.</p>
-    <p>
-      <a name="Revisions"></a>
-    </p>
-    <h2 id="revisions">Revisions</h2>
-    <p>The TTM Framework has undergone a few revisions since it's inception in 2005. The following table attempts to provide the relationships between the various components and revisions that have been actively employed.</p>
-    <table>
-      <thead>
-        <tr>
-          <th>Component</th>
-          <th>2011</th>
-          <th>2025</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Firmware</td>
-          <td>2.3.4009</td>
-          <td>2.4.9111</td>
-        </tr>
-        <tr>
-          <td>Loader</td>
-          <td>isr.Ttm.Loader 2.3.4049</td>
-          <td>cc.isr.VI.Tsp.K2600.Ttmware.Loader 8.1.9210</td>
-        </tr>
-        <tr>
-          <td>Driver</td>
-          <td>isr.Ttm.Driver 2.3.4077</td>
-          <td>TBA</td>
-        </tr>
-        <tr>
-          <td>VISA</td>
-          <td>NI-VISA NS 8.1.20</td>
-          <td>IVI-VISA 7.2.0</td>
-        </tr>
-      </tbody>
-    </table>
-    <p>
-      <a name="Terminology"></a>
-    </p>
-    <h2 id="terminology">Terminology</h2>
-    <p>
-      <a name="Firmware"></a>
-    </p>
-    <h3 id="firmware">Firmware</h3>
-    <p>The ISR Thermal Transient Meter is implemented by customizing an off-the-shelf <a href="https://www.tek.com/en/products/keithley/source-measure-units/2600b-series-sourcemeter">Keithley series 2600</a> instrument. This is done by embedding the ISR Thermal Transient Meter firmware--the TTM Firmware--in this instrument. The TTM firmware consists of an embedded program written in the programming language of the instrument.</p>
-    <p>
-      <a name="Loading"></a>
-    </p>
-    <h3 id="loading">Loading</h3>
-    <p>The ISR Thermal Transient Meter comes already installed with the TTM Firmware. A stand-alone TTM Loader program is used for updating the embedded TTM firmware. This is done by removing (unloading) the TTM firmware embedded in the instrument and loading (installing) new TTM Firmware.</p>
-    <p>
-      <a name="Memory"></a>
-    </p>
-    <h3 id="memory">Memory</h3>
-    <p>When updated, the TTM Firmware resides in the instrument volatile memory. Firmware residing in volatile memory does not persist after restarting the instrument. During installation, the TTM Loader program saves the TTM Firmware to non-volatile memory. Firmware saved in non-volatile memory persists after the instrument power is toggled.</p>
-    <p>
-      <a name="Startup"></a>
-    </p>
-    <h3 id="startup">Startup</h3>
-    <p>When starting the TTM instrument, the instrument panel displays the Thermal Transient Meter version message, e.g., <em><strong>TTM 2.4.9111</strong></em> and author (<strong>Integerated Scientific Resources</strong>). In addition, the TTM Firmware is initiated to prepare the instrument for measurement. This is done by the <em>TTM Startup</em> or bootstrap firmware. The startup firmware is saved in non-volatile memory when the TTM fimware is loaded.</p>
-    <p>
-      <a name="Using_the_Framework"></a>
-    </p>
-    <h2 id="using-the-framework">Using the Framework</h2>
-    <p>The TTM Framework comes with the following guides:</p>
-    <ul>
-      <li>
-        <a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/ttm/TTM%20Framework%20Guide.html">TTM Framework Guide</a>: This guide.</li>
-      <li>
-        <a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/ttm/TTM%20Firmware%20Upgrade%20Guide.html">TTM Firmware Upgrade Guide</a>: Describes how to upgrade the firmware.</li>
-      <li>
-        <a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/ttm/TTM%20Firmware%20API%20Guide.html">TTM Firmware API Guide</a>: Describe how to interact with the Firmware by wat of TCP/IP, USB or GPIB using <a href="https://www,ivi.org">IVI VISA</a>.</li>
-      <li>
-        <a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/ttm/TTM%20Driver%20API%20Guide.html">TTM Driver API Guide</a>: Describes how to use the ISR TTM Driver.</li>
-      <li>
-        <a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/ttm/TTM%20Driver%20API%20Upgrade%20Guide.html">TTM Driver API Upgrade Guide</a>: Describes how to upgrade software using the legacy ISR TTM driver.</li>
-      <li>
-        <a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/ttm/TTM%20Instrument%20Guide.html">TTM Instrument Guide</a>: Describes how to use the TTM Instrument manually or from application programs.</li>
-      <li>
-        <a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/ttm/TTM%20Console%20Guide.html">TTM Console Guide</a>: Describes how to take measurement using the TTM Console application.</li>
-      <li>
-        <a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/kelary/Visa%20Compatibility%20Tester%20Guide.html">VISA Compatibility Tester Guide</a>: how to use the Visa Compatibility Tester to determine if <a href="https://www,ivi.org">IVI VISA</a> is installed on the computer and is compatible with the TTM .NET libraries and applications.</li>
-    </ul>
-    <p>
-      <a name="Requirements_and_Resources"></a>
-    </p>
-    <h2 id="requirements-and-resources">Requirements and Resources</h2>
-    <p>
-      <a name="FTP_Site"></a>
-    </p>
-    <h3 id="ftp-site">FTP Site</h3>
-    <p>The latest information about requirements can be found in the program read me file which can be downloaded from the <a href="http://bit.ly/aJgNDP">ISR FTP site</a>.</p>
-    <p>The access to the <a href="ftp://ftp.isr.cc">cc.isr.ftp</a> FTP site is protected by a password.</p>
-    <p>The user name is: ttm@isr.cc
+body > *:first-child {
+  margin-top: 0 !important;
+}
+
+body > *:last-child {
+  margin-bottom: 0 !important;
+}
+
+a {
+  color: #4183C4;
+  text-decoration: none;
+}
+
+a.absent {
+  color: #cc0000;
+}
+
+a.anchor {
+  display: block;
+  padding-left: 30px;
+  margin-left: -30px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  cursor: text;
+  position: relative;
+}
+
+h2:first-child, h1:first-child, h1:first-child + h2, h3:first-child, h4:first-child, h5:first-child, h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
+  text-decoration: none;
+}
+
+h1 tt, h1 code {
+  font-size: inherit;
+}
+
+h2 tt, h2 code {
+  font-size: inherit;
+}
+
+h3 tt, h3 code {
+  font-size: inherit;
+}
+
+h4 tt, h4 code {
+  font-size: inherit;
+}
+
+h5 tt, h5 code {
+  font-size: inherit;
+}
+
+h6 tt, h6 code {
+  font-size: inherit;
+}
+
+h1 {
+  font-size: 28px;
+  color: black;
+}
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
+  color: black;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h6 {
+  color: #777777;
+  font-size: 14px;
+}
+
+p, blockquote, ul, ol, dl, li, table, pre {
+  margin: 15px 0;
+}
+
+/*
+hr {
+  border: 0 none;
+  color: #cccccc;
+  height: 4px;
+  padding: 0;
+}
+*/
+body > h2:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+body > h1:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+body > h1:first-child + h2 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
+  margin-top: 0;
+}
+
+li p.first {
+  display: inline-block;
+}
+
+ul, ol {
+  padding-left: 30px;
+}
+
+ul :first-child, ol :first-child {
+  margin-top: 0;
+}
+
+ul :last-child, ol :last-child {
+  margin-bottom: 0;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  padding: 0;
+  margin: 15px 0 5px;
+}
+
+dl dt:first-child {
+  padding: 0;
+}
+
+dl dt > :first-child {
+  margin-top: 0;
+}
+
+dl dt > :last-child {
+  margin-bottom: 0;
+}
+
+dl dd {
+  margin: 0 0 15px;
+  padding: 0 15px;
+}
+
+dl dd > :first-child {
+  margin-top: 0;
+}
+
+dl dd > :last-child {
+  margin-bottom: 0;
+}
+
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777;
+}
+
+blockquote > :first-child {
+  margin-top: 0;
+}
+
+blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+table {
+  padding: 0;
+}
+table tr {
+  border-top: 1px solid #cccccc;
+  background-color: white;
+  margin: 0;
+  padding: 0;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+table tr th {
+  font-weight: bold;
+  border: 1px solid #cccccc;
+  text-align: left;
+  margin: 0;
+  padding: 6px 13px;
+}
+
+table tr td {
+  border: 1px solid #cccccc;
+  text-align: left;
+  margin: 0;
+  padding: 6px 13px;
+}
+
+table tr th :first-child, table tr td :first-child {
+  margin-top: 0;
+}
+
+table tr th :last-child, table tr td :last-child {
+  margin-bottom: 0;
+}
+
+img {
+  max-width: 100%;
+}
+
+span.frame {
+  display: block;
+  overflow: hidden;
+}
+
+span.frame > span {
+  border: 1px solid #dddddd;
+  display: block;
+  float: left;
+  overflow: hidden;
+  margin: 13px 0 0;
+  padding: 7px;
+  width: auto;
+}
+
+span.frame span img {
+  display: block;
+  float: left;
+}
+
+span.frame span span {
+  clear: both;
+  color: #333333;
+  display: block;
+  padding: 5px 0 0;
+}
+
+span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both;
+}
+
+span.align-center > span {
+  display: block;
+  overflow: hidden;
+  margin: 13px auto 0;
+  text-align: center;
+}
+
+span.align-center span img {
+  margin: 0 auto;
+  text-align: center;
+}
+
+span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both;
+}
+
+span.align-right > span {
+  display: block;
+  overflow: hidden;
+  margin: 13px 0 0;
+  text-align: right;
+}
+
+span.align-right span img {
+  margin: 0;
+  text-align: right;
+}
+
+span.float-left {
+  display: block;
+  margin-right: 13px;
+  overflow: hidden;
+  float: left;
+}
+
+span.float-left span {
+  margin: 13px 0 0;
+}
+
+span.float-right {
+  display: block;
+  margin-left: 13px;
+  overflow: hidden;
+  float: right;
+}
+
+span.float-right > span {
+  display: block;
+  overflow: hidden;
+  margin: 13px auto 0;
+  text-align: right;
+}
+
+code, tt {
+  margin: 0 2px;
+  padding: 0 5px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+}
+
+pre code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent;
+}
+
+.highlight pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #cccccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+pre code, pre tt {
+  background-color: transparent;
+  border: none;
+}
+
+/* Syntax Highlighting */
+
+.plainText {
+ background-color: #FFFFFF;
+ color: #000000;
+}
+.htmlServerSideScript {
+ background-color: #FFFF00;
+}
+.htmlComment {
+ color: #008000;
+}
+.htmlTagDelimiter {
+ color: #0000FF;
+}
+.htmlElementName {
+ color: #A31515;
+}
+.htmlAttributeName {
+ color: #FF0000;
+}
+.htmlAttributeValue {
+ color: #0000FF;
+}
+.htmlOperator {
+ color: #0000FF;
+}
+.comment {
+ color: #008000;
+}
+.xmlDocTag {
+ color: #808080;
+}
+.xmlDocComment {
+ color: #008000;
+}
+.string {
+ color: #A31515;
+}
+.stringCSharpVerbatim {
+ color: #A31515;
+}
+.keyword {
+ color: #0000FF;
+}
+.preprocessorKeyword {
+ color: #0000FF;
+}
+.htmlEntity {
+ color: #FF0000;
+}
+.xmlAttribute {
+ color: #FF0000;
+}
+.xmlAttributeQuotes {
+ color: #000000;
+}
+.xmlAttributeValue {
+ color: #0000FF;
+}
+.xmlCDataSection {
+ color: #808080;
+}
+.xmlComment {
+ color: #008000;
+}
+.xmlDelimiter {
+ color: #0000FF;
+}
+.xmlName {
+ color: #A31515;
+}
+.className {
+ color: #48D1CC;
+}
+.cssSelector {
+ color: #A31515;
+}
+.cssPropertyName {
+ color: #FF0000;
+}
+.cssPropertyValue {
+ color: #0000FF;
+}
+.sqlSystemFunction {
+ color: #FF00FF;
+}
+.powershellAttribute {
+ color: #B0E0E6;
+}
+.powershellOperator {
+ color: #808080;
+}
+.powershellType {
+ color: #008080;
+}
+.powershellVariable {
+ color: #FF4500;
+}
+.type {
+ color: #008080;
+}
+.typeVariable {
+ color: #008080;
+ font-style: italic;
+}
+.namespace {
+ color: #000080;
+}
+.constructor {
+ color: #800080;
+}
+.predefined {
+ color: #000080;
+}
+.pseudoKeyword {
+ color: #000080;
+}
+.stringEscape {
+ color: #808080;
+}
+.controlKeyword {
+ color: #0000FF;
+}
+.number {
+}
+.operator {
+}
+.delimiter {
+}
+.markdownHeader {
+ font-weight: bold;
+}
+.markdownCode {
+ color: #008080;
+}
+.markdownListItem {
+ font-weight: bold;
+}
+.italic {
+ font-style: italic;
+}
+.bold {
+ font-weight: bold;
+}
+
+                    </style>
+                </head>
+                <body class="markdown-body" style="">
+                <h1 id="0">Thermal Transient Meter™ Framework Guide</h1>
+<p id="2">Last Updated: 2026-03-20</p>
+<h2 id="4">Table of Contents</h2>
+<ul id="6">
+<li id="6"><a href="#Components">Components</a>
+<ul id="7">
+<li id="7"><a href="#Meter">Meter</a></li>
+<li id="8">[TTM-Firmware](#TTM Firmware)</li>
+<li id="9"><a href="#Loader">Loader</a></li>
+<li id="10"><a href="#API">API</a></li>
+<li id="11"><a href="#Console">Console</a></li>
+<li id="12"><a href="#Visa-Compatibility-Tester">VISA Compatibility Tester</a></li>
+</ul>
+</li>
+<li id="13"><a href="#Revisions">Revisions</a></li>
+<li id="14"><a href="#Terminology">Terminology</a>
+<ul id="15">
+<li id="15"><a href="#Firmware">Firmware</a></li>
+<li id="16"><a href="#Loading">Loading</a></li>
+<li id="17"><a href="#Memory">Memory</a></li>
+<li id="18"><a href="#Startup">Startup</a></li>
+</ul>
+</li>
+<li id="19"><a href="#Using_the_Framework">Using the Framework</a></li>
+<li id="20"><a href="#Requirements_and_Resources">Requirements and Resources</a>
+<ul id="21">
+<li id="21"><a href="#FTP_Site">FTP Site</a></li>
+<li id="22"><a href="#Microsoft_.NET_Framework">Microsoft .NET Framework</a></li>
+<li id="23"><a href="#VISA_Runtime">VISA Runtime</a></li>
+</ul>
+</li>
+<li id="24"><a href="#Attributions">Attributions</a></li>
+</ul>
+<p id="26"><a name="Components"></a></p>
+<h2 id="27">Components</h2>
+<p id="29">The ISR Thermal Transient Meter™ (TTM) Framework consists of the following components, programs and documents:</p>
+<ul id="31">
+<li id="31"><a href="#Meter">Meter</a> - The ISR Thermal Transient Meter (TTM) Instrument.</li>
+<li id="32"><a href="#TTM-Firmware">TTM Firmware</a> - The ISR Thermal Transient Meter (TTM) <a href="#92">Firmware</a> that is loaded onto the <a href="#Meter">Meter</a>.</li>
+<li id="33"><a href="#Loader">Loader</a> - An application that loads the custom TTM firmware onto the <a href="https://www.tek.com/en/products/keithley/source-measure-units/2600b-series-sourcemeter">Keithley series 2600</a> instruments.</li>
+<li id="34"><a href="#API">API</a> - A <a href="https://dotnet.microsoft.com/en-us/learn/dotnet/what-is-dotnet-framework">Microsoft .NET</a> library for communicating with the instrument over TCP/IP, USB or GPIB interfaces.</li>
+<li id="35"><a href="#Console">Console</a> - A stand-alone <a href="https://dotnet.microsoft.com/en-us/learn/dotnet/what-is-dotnet-framework">Microsoft .NET</a> application for making Thermal Transient measurements.</li>
+<li id="36"><a href="#VISA-Compatibility-Tester">VISA Compatibility Tester</a> - A stand-alone <a href="https://dotnet.microsoft.com/en-us/learn/dotnet/what-is-dotnet-framework">Microsoft .NET</a> application for looking for and checking the compatibility of the <a href="https://www.ivi.org">IVI VISA</a> implementation on this computer.</li>
+</ul>
+<p id="38"><a name="Meter"></a></p>
+<h3 id="39">Meter</h3>
+<p id="41">The ISR Thermal Transient Meter (TTM) Instrument is at the core of the framework. This instrument measures the thermal transient response of a resistive element to short current pulses. The instrument is capable of applying current pulses over a wide range of current levels and pulse widths. The instrument also measures the resistances before and after applying the current pulse. The instrument displays measurement values and outputs a digital word that can be used for binning the tested device.</p>
+<p id="43">The instrument consists of a <a href="https://www.tek.com/en/products/keithley/source-measure-units/2600b-series-sourcemeter">Keithley series 2600</a> instrument and a custom embedded <a href="#TTM-Firmware">TTM Firmware</a>, which extends the capabilities of the instrument for measuring thermal transients.</p>
+<p id="45">The <a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/ttm/TTM%20Instrument%20Guide.html">TTM Instrument Guide</a> describes the usage of the TTM as a stand-alone instrument.</p>
+<p id="47"><a name="TTM-Firmware"></a></p>
+<h3 id="48">TTM Firmware</h3>
+<p id="50">The ISR Thermal Transient Meter (TTM) <a href="#92">Firmware</a> is loaded is a custom embedded firmware, which extends the capabilities of the native <a href="https://www.tek.com/en/products/keithley/source-measure-units/2600b-series-sourcemeter">Keithley series 2600</a> meter for measuring thermal transients.</p>
+<p id="52"><a name="Loader"></a></p>
+<h3 id="53">Loader</h3>
+<p id="55">The ISR Thermal Transient Meter (TTM) Firmware Loader is a Windows program that loads the custom TTM firmware onto the <a href="https://www.tek.com/en/products/keithley/source-measure-units/2600b-series-sourcemeter">Keithley series 2600</a> instrument.</p>
+<p id="57"><a name="API"></a></p>
+<h3 id="58">API</h3>
+<p id="60">The ISR Thermal Transient Meter (TTM) Application Programming Interface (API) is a .NET library (also called Driver) that can be used to communicate with the TTM instrument. The library is provided both as a dynamic link library (DLL) and a Visual Studio project with source code.</p>
+<p id="62">The <a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/ttm/TTM%20Driver%20API%20Guide.html">TTM Driver API Guide</a> describes how to use the TTM API to interface with the instrument remotely from a Windows computer.</p>
+<p id="64"><a name="Console"></a></p>
+<h3 id="65">Console</h3>
+<p id="67">The ISR Thermal Transient Meter (TTM) Console (or Driver Console) is an application program for testing resistive devices using the TTM instrument. The Console is included as part of the TTM Framework both as an application program executable and a Visual Studio project with source code.</p>
+<p id="69">The <a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/ttm/TTM%20Console%20Guide.html">TTM Console Guide</a> describes how to use the Console.</p>
+<p id="71"><a name="Visa-Compatibility-Tester"></a></p>
+<h3 id="72">VISA Compatibility Tester</h3>
+<p id="74">The TTM Framework <a href="https://dotnet.microsoft.com/en-us/learn/dotnet/what-is-dotnet-framework">Microsoft .NET</a> API uses the Virtual Instruments (VISA) framework from the <a href="https://www.ivi.org">IVI Foundation</a> for communicating with the TTM instrument. The <a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/kelary/Visa%20Compatibility%20Tester%20Guide.html">VISA Compatibility Tester Guide</a> describes how to use the Visa Compatibility Tester to determine if <a href="https://www.ivi.org">IVI VISA</a> is installed on the computer and is compatible with the TTM .NET libraries and applications.</p>
+<p id="76"><a name="Revisions"></a></p>
+<h2 id="77">Revisions</h2>
+<p id="79">The TTM Framework has undergone a few revisions since it's inception in 2005. The following table attempts to provide the relationships between the various components and revisions that have been actively employed.</p>
+<table id="81">
+<thead>
+<tr id="81">
+<th id="81">Component</th>
+<th id="81">2011</th>
+<th id="81">2025</th>
+</tr>
+</thead>
+<tbody>
+<tr id="83">
+<td id="83">Firmware</td>
+<td id="83">2.3.4009</td>
+<td id="83">2.4.xxxx</td>
+</tr>
+<tr id="84">
+<td id="84">Loader</td>
+<td id="84">isr.Ttm.Loader 2.3.4049</td>
+<td id="84">cc.isr.VI.Tsp.K2600.Ttmware.Loader</td>
+</tr>
+<tr id="85">
+<td id="85">Driver</td>
+<td id="85">isr.Ttm.Driver 2.3.4077</td>
+<td id="85">TBA</td>
+</tr>
+<tr id="86">
+<td id="86">VISA</td>
+<td id="86">NI-VISA NS 8.1.20</td>
+<td id="86">IVI-VISA 8.0.2</td>
+</tr>
+</tbody>
+</table>
+<p id="88"><a name="Terminology"></a></p>
+<h2 id="89">Terminology</h2>
+<p id="91"><a name="Firmware"></a></p>
+<h3 id="92">Firmware</h3>
+<p id="94">The ISR Thermal Transient Meter is implemented by customizing an off-the-shelf <a href="https://www.tek.com/en/products/keithley/source-measure-units/2600b-series-sourcemeter">Keithley series 2600</a> instrument. This is done by embedding the ISR Thermal Transient Meter firmware--the TTM Firmware--in this instrument. The TTM firmware consists of an embedded program written in the programming language of the instrument.</p>
+<p id="96"><a name="Loading"></a></p>
+<h3 id="97">Loading</h3>
+<p id="99">The ISR Thermal Transient Meter comes already installed with the TTM Firmware. A stand-alone TTM Loader program is used for updating the embedded TTM firmware. This is done by removing (unloading) the TTM firmware embedded in the instrument and loading (installing) new TTM Firmware.</p>
+<p id="101"><a name="Memory"></a></p>
+<h3 id="102">Memory</h3>
+<p id="104">When updated, the TTM Firmware resides in the instrument volatile memory. Firmware residing in volatile memory does not persist after restarting the instrument. During installation, the TTM Loader program saves the TTM Firmware to non-volatile memory. Firmware saved in non-volatile memory persists after the instrument power is toggled.</p>
+<p id="106"><a name="Startup"></a></p>
+<h3 id="107">Startup</h3>
+<p id="109">When starting the TTM instrument, the instrument panel displays the Thermal Transient Meter version message, e.g., <em><strong>TTM 2.4.9111</strong></em> and author (<strong>Integerated Scientific Resources</strong>). In addition, the TTM Firmware is initiated to prepare the instrument for measurement. This is done by the <em>TTM Startup</em> or bootstrap firmware. The startup firmware is saved in non-volatile memory when the TTM fimware is loaded.</p>
+<p id="111"><a name="Using_the_Framework"></a></p>
+<h2 id="112">Using the Framework</h2>
+<p id="114">The TTM Framework comes with the following guides:</p>
+<ul id="115">
+<li id="115"><a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/ttm/TTM%20Framework%20Guide.html">TTM Framework Guide</a>: This guide.</li>
+<li id="116"><a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/ttm/TTM%20Firmware%20API%20Guide.html">TTM Firmware API Guide</a>: Describe how to interact with the Firmware by wat of TCP/IP, USB or GPIB using <a href="https://www.ivi.org">IVI VISA</a>.</li>
+<li id="117"><a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/ttm/TTM%20Driver%20API%20Guide.html">TTM Driver API Guide</a>: Describes how to use the ISR TTM Driver.</li>
+<li id="118"><a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/ttm/TTM%20Driver%20API%20Upgrade%20Guide.html">TTM Driver API Upgrade Guide</a>: Describes how to upgrade software using the legacy ISR TTM driver.</li>
+<li id="119"><a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/ttm/TTM%20Instrument%20Guide.html">TTM Instrument Guide</a>: Describes how to use the TTM Instrument manually or from application programs.</li>
+<li id="120"><a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/ttm/TTM%20Console%20Guide.html">TTM Console Guide</a>: Describes how to take measurement using the TTM Console application.</li>
+<li id="121"><a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/kelary/Visa%20Compatibility%20Tester%20Guide.html">VISA Compatibility Tester Guide</a>: how to use the Visa Compatibility Tester to determine if <a href="https://www.ivi.org">IVI VISA</a> is installed on the computer and is compatible with the TTM .NET libraries and applications.</li>
+</ul>
+<p id="123"><a name="Requirements_and_Resources"></a></p>
+<h2 id="124">Requirements and Resources</h2>
+<p id="126"><a name="FTP_Site"></a></p>
+<h3 id="127">FTP Site</h3>
+<p id="129">The latest information about requirements can be found in the program read me file which can be downloaded from the <a href="http://bit.ly/aJgNDP">ISR FTP site</a>.</p>
+<p id="131">The access to the <a href="ftp://ftp.isr.cc">cc.isr.ftp</a> FTP site is protected by a password.</p>
+<p id="133">The user name is: ttm@isr.cc
 The password is: ttm2.2</p>
-    <p>
-      <a name="Microsoft_.NET_Framework"></a>
-    </p>
-    <h3 id="microsoft.net-framework">Microsoft .NET Framework</h3>
-    <p>The TTM applications are based on the Microsoft <a href="https://dotnet.microsoft.com/en-us/download/dotnet/8.0">.NET Framework</a> 9.0 and <a href="https://learn.microsoft.com/en-us/dotnet/standard/net-standard?tabs=net-standard-1-0">Microsoft .NET Standard</a> 2.0, which is accessible from multiple .NET implementations.</p>
-    <p>
-      <a name="VISA_Runtime"></a>
-    </p>
-    <h3 id="visa-runtime">VISA Runtime</h3>
-    <p>The TTM Framework <a href="https://en.wikipedia.org/wiki/.NET_Framework">Microsoft .NET</a> API uses the Virtual Instruments (VISA) framework from the <a href="https://www,ivi.org">IVI Foundation</a> for communicating with the TTM instrument. <a href="https://www,ivi.org">IVI VISA</a> is installed by members of the <a href="https://www,ivi.org">IVI Foundation</a> such as Keysight, Rohde-Schwartz and NI (former National Instruments). Implementations such as the <a href="https://www.keysight.com/us/en/lib/software-detail/computer-software/io-libraries-suite-downloads-2175637.html">IO Suite</a> from Keysight or <a href="http://ftp.ni.com/support/softlib/visa/VISA%20Run-Time%20Engine">NI Visa</a> from NI must be installed for running applications based on <a href="https://www,ivi.org">IVI VISA</a>.</p>
-    <p>The current TTM software was developed based on version 7.2.0.0 of <a href="https://www,ivi.org">IVI VISA</a>. Any VISA implementation, such as <a href="https://www.keysight.com/us/en/lib/software-detail/computer-software/io-libraries-suite-downloads-2175637.html">IO Suite</a> version 21.1.47 is compatible with the ISR TTM API.</p>
-    <p>
-      <a name="Attributions"></a>
-    </p>
-    <h2 id="attributions">Attributions</h2>
-    <p>Last Updated 2024-12-21 12:57:26</p>
-    <p>© 2011 by Integrated Scientific Resources, Inc.</p>
-    <p>This information is provided "AS IS" WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.</p>
-    <p>Licensed under <a href="http://www.isr.cc/licenses/Fair%20End%20User%20Use%20License.pdf">The Fair End User</a> and <a href="http://opensource.org/licenses/MIT">MIT</a> Licenses.</p>
-    <p>Unless required by applicable law or agreed to in writing, this software is provided "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</p>
-    <p>Source code is hosted on <a href="https://www.github.com/ATECoder">GitHub</a></p>
-  </body>
-</html>
+<p id="136"><a name="Microsoft_.NET_Framework"></a></p>
+<h3 id="137">Microsoft .NET Framework</h3>
+<p id="139">The TTM applications are based on the Microsoft <a href="https://dotnet.microsoft.com/en-us/download/dotnet/9.0">.NET Framework</a> 9.0 and <a href="https://learn.microsoft.com/en-us/dotnet/standard/net-standard?tabs=net-standard-1-0">Microsoft .NET Standard</a> 2.0, which is accessible from multiple .NET implementations.</p>
+<p id="141"><a name="VISA_Runtime"></a></p>
+<h3 id="142">VISA Runtime</h3>
+<p id="144">The TTM Framework <a href="https://dotnet.microsoft.com/en-us/learn/dotnet/what-is-dotnet-framework">Microsoft .NET</a> API uses the Virtual Instruments (VISA) framework from the <a href="https://www.ivi.org">IVI Foundation</a> for communicating with the TTM instrument. <a href="https://www.ivi.org">IVI VISA</a> is installed by members of the <a href="https://www.ivi.org">IVI Foundation</a> such as Keysight, Rohde-Schwartz and NI (former National Instruments). Implementations such as the <a href="https://www.keysight.com/en/pd-1985909/io-libraries-suite">Keysight IO Suite</a> or <a href="http://ftp.ni.com/support/softlib/visa/VISA%20Run-Time%20Engine">NI Visa</a> must be installed for running applications based on <a href="https://www.ivi.org">IVI VISA</a>.</p>
+<p id="146">The current TTM software was developed based on version 8.0.2 of <a href="https://www.ivi.org">IVI VISA</a> and <a href="https://www.keysight.com/en/pd-1985909/io-libraries-suite">Keysight IO Suite</a> 21.2.207.</p>
+<p id="148">If is not clear at this time if <a href="http://ftp.ni.com/support/softlib/visa/VISA%20Run-Time%20Engine">NI Visa</a> can be used because, starting with <a href="https://www.keysight.com/en/pd-1985909/io-libraries-suite">Keysight IO Suite</a> 21.1.209, the application no longer compile against a naked IVI Visa DLL.</p>
+<p id="150"><a name="Attributions"></a></p>
+<h2 id="151">Attributions</h2>
+<p id="153">© 2011 by Integrated Scientific Resources, Inc.</p>
+<p id="155">This information is provided &quot;AS IS&quot; WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.</p>
+<p id="157">Licensed under <a href="https://github.com/ATECoder/dn.vi.ivi.git/docs/ttm/Fair%20End%20User%20License.html">The Fair End User</a> and <a href="http://opensource.org/licenses/MIT">MIT</a> Licenses.</p>
+<p id="159">Unless required by applicable law or agreed to in writing, this software is provided &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</p>
+<p id="161">Source code is hosted on <a href="https://www.github.com/ATECoder">GitHub</a></p>
+
+                </body>
+            </html>
+            

@@ -1,6 +1,6 @@
 # Thermal Transient Meter&trade; Release notes
 
-Last update: 2026-01-16 11:15:48
+Last update: 2026-03-20
 
 ## User Guides 
 
@@ -16,6 +16,27 @@ Last update: 2026-01-16 11:15:48
 | TTM Manual Test Guide                  | 2024-12-30 | Work in progress.                                           |     
 
 ## Releases
+
+### 2026-03-20
+
+| Item               | Info                                | Notes                                                         |
+|:-------------------|:------------------------------------|:--------------------------------------------------------------|
+| Loader             | Ttmware.Loader.8.1.9575.2.4.9475.7z |                                                               |
+| Source code        | Ttmware.code.8.1.9575.2.4.9475.7z   |                                                               |
+| Firmware           | 2.4.9575                            |                                                               |
+| .NET               | Modern .NET 10.                     | Required                                                      |
+| IVI-Visa           | 8.0.2                               | Included in the published package                             |
+| Keysight I/O Suite | 21.2.207                            | Required                                                      |
+
+The command file `00_make_cc_isr_settings_dir` must be run with administrator credential the first time this version is installed. This command creates the application settings folder under the shared `c:\ProgramData` folder.
+
+The _TTM Firmware Command Line Loader Guide_ was updated with installation instruction of the required modern .NET and IVI Foundation VISA implementation.
+
+#### Bug fixes
+
+When set to using the new driver (API to be released), the firmware stopped after the measuring the initial resistance.
+The firmware incorrectly assumed that it failed to configure the thermal transient measurement.
+This was fixed by adding a method to specifically check for a failed configuration.
 
 ### 2026-01-22
 

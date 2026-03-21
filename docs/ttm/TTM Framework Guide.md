@@ -1,6 +1,6 @@
 # Thermal Transient Meter&trade; Framework Guide
 
-Last Updated: 2025-09-16
+Last Updated: 2026-03-20
 
 ## Table of Contents
 
@@ -79,12 +79,12 @@ The TTM Framework [Microsoft .NET] API uses the Virtual Instruments (VISA) frame
 
 The TTM Framework has undergone a few revisions since it's inception in 2005. The following table attempts to provide the relationships between the various components and revisions that have been actively employed.
 
-| Component | 2011                    | 2025                                        |
-|-----------|-------------------------|---------------------------------------------|
-| Firmware  | 2.3.4009                | 2.4.9387                                    |
-| Loader    | isr.Ttm.Loader 2.3.4049 | cc.isr.VI.Tsp.K2600.Ttmware.Loader 8.1.9387 |
-| Driver    | isr.Ttm.Driver 2.3.4077 | TBA                                         |
-| VISA      | NI-VISA NS 8.1.20       | IVI-VISA 8.0.2                              |
+| Component | 2011                    | 2025                               |
+|-----------|-------------------------|------------------------------------|
+| Firmware  | 2.3.4009                | 2.4.xxxx                           |
+| Loader    | isr.Ttm.Loader 2.3.4049 | cc.isr.VI.Tsp.K2600.Ttmware.Loader |
+| Driver    | isr.Ttm.Driver 2.3.4077 | TBA                                |
+| VISA      | NI-VISA NS 8.1.20       | IVI-VISA 8.0.2                     |
 
 <a name="Terminology"></a>
 ## Terminology

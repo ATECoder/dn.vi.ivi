@@ -88,6 +88,55 @@ internal static partial class Asserts
         _ = Asserts.AssertQueryShouldExecute( session, command, logEnabled );
     }
 
+    /// <summary>   Assert get legacy driver option. </summary>
+    /// <remarks>   2026-03-19. </remarks>
+    /// <param name="session">      The session. </param>
+    /// <returns>   An int. </returns>
+    public static int AssertGetLegacyDriverOption( Pith.SessionBase? session )
+    {
+        Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
+        Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
+
+        string query = "_G.print(string.format('%d',_G.ttm.legacyDriverGetter()))";
+        return session.QueryIntegerThrowIfError( query, "actual legacy driver option" );
+    }
+
+    /// <summary>   Assert set legacy driver option. </summary>
+    /// <remarks>   2026-03-19. </remarks>
+    /// <param name="session">      The session. </param>
+    /// <param name="optionValue">  The option value. </param>
+    /// <param name="logEnabled">   (Optional) [false] True to enable, false to disable the log. </param>
+    public static void AssertSetLegacyDriverOption( Pith.SessionBase? session, int optionValue, bool logEnabled = false )
+    {
+        Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
+        Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
+
+        string query = "_G.print(string.format('%d',_G.ttm.legacyDriverGetter()))";
+        string command = $"_G.ttm.legacyDriverSetter({optionValue})";
+        Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, optionValue, logEnabled );
+    }
+
+    /// <summary>   Assert toggle legacy driver option. </summary>
+    /// <remarks>   2026-03-19. </remarks>
+    /// <param name="session">      The session. </param>
+    /// <param name="logEnabled">   (Optional) [false] True to enable, false to disable the log. </param>
+    /// <returns>   A Tuple. </returns>
+    public static (int intialValue, int finalValue) AssertToggleLegacyDriverOption( Pith.SessionBase? session, bool logEnabled = false )
+    {
+        Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
+        Assert.IsTrue( session.IsDeviceOpen, $"{session.CandidateResourceName} should be open" );
+
+        string query = "_G.print(string.format('%d',_G.ttm.legacyDriverGetter()))";
+        int initialValue = session.QueryIntegerThrowIfError( query, "actual legacy driver option" );
+
+        // set a new legacy driver option;
+        int finalValue = initialValue == 1 ? 0 : 1;
+        string command = $"_G.ttm.legacyDriverSetter({finalValue})";
+        Asserts.AssertSetterQueryReplyShouldBeValid( session, command, query, finalValue, logEnabled );
+
+        return (initialValue, finalValue);
+    }
+
     /// <summary>   Assert meter settings should change. </summary>
     /// <remarks>   2024-11-02. </remarks>
     /// <param name="session">          The session. </param>
