@@ -5,53 +5,87 @@
     "TraceShowLevel": "Information"
   },
 
-  "TtmMeterSettings": {
+  "MeterSettings": {
     "Exists": true,
     "ContactCheckEnabled": false,
-    "ContactCheckEnabledDefault": false,
-    "ContactCheckThreshold": 75,
-    "ContactCheckThresholdDefault": 75,
     "ContactCheckOptions": 15,
-    "ContactCheckOptionsDefault": 15,
+    "ContactCheckThreshold": 75,
     "LegacyDriver": 1,
-    "LegacyDriverDefault": 1,
+    "OpenLimit": 1000,
     "PostTransientDelay": 0.01,
-    "PostTransientDelayDefault": 0.01,
-    "PostTransientDelayMaximum": 10,
-    "PostTransientDelayMinimum": 0.001,
     "SourceMeasureUnit": "smua",
-    "SourceMeasureUnitDefault": "smua"
+    "SourceSenseShunt": 3300
   },
 
-  "TtmResistanceSettings": {
+  "MeterDefaults": {
+    "Exists": true,
+    "ContactCheckEnabled": false,
+    "ContactCheckOptions": 15,
+    "ContactCheckOptionsMinimum": 0,
+    "ContactCheckOptionsMaximum": 15,
+    "ContactCheckThreshold": 75,
+    "ContactCheckThresholdMinimum": 20,
+    "ContactCheckThresholdMaximum": 999,
+    "LegacyDriver": 1,
+    "OpenLimit": 1000,
+    "OpenLimitMinimum": 0,
+    "OpenLimitMaximum": 999999,
+    "PostTransientDelay": 0.01,
+    "PostTransientDelayMinimum": 0.001,
+    "PostTransientDelayMaximum": 10,
+    "SourceMeasureUnit": "smua",
+    "SourceSenseShunt": 3300,
+    "SourceSenseShuntMinimum": 0,
+    "SourceSenseShuntMaximum": 999999
+  },
+
+  "ColdResistanceSettings": {
     "Exists": true,
     "CurrentSourceSmu": "smua",
     "Aperture": 1,
-    "ApertureDefault": 1,
+    "CurrentLevel": 0.01,
+    "CurrentLimit": 0.04,
+    "FailStatus": 2,
+    "HighLimit": 2.156,
+    "LowLimit": 1.85,
+    "SourceOutput": "Current",
+    "VoltageLevel": 0.02,
+    "VoltageLimit": 0.1
+  },
+
+  "ColdResistanceDefaults": {
+    "Exists": true,
+    "CurrentSourceSmu": "smua",
+    "Aperture": 1,
     "ApertureMaximum": 10,
     "ApertureMinimum": 0.01,
     "CurrentLevel": 0.01,
-    "CurrentLevelDefault": 0.01,
-    "CurrentLimit": 0.01,
-    "CurrentLimitDefault": 0.01,
+    "CurrentLimit": 0.04,
     "CurrentMaximum": 0.05,
     "CurrentMinimum": 0.001,
+    "FailStatus": 2,
     "HighLimit": 2.156,
-    "HighLimitDefault": 2.156,
     "LowLimit": 1.85,
-    "LowLimitDefault": 1.85,
     "Minimum": 0.1,
     "Maximum": 10,
-    "SourceOutput": "Voltage",
-    "VoltageLevel": 0.1,
-    "VoltageLevelDefault": 0.1,
+    "SourceOutput": "Current",
+    "VoltageLevel": 0.02,
     "VoltageLimit": 0.1,
-    "VoltageLimitDefault": 0.1,
     "VoltageMaximum": 0.10,
     "VoltageMinimum": 0.001
   },
 
-  "TtmShuntSettings": {
+  "ShuntSettings": {
+    "Exists": true,
+    "Aperture": 0.1,
+    "CurrentLevel": 0.001,
+    "CurrentRange": 0.01,
+    "HighLimit": 1250,
+    "LowLimit": 1150,
+    "VoltageLimit": 10
+  },
+
+  "ShuntDefaults": {
     "Exists": true,
     "Aperture": 0.1,
     "ApertureDefault": 0.1,
@@ -74,50 +108,60 @@
     "VoltageMinimum": 1
   },
 
-  "TtmEstimatorSettings": {
+  "EstimatorSettings": {
+    "Exists": true,
+    "ThermalCoefficient": 0.0005
+  },
+
+  "EstimatorDefaults": {
     "Exists": true,
     "ThermalCoefficient": 0.0005,
-    "ThermalCoefficientDefault": 0.0005,
     "ThermalCoefficientMaximum": 0.001,
     "ThermalCoefficientMinimum": 0.00001
   },
 
-  "TtmTraceSettings": {
+  "TraceSettings": {
     "Exists": true,
     "Aperture": 0.004,
-    "ApertureDefault": 0.004,
+    "CurrentLevel": 0.27,
+    "Duration": 0.01,
+    "HighLimit": 0.017,
+    "Latency": 0.00035,
+    "LowLimit": 0.006,
+    "MedianFilterLength": 3,
+    "SamplingInterval": 0.0001,
+    "TracePoints": 100,
+    "VoltageChange": 0.099,
+    "VoltageLimit": 0.99
+  },
+
+  "TraceDefaults": {
+    "Exists": true,
+    "Aperture": 0.004,
     "ApertureMaximum": 0.01,
     "ApertureMinimum": 0.001,
     "CurrentLevel": 0.27,
-    "CurrentLevelDefault": 0.27,
     "CurrentMaximum": 0.999,
     "CurrentMinimum": 0.01,
     "Duration": 0.01,
-    "DurationDefault": 0.01,
     "DurationMaximum": 0.1,
     "DurationMinimum": 0.01,
     "HighLimit": 0.017,
-    "HighLimitDefault": 0.017,
+    "Latency": 0.00035,
     "LowLimit": 0.006,
-    "LowLimitDefault": 0.006,
     "MedianFilterLength": 3,
-    "MedianFilterLengthDefault": 3,
     "MedianFilterLengthMaximum": 9,
     "MedianFilterLengthMinimum": 3,
     "SamplingInterval": 0.0001,
-    "SamplingIntervalDefault": 0.0001,
     "SamplingIntervalMaximum": 0.001,
     "SamplingIntervalMinimum": 0.00008,
     "TracePoints": 100,
-    "TracePointsDefault": 100,
     "TracePointsMaximum": 10000,
     "TracePointsMinimum": 10,
     "VoltageChange": 0.099,
-    "VoltageChangeDefault": 0.099,
     "VoltageChangeMaximum": 0.099,
     "VoltageChangeMinimum": 0.001,
     "VoltageLimit": 0.99,
-    "VoltageLimitDefault": 0.99,
     "VoltageMaximum": 9.99,
     "VoltageMinimum": 0.01
   }

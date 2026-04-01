@@ -191,7 +191,8 @@ public partial class MeasurementViewBase : cc.isr.WinControls.ModelViewBase
     /// <returns> The trace values. </returns>
     protected virtual IList<isr.Std.Cartesian.CartesianPoint<double>> DisplayThermalTransientTrace( Chart chart )
     {
-        return new List<isr.Std.Cartesian.CartesianPoint<double>>( [] );
+        Std.Cartesian.CartesianPoint<double>[] value = [];
+        return [.. value];
     }
 
     /// <summary> Event handler. Called by _readTraceToolStripMenuItem for click events. </summary>
@@ -621,12 +622,10 @@ public partial class MeasurementViewBase : cc.isr.WinControls.ModelViewBase
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( field is not null )
-                field.PropertyChanged -= this.MeasureSequencer_PropertyChanged;
+            field?.PropertyChanged -= this.MeasureSequencer_PropertyChanged;
 
             field = value;
-            if ( field is not null )
-                field.PropertyChanged += this.MeasureSequencer_PropertyChanged;
+            field?.PropertyChanged += this.MeasureSequencer_PropertyChanged;
         }
     }
 
@@ -674,7 +673,7 @@ public partial class MeasurementViewBase : cc.isr.WinControls.ModelViewBase
             if ( this.InvokeRequired )
                 _ = this.Invoke( new Action<object, PropertyChangedEventArgs>( this.MeasureSequencer_PropertyChanged ), [sender, e] );
             else if ( sender is MeasureSequencer s )
-                this.OnPropertyChanged( s, e?.PropertyName! );
+                this.OnPropertyChanged( s, e?.PropertyName );
         }
         catch ( Exception ex )
         {
@@ -838,12 +837,9 @@ public partial class MeasurementViewBase : cc.isr.WinControls.ModelViewBase
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( field is not null )
-                field.PropertyChanged -= this.TriggerSequencer_PropertyChanged;
-
+            field?.PropertyChanged -= this.TriggerSequencer_PropertyChanged;
             field = value;
-            if ( field is not null )
-                field.PropertyChanged += this.TriggerSequencer_PropertyChanged;
+            field?.PropertyChanged += this.TriggerSequencer_PropertyChanged;
         }
     }
 
@@ -1057,8 +1053,8 @@ public partial class MeasurementViewBase : cc.isr.WinControls.ModelViewBase
         this._logTraceLevelComboBox.ComboBox.SelectedValueChanged += this.LogTraceLevelComboBox_SelectedIndexChanged;
         cc.isr.WinControls.ComboBoxExtensions.ComboBoxMethods.ListTraceEventLevels( this._displayTraceLevelComboBox.ComboBox, cc.isr.Logging.TraceLog.TraceEventSelector.TraceEventValueNamePairs );
         this._displayTraceLevelComboBox.ComboBox.SelectedValueChanged += this.DisplayTraceLevelComboBox_SelectedIndexChanged;
-        cc.isr.WinControls.ComboBoxExtensions.ComboBoxMethods.SelectItem( this._logTraceLevelComboBox, cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TraceLogSettings.TraceLogLevel );
-        cc.isr.WinControls.ComboBoxExtensions.ComboBoxMethods.SelectItem( this._displayTraceLevelComboBox, cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TraceLogSettings.TraceShowLevel );
+        cc.isr.WinControls.ToolStripExtensions.ToolStripMethods.SelectItem( this._logTraceLevelComboBox, cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.TraceLogSettings.TraceLogLevel );
+        cc.isr.WinControls.ToolStripExtensions.ToolStripMethods.SelectItem( this._displayTraceLevelComboBox, cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.TraceLogSettings.TraceShowLevel );
     }
 
     /// <summary>

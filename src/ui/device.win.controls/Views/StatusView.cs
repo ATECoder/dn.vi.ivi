@@ -273,7 +273,7 @@ public partial class StatusView : cc.isr.WinControls.ModelViewBase
             {
                 activity = $"reading status byte after {this.SessionBase.StatusReadDelay.TotalMilliseconds}ms delay";
                 _ = Pith.SessionBase.AsyncDelay( this.SessionBase.StatusReadDelay );
-                this.SessionBase!.StatusPrompt = activity;
+                this.SessionBase.StatusPrompt = activity;
                 _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"{activity};. " );
                 this.SessionBase.ApplyStatusByte( this.SessionBase.ReadStatusByte() );
             }
@@ -310,7 +310,7 @@ public partial class StatusView : cc.isr.WinControls.ModelViewBase
         }
         catch ( Exception ex )
         {
-            this.SessionBase!.StatusPrompt = $"failed {activity}";
+            this.SessionBase.StatusPrompt = $"failed {activity}";
             activity = cc.isr.VI.SessionLogger.Instance.LogException( ex, activity );
             _ = this.InfoProvider?.Annunciate( sender, cc.isr.WinControls.InfoProviderLevel.Error, activity );
         }
@@ -615,7 +615,7 @@ public partial class StatusView : cc.isr.WinControls.ModelViewBase
                 activity = $"{this.VisaSessionBase.ResourceNameCaption} clearing error report";
                 this.SessionBase.StatusPrompt = activity;
                 _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"{activity};. " );
-                this.StatusSubsystemBase?.Session.ClearErrorReport();
+                this.StatusSubsystemBase?.Session?.ClearErrorReport();
             }
         }
         catch ( Exception ex )
@@ -687,16 +687,9 @@ public partial class StatusView : cc.isr.WinControls.ModelViewBase
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( this._visaSessionBaseInternal is not null )
-            {
-                this._visaSessionBaseInternal.PropertyChanged -= this.VisaSessionBase_PropertyChanged;
-            }
-
+            this._visaSessionBaseInternal?.PropertyChanged -= this.VisaSessionBase_PropertyChanged;
             this._visaSessionBaseInternal = value;
-            if ( this._visaSessionBaseInternal is not null )
-            {
-                this._visaSessionBaseInternal.PropertyChanged += this.VisaSessionBase_PropertyChanged;
-            }
+            this._visaSessionBaseInternal?.PropertyChanged += this.VisaSessionBase_PropertyChanged;
         }
     }
 
@@ -841,7 +834,7 @@ public partial class StatusView : cc.isr.WinControls.ModelViewBase
 
         _ = this.AddRemoveBinding( this._traceShowLevelComboBox, add, nameof( ToolStripComboBox.SelectedItem ),
             cc.isr.VI.SessionLogger.Instance, nameof( cc.isr.VI.SessionLogger.Instance.TraceEventWriterTraceEventType ) );
-        cc.isr.WinControls.ComboBoxExtensions.ComboBoxMethods.SelectItem( this._traceShowLevelComboBox, cc.isr.VI.SessionLogger.Instance.TraceEventWriterTraceEventType );
+        cc.isr.WinControls.ToolStripExtensions.ToolStripMethods.SelectItem( this._traceShowLevelComboBox, cc.isr.VI.SessionLogger.Instance.TraceEventWriterTraceEventType );
 
         // trace log level
         binding = this.AddRemoveBinding( this._traceLogLevelComboBox.ComboBox, add, nameof( this.Enabled ), viewModel, nameof( VI.VisaSessionBase.IsSessionOpen ) );
@@ -863,7 +856,7 @@ public partial class StatusView : cc.isr.WinControls.ModelViewBase
 
         _ = this.AddRemoveBinding( this._traceLogLevelComboBox, add, nameof( ToolStripComboBox.SelectedItem ), cc.isr.VI.SessionLogger.Instance,
             nameof( cc.isr.VI.SessionLogger.Instance.TraceEventWriterTraceEventType ) );
-        cc.isr.WinControls.ComboBoxExtensions.ComboBoxMethods.SelectItem( this._traceLogLevelComboBox, cc.isr.VI.SessionLogger.Instance.TraceEventWriterTraceEventType );
+        cc.isr.WinControls.ToolStripExtensions.ToolStripMethods.SelectItem( this._traceLogLevelComboBox, cc.isr.VI.SessionLogger.Instance.TraceEventWriterTraceEventType );
         binding = this.AddRemoveBinding( this._usingStatusSubsystemMenuItem, add, nameof( ToolStripMenuItem.Enabled ), viewModel, nameof( VI.VisaSessionBase.IsSessionOpen ) );
         binding.DataSourceUpdateMode = DataSourceUpdateMode.Never;
         if ( add )
@@ -1519,7 +1512,7 @@ public partial class StatusView : cc.isr.WinControls.ModelViewBase
         if ( Views.DisplayViewSettings.Instance is not null )
         {
             Form form = new JsonSettingsEditorForm( "Display View Settings Editor",
-                new AppSettingsEditorViewModel( Views.DisplayViewSettings.Instance.Scribe!, SimpleServiceProvider.GetInstance() ) );
+                new AppSettingsEditorViewModel( Views.DisplayViewSettings.Instance.Scribe, SimpleServiceProvider.GetInstance() ) );
             _ = form.ShowDialog();
         }
     }

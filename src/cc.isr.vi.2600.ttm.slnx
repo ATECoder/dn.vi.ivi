@@ -8,7 +8,6 @@
     <Project Path="device/device.mstest/cc.isr.VI.Device.MSTest.csproj" />
     <Project Path="device/device/cc.isr.VI.Device.csproj" />
     <Project Path="device/tsp.mstest/cc.isr.VI.Device.Tsp.MSTest.csproj" />
-    <Project Path="device/tsp.script/cc.isr.VI.Tsp.Script.csproj" />
     <Project Path="device/tsp/cc.isr.VI.Device.Tsp.csproj" />
   </Folder>
   <Folder Name="/resource/">
@@ -74,7 +73,6 @@
     <Project Path="../../../core/std/src/event.context/event.context/cc.isr.Std.EventContext.csproj" />
     <Project Path="../../../core/std/src/framework/framework/cc.isr.Std.Framework.csproj" />
     <Project Path="../../../core/std/src/moving.filters/moving.filters/cc.isr.Std.MovingFilters.csproj" />
-    <Project Path="../../../core/std/src/mstest/mstest/cc.isr.Std.MSTest.csproj" />
     <Project Path="../../../core/std/src/notifiers/notifiers/cc.isr.Std.Notifiers.csproj" />
     <Project Path="../../../core/std/src/primitives/primitives/cc.isr.Std.Primitives.csproj" />
     <Project Path="../../../core/std/src/statistics/statistics/cc.isr.Std.Statistics.csproj" />

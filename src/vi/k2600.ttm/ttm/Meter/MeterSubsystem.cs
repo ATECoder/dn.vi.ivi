@@ -70,8 +70,8 @@ public class MeterSubsystem : MeterSubsystemBase
 
     #region " device under test element: MeterMain "
 
-    /// <summary> Gets the <see cref="ColdResistance">cold meterMain</see>. </summary>
-    /// <value> The cold meterMain. </value>
+    /// <summary> Gets the <see cref="MeterMain">meter main</see>. </summary>
+    /// <value> The meter main. </value>
     public MeterMain MeterMain { get; set; }
 
     /// <summary> Gets the <see cref="DeviceUnderTestElementBase">of the meter element</see>. </summary>
@@ -102,27 +102,53 @@ public class MeterSubsystem : MeterSubsystemBase
 
         bool localTryQueryPrintLegacyDriver()
         {
-            int result = Properties.Settings.Instance.TtmMeterSettings.LegacyDriverDefault;
+            int result = Properties.DriverSettings.Instance.MeterDefaults.LegacyDriver;
             bool ret = this.Session.TryQueryPrint( 1, ref result, "{0}.legacyDriver", this.DefaultsName );
-            Properties.Settings.Instance.TtmMeterSettings.LegacyDriverDefault = result;
+            Properties.DriverSettings.Instance.MeterDefaults.LegacyDriver = result;
             return ret;
         }
 
         if ( !(MeterSubsystem.LegacyFirmware || localTryQueryPrintLegacyDriver()) )
             _ = cc.isr.VI.SessionLogger.Instance.LogWarning( $"failed reading default meter legacy driver;. Sent:'{this.Session.LastMessageSent}; Received:'{this.Session.LastMessageReceived}'." );
 
+        cc.isr.VI.Pith.SessionBase.DoEventsAction?.Invoke();
 
         bool localTryQueryPrintContactLimit()
         {
-            int result = Properties.Settings.Instance.TtmMeterSettings.ContactCheckThresholdDefault;
+            int result = Properties.DriverSettings.Instance.MeterDefaults.ContactCheckThreshold;
             bool ret = this.Session.TryQueryPrint( 1, ref result, "{0}.contactLimit", this.DefaultsName );
-            Properties.Settings.Instance.TtmMeterSettings.ContactCheckThresholdDefault = result;
+            Properties.DriverSettings.Instance.MeterDefaults.ContactCheckThreshold = result;
             return ret;
         }
 
         if ( !(MeterSubsystem.LegacyFirmware || localTryQueryPrintContactLimit()) )
             _ = cc.isr.VI.SessionLogger.Instance.LogWarning( $"failed reading default contact check threshold;. Sent:'{this.Session.LastMessageSent}; Received:'{this.Session.LastMessageReceived}'." );
 
+        cc.isr.VI.Pith.SessionBase.DoEventsAction?.Invoke();
+
+        bool localTryQueryPrintOpenLimit()
+        {
+            int result = Properties.DriverSettings.Instance.MeterDefaults.OpenLimit;
+            bool ret = this.Session.TryQueryPrint( 1, ref result, "{0}.openLimit", this.DefaultsName );
+            Properties.DriverSettings.Instance.MeterDefaults.OpenLimit = result;
+            return ret;
+        }
+
+        if ( !(MeterSubsystem.LegacyFirmware || localTryQueryPrintOpenLimit()) )
+            _ = cc.isr.VI.SessionLogger.Instance.LogWarning( $"failed reading default DUT open limit;. Sent:'{this.Session.LastMessageSent}; Received:'{this.Session.LastMessageReceived}'." );
+
+        cc.isr.VI.Pith.SessionBase.DoEventsAction?.Invoke();
+
+        bool localTryQueryPrintSourceSenseShunt()
+        {
+            int result = Properties.DriverSettings.Instance.MeterDefaults.SourceSenseShunt;
+            bool ret = this.Session.TryQueryPrint( 1, ref result, "{0}.shunt", this.DefaultsName );
+            Properties.DriverSettings.Instance.MeterDefaults.SourceSenseShunt = result;
+            return ret;
+        }
+
+        if ( !(MeterSubsystem.LegacyFirmware || localTryQueryPrintSourceSenseShunt()) )
+            _ = cc.isr.VI.SessionLogger.Instance.LogWarning( $"failed reading default source-sense shunt;. Sent:'{this.Session.LastMessageSent}; Received:'{this.Session.LastMessageReceived}'." );
 
         cc.isr.VI.Pith.SessionBase.DoEventsAction?.Invoke();
 
@@ -136,7 +162,7 @@ public class MeterSubsystem : MeterSubsystemBase
             }
             else
             {
-                Properties.Settings.Instance.TtmMeterSettings.SourceMeasureUnitDefault = reply;
+                Properties.DriverSettings.Instance.MeterDefaults.SourceMeasureUnit = reply;
                 return true;
             }
         }
@@ -148,9 +174,9 @@ public class MeterSubsystem : MeterSubsystemBase
 
         bool localTryQueryPrintContactCheckOptions()
         {
-            int result = Properties.Settings.Instance.TtmMeterSettings.ContactCheckThresholdDefault;
+            int result = Properties.DriverSettings.Instance.MeterDefaults.ContactCheckThreshold;
             bool ret = this.Session.TryQueryPrint( 1, ref result, "{0}.contactLimit", this.DefaultsName );
-            Properties.Settings.Instance.TtmMeterSettings.ContactCheckThresholdDefault = result;
+            Properties.DriverSettings.Instance.MeterDefaults.ContactCheckThreshold = result;
             return ret;
         }
 
@@ -161,9 +187,9 @@ public class MeterSubsystem : MeterSubsystemBase
 
         bool localTryQueryPrintPostTransientDelay()
         {
-            double result = Properties.Settings.Instance.TtmMeterSettings.PostTransientDelayDefault;
+            double result = Properties.DriverSettings.Instance.MeterDefaults.PostTransientDelay;
             bool ret = this.Session.TryQueryPrint( 7.4m, ref result, "{0}.postTransientDelay", this.DefaultsName );
-            Properties.Settings.Instance.TtmMeterSettings.PostTransientDelayDefault = result;
+            Properties.DriverSettings.Instance.MeterDefaults.PostTransientDelay = result;
             return ret;
         }
 
@@ -202,6 +228,16 @@ public class MeterSubsystem : MeterSubsystemBase
             _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"Setting {this.BaseEntityName} {details} to {meterMain.ContactLimit};. " );
             _ = this.ApplyContactLimit( meterMain.ContactLimit );
             _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"{this.BaseEntityName} {details} set to {meterMain.ContactLimit};. " );
+
+            details = "open limit";
+            _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"Setting {this.BaseEntityName} {details} to {meterMain.OpenLimit};. " );
+            _ = this.ApplyContactLimit( meterMain.OpenLimit );
+            _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"{this.BaseEntityName} {details} set to {meterMain.OpenLimit};. " );
+
+            details = "source-sense shunt";
+            _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"Setting {this.BaseEntityName} {details} to {meterMain.SourceSenseShunt};. " );
+            _ = this.ApplySourceSenseShunt( meterMain.SourceSenseShunt );
+            _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"{this.BaseEntityName} {details} set to {meterMain.SourceSenseShunt};. " );
 
             details = "source measure unit";
             _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"Setting {this.BaseEntityName} {details} to {meterMain.SourceMeasureUnit};. " );
@@ -246,6 +282,16 @@ public class MeterSubsystem : MeterSubsystemBase
                 _ = this.ApplyContactLimit( meterMain.ContactLimit );
                 _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"{this.BaseEntityName} {details} set to {meterMain.ContactLimit};. " );
 
+                details = "open limit";
+                _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"Setting {this.BaseEntityName} {details} to {meterMain.OpenLimit};. " );
+                _ = this.ApplyOpenLimit( meterMain.OpenLimit );
+                _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"{this.BaseEntityName} {details} set to {meterMain.OpenLimit};. " );
+
+                details = "source-sense shunt";
+                _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"Setting {this.BaseEntityName} {details} to {meterMain.SourceSenseShunt};. " );
+                _ = this.ApplySourceSenseShunt( meterMain.SourceSenseShunt );
+                _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"{this.BaseEntityName} {details} set to {meterMain.SourceSenseShunt};. " );
+
                 details = "source measure unit";
                 _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"Setting {this.BaseEntityName} {details} to {meterMain.SourceMeasureUnit};. " );
                 _ = this.ApplySourceMeasureUnit( meterMain.SourceMeasureUnit );
@@ -270,7 +316,10 @@ public class MeterSubsystem : MeterSubsystemBase
         _ = this.QuerySourceMeasureUnit();
         _ = this.QueryContactCheckOptions();
         _ = this.QueryContactLimit();
+        _ = this.QueryOpenLimit();
+        _ = this.QuerySourceSenseShunt();
         _ = this.QueryPostTransientDelay();
+        _ = this.QuerySourceSenseShunt();
         this.Session.ThrowDeviceExceptionIfError();
     }
 
@@ -285,7 +334,7 @@ public class MeterSubsystem : MeterSubsystemBase
 
         protected set
         {
-            value ??= Properties.Settings.Instance.TtmMeterSettings.LegacyDriver;
+            value ??= Properties.DriverSettings.Instance.MeterSettings.LegacyDriver;
             this.MeterMain.LegacyDriver = value.Value;
             _ = this.SetProperty( ref field, value );
         }
@@ -334,22 +383,22 @@ public class MeterSubsystem : MeterSubsystemBase
 
     #region " Contact Limit "
 
-    /// <summary> Gets or sets the cached Contact Limit flag. </summary>
+    /// <summary> Gets or sets the cached Contact Limit value. </summary>
     public int? ContactLimit
     {
         get;
 
         protected set
         {
-            value ??= Properties.Settings.Instance.TtmMeterSettings.ContactCheckThreshold;
+            value ??= Properties.DriverSettings.Instance.MeterSettings.ContactCheckThreshold;
             this.MeterMain.ContactLimit = value.Value;
             _ = this.SetProperty( ref field, value );
         }
     }
 
-    /// <summary> Writes and reads back the Contact Limit flag. </summary>
+    /// <summary> Writes and reads back the Contact Limit value. </summary>
     /// <param name="value"> The Contact Limit. </param>
-    /// <returns> The Contact Limit flag. </returns>
+    /// <returns> The Contact Limit value. </returns>
     public int? ApplyContactLimit( int value )
     {
         _ = this.WriteContactLimit( value );
@@ -370,12 +419,12 @@ public class MeterSubsystem : MeterSubsystemBase
     }
 
     /// <summary>
-    /// Writes the Contact Limit flag without reading back the value from the device.
+    /// Writes the Contact Limit value without reading back the value from the device.
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException"> Thrown when one or more arguments are outside
     ///                                                the required range. </exception>
     /// <param name="value"> The Contact Limit. </param>
-    /// <returns> The Contact Limit flag. </returns>
+    /// <returns> The Contact Limit value. </returns>
     public int? WriteContactLimit( int value )
     {
         if ( !MeterMain.ValidateContactThreshold( value, out string details ) )
@@ -390,22 +439,22 @@ public class MeterSubsystem : MeterSubsystemBase
 
     #region " Contact Check Option "
 
-    /// <summary> Gets or sets the cached Contact Check Option flag. </summary>
+    /// <summary> Gets or sets the cached Contact Check Options value. </summary>
     public Syntax.ContactCheckOptions? ContactCheckOptions
     {
         get;
 
         protected set
         {
-            value ??= Properties.Settings.Instance.TtmMeterSettings.ContactCheckOptions;
+            value ??= Properties.DriverSettings.Instance.MeterSettings.ContactCheckOptions;
             this.MeterMain.ContactCheckOptions = value.Value;
             _ = this.SetProperty( ref field, value );
         }
     }
 
-    /// <summary> Writes and reads back the Contact Check Option flag. </summary>
+    /// <summary> Writes and reads back the Contact Check Options value. </summary>
     /// <param name="value"> The Contact Check Option. </param>
-    /// <returns> The Contact Check Option flag. </returns>
+    /// <returns> The Contact Check Options value. </returns>
     public Syntax.ContactCheckOptions? ApplyContactCheckOptions( Syntax.ContactCheckOptions value )
     {
         _ = this.WriteContactCheckOptions( value );
@@ -427,12 +476,12 @@ public class MeterSubsystem : MeterSubsystemBase
     }
 
     /// <summary>
-    /// Writes the Contact Check Option flag without reading back the value from the device.
+    /// Writes the Contact Check Options value without reading back the value from the device.
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException"> Thrown when one or more arguments are outside
     ///                                                the required range. </exception>
     /// <param name="value"> The Contact Check Option. </param>
-    /// <returns> The Contact Check Option flag. </returns>
+    /// <returns> The Contact Check Options value. </returns>
     public Syntax.ContactCheckOptions? WriteContactCheckOptions( Syntax.ContactCheckOptions value )
     {
         if ( !MeterMain.ValidateContactCheckOptions( ( int ) value, out string details ) )
@@ -442,6 +491,63 @@ public class MeterSubsystem : MeterSubsystemBase
             _ = this.Session.WriteLine( $"{this.BaseEntityName}.contactCheckOptionsSetter({( int ) value})" );
         this.ContactCheckOptions = value;
         return this.ContactCheckOptions;
+    }
+
+    #endregion
+
+    #region " Open Limit "
+
+    /// <summary> Gets or sets the cached Open Limit value. </summary>
+    public int? OpenLimit
+    {
+        get;
+
+        protected set
+        {
+            value ??= Properties.DriverSettings.Instance.MeterSettings.OpenLimit;
+            this.MeterMain.OpenLimit = value.Value;
+            _ = this.SetProperty( ref field, value );
+        }
+    }
+
+    /// <summary>   Writes and reads back the Open Limit value. </summary>
+    /// <remarks>   2026-03-24. </remarks>
+    /// <param name="openLimit">    The Open Limit. </param>
+    /// <returns>   The Open Limit value. </returns>
+    public int? ApplyOpenLimit( int openLimit )
+    {
+        _ = this.WriteOpenLimit( openLimit );
+        return this.QueryOpenLimit();
+    }
+
+    /// <summary> Queries the Open Limit. </summary>
+    /// <remarks> David, 2020-10-12. </remarks>
+    /// <returns> The Open Limit or none if unknown. </returns>
+    public int? QueryOpenLimit()
+    {
+        const int printFormat = 1;
+        if ( MeterSubsystem.LegacyFirmware )
+            this.OpenLimit = 10;
+        else
+            this.OpenLimit = this.Session.QueryPrint( this.OpenLimit.GetValueOrDefault( 1 ), printFormat, $"{this.EntityName}.openLimitGetter()" );
+        return this.OpenLimit;
+    }
+
+    /// <summary>
+    /// Writes the Open Limit without reading back the value from the device.
+    /// </summary>
+    /// <exception cref="ArgumentOutOfRangeException"> Thrown when one or more arguments are outside
+    ///                                                the required range. </exception>
+    /// <param name="value"> The Open Limit. </param>
+    /// <returns> The Open Limit value. </returns>
+    public int? WriteOpenLimit( int value )
+    {
+        if ( !MeterMain.ValidateOpenLimit( value, out string details ) )
+            throw new ArgumentOutOfRangeException( nameof( value ), details );
+        if ( !MeterSubsystem.LegacyFirmware )
+            _ = this.Session.WriteLine( $"{this.BaseEntityName}.openLimitSetter({value})" );
+        this.OpenLimit = value;
+        return this.OpenLimit;
     }
 
     #endregion
@@ -458,7 +564,7 @@ public class MeterSubsystem : MeterSubsystemBase
 
         protected set
         {
-            value ??= Properties.Settings.Instance.TtmMeterSettings.PostTransientDelay;
+            value ??= Properties.DriverSettings.Instance.MeterSettings.PostTransientDelay;
             this.MeterMain.PostTransientDelay = value.Value;
             _ = this.SetProperty( ref field, value );
         }
@@ -537,4 +643,60 @@ public class MeterSubsystem : MeterSubsystemBase
 
     #endregion
 
+    #region " Source-Sense shunt "
+
+    /// <summary> Gets or sets the cached Source-Sense shunt value. </summary>
+    public int? SourceSenseShunt
+    {
+        get;
+
+        protected set
+        {
+            value ??= Properties.DriverSettings.Instance.MeterSettings.SourceSenseShunt;
+            this.MeterMain.SourceSenseShunt = value.Value;
+            _ = this.SetProperty( ref field, value );
+        }
+    }
+
+    /// <summary>   Writes and reads back the Source-Sense shunt value. </summary>
+    /// <remarks>   2026-03-24. </remarks>
+    /// <param name="shunt">    The Source-Sense shunt. </param>
+    /// <returns>   The Source-Sense shunt value. </returns>
+    public int? ApplySourceSenseShunt( int shunt )
+    {
+        _ = this.WriteSourceSenseShunt( shunt );
+        return this.QuerySourceSenseShunt();
+    }
+
+    /// <summary> Queries the Source-Sense shunt. </summary>
+    /// <remarks> David, 2020-10-12. </remarks>
+    /// <returns> The Source-Sense shunt or none if unknown. </returns>
+    public int? QuerySourceSenseShunt()
+    {
+        const int printFormat = 1;
+        if ( MeterSubsystem.LegacyFirmware )
+            this.SourceSenseShunt = 10;
+        else
+            this.SourceSenseShunt = this.Session.QueryPrint( this.SourceSenseShunt.GetValueOrDefault( 1 ), printFormat, $"{this.EntityName}.senseShuntGetter()" );
+        return this.SourceSenseShunt;
+    }
+
+    /// <summary>
+    /// Writes the Source-Sense shunt without reading back the value from the device.
+    /// </summary>
+    /// <exception cref="ArgumentOutOfRangeException"> Thrown when one or more arguments are outside
+    ///                                                the required range. </exception>
+    /// <param name="value"> The Source-Sense shunt. </param>
+    /// <returns> The Source-Sense shunt value. </returns>
+    public int? WriteSourceSenseShunt( int value )
+    {
+        if ( !MeterMain.ValidateContactThreshold( value, out string details ) )
+            throw new ArgumentOutOfRangeException( nameof( value ), details );
+        if ( !MeterSubsystem.LegacyFirmware )
+            _ = this.Session.WriteLine( $"{this.BaseEntityName}.senseShuntSetter({value})" );
+        this.SourceSenseShunt = value;
+        return this.SourceSenseShunt;
+    }
+
+    #endregion
 }

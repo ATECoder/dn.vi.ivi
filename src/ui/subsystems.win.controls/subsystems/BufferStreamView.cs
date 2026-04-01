@@ -172,12 +172,9 @@ public partial class BufferStreamView : cc.isr.WinControls.ModelViewBase
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( field is not null )
-                field.DataError -= this.DataGridView_DataError;
-
+            field?.DataError -= this.DataGridView_DataError;
             field = value;
-            if ( field is not null )
-                field.DataError += this.DataGridView_DataError;
+            field?.DataError += this.DataGridView_DataError;
         }
     }
 
@@ -354,14 +351,12 @@ public partial class BufferStreamView : cc.isr.WinControls.ModelViewBase
         // ReadSettings( subsystem );
         if ( add )
         {
-            if ( this.BufferSubsystem is not null )
-                this.BufferSubsystem.PropertyChanged += this.HandleBufferSubsystemPropertyChange;
+            this.BufferSubsystem?.PropertyChanged += this.HandleBufferSubsystemPropertyChange;
             this.ApplyPropertyChanged( subsystem );
         }
         else
         {
-            if ( this.BufferSubsystem != null )
-                this.BufferSubsystem.PropertyChanged -= this.HandleBufferSubsystemPropertyChange;
+            this.BufferSubsystem?.PropertyChanged -= this.HandleBufferSubsystemPropertyChange;
         }
     }
 
@@ -849,21 +844,15 @@ public partial class BufferStreamView : cc.isr.WinControls.ModelViewBase
     /// <param name="subsystem"> The subsystem. </param>
     public void BindSubsystem( SystemSubsystemBase subsystem )
     {
-        if ( this.SystemSubsystem is not null )
-        {
-            this.SystemSubsystem.PropertyChanged -= this.HandleSystemSubsystemPropertyChange;
-            this.SystemSubsystem = null;
-        }
+        this.SystemSubsystem?.PropertyChanged -= this.HandleSystemSubsystemPropertyChange;
+        this.SystemSubsystem = null;
 
         this.SystemSubsystem = subsystem;
-        if ( this.SystemSubsystem is not null )
-        {
-            // must Not read setting when biding because the instrument may be locked Or in a trigger mode
-            // The bound values should be sent when binding Or when applying property change.
-            // ReadSettings( subsystem );
-            // Me.ApplyPropertyChanged(subsystem)
-            this.SystemSubsystem.PropertyChanged += this.HandleSystemSubsystemPropertyChange;
-        }
+        // must Not read setting when biding because the instrument may be locked Or in a trigger mode
+        // The bound values should be sent when binding Or when applying property change.
+        // ReadSettings( subsystem );
+        // Me.ApplyPropertyChanged(subsystem)
+        this.SystemSubsystem?.PropertyChanged += this.HandleSystemSubsystemPropertyChange;
     }
 
     /// <summary> Reads the settings. </summary>
@@ -1016,17 +1005,11 @@ public partial class BufferStreamView : cc.isr.WinControls.ModelViewBase
     /// <param name="subsystem"> The subsystem. </param>
     public void BindSubsystem( SenseSubsystemBase subsystem )
     {
-        if ( this.SenseSubsystem is not null )
-        {
-            this.SenseSubsystem.PropertyChanged -= this.SenseSubsystemPropertyChanged;
-            this.SenseSubsystem = null;
-        }
+        this.SenseSubsystem?.PropertyChanged -= this.SenseSubsystemPropertyChanged;
+        this.SenseSubsystem = null;
 
         this.SenseSubsystem = subsystem;
-        if ( this.SenseSubsystem is not null )
-        {
-            this.SenseSubsystem.PropertyChanged += this.SenseSubsystemPropertyChanged;
-        }
+        this.SenseSubsystem?.PropertyChanged += this.SenseSubsystemPropertyChanged;
     }
 
     /// <summary> Gets the function mode changed. </summary>
@@ -1475,10 +1458,8 @@ public partial class BufferStreamView : cc.isr.WinControls.ModelViewBase
         if ( this.InitializingComponents || this.TraceSubsystem is null || this.TriggerSubsystem is null ) return;
         TimeSpan timeout = TraceSubsystemBase.EstimateStreamStopTimeoutInterval( this.TraceSubsystem.StreamCycleDuration,
             TimeSpan.FromMilliseconds( this.Settings.BufferStreamPollInterval ), 1.5d );
-        if ( this.BufferSubsystem is not null )
-            this.BufferSubsystem.BufferStreamTasker.AsyncCompleted -= this.BufferStreamTasker_asyncCompleted;
-        if ( this.TraceSubsystem is not null )
-            this.TraceSubsystem.BufferStreamTasker.AsyncCompleted -= this.BufferStreamTasker_asyncCompleted;
+        this.BufferSubsystem?.BufferStreamTasker.AsyncCompleted -= this.BufferStreamTasker_asyncCompleted;
+        this.TraceSubsystem?.BufferStreamTasker.AsyncCompleted -= this.BufferStreamTasker_asyncCompleted;
         (bool success, string details) = this.BufferSubsystem is not null
             ? this.BufferSubsystem.StopBufferStream( timeout )
             : this.TraceSubsystem!.StopBufferStream( timeout );
@@ -1565,11 +1546,11 @@ public partial class BufferStreamView : cc.isr.WinControls.ModelViewBase
                 this.StartBufferStreaming( this.TraceSubsystem );
             }
 
-            if ( this.Device.StatusSubsystemBase.Session.ErrorAvailable )
+            if ( this.Device.Session.ErrorAvailable )
             {
                 this.StopBufferStreaming();
                 _ = cc.isr.VI.SessionLogger.Instance.LogWarning(
-                    $"{activity} encountered device errors: {this.Device.StatusSubsystemBase.Session.DeviceErrorPreamble}\n{this.Device.StatusSubsystemBase.Session.DeviceErrorReport}" );
+                    $"{activity} encountered device errors: {this.Device.Session.DeviceErrorPreamble}\n{this.Device.Session.DeviceErrorReport}" );
                 this.Device.Session.StatusPrompt = "Streaming aborted";
             }
             else

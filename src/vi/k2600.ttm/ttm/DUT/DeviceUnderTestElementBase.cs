@@ -59,7 +59,7 @@ public abstract partial class DeviceUnderTestElementBase : CommunityToolkit.Mvvm
     /// <remarks> David, 2020-10-12. </remarks>
     public virtual void PresetKnownState()
     {
-        this.SourceMeasureUnit = Properties.Settings.Instance.TtmMeterSettings.SourceMeasureUnitDefault;
+        this.SourceMeasureUnit = Properties.DriverSettings.Instance.MeterDefaults.SourceMeasureUnit;
     }
 
     /// <summary> Restores defaults. </summary>

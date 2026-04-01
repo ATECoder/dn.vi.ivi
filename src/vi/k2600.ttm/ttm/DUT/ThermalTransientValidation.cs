@@ -1,3 +1,5 @@
+using cc.isr.Std.IComparableExtensions;
+
 namespace cc.isr.VI.Tsp.K2600.Ttm;
 
 public partial class ThermalTransient
@@ -9,14 +11,8 @@ public partial class ThermalTransient
     /// <returns> <c>true</c> if value is in range; otherwise, <c>false</c>. </returns>
     public static bool ValidateVoltageChange( double value, out string details )
     {
-        bool affirmative = value >= ( double ) Properties.Settings.Instance.TtmTraceSettings.VoltageMinimum && value <= ( double ) Properties.Settings.Instance.TtmTraceSettings.VoltageMaximum;
-        details = affirmative
-            ? string.Empty
-            : value < ( double ) Properties.Settings.Instance.TtmTraceSettings.VoltageMinimum
-                ? $"Thermal Transient Voltage Change value of {value} is lower than the minimum of {Properties.Settings.Instance.TtmTraceSettings.VoltageMinimum}."
-                : $"Thermal Transient Voltage Change value of {value} is higher than the maximum of {Properties.Settings.Instance.TtmTraceSettings.VoltageMaximum}.";
-
-        return affirmative;
+        return value.IsBetweenInclusive( ( double ) Properties.DriverSettings.Instance.TraceDefaults.VoltageMinimum,
+            ( double ) Properties.DriverSettings.Instance.TraceDefaults.VoltageMaximum, "Thermal Transient Voltage Change ", out details );
     }
 
     /// <summary> Validates the aperture described by value. </summary>
@@ -26,14 +22,8 @@ public partial class ThermalTransient
     /// <returns> <c>true</c> if value is in range; otherwise, <c>false</c>. </returns>
     public static bool ValidateAperture( double value, out string details )
     {
-        bool affirmative = value >= ( double ) Properties.Settings.Instance.TtmTraceSettings.ApertureMinimum && value <= ( double ) Properties.Settings.Instance.TtmTraceSettings.ApertureMaximum;
-        details = affirmative
-            ? string.Empty
-            : value < ( double ) Properties.Settings.Instance.TtmTraceSettings.ApertureMinimum
-                ? $"Thermal Transient aperture value of {value} is lower than the minimum of {Properties.Settings.Instance.TtmTraceSettings.ApertureMinimum}."
-                : $"Thermal Transient aperture value of {value} is higher than the maximum of {Properties.Settings.Instance.TtmTraceSettings.ApertureMaximum}.";
-
-        return affirmative;
+        return value.IsBetweenInclusive( ( double ) Properties.DriverSettings.Instance.TraceDefaults.ApertureMinimum,
+            ( double ) Properties.DriverSettings.Instance.TraceDefaults.ApertureMaximum, "Thermal Transient Aperture", out details );
     }
 
     /// <summary> Validates the current level described by value. </summary>
@@ -43,14 +33,8 @@ public partial class ThermalTransient
     /// <returns> <c>true</c> if value is in range; otherwise, <c>false</c>. </returns>
     public static bool ValidateCurrentLevel( double value, out string details )
     {
-        bool affirmative = value >= ( double ) Properties.Settings.Instance.TtmTraceSettings.CurrentMinimum && value <= ( double ) Properties.Settings.Instance.TtmTraceSettings.CurrentMaximum;
-        details = affirmative
-            ? string.Empty
-            : value < ( double ) Properties.Settings.Instance.TtmTraceSettings.CurrentMinimum
-                ? $"Thermal Transient CurrentLevel value of {value} is lower than the minimum of {Properties.Settings.Instance.TtmTraceSettings.CurrentMinimum}."
-                : $"Thermal Transient Current Level value of {value} is higher than the maximum of {Properties.Settings.Instance.TtmTraceSettings.CurrentMaximum}.";
-
-        return affirmative;
+        return value.IsBetweenInclusive( ( double ) Properties.DriverSettings.Instance.TraceDefaults.CurrentMinimum,
+            ( double ) Properties.DriverSettings.Instance.TraceDefaults.CurrentMaximum, "Thermal Transient Current Level", out details );
     }
 
     /// <summary> Validates the limit described by value. </summary>
@@ -60,14 +44,8 @@ public partial class ThermalTransient
     /// <returns> <c>true</c> if value is in range; otherwise, <c>false</c>. </returns>
     public static bool ValidateLimit( double value, out string details )
     {
-        bool affirmative = value >= ( double ) Properties.Settings.Instance.TtmTraceSettings.VoltageChangeMinimum && value <= ( double ) Properties.Settings.Instance.TtmTraceSettings.VoltageChangeMaximum;
-        details = affirmative
-            ? string.Empty
-            : value < ( double ) Properties.Settings.Instance.TtmTraceSettings.VoltageMinimum
-                ? $"Thermal Transient Limit value of {value} is lower than the minimum of {Properties.Settings.Instance.TtmTraceSettings.VoltageMinimum}."
-                : $"Thermal Transient Limit value of {value} is higher than the maximum of {Properties.Settings.Instance.TtmTraceSettings.VoltageMaximum}.";
-
-        return affirmative;
+        return value.IsBetweenInclusive( ( double ) Properties.DriverSettings.Instance.TraceDefaults.VoltageChangeMinimum,
+            ( double ) Properties.DriverSettings.Instance.TraceDefaults.VoltageChangeMaximum, "Thermal Transient Limit", out details );
     }
 
     /// <summary> Validates the median filter size described by value. </summary>
@@ -77,14 +55,8 @@ public partial class ThermalTransient
     /// <returns> <c>true</c> if value is in range; otherwise, <c>false</c>. </returns>
     public static bool ValidateMedianFilterSize( int value, out string details )
     {
-        bool affirmative = value >= Properties.Settings.Instance.TtmTraceSettings.MedianFilterLengthMinimum && value <= Properties.Settings.Instance.TtmTraceSettings.MedianFilterLengthMaximum;
-        details = affirmative
-            ? string.Empty
-            : value < Properties.Settings.Instance.TtmTraceSettings.TracePointsMinimum
-                ? $"Thermal Transient Median Filter Length of {value} is lower than the minimum of {Properties.Settings.Instance.TtmTraceSettings.MedianFilterLengthMinimum}."
-                : $"Thermal Transient Median Filter Length value of {value} is higher than the maximum of {Properties.Settings.Instance.TtmTraceSettings.MedianFilterLengthMaximum}.";
-
-        return affirmative;
+        return value.IsBetweenInclusive( Properties.DriverSettings.Instance.TraceDefaults.MedianFilterLengthMinimum,
+            Properties.DriverSettings.Instance.TraceDefaults.MedianFilterLengthMaximum, "Thermal Transient Median Filter Length", out details );
     }
 
     /// <summary> Validates the Duration described by value. </summary>
@@ -96,20 +68,10 @@ public partial class ThermalTransient
     public static bool ValidatePulseWidth( double samplingInterval, int tracePoints, out string details )
     {
         double pulseWidth = samplingInterval * tracePoints;
-        bool affirmative = ValidateSamplingInterval( samplingInterval, out string details1 ) && ValidateTracePoints( tracePoints, out details1 )
-            && pulseWidth >= ( double ) Properties.Settings.Instance.TtmTraceSettings.DurationMinimum && pulseWidth <= ( double ) Properties.Settings.Instance.TtmTraceSettings.DurationMaximum;
-        if ( affirmative )
-            details = string.Empty;
-        else if ( !string.IsNullOrWhiteSpace( details1 ) )
-            details = details1; // we have details. nothing to do.
-        else
-        {
-            details = pulseWidth < ( double ) Properties.Settings.Instance.TtmTraceSettings.DurationMinimum
-                ? $"Thermal Transient Pulse Width of {pulseWidth}s is lower than the minimum of {Properties.Settings.Instance.TtmTraceSettings.DurationMinimum}s."
-                : $"Thermal Transient Pulse Width of {pulseWidth}s is higher than the maximum of {Properties.Settings.Instance.TtmTraceSettings.DurationMaximum}s.";
-        }
-
-        return affirmative;
+        return ValidateSamplingInterval( samplingInterval, out details ) &&
+            ValidateTracePoints( tracePoints, out details ) &&
+            pulseWidth.IsBetweenInclusive( ( double ) Properties.DriverSettings.Instance.TraceDefaults.DurationMinimum,
+            ( double ) Properties.DriverSettings.Instance.TraceDefaults.DurationMaximum, "Thermal Transient Pulse Width", out details );
     }
 
     /// <summary> Validates the sampling interval described by value. </summary>
@@ -119,15 +81,8 @@ public partial class ThermalTransient
     /// <returns> <c>true</c> if value is in range; otherwise, <c>false</c>. </returns>
     public static bool ValidateSamplingInterval( double value, out string details )
     {
-        bool affirmative = value >= ( double ) Properties.Settings.Instance.TtmTraceSettings.SamplingIntervalMinimum
-            && value <= ( double ) Properties.Settings.Instance.TtmTraceSettings.SamplingIntervalMaximum;
-        details = affirmative
-            ? string.Empty
-            : value < ( double ) Properties.Settings.Instance.TtmTraceSettings.SamplingIntervalMinimum
-                ? $"Thermal Transient Sample Interval value of {value} is lower than the minimum of {Properties.Settings.Instance.TtmTraceSettings.SamplingIntervalMinimum}."
-                : $"Thermal Transient Sample Interval value of {value} is higher than the maximum of {Properties.Settings.Instance.TtmTraceSettings.SamplingIntervalMaximum}.";
-
-        return affirmative;
+        return value.IsBetweenInclusive( ( double ) Properties.DriverSettings.Instance.TraceDefaults.SamplingIntervalMinimum,
+            ( double ) Properties.DriverSettings.Instance.TraceDefaults.SamplingIntervalMaximum, "Thermal Transient Sampling Interval", out details );
     }
 
     /// <summary> Validates the trace points described by value. </summary>
@@ -137,15 +92,8 @@ public partial class ThermalTransient
     /// <returns> <c>true</c> if value is in range; otherwise, <c>false</c>. </returns>
     public static bool ValidateTracePoints( int value, out string details )
     {
-        bool affirmative = value >= Properties.Settings.Instance.TtmTraceSettings.TracePointsMinimum
-            && value <= Properties.Settings.Instance.TtmTraceSettings.TracePointsMaximum;
-        details = affirmative
-            ? string.Empty
-            : value < Properties.Settings.Instance.TtmTraceSettings.TracePointsMinimum
-                ? $"Thermal Transient Trace Points value of {value} is lower than the minimum of {Properties.Settings.Instance.TtmTraceSettings.TracePointsMinimum}."
-                : $"Thermal Transient Trace Points value of {value} is higher than the maximum of {Properties.Settings.Instance.TtmTraceSettings.TracePointsMaximum}";
-
-        return affirmative;
+        return value.IsBetweenInclusive( Properties.DriverSettings.Instance.TraceDefaults.TracePointsMinimum,
+            Properties.DriverSettings.Instance.TraceDefaults.TracePointsMaximum, "Thermal Transient Trace Points", out details );
     }
 
     /// <summary> Validates the voltage limit described by value. </summary>
@@ -155,14 +103,22 @@ public partial class ThermalTransient
     /// <returns> <c>true</c> if value is in range; otherwise, <c>false</c>. </returns>
     public static bool ValidateVoltageLimit( double value, out string details )
     {
-        bool affirmative = value >= ( double ) Properties.Settings.Instance.TtmTraceSettings.VoltageMinimum
-            && value <= ( double ) Properties.Settings.Instance.TtmTraceSettings.VoltageMaximum;
+        return value.IsBetweenInclusive( ( double ) Properties.DriverSettings.Instance.TraceDefaults.VoltageMinimum,
+            ( double ) Properties.DriverSettings.Instance.TraceDefaults.VoltageMaximum, "Thermal Transient Voltage Limit", out details );
+    }
+
+    /// <summary>   Validates the voltage limit described by value. </summary>
+    /// <remarks>   2026-03-27. </remarks>
+    /// <param name="value">                    The value. </param>
+    /// <param name="expectedMaximumVoltage">   The expected maximum voltage. </param>
+    /// <param name="details">                  [out] The details. </param>
+    /// <returns>   <c>true</c> if value is in range; otherwise, <c>false</c>. </returns>
+    public static bool ValidateVoltageLimit( double value, double expectedMaximumVoltage, out string details )
+    {
+        bool affirmative = value >= expectedMaximumVoltage;
         details = affirmative
             ? string.Empty
-            : value < ( double ) Properties.Settings.Instance.TtmTraceSettings.VoltageMinimum
-                ? $"Thermal Transient Voltage Limit value of {value} is lower than the minimum of {Properties.Settings.Instance.TtmTraceSettings.VoltageMinimum}."
-                : $"Thermal Transient Voltage Limit value of {value} is high than the maximum of {Properties.Settings.Instance.TtmTraceSettings.VoltageMaximum}.";
-
+            : $"A Thermal Transient Voltage Limit of {value} volts is too low; Based on the cold resistance high limit and thermal transient current level and voltage change, the voltage might reach {expectedMaximumVoltage} volts.";
         return affirmative;
     }
 
@@ -178,22 +134,10 @@ public partial class ThermalTransient
     /// </returns>
     public static bool ValidateVoltageLimit( double value, double maximumColdResistance, double currentLevel, double allowedVoltageChange, out string details )
     {
-        double expectedMaximumVoltage = (maximumColdResistance * currentLevel) + allowedVoltageChange;
-        bool affirmative = ValidateVoltageChange( allowedVoltageChange, out string details1 )
-                                && ValidateCurrentLevel( currentLevel, out details1 )
-                                && ValidateVoltageLimit( value, out details1 )
-                                && value >= expectedMaximumVoltage;
-        details = details1;
-        if ( !affirmative && string.IsNullOrWhiteSpace( details ) )
-            details = $"A Thermal transient voltage limit of {value} volts is too low;. Based on the cold resistance high limit and thermal transient current level and voltage change, the voltage might reach {expectedMaximumVoltage} volts.";
-        // we have details. nothing to do.
-#if false
-        else if ( expectedMaximumVoltage < expectedMaximumVoltage )
-        {
-            details = $"A Thermal transient voltage limit of {value} volts is too low;. Based on the cold resistance high limit and thermal transient current level and voltage change, the voltage might reach {expectedMaximumVoltage} volts.";
-        }
-#endif
-        return affirmative;
+        return ValidateVoltageChange( allowedVoltageChange, out details )
+                                && ValidateCurrentLevel( currentLevel, out details )
+                                && ValidateVoltageLimit( value, out details )
+                                && ValidateVoltageLimit( value, (maximumColdResistance * currentLevel) + allowedVoltageChange, out details );
     }
 
     #region " estimator "
@@ -205,14 +149,8 @@ public partial class ThermalTransient
     /// <returns> <c>true</c> if value is in range; otherwise, <c>false</c>. </returns>
     public static bool ValidateThermalCoefficient( double value, out string details )
     {
-        bool affirmative = value >= ( double ) Properties.Settings.Instance.TtmEstimatorSettings.ThermalCoefficientMinimum && value <= ( double ) Properties.Settings.Instance.TtmEstimatorSettings.ThermalCoefficientMaximum;
-        details = affirmative
-            ? string.Empty
-            : value < ( double ) Properties.Settings.Instance.TtmEstimatorSettings.ThermalCoefficientMinimum
-                ? string.Format( System.Globalization.CultureInfo.CurrentCulture, "Thermal Coefficient value of {0} is lower than the minimum of {1}.", value, Properties.Settings.Instance.TtmEstimatorSettings.ThermalCoefficientMinimum )
-                : string.Format( System.Globalization.CultureInfo.CurrentCulture, "Thermal Coefficient value of {0} is higher than the maximum of {1}.", value, Properties.Settings.Instance.TtmEstimatorSettings.ThermalCoefficientMaximum );
-
-        return affirmative;
+        return value.IsBetweenInclusive( ( double ) Properties.DriverSettings.Instance.EstimatorDefaults.ThermalCoefficientMinimum,
+            ( double ) Properties.DriverSettings.Instance.EstimatorDefaults.ThermalCoefficientMaximum, "Thermal Coefficient", out details );
     }
 
     #endregion

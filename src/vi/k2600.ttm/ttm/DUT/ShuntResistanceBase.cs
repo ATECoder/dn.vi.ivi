@@ -42,12 +42,12 @@ public abstract class ShuntResistanceBase : MeasureBase, IEquatable<ShuntResista
     {
         base.ResetKnownState();
         /* moved to preset
-            this.Aperture = ( double ) Properties.Settings.Instance.TtmShuntSettings.ApertureDefault;
-            this.CurrentRange = ( double ) Properties.Settings.Instance.TtmShuntSettings.CurrentRangeDefault;
-            this.CurrentLevel = ( double ) Properties.Settings.Instance.TtmShuntSettings.CurrentLevelDefault;
-            this.LowLimit = ( double ) Properties.Settings.Instance.TtmShuntSettings.LowLimitDefault;
-            this.HighLimit = ( double ) Properties.Settings.Instance.TtmShuntSettings.HighLimitDefault;
-            this.VoltageLimit = ( double ) Properties.Settings.Instance.TtmShuntSettings.VoltageLimitDefault;
+            this.Aperture = Properties.DriverSettings.Instance.ShuntDefaults.Aperture;
+            this.CurrentRange = Properties.DriverSettings.Instance.ShuntDefaults.CurrentRange;
+            this.CurrentLevel = Properties.DriverSettings.Instance.ShuntDefaults.CurrentLevel;
+            this.LowLimit = Properties.DriverSettings.Instance.ShuntDefaults.LowLimit;
+            this.HighLimit = Properties.DriverSettings.Instance.ShuntDefaults.HighLimit;
+            this.VoltageLimit = Properties.DriverSettings.Instance.ShuntDefaults.VoltageLimit;
          */
     }
 
@@ -56,12 +56,12 @@ public abstract class ShuntResistanceBase : MeasureBase, IEquatable<ShuntResista
     public override void PresetKnownState()
     {
         base.PresetKnownState();
-        this.Aperture = ( double ) Properties.Settings.Instance.TtmShuntSettings.ApertureDefault;
-        this.CurrentRange = ( double ) Properties.Settings.Instance.TtmShuntSettings.CurrentRangeDefault;
-        this.CurrentLevel = ( double ) Properties.Settings.Instance.TtmShuntSettings.CurrentLevelDefault;
-        this.LowLimit = ( double ) Properties.Settings.Instance.TtmShuntSettings.LowLimitDefault;
-        this.HighLimit = ( double ) Properties.Settings.Instance.TtmShuntSettings.HighLimitDefault;
-        this.VoltageLimit = ( double ) Properties.Settings.Instance.TtmShuntSettings.VoltageLimitDefault;
+        this.Aperture = Properties.DriverSettings.Instance.ShuntDefaults.Aperture;
+        this.CurrentRange = Properties.DriverSettings.Instance.ShuntDefaults.CurrentRange;
+        this.CurrentLevel = Properties.DriverSettings.Instance.ShuntDefaults.CurrentLevel;
+        this.LowLimit = Properties.DriverSettings.Instance.ShuntDefaults.LowLimit;
+        this.HighLimit = Properties.DriverSettings.Instance.ShuntDefaults.HighLimit;
+        this.VoltageLimit = Properties.DriverSettings.Instance.ShuntDefaults.VoltageLimit;
     }
 
     #endregion

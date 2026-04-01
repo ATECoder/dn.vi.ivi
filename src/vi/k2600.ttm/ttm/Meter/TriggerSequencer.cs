@@ -304,12 +304,10 @@ public class TriggerSequencer : CommunityToolkit.Mvvm.ComponentModel.ObservableO
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( field is not null )
-                field.Elapsed -= this.SequencerTimer_Elapsed;
+            field?.Elapsed -= this.SequencerTimer_Elapsed;
 
             field = value;
-            if ( field is not null )
-                field.Elapsed += this.SequencerTimer_Elapsed;
+            field?.Elapsed += this.SequencerTimer_Elapsed;
         }
     }
 

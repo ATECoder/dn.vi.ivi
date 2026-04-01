@@ -7,7 +7,6 @@
   <Folder Name="/device/">
     <Project Path="device/device.mstest/cc.isr.VI.Device.MSTest.csproj" />
     <Project Path="device/device/cc.isr.VI.Device.csproj" />
-    <Project Path="device/tsp.script/cc.isr.VI.Tsp.Script.csproj" />
     <Project Path="device/tsp/cc.isr.VI.Device.Tsp.csproj" />
   </Folder>
   <Folder Name="/resource/">

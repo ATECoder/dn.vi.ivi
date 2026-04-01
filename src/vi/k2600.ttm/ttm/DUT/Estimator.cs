@@ -59,7 +59,7 @@ public class Estimator : DeviceUnderTestElementBase, IEquatable<Estimator>
     public override void PresetKnownState()
     {
         base.PresetKnownState();
-        this.ThermalCoefficient = ( double ) Properties.Settings.Instance.TtmEstimatorSettings.ThermalCoefficientDefault;
+        this.ThermalCoefficient = ( double ) Properties.DriverSettings.Instance.EstimatorDefaults.ThermalCoefficient;
     }
 
     #endregion

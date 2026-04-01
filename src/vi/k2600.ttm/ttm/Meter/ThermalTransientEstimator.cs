@@ -67,7 +67,7 @@ public class ThermalTransientEstimator : MeterSubsystemBase
         get;
         protected set
         {
-            value ??= Properties.Settings.Instance.TtmEstimatorSettings.ThermalCoefficient;
+            value ??= Properties.DriverSettings.Instance.EstimatorSettings.ThermalCoefficient;
             this.Estimator.ThermalCoefficient = value.Value;
             _ = this.SetProperty( ref field, value );
         }
@@ -135,7 +135,12 @@ public class ThermalTransientEstimator : MeterSubsystemBase
     public override void ReadInstrumentDefaults()
     {
         _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"Reading {0} defaults.", this.EntityName );
-        bool localTryQueryPrint() { double result = Properties.Settings.Instance.TtmEstimatorSettings.ThermalCoefficientDefault; bool ret = this.Session.TryQueryPrint( 9.6m, ref result, "{0}.thermalCoefficient", this.DefaultsName ); Properties.Settings.Instance.TtmEstimatorSettings.ThermalCoefficientDefault = result; return ret; }
+        bool localTryQueryPrint()
+        {
+            double result = Properties.DriverSettings.Instance.EstimatorDefaults.ThermalCoefficient;
+            bool ret = this.Session.TryQueryPrint( 9.6m, ref result, "{0}.thermalCoefficient", this.DefaultsName );
+            Properties.DriverSettings.Instance.EstimatorDefaults.ThermalCoefficient = result; return ret;
+        }
 
         if ( !localTryQueryPrint() )
             _ = cc.isr.VI.SessionLogger.Instance.LogWarning( $"failed reading default thermal transient estimator thermal coefficient;. Sent:'{this.Session.LastMessageSent}; Received:'{this.Session.LastMessageReceived}'." );

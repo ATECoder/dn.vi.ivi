@@ -23,7 +23,7 @@ public class Settings : cc.isr.Json.AppSettings.Settings.SettingsContainerBase
     public override void CreateScribe()
     {
         Settings.ConsoleSettings = new();
-        Settings.TtmSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance;
+        Settings.TtmSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance;
         Settings.LotSettingsContainer = Controls.Settings.Instance;
 
         this.Scribe = new( [Settings.ConsoleSettings] );
@@ -68,7 +68,7 @@ public class Settings : cc.isr.Json.AppSettings.Settings.SettingsContainerBase
 
     /// <summary>   Gets or sets the ttm settings. </summary>
     /// <value> The ttm settings. </value>
-    public static cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings TtmSettings { get; set; } = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance;
+    public static cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings TtmSettings { get; set; } = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance;
 
     /// <summary>   Gets or sets the lot settings container. </summary>
     /// <value> The lot settings container. </value>

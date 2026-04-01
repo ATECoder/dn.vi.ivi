@@ -104,7 +104,7 @@ public class ColdResistanceMeasure : MeasureSubsystemBase
 
         protected set
         {
-            value ??= Properties.Settings.Instance.TtmResistanceSettings.CurrentLevel;
+            value ??= Properties.DriverSettings.Instance.ColdResistanceSettings.CurrentLevel;
             this.ColdResistance.CurrentLevel = value.Value;
             _ = this.SetProperty( ref this._currentLevel, value );
         }
@@ -176,7 +176,7 @@ public class ColdResistanceMeasure : MeasureSubsystemBase
 
         protected set
         {
-            value ??= Properties.Settings.Instance.TtmResistanceSettings.CurrentLimit;
+            value ??= Properties.DriverSettings.Instance.ColdResistanceSettings.CurrentLimit;
             this.ColdResistance.CurrentLimit = value.Value;
             _ = this.SetProperty( ref this._currentLimit, value );
         }
@@ -249,7 +249,7 @@ public class ColdResistanceMeasure : MeasureSubsystemBase
 
         protected set
         {
-            value ??= Properties.Settings.Instance.TtmResistanceSettings.VoltageLevel;
+            value ??= Properties.DriverSettings.Instance.ColdResistanceSettings.VoltageLevel;
             this.ColdResistance.VoltageLevel = value.Value;
             _ = this.SetProperty( ref this._voltageLevel, value );
         }
@@ -322,7 +322,7 @@ public class ColdResistanceMeasure : MeasureSubsystemBase
 
         protected set
         {
-            value ??= Properties.Settings.Instance.TtmResistanceSettings.VoltageLimit;
+            value ??= Properties.DriverSettings.Instance.ColdResistanceSettings.VoltageLimit;
             this.ColdResistance.VoltageLimit = value.Value;
             _ = this.SetProperty( ref this._voltageLimit, value );
         }
@@ -391,7 +391,7 @@ public class ColdResistanceMeasure : MeasureSubsystemBase
 
         protected set
         {
-            value ??= Properties.Settings.Instance.TtmResistanceSettings.FailStatus;
+            value ??= Properties.DriverSettings.Instance.ColdResistanceSettings.FailStatus;
             this.ColdResistance.FailStatus = value.Value;
             _ = this.SetProperty( ref this._failStatus, value );
         }
@@ -452,7 +452,7 @@ public class ColdResistanceMeasure : MeasureSubsystemBase
 
         protected set
         {
-            value ??= Properties.Settings.Instance.TtmResistanceSettings.SourceOutput;
+            value ??= Properties.DriverSettings.Instance.ColdResistanceSettings.SourceOutput;
             this.ColdResistance.SourceOutputOption = value.Value;
             _ = this.SetProperty( ref this._sourceOutputOption, value );
         }
@@ -526,7 +526,7 @@ public class ColdResistanceMeasure : MeasureSubsystemBase
         bool localTryQuerySourceOutput()
         {
             bool ret;
-            Syntax.SourceOutputOption result = Properties.Settings.Instance.TtmResistanceSettings.SourceOutputDefault;
+            Syntax.SourceOutputOption result = Properties.DriverSettings.Instance.ColdResistanceDefaults.SourceOutput;
             if ( MeterSubsystem.LegacyFirmware )
             {
                 result = Syntax.SourceOutputOption.Current;
@@ -537,22 +537,22 @@ public class ColdResistanceMeasure : MeasureSubsystemBase
                 string? reply = this.Session.QueryPrintTrimEnd( "{0}.sourceOutput", this.EntityName );
                 ret = reply is not null && !string.IsNullOrEmpty( reply ) && Enum.TryParse( reply, out result );
             }
-            Properties.Settings.Instance.TtmResistanceSettings.SourceOutputDefault = result; return ret;
+            Properties.DriverSettings.Instance.ColdResistanceDefaults.SourceOutput = result; return ret;
         }
 
         if ( !localTryQuerySourceOutput() )
             _ = cc.isr.VI.SessionLogger.Instance.LogWarning( $"failed reading default {fieldCaption};. Sent:'{this.Session.LastMessageSent}; Received:'{this.Session.LastMessageReceived}'." );
 
-        Syntax.SourceOutputOption sourceOutput = Properties.Settings.Instance.TtmResistanceSettings.SourceOutputDefault;
+        Syntax.SourceOutputOption sourceOutput = Properties.DriverSettings.Instance.ColdResistanceDefaults.SourceOutput;
 
         cc.isr.VI.Pith.SessionBase.DoEventsAction?.Invoke();
 
         fieldCaption = "cold resistance aperture";
         bool localTryQueryAperture()
         {
-            double result = Properties.Settings.Instance.TtmResistanceSettings.ApertureDefault;
+            double result = Properties.DriverSettings.Instance.ColdResistanceDefaults.Aperture;
             bool ret = this.Session.TryQueryPrint( 7.4m, ref result, "{0}.aperture", this.DefaultsName );
-            Properties.Settings.Instance.TtmResistanceSettings.ApertureDefault = result;
+            Properties.DriverSettings.Instance.ColdResistanceDefaults.Aperture = result;
             return ret;
         }
 
@@ -564,11 +564,11 @@ public class ColdResistanceMeasure : MeasureSubsystemBase
         fieldCaption = "cold resistance current level";
         bool localTryQueryCurrentLevel()
         {
-            double result = Properties.Settings.Instance.TtmResistanceSettings.CurrentLevelDefault;
+            double result = Properties.DriverSettings.Instance.ColdResistanceDefaults.CurrentLevel;
             bool ret = MeterSubsystem.LegacyFirmware
                 ? this.Session.TryQueryPrint( 9.6m, ref result, "{0}.level", this.DefaultsName )
                 : this.Session.TryQueryPrint( 9.6m, ref result, "{0}.levelI", this.DefaultsName );
-            Properties.Settings.Instance.TtmResistanceSettings.CurrentLevelDefault = result; return ret;
+            Properties.DriverSettings.Instance.ColdResistanceDefaults.CurrentLevel = result; return ret;
         }
 
         if ( (sourceOutput == Syntax.SourceOutputOption.Current) && !localTryQueryCurrentLevel() )
@@ -579,9 +579,9 @@ public class ColdResistanceMeasure : MeasureSubsystemBase
         fieldCaption = "cold resistance current limit";
         bool localTryQueryCurrentLimit()
         {
-            double result = Properties.Settings.Instance.TtmResistanceSettings.CurrentLimitDefault;
+            double result = Properties.DriverSettings.Instance.ColdResistanceDefaults.CurrentLimit;
             bool ret = MeterSubsystem.LegacyFirmware || this.Session.TryQueryPrint( 9.6m, ref result, "{0}.limitI", this.DefaultsName );
-            Properties.Settings.Instance.TtmResistanceSettings.CurrentLimitDefault = result; return ret;
+            Properties.DriverSettings.Instance.ColdResistanceDefaults.CurrentLimit = result; return ret;
         }
 
         if ( !MeterSubsystem.LegacyFirmware && (sourceOutput == Syntax.SourceOutputOption.Voltage) && !localTryQueryCurrentLimit() )
@@ -592,9 +592,9 @@ public class ColdResistanceMeasure : MeasureSubsystemBase
         fieldCaption = "cold resistance minimum current";
         bool localTryQueryMinCurrent()
         {
-            double result = Properties.Settings.Instance.TtmResistanceSettings.CurrentMinimum;
+            double result = Properties.DriverSettings.Instance.ColdResistanceDefaults.CurrentMinimum;
             bool ret = this.Session.TryQueryPrint( 9.6m, ref result, "{0}.minCurrent", this.DefaultsName );
-            Properties.Settings.Instance.TtmResistanceSettings.CurrentMinimum = result;
+            Properties.DriverSettings.Instance.ColdResistanceDefaults.CurrentMinimum = result;
             return ret;
         }
 
@@ -606,9 +606,9 @@ public class ColdResistanceMeasure : MeasureSubsystemBase
         fieldCaption = "cold resistance maximum current";
         bool localTryQueryMaxCurrent()
         {
-            double result = Properties.Settings.Instance.TtmResistanceSettings.CurrentMaximum;
+            double result = Properties.DriverSettings.Instance.ColdResistanceDefaults.CurrentMaximum;
             bool ret = this.Session.TryQueryPrint( 9.6m, ref result, "{0}.maxCurrent", this.DefaultsName );
-            Properties.Settings.Instance.TtmResistanceSettings.CurrentMaximum = result;
+            Properties.DriverSettings.Instance.ColdResistanceDefaults.CurrentMaximum = result;
             return ret;
         }
 
@@ -620,9 +620,9 @@ public class ColdResistanceMeasure : MeasureSubsystemBase
         fieldCaption = "cold resistance voltage level";
         bool localTryQueryVoltageLevel()
         {
-            double result = Properties.Settings.Instance.TtmResistanceSettings.VoltageLevelDefault;
+            double result = Properties.DriverSettings.Instance.ColdResistanceDefaults.VoltageLevel;
             bool ret = MeterSubsystem.LegacyFirmware || this.Session.TryQueryPrint( 9.6m, ref result, "{0}.levelV", this.DefaultsName );
-            Properties.Settings.Instance.TtmResistanceSettings.VoltageLevelDefault = result;
+            Properties.DriverSettings.Instance.ColdResistanceDefaults.VoltageLevel = result;
             return ret;
         }
 
@@ -634,11 +634,11 @@ public class ColdResistanceMeasure : MeasureSubsystemBase
         fieldCaption = "cold resistance voltage limit";
         bool localTryQueryVoltageLimit()
         {
-            double result = Properties.Settings.Instance.TtmResistanceSettings.VoltageLimitDefault;
+            double result = Properties.DriverSettings.Instance.ColdResistanceDefaults.VoltageLimit;
             bool ret = MeterSubsystem.LegacyFirmware
                 ? this.Session.TryQueryPrint( 9.6m, ref result, "{0}.limit", this.DefaultsName )
                 : this.Session.TryQueryPrint( 9.6m, ref result, "{0}.limitV", this.DefaultsName );
-            Properties.Settings.Instance.TtmResistanceSettings.VoltageLimitDefault = result;
+            Properties.DriverSettings.Instance.ColdResistanceDefaults.VoltageLimit = result;
             return ret;
         }
 
@@ -650,9 +650,9 @@ public class ColdResistanceMeasure : MeasureSubsystemBase
         fieldCaption = "cold resistance minimum voltage";
         bool localTryQueryMinVoltage()
         {
-            double result = Properties.Settings.Instance.TtmResistanceSettings.VoltageMinimum;
+            double result = Properties.DriverSettings.Instance.ColdResistanceDefaults.VoltageMinimum;
             bool ret = this.Session.TryQueryPrint( 9.6m, ref result, "{0}.minVoltage", this.DefaultsName );
-            Properties.Settings.Instance.TtmResistanceSettings.VoltageMinimum = result;
+            Properties.DriverSettings.Instance.ColdResistanceDefaults.VoltageMinimum = result;
             return ret;
         }
 
@@ -664,9 +664,9 @@ public class ColdResistanceMeasure : MeasureSubsystemBase
         fieldCaption = "cold resistance maximum voltage";
         bool maxVoltage()
         {
-            double result = Properties.Settings.Instance.TtmResistanceSettings.VoltageMaximum;
+            double result = Properties.DriverSettings.Instance.ColdResistanceDefaults.VoltageMaximum;
             bool ret = this.Session.TryQueryPrint( 9.6m, ref result, "{0}.maxVoltage", this.DefaultsName );
-            Properties.Settings.Instance.TtmResistanceSettings.VoltageMaximum = result;
+            Properties.DriverSettings.Instance.ColdResistanceDefaults.VoltageMaximum = result;
             return ret;
         }
 
@@ -678,9 +678,9 @@ public class ColdResistanceMeasure : MeasureSubsystemBase
         fieldCaption = "cold resistance low limit";
         bool localTryQueryLowLimit()
         {
-            double result = Properties.Settings.Instance.TtmResistanceSettings.LowLimitDefault;
+            double result = Properties.DriverSettings.Instance.ColdResistanceDefaults.LowLimit;
             bool ret = this.Session.TryQueryPrint( 9.6m, ref result, "{0}.lowLimit", this.DefaultsName );
-            Properties.Settings.Instance.TtmResistanceSettings.LowLimitDefault = result;
+            Properties.DriverSettings.Instance.ColdResistanceDefaults.LowLimit = result;
             return ret;
         }
 
@@ -692,9 +692,9 @@ public class ColdResistanceMeasure : MeasureSubsystemBase
         fieldCaption = "cold resistance high limit";
         bool localTryQueryHighLimit()
         {
-            double result = Properties.Settings.Instance.TtmResistanceSettings.HighLimitDefault;
+            double result = Properties.DriverSettings.Instance.ColdResistanceDefaults.HighLimit;
             bool ret = this.Session.TryQueryPrint( 9.6m, ref result, "{0}.highLimit", this.DefaultsName );
-            Properties.Settings.Instance.TtmResistanceSettings.HighLimitDefault = result;
+            Properties.DriverSettings.Instance.ColdResistanceDefaults.HighLimit = result;
             return ret;
         }
 
@@ -706,9 +706,9 @@ public class ColdResistanceMeasure : MeasureSubsystemBase
         fieldCaption = "cold resistance minimum resistance";
         bool localTryQueryMinResistance()
         {
-            double result = Properties.Settings.Instance.TtmResistanceSettings.Minimum;
+            double result = Properties.DriverSettings.Instance.ColdResistanceDefaults.Minimum;
             bool ret = this.Session.TryQueryPrint( 9.6m, ref result, "{0}.minResistance", this.DefaultsName );
-            Properties.Settings.Instance.TtmResistanceSettings.Minimum = result;
+            Properties.DriverSettings.Instance.ColdResistanceDefaults.Minimum = result;
             return ret;
         }
 
@@ -720,9 +720,9 @@ public class ColdResistanceMeasure : MeasureSubsystemBase
         fieldCaption = "cold resistance maximum resistance";
         bool localTryQueryMaxResistance()
         {
-            double result = Properties.Settings.Instance.TtmResistanceSettings.Maximum;
+            double result = Properties.DriverSettings.Instance.ColdResistanceDefaults.Maximum;
             bool ret = this.Session.TryQueryPrint( 9.6m, ref result, "{0}.maxResistance", this.DefaultsName );
-            Properties.Settings.Instance.TtmResistanceSettings.Maximum = result;
+            Properties.DriverSettings.Instance.ColdResistanceDefaults.Maximum = result;
             return ret;
         }
 

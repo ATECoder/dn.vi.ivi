@@ -1,3 +1,4 @@
+using cc.isr.Std.IComparableExtensions;
 namespace cc.isr.VI.Tsp.K2600.Ttm;
 
 public partial class ShuntResistance
@@ -9,16 +10,8 @@ public partial class ShuntResistance
     /// <returns> <c>true</c> if value is in range; otherwise, <c>false</c>. </returns>
     public static bool ValidateCurrent( double value, out string details )
     {
-        bool affirmative = value >= ( double ) Properties.Settings.Instance.TtmShuntSettings.CurrentMinimum && value <= ( double ) Properties.Settings.Instance.TtmShuntSettings.CurrentMaximum;
-        details = affirmative
-            ? string.Empty
-            : value < ( double ) Properties.Settings.Instance.TtmShuntSettings.CurrentMinimum
-                ? string.Format( System.Globalization.CultureInfo.CurrentCulture,
-                "Shunt MeasuredValue Current value of {0} is lower than the minimum of {1}.", value, Properties.Settings.Instance.TtmShuntSettings.CurrentMinimum )
-                : string.Format( System.Globalization.CultureInfo.CurrentCulture,
-                "Shunt MeasuredValue Current value of {0} is high than the maximum of {1}.", value, Properties.Settings.Instance.TtmShuntSettings.CurrentMaximum );
-
-        return affirmative;
+        return value.IsBetweenInclusive( ( double ) Properties.DriverSettings.Instance.ShuntDefaults.CurrentMinimum,
+            ( double ) Properties.DriverSettings.Instance.ShuntDefaults.CurrentMaximum, "Shunt Current", out details );
     }
 
     /// <summary> Validates the limit described by value. </summary>
@@ -28,16 +21,8 @@ public partial class ShuntResistance
     /// <returns> <c>true</c> if value is in range; otherwise, <c>false</c>. </returns>
     public static bool ValidateLimit( double value, out string details )
     {
-        bool affirmative = value >= ( double ) Properties.Settings.Instance.TtmShuntSettings.Minimum && value <= ( double ) Properties.Settings.Instance.TtmShuntSettings.Maximum;
-        details = affirmative
-            ? string.Empty
-            : value < ( double ) Properties.Settings.Instance.TtmShuntSettings.Minimum
-                ? string.Format( System.Globalization.CultureInfo.CurrentCulture,
-                "Shunt MeasuredValue Limit value of {0} is lower than the minimum of {1}.", value, Properties.Settings.Instance.TtmShuntSettings.Minimum )
-                : string.Format( System.Globalization.CultureInfo.CurrentCulture,
-                "Shunt MeasuredValue Limit value of {0} is high than the maximum of {1}.", value, Properties.Settings.Instance.TtmShuntSettings.Maximum );
-
-        return affirmative;
+        return value.IsBetweenInclusive( ( double ) Properties.DriverSettings.Instance.ShuntDefaults.Minimum,
+            ( double ) Properties.DriverSettings.Instance.ShuntDefaults.Maximum, "Shunt limit", out details );
     }
 
     /// <summary> Validates the voltage limit described by value. </summary>
@@ -47,15 +32,7 @@ public partial class ShuntResistance
     /// <returns> <c>true</c> if value is in range; otherwise, <c>false</c>. </returns>
     public static bool ValidateVoltageLimit( double value, out string details )
     {
-        bool affirmative = value >= ( double ) Properties.Settings.Instance.TtmShuntSettings.VoltageMinimum && value <= ( double ) Properties.Settings.Instance.TtmShuntSettings.VoltageMaximum;
-        details = affirmative
-            ? string.Empty
-            : value < ( double ) Properties.Settings.Instance.TtmShuntSettings.VoltageMinimum
-                ? string.Format( System.Globalization.CultureInfo.CurrentCulture,
-                "Shunt MeasuredValue Voltage Limit value of {0} is lower than the minimum of {1}.", value, Properties.Settings.Instance.TtmShuntSettings.VoltageMinimum )
-                : string.Format( System.Globalization.CultureInfo.CurrentCulture,
-                "Shunt MeasuredValue Voltage Limit value of {0} is high than the maximum of {1}.", value, Properties.Settings.Instance.TtmShuntSettings.VoltageMaximum );
-
-        return affirmative;
+        return value.IsBetweenInclusive( ( double ) Properties.DriverSettings.Instance.ShuntDefaults.VoltageMinimum,
+            Properties.DriverSettings.Instance.ShuntDefaults.VoltageMaximum, "Shunt voltage limit", out details );
     }
 }

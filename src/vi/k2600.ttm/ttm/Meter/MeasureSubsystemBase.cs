@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Text;
 using cc.isr.Std.NumericExtensions;
 using cc.isr.Std.StackTraceExtensions;
 using cc.isr.VI.Tsp.K2600.Ttm.Syntax;
@@ -445,8 +446,8 @@ public abstract class MeasureSubsystemBase( VI.StatusSubsystemBase statusSubsyst
         cc.isr.VI.Pith.SessionBase.DoEventsAction?.Invoke();
         if ( Syntax.ThermalTransient.RequiresSourceMeasureUnit( this.MeterEntity ) )
         {
-            Properties.Settings.Instance.TtmMeterSettings.SourceMeasureUnitDefault = this.Session.QueryTrimEnd( $"_G.print({this.DefaultsName}.smuI)" );
-            if ( string.IsNullOrWhiteSpace( Properties.Settings.Instance.TtmMeterSettings.SourceMeasureUnitDefault ) )
+            Properties.DriverSettings.Instance.MeterDefaults.SourceMeasureUnit = this.Session.QueryTrimEnd( $"_G.print({this.DefaultsName}.smuI)" );
+            if ( string.IsNullOrWhiteSpace( Properties.DriverSettings.Instance.MeterDefaults.SourceMeasureUnit ) )
                 _ = cc.isr.VI.SessionLogger.Instance.LogWarning( $"failed reading default source measure unit name;. Sent:'{this.Session.LastMessageSent}; Received:'{this.Session.LastMessageReceived}'." );
         }
 
@@ -584,15 +585,15 @@ public abstract class MeasureSubsystemBase( VI.StatusSubsystemBase statusSubsyst
         }
     }
 
-    /// <summary> Measures the Thermal Transient. </summary>
+    /// <summary> Takes a measurement . </summary>
     /// <remarks> David, 2020-10-12. </remarks>
     /// <exception cref="ArgumentNullException"> Thrown when one or more required arguments are null. </exception>
-    /// <param name="resistance"> The Thermal Transient element. </param>
-    public void Measure( MeasureBase resistance )
+    /// <param name="measureBase"> The measurement element. </param>
+    public void Measure( MeasureBase measureBase )
     {
-        if ( resistance is null ) throw new ArgumentNullException( nameof( resistance ) );
-        resistance.DefineClearExecutionState();
-        this.Session.SetLastAction( $"measuring Thermal Transient" );
+        if ( measureBase is null ) throw new ArgumentNullException( nameof( measureBase ) );
+        measureBase.DefineClearExecutionState();
+        this.Session.SetLastAction( $"measuring {this.EntityName}" );
         this.Measure();
         this.Session.ThrowDeviceExceptionIfError();
     }
@@ -685,7 +686,6 @@ public abstract class MeasureSubsystemBase( VI.StatusSubsystemBase statusSubsyst
     public string? FirmwareReading
     {
         get;
-
         protected set => _ = this.SetProperty( ref field, value );
     }
 
@@ -694,7 +694,6 @@ public abstract class MeasureSubsystemBase( VI.StatusSubsystemBase statusSubsyst
     public string? FirmwareOutcomeReading
     {
         get;
-
         protected set => _ = this.SetProperty( ref field, value );
     }
 
@@ -703,7 +702,6 @@ public abstract class MeasureSubsystemBase( VI.StatusSubsystemBase statusSubsyst
     public string? FirmwareOkayReading
     {
         get;
-
         protected set => _ = this.SetProperty( ref field, value );
     }
 
@@ -712,7 +710,6 @@ public abstract class MeasureSubsystemBase( VI.StatusSubsystemBase statusSubsyst
     public string? FirmwareStatusReading
     {
         get;
-
         protected set => _ = this.SetProperty( ref field, value );
     }
 
@@ -721,11 +718,7 @@ public abstract class MeasureSubsystemBase( VI.StatusSubsystemBase statusSubsyst
     public bool MeasurementAvailable
     {
         get;
-        set
-        {
-            field = value;
-            this.NotifyPropertyChanged();
-        }
+        set => _ = this.SetProperty( ref field, value );
     }
 
     /// <summary> Gets or sets the cached Condition of the measurement register events. </summary>
@@ -733,15 +726,7 @@ public abstract class MeasureSubsystemBase( VI.StatusSubsystemBase statusSubsyst
     public int MeasurementEventCondition
     {
         get;
-
-        protected set
-        {
-            if ( !this.MeasurementEventCondition.Equals( value ) )
-            {
-                field = value;
-                this.NotifyPropertyChanged();
-            }
-        }
+        protected set => _ = this.SetProperty( ref field, value );
     }
 
     /// <summary> Reads the condition of the measurement register event. </summary>
@@ -875,6 +860,22 @@ public abstract class MeasureSubsystemBase( VI.StatusSubsystemBase statusSubsyst
 
         details = detailsBuilder.ToString();
         return outcome;
+    }
+
+    #endregion
+
+    #region " report "
+
+    /// <summary>   Builds measured values. </summary>
+    /// <remarks>   2026-03-30. </remarks>
+    /// <param name="prefix">  (Optional) [CRLF] The prefix. </param>
+    /// <returns>   A string. </returns>
+    public string BuildMeasuredValues( string prefix = "\r\n" )
+    {
+        StringBuilder sb = new();
+        _ = sb.Append( $"{prefix}{this.EntityName} values:" );
+        _ = sb.Append( $"{this.PrimaryMeasurement.BuildMeasuredValues( prefix )}" );
+        return sb.ToString();
     }
 
     #endregion

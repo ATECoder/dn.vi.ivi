@@ -45,7 +45,7 @@ public partial class MeterView : cc.isr.WinControls.ModelViewBase
             CaptionFormat = "{0} " + Convert.ToChar( 0x1C2 ),
             ResetCount = 1000,
             PresetCount = 500,
-            TraceLevel = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TraceLogSettings.TraceShowLevel
+            TraceLevel = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.TraceLogSettings.TraceShowLevel
         };
         cc.isr.Tracing.TracingPlatform.Instance.AddTraceEventWriter( this.TextBoxTextWriter );
 
@@ -104,11 +104,8 @@ public partial class MeterView : cc.isr.WinControls.ModelViewBase
                 this.TextBoxTextWriter.SuspendUpdatesReleaseIndicators();
                 this.BindPart( null );
                 this.AssignMeter( null );
-                if ( this.Meter is not null )
-                {
-                    this.Meter.Dispose();
-                    this.Meter = null;
-                }
+                this.Meter?.Dispose();
+                this.Meter = null;
 
                 this.components?.Dispose();
             }
@@ -185,38 +182,39 @@ public partial class MeterView : cc.isr.WinControls.ModelViewBase
         if ( this.Part is null ) throw new InvalidOperationException( $"{nameof( MeterView )}.{nameof( MeterView.Part )} is null." );
         if ( this.Part.ShuntResistance is null ) throw new InvalidOperationException( $"{nameof( MeterView )}.{nameof( MeterView.Part )}.{nameof( MeterView.Part.ShuntResistance )} is null." );
 
-        TtmShuntSettings ttmShuntSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmShuntSettings;
+        ShuntDefaults shuntDefaults = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.ShuntDefaults;
+        ShuntSettings shuntSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.ShuntSettings;
 
         // set the GUI based on the current defaults.
-        this._shuntResistanceCurrentRangeNumeric.Minimum = ( decimal ) ttmShuntSettings.CurrentMinimum;
-        this._shuntResistanceCurrentRangeNumeric.Maximum = ( decimal ) ttmShuntSettings.CurrentMaximum;
+        this._shuntResistanceCurrentRangeNumeric.Minimum = ( decimal ) shuntDefaults.CurrentMinimum;
+        this._shuntResistanceCurrentRangeNumeric.Maximum = ( decimal ) shuntDefaults.CurrentMaximum;
         this._shuntResistanceCurrentRangeNumeric.DataBindings.Clear();
         this._shuntResistanceCurrentRangeNumeric.DataBindings.Add( new Binding( "Value", this.Part.ShuntResistance, "CurrentRange", true, DataSourceUpdateMode.OnPropertyChanged ) );
-        this._shuntResistanceCurrentRangeNumeric.Value = (( decimal ) ttmShuntSettings.CurrentRange).Clip( this._shuntResistanceCurrentRangeNumeric.Minimum, this._shuntResistanceCurrentRangeNumeric.Maximum );
+        this._shuntResistanceCurrentRangeNumeric.Value = (( decimal ) shuntDefaults.CurrentRange).Clip( this._shuntResistanceCurrentRangeNumeric.Minimum, this._shuntResistanceCurrentRangeNumeric.Maximum );
         this.Part.ShuntResistance.CurrentRange = ( double ) this._shuntResistanceCurrentRangeNumeric.Value;
-        this._shuntResistanceCurrentLevelNumeric.Minimum = ( decimal ) ttmShuntSettings.CurrentMinimum;
-        this._shuntResistanceCurrentLevelNumeric.Maximum = ( decimal ) ttmShuntSettings.CurrentMaximum;
+        this._shuntResistanceCurrentLevelNumeric.Minimum = ( decimal ) shuntDefaults.CurrentMinimum;
+        this._shuntResistanceCurrentLevelNumeric.Maximum = ( decimal ) shuntDefaults.CurrentMaximum;
         this._shuntResistanceCurrentLevelNumeric.DataBindings.Clear();
         this._shuntResistanceCurrentLevelNumeric.DataBindings.Add( new Binding( "Value", this.Part.ShuntResistance, "CurrentLevel", true, DataSourceUpdateMode.OnPropertyChanged ) );
-        this._shuntResistanceCurrentLevelNumeric.Value = (( decimal ) ttmShuntSettings.CurrentLevel).Clip( this._shuntResistanceCurrentLevelNumeric.Minimum, this._shuntResistanceCurrentLevelNumeric.Maximum );
+        this._shuntResistanceCurrentLevelNumeric.Value = (( decimal ) shuntSettings.CurrentLevel).Clip( this._shuntResistanceCurrentLevelNumeric.Minimum, this._shuntResistanceCurrentLevelNumeric.Maximum );
         this.Part.ShuntResistance.CurrentLevel = ( double ) this._shuntResistanceCurrentLevelNumeric.Value;
-        this._shuntResistanceHighLimitNumeric.Minimum = ( decimal ) ttmShuntSettings.Minimum;
-        this._shuntResistanceHighLimitNumeric.Maximum = ( decimal ) ttmShuntSettings.Maximum;
+        this._shuntResistanceHighLimitNumeric.Minimum = ( decimal ) shuntDefaults.Minimum;
+        this._shuntResistanceHighLimitNumeric.Maximum = ( decimal ) shuntDefaults.Maximum;
         this._shuntResistanceHighLimitNumeric.DataBindings.Clear();
         this._shuntResistanceHighLimitNumeric.DataBindings.Add( new Binding( "Value", this.Part.ShuntResistance, "HighLimit", true, DataSourceUpdateMode.OnPropertyChanged ) );
-        this._shuntResistanceHighLimitNumeric.Value = (( decimal ) ttmShuntSettings.HighLimit).Clip( this._shuntResistanceHighLimitNumeric.Minimum, this._shuntResistanceHighLimitNumeric.Maximum );
+        this._shuntResistanceHighLimitNumeric.Value = (( decimal ) shuntSettings.HighLimit).Clip( this._shuntResistanceHighLimitNumeric.Minimum, this._shuntResistanceHighLimitNumeric.Maximum );
         this.Part.ShuntResistance.HighLimit = ( double ) this._shuntResistanceHighLimitNumeric.Value;
-        this._shuntResistanceLowLimitNumeric.Minimum = ( decimal ) ttmShuntSettings.Minimum;
-        this._shuntResistanceLowLimitNumeric.Maximum = ( decimal ) ttmShuntSettings.Maximum;
+        this._shuntResistanceLowLimitNumeric.Minimum = ( decimal ) shuntDefaults.Minimum;
+        this._shuntResistanceLowLimitNumeric.Maximum = ( decimal ) shuntDefaults.Maximum;
         this._shuntResistanceLowLimitNumeric.DataBindings.Clear();
         this._shuntResistanceLowLimitNumeric.DataBindings.Add( new Binding( "Value", this.Part.ShuntResistance, "LowLimit", true, DataSourceUpdateMode.OnPropertyChanged ) );
-        this._shuntResistanceLowLimitNumeric.Value = (( decimal ) ttmShuntSettings.LowLimit).Clip( this._shuntResistanceLowLimitNumeric.Minimum, this._shuntResistanceLowLimitNumeric.Maximum );
+        this._shuntResistanceLowLimitNumeric.Value = (( decimal ) shuntSettings.LowLimit).Clip( this._shuntResistanceLowLimitNumeric.Minimum, this._shuntResistanceLowLimitNumeric.Maximum );
         this.Part.ShuntResistance.LowLimit = ( double ) this._shuntResistanceLowLimitNumeric.Value;
-        this._shuntResistanceVoltageLimitNumeric.Minimum = ( decimal ) ttmShuntSettings.VoltageMinimum;
-        this._shuntResistanceVoltageLimitNumeric.Maximum = ( decimal ) ttmShuntSettings.VoltageMaximum;
+        this._shuntResistanceVoltageLimitNumeric.Minimum = ( decimal ) shuntDefaults.VoltageMinimum;
+        this._shuntResistanceVoltageLimitNumeric.Maximum = ( decimal ) shuntDefaults.VoltageMaximum;
         this._shuntResistanceVoltageLimitNumeric.DataBindings.Clear();
         this._shuntResistanceVoltageLimitNumeric.DataBindings.Add( new Binding( "Value", this.Part.ShuntResistance, "VoltageLimit", true, DataSourceUpdateMode.OnPropertyChanged ) );
-        this._shuntResistanceVoltageLimitNumeric.Value = (( decimal ) ttmShuntSettings.VoltageLimit).Clip( this._shuntResistanceVoltageLimitNumeric.Minimum, this._shuntResistanceVoltageLimitNumeric.Maximum );
+        this._shuntResistanceVoltageLimitNumeric.Value = (( decimal ) shuntSettings.VoltageLimit).Clip( this._shuntResistanceVoltageLimitNumeric.Minimum, this._shuntResistanceVoltageLimitNumeric.Maximum );
         this.Part.ShuntResistance.VoltageLimit = ( double ) this._shuntResistanceVoltageLimitNumeric.Value;
     }
 
@@ -224,13 +222,14 @@ public partial class MeterView : cc.isr.WinControls.ModelViewBase
     /// <remarks> David, 2020-10-12. </remarks>
     private static void RestoreShuntDefaults()
     {
-        TtmShuntSettings ttmShuntSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmShuntSettings;
+        ShuntSettings ttmShuntSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.ShuntSettings;
+        ShuntDefaults ttmShuntDefaults = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.ShuntDefaults;
 
-        ttmShuntSettings.CurrentRange = ttmShuntSettings.CurrentRangeDefault;
-        ttmShuntSettings.CurrentLevel = ttmShuntSettings.CurrentLevelDefault;
-        ttmShuntSettings.HighLimit = ttmShuntSettings.HighLimitDefault;
-        ttmShuntSettings.LowLimit = ttmShuntSettings.LowLimitDefault;
-        ttmShuntSettings.VoltageLimit = ttmShuntSettings.VoltageLimitDefault;
+        ttmShuntSettings.CurrentRange = ttmShuntDefaults.CurrentRange;
+        ttmShuntSettings.CurrentLevel = ttmShuntDefaults.CurrentLevel;
+        ttmShuntSettings.HighLimit = ttmShuntDefaults.HighLimit;
+        ttmShuntSettings.LowLimit = ttmShuntDefaults.LowLimit;
+        ttmShuntSettings.VoltageLimit = ttmShuntDefaults.VoltageLimit;
     }
 
     /// <summary> Copy shunt values to the settings store. </summary>
@@ -239,7 +238,7 @@ public partial class MeterView : cc.isr.WinControls.ModelViewBase
     {
         if ( this.Part is not null && this.Part.ShuntResistance is not null )
         {
-            TtmShuntSettings ttmShuntSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmShuntSettings;
+            ShuntSettings ttmShuntSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.ShuntSettings;
 
             ttmShuntSettings.CurrentRange = this.Part.ShuntResistance.CurrentRange;
             ttmShuntSettings.CurrentLevel = this.Part.ShuntResistance.CurrentLevel;
@@ -256,17 +255,17 @@ public partial class MeterView : cc.isr.WinControls.ModelViewBase
     {
         if ( this.Meter is not null && this.Meter.ShuntResistance is not null )
         {
-            TtmShuntSettings ttmShuntSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmShuntSettings;
-            ttmShuntSettings.CurrentLevel = this.Meter.ShuntResistance.CurrentLevel;
-            this._shuntResistanceCurrentLevelNumeric.Value = (( decimal ) ttmShuntSettings.CurrentLevel).Clip( this._shuntResistanceCurrentLevelNumeric.Minimum, this._shuntResistanceCurrentLevelNumeric.Maximum );
-            ttmShuntSettings.CurrentRange = this.Meter.ShuntResistance.CurrentRange;
-            this._shuntResistanceCurrentRangeNumeric.Value = (( decimal ) ttmShuntSettings.CurrentRange).Clip( this._shuntResistanceCurrentRangeNumeric.Minimum, this._shuntResistanceCurrentRangeNumeric.Maximum );
-            ttmShuntSettings.VoltageLimit = this.Meter.ShuntResistance.VoltageLimit;
-            this._shuntResistanceVoltageLimitNumeric.Value = (( decimal ) ttmShuntSettings.VoltageLimit).Clip( this._shuntResistanceVoltageLimitNumeric.Minimum, this._shuntResistanceVoltageLimitNumeric.Maximum );
-            ttmShuntSettings.HighLimit = this.Meter.ShuntResistance.HighLimit;
-            this._shuntResistanceHighLimitNumeric.Value = (( decimal ) ttmShuntSettings.HighLimit).Clip( this._shuntResistanceHighLimitNumeric.Minimum, this._shuntResistanceHighLimitNumeric.Maximum );
-            ttmShuntSettings.LowLimit = this.Meter.ShuntResistance.LowLimit;
-            this._shuntResistanceLowLimitNumeric.Value = (( decimal ) ttmShuntSettings.LowLimit).Clip( this._shuntResistanceLowLimitNumeric.Minimum, this._shuntResistanceLowLimitNumeric.Maximum );
+            ShuntSettings shuntSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.ShuntSettings;
+            shuntSettings.CurrentLevel = this.Meter.ShuntResistance.CurrentLevel;
+            this._shuntResistanceCurrentLevelNumeric.Value = (( decimal ) shuntSettings.CurrentLevel).Clip( this._shuntResistanceCurrentLevelNumeric.Minimum, this._shuntResistanceCurrentLevelNumeric.Maximum );
+            shuntSettings.CurrentRange = this.Meter.ShuntResistance.CurrentRange;
+            this._shuntResistanceCurrentRangeNumeric.Value = (( decimal ) shuntSettings.CurrentRange).Clip( this._shuntResistanceCurrentRangeNumeric.Minimum, this._shuntResistanceCurrentRangeNumeric.Maximum );
+            shuntSettings.VoltageLimit = this.Meter.ShuntResistance.VoltageLimit;
+            this._shuntResistanceVoltageLimitNumeric.Value = (( decimal ) shuntSettings.VoltageLimit).Clip( this._shuntResistanceVoltageLimitNumeric.Minimum, this._shuntResistanceVoltageLimitNumeric.Maximum );
+            shuntSettings.HighLimit = this.Meter.ShuntResistance.HighLimit;
+            this._shuntResistanceHighLimitNumeric.Value = (( decimal ) shuntSettings.HighLimit).Clip( this._shuntResistanceHighLimitNumeric.Minimum, this._shuntResistanceHighLimitNumeric.Maximum );
+            shuntSettings.LowLimit = this.Meter.ShuntResistance.LowLimit;
+            this._shuntResistanceLowLimitNumeric.Value = (( decimal ) shuntSettings.LowLimit).Clip( this._shuntResistanceLowLimitNumeric.Minimum, this._shuntResistanceLowLimitNumeric.Maximum );
         }
     }
 
@@ -635,11 +634,8 @@ public partial class MeterView : cc.isr.WinControls.ModelViewBase
     /// <param name="value"> True to show or False to hide the control. </param>
     private void BindShuntResistance( DeviceUnderTest? value )
     {
-        if ( this.ShuntResistance is not null )
-        {
-            this.ShuntResistance.PropertyChanged -= this.ShuntResistancePropertyChanged;
-            this.ShuntResistance = null;
-        }
+        this.ShuntResistance?.PropertyChanged -= this.ShuntResistancePropertyChanged;
+        this.ShuntResistance = null;
 
         if ( value is not null )
         {
@@ -908,8 +904,7 @@ public partial class MeterView : cc.isr.WinControls.ModelViewBase
             this.Device.Closed -= this.DeviceClosed;
             this.Device.Initialized -= this.DeviceInitialized;
             this.Device.Initializing -= this.DeviceInitializing;
-            if ( this.Device.SessionFactory is not null )
-                this.Device.SessionFactory.PropertyChanged -= this.SessionFactoryPropertyChanged;
+            this.Device.SessionFactory?.PropertyChanged -= this.SessionFactoryPropertyChanged;
             this._resourceSelectorConnector.AssignSelectorViewModel( null );
             this._resourceSelectorConnector.AssignOpenerViewModel( null );
             this.Device = null;
@@ -1305,12 +1300,10 @@ public partial class MeterView : cc.isr.WinControls.ModelViewBase
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( field is not null )
-                field.PropertyChanged -= this.MeasureSequencer_PropertyChanged;
+            field?.PropertyChanged -= this.MeasureSequencer_PropertyChanged;
 
             field = value;
-            if ( field is not null )
-                field.PropertyChanged += this.MeasureSequencer_PropertyChanged;
+            field?.PropertyChanged += this.MeasureSequencer_PropertyChanged;
         }
     }
 
@@ -1356,7 +1349,7 @@ public partial class MeterView : cc.isr.WinControls.ModelViewBase
             if ( this.InvokeRequired )
                 _ = this.Invoke( new Action<object, PropertyChangedEventArgs>( this.MeasureSequencer_PropertyChanged ), [sender, e] );
             else if ( sender is MeasureSequencer s )
-                this.OnPropertyChanged( s, e?.PropertyName! );
+                this.OnPropertyChanged( s, e?.PropertyName );
         }
         catch ( Exception ex )
         {
@@ -1480,12 +1473,10 @@ public partial class MeterView : cc.isr.WinControls.ModelViewBase
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( field is not null )
-                field.PropertyChanged -= this.TriggerSequencer_PropertyChanged;
+            field?.PropertyChanged -= this.TriggerSequencer_PropertyChanged;
 
             field = value;
-            if ( field is not null )
-                field.PropertyChanged += this.TriggerSequencer_PropertyChanged;
+            field?.PropertyChanged += this.TriggerSequencer_PropertyChanged;
         }
     }
 

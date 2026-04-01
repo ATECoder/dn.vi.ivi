@@ -75,9 +75,9 @@ public class MeterTests
 
         // read the TTM Driver settings
         this.TtmSettings.ReadSettings( this.GetType(), ".Driver", true, true );
-        Assert.IsTrue( this.TtmSettings.TtmMeterSettings.Exists, $"{nameof( this.TtmSettings.TtmMeterSettings )} should exist" );
+        Assert.IsTrue( this.TtmSettings.MeterSettings.Exists, $"{nameof( this.TtmSettings.MeterSettings )} should exist" );
 
-        Asserts.LegacyDriver = this.TtmSettings.TtmMeterSettings.LegacyDriver;
+        Asserts.LegacyDriver = this.TtmSettings.MeterSettings.LegacyDriver;
 
         // instantiate a meter with associated visa sessions
         this.Meter = new();
@@ -109,7 +109,7 @@ public class MeterTests
 
     /// <summary>   Gets or sets the ttm settings. </summary>
     /// <value> The ttm settings. </value>
-    internal Properties.Settings TtmSettings { get; set; } = Properties.Settings.Instance;
+    internal Properties.DriverSettings TtmSettings { get; set; } = Properties.DriverSettings.Instance;
 
     /// <summary>   Gets or sets the location settings. </summary>
     /// <value> The location settings. </value>

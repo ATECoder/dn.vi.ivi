@@ -77,6 +77,10 @@ public interface IDevice : IApparatus
     /// <returns>   The measurements. </returns>
     public bool ReadMeasurements( bool readTriggerCycleReply = true );
 
+    /// <summary>   Read the measurements from the instrument. </summary>
+    /// <returns>   The measurements. </returns>
+    public bool ReadMeasurements();
+
     #endregion
 
     #region " reporting "

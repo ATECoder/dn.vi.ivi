@@ -1,73 +1,67 @@
+using cc.isr.Std.IComparableExtensions;
 namespace cc.isr.VI.Tsp.K2600.Ttm;
 
 public partial class MeterMain : DeviceUnderTestElementBase, IEquatable<MeterMain>
 {
-
     /// <summary> Validates the Post Transient Delay described by value. </summary>
     /// <remarks> David, 2020-10-12. </remarks>
-    /// <param name="value">   The value. </param>
+    /// <param name="delay">   The delay. </param>
     /// <param name="details"> [out] The details. </param>
-    /// <returns> <c>true</c> if value is in range; otherwise, <c>false</c>. </returns>
-    public static bool ValidatePostTransientDelay( double value, out string details )
+    /// <returns>   True if the <paramref name="delay"/> is within range; otherwise, false.. </returns>
+    public static bool ValidatePostTransientDelay( double delay, out string details )
     {
-        bool affirmative = value >= ( double ) Properties.Settings.Instance.TtmMeterSettings.PostTransientDelayMinimum
-            && value <= ( double ) Properties.Settings.Instance.TtmMeterSettings.PostTransientDelayMaximum;
-        details = affirmative
-            ? string.Empty
-            : value < ( double ) Properties.Settings.Instance.TtmMeterSettings.PostTransientDelayMinimum
-                ? $"Post Transient Delay value of {value} is lower than the minimum of {Properties.Settings.Instance.TtmMeterSettings.PostTransientDelayMinimum}."
-                : $"Post Transient Delay value of {value} is higher than the maximum of {Properties.Settings.Instance.TtmMeterSettings.PostTransientDelayMaximum}.";
-
-        return affirmative;
+        return delay.IsBetweenInclusive( ( double ) Properties.DriverSettings.Instance.MeterDefaults.PostTransientDelayMinimum,
+            ( double ) Properties.DriverSettings.Instance.MeterDefaults.PostTransientDelayMaximum, "Post Transient Delay", out details );
     }
 
     /// <summary>   Validates the legacy driver. </summary>
     /// <remarks>   2024-11-05. </remarks>
-    /// <param name="value">    The value. </param>
+    /// <param name="driverOption">    The driver option. </param>
     /// <param name="details">  [out] The details. </param>
-    /// <returns>   True if it succeeds; otherwise, false. </returns>
-    public static bool ValidateLegacyDriver( int value, out string details )
+    /// <returns>   True if the <paramref name="driverOption"/> is within range; otherwise, false.. </returns>
+    public static bool ValidateLegacyDriver( int driverOption, out string details )
     {
-        bool affirmative = value is >= 0 and <= 1;
+        bool affirmative = driverOption is 0 or 1;
         details = affirmative
             ? string.Empty
-            : value < 0
-                ? $"Legacy Driver value of {value} is lower than the minimum of 0."
-                : $"Legacy Driver value of {value} is higher than the maximum of 1.";
+            : $"Legacy Driver value of {driverOption} must be either 0 or 1.";
 
         return affirmative;
     }
 
     /// <summary>   Validates the contact threshold. </summary>
     /// <remarks>   2024-11-05. </remarks>
-    /// <param name="value">    The value. </param>
+    /// <param name="limit">    The limit value. </param>
     /// <param name="details">  [out] The details. </param>
-    /// <returns>   True if it succeeds; otherwise, false. </returns>
-    public static bool ValidateContactThreshold( int value, out string details )
+    /// <returns>   True if the <paramref name="limit"/> is within range; otherwise, false.. </returns>
+    public static bool ValidateContactThreshold( int limit, out string details )
     {
-        bool affirmative = value is >= 10 and <= 999;
-        details = affirmative
-            ? string.Empty
-            : value < 0
-                ? $"Contact Check Threshold value of {value} is lower than the minimum of 10."
-                : $"Contact Check Threshold value of {value} is higher than the maximum of 999.";
-
-        return affirmative;
+        return limit.IsBetweenInclusive( Properties.DriverSettings.Instance.MeterDefaults.ContactCheckThresholdMinimum,
+            Properties.DriverSettings.Instance.MeterDefaults.ContactCheckThresholdMaximum, "Contact Check Limit", out details );
     }
 
     /// <summary>   Validates the contact check options. </summary>
     /// <remarks>   2024-11-05. </remarks>
-    /// <param name="contactOption">    The contact option value. </param>
-    /// <param name="details">  [out] The details. </param>
-    /// <returns>   True if it succeeds; otherwise, false. </returns>
-    public static bool ValidateContactCheckOptions( int contactOption, out string details )
+    /// <param name="contactCheckOptions">  The contact option value. </param>
+    /// <param name="details">              [out] The details. </param>
+    /// <returns>
+    /// True if the <paramref name="contactCheckOptions"/> is within range; otherwise, false.
+    /// </returns>
+    public static bool ValidateContactCheckOptions( int contactCheckOptions, out string details )
     {
-        bool affirmative = contactOption is 1 or 3 or 5 or 7;
-        details = affirmative
-            ? string.Empty
-           : $"Contact Check Option value of {contactOption} must be either 1, 3, 5 or 7.";
+        return contactCheckOptions.IsBetweenInclusive( ( int ) Properties.DriverSettings.Instance.MeterDefaults.ContactCheckOptionsMinimum,
+            ( int ) Properties.DriverSettings.Instance.MeterDefaults.ContactCheckOptionsMaximum, "Contact check options", out details );
+    }
 
-        return affirmative;
+    /// <summary>   Validates the open limit. </summary>
+    /// <remarks>   2026-03-24. </remarks>
+    /// <param name="limit">    The limit value. </param>
+    /// <param name="details">  [out] The details. </param>
+    /// <returns>   True if the <paramref name="limit"/> is within range; otherwise, false.. </returns>
+    public static bool ValidateOpenLimit( int limit, out string details )
+    {
+        return limit.IsBetweenInclusive( Properties.DriverSettings.Instance.MeterDefaults.OpenLimitMinimum,
+                Properties.DriverSettings.Instance.MeterDefaults.OpenLimitMaximum, "Open limit", out details );
     }
 
     /// <summary>   Validates the a source measure unit with the specified name exists. </summary>
@@ -86,4 +80,14 @@ public partial class MeterMain : DeviceUnderTestElementBase, IEquatable<MeterMai
         return string.IsNullOrWhiteSpace( details );
     }
 
+    /// <summary>   Validates the source sense shunt. </summary>
+    /// <remarks>   2026-03-24. </remarks>
+    /// <param name="shunt">    The shunt. </param>
+    /// <param name="details">  [out] The details. </param>
+    /// <returns>   True if it succeeds, false if it fails. </returns>
+    public static bool ValidateSourceSenseShunt( int shunt, out string details )
+    {
+        return shunt.IsBetweenInclusive( Properties.DriverSettings.Instance.MeterDefaults.SourceSenseShuntMinimum,
+                Properties.DriverSettings.Instance.MeterDefaults.SourceSenseShuntMaximum, "Source-Sense shunt", out details );
+    }
 }

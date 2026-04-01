@@ -93,7 +93,7 @@ public class ThermalTransientMeasure : MeasureSubsystemBase
 
         protected set
         {
-            value ??= Properties.Settings.Instance.TtmTraceSettings.CurrentLevel;
+            value ??= Properties.DriverSettings.Instance.TraceSettings.CurrentLevel;
             this.ThermalTransient.CurrentLevel = value.Value;
             _ = this.SetProperty( ref this._currentLevel, value );
         }
@@ -161,7 +161,7 @@ public class ThermalTransientMeasure : MeasureSubsystemBase
 
         protected set
         {
-            value ??= Properties.Settings.Instance.TtmTraceSettings.VoltageLimit;
+            value ??= Properties.DriverSettings.Instance.TraceSettings.VoltageLimit;
             this.ThermalTransient.VoltageLimit = value.Value;
             _ = this.SetProperty( ref this._voltageLimit, value );
         }
@@ -254,7 +254,7 @@ public class ThermalTransientMeasure : MeasureSubsystemBase
 
         protected set
         {
-            value ??= Properties.Settings.Instance.TtmTraceSettings.MedianFilterLength;
+            value ??= Properties.DriverSettings.Instance.TraceSettings.MedianFilterLength;
             this.ThermalTransient.MedianFilterSize = value.Value;
             _ = this.SetProperty( ref field, value );
         }
@@ -319,7 +319,7 @@ public class ThermalTransientMeasure : MeasureSubsystemBase
 
         protected set
         {
-            value ??= Properties.Settings.Instance.TtmTraceSettings.SamplingInterval;
+            value ??= Properties.DriverSettings.Instance.TraceSettings.SamplingInterval;
             this.ThermalTransient.SamplingInterval = value.Value;
             if ( this.SamplingInterval.Differs( value, 0.000001d ) )
             {
@@ -389,7 +389,7 @@ public class ThermalTransientMeasure : MeasureSubsystemBase
 
         protected set
         {
-            value ??= Properties.Settings.Instance.TtmTraceSettings.TracePoints;
+            value ??= Properties.DriverSettings.Instance.TraceSettings.TracePoints;
             this.ThermalTransient.TracePoints = value.Value;
             _ = this.SetProperty( ref field, value );
         }
@@ -420,8 +420,8 @@ public class ThermalTransientMeasure : MeasureSubsystemBase
 
     /// <summary> Writes the Trace Points without reading back the value from the device. </summary>
     /// <remarks>
-    /// This command sets the immediate output Trace Points. The value is in Volts. The immediate
-    /// ContactLimit is the output Voltage setting. At *RST, the Voltage values = 0.
+    /// This command sets the immediate output Trace Points. The value is unitless. The immediate
+    /// TracePoints is the trace points count setting. At *RST the value = 0.
     /// </remarks>
     /// <exception cref="ArgumentOutOfRangeException"> Thrown when one or more arguments are outside
     ///                                                the required range. </exception>
@@ -475,7 +475,7 @@ public class ThermalTransientMeasure : MeasureSubsystemBase
 
         protected set
         {
-            value ??= Properties.Settings.Instance.TtmTraceSettings.VoltageChange;
+            value ??= Properties.DriverSettings.Instance.TraceSettings.VoltageChange;
             this.ThermalTransient.AllowedVoltageChange = value.Value;
             if ( this.VoltageChange.Differs( value, 0.000001d ) )
             {
@@ -556,9 +556,9 @@ public class ThermalTransientMeasure : MeasureSubsystemBase
         base.ReadInstrumentDefaults();
         bool localTryQueryPrint()
         {
-            double result = Properties.Settings.Instance.TtmTraceSettings.ApertureDefault;
+            double result = Properties.DriverSettings.Instance.TraceDefaults.Aperture;
             bool ret = this.Session.TryQueryPrint( 7.4m, ref result, "{0}.aperture", this.DefaultsName );
-            Properties.Settings.Instance.TtmTraceSettings.ApertureDefault = result;
+            Properties.DriverSettings.Instance.TraceDefaults.Aperture = result;
             return ret;
         }
 
@@ -567,9 +567,9 @@ public class ThermalTransientMeasure : MeasureSubsystemBase
 
         bool localTryQueryPrint1()
         {
-            double result = Properties.Settings.Instance.TtmTraceSettings.ApertureMinimum;
+            double result = Properties.DriverSettings.Instance.TraceDefaults.ApertureMinimum;
             bool ret = this.Session.TryQueryPrint( 9.6m, ref result, "{0}.minAperture", this.DefaultsName );
-            Properties.Settings.Instance.TtmTraceSettings.ApertureMinimum = result;
+            Properties.DriverSettings.Instance.TraceDefaults.ApertureMinimum = result;
             return ret;
         }
 
@@ -578,9 +578,9 @@ public class ThermalTransientMeasure : MeasureSubsystemBase
 
         bool localTryQueryPrint2()
         {
-            double result = Properties.Settings.Instance.TtmTraceSettings.ApertureMaximum;
+            double result = Properties.DriverSettings.Instance.TraceDefaults.ApertureMaximum;
             bool ret = this.Session.TryQueryPrint( 9.6m, ref result, "{0}.maxAperture", this.DefaultsName );
-            Properties.Settings.Instance.TtmTraceSettings.ApertureMaximum = result;
+            Properties.DriverSettings.Instance.TraceDefaults.ApertureMaximum = result;
             return ret;
         }
 
@@ -589,9 +589,9 @@ public class ThermalTransientMeasure : MeasureSubsystemBase
 
         bool localTryQueryPrint3()
         {
-            double result = Properties.Settings.Instance.TtmTraceSettings.CurrentLevelDefault;
+            double result = Properties.DriverSettings.Instance.TraceDefaults.CurrentLevel;
             bool ret = this.Session.TryQueryPrint( 9.6m, ref result, "{0}.level", this.DefaultsName );
-            Properties.Settings.Instance.TtmTraceSettings.CurrentLevelDefault = result;
+            Properties.DriverSettings.Instance.TraceDefaults.CurrentLevel = result;
             return ret;
         }
 
@@ -600,9 +600,9 @@ public class ThermalTransientMeasure : MeasureSubsystemBase
 
         bool localTryQueryPrint4()
         {
-            double result = Properties.Settings.Instance.TtmTraceSettings.CurrentMinimum;
+            double result = Properties.DriverSettings.Instance.TraceDefaults.CurrentMinimum;
             bool ret = this.Session.TryQueryPrint( 9.6m, ref result, "{0}.minCurrent", this.DefaultsName );
-            Properties.Settings.Instance.TtmTraceSettings.CurrentMinimum = result;
+            Properties.DriverSettings.Instance.TraceDefaults.CurrentMinimum = result;
             return ret;
         }
 
@@ -611,9 +611,9 @@ public class ThermalTransientMeasure : MeasureSubsystemBase
 
         bool localTryQueryPrint5()
         {
-            double result = Properties.Settings.Instance.TtmTraceSettings.CurrentMaximum;
+            double result = Properties.DriverSettings.Instance.TraceDefaults.CurrentMaximum;
             bool ret = this.Session.TryQueryPrint( 9.6m, ref result, "{0}.maxCurrent", this.DefaultsName );
-            Properties.Settings.Instance.TtmTraceSettings.CurrentMaximum = result;
+            Properties.DriverSettings.Instance.TraceDefaults.CurrentMaximum = result;
             return ret;
         }
 
@@ -622,9 +622,9 @@ public class ThermalTransientMeasure : MeasureSubsystemBase
 
         bool localTryQueryPrint6()
         {
-            double result = Properties.Settings.Instance.TtmTraceSettings.VoltageChangeDefault;
+            double result = Properties.DriverSettings.Instance.TraceDefaults.VoltageChange;
             bool ret = this.Session.TryQueryPrint( 9.6m, ref result, "{0}.limit", this.DefaultsName );
-            Properties.Settings.Instance.TtmTraceSettings.VoltageChangeDefault = result;
+            Properties.DriverSettings.Instance.TraceDefaults.VoltageChange = result;
             return ret;
         }
 
@@ -633,9 +633,9 @@ public class ThermalTransientMeasure : MeasureSubsystemBase
 
         bool localTryQueryPrint7()
         {
-            double result = Properties.Settings.Instance.TtmTraceSettings.VoltageMinimum;
+            double result = Properties.DriverSettings.Instance.TraceDefaults.VoltageMinimum;
             bool ret = this.Session.TryQueryPrint( 9.6m, ref result, "{0}.minVoltage", this.DefaultsName );
-            Properties.Settings.Instance.TtmTraceSettings.VoltageMinimum = result;
+            Properties.DriverSettings.Instance.TraceDefaults.VoltageMinimum = result;
             return ret;
         }
 
@@ -644,9 +644,9 @@ public class ThermalTransientMeasure : MeasureSubsystemBase
 
         bool localTryQueryPrint8()
         {
-            double result = Properties.Settings.Instance.TtmTraceSettings.VoltageMaximum;
+            double result = Properties.DriverSettings.Instance.TraceDefaults.VoltageMaximum;
             bool ret = this.Session.TryQueryPrint( 9.6m, ref result, "{0}.maxVoltage", this.DefaultsName );
-            Properties.Settings.Instance.TtmTraceSettings.VoltageMaximum = result;
+            Properties.DriverSettings.Instance.TraceDefaults.VoltageMaximum = result;
             return ret;
         }
 
@@ -655,9 +655,9 @@ public class ThermalTransientMeasure : MeasureSubsystemBase
 
         bool localTryQueryPrint9()
         {
-            double result = Properties.Settings.Instance.TtmTraceSettings.HighLimitDefault;
+            double result = Properties.DriverSettings.Instance.TraceDefaults.HighLimit;
             bool ret = this.Session.TryQueryPrint( 9.6m, ref result, "{0}.highLimit", this.DefaultsName );
-            Properties.Settings.Instance.TtmTraceSettings.HighLimitDefault = result;
+            Properties.DriverSettings.Instance.TraceDefaults.HighLimit = result;
             return ret;
         }
 
@@ -666,9 +666,9 @@ public class ThermalTransientMeasure : MeasureSubsystemBase
 
         bool localTryQueryPrint10()
         {
-            double result = Properties.Settings.Instance.TtmTraceSettings.LowLimitDefault;
+            double result = Properties.DriverSettings.Instance.TraceDefaults.LowLimit;
             bool ret = this.Session.TryQueryPrint( 9.6m, ref result, "{0}.lowLimit", this.DefaultsName );
-            Properties.Settings.Instance.TtmTraceSettings.LowLimitDefault = result;
+            Properties.DriverSettings.Instance.TraceDefaults.LowLimit = result;
             return ret;
         }
 
@@ -677,9 +677,9 @@ public class ThermalTransientMeasure : MeasureSubsystemBase
 
         bool localTryQueryPrint11()
         {
-            double result = Properties.Settings.Instance.TtmTraceSettings.VoltageChangeDefault;
+            double result = Properties.DriverSettings.Instance.TraceDefaults.VoltageChange;
             bool ret = this.Session.TryQueryPrint( 9.6m, ref result, "{0}.maxVoltageChange", this.DefaultsName );
-            Properties.Settings.Instance.TtmTraceSettings.VoltageChangeDefault = result;
+            Properties.DriverSettings.Instance.TraceDefaults.VoltageChange = result;
             return ret;
         }
 
@@ -688,9 +688,9 @@ public class ThermalTransientMeasure : MeasureSubsystemBase
 
         bool localTryQueryPrint12()
         {
-            int result = Properties.Settings.Instance.TtmTraceSettings.MedianFilterLengthDefault;
+            int result = Properties.DriverSettings.Instance.TraceDefaults.MedianFilterLength;
             bool ret = this.Session.TryQueryPrint( 1, ref result, "{0}.medianFilterSize", this.DefaultsName );
-            Properties.Settings.Instance.TtmTraceSettings.MedianFilterLengthDefault = result;
+            Properties.DriverSettings.Instance.TraceDefaults.MedianFilterLength = result;
             return ret;
         }
 
@@ -699,9 +699,9 @@ public class ThermalTransientMeasure : MeasureSubsystemBase
 
         bool localTryQueryPrint13()
         {
-            double result = Properties.Settings.Instance.TtmTraceSettings.SamplingIntervalDefault;
+            double result = Properties.DriverSettings.Instance.TraceDefaults.SamplingInterval;
             bool ret = this.Session.TryQueryPrint( 9.6m, ref result, "{0}.period", this.DefaultsName );
-            Properties.Settings.Instance.TtmTraceSettings.SamplingIntervalDefault = result;
+            Properties.DriverSettings.Instance.TraceDefaults.SamplingInterval = result;
             return ret;
         }
 
@@ -710,9 +710,9 @@ public class ThermalTransientMeasure : MeasureSubsystemBase
 
         bool localTryQueryPrint14()
         {
-            double result = Properties.Settings.Instance.TtmTraceSettings.SamplingIntervalMinimum;
+            double result = Properties.DriverSettings.Instance.TraceDefaults.SamplingIntervalMinimum;
             bool ret = this.Session.TryQueryPrint( 9.6m, ref result, "{0}.minPeriod", this.DefaultsName );
-            Properties.Settings.Instance.TtmTraceSettings.SamplingIntervalMinimum = result;
+            Properties.DriverSettings.Instance.TraceDefaults.SamplingIntervalMinimum = result;
             return ret;
         }
 
@@ -721,9 +721,9 @@ public class ThermalTransientMeasure : MeasureSubsystemBase
 
         bool localTryQueryPrint15()
         {
-            double result = Properties.Settings.Instance.TtmTraceSettings.SamplingIntervalMaximum;
+            double result = Properties.DriverSettings.Instance.TraceDefaults.SamplingIntervalMaximum;
             bool ret = this.Session.TryQueryPrint( 9.6m, ref result, "{0}.maxPeriod", this.DefaultsName );
-            Properties.Settings.Instance.TtmTraceSettings.SamplingIntervalMaximum = result;
+            Properties.DriverSettings.Instance.TraceDefaults.SamplingIntervalMaximum = result;
             return ret;
         }
 
@@ -732,9 +732,9 @@ public class ThermalTransientMeasure : MeasureSubsystemBase
 
         bool localTryQueryPrint16()
         {
-            int result = Properties.Settings.Instance.TtmTraceSettings.TracePointsDefault;
+            int result = Properties.DriverSettings.Instance.TraceDefaults.TracePoints;
             bool ret = this.Session.TryQueryPrint( 1, ref result, "{0}.points", this.DefaultsName );
-            Properties.Settings.Instance.TtmTraceSettings.TracePointsDefault = result;
+            Properties.DriverSettings.Instance.TraceDefaults.TracePoints = result;
             return ret;
         }
 
@@ -743,9 +743,9 @@ public class ThermalTransientMeasure : MeasureSubsystemBase
 
         bool localTryQueryPrint17()
         {
-            int result = Properties.Settings.Instance.TtmTraceSettings.TracePointsMinimum;
+            int result = Properties.DriverSettings.Instance.TraceDefaults.TracePointsMinimum;
             bool ret = this.Session.TryQueryPrint( 1, ref result, "{0}.minPoints", this.DefaultsName );
-            Properties.Settings.Instance.TtmTraceSettings.TracePointsMinimum = result;
+            Properties.DriverSettings.Instance.TraceDefaults.TracePointsMinimum = result;
             return ret;
         }
 
@@ -754,9 +754,9 @@ public class ThermalTransientMeasure : MeasureSubsystemBase
 
         bool localTryQueryPrint18()
         {
-            int result = Properties.Settings.Instance.TtmTraceSettings.TracePointsMaximum;
+            int result = Properties.DriverSettings.Instance.TraceDefaults.TracePointsMaximum;
             bool ret = this.Session.TryQueryPrint( 1, ref result, "{0}.maxPoints", this.DefaultsName );
-            Properties.Settings.Instance.TtmTraceSettings.TracePointsMaximum = result;
+            Properties.DriverSettings.Instance.TraceDefaults.TracePointsMaximum = result;
             return ret;
         }
 

@@ -62,15 +62,15 @@ public abstract class ThermalTransientBase : MeasureBase, IEquatable<ThermalTran
     {
         base.ResetKnownState();
         /*  Moved to preset
-            this.Aperture = ( double ) Properties.Settings.Instance.TtmTraceSettings.ApertureDefault;
-            this.LowLimit = ( double ) Properties.Settings.Instance.TtmTraceSettings.LowLimitDefault;
-            this.HighLimit = ( double ) Properties.Settings.Instance.TtmTraceSettings.HighLimitDefault;
-            this.AllowedVoltageChange = ( double ) Properties.Settings.Instance.TtmTraceSettings.VoltageChangeDefault;
-            this.CurrentLevel = ( double ) Properties.Settings.Instance.TtmTraceSettings.CurrentLevelDefault;
-            this.MedianFilterSize = Properties.Settings.Instance.TtmTraceSettings.MedianFilterLengthDefault;
-            this.SamplingInterval = ( double ) Properties.Settings.Instance.TtmTraceSettings.SamplingIntervalDefault;
-            this.TracePoints = Properties.Settings.Instance.TtmTraceSettings.TracePointsDefault;
-            this.VoltageLimit = ( double ) Properties.Settings.Instance.TtmTraceSettings.VoltageChangeDefault;
+            this.Aperture = Properties.DriverSettings.Instance.TraceDefaults.Aperture;
+            this.LowLimit = Properties.DriverSettings.Instance.TraceDefaults.LowLimit;
+            this.HighLimit = Properties.DriverSettings.Instance.TraceDefaults.HighLimit;
+            this.AllowedVoltageChange = Properties.DriverSettings.Instance.TraceDefaults.VoltageChange;
+            this.CurrentLevel = Properties.DriverSettings.Instance.TraceDefaults.CurrentLevel;
+            this.MedianFilterSize = Properties.DriverSettings.Instance.TraceDefaults.MedianFilterLength;
+            this.SamplingInterval = Properties.DriverSettings.Instance.TraceDefaults.SamplingInterval;
+            this.TracePoints = Properties.DriverSettings.Instance.TraceDefaults.TracePoints;
+            this.VoltageLimit = Properties.DriverSettings.Instance.TraceDefaults.VoltageChange;
          */
     }
 
@@ -79,15 +79,15 @@ public abstract class ThermalTransientBase : MeasureBase, IEquatable<ThermalTran
     public override void PresetKnownState()
     {
         base.PresetKnownState();
-        this.Aperture = ( double ) Properties.Settings.Instance.TtmTraceSettings.ApertureDefault;
-        this.LowLimit = ( double ) Properties.Settings.Instance.TtmTraceSettings.LowLimitDefault;
-        this.HighLimit = ( double ) Properties.Settings.Instance.TtmTraceSettings.HighLimitDefault;
-        this.AllowedVoltageChange = ( double ) Properties.Settings.Instance.TtmTraceSettings.VoltageChangeDefault;
-        this.CurrentLevel = ( double ) Properties.Settings.Instance.TtmTraceSettings.CurrentLevelDefault;
-        this.MedianFilterSize = Properties.Settings.Instance.TtmTraceSettings.MedianFilterLengthDefault;
-        this.SamplingInterval = ( double ) Properties.Settings.Instance.TtmTraceSettings.SamplingIntervalDefault;
-        this.TracePoints = Properties.Settings.Instance.TtmTraceSettings.TracePointsDefault;
-        this.VoltageLimit = ( double ) Properties.Settings.Instance.TtmTraceSettings.VoltageChangeDefault;
+        this.Aperture = Properties.DriverSettings.Instance.TraceDefaults.Aperture;
+        this.LowLimit = Properties.DriverSettings.Instance.TraceDefaults.LowLimit;
+        this.HighLimit = Properties.DriverSettings.Instance.TraceDefaults.HighLimit;
+        this.AllowedVoltageChange = Properties.DriverSettings.Instance.TraceDefaults.VoltageChange;
+        this.CurrentLevel = Properties.DriverSettings.Instance.TraceDefaults.CurrentLevel;
+        this.MedianFilterSize = Properties.DriverSettings.Instance.TraceDefaults.MedianFilterLength;
+        this.SamplingInterval = Properties.DriverSettings.Instance.TraceDefaults.SamplingInterval;
+        this.TracePoints = Properties.DriverSettings.Instance.TraceDefaults.TracePoints;
+        this.VoltageLimit = Properties.DriverSettings.Instance.TraceDefaults.VoltageChange;
     }
 
     #endregion

@@ -3,18 +3,10 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace cc.isr.VI.Tsp.K2600.Ttm;
 
-/// <summary>   The TTM Driver Settings. </summary>
+/// <summary>   The TTM Driver Estimator Default Settings. </summary>
 /// <remarks>   David, 2021-02-01. </remarks>
-public partial class TtmEstimatorSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
+public partial class EstimatorDefaults() : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
 {
-    #region " construction "
-
-    /// <summary>   Default constructor. </summary>
-    /// <remarks>   2024-10-24. </remarks>
-    public TtmEstimatorSettings() { }
-
-    #endregion
-
     #region " exists "
 
     /// <summary>
@@ -38,12 +30,6 @@ public partial class TtmEstimatorSettings : CommunityToolkit.Mvvm.ComponentModel
     [ObservableProperty]
     [Description( "The Bridge-Wire Thermal Coefficient in Inverse Degrees Centigrade (0.0005)." )]
     public partial double ThermalCoefficient { get; set; } = 0.0005;
-
-    /// <summary>   Gets or sets the default thermal coefficient in inverse degrees centigrade. </summary>
-    /// <value> The default thermal coefficient. </value>
-    [ObservableProperty]
-    [Description( "The Default Bridge-Wire Thermal Coefficient (0.0005)." )]
-    public partial double ThermalCoefficientDefault { get; set; } = 0.0005;
 
     /// <summary>   Gets or sets the thermal coefficient maximum. </summary>
     /// <value> The thermal coefficient maximum. </value>

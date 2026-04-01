@@ -480,8 +480,8 @@ public partial class DisplayView : cc.isr.WinControls.ModelViewBase
         string activity = string.Empty;
         try
         {
-            if ( this.StatusSubsystemBase is not null && (this.StatusSubsystemBase.Session.HasDeviceError
-                || this.StatusSubsystemBase.Session.HasErrorReport) )
+            if ( this.StatusSubsystemBase is not null && this.StatusSubsystemBase.Session is not null
+                && (this.StatusSubsystemBase.Session.HasDeviceError || this.StatusSubsystemBase.Session.HasErrorReport) )
             {
                 string value = string.Empty;
                 value = this.StatusSubsystemBase.Session.HasErrorReport

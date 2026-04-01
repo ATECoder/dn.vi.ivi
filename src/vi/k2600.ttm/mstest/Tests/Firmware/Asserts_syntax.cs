@@ -154,9 +154,10 @@ internal static partial class Asserts
         int expectedInt;
         string expectedValue;
 
-        cc.isr.VI.Tsp.K2600.Ttm.TtmMeterSettings meterSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmMeterSettings;
+        cc.isr.VI.Tsp.K2600.Ttm.MeterSettings meterSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.MeterSettings;
+        cc.isr.VI.Tsp.K2600.Ttm.MeterDefaults meterDefaults = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.MeterDefaults;
 
-        Assert.IsTrue( meterSettings.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmMeterSettings )} should exist." );
+        Assert.IsTrue( meterSettings.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.MeterSettings )} should exist." );
 
         expectedBoolean = true;
         query = "_G.print(_G.isr.access.loaded())";
@@ -165,7 +166,7 @@ internal static partial class Asserts
         double expectedPostTransientDelayDefault; // = 0.5;
         if ( !MeterSubsystem.LegacyFirmware )
         {
-            expectedPostTransientDelayDefault = meterSettings.PostTransientDelayDefault;
+            expectedPostTransientDelayDefault = meterSettings.PostTransientDelay;
             query = "_G.print(string.format('%9.3f',_G.ttm.meterDefaults.postTransientDelay))";
             double postTransientDelayDefault = session.QueryDoubleThrowIfError( query, "post transient delay" );
             Assert.AreEqual( expectedPostTransientDelayDefault, postTransientDelayDefault, $"{nameof( postTransientDelayDefault )} should equal the settings value." );
@@ -193,7 +194,7 @@ internal static partial class Asserts
             query = "_G.print(string.format('%d',_G.ttm.meterDefaults.contactLimit))";
 
             contactLimit = session.QueryIntegerThrowIfError( query, "contact limit" );
-            Assert.AreEqual( meterSettings.ContactCheckThresholdDefault, contactLimit, $"{nameof( contactLimit )} should equal the settings value." );
+            Assert.AreEqual( meterDefaults.ContactCheckThreshold, contactLimit, $"{nameof( contactLimit )} should equal the settings value." );
             Asserts.LogIT( $"{query} returned {contactLimit}" );
 
             // get actual value
@@ -213,7 +214,7 @@ internal static partial class Asserts
             int defaultContactCheckOptions; // = 15;
             query = "_G.print(string.format('%d',_G.ttm.meterDefaults.contactCheckOptions))";
             defaultContactCheckOptions = session.QueryIntegerThrowIfError( query, "default contact check options" );
-            Assert.AreEqual( ( int ) meterSettings.ContactCheckOptionsDefault, defaultContactCheckOptions, $"{nameof( defaultContactCheckOptions )} should equal the settings value." );
+            Assert.AreEqual( ( int ) meterDefaults.ContactCheckOptions, defaultContactCheckOptions, $"{nameof( defaultContactCheckOptions )} should equal the settings value." );
             Asserts.LogIT( $"{query} returned {defaultContactCheckOptions}" );
 
             // get actual value
@@ -254,7 +255,7 @@ internal static partial class Asserts
             int defaultLegacyDriverOption; // = 1;
             query = "_G.print(string.format('%d',_G.ttm.meterDefaults.legacyDriver))";
             defaultLegacyDriverOption = session.QueryIntegerThrowIfError( query, "legacy driver" );
-            Assert.AreEqual( meterSettings.LegacyDriverDefault, defaultLegacyDriverOption, $"{nameof( defaultLegacyDriverOption )} should equal the settings value." );
+            Assert.AreEqual( meterDefaults.LegacyDriver, defaultLegacyDriverOption, $"{nameof( defaultLegacyDriverOption )} should equal the settings value." );
             Asserts.LogIT( $"{query} returned {defaultLegacyDriverOption}" );
 
             query = "_G.print(string.format('%d',_G.ttm.legacyDriverGetter()))";
@@ -281,7 +282,7 @@ internal static partial class Asserts
             string smuName; // "smua";
             query = "_G.print(_G.ttm.meterDefaults.smuName)";
             smuName = session.QueryStringThrowIfError( query, "smu name" );
-            Assert.AreEqual( meterSettings.SourceMeasureUnitDefault, smuName, $"{nameof( smuName )} should equal the settings value." );
+            Assert.AreEqual( meterDefaults.SourceMeasureUnit, smuName, $"{nameof( smuName )} should equal the settings value." );
 
             expectedValue = smuName;
             expectedBoolean = true;
@@ -330,50 +331,52 @@ internal static partial class Asserts
         string query;
         double expectedDouble;
 
-        cc.isr.VI.Tsp.K2600.Ttm.TtmResistanceSettings resistanceSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmResistanceSettings;
-        Assert.IsTrue( resistanceSettings.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmResistanceSettings )} should exist." );
+        cc.isr.VI.Tsp.K2600.Ttm.ColdResistanceSettings resistanceSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.ColdResistanceSettings;
+        cc.isr.VI.Tsp.K2600.Ttm.ColdResistanceDefaults resistanceDefaults = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.ColdResistanceDefaults;
+        Assert.IsTrue( resistanceSettings.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.ColdResistanceSettings )} should exist." );
+        Assert.IsTrue( resistanceDefaults.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.ColdResistanceDefaults )} should exist." );
 
-        cc.isr.VI.Tsp.K2600.Ttm.TtmMeterSettings meterSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmMeterSettings;
-        Assert.IsTrue( meterSettings.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmMeterSettings )} should exist." );
+        cc.isr.VI.Tsp.K2600.Ttm.MeterSettings meterSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.MeterSettings;
+        Assert.IsTrue( meterSettings.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.MeterSettings )} should exist." );
 
         double aperture; // 1.0000;
         query = $"_G.print(string.format('%7.4f',_G.ttm.coldResistance.Defaults.aperture))";
         aperture = session.QueryDoubleThrowIfError( query, "default aperture" );
-        Assert.AreEqual( resistanceSettings.ApertureDefault, aperture, $"{nameof( aperture )} should match settings value." );
+        Assert.AreEqual( resistanceDefaults.Aperture, aperture, $"{nameof( aperture )} should match settings value." );
 
-        expectedDouble = MeterSubsystem.LegacyFirmware ? 0.0001 : resistanceSettings.CurrentMinimum;
+        expectedDouble = MeterSubsystem.LegacyFirmware ? 0.0001 : resistanceDefaults.CurrentMinimum;
         query = "_G.print(string.format('%9.6f',_G.ttm.coldResistance.Defaults.minCurrent))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedDouble, 0.0001, logEnabled );
 
-        expectedDouble = MeterSubsystem.LegacyFirmware ? 0.01 : resistanceSettings.CurrentMaximum;
+        expectedDouble = MeterSubsystem.LegacyFirmware ? 0.01 : resistanceDefaults.CurrentMaximum;
         query = "_G.print(string.format('%9.6f',_G.ttm.coldResistance.Defaults.maxCurrent))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedDouble, 0.0001, logEnabled );
 
-        expectedDouble = resistanceSettings.Minimum;
+        expectedDouble = resistanceDefaults.Minimum;
         query = "_G.print(string.format('%9.6f',_G.ttm.coldResistance.Defaults.minResistance))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedDouble, 0.0001, logEnabled );
 
-        expectedDouble = resistanceSettings.Maximum;
+        expectedDouble = resistanceDefaults.Maximum;
         query = "_G.print(string.format('%9.6f',_G.ttm.coldResistance.Defaults.maxResistance))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedDouble, 0.0001, logEnabled );
 
-        expectedDouble = resistanceSettings.VoltageMinimum;
+        expectedDouble = resistanceDefaults.VoltageMinimum;
         query = "_G.print(string.format('%9.6f',_G.ttm.coldResistance.Defaults.minVoltage))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedDouble, 0.0001, logEnabled );
 
-        expectedDouble = MeterSubsystem.LegacyFirmware ? 10 : resistanceSettings.VoltageMaximum;
+        expectedDouble = MeterSubsystem.LegacyFirmware ? 10 : resistanceDefaults.VoltageMaximum;
         query = "_G.print(string.format('%9.6f',_G.ttm.coldResistance.Defaults.maxVoltage))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedDouble, 0.0001, logEnabled );
 
         double lowLimit; // 1.85;
         query = $"_G.print(string.format('%9.6f',_G.ttm.coldResistance.Defaults.lowLimit))";
         lowLimit = session.QueryDoubleThrowIfError( query, "default low limit" );
-        Assert.AreEqual( resistanceSettings.LowLimitDefault, lowLimit, $"{nameof( lowLimit )} should match settings value." );
+        Assert.AreEqual( resistanceDefaults.LowLimit, lowLimit, $"{nameof( lowLimit )} should match settings value." );
 
         double highLimit; // 2.156;
         query = $"_G.print(string.format('%9.6f',_G.ttm.coldResistance.Defaults.highLimit))";
         highLimit = session.QueryDoubleThrowIfError( query, "default high limit" );
-        Assert.AreEqual( resistanceSettings.HighLimitDefault, highLimit, $"{nameof( highLimit )} should match settings value." );
+        Assert.AreEqual( resistanceDefaults.HighLimit, highLimit, $"{nameof( highLimit )} should match settings value." );
 
         double level; // 0.01;
         query = $"_G.print(string.format('%9.6f',_G.ttm.coldResistance.Defaults.level))";
@@ -436,11 +439,17 @@ internal static partial class Asserts
         int expectedInt;
         string expectedValue;
 
-        cc.isr.VI.Tsp.K2600.Ttm.TtmResistanceSettings resistanceSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmResistanceSettings;
-        Assert.IsTrue( resistanceSettings.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmResistanceSettings )} should exist." );
+        cc.isr.VI.Tsp.K2600.Ttm.ColdResistanceSettings resistanceSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.ColdResistanceSettings;
+        Assert.IsTrue( resistanceSettings.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.ColdResistanceSettings )} should exist." );
 
-        cc.isr.VI.Tsp.K2600.Ttm.TtmMeterSettings meterSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmMeterSettings;
-        Assert.IsTrue( meterSettings.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmMeterSettings )} should exist." );
+        cc.isr.VI.Tsp.K2600.Ttm.ColdResistanceDefaults resistanceDefaults = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.ColdResistanceDefaults;
+        Assert.IsTrue( resistanceDefaults.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.ColdResistanceDefaults )} should exist." );
+
+        cc.isr.VI.Tsp.K2600.Ttm.MeterSettings meterSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.MeterSettings;
+        Assert.IsTrue( meterSettings.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.MeterSettings )} should exist." );
+
+        cc.isr.VI.Tsp.K2600.Ttm.MeterDefaults meterDefaults = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.MeterDefaults;
+        Assert.IsTrue( meterDefaults.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.MeterDefaults )} should exist." );
 
         string model = session.AllSettings.ResourceSettings.ResourceModel;
         query = "_G.print(localnode.model)";
@@ -727,10 +736,13 @@ internal static partial class Asserts
         string command, query;
         double expectedDouble;
 
-        cc.isr.VI.Tsp.K2600.Ttm.TtmEstimatorSettings estimatorSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmEstimatorSettings;
-        Assert.IsTrue( estimatorSettings.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmEstimatorSettings )} should exist." );
+        cc.isr.VI.Tsp.K2600.Ttm.EstimatorSettings estimatorSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.EstimatorSettings;
+        Assert.IsTrue( estimatorSettings.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.EstimatorSettings )} should exist." );
 
-        expectedDouble = estimatorSettings.ThermalCoefficientDefault;
+        cc.isr.VI.Tsp.K2600.Ttm.EstimatorDefaults estimatorDefaults = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.EstimatorDefaults;
+        Assert.IsTrue( estimatorDefaults.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.EstimatorDefaults )} should exist." );
+
+        expectedDouble = estimatorDefaults.ThermalCoefficient;
         query = "_G.print(string.format('%9.6f',_G.ttm.estimator.Defaults.thermalCoefficient))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedDouble, 0.00001, logEnabled );
 
@@ -754,8 +766,6 @@ internal static partial class Asserts
     /// <param name="session">          The session. </param>
     /// <param name="validateModel">    (Optional) [false] True to validate the instrument model. </param>
     /// <param name="logEnabled">       (Optional) True to enable, false to disable the log. </param>
-    ///
-    /// ### <param name="checkSmuSetter">   (Optional) True to check smu setter. </param>
     public static void AssertThermalTransientDefaultsShouldEqualSettings( Pith.SessionBase? session, bool validateModel = false, bool logEnabled = false )
     {
         Assert.IsNotNull( session, $"{nameof( session )} must not be null." );
@@ -764,10 +774,14 @@ internal static partial class Asserts
         double expectedDouble;
         int expectedInt;
 
-        cc.isr.VI.Tsp.K2600.Ttm.TtmTraceSettings traceSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmTraceSettings;
-        cc.isr.VI.Tsp.K2600.Ttm.TtmMeterSettings meterSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmMeterSettings;
-        Assert.IsTrue( traceSettings.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmTraceSettings )} should exist." );
-        Assert.IsTrue( meterSettings.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmMeterSettings )} should exist." );
+        cc.isr.VI.Tsp.K2600.Ttm.TraceSettings traceSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.TraceSettings;
+        cc.isr.VI.Tsp.K2600.Ttm.TraceDefaults traceDefaults = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.TraceDefaults;
+        cc.isr.VI.Tsp.K2600.Ttm.MeterSettings meterSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.MeterSettings;
+        cc.isr.VI.Tsp.K2600.Ttm.MeterDefaults meterDefaults = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.MeterDefaults;
+        Assert.IsTrue( traceSettings.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.TraceSettings )} should exist." );
+        Assert.IsTrue( traceDefaults.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.TraceDefaults )} should exist." );
+        Assert.IsTrue( meterSettings.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.MeterSettings )} should exist." );
+        Assert.IsTrue( meterDefaults.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.MeterDefaults )} should exist." );
 
         if ( validateModel )
         {
@@ -785,79 +799,79 @@ internal static partial class Asserts
             Asserts.AssertQueryReplyShouldBeValid( session, query, true, logEnabled );
         }
 
-        expectedDouble = traceSettings.ApertureDefault;
+        expectedDouble = traceDefaults.Aperture;
         query = "_G.print(string.format('%8.5f',_G.ttm.trace.Defaults.aperture))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedDouble, 0.00001, logEnabled );
 
-        expectedDouble = traceSettings.ApertureMinimum;
+        expectedDouble = traceDefaults.ApertureMinimum;
         query = "_G.print(string.format('%9.6f',_G.ttm.trace.Defaults.minAperture))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedDouble, 0.00001, logEnabled );
 
-        expectedDouble = traceSettings.ApertureMaximum;
+        expectedDouble = traceDefaults.ApertureMaximum;
         query = "_G.print(string.format('%9.6f',_G.ttm.trace.Defaults.maxAperture))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedDouble, 0.00001, logEnabled );
 
-        expectedDouble = traceSettings.CurrentLevelDefault;
+        expectedDouble = traceDefaults.CurrentLevel;
         query = "_G.print(string.format('%9.6f',_G.ttm.trace.Defaults.level))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedDouble, 0.00001, logEnabled );
 
-        expectedDouble = traceSettings.VoltageLimitDefault;
+        expectedDouble = traceDefaults.VoltageLimit;
         query = "_G.print(string.format('%9.6f',_G.ttm.trace.Defaults.limit))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedDouble, 0.00001, logEnabled );
 
-        expectedDouble = traceSettings.CurrentMinimum;
+        expectedDouble = traceDefaults.CurrentMinimum;
         query = "_G.print(string.format('%9.6f',_G.ttm.trace.Defaults.minCurrent))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedDouble, 0.00001, logEnabled );
 
-        expectedDouble = traceSettings.CurrentMaximum;
+        expectedDouble = traceDefaults.CurrentMaximum;
         query = "_G.print(string.format('%9.6f',_G.ttm.trace.Defaults.maxCurrent))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedDouble, 0.00001, logEnabled );
 
-        expectedDouble = traceSettings.VoltageMinimum;
+        expectedDouble = traceDefaults.VoltageMinimum;
         query = "_G.print(string.format('%9.6f',_G.ttm.trace.Defaults.minVoltage))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedDouble, 0.00001, logEnabled );
 
-        expectedDouble = traceSettings.VoltageMaximum;
+        expectedDouble = traceDefaults.VoltageMaximum;
         query = "_G.print(string.format('%9.6f',_G.ttm.trace.Defaults.maxVoltage))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedDouble, 0.00001, logEnabled );
 
-        expectedDouble = traceSettings.LowLimitDefault;
+        expectedDouble = traceDefaults.LowLimit;
         query = "_G.print(string.format('%9.6f',_G.ttm.trace.Defaults.lowLimit))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedDouble, 0.00001, logEnabled );
 
-        expectedDouble = traceSettings.HighLimitDefault;
+        expectedDouble = traceDefaults.HighLimit;
         query = "_G.print(string.format('%9.6f',_G.ttm.trace.Defaults.highLimit))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedDouble, 0.00001, logEnabled );
 
-        expectedDouble = traceSettings.VoltageChangeMaximum;
+        expectedDouble = traceDefaults.VoltageChangeMaximum;
         query = "_G.print(string.format('%9.6f',_G.ttm.trace.Defaults.maxVoltageChange))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedDouble, 0.001, logEnabled );
 
-        expectedInt = traceSettings.MedianFilterLengthDefault;
+        expectedInt = traceDefaults.MedianFilterLength;
         query = "_G.print(string.format('%d',_G.ttm.trace.Defaults.medianFilterSize))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedInt, logEnabled );
 
-        expectedDouble = traceSettings.SamplingIntervalDefault;
+        expectedDouble = traceDefaults.SamplingInterval;
         query = "_G.print(string.format('%9.6f',_G.ttm.trace.Defaults.period))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedDouble, 0.00001, logEnabled );
 
-        expectedDouble = traceSettings.SamplingIntervalMinimum;
+        expectedDouble = traceDefaults.SamplingIntervalMinimum;
         query = "_G.print(string.format('%9.6f',_G.ttm.trace.Defaults.minPeriod))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedDouble, 0.00001, logEnabled );
 
-        expectedDouble = traceSettings.SamplingIntervalMaximum;
+        expectedDouble = traceDefaults.SamplingIntervalMaximum;
         query = "_G.print(string.format('%9.6f',_G.ttm.trace.Defaults.maxPeriod))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedDouble, 0.00001, logEnabled );
 
-        expectedInt = traceSettings.TracePointsDefault;
+        expectedInt = traceDefaults.TracePoints;
         query = "_G.print(string.format('%d',_G.ttm.trace.Defaults.points))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedInt, logEnabled );
 
-        expectedInt = traceSettings.TracePointsMinimum;
+        expectedInt = traceDefaults.TracePointsMinimum;
         query = "_G.print(string.format('%9.6f',_G.ttm.trace.Defaults.minPoints))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedInt, logEnabled );
 
-        expectedDouble = traceSettings.LatencyDefault;
+        expectedDouble = traceDefaults.Latency;
         query = "_G.print(string.format('%9.6f',_G.ttm.trace.Defaults.latency))";
         Asserts.AssertQueryReplyShouldBeValid( session, query, expectedDouble, 0.000001, logEnabled );
     }
@@ -878,10 +892,14 @@ internal static partial class Asserts
         int expectedInt;
         string expectedValue;
 
-        cc.isr.VI.Tsp.K2600.Ttm.TtmTraceSettings traceSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmTraceSettings;
-        cc.isr.VI.Tsp.K2600.Ttm.TtmMeterSettings meterSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmMeterSettings;
-        Assert.IsTrue( traceSettings.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmTraceSettings )} should exist." );
-        Assert.IsTrue( meterSettings.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmMeterSettings )} should exist." );
+        cc.isr.VI.Tsp.K2600.Ttm.TraceSettings traceSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.TraceSettings;
+        cc.isr.VI.Tsp.K2600.Ttm.TraceDefaults traceDefaults = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.TraceDefaults;
+        cc.isr.VI.Tsp.K2600.Ttm.MeterSettings meterSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.MeterSettings;
+        cc.isr.VI.Tsp.K2600.Ttm.MeterDefaults meterDefaults = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.MeterDefaults;
+        Assert.IsTrue( traceSettings.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.TraceSettings )} should exist." );
+        Assert.IsTrue( traceDefaults.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.TraceDefaults )} should exist." );
+        Assert.IsTrue( meterSettings.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.MeterSettings )} should exist." );
+        Assert.IsTrue( meterDefaults.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.MeterDefaults )} should exist." );
 
         string model = session.AllSettings.ResourceSettings.ResourceModel;
         query = "_G.print(localnode.model)";

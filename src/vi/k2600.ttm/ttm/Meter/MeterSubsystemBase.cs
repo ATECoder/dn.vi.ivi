@@ -140,7 +140,7 @@ public abstract class MeterSubsystemBase( VI.StatusSubsystemBase statusSubsystem
         get => this._sourceMeasureUnit;
         protected set
         {
-            if ( string.IsNullOrWhiteSpace( value ) ) value = Properties.Settings.Instance.TtmMeterSettings.SourceMeasureUnit;
+            if ( string.IsNullOrWhiteSpace( value ) ) value = Properties.DriverSettings.Instance.MeterSettings.SourceMeasureUnit;
             this.DeviceUnderTestElement.SourceMeasureUnit = value;
             _ = this.SetProperty( ref this._sourceMeasureUnit, value );
         }
@@ -205,7 +205,7 @@ public abstract class MeterSubsystemBase( VI.StatusSubsystemBase statusSubsystem
         cc.isr.VI.Pith.SessionBase.DoEventsAction?.Invoke();
 
         if ( Syntax.ThermalTransient.RequiresSourceMeasureUnit( this.MeterEntity ) )
-            Properties.Settings.Instance.TtmMeterSettings.SourceMeasureUnitDefault = Syntax.ThermalTransient.ReadSourceMeasureUnitDefaults( this.Session, this.MeterEntity );
+            Properties.DriverSettings.Instance.MeterDefaults.SourceMeasureUnit = Syntax.ThermalTransient.ReadSourceMeasureUnitDefaults( this.Session, this.MeterEntity );
 
         cc.isr.VI.Pith.SessionBase.DoEventsAction?.Invoke();
     }

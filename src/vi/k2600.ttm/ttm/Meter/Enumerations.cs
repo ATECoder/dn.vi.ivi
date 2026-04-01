@@ -136,11 +136,11 @@ public enum ThermalTransientMeterEntity
     MeterMain,
 
     /// <summary> Initial resistance entity. </summary>
-    [Description( "Initial MeasuredValue (_G.ttm.ir)" )]
+    [Description( "Initial Resistance entity (_G.ttm.ir)" )]
     InitialResistance,
 
     /// <summary> Final resistance entity. </summary>
-    [Description( "Initial MeasuredValue (_G.ttm.fr)" )]
+    [Description( "Final Resistance entity (_G.ttm.fr)" )]
     FinalResistance,
 
     /// <summary> Thermal Transient entity. </summary>
@@ -152,6 +152,6 @@ public enum ThermalTransientMeterEntity
     Estimator,
 
     /// <summary> Shunt resistance entity. </summary>
-    [Description( "Shunt MeasuredValue (_G)" )]
+    [Description( "Shunt entity (_G)" )]
     Shunt
 }

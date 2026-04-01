@@ -2,9 +2,19 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9575]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9587]: https://www.github.com/atecoder/dn.vi.ivi
 
 Current IVI Visa Compatibility: 8.0.2.9518
+
+## [8.1.9587] - 2026-04-01
+- TTM
+  - Settings: Split default and primary settings.
+  - Use auto properties.
+  - Meter Main and Meter subsystem and settings.
+   - Add source-sense shunt.
+   - Add open limit.
+- MS Test
+  - Add Driver assertions.
 
 ## [8.1.9575] - 2026-03-20
 - TTM

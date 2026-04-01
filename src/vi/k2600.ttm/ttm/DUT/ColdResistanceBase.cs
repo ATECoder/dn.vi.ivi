@@ -26,12 +26,12 @@ public abstract class ColdResistanceBase : MeasureBase, IEquatable<ColdResistanc
     {
         if ( value is not null )
         {
-            this._currentLevel = value.CurrentLevel;
-            this._currentLimit = value.CurrentLimit;
-            this._voltageLevel = value.VoltageLevel;
-            this._voltageLimit = value.VoltageLimit;
-            this._sourceOutputOption = value.SourceOutputOption;
-            this._failStatus = value.FailStatus;
+            this.CurrentLevel = value.CurrentLevel;
+            this.CurrentLimit = value.CurrentLimit;
+            this.VoltageLevel = value.VoltageLevel;
+            this.VoltageLimit = value.VoltageLimit;
+            this.SourceOutputOption = value.SourceOutputOption;
+            this.FailStatus = value.FailStatus;
         }
     }
 
@@ -43,12 +43,12 @@ public abstract class ColdResistanceBase : MeasureBase, IEquatable<ColdResistanc
         base.CopyConfiguration( value );
         if ( value is not null )
         {
-            this._currentLevel = value.CurrentLevel;
-            this._currentLimit = value.CurrentLimit;
-            this._voltageLevel = value.VoltageLevel;
-            this._voltageLimit = value.VoltageLimit;
-            this._sourceOutputOption = value.SourceOutputOption;
-            this._failStatus = value.FailStatus;
+            this.CurrentLevel = value.CurrentLevel;
+            this.CurrentLimit = value.CurrentLimit;
+            this.VoltageLevel = value.VoltageLevel;
+            this.VoltageLimit = value.VoltageLimit;
+            this.SourceOutputOption = value.SourceOutputOption;
+            this.FailStatus = value.FailStatus;
         }
     }
 
@@ -63,15 +63,15 @@ public abstract class ColdResistanceBase : MeasureBase, IEquatable<ColdResistanc
         base.ResetKnownState();
         cc.isr.VI.Pith.SessionBase.DoEventsAction?.Invoke();
         /* Moved to Preset
-            this.Aperture = ( double ) Properties.Settings.Instance.TtmResistanceSettings.ApertureDefault;
-            this.LowLimit = ( double ) Properties.Settings.Instance.TtmResistanceSettings.LowLimitDefault;
-            this.HighLimit = ( double ) Properties.Settings.Instance.TtmResistanceSettings.HighLimitDefault;
-            this.CurrentLevel = ( double ) Properties.Settings.Instance.TtmResistanceSettings.CurrentLevelDefault;
-            this.CurrentLimit = ( double ) Properties.Settings.Instance.TtmResistanceSettings.CurrentLimitDefault;
-            this.VoltageLimit = ( double ) Properties.Settings.Instance.TtmResistanceSettings.VoltageLimitDefault;
-            this.VoltageLevel = ( double ) Properties.Settings.Instance.TtmResistanceSettings.VoltageLevelDefault;
-            this.FailStatus = Properties.Settings.Instance.TtmResistanceSettings.FailStatusDefault;
-            this.SourceOutputOption = Properties.Settings.Instance.TtmResistanceSettings.SourceOutput;
+            this.Aperture = Properties.DriverSettings.Instance.ColdResistanceDefaults.Aperture;
+            this.LowLimit = Properties.DriverSettings.Instance.ColdResistanceDefaults.LowLimit;
+            this.HighLimit = Properties.DriverSettings.Instance.ColdResistanceDefaults.HighLimit;
+            this.CurrentLevel = Properties.DriverSettings.Instance.ColdResistanceDefaults.CurrentLevel;
+            this.CurrentLimit = Properties.DriverSettings.Instance.ColdResistanceDefaults.CurrentLimit;
+            this.VoltageLimit = Properties.DriverSettings.Instance.ColdResistanceDefaults.VoltageLimit;
+            this.VoltageLevel = Properties.DriverSettings.Instance.ColdResistanceDefaults.VoltageLevel;
+            this.FailStatus = Properties.DriverSettings.Instance.ColdResistanceDefaults.FailStatus;
+            this.SourceOutputOption = Properties.DriverSettings.Instance.ColdResistanceDefaults.SourceOutput;
          */
     }
 
@@ -80,15 +80,15 @@ public abstract class ColdResistanceBase : MeasureBase, IEquatable<ColdResistanc
     public override void PresetKnownState()
     {
         base.PresetKnownState();
-        this.SourceOutputOption = Properties.Settings.Instance.TtmResistanceSettings.SourceOutput;
-        this.Aperture = ( double ) Properties.Settings.Instance.TtmResistanceSettings.ApertureDefault;
-        this.LowLimit = ( double ) Properties.Settings.Instance.TtmResistanceSettings.LowLimitDefault;
-        this.HighLimit = ( double ) Properties.Settings.Instance.TtmResistanceSettings.HighLimitDefault;
-        this.CurrentLevel = ( double ) Properties.Settings.Instance.TtmResistanceSettings.CurrentLevelDefault;
-        this.CurrentLimit = ( double ) Properties.Settings.Instance.TtmResistanceSettings.CurrentLimitDefault;
-        this.VoltageLimit = ( double ) Properties.Settings.Instance.TtmResistanceSettings.VoltageLimitDefault;
-        this.VoltageLevel = ( double ) Properties.Settings.Instance.TtmResistanceSettings.VoltageLevelDefault;
-        this.FailStatus = Properties.Settings.Instance.TtmResistanceSettings.FailStatusDefault;
+        this.SourceOutputOption = Properties.DriverSettings.Instance.ColdResistanceDefaults.SourceOutput;
+        this.Aperture = Properties.DriverSettings.Instance.ColdResistanceDefaults.Aperture;
+        this.LowLimit = Properties.DriverSettings.Instance.ColdResistanceDefaults.LowLimit;
+        this.HighLimit = Properties.DriverSettings.Instance.ColdResistanceDefaults.HighLimit;
+        this.CurrentLevel = Properties.DriverSettings.Instance.ColdResistanceDefaults.CurrentLevel;
+        this.CurrentLimit = Properties.DriverSettings.Instance.ColdResistanceDefaults.CurrentLimit;
+        this.VoltageLimit = Properties.DriverSettings.Instance.ColdResistanceDefaults.VoltageLimit;
+        this.VoltageLevel = Properties.DriverSettings.Instance.ColdResistanceDefaults.VoltageLevel;
+        this.FailStatus = Properties.DriverSettings.Instance.ColdResistanceDefaults.FailStatus;
         cc.isr.VI.Pith.SessionBase.DoEventsAction?.Invoke();
     }
 
@@ -226,62 +226,52 @@ public abstract class ColdResistanceBase : MeasureBase, IEquatable<ColdResistanc
 
     #region " configuration "
 
-    private double _currentLevel;
-
     /// <summary> Gets or sets the current level. </summary>
     /// <value> The current level. </value>
     public double CurrentLevel
     {
-        get => this._currentLevel;
-        set => _ = this.SetProperty( ref this._currentLevel, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
-
-    private double _currentLimit;
 
     /// <summary> Gets or sets the current Limit. </summary>
     /// <value> The current Limit. </value>
     public double CurrentLimit
     {
-        get => this._currentLimit;
-        set => _ = this.SetProperty( ref this._currentLimit, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
-
-    private double _voltageLevel;
 
     /// <summary> Gets or sets the cached Source Voltage Level. </summary>
     /// <value> The Source Voltage Level. </value>
     public double VoltageLevel
     {
-        get => this._voltageLevel;
-        set => _ = this.SetProperty( ref this._voltageLevel, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
-
-    private double _voltageLimit;
 
     /// <summary> Gets or sets the cached Source Voltage Limit. </summary>
     /// <value> The Source Voltage Limit. </value>
     public double VoltageLimit
     {
-        get => this._voltageLimit;
-        set => _ = this.SetProperty( ref this._voltageLimit, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
 
-    private SourceOutputOption _sourceOutputOption;
     /// <summary>   Gets or sets source output option. </summary>
     /// <value> The source output option. </value>
     public SourceOutputOption SourceOutputOption
     {
-        get => this._sourceOutputOption;
-        set => _ = this.SetProperty( ref this._sourceOutputOption, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
 
-    private int _failStatus;
     /// <summary>   Gets or sets the fail status. </summary>
     /// <value> The fail status. </value>
     public int FailStatus
     {
-        get => this._failStatus;
-        set => _ = this.SetProperty( ref this._failStatus, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
 
     #endregion

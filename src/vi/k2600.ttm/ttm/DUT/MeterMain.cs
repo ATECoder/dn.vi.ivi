@@ -68,10 +68,12 @@ public partial class MeterMain : DeviceUnderTestElementBase, IEquatable<MeterMai
     public override void PresetKnownState()
     {
         base.PresetKnownState();
-        this.LegacyDriver = Properties.Settings.Instance.TtmMeterSettings.LegacyDriver;
-        this.ContactLimit = Properties.Settings.Instance.TtmMeterSettings.ContactCheckThresholdDefault;
-        this.ContactCheckOptions = Properties.Settings.Instance.TtmMeterSettings.ContactCheckOptions;
-        this.PostTransientDelay = ( double ) Properties.Settings.Instance.TtmMeterSettings.PostTransientDelayDefault;
+        this.LegacyDriver = Properties.DriverSettings.Instance.MeterDefaults.LegacyDriver;
+        this.ContactLimit = Properties.DriverSettings.Instance.MeterDefaults.ContactCheckThreshold;
+        this.ContactCheckOptions = Properties.DriverSettings.Instance.MeterDefaults.ContactCheckOptions;
+        this.OpenLimit = Properties.DriverSettings.Instance.MeterDefaults.OpenLimit;
+        this.PostTransientDelay = ( double ) Properties.DriverSettings.Instance.MeterDefaults.PostTransientDelay;
+        this.SourceSenseShunt = Properties.DriverSettings.Instance.MeterDefaults.SourceSenseShunt;
     }
 
     #endregion
@@ -231,6 +233,14 @@ public partial class MeterMain : DeviceUnderTestElementBase, IEquatable<MeterMai
         set => _ = this.SetProperty( ref this._contactCheckOptions, value );
     }
 
+    /// <summary> Gets or sets the open limit in ohms. This value is used to determine if a DUT is open. </summary>
+    /// <value> The open limit in ohms. </value>
+    public int OpenLimit
+    {
+        get;
+        set => _ = this.SetProperty( ref field, value );
+    }
+
     private double _postTransientDelay;
 
     /// <summary>
@@ -242,6 +252,14 @@ public partial class MeterMain : DeviceUnderTestElementBase, IEquatable<MeterMai
     {
         get => this._postTransientDelay;
         set => _ = this.SetProperty( ref this._postTransientDelay, value );
+    }
+
+    /// <summary> Gets or sets the source-sense shunt in ohms.. </summary>
+    /// <value> The source-sense shunt in ohms. </value>
+    public int SourceSenseShunt
+    {
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
 
     #endregion

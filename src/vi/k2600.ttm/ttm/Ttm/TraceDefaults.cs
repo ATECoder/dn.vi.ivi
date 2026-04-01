@@ -3,18 +3,10 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace cc.isr.VI.Tsp.K2600.Ttm;
 
-/// <summary>   The TTM Trace Settings. </summary>
+/// <summary>   The TTM Trace Default Settings. </summary>
 /// <remarks>   David, 2021-02-01. </remarks>
-public partial class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
+public partial class TraceDefaults() : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
 {
-    #region " construction "
-
-    /// <summary>   Default constructor. </summary>
-    /// <remarks>   2024-10-24. </remarks>
-    public TtmTraceSettings() { }
-
-    #endregion
-
     #region " exists "
 
     /// <summary>
@@ -39,12 +31,6 @@ public partial class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.Obs
     [Description( "Thermal Transient Aperture {0.004)." )]
     public partial double Aperture { get; set; } = 0.004;
 
-    /// <summary>   Gets or sets the Thermal Transient aperture default. </summary>
-    /// <value> The Thermal Transient aperture default. </value>
-    [ObservableProperty]
-    [Description( "Thermal Transient Default Aperture {0.004)." )]
-    public partial double ApertureDefault { get; set; } = 0.004;
-
     /// <summary>   Gets or sets the Thermal Transient aperture Maximum. </summary>
     /// <value> The Thermal Transient aperture Maximum. </value>
     [ObservableProperty]
@@ -62,12 +48,6 @@ public partial class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.Obs
     [ObservableProperty]
     [Description( "Thermal Transient Current Level {0.27)." )]
     public partial double CurrentLevel { get; set; } = 0.27;
-
-    /// <summary>   Gets or sets the Thermal Transient current level default. </summary>
-    /// <value> The Thermal Transient current level default. </value>
-    [ObservableProperty]
-    [Description( "Thermal Transient Default Current Level {0.27)." )]
-    public partial double CurrentLevelDefault { get; set; } = 0.27;
 
     /// <summary>   Gets or sets the Thermal Transient current Maximum. </summary>
     /// <value> The Thermal Transient current Maximum. </value>
@@ -87,12 +67,6 @@ public partial class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.Obs
     [Description( "Thermal Transient Duration {0.01)." )]
     public partial double Duration { get; set; } = 0.01;
 
-    /// <summary>   Gets or sets the Thermal Transient Duration default. </summary>
-    /// <value> The Thermal Transient Duration default. </value>
-    [ObservableProperty]
-    [Description( "Thermal Transient Default Duration {0.01)." )]
-    public partial double DurationDefault { get; set; } = 0.01;
-
     /// <summary>   Gets or sets the Thermal Transient Duration Maximum. </summary>
     /// <value> The Thermal Transient Duration Maximum. </value>
     [ObservableProperty]
@@ -111,12 +85,6 @@ public partial class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.Obs
     [Description( "Thermal Transient Voltage Change High Limit {0.017)." )]
     public partial double HighLimit { get; set; } = 0.017;
 
-    /// <summary>   Gets or sets the Thermal Transient High limit default. </summary>
-    /// <value> The Thermal Transient High limit default. </value>
-    [ObservableProperty]
-    [Description( "Thermal Transient Default Voltage Change High Limit {0.017)." )]
-    public partial double HighLimitDefault { get; set; } = 0.017;
-
     /// <summary>   Gets or sets the Thermal Transient Latency. </summary>
     /// <remarks> This is the estimated time from the onset of the current pulse to the onset of data acquisition. </remarks>
     /// <value> The Thermal Transient Latency. </value>
@@ -124,35 +92,17 @@ public partial class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.Obs
     [Description( "Thermal Transient Latency {0.00035)." )]
     public partial double Latency { get; set; } = 0.00035;
 
-    /// <summary>   Gets or sets the Thermal Transient Latency default. </summary>
-    /// <value> The Thermal Transient Latency default. </value>
-    [ObservableProperty]
-    [Description( "Thermal Transient Default Latency {0.00035)." )]
-    public partial double LatencyDefault { get; set; } = 0.00035;
-
     /// <summary>   Gets or sets the Thermal Transient low limit . </summary>
     /// <value> The Thermal Transient low limit . </value>
     [ObservableProperty]
     [Description( "Thermal Voltage Change Default Low Limit {0.006)." )]
     public partial double LowLimit { get; set; } = 0.006;
 
-    /// <summary>   Gets or sets the Thermal Transient low limit default. </summary>
-    /// <value> The Thermal Transient low limit default. </value>
-    [ObservableProperty]
-    [Description( "Thermal Transient Voltage Change Default Low Limit {0.006)." )]
-    public partial double LowLimitDefault { get; set; } = 0.006;
-
     /// <summary>   Gets or sets the Thermal Transient Median Filter Length. </summary>
     /// <value> The Thermal Transient Median Filter Length. </value>
     [ObservableProperty]
     [Description( "Thermal Transient Median Filter Length {3)." )]
     public partial int MedianFilterLength { get; set; } = 3;
-
-    /// <summary>   Gets or sets the Thermal Transient Trace Median Filter Length default. </summary>
-    /// <value> The Thermal Transient Median Filter Length default. </value>
-    [ObservableProperty]
-    [Description( "Thermal Transient Default Median Filter Length {3)." )]
-    public partial int MedianFilterLengthDefault { get; set; } = 3;
 
     /// <summary>   Gets or sets the Thermal Transient Median Filter Length Maximum. </summary>
     /// <value> The Thermal Transient Median Filter Length Maximum. </value>
@@ -172,12 +122,6 @@ public partial class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.Obs
     [Description( "Thermal Transient Maximum Sampling Interval {0.0001)." )]
     public partial double SamplingInterval { get; set; } = 0.0001;
 
-    /// <summary>   Gets or sets the Thermal Transient Sampling Interval default. </summary>
-    /// <value> The Thermal Transient Sampling Interval default. </value>
-    [ObservableProperty]
-    [Description( "Thermal Transient Default Sampling Interval {0.0001)." )]
-    public partial double SamplingIntervalDefault { get; set; } = 0.0001;
-
     /// <summary>   Gets or sets the Thermal Transient Sampling Interval Maximum. </summary>
     /// <value> The Thermal Transient Sampling Interval Maximum. </value>
     [ObservableProperty]
@@ -195,12 +139,6 @@ public partial class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.Obs
     [ObservableProperty]
     [Description( "Thermal Transient Trace Points {100)." )]
     public partial int TracePoints { get; set; } = 100;
-
-    /// <summary>   Gets or sets the Thermal Transient Trace Points default. </summary>
-    /// <value> The Thermal Transient Trace Points default. </value>
-    [ObservableProperty]
-    [Description( "Thermal Transient Default Trace Points {100)." )]
-    public partial int TracePointsDefault { get; set; } = 100;
 
     /// <summary>   Gets or sets the Thermal Transient Median Filter Length Maximum. </summary>
     /// <value> The Thermal Transient Trace Points Maximum. </value>
@@ -220,12 +158,6 @@ public partial class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.Obs
     [Description( "Thermal Transient Voltage Change {0.099)." )]
     public partial double VoltageChange { get; set; } = 0.099;
 
-    /// <summary>   Gets or sets the Thermal Transient voltage Change default. </summary>
-    /// <value> The Thermal Transient voltage Change default. </value>
-    [ObservableProperty]
-    [Description( "Thermal Transient Default Voltage Change {0.099)." )]
-    public partial double VoltageChangeDefault { get; set; } = 0.099;
-
     /// <summary>   Gets or sets the Thermal Transient voltage Change Maximum. </summary>
     /// <value> The Thermal Transient voltage Change Maximum. </value>
     [ObservableProperty]
@@ -244,12 +176,6 @@ public partial class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.Obs
     [Description( "Thermal Transient Voltage Limit {0.99)." )]
     public partial double VoltageLimit { get; set; } = 0.99;
 
-    /// <summary>   Gets or sets the Thermal Transient voltage limit default. </summary>
-    /// <value> The Thermal Transient voltage limit default. </value>
-    [ObservableProperty]
-    [Description( "Thermal Transient Default Voltage Limit {0.99)." )]
-    public partial double VoltageLimitDefault { get; set; } = 0.99;
-
     /// <summary>   Gets or sets the Thermal Transient voltage maximum. </summary>
     /// <value> The Thermal Transient voltage maximum. </value>
     [ObservableProperty]
@@ -263,5 +189,4 @@ public partial class TtmTraceSettings : CommunityToolkit.Mvvm.ComponentModel.Obs
     public partial double VoltageMinimum { get; set; } = 0.01;
 
     #endregion
-
 }

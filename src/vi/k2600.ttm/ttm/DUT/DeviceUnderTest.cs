@@ -193,8 +193,8 @@ public class DeviceUnderTest : CommunityToolkit.Mvvm.ComponentModel.ObservableOb
     /// <remarks> David, 2020-10-12. </remarks>
     public virtual void PresetKnownState()
     {
-        this.ContactCheckEnabled = Properties.Settings.Instance.TtmMeterSettings.ContactCheckEnabledDefault;
-        this.ContactCheckThreshold = Properties.Settings.Instance.TtmMeterSettings.ContactCheckThresholdDefault;
+        this.ContactCheckEnabled = Properties.DriverSettings.Instance.MeterDefaults.ContactCheckEnabled;
+        this.ContactCheckThreshold = Properties.DriverSettings.Instance.MeterDefaults.ContactCheckThreshold;
         this.Elements.PresetKnownState();
     }
 
@@ -439,12 +439,9 @@ public class DeviceUnderTest : CommunityToolkit.Mvvm.ComponentModel.ObservableOb
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( field is not null )
-                field.PropertyChanged -= this.Estimator_PropertyChanged;
-
+            field?.PropertyChanged -= this.Estimator_PropertyChanged;
             field = value;
-            if ( field is not null )
-                field.PropertyChanged += this.Estimator_PropertyChanged;
+            field?.PropertyChanged += this.Estimator_PropertyChanged;
         }
     }
 
@@ -478,12 +475,10 @@ public class DeviceUnderTest : CommunityToolkit.Mvvm.ComponentModel.ObservableOb
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( field is not null )
-                field.PropertyChanged -= this.MeterMain_PropertyChanged;
+            field?.PropertyChanged -= this.MeterMain_PropertyChanged;
 
             field = value;
-            if ( field is not null )
-                field.PropertyChanged += this.MeterMain_PropertyChanged;
+            field?.PropertyChanged += this.MeterMain_PropertyChanged;
         }
     }
 
@@ -530,12 +525,10 @@ public class DeviceUnderTest : CommunityToolkit.Mvvm.ComponentModel.ObservableOb
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( field is not null )
-                field.PropertyChanged -= this.InitialResistance_PropertyChanged;
+            field?.PropertyChanged -= this.InitialResistance_PropertyChanged;
 
             field = value;
-            if ( field is not null )
-                field.PropertyChanged += this.InitialResistance_PropertyChanged;
+            field?.PropertyChanged += this.InitialResistance_PropertyChanged;
         }
     }
 
@@ -582,16 +575,10 @@ public class DeviceUnderTest : CommunityToolkit.Mvvm.ComponentModel.ObservableOb
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( field is not null )
-            {
-                field.PropertyChanged -= this.FinalResistance_PropertyChanged;
-            }
+            field?.PropertyChanged -= this.FinalResistance_PropertyChanged;
 
             field = value;
-            if ( field is not null )
-            {
-                field.PropertyChanged += this.FinalResistance_PropertyChanged;
-            }
+            field?.PropertyChanged += this.FinalResistance_PropertyChanged;
         }
     }
 
@@ -626,12 +613,10 @@ public class DeviceUnderTest : CommunityToolkit.Mvvm.ComponentModel.ObservableOb
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( field is not null )
-                field.PropertyChanged -= this.ShuntResistance_PropertyChanged;
+            field?.PropertyChanged -= this.ShuntResistance_PropertyChanged;
 
             field = value;
-            if ( field is not null )
-                field.PropertyChanged += this.ShuntResistance_PropertyChanged;
+            field?.PropertyChanged += this.ShuntResistance_PropertyChanged;
         }
     }
 
@@ -678,12 +663,10 @@ public class DeviceUnderTest : CommunityToolkit.Mvvm.ComponentModel.ObservableOb
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( field is not null )
-                field.PropertyChanged -= this.ThermalTransient_PropertyChanged;
+            field?.PropertyChanged -= this.ThermalTransient_PropertyChanged;
 
             field = value;
-            if ( field is not null )
-                field.PropertyChanged += this.ThermalTransient_PropertyChanged;
+            field?.PropertyChanged += this.ThermalTransient_PropertyChanged;
         }
     }
 
@@ -707,7 +690,7 @@ public class DeviceUnderTest : CommunityToolkit.Mvvm.ComponentModel.ObservableOb
     public bool ValidateTransientVoltageLimit( ref string details )
     {
         if ( this.InitialResistance is null )
-            throw new InvalidOperationException( "Initial MeasuredValue object is null." );
+            throw new InvalidOperationException( "Initial object is null." );
 
         if ( this.ThermalTransient is null )
             throw new InvalidOperationException( "Thermal Transient object is null." );

@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Text;
 using cc.isr.Std.NumericExtensions;
 
 namespace cc.isr.VI.Tsp.K2600.Ttm;
@@ -25,21 +26,21 @@ public abstract partial class MeasureBase : DeviceUnderTestElementBase
         if ( value is not null )
         {
             // measurement
-            this._displayFormat = value.DisplayFormat;
-            this._measurementOutcome = value.MeasurementOutcome;
-            this._measuredValue = value.MeasuredValue;
-            this._measuredValueCaption = value.MeasuredValueCaption;
+            this.DisplayFormat = value.DisplayFormat;
+            this.MeasurementOutcome = value.MeasurementOutcome;
+            this.MeasuredValue = value.MeasuredValue;
+            this.MeasuredValueCaption = value.MeasuredValueCaption;
             this.Reading = value.Reading;
             this.FirmwareReading = value.FirmwareReading;
             this.FirmwareOutcomeReading = value.FirmwareOutcomeReading;
             this.FirmwareOkayReading = value.FirmwareOkayReading;
             this.FirmwareStatusReading = value.FirmwareStatusReading;
-            this._timestamp = value.Timestamp;
+            this.Timestamp = value.Timestamp;
 
             // Configuration
-            this._aperture = value.Aperture;
-            this._highLimit = value.HighLimit;
-            this._lowLimit = value.LowLimit;
+            this.Aperture = value.Aperture;
+            this.HighLimit = value.HighLimit;
+            this.LowLimit = value.LowLimit;
         }
     }
 
@@ -51,9 +52,9 @@ public abstract partial class MeasureBase : DeviceUnderTestElementBase
         base.CopyConfiguration( value );
         if ( value is not null )
         {
-            this._aperture = value.Aperture;
-            this._highLimit = value.HighLimit;
-            this._lowLimit = value.LowLimit;
+            this.Aperture = value.Aperture;
+            this.HighLimit = value.HighLimit;
+            this.LowLimit = value.LowLimit;
         }
     }
 
@@ -64,12 +65,12 @@ public abstract partial class MeasureBase : DeviceUnderTestElementBase
     {
         if ( value is not null )
         {
-            this._displayFormat = value.DisplayFormat;
-            this._measurementOutcome = value.MeasurementOutcome;
-            this._measuredValue = value.MeasuredValue;
-            this._measuredValueCaption = value.MeasuredValueCaption;
-            this._reading = value.Reading;
-            this._timestamp = value.Timestamp;
+            this.DisplayFormat = value.DisplayFormat;
+            this.MeasurementOutcome = value.MeasurementOutcome;
+            this.MeasuredValue = value.MeasuredValue;
+            this.MeasuredValueCaption = value.MeasuredValueCaption;
+            this.Reading = value.Reading;
+            this.Timestamp = value.Timestamp;
         }
     }
 
@@ -200,14 +201,12 @@ public abstract partial class MeasureBase : DeviceUnderTestElementBase
 
     #region " display properties "
 
-    private string? _displayFormat;
-
     /// <summary> Gets or sets the display format for the primary measurement. </summary>
     /// <value> The display format. </value>
     public string? DisplayFormat
     {
-        get => this._displayFormat;
-        set => _ = this.SetProperty( ref this._displayFormat, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
 
     /// <summary> Gets or sets the display format for Voltage. </summary>
@@ -217,6 +216,7 @@ public abstract partial class MeasureBase : DeviceUnderTestElementBase
         get;
         set => _ = this.SetProperty( ref field, value );
     }
+
 
     #endregion
 
@@ -310,17 +310,13 @@ public abstract partial class MeasureBase : DeviceUnderTestElementBase
         set => _ = this.SetProperty( ref field, value );
     }
 
-    private MeasurementOutcomes? _measurementOutcome;
-
     /// <summary> Gets or sets the measurement outcome. </summary>
     /// <value> The outcome. </value>
     public MeasurementOutcomes? MeasurementOutcome
     {
-        get => this._measurementOutcome;
-        set => _ = this.SetProperty( ref this._measurementOutcome, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
-
-    private string? _reading;
 
     /// <summary>
     /// Gets or sets  or sets (protected) the reading.  When set, the value is converted to the <see cref="MeasuredValue"/>.
@@ -328,41 +324,35 @@ public abstract partial class MeasureBase : DeviceUnderTestElementBase
     /// <value> The reading. </value>
     public string? Reading
     {
-        get => this._reading;
-        set => _ = this.SetProperty( ref this._reading, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
-
-    private double _measuredValue;
 
     /// <summary> Gets or sets the measured value. </summary>
     /// <value> The measured value. </value>
     public double MeasuredValue
     {
-        get => this._measuredValue;
+        get;
         set
         {
-            if ( this.SetProperty( ref this._measuredValue, value ) )
+            if ( this.SetProperty( ref field, value ) )
             {
                 this.MeasuredValueCaption = this.MeasurementOutcome == MeasurementOutcomes.None || (this.MeasurementOutcome & MeasurementOutcomes.MeasurementNotMade) != 0
                     ? string.Empty
                     : string.IsNullOrWhiteSpace( this.Reading ) || (this.MeasurementOutcome & MeasurementOutcomes.MeasurementFailed) != 0
                         ? "#null#"
-                        : this._measuredValue.ToString( this.DisplayFormat, System.Globalization.CultureInfo.CurrentCulture );
+                        : this.MeasuredValue.ToString( this.DisplayFormat, System.Globalization.CultureInfo.CurrentCulture );
             }
         }
     }
-
-    private string? _measuredValueCaption;
 
     /// <summary> Gets or sets (protected) the measured value display caption. </summary>
     /// <value> The measured value caption. </value>
     public string? MeasuredValueCaption
     {
-        get => this._measuredValueCaption;
-        protected set => _ = this.SetProperty( ref this._measuredValueCaption, value );
+        get;
+        protected set => _ = this.SetProperty( ref field, value );
     }
-
-    private DateTimeOffset _timestamp;
 
     /// <summary>
     /// Gets or sets (protected) the measurement time stamp. Gets set when setting the reading or
@@ -371,8 +361,8 @@ public abstract partial class MeasureBase : DeviceUnderTestElementBase
     /// <value> The timestamp. </value>
     public DateTimeOffset Timestamp
     {
-        get => this._timestamp;
-        protected set => _ = this.SetProperty( ref this._timestamp, value );
+        get;
+        protected set => _ = this.SetProperty( ref field, value );
     }
 
     /// <summary> Emulates a reading. </summary>
@@ -387,19 +377,15 @@ public abstract partial class MeasureBase : DeviceUnderTestElementBase
 
     #region " configuration properties "
 
-    private double _aperture;
-
     /// <summary>
     /// Gets or sets the integration period in number of power line cycles for taking the measurement.
     /// </summary>
     /// <value> The aperture. </value>
     public double Aperture
     {
-        get => this._aperture;
-        set => _ = this.SetProperty( ref this._aperture, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
-
-    private double _highLimit;
 
     /// <summary>
     /// Gets or sets the high limit for determining measurement pass fail condition.
@@ -407,11 +393,9 @@ public abstract partial class MeasureBase : DeviceUnderTestElementBase
     /// <value> The high limit. </value>
     public double HighLimit
     {
-        get => this._highLimit;
-        set => _ = this.SetProperty( ref this._highLimit, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
-
-    private double _lowLimit;
 
     /// <summary>
     /// Gets or sets the low limit for determining measurement pass fail condition.
@@ -419,9 +403,29 @@ public abstract partial class MeasureBase : DeviceUnderTestElementBase
     /// <value> The low limit. </value>
     public double LowLimit
     {
-        get => this._lowLimit;
-        set => _ = this.SetProperty( ref this._lowLimit, value );
+        get;
+        set => _ = this.SetProperty( ref field, value );
     }
 
     #endregion
+
+    #region " report " 
+
+    /// <summary>   Builds measured values. </summary>
+    /// <remarks>   2026-03-30. </remarks>
+    /// <param name="prefix">  (Optional) [CRLF] The prefix. </param>
+    /// <returns>   A string. </returns>
+    public string BuildMeasuredValues( string prefix = "\r\n" )
+    {
+        StringBuilder sb = new();
+        _ = sb.Append( $"{prefix}Okay Outcome: {this.FirmwareOkayReading}" );
+        _ = sb.Append( $"{prefix}      Status: {this.FirmwareStatusReading}" );
+        _ = sb.Append( $"{prefix}     Outcome: {this.FirmwareOutcomeReading}" );
+        _ = sb.Append( $"{prefix}     Reading: {this.FirmwareReading}" );
+        _ = sb.Append( $"{prefix}      Amount: {this.MeasuredValue}" );
+        return sb.ToString();
+    }
+
+    #endregion
+
 }

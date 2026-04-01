@@ -151,7 +151,6 @@ public partial class Meter : CommunityToolkit.Mvvm.ComponentModel.ObservableObje
 
     #region " Tsp Device "
 
-
     private K2600Device? TspDeviceInternal
     {
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
@@ -770,23 +769,23 @@ public partial class Meter : CommunityToolkit.Mvvm.ComponentModel.ObservableObje
         }
         else if ( configurationInformation.InitialResistance is null )
         {
-            throw new InvalidOperationException( "Initial MeasuredValue null detected in device under test." );
+            throw new InvalidOperationException( "Configuration information initial resistance null detected in device under test." );
         }
         else if ( this.InitialResistance is null )
         {
-            throw new InvalidOperationException( "Meter Initial MeasuredValue null detected in device under test." );
+            throw new InvalidOperationException( "Meter Initial Resistance null detected in device under test." );
         }
         else if ( configurationInformation.FinalResistance is null )
         {
-            throw new InvalidOperationException( "Final MeasuredValue null detected in device under test." );
+            throw new InvalidOperationException( "Configuration information  Final Resistance null detected in device under test." );
         }
         else if ( this.FinalResistance is null )
         {
-            throw new InvalidOperationException( "Meter Final MeasuredValue null detected in device under test." );
+            throw new InvalidOperationException( "Meter Final Resistance null detected in device under test." );
         }
         else if ( configurationInformation.ThermalTransient is null )
         {
-            throw new InvalidOperationException( "Thermal Transient null detected in device under test." );
+            throw new InvalidOperationException( "Configuration information  Thermal Transient null detected in device under test." );
         }
         else if ( this.ThermalTransient is null )
         {
@@ -798,7 +797,7 @@ public partial class Meter : CommunityToolkit.Mvvm.ComponentModel.ObservableObje
         }
         else if ( this.ConfigInfo.InitialResistance is null )
         {
-            throw new InvalidOperationException( "Meter Configuration Initial MeasuredValue null detected in device under test." );
+            throw new InvalidOperationException( "Meter Configuration Initial Resistance null detected in device under test." );
         }
 
         if ( !this.ConfigInfo.SourceMeasureUnitEquals( configurationInformation ) )
@@ -837,19 +836,19 @@ public partial class Meter : CommunityToolkit.Mvvm.ComponentModel.ObservableObje
         }
         else if ( configurationInformation.InitialResistance is null )
         {
-            throw new InvalidOperationException( "Initial MeasuredValue null detected in device under test." );
+            throw new InvalidOperationException( "Initial Resistance null detected in device under test." );
         }
         else if ( this.InitialResistance is null )
         {
-            throw new InvalidOperationException( "Meter Initial MeasuredValue null detected in device under test." );
+            throw new InvalidOperationException( "Meter Initial Resistance null detected in device under test." );
         }
         else if ( configurationInformation.FinalResistance is null )
         {
-            throw new InvalidOperationException( "Final MeasuredValue null detected in device under test." );
+            throw new InvalidOperationException( "Final Resistance null detected in device under test." );
         }
         else if ( this.FinalResistance is null )
         {
-            throw new InvalidOperationException( "Meter Final MeasuredValue null detected in device under test." );
+            throw new InvalidOperationException( "Meter Final Resistance null detected in device under test." );
         }
         else if ( configurationInformation.ThermalTransient is null )
         {
@@ -865,7 +864,7 @@ public partial class Meter : CommunityToolkit.Mvvm.ComponentModel.ObservableObje
         }
         else if ( this.ConfigInfo.InitialResistance is null )
         {
-            throw new InvalidOperationException( "Meter Configuration Initial MeasuredValue null detected in device under test." );
+            throw new InvalidOperationException( "Meter Configuration Initial Resistance null detected in device under test." );
         }
 
         if ( !this.ConfigInfo.SourceMeasureUnitEquals( configurationInformation ) )
@@ -999,7 +998,7 @@ public partial class Meter : CommunityToolkit.Mvvm.ComponentModel.ObservableObje
 
     #region " ttm framework: shunt "
 
-    /// <summary> Configures the meter for making Shunt MeasuredValue measurements. </summary>
+    /// <summary> Configures the meter for making Shunt measurements. </summary>
     /// <remarks> David, 2020-10-12. </remarks>
     /// <exception cref="ArgumentNullException"> Thrown when one or more required arguments are null. </exception>
     /// <param name="resistance"> The shunt resistance. </param>
@@ -1055,7 +1054,7 @@ public partial class Meter : CommunityToolkit.Mvvm.ComponentModel.ObservableObje
         this.ShuntResistance.CheckThrowUnequalConfiguration( resistance );
     }
 
-    /// <summary> Apply changed Shunt MeasuredValue configuration. </summary>
+    /// <summary> Apply changed Shunt configuration. </summary>
     /// <remarks> David, 2020-10-12. </remarks>
     /// <exception cref="ArgumentNullException"> Thrown when one or more required arguments are null. </exception>
     /// <param name="resistance"> The shunt resistance. </param>
@@ -1201,7 +1200,37 @@ public partial class Meter : CommunityToolkit.Mvvm.ComponentModel.ObservableObje
     /// <summary> True if the meter was enabled to respond to trigger events. </summary>
     public bool IsAwaitingTrigger { get; set; }
 
-    /// <summary> Abort triggered measurements. </summary>
+    /// <summary>   Abort trigger sequence. </summary>
+    /// <remarks>   2026-03-30. </remarks>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    public void AbortTriggerSequence( double timeoutSeconds = 1.0 )
+    {
+        if ( this.TspDevice is null ) throw new InvalidOperationException( $"{nameof( Meter )}.{nameof( Meter.TspDevice )} is null." );
+        if ( this.TspDevice.Session is null ) throw new InvalidOperationException( $"{nameof( Meter )}.{nameof( Meter.TspDevice )}.{nameof( Meter.TspDevice.Session )} is null." );
+        if ( this.TriggerSequencer is null ) throw new InvalidOperationException( $"{nameof( Meter )}.{nameof( Meter.TriggerSequencer )} is null." );
+        if ( this.MeterSubsystem is null ) throw new InvalidOperationException( $"{nameof( Meter )}.{nameof( Meter.MeterSubsystem )} is null." );
+        this.TriggerSequencer.RestartSignal = TriggerSequenceSignal.Stop;
+        this.TspDevice.Session.AssertTrigger();
+
+        // allow time for the measurement to terminate.
+        bool messageAvailable = false;
+        Stopwatch sw = Stopwatch.StartNew();
+        while ( !messageAvailable && sw.Elapsed < TimeSpan.FromSeconds( timeoutSeconds ) )
+        {
+            _ = Pith.SessionBase.AsyncDelay( TimeSpan.FromMilliseconds( 10 ) );
+            messageAvailable = this.IsMeasurementCompleted();
+        }
+
+        // clear the complete message from the output buffer
+        _ = this.FlushRead();
+
+        // System.Threading.Thread.Sleep( ( int ) Math.Round( 1000d * this.MeterSubsystem.MeterMain.PostTransientDelay ) + 400 );
+
+        this.IsAwaitingTrigger = false;
+    }
+
+    /// <summary> Abort triggered measurements if triggered. </summary>
     /// <remarks> David, 2020-10-12. </remarks>
     public void AbortTriggerSequenceIf()
     {
@@ -1228,8 +1257,8 @@ public partial class Meter : CommunityToolkit.Mvvm.ComponentModel.ObservableObje
     /// <param name="onCompleteReply">  (Optional) The operation completion reply. </param>
     public void PrepareForTrigger( bool lockLocal = false, string onCompleteReply = "OPC" )
     {
-        if ( this.TspDevice is null ) throw new InvalidOperationException( $"Meter {nameof( this.TspDevice )} is null." );
-        if ( this.TspDevice.Session is null ) throw new InvalidOperationException( $"Meter {nameof( this.TspDevice )}.{nameof( this.TspDevice.Session )} is null." );
+        if ( this.TspDevice is null ) throw new InvalidOperationException( $"{nameof( Meter )}.{nameof( Meter.TspDevice )} is null." );
+        if ( this.TspDevice.Session is null ) throw new InvalidOperationException( $"{nameof( Meter )}.{nameof( Meter.TspDevice )}.{nameof( Meter.TspDevice.Session )} is null." );
         SessionBase session = this.TspDevice.Session;
 
         this.IsAwaitingTrigger = true;
@@ -1262,6 +1291,32 @@ public partial class Meter : CommunityToolkit.Mvvm.ComponentModel.ObservableObje
         }
     }
 
+    /// <summary> Reads the status byte and returns true if the message available bit is set. </summary>
+    public bool IsMeasurementCompleted()
+    {
+        if ( !this.IsSessionOpen ) return false;
+        Pith.SessionBase session = this.TspDevice!.Session!;
+        bool completed = session.IsMessageAvailableBitSet( session.ReadStatusByte() );
+        this.IsAwaitingTrigger = !completed;
+        return completed;
+    }
+
+    /// <summary>   Gets or sets the measurement completed reply. </summary>
+    /// <value> The measurement completed reply. </value>
+    public string MeasurementCompletedReply { get; set; } = "OPC";
+
+    /// <summary>   Clears the output buffer. </summary>
+    /// <remarks>   2024-11-08. </remarks>
+    /// <returns>
+    /// A string containing any orphan messages that were left unread in the instrument output buffer.
+    /// </returns>
+    public string FlushRead()
+    {
+        if ( !this.IsSessionOpen ) return string.Empty;
+        Pith.SessionBase session = this.TspDevice!.Session!;
+        return session.ReadLines( session.StatusReadDelay, TimeSpan.FromMilliseconds( 100 ), false );
+    }
+
     /// <summary> Reads the measurements from the instrument. </summary>
     /// <remarks> David, 2020-10-12. </remarks>
     /// <param name="initialResistance"> The initial resistance. </param>
@@ -1275,11 +1330,37 @@ public partial class Meter : CommunityToolkit.Mvvm.ComponentModel.ObservableObje
         if ( this.FinalResistance is null ) throw new InvalidOperationException( $"Meter {nameof( this.FinalResistance )} is null." );
         if ( this.ThermalTransient is null ) throw new InvalidOperationException( $"Meter {nameof( this.ThermalTransient )} is null." );
 
+        string orphanMessages = this.FlushRead();
+        if ( !string.IsNullOrWhiteSpace( orphanMessages ) )
+            _ = cc.isr.VI.SessionLogger.Instance.LogWarning( "Instrument '{0}' reading measurements found orphan messages:\r\n\t{0}",
+                this.ResourceName, orphanMessages );
+
         _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"'{0}' reading measurements;. ", this.ResourceName );
         this.IsAwaitingTrigger = false;
         this.InitialResistance.ReadResistance( initialResistance );
         this.FinalResistance.ReadResistance( finalResistance );
         this.ThermalTransient.ReadThermalTransient( thermalTransient );
+    }
+
+    /// <summary>   Reads the measurements from the instrument. </summary>
+    /// <remarks>   2026-03-30. </remarks>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    /// <param name="part"> The part. </param>
+    public void ReadMeasurements( DeviceUnderTest part )
+    {
+        this.ReadMeasurements( part.InitialResistance ?? throw new InvalidOperationException( $"{nameof( part )}.{nameof( part.InitialResistance )} is null." ),
+            part.FinalResistance ?? throw new InvalidOperationException( $"{nameof( part )}.{nameof( part.FinalResistance )} is null." ),
+            part.ThermalTransient ?? throw new InvalidOperationException( $"{nameof( part )}.{nameof( part.ThermalTransient )} is null." ) );
+    }
+
+    /// <summary>   Reads the measurements from the instrument. </summary>
+    /// <remarks>   2026-03-30. </remarks>
+    /// <exception cref="InvalidOperationException">    Thrown when the requested operation is
+    ///                                                 invalid. </exception>
+    public void ReadMeasurements()
+    {
+        this.ReadMeasurements( this.Part ?? throw new InvalidOperationException( $"{nameof( this.Part )} is null." ) );
     }
 
     #endregion
@@ -1565,7 +1646,7 @@ public partial class Meter : CommunityToolkit.Mvvm.ComponentModel.ObservableObje
                     _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"Measurement sequence starting;. " );
                     this.Part.ClearMeasurements();
 
-                    // step to the Measure Initial MeasuredValue state.
+                    // step to the Measure Initial Resistance state.
                     this.MeasureSequencer.Enqueue( MeasurementSequenceSignal.Step );
                     break;
                 }

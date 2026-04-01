@@ -78,12 +78,10 @@ public partial class ConfigurationViewBase : cc.isr.WinControls.ModelViewBase
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( field is not null )
-                field.PropertyChanged -= this.Part_PropertyChanged;
+            field?.PropertyChanged -= this.Part_PropertyChanged;
 
             field = value;
-            if ( field is not null )
-                field.PropertyChanged += this.Part_PropertyChanged;
+            field?.PropertyChanged += this.Part_PropertyChanged;
         }
     }
 
@@ -163,42 +161,44 @@ public partial class ConfigurationViewBase : cc.isr.WinControls.ModelViewBase
         if ( this.Part is null ) throw new InvalidOperationException( $"{nameof( ConfigurationViewBase )}.{nameof( this.Part )} is null." );
         if ( this.Part.InitialResistance is null ) throw new InvalidOperationException( $"{nameof( ConfigurationViewBase )}.{nameof( this.Part )}..{nameof( this.Part.InitialResistance )} is null." );
 
-        TtmMeterSettings ttmMeterSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmMeterSettings;
-        TtmResistanceSettings ttmResistanceSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmResistanceSettings;
+        MeterSettings meterSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.MeterSettings;
+        MeterDefaults meterDefaults = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.MeterDefaults;
+        ColdResistanceSettings coldResistanceSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.ColdResistanceSettings;
+        ColdResistanceDefaults coldResistanceDefaults = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.ColdResistanceDefaults;
 
         // set the GUI based on the current defaults.
         this._checkContactsCheckBox.DataBindings.Clear();
         this._checkContactsCheckBox.DataBindings.Add( new Binding( "Checked", this.Part, "ContactCheckEnabled",
             true, DataSourceUpdateMode.OnPropertyChanged ) );
-        this._checkContactsCheckBox.Checked = ttmMeterSettings.ContactCheckEnabled;
+        this._checkContactsCheckBox.Checked = meterSettings.ContactCheckEnabled;
         this.Part.ContactCheckEnabled = this._checkContactsCheckBox.Checked;
         cc.isr.VI.Pith.SessionBase.DoEventsAction?.Invoke();
-        this._coldVoltageNumeric.Minimum = ( decimal ) ttmResistanceSettings.VoltageMinimum;
-        this._coldVoltageNumeric.Maximum = ( decimal ) ttmResistanceSettings.VoltageMaximum;
+        this._coldVoltageNumeric.Minimum = ( decimal ) coldResistanceDefaults.VoltageMinimum;
+        this._coldVoltageNumeric.Maximum = ( decimal ) coldResistanceDefaults.VoltageMaximum;
         this._coldVoltageNumeric.DataBindings.Clear();
         this._coldVoltageNumeric.DataBindings.Add( new Binding( "Value", this.Part.InitialResistance, "VoltageLimit", true, DataSourceUpdateMode.OnPropertyChanged ) );
-        this._coldVoltageNumeric.Value = (( decimal ) ttmResistanceSettings.VoltageLimit).Clip( this._coldVoltageNumeric.Minimum, this._coldVoltageNumeric.Maximum );
+        this._coldVoltageNumeric.Value = (( decimal ) coldResistanceSettings.VoltageLimit).Clip( this._coldVoltageNumeric.Minimum, this._coldVoltageNumeric.Maximum );
         this.Part.InitialResistance.VoltageLimit = ( double ) this._coldVoltageNumeric.Value;
         cc.isr.VI.Pith.SessionBase.DoEventsAction?.Invoke();
-        this._coldCurrentNumeric.Minimum = ( decimal ) ttmResistanceSettings.CurrentMinimum;
-        this._coldCurrentNumeric.Maximum = ( decimal ) ttmResistanceSettings.CurrentMaximum;
+        this._coldCurrentNumeric.Minimum = ( decimal ) coldResistanceDefaults.CurrentMinimum;
+        this._coldCurrentNumeric.Maximum = ( decimal ) coldResistanceDefaults.CurrentMaximum;
         this._coldCurrentNumeric.DataBindings.Clear();
         this._coldCurrentNumeric.DataBindings.Add( new Binding( "Value", this.Part.InitialResistance, "CurrentLevel", true, DataSourceUpdateMode.OnPropertyChanged ) );
-        this._coldCurrentNumeric.Value = (( decimal ) ttmResistanceSettings.CurrentLevel).Clip( this._coldCurrentNumeric.Minimum, this._coldCurrentNumeric.Maximum );
+        this._coldCurrentNumeric.Value = (( decimal ) coldResistanceSettings.CurrentLevel).Clip( this._coldCurrentNumeric.Minimum, this._coldCurrentNumeric.Maximum );
         this.Part.InitialResistance.CurrentLevel = ( double ) this._coldCurrentNumeric.Value;
         cc.isr.VI.Pith.SessionBase.DoEventsAction?.Invoke();
-        this._coldResistanceHighLimitNumeric.Minimum = ( decimal ) ttmResistanceSettings.Minimum;
-        this._coldResistanceHighLimitNumeric.Maximum = ( decimal ) ttmResistanceSettings.Maximum;
+        this._coldResistanceHighLimitNumeric.Minimum = ( decimal ) coldResistanceDefaults.Minimum;
+        this._coldResistanceHighLimitNumeric.Maximum = ( decimal ) coldResistanceDefaults.Maximum;
         this._coldResistanceHighLimitNumeric.DataBindings.Clear();
         this._coldResistanceHighLimitNumeric.DataBindings.Add( new Binding( "Value", this.Part.InitialResistance, "HighLimit", true, DataSourceUpdateMode.OnPropertyChanged ) );
-        this._coldResistanceHighLimitNumeric.Value = (( decimal ) ttmResistanceSettings.HighLimit).Clip( this._coldResistanceHighLimitNumeric.Minimum, this._coldResistanceHighLimitNumeric.Maximum );
+        this._coldResistanceHighLimitNumeric.Value = (( decimal ) coldResistanceSettings.HighLimit).Clip( this._coldResistanceHighLimitNumeric.Minimum, this._coldResistanceHighLimitNumeric.Maximum );
         this.Part.InitialResistance.HighLimit = ( double ) this._coldResistanceHighLimitNumeric.Value;
         cc.isr.VI.Pith.SessionBase.DoEventsAction?.Invoke();
-        this._coldResistanceLowLimitNumeric.Minimum = ( decimal ) ttmResistanceSettings.Minimum;
-        this._coldResistanceLowLimitNumeric.Maximum = ( decimal ) ttmResistanceSettings.Maximum;
+        this._coldResistanceLowLimitNumeric.Minimum = ( decimal ) coldResistanceDefaults.Minimum;
+        this._coldResistanceLowLimitNumeric.Maximum = ( decimal ) coldResistanceDefaults.Maximum;
         this._coldResistanceLowLimitNumeric.DataBindings.Clear();
         this._coldResistanceLowLimitNumeric.DataBindings.Add( new Binding( "Value", this.Part.InitialResistance, "LowLimit", true, DataSourceUpdateMode.OnPropertyChanged ) );
-        this._coldResistanceLowLimitNumeric.Value = (( decimal ) ttmResistanceSettings.LowLimit).Clip( this._coldResistanceLowLimitNumeric.Minimum, this._coldResistanceLowLimitNumeric.Maximum );
+        this._coldResistanceLowLimitNumeric.Value = (( decimal ) coldResistanceSettings.LowLimit).Clip( this._coldResistanceLowLimitNumeric.Minimum, this._coldResistanceLowLimitNumeric.Maximum );
         this.Part.InitialResistance.LowLimit = ( double ) this._coldResistanceLowLimitNumeric.Value;
         cc.isr.VI.Pith.SessionBase.DoEventsAction?.Invoke();
     }
@@ -213,55 +213,57 @@ public partial class ConfigurationViewBase : cc.isr.WinControls.ModelViewBase
         if ( this.Part.ThermalTransient is null ) throw new InvalidOperationException( $"{nameof( ConfigurationViewBase )}.{nameof( this.Part )}..{nameof( this.Part.ThermalTransient )} is null." );
         if ( this.Part.MeterMain is null ) throw new InvalidOperationException( $"{nameof( ConfigurationViewBase )}.{nameof( this.Part )}..{nameof( this.Part.MeterMain )} is null." );
 
-        TtmMeterSettings ttmMeterSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmMeterSettings;
-        TtmTraceSettings ttmTraceSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmTraceSettings;
+        MeterSettings meterSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.MeterSettings;
+        MeterDefaults meterDefaults = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.MeterDefaults;
+        TraceSettings traceSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.TraceSettings;
+        TraceDefaults traceDefaults = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.TraceDefaults;
 
         // set the GUI based on the current defaults.
-        this._postTransientDelayNumeric.Minimum = ( decimal ) ttmMeterSettings.PostTransientDelayMinimum;
-        this._postTransientDelayNumeric.Maximum = ( decimal ) ttmMeterSettings.PostTransientDelayMaximum;
+        this._postTransientDelayNumeric.Minimum = ( decimal ) meterDefaults.PostTransientDelayMinimum;
+        this._postTransientDelayNumeric.Maximum = ( decimal ) meterDefaults.PostTransientDelayMaximum;
         this._postTransientDelayNumeric.DataBindings.Clear();
         this._postTransientDelayNumeric.DataBindings.Add( new Binding( "Value", this.Part.ThermalTransient, "PostTransientDelay", true, DataSourceUpdateMode.OnPropertyChanged ) );
-        this._postTransientDelayNumeric.Value = (( decimal ) ttmMeterSettings.PostTransientDelay).Clip( this._postTransientDelayNumeric.Minimum, this._postTransientDelayNumeric.Maximum );
+        this._postTransientDelayNumeric.Value = (( decimal ) meterSettings.PostTransientDelay).Clip( this._postTransientDelayNumeric.Minimum, this._postTransientDelayNumeric.Maximum );
         this.Part.MeterMain.PostTransientDelay = ( double ) this._postTransientDelayNumeric.Value;
         cc.isr.VI.Pith.SessionBase.DoEventsAction?.Invoke();
 
-        this._thermalVoltageNumeric.Minimum = ( decimal ) ttmTraceSettings.VoltageMinimum;
-        this._thermalVoltageNumeric.Maximum = ( decimal ) ttmTraceSettings.VoltageMaximum;
+        this._thermalVoltageNumeric.Minimum = ( decimal ) traceDefaults.VoltageMinimum;
+        this._thermalVoltageNumeric.Maximum = ( decimal ) traceDefaults.VoltageMaximum;
         this._thermalVoltageNumeric.DataBindings.Clear();
         this._thermalVoltageNumeric.DataBindings.Add( new Binding( "Value", this.Part.ThermalTransient, "AllowedVoltageChange", true, DataSourceUpdateMode.OnPropertyChanged ) );
-        this._thermalVoltageNumeric.Value = (( decimal ) ttmTraceSettings.VoltageChange).Clip( this._thermalVoltageNumeric.Minimum, this._thermalVoltageNumeric.Maximum );
+        this._thermalVoltageNumeric.Value = (( decimal ) traceSettings.VoltageChange).Clip( this._thermalVoltageNumeric.Minimum, this._thermalVoltageNumeric.Maximum );
         this.Part.ThermalTransient.AllowedVoltageChange = ( double ) this._thermalVoltageNumeric.Value;
         cc.isr.VI.Pith.SessionBase.DoEventsAction?.Invoke();
 
-        this._thermalCurrentNumeric.Minimum = ( decimal ) ttmTraceSettings.CurrentMinimum;
-        this._thermalCurrentNumeric.Maximum = ( decimal ) ttmTraceSettings.CurrentMaximum;
+        this._thermalCurrentNumeric.Minimum = ( decimal ) traceDefaults.CurrentMinimum;
+        this._thermalCurrentNumeric.Maximum = ( decimal ) traceDefaults.CurrentMaximum;
         this._thermalCurrentNumeric.DataBindings.Clear();
         this._thermalCurrentNumeric.DataBindings.Add( new Binding( "Value", this.Part.ThermalTransient, "CurrentLevel", true, DataSourceUpdateMode.OnPropertyChanged ) );
-        this._thermalCurrentNumeric.Value = (( decimal ) ttmTraceSettings.CurrentLevel).Clip( this._thermalCurrentNumeric.Minimum, this._thermalCurrentNumeric.Maximum );
+        this._thermalCurrentNumeric.Value = (( decimal ) traceSettings.CurrentLevel).Clip( this._thermalCurrentNumeric.Minimum, this._thermalCurrentNumeric.Maximum );
         this.Part.ThermalTransient.CurrentLevel = ( double ) this._thermalCurrentNumeric.Value;
         cc.isr.VI.Pith.SessionBase.DoEventsAction?.Invoke();
 
-        this._thermalVoltageLimitNumeric.Minimum = ( decimal ) ttmTraceSettings.VoltageMinimum;
-        this._thermalVoltageLimitNumeric.Maximum = ( decimal ) ttmTraceSettings.VoltageMaximum;
+        this._thermalVoltageLimitNumeric.Minimum = ( decimal ) traceDefaults.VoltageMinimum;
+        this._thermalVoltageLimitNumeric.Maximum = ( decimal ) traceDefaults.VoltageMaximum;
         this._thermalVoltageLimitNumeric.DataBindings.Clear();
         this._thermalVoltageLimitNumeric.DataBindings.Add( new Binding( "Value", this.Part.ThermalTransient, "VoltageLimit", true, DataSourceUpdateMode.OnPropertyChanged ) );
-        this._thermalVoltageLimitNumeric.Value = (( decimal ) ttmTraceSettings.VoltageLimit).Clip( this._thermalVoltageLimitNumeric.Minimum, this._thermalVoltageLimitNumeric.Maximum );
+        this._thermalVoltageLimitNumeric.Value = (( decimal ) traceSettings.VoltageLimit).Clip( this._thermalVoltageLimitNumeric.Minimum, this._thermalVoltageLimitNumeric.Maximum );
         this.Part.ThermalTransient.VoltageLimit = ( double ) this._thermalVoltageLimitNumeric.Value;
         cc.isr.VI.Pith.SessionBase.DoEventsAction?.Invoke();
 
-        this._thermalVoltageHighLimitNumeric.Minimum = ( decimal ) ttmTraceSettings.VoltageChangeMinimum;
-        this._thermalVoltageHighLimitNumeric.Maximum = ( decimal ) ttmTraceSettings.VoltageChangeMaximum;
+        this._thermalVoltageHighLimitNumeric.Minimum = ( decimal ) traceDefaults.VoltageChangeMinimum;
+        this._thermalVoltageHighLimitNumeric.Maximum = ( decimal ) traceDefaults.VoltageChangeMaximum;
         this._thermalVoltageHighLimitNumeric.DataBindings.Clear();
         this._thermalVoltageHighLimitNumeric.DataBindings.Add( new Binding( "Value", this.Part.ThermalTransient, "HighLimit", true, DataSourceUpdateMode.OnPropertyChanged ) );
-        this._thermalVoltageHighLimitNumeric.Value = (( decimal ) ttmTraceSettings.HighLimit).Clip( this._thermalVoltageHighLimitNumeric.Minimum, this._thermalVoltageHighLimitNumeric.Maximum );
+        this._thermalVoltageHighLimitNumeric.Value = (( decimal ) traceSettings.HighLimit).Clip( this._thermalVoltageHighLimitNumeric.Minimum, this._thermalVoltageHighLimitNumeric.Maximum );
         this.Part.ThermalTransient.HighLimit = ( double ) this._thermalVoltageHighLimitNumeric.Value;
         cc.isr.VI.Pith.SessionBase.DoEventsAction?.Invoke();
 
-        this._thermalVoltageLowLimitNumeric.Minimum = ( decimal ) ttmTraceSettings.VoltageChangeMinimum;
-        this._thermalVoltageLowLimitNumeric.Maximum = ( decimal ) ttmTraceSettings.VoltageChangeMaximum;
+        this._thermalVoltageLowLimitNumeric.Minimum = ( decimal ) traceDefaults.VoltageChangeMinimum;
+        this._thermalVoltageLowLimitNumeric.Maximum = ( decimal ) traceDefaults.VoltageChangeMaximum;
         this._thermalVoltageLowLimitNumeric.DataBindings.Clear();
         this._thermalVoltageLowLimitNumeric.DataBindings.Add( new Binding( "Value", this.Part.ThermalTransient, "LowLimit", true, DataSourceUpdateMode.OnPropertyChanged ) );
-        this._thermalVoltageLowLimitNumeric.Value = (( decimal ) ttmTraceSettings.LowLimit).Clip( this._thermalVoltageLowLimitNumeric.Minimum, this._thermalVoltageLowLimitNumeric.Maximum );
+        this._thermalVoltageLowLimitNumeric.Value = (( decimal ) traceSettings.LowLimit).Clip( this._thermalVoltageLowLimitNumeric.Minimum, this._thermalVoltageLowLimitNumeric.Maximum );
         this.Part.ThermalTransient.LowLimit = ( double ) this._thermalVoltageLowLimitNumeric.Value;
     }
 
@@ -283,22 +285,27 @@ public partial class ConfigurationViewBase : cc.isr.WinControls.ModelViewBase
     /// <remarks> David, 2020-10-12. </remarks>
     private static void RestoreDefaults()
     {
-        TtmMeterSettings ttmMeterSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmMeterSettings;
-        TtmResistanceSettings ttmResistanceSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmResistanceSettings;
-        TtmTraceSettings ttmTraceSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmTraceSettings;
+        MeterDefaults meterDefaults = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.MeterDefaults;
+        MeterSettings meterSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.MeterSettings;
+        ColdResistanceDefaults coldResistanceDefaults = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.ColdResistanceDefaults;
+        ColdResistanceSettings coldResistanceSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.ColdResistanceSettings;
+        TraceDefaults traceDefaults = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.TraceDefaults;
+        TraceSettings tTraceSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.TraceSettings;
 
-        ttmMeterSettings.ContactCheckEnabled = ttmMeterSettings.ContactCheckEnabledDefault;
-        ttmMeterSettings.ContactCheckThreshold = ttmMeterSettings.ContactCheckThresholdDefault;
-        ttmResistanceSettings.VoltageLimit = ttmResistanceSettings.VoltageLimitDefault;
-        ttmResistanceSettings.CurrentLevel = ttmResistanceSettings.CurrentLevelDefault;
-        ttmResistanceSettings.HighLimit = ttmResistanceSettings.HighLimitDefault;
-        ttmResistanceSettings.LowLimit = ttmResistanceSettings.LowLimitDefault;
-        ttmMeterSettings.PostTransientDelay = ttmMeterSettings.PostTransientDelayDefault;
-        ttmTraceSettings.VoltageChange = ttmTraceSettings.VoltageChangeDefault;
-        ttmTraceSettings.CurrentLevel = ttmTraceSettings.CurrentLevelDefault;
-        ttmTraceSettings.HighLimit = ttmTraceSettings.HighLimitDefault;
-        ttmTraceSettings.LowLimit = ttmTraceSettings.LowLimitDefault;
-        ttmTraceSettings.VoltageLimit = ttmTraceSettings.VoltageLimitDefault;
+        meterSettings.ContactCheckEnabled = meterDefaults.ContactCheckEnabled;
+        meterSettings.ContactCheckThreshold = meterDefaults.ContactCheckThreshold;
+        meterSettings.PostTransientDelay = meterDefaults.PostTransientDelay;
+
+        coldResistanceSettings.VoltageLimit = coldResistanceDefaults.VoltageLimit;
+        coldResistanceSettings.CurrentLevel = coldResistanceDefaults.CurrentLevel;
+        coldResistanceSettings.HighLimit = coldResistanceDefaults.HighLimit;
+        coldResistanceSettings.LowLimit = coldResistanceDefaults.LowLimit;
+
+        tTraceSettings.VoltageChange = traceDefaults.VoltageChange;
+        tTraceSettings.CurrentLevel = traceDefaults.CurrentLevel;
+        tTraceSettings.HighLimit = traceDefaults.HighLimit;
+        tTraceSettings.LowLimit = traceDefaults.LowLimit;
+        tTraceSettings.VoltageLimit = traceDefaults.VoltageLimit;
     }
 
     /// <summary> Copy part values to the settings store. </summary>
@@ -307,23 +314,25 @@ public partial class ConfigurationViewBase : cc.isr.WinControls.ModelViewBase
     {
         if ( this.Part is not null && this.Part.InitialResistance is not null && this.Part.ThermalTransient is not null && this.Part.MeterMain is not null )
         {
-            TtmMeterSettings ttmMeterSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmMeterSettings;
-            TtmResistanceSettings ttmResistanceSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmResistanceSettings;
-            TtmTraceSettings ttmTraceSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmTraceSettings;
+            MeterSettings meterSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.MeterSettings;
+            ColdResistanceSettings coldResistanceSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.ColdResistanceSettings;
+            TraceSettings traceSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.TraceSettings;
 
-            ttmMeterSettings.SourceMeasureUnit = this.Part.InitialResistance.SourceMeasureUnit;
-            ttmMeterSettings.ContactCheckEnabled = this.Part.ContactCheckEnabled;
-            ttmMeterSettings.ContactCheckThreshold = this.Part.ContactCheckThreshold;
-            ttmResistanceSettings.VoltageLimit = this.Part.InitialResistance.VoltageLimit;
-            ttmResistanceSettings.CurrentLevel = this.Part.InitialResistance.CurrentLevel;
-            ttmResistanceSettings.HighLimit = this.Part.InitialResistance.HighLimit;
-            ttmResistanceSettings.LowLimit = this.Part.InitialResistance.LowLimit;
-            ttmMeterSettings.PostTransientDelay = this.Part.MeterMain.PostTransientDelay;
-            ttmTraceSettings.VoltageChange = this.Part.ThermalTransient.AllowedVoltageChange;
-            ttmTraceSettings.CurrentLevel = this.Part.ThermalTransient.CurrentLevel;
-            ttmTraceSettings.HighLimit = this.Part.ThermalTransient.HighLimit;
-            ttmTraceSettings.LowLimit = this.Part.ThermalTransient.LowLimit;
-            ttmTraceSettings.VoltageLimit = this.Part.ThermalTransient.VoltageLimit;
+            meterSettings.SourceMeasureUnit = this.Part.InitialResistance.SourceMeasureUnit;
+            meterSettings.ContactCheckEnabled = this.Part.ContactCheckEnabled;
+            meterSettings.ContactCheckThreshold = this.Part.ContactCheckThreshold;
+            meterSettings.PostTransientDelay = this.Part.MeterMain.PostTransientDelay;
+
+            coldResistanceSettings.VoltageLimit = this.Part.InitialResistance.VoltageLimit;
+            coldResistanceSettings.CurrentLevel = this.Part.InitialResistance.CurrentLevel;
+            coldResistanceSettings.HighLimit = this.Part.InitialResistance.HighLimit;
+            coldResistanceSettings.LowLimit = this.Part.InitialResistance.LowLimit;
+
+            traceSettings.VoltageChange = this.Part.ThermalTransient.AllowedVoltageChange;
+            traceSettings.CurrentLevel = this.Part.ThermalTransient.CurrentLevel;
+            traceSettings.HighLimit = this.Part.ThermalTransient.HighLimit;
+            traceSettings.LowLimit = this.Part.ThermalTransient.LowLimit;
+            traceSettings.VoltageLimit = this.Part.ThermalTransient.VoltageLimit;
         }
     }
 

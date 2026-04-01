@@ -83,9 +83,9 @@ public class DeviceTests
         this.LegacyDevice = new( this.GetType(), ".Driver", true, true );
         Assert.IsNotNull( this.LegacyDevice );
 
-        Assert.IsTrue( cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmMeterSettings.Exists,
-            $"{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmMeterSettings )} should exist" );
-        Asserts.LegacyDriver = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmMeterSettings.LegacyDriver;
+        Assert.IsTrue( cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.MeterSettings.Exists,
+            $"{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.MeterSettings )} should exist" );
+        Asserts.LegacyDriver = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.MeterSettings.LegacyDriver;
 
         this.Meter = this.LegacyDevice.Meter;
         Assert.IsNotNull( this.LegacyDevice.Meter.TspDevice );
@@ -118,7 +118,7 @@ public class DeviceTests
 
     /// <summary>   Gets or sets the ttm settings. </summary>
     /// <value> The ttm settings. </value>
-    internal Properties.Settings TtmSettings { get; set; } = Properties.Settings.Instance;
+    internal Properties.DriverSettings TtmSettings { get; set; } = Properties.DriverSettings.Instance;
 
     /// <summary>   Gets or sets the location settings. </summary>
     /// <value> The location settings. </value>
@@ -211,13 +211,13 @@ public class DeviceTests
         using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( this.LegacyDevice, this.ResourceSettings.ResourceName );
 
         Stopwatch sw = Stopwatch.StartNew();
-        bool validateTriggerCycleReplyMessage = true;
         TimeSpan timeout = TimeSpan.FromSeconds( 1 );
-        Asserts.AssertTriggerCycleShouldStart( this.LegacyDevice, timeout, validateTriggerCycleReplyMessage );
-        Asserts.AssertMeasurementsShouldRead( this.LegacyDevice, !validateTriggerCycleReplyMessage );
+        Asserts.AssertTriggerCycleShouldStart( this.LegacyDevice, timeout );
+        Asserts.AssertTriggerCycleCompleteMessageShouldRead( this.LegacyDevice );
+        Asserts.AssertMeasurementsShouldRead( this.LegacyDevice, false );
         sw.Stop();
         TimeSpan timeSpan = sw.Elapsed;
-        Console.WriteLine( $"         Elapsed: {timeSpan:s\\.fff}s" );
+        Console.WriteLine( $"\tElapsed: {timeSpan:s\\.fff}s" );
         Asserts.AssertInitialResistanceReadingShouldValidate( this.LegacyDevice );
         Asserts.AssertTriggerCycleShouldAbort( this.LegacyDevice );
 

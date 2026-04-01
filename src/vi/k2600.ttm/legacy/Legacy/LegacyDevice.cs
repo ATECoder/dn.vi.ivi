@@ -22,15 +22,17 @@ public partial class LegacyDevice : CommunityToolkit.Mvvm.ComponentModel.Observa
     ///                                             cc.isr.VI.Tsp.K2600.Ttm.MSTest.suffix.json. </param>
     /// <param name="overwriteAllUsersFile"> (Optional) [false] True to over-write all users settings file. </param>
     /// <param name="overwriteThisUserFile"> (Optional) [false] True to over-write this user settings file. </param>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage( "Style", "IDE0270:Use coalesce expression", Justification = "<Pending>" )]
     public LegacyDevice( Type settingAssemblyMemberType, string settingsFileSuffix = ".Driver", bool overwriteAllUsersFile = false, bool overwriteThisUserFile = false ) : base()
     {
-        this.Meter = new();
-        if ( this.Meter is null ) throw new InvalidOperationException( $"{nameof( this.Meter )} is null." );
+        Meter m = new();
+        if ( m is null ) throw new InvalidOperationException( $"Failed initializing a {nameof( Ttm.Meter )} for this instance of {nameof( LegacyDevice )}." );
+        this.Meter = m;
 
         // read settings
-        cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.ReadSettings( settingAssemblyMemberType, settingsFileSuffix, overwriteAllUsersFile, overwriteThisUserFile );
-        if ( !cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmResistanceSettings.Exists )
-            throw new InvalidOperationException( $"Failed reading the thermal transient settings {nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings )}" );
+        cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.ReadSettings( settingAssemblyMemberType, settingsFileSuffix, overwriteAllUsersFile, overwriteThisUserFile );
+        if ( !cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.ColdResistanceSettings.Exists )
+            throw new InvalidOperationException( $"Failed reading the thermal transient settings {nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings )}" );
 
         // the meter configuration is instantiated upon meter instantiation.
         if ( this.Meter.ConfigInfo is null ) throw new InvalidOperationException( $"{nameof( this.Meter )}.{nameof( this.Meter.ConfigInfo )} is null." );
@@ -382,30 +384,36 @@ public partial class LegacyDevice : CommunityToolkit.Mvvm.ComponentModel.Observa
     /// <value> The trigger cycle complete message. </value>
     public string TriggerCycleCompleteMessage { get; private set; }
 
+    /// <summary>   Reads trigger cycle reply. </summary>
+    /// <remarks>   2026-03-30. </remarks>
+    public void ReadTriggerCycleReply()
+    {
+        if ( !this.IsConnected ) return;
+        Pith.SessionBase session = this.Meter!.TspDevice!.Session!;
+        this.OnMessageAvailable( TraceEventType.Verbose, "Reading trigger cycle complete message",
+            "Instrument '{0}' reading trigger cycle completion message", this.ResourceName );
+        this.Meter!.IsAwaitingTrigger = false;
+        this.TriggerCycleCompleteMessage = session.ReadLineTrimEnd();
+        if ( string.IsNullOrWhiteSpace( this.TriggerCycleCompleteMessage ) )
+            this.OnMessageAvailable( TraceEventType.Verbose, "Unexpected empty trigger cycle reply message upon end of measurement",
+                "Instrument '{0}' end of trigger cycle message is empty",
+                this.ResourceName );
+        else if ( string.Equals( this.MeasurementCompletedReply, this.TriggerCycleCompleteMessage, StringComparison.Ordinal ) )
+            this.OnMessageAvailable( TraceEventType.Verbose, "Received end of measurement",
+                "Instrument '{0}' sent this trigger cycle complete message: {1}",
+                this.ResourceName, this.TriggerCycleCompleteMessage );
+        else
+            this.OnMessageAvailable( TraceEventType.Verbose, "Received unexpected end of measurement message",
+                "Instrument '{0}' trigger cycle complete message returned {1} instead of {2}",
+                this.ResourceName, this.TriggerCycleCompleteMessage, this.MeasurementCompletedReply );
+    }
+
     /// <summary>   Read the measurements from the instrument. </summary>
     /// <remarks>   2024-11-15. </remarks>
-    /// <param name="readTriggerCycleReply"> (Optional) (true) True to read trigger cycle reply. </param>
     /// <returns>   The measurements. </returns>
-    public bool ReadMeasurements( bool readTriggerCycleReply = true )
+    public bool ReadMeasurements()
     {
         if ( !this.IsConnected ) return false;
-        Pith.SessionBase session = this.Meter!.TspDevice!.Session!;
-        if ( readTriggerCycleReply )
-        {
-            this.OnMessageAvailable( TraceEventType.Verbose, "Reading trigger cycle complete message",
-                "Instrument '{0}' reading trigger cycle completion message", this.ResourceName );
-            this.Meter!.IsAwaitingTrigger = false;
-            this.TriggerCycleCompleteMessage = session.ReadLineTrimEnd();
-            if ( string.IsNullOrWhiteSpace( this.TriggerCycleCompleteMessage ) )
-                this.OnMessageAvailable( TraceEventType.Verbose, "Unexpected empty trigger cycle reply message upon end of measurement",
-                    "Instrument '{0}' end of trigger cycle message is empty", this.ResourceName );
-            else if ( string.Equals( this.MeasurementCompletedReply, this.TriggerCycleCompleteMessage, StringComparison.Ordinal ) )
-                this.OnMessageAvailable( TraceEventType.Verbose, "Received end of measurement",
-                    "Instrument '{0}' sent this trigger cycle complete message: {1}", this.ResourceName, this.TriggerCycleCompleteMessage );
-            else
-                this.OnMessageAvailable( TraceEventType.Verbose, "Received unexpected end of measurement message",
-                    "Instrument '{0}' trigger cycle complete message returned {1} instead of {2}", this.ResourceName, this.TriggerCycleCompleteMessage, this.MeasurementCompletedReply );
-        }
         this.LastOrphanMessages = this.FlushRead();
         if ( !string.IsNullOrWhiteSpace( this.LastOrphanMessages ) )
             this.OnMessageAvailable( TraceEventType.Warning, "Found orphan messages",
@@ -414,6 +422,19 @@ public partial class LegacyDevice : CommunityToolkit.Mvvm.ComponentModel.Observa
         _ = this.ReadInitialResistance( this.InitialResistance );
         _ = this.ReadFinalResistance( this.FinalResistance );
         return this.ReadThermalTransient( this.ThermalTransient );
+    }
+
+    /// <summary>   Read the measurements from the instrument. </summary>
+    /// <remarks>   2026-03-30. </remarks>
+    /// <param name="readTriggerCycleReply">    (Optional) [true] True to read trigger cycle reply
+    ///                                         before reading the measurements. </param>
+    /// <returns>   The measurements. </returns>
+    public bool ReadMeasurements( bool readTriggerCycleReply = true )
+    {
+        if ( !this.IsConnected ) return false;
+        if ( readTriggerCycleReply )
+            this.ReadTriggerCycleReply();
+        return this.ReadMeasurements();
     }
 
     #endregion

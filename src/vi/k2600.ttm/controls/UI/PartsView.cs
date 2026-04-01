@@ -52,12 +52,10 @@ public partial class PartsView : cc.isr.WinControls.ModelViewBase
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( field is not null )
-                field.PropertyChanged -= this.Part_PropertyChanged;
+            field?.PropertyChanged -= this.Part_PropertyChanged;
 
             field = value;
-            if ( field is not null )
-                field.PropertyChanged += this.Part_PropertyChanged;
+            field?.PropertyChanged += this.Part_PropertyChanged;
         }
     }
 
@@ -306,12 +304,10 @@ public partial class PartsView : cc.isr.WinControls.ModelViewBase
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( field is not null )
-                field.CollectionChanged -= this.OnPartsChanged;
+            field?.CollectionChanged -= this.OnPartsChanged;
 
             field = value;
-            if ( field is not null )
-                field.CollectionChanged += this.OnPartsChanged;
+            field?.CollectionChanged += this.OnPartsChanged;
         }
     }
 
@@ -587,10 +583,7 @@ public partial class PartsView : cc.isr.WinControls.ModelViewBase
     /// <param name="e">      Data grid view data error event information. </param>
     private void PartsDataGridView_DataError( object? sender, DataGridViewDataErrorEventArgs e )
     {
-        if ( e is not null )
-        {
-            e.Cancel = false;
-        }
+        e?.Cancel = false;
     }
 
     /// <summary> The binder. </summary>

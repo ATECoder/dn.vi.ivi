@@ -142,16 +142,10 @@ public partial class MeterView : cc.isr.WinControls.ModelViewBase
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( field is not null )
-            {
-                field.DataError -= this.DataGridView_DataError;
-            }
+            field?.DataError -= this.DataGridView_DataError;
 
             field = value;
-            if ( field is not null )
-            {
-                field.DataError += this.DataGridView_DataError;
-            }
+            field?.DataError += this.DataGridView_DataError;
         }
     }
 
@@ -2218,7 +2212,7 @@ public partial class MeterView : cc.isr.WinControls.ModelViewBase
             _ = cc.isr.VI.SessionLogger.Instance.LogVerbose( $"{this.Device.ResourceModelCaption} SRQ: {this.Device.Session.ServiceRequestStatus:X};. " );
             this.Cursor = Cursors.WaitCursor;
             this.InfoProvider?.Clear();
-            if ( this.Device.StatusSubsystemBase.Session.HasMeasurementEvent )
+            if ( this.Device.Session.HasMeasurementEvent )
             {
                 if ( this.TriggerSubsystem.TriggerCount.Value == 1 )
                 {

@@ -324,11 +324,8 @@ public partial class ScannerView : cc.isr.WinControls.ModelViewBase
     [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
     private void AssignDeviceThis( VisaSessionBase? value )
     {
-        if ( this.Device is not null )
-        {
-            this.Device.PropertyChanged -= this.VisaSessionBasePropertyChanged;
-            this.Device = null;
-        }
+        this.Device?.PropertyChanged -= this.VisaSessionBasePropertyChanged;
+        this.Device = null;
 
         this.Device = value;
         this._slotView.AssignDevice( value );

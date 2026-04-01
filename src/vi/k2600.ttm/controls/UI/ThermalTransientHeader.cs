@@ -26,12 +26,10 @@ public partial class ThermalTransientHeader : cc.isr.WinControls.ModelViewBase
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( field is not null )
-                field.PropertyChanged -= this.DeviceUnderTest_PropertyChanged;
+            field?.PropertyChanged -= this.DeviceUnderTest_PropertyChanged;
 
             field = value;
-            if ( field is not null )
-                field.PropertyChanged += this.DeviceUnderTest_PropertyChanged;
+            field?.PropertyChanged += this.DeviceUnderTest_PropertyChanged;
         }
     }
 
@@ -133,12 +131,10 @@ public partial class ThermalTransientHeader : cc.isr.WinControls.ModelViewBase
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( field is not null )
-                field.PropertyChanged -= this.ThermalTransient_PropertyChanged;
+            field?.PropertyChanged -= this.ThermalTransient_PropertyChanged;
 
             field = value;
-            if ( field is not null )
-                field.PropertyChanged += this.ThermalTransient_PropertyChanged;
+            field?.PropertyChanged += this.ThermalTransient_PropertyChanged;
         }
     }
 

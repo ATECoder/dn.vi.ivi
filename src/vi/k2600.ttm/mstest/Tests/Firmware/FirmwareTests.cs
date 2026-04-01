@@ -78,12 +78,21 @@ public class FirmwareTests
 
         // read the TTM Driver settings and throw if not found.
         this.TtmSettings.ReadSettings( this.GetType(), ".Driver", true, true );
-        cc.isr.VI.Tsp.K2600.Ttm.TtmMeterSettings meterSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmMeterSettings;
-        Assert.IsTrue( meterSettings.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmMeterSettings )} should exist." );
-        cc.isr.VI.Tsp.K2600.Ttm.TtmResistanceSettings resistanceSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmResistanceSettings;
-        Assert.IsTrue( resistanceSettings.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmResistanceSettings )} should exist." );
-        Assert.AreEqual( 0.1, resistanceSettings.VoltageMaximum );
-        Asserts.LegacyDriver = this.TtmSettings.TtmMeterSettings.LegacyDriver;
+
+        cc.isr.VI.Tsp.K2600.Ttm.MeterSettings meterSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.MeterSettings;
+        Assert.IsTrue( meterSettings.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.MeterSettings )} should exist." );
+
+        cc.isr.VI.Tsp.K2600.Ttm.MeterDefaults meterDefaults = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.MeterDefaults;
+        Assert.IsTrue( meterDefaults.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.MeterDefaults )} should exist." );
+
+        cc.isr.VI.Tsp.K2600.Ttm.ColdResistanceSettings resistanceSettings = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.ColdResistanceSettings;
+        Assert.IsTrue( resistanceSettings.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.ColdResistanceSettings )} should exist." );
+
+        cc.isr.VI.Tsp.K2600.Ttm.ColdResistanceDefaults resistanceDefaults = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.ColdResistanceDefaults;
+        Assert.IsTrue( resistanceDefaults.Exists, $"cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.{nameof( cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.ColdResistanceSettings )} should exist." );
+
+        Assert.AreEqual( 0.1, resistanceDefaults.VoltageMaximum );
+        Asserts.LegacyDriver = this.TtmSettings.MeterSettings.LegacyDriver;
 
         cc.isr.VI.Tsp.VisaSession visaSession = new();
         Assert.IsNotNull( visaSession.Session );
@@ -110,7 +119,7 @@ public class FirmwareTests
 
     /// <summary>   Gets or sets the ttm settings. </summary>
     /// <value> The ttm settings. </value>
-    internal cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings TtmSettings { get; set; } = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance;
+    internal cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings TtmSettings { get; set; } = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance;
 
     /// <summary>   Gets or sets the location settings. </summary>
     /// <value> The location settings. </value>

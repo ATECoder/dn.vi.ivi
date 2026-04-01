@@ -161,10 +161,10 @@ internal static partial class Asserts
 
         // the following values are set to allow testing for both voltage and current source to make sure
         // the the preset values do not become out of range when changing the source output option.
-        double maxValue = Ttm.Properties.Settings.Instance.TtmResistanceSettings.VoltageMaximum;
-        maxValue = Math.Min( maxValue, Ttm.Properties.Settings.Instance.TtmResistanceSettings.CurrentMaximum );
+        double maxValue = Ttm.Properties.DriverSettings.Instance.ColdResistanceDefaults.VoltageMaximum;
+        maxValue = Math.Min( maxValue, Ttm.Properties.DriverSettings.Instance.ColdResistanceDefaults.CurrentMaximum );
 
-        double expectedValue = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmResistanceSettings.CurrentLevelDefault;
+        double expectedValue = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.ColdResistanceDefaults.CurrentLevel;
         double actualValue = legacyDevice.ColdResistanceConfig.CurrentLevel;
         Assert.AreEqual( expectedValue, actualValue, 0.001 * expectedValue,
             $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ColdResistanceConfig )}.{nameof( LegacyDevice.ColdResistanceConfig.CurrentLevel )} should equal the settings value." );
@@ -196,7 +196,7 @@ internal static partial class Asserts
         VI.Device.Tests.Asserts.AssertOrphanMessages( session );
         VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
 
-        expectedValue = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmResistanceSettings.VoltageLimitDefault;
+        expectedValue = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.ColdResistanceDefaults.VoltageLimit;
         actualValue = legacyDevice.ColdResistanceConfig.VoltageLimit;
         Assert.AreEqual( expectedValue, actualValue, 0.001 * expectedValue,
             $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ColdResistanceConfig )}.{nameof( LegacyDevice.ColdResistanceConfig.VoltageLimit )} should equal the settings value." );
@@ -271,7 +271,7 @@ internal static partial class Asserts
             Asserts.AssertSourceShouldConfigure( legacyDevice, initialSourceOutputOption );
         }
 
-        double expectedValue = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmResistanceSettings.HighLimitDefault;
+        double expectedValue = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.ColdResistanceDefaults.HighLimit;
         double actualValue = legacyDevice.ColdResistanceConfig.HighLimit;
         Assert.AreEqual( expectedValue, actualValue, 0.001 * expectedValue,
             $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ColdResistanceConfig )}.{nameof( LegacyDevice.ColdResistanceConfig.HighLimit )} should equal the settings value." );
@@ -305,7 +305,7 @@ internal static partial class Asserts
         VI.Device.Tests.Asserts.AssertOrphanMessages( session );
         VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
 
-        expectedValue = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmResistanceSettings.LowLimitDefault;
+        expectedValue = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.ColdResistanceDefaults.LowLimit;
         actualValue = legacyDevice.ColdResistanceConfig.LowLimit;
         Assert.AreEqual( expectedValue, actualValue, 0.001 * expectedValue,
             $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ColdResistanceConfig )}.{nameof( LegacyDevice.ColdResistanceConfig.LowLimit )} should equal the settings value." );
@@ -339,7 +339,7 @@ internal static partial class Asserts
         VI.Device.Tests.Asserts.AssertOrphanMessages( session );
         VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
 
-        expectedValue = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmMeterSettings.PostTransientDelayDefault;
+        expectedValue = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.MeterDefaults.PostTransientDelay;
         actualValue = legacyDevice.PostTransientDelayConfig;
         Assert.AreEqual( expectedValue, actualValue, 0.001 * expectedValue,
             $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.PostTransientDelay )} should equal the settings value." );
@@ -373,7 +373,7 @@ internal static partial class Asserts
         VI.Device.Tests.Asserts.AssertOrphanMessages( session );
         VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
 
-        expectedValue = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmTraceSettings.CurrentLevelDefault;
+        expectedValue = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.TraceDefaults.CurrentLevel;
         actualValue = legacyDevice.ThermalTransientConfig.CurrentLevel;
         Assert.AreEqual( expectedValue, actualValue, 0.01 * expectedValue,
             $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ThermalTransientConfig )}.{nameof( LegacyDevice.ThermalTransientConfig.CurrentLevel )} should equal the settings value." );
@@ -407,7 +407,7 @@ internal static partial class Asserts
         VI.Device.Tests.Asserts.AssertOrphanMessages( session );
         VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
 
-        expectedValue = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmTraceSettings.VoltageChangeDefault;
+        expectedValue = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.TraceDefaults.VoltageChange;
         actualValue = legacyDevice.ThermalTransientConfig.AllowedVoltageChange;
         Assert.AreEqual( expectedValue, actualValue, 0.01 * expectedValue,
             $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ThermalTransientConfig )}.{nameof( LegacyDevice.ThermalTransientConfig.AllowedVoltageChange )} should equal the settings value." );
@@ -441,7 +441,7 @@ internal static partial class Asserts
         VI.Device.Tests.Asserts.AssertOrphanMessages( session );
         VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
 
-        expectedValue = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmTraceSettings.HighLimitDefault;
+        expectedValue = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.TraceDefaults.HighLimit;
         actualValue = legacyDevice.ThermalTransientConfig.HighLimit;
         Assert.AreEqual( expectedValue, actualValue, 0.01 * expectedValue,
             $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ThermalTransientConfig )}.{nameof( LegacyDevice.ThermalTransientConfig.HighLimit )} should equal the settings value." );
@@ -475,7 +475,7 @@ internal static partial class Asserts
         VI.Device.Tests.Asserts.AssertOrphanMessages( session );
         VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
 
-        expectedValue = cc.isr.VI.Tsp.K2600.Ttm.Properties.Settings.Instance.TtmTraceSettings.LowLimitDefault;
+        expectedValue = cc.isr.VI.Tsp.K2600.Ttm.Properties.DriverSettings.Instance.TraceDefaults.LowLimit;
         actualValue = legacyDevice.ThermalTransientConfig.LowLimit;
         Assert.AreEqual( expectedValue, actualValue, 0.01 * expectedValue,
             $"{nameof( LegacyDevice )}.{nameof( LegacyDevice.ThermalTransientConfig )}.{nameof( LegacyDevice.ThermalTransientConfig.LowLimit )} should equal the settings value." );
@@ -514,9 +514,7 @@ internal static partial class Asserts
     /// <remarks>   2024-11-11. </remarks>
     /// <param name="legacyDevice">                         The legacy device. </param>
     /// <param name="timeout">                              The timeout. </param>
-    /// <param name="validateTriggerCycleCompleteMessage">  True to validate trigger cycle complete
-    ///                                                     message. </param>
-    public static void AssertTriggerCycleShouldStart( LegacyDevice? legacyDevice, TimeSpan timeout, bool validateTriggerCycleCompleteMessage )
+    public static void AssertTriggerCycleShouldStart( LegacyDevice? legacyDevice, TimeSpan timeout )
     {
         Assert.IsNotNull( legacyDevice, $"{nameof( legacyDevice )} should not be null." );
         Assert.IsNotNull( legacyDevice.Meter.TspDevice!.Session, $"{nameof( legacyDevice )} should not be null." );
@@ -540,19 +538,23 @@ internal static partial class Asserts
             messageAvailable = legacyDevice.IsMeasurementCompleted();
         }
 
-        Assert.IsTrue( messageAvailable, "The trigger wait should not timeout." );
-        Assert.IsFalse( legacyDevice.Meter.IsAwaitingTrigger, "awaiting trigger should be false after trigger." );
-
-        if ( validateTriggerCycleCompleteMessage )
-        {
-            string reading = session.ReadLineTrimEnd();
-            Assert.IsFalse( string.IsNullOrEmpty( reading ), $"Triggered output should not be null or empty." );
-            Assert.AreEqual( legacyDevice.MeasurementCompletedReply, reading, "The trigger cycle completion reply should match the expected value" );
-        }
-
         sw.Stop();
         TimeSpan timeSpan = sw.Elapsed;
         Console.WriteLine( $"Trigger Cycle Time: {timeSpan:s\\.fff}s" );
+    }
+
+    /// <summary>   Assert trigger cycle complete message should read. </summary>
+    /// <remarks>   2026-03-30. </remarks>
+    /// <param name="legacyDevice"> The legacy device. </param>
+    public static void AssertTriggerCycleCompleteMessageShouldRead( LegacyDevice? legacyDevice )
+    {
+        Assert.IsNotNull( legacyDevice, $"{nameof( legacyDevice )} should not be null." );
+        Assert.IsNotNull( legacyDevice.Meter.TspDevice!.Session, $"{nameof( legacyDevice )} should not be null." );
+        Pith.SessionBase session = legacyDevice.Meter.TspDevice.Session;
+
+        string reading = session.ReadLineTrimEnd();
+        Assert.IsFalse( string.IsNullOrEmpty( reading ), $"Triggered output should not be null or empty." );
+        Assert.AreEqual( legacyDevice.MeasurementCompletedReply, reading, "The trigger cycle completion reply should match the expected value" );
 
         VI.Device.Tests.Asserts.AssertOrphanMessages( session );
         VI.Device.Tests.Asserts.ThrowIfDeviceErrors( session, $"Device error occurred after 'VI.Device.Tests.Asserts.AssertOrphanMessages()'" );
@@ -564,11 +566,11 @@ internal static partial class Asserts
     private static void OutputColdResistance( IColdResistance resistance )
     {
         Console.WriteLine( $"{resistance.EntityName} values:" );
-        Console.WriteLine( $"  Okay Outcome: {resistance.OkayReading}" );
-        Console.WriteLine( $"        Status: {resistance.StatusReading}" );
-        Console.WriteLine( $"       Outcome: {resistance.OutcomeReading}" );
-        Console.WriteLine( $"       Reading: {resistance.Reading}" );
-        Console.WriteLine( $"    Resistance: {resistance.Resistance}" );
+        Console.WriteLine( $"Okay Outcome: {resistance.OkayReading}" );
+        Console.WriteLine( $"      Status: {resistance.StatusReading}" );
+        Console.WriteLine( $"     Outcome: {resistance.OutcomeReading}" );
+        Console.WriteLine( $"     Reading: {resistance.Reading}" );
+        Console.WriteLine( $"  Resistance: {resistance.Resistance}" );
     }
 
     /// <summary>   Output trace. </summary>
@@ -577,24 +579,24 @@ internal static partial class Asserts
     private static void OutputTrace( IThermalTransient trace )
     {
         Console.WriteLine( $"{trace.EntityName} values:" );
-        Console.WriteLine( $"    Okay Outcome: {trace.OkayReading}" );
-        Console.WriteLine( $"          Status: {trace.StatusReading}" );
-        Console.WriteLine( $"         Outcome: {trace.OutcomeReading}" );
-        Console.WriteLine( $"         Reading: {trace.Reading}" );
-        Console.WriteLine( $"  Voltage Change: {trace.Voltage}" );
+        Console.WriteLine( $"  Okay Outcome: {trace.OkayReading}" );
+        Console.WriteLine( $"        Status: {trace.StatusReading}" );
+        Console.WriteLine( $"       Outcome: {trace.OutcomeReading}" );
+        Console.WriteLine( $"       Reading: {trace.Reading}" );
+        Console.WriteLine( $"Voltage Change: {trace.Voltage}" );
     }
 
     /// <summary>   Assert measurements should read. </summary>
     /// <remarks>   2024-11-08. </remarks>
-    /// <param name="legacyDevice">                     The legacy device. </param>
-    /// <param name="readTriggerCycleCompleteMessage">  True to read trigger cycle complete message. </param>
-    public static void AssertMeasurementsShouldRead( LegacyDevice? legacyDevice, bool readTriggerCycleCompleteMessage )
+    /// <param name="legacyDevice">                 The legacy device. </param>
+    /// <param name="readTriggerCycleReplyFirst">   True to read trigger cycle reply before reading the measurements. </param>
+    public static void AssertMeasurementsShouldRead( LegacyDevice? legacyDevice, bool readTriggerCycleReplyFirst )
     {
         Assert.IsNotNull( legacyDevice, $"{nameof( legacyDevice )} should not be null." );
         Assert.IsNotNull( legacyDevice.Meter.TspDevice!.Session, $"{nameof( legacyDevice )} should not be null." );
 
-        // the trigger cycle complete message was already read
-        _ = legacyDevice.ReadMeasurements( readTriggerCycleCompleteMessage );
+        // the trigger cycle complete message must be read because calling this method.
+        _ = legacyDevice.ReadMeasurements( readTriggerCycleReplyFirst );
 
         if ( !string.IsNullOrWhiteSpace( legacyDevice.LastOrphanMessages ) )
             Console.WriteLine( "Orphan orphan messages:\r\n\t{this.LastOrphanMessages}" );

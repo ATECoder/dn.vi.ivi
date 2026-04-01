@@ -77,12 +77,10 @@ public partial class MeasurementsHeader : cc.isr.WinControls.ModelViewBase
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( field is not null )
-                field.PropertyChanged -= this.DeviceUnderTest_PropertyChanged;
+            field?.PropertyChanged -= this.DeviceUnderTest_PropertyChanged;
 
             field = value;
-            if ( field is not null )
-                field.PropertyChanged += this.DeviceUnderTest_PropertyChanged;
+            field?.PropertyChanged += this.DeviceUnderTest_PropertyChanged;
         }
     }
 
@@ -407,12 +405,10 @@ public partial class MeasurementsHeader : cc.isr.WinControls.ModelViewBase
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( field is not null )
-                field.PropertyChanged -= this.InitialResistance_PropertyChanged;
+            field?.PropertyChanged -= this.InitialResistance_PropertyChanged;
 
             field = value;
-            if ( field is not null )
-                field.PropertyChanged += this.InitialResistance_PropertyChanged;
+            field?.PropertyChanged += this.InitialResistance_PropertyChanged;
         }
     }
 
@@ -482,12 +478,10 @@ public partial class MeasurementsHeader : cc.isr.WinControls.ModelViewBase
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( field is not null )
-                field.PropertyChanged -= this.FinalResistance_PropertyChanged;
+            field?.PropertyChanged -= this.FinalResistance_PropertyChanged;
 
             field = value;
-            if ( field is not null )
-                field.PropertyChanged += this.FinalResistance_PropertyChanged;
+            field?.PropertyChanged += this.FinalResistance_PropertyChanged;
         }
     }
 
@@ -558,12 +552,10 @@ public partial class MeasurementsHeader : cc.isr.WinControls.ModelViewBase
         [System.Runtime.CompilerServices.MethodImpl( System.Runtime.CompilerServices.MethodImplOptions.Synchronized )]
         set
         {
-            if ( field is not null )
-                field.PropertyChanged -= this.ThermalTransient_PropertyChanged;
+            field?.PropertyChanged -= this.ThermalTransient_PropertyChanged;
 
             field = value;
-            if ( field is not null )
-                field.PropertyChanged += this.ThermalTransient_PropertyChanged;
+            field?.PropertyChanged += this.ThermalTransient_PropertyChanged;
         }
     }
 
