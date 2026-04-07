@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace cc.isr.VI.Tsp.K2600.Ttm.Tests.Driver;
 
 /// <summary>
@@ -147,4 +149,86 @@ public class MeterTests
         session.ThrowDeviceExceptionIfError();
     }
 
+    /// <summary>   (Unit Test Method) meter should initialize. </summary>
+    /// <remarks>   2026-04-06. </remarks>
+    [TestMethod( DisplayName = "02. Meter should initialize" )]
+    public void MeterShouldInitialize()
+    {
+        Assert.IsNotNull( this.Meter, $"{nameof( this.Meter )} should not be null." );
+
+        using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( this.Meter, this.ResourceSettings.ResourceName, this.ResourceSettings.ResourceModel );
+
+        Asserts.AssertMeterShouldInitializeKnowState( this.Meter );
+
+        Assert.IsTrue( Meter.TryDisconnect( this.Meter, out string details ), details );
+    }
+
+    /// <summary>   (Unit Test Method) meter should preset. </summary>
+    /// <remarks>   2026-04-06. </remarks>
+    [TestMethod( DisplayName = "03. Meter should preset" )]
+    public void MeterShouldPreset()
+    {
+        Assert.IsNotNull( this.Meter, $"{nameof( this.Meter )} should not be null." );
+
+        using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( this.Meter, this.ResourceSettings.ResourceName, this.ResourceSettings.ResourceModel );
+
+        Asserts.AssertMeterShouldPreset( this.Meter );
+
+        Assert.IsTrue( Meter.TryDisconnect( this.Meter, out string details ), details );
+    }
+
+    /// <summary>   (Unit Test Method) measurements should configure. </summary>
+    /// <remarks>   2026-04-06. </remarks>
+    [TestMethod( DisplayName = "04. Measurements Should Configure" )]
+    public void MeasurementsShouldConfigure()
+    {
+        Assert.IsNotNull( this.Meter, $"{nameof( this.Meter )} should not be null." );
+
+        using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( this.Meter, this.ResourceSettings.ResourceName, this.ResourceSettings.ResourceModel );
+
+        Asserts.AssertMeasurementsShouldConfigure( this.Meter );
+
+        Assert.IsTrue( Meter.TryDisconnect( this.Meter, out string details ), details );
+    }
+
+    /// <summary>   (Unit Test Method) measurement should trigger. </summary>
+    /// <remarks>   2026-04-06. </remarks>
+    [TestMethod( DisplayName = "05. Measurement should trigger" )]
+    public void MeasurementShouldTrigger()
+    {
+        Assert.IsNotNull( this.Meter, $"{nameof( this.Meter )} should not be null." );
+
+        using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( this.Meter, this.ResourceSettings.ResourceName, this.ResourceSettings.ResourceModel );
+
+        Stopwatch sw = Stopwatch.StartNew();
+        TimeSpan timeout = TimeSpan.FromSeconds( 1 );
+        Asserts.AssertTriggerCycleShouldStart( this.Meter, timeout );
+        Asserts.AssertTriggerCycleCompleteMessageShouldRead( this.Meter );
+        Asserts.AssertMeasurementsShouldRead( this.Meter );
+        sw.Stop();
+        TimeSpan timeSpan = sw.Elapsed;
+        Console.WriteLine( $"\tElapsed: {timeSpan:s\\.fff}s" );
+        Asserts.AssertInitialResistanceReadingShouldValidate( this.Meter );
+        Asserts.AssertTriggerCycleShouldAbort( this.Meter );
+
+        Assert.IsTrue( Meter.TryDisconnect( this.Meter, out string details ), details );
+    }
+
+    /// <summary>   (Unit Test Method) trigger cycle should abort. </summary>
+    /// <remarks>   2026-04-06. </remarks>
+    [TestMethod( DisplayName = "06. Trigger cycle should abort" )]
+    public void TriggerCycleShouldAbort()
+    {
+        Assert.IsNotNull( this.Meter, $"{nameof( this.Meter )} should not be null." );
+
+        using Pith.SessionBase session = Asserts.AssetSessionShouldOpen( this.Meter, this.ResourceSettings.ResourceName, this.ResourceSettings.ResourceModel );
+
+        Stopwatch sw = Stopwatch.StartNew();
+        Asserts.AssertTriggerCycleShouldAbort( this.Meter );
+        sw.Stop();
+        TimeSpan timeSpan = sw.Elapsed;
+        Console.WriteLine( $"Abort Time: {timeSpan:s\\.fff}s" );
+
+        Assert.IsTrue( Meter.TryDisconnect( this.Meter, out string details ), details );
+    }
 }

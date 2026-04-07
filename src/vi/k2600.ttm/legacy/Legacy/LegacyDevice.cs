@@ -204,8 +204,11 @@ public partial class LegacyDevice : CommunityToolkit.Mvvm.ComponentModel.Observa
         return this.Meter.IsDeviceOpen;
     }
 
-    /// <summary>   Gets the sentinel indicating if the thermal transient meter is connected. </summary>
-    /// <value> The is connected. </value>
+    /// <summary>
+    /// Gets the sentinel indicating if the <see cref="Meter">thermal transient meter </see> is not disposed and has an open
+    /// session to the instrument.
+    /// </summary>
+    /// <value> True if the <see cref="Meter"/> is not disposed and has an open session to the instrument. </value>
     public bool IsConnected => this.Meter.IsSessionOpen;
 
     /// <summary> Restores defaults. </summary>

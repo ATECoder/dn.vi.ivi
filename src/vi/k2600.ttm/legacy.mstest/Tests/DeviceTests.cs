@@ -161,6 +161,8 @@ public class DeviceTests
         _ = this.LegacyDevice.Disconnect();
     }
 
+    /// <summary>   (Unit Test Method) meter should initialize. </summary>
+    /// <remarks>   2026-04-06. </remarks>
     [TestMethod( DisplayName = "02. Meter should initialize" )]
     public void MeterShouldInitialize()
     {
@@ -173,6 +175,8 @@ public class DeviceTests
         _ = this.LegacyDevice.Disconnect();
     }
 
+    /// <summary>   (Unit Test Method) meter should preset. </summary>
+    /// <remarks>   2026-04-06. </remarks>
     [TestMethod( DisplayName = "03. Meter should preset" )]
     public void MeterShouldPreset()
     {

@@ -46,7 +46,7 @@ public class DriverSettings : Json.AppSettings.Settings.SettingsContainerBase
             this.EstimatorDefaults, this.EstimatorSettings,
             this.ColdResistanceDefaults, this.ColdResistanceSettings,
             this.MeterDefaults, this.MeterSettings,
-            this.ShuntSettings,this.ShuntSettings,
+            this.ShuntDefaults,this.ShuntSettings,
             this.TraceDefaults, this.TraceSettings] );
     }
 

@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using cc.isr.Std.ExceptionExtensions;
 using cc.isr.VI.Pith;
 
@@ -145,6 +146,45 @@ public partial class Meter : CommunityToolkit.Mvvm.ComponentModel.ObservableObje
                 this.PropertyChanged -= ( PropertyChangedEventHandler ) item;
             }
         }
+    }
+
+    #endregion
+
+    #region " legacy device compatible methods "
+
+    /// <summary>
+    /// Gets the sentinel indicating if the <see cref="Meter">thermal transient meter </see> is not disposed and has an open
+    /// session to the instrument.
+    /// </summary>
+    /// <value> True if the <see cref="Meter"/> is not disposed and has an open session to the instrument. </value>
+    public bool IsConnected => !this.IsDisposed && this.IsSessionOpen;
+
+    /// <summary> Disconnects from the thermal transient meter. </summary>
+    /// <returns> <c>True</c> if the device  disconnected. </returns>
+    public static bool Disconnect( Meter meter )
+    {
+        if ( meter.TspDevice is not null && meter.TspDevice.IsDeviceOpen ) { meter.TspDevice.CloseSession(); }
+        meter.Dispose();
+        return !meter.IsConnected;
+    }
+
+    /// <summary>   Attempts to disconnect a string from the given Meter. </summary>
+    /// <remarks>   2026-04-06. </remarks>
+    /// <param name="meter">    The meter. </param>
+    /// <param name="details">  [out] The details. </param>
+    /// <returns>   True if it succeeds, false if it fails. </returns>
+    public static bool TryDisconnect( Meter meter, out string details )
+    {
+        details = string.Empty;
+        try
+        {
+            _ = Meter.Disconnect( meter );
+        }
+        catch ( Exception ex )
+        {
+            details += ex.ToString();
+        }
+        return !meter.IsConnected;
     }
 
     #endregion
@@ -1527,7 +1567,6 @@ public partial class Meter : CommunityToolkit.Mvvm.ComponentModel.ObservableObje
     #endregion
 
     #region " sequenced measurements "
-
 
     private MeasureSequencer? MeasureSequencerInternal
     {
