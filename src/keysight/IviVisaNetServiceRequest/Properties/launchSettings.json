@@ -9,6 +9,18 @@
         "tcpip0::192.168.0.254::gpib0,22::instr"
         "TCPIP0::192.168.0.144::inst0::INSTR"
       */
+    },
+    "SRQ Wait on events": {
+      "commandName": "Project",
+      "commandLineArgs": "TCPIP0::192.168.0.150::inst0::INSTR 3"
+    },
+    "SRQ Call Back": {
+      "commandName": "Project",
+      "commandLineArgs": "TCPIP0::192.168.0.150::inst0::INSTR 5"
+    },
+    "SRQ Wait and Call Back": {
+      "commandName": "Project",
+      "commandLineArgs": "TCPIP0::192.168.0.150::inst0::INSTR 7"
     }
   }
 }

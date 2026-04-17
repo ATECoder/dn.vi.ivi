@@ -26,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="KeysightTechnologies.Visa" Version="18.6.6 " />
+    <PackageReference Include="IviFoundation.Visa" Version="8.0.2" />
     <!--
     <PackageReference Include="KeysightTechnologies.Visa" Version="18.6.6 " />
     <PackageReference Include="IviFoundation.Visa" Version="8.0.2" />
@@ -34,6 +34,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="cmds\call me.lnk">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="cmds\test.bat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

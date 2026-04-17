@@ -241,9 +241,7 @@ internal static class SessionExtensionMethods
     /// <param name="operationCompletionDelay"> (Optional) The operation completion delay in milliseconds. </param>
     /// <param name="queryCompleteTimeout">     (Optional) The query complete timeout in milliseconds. </param>
     /// <returns>   A bool? </returns>
-    ///
-    /// ### <param name="cancellation"> The cancellation token. </param>
-    public static async Task<bool?> ExecuteCommandOperationCompleted( this IMessageBasedSession? session, string command,
+    public static bool? ExecuteCommandOperationCompleted( this IMessageBasedSession? session, string command,
         CancellationToken cancellationToken, int operationCompletionDelay = 10, int queryCompleteTimeout = 10000 )
     {
         ArgumentNullException.ThrowIfNull( session );
@@ -267,7 +265,7 @@ internal static class SessionExtensionMethods
     /// <param name="dataToWrite">          The data to write. </param>
     /// <param name="cancellationToken">    A token that allows processing to be cancelled. </param>
     /// <returns>   A bool? </returns>
-    public static async Task<bool?> ExecuteCommandsOperationCompleted( this IMessageBasedSession? session, string dataToWrite,
+    public static bool? ExecuteCommandsOperationCompleted( this IMessageBasedSession? session, string dataToWrite,
         CancellationToken cancellationToken )
     {
         ArgumentNullException.ThrowIfNull( session );
@@ -283,7 +281,9 @@ internal static class SessionExtensionMethods
                 string command = q.Dequeue().Trim();
                 if ( !string.IsNullOrWhiteSpace( command ) )
                 {
-                    bool success = ( bool ) await session.ExecuteCommandOperationCompleted( command, cancellationToken );
+                    bool success = session.ExecuteCommandOperationCompleted( command, cancellationToken ) ??
+                        throw new InvalidCastException(
+                            $"{nameof( SessionExtensionMethods.ExecuteCommandOperationCompleted )} returned a null value." );
                     if ( !success )
                         return false;
                 }
@@ -291,7 +291,9 @@ internal static class SessionExtensionMethods
         }
         else
         {
-            bool success = ( bool ) await session.ExecuteCommandOperationCompleted( dataToWrite, cancellationToken );
+            bool success = session.ExecuteCommandOperationCompleted( dataToWrite, cancellationToken ) ??
+                        throw new InvalidCastException(
+                            $"{nameof( SessionExtensionMethods.ExecuteCommandOperationCompleted )} returned a null value." );
             if ( !success )
                 return false;
         }
