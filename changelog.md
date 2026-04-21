@@ -2,9 +2,15 @@
 Notable changes to the `cc.isr.vi` solution are documented in this file using the 
 [Keep a Changelog] style. The dates specified are in coordinated universal time (UTC).
 
-[8.1.9603]: https://www.github.com/atecoder/dn.vi.ivi
+[8.1.9608]: https://www.github.com/atecoder/dn.vi.ivi
 
 Current IVI Visa Compatibility: 8.0.2.9518
+
+## [8.1.9608] - 2026-04-21
+CsStatusSrq:
+- Add project from Keysight.
+- Modify for IVI>Visa 8.0.2 and .NET 10.
+- Test and create a read me file.
 
 ## [8.1.9603] - 2026-04-17
 IviVisaNetServiceRequest:
