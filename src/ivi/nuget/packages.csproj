@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net48;net10.0</TargetFrameworks>
+    <Platforms>AnyCPU;x64;x86</Platforms>
+
+    <OutputType>Exe</OutputType>
+
+    <!--
+    To Address the following warning:
+    Warning As Error: Package 'Kelary.Ivi.Visa 7.2.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7,
+    .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework
+    'net10.0'. This package may not be fully compatible with your project.    
+    -->
+    <NoWarn>NU1701</NoWarn>
+
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <RootNamespace>Ivi.VisaNet</RootNamespace>
+
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="IviFoundation.Visa" Version="8.0.2" />
+    <PackageReference Include="KeysightTechnologies.Visa" Version="18.6.6" />
+    <PackageReference Include="Microsoft.SourceLink.Bitbucket.Git" Version="10.0.203">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.203">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
+    <PackageReference Include="NationalInstruments.Visa" Version="25.5.0.13" />
+  </ItemGroup>
+
+</Project>
