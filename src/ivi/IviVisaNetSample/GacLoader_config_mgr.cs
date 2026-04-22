@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Security.Policy;
 using System.Text;
 using Ivi.Visa;
 
@@ -322,5 +323,43 @@ public static partial class GacLoader
             }
         }
         return loadedAssembly;
+    }
+
+
+    /// <summary>   Parse implementation name, e.g., Keysight.Visa or NationalInstruments.Visa. </summary>
+    /// <remarks>   2026-04-21. </remarks>
+    /// <param name="implementationFullName">   Name of the implementation full. </param>
+    /// <returns>   A string. </returns>
+    public static string ParseImplementationName( string implementationFullName )
+    {
+        if ( string.IsNullOrWhiteSpace( implementationFullName ) )
+            return string.Empty;
+        else
+        {
+            string[] parts = implementationFullName.Split( ',' );
+            if ( parts.Length > 0 )
+                return parts[0].Trim();
+            else
+                return implementationFullName;
+        }
+    }
+
+    /// <summary>   Parse vendor name. </summary>
+    /// <remarks>   2026-04-21. </remarks>
+    /// <param name="implementationFullName">   Full name of the implementation. </param>
+    /// <returns>   A string. </returns>
+    public static string ParseVendorName( string implementationFullName )
+    {
+        string implementationName = GacLoader.ParseImplementationName( implementationFullName );
+        if ( string.IsNullOrWhiteSpace( implementationName ) )
+            return string.Empty;
+        else
+        {
+            string[] parts = implementationName.Split( '.' );
+            if ( parts.Length > 0 )
+                return parts[0].Trim();
+            else
+                return implementationName;
+        }
     }
 }

@@ -194,21 +194,22 @@ public static partial class GacLoader
     ///                                             unsupported or illegal values. </exception>
     /// <param name="installedAssembly">    The installed assembly. </param>
     /// <param name="visaSession">          The visa session. </param>
-    /// <param name="keysightTypeName">     The name of the type assuming a Keysight implementation
-    ///                                     where the vendor name is replaced by the parsed vendor name
-    ///                                     of the installed assembly. </param>
+    /// <param name="genericVendorName">    The generic name of the vendor in <paramref name="genericInterfaceName"/>, e.g.,
+    ///                                     'vendor'. </param>
+    /// <param name="genericInterfaceName"> The generic interface name such as 'vendor.Visa.VisaSession' where 'vendor' is replaced by
+    ///                                     the actual vendor name of the installed assembly. </param>
     /// <param name="details">              [out] The details. </param>
     /// <returns>   True if vendor interface implemented; otherwise false. </returns>
     [CLSCompliant( false )]
     public static bool IsVendorInterfaceImplemented( System.Reflection.Assembly? installedAssembly, Ivi.Visa.IVisaSession visaSession,
-        string keysightInterfaceName, out string details )
+        string genericVendorName, string genericInterfaceName, out string details )
     {
         if ( installedAssembly is null ) throw new ArgumentNullException( nameof( installedAssembly ), $"{nameof( installedAssembly )} cannot be null." );
         if ( visaSession is null ) throw new ArgumentNullException( nameof( visaSession ), $"{nameof( visaSession )} cannot be null." );
-        if ( string.IsNullOrWhiteSpace( keysightInterfaceName ) ) throw new ArgumentException( $"{nameof( keysightInterfaceName )} cannot be null or empty.", nameof( keysightInterfaceName ) );
+        if ( string.IsNullOrWhiteSpace( genericInterfaceName ) ) throw new ArgumentException( $"{nameof( genericInterfaceName )} cannot be null or empty.", nameof( genericInterfaceName ) );
 
         string vendorName = GacLoader.ParseVendorName( installedAssembly );
-        string vendorInterfaceName = keysightInterfaceName.Replace( "Keysight", vendorName );
+        string vendorInterfaceName = genericInterfaceName.Replace( genericVendorName, vendorName );
         return IsInterfaceImplemented( installedAssembly, visaSession, vendorInterfaceName, out details );
     }
 
@@ -252,18 +253,20 @@ public static partial class GacLoader
     /// </summary>
     /// <remarks>   2025-09-16. </remarks>
     /// <param name="installedAssembly">    The installed assembly. </param>
-    /// <param name="visaSession">          The visa session. </param>
-    /// <param name="keySightTypeName">     The name of the type assuming a Keysight implementation
-    ///                                     where the vendor name is replaced by the parsed vendor name
-    ///                                     of the installed assembly. </param>
+    /// <param name="genericVendorName">    The generic name of the vendor in <paramref name="genericInterfaceName"/>,
+    ///                                     e.g., 'vendor'. </param>
+    /// <param name="genericTypeName">      The generic name of the type, e.g.,
+    ///                                     "vendor.Visa.VisaSession" where the <paramref name="genericVendorName"/> name is replaced by
+    ///                                     the actual vendor name of the installed assembly. </param>
     /// <param name="details">              [out] The details. </param>
     /// <returns>   True if instance of type; otherwise false. </returns>
     [CLSCompliant( false )]
-    public static bool IsInstanceOfVendorType( Assembly installedAssembly, Ivi.Visa.IVisaSession visaSession, string keySightTypeName, out string details )
+    public static bool IsInstanceOfVendorType( Assembly installedAssembly, Ivi.Visa.IVisaSession visaSession,
+        string genericVendorName, string genericTypeName, out string details )
     {
         bool reply = false;
         string vendorName = GacLoader.ParseVendorName( installedAssembly );
-        string vendorTypeName = keySightTypeName.Replace( "Keysight", vendorName );
+        string vendorTypeName = genericTypeName.Replace( genericVendorName, vendorName );
         try
         {
             Type? candidateType = installedAssembly.GetType( vendorTypeName, false, true );
@@ -392,30 +395,33 @@ public static partial class GacLoader
 
         System.Text.StringBuilder sb = new();
 
-        string[] vendorTypeNames = ["Keysight.Visa.MessageBasedSession",
-            "Keysight.Visa.GpibInterfaceSession", "Keysight.Visa.GpibSession",
-            "Keysight.Visa.PxiBackplaneSession", "Keysight.Visa.PxiMemorySession", "Keysight.Visa.PxiSession",
-            "Keysight.Visa.RegisterBasedSession",
-            "Keysight.Visa.SerialSession",
-            "Keysight.Visa.TcpipSession", "Keysight.Visa.TcpipSocketSession",
-            "Keysight.Visa.UsbSession",
-            "Keysight.Visa.VisaSession",
-            "Keysight.Visa.VxiBackplaneSession", "Keysight.Visa.VxiMemorySession", "Keysight.Visa.VxiSession"];
+        string genericVendorName = "vendor";
+        string[] vendorTypeNames = [$"{genericVendorName}.Visa.MessageBasedSession",
+            $"{genericVendorName}.Visa.GpibInterfaceSession", $"{genericVendorName}.Visa.GpibSession",
+            $"{genericVendorName}.Visa.PxiBackplaneSession", $"{genericVendorName}.Visa.PxiMemorySession", $"{genericVendorName}.Visa.PxiSession",
+            $"{genericVendorName}.Visa.RegisterBasedSession",
+            $"{genericVendorName}.Visa.SerialSession",
+            $"{genericVendorName}.Visa.TcpipSession", $"{genericVendorName}.Visa.TcpipSocketSession",
+            $"{genericVendorName}.Visa.UsbSession",
+            $"{genericVendorName}.Visa.VisaSession",
+            $"{genericVendorName}.Visa.VxiBackplaneSession", $"{genericVendorName}.Visa.VxiMemorySession", $"{genericVendorName}.Visa.VxiSession"];
 
-        string[] vendorInterfaceNames = ["Keysight.Visa.IKeysightNativeVisaSession"];
+        string[] vendorInterfaceNames = [$"{genericVendorName}.Visa.IKeysightNativeVisaSession"];
 
         _ = sb.AppendLine( $"Identifying session types by vendor type names:" );
 
         foreach ( string vendorTypeName in vendorTypeNames )
         {
-            _ = sb.AppendLine( GacLoader.IsInstanceOfVendorType( installedAssembly, visaSession, vendorTypeName, out string details ) ? details : details );
+            _ = sb.AppendLine( GacLoader.IsInstanceOfVendorType( installedAssembly, visaSession,
+                genericVendorName, vendorTypeName, out string details ) ? details : details );
         }
 
         _ = sb.AppendLine( $"\nIdentifying session interface implementations by vendor type names:" );
 
         foreach ( string vendorInterfaceName in vendorInterfaceNames )
         {
-            _ = sb.AppendLine( GacLoader.IsVendorInterfaceImplemented( installedAssembly, visaSession, vendorInterfaceName, out string details ) ? details : details );
+            _ = sb.AppendLine( GacLoader.IsVendorInterfaceImplemented( installedAssembly, visaSession,
+                genericVendorName, vendorInterfaceName, out string details ) ? details : details );
         }
 
         return sb.ToString();

@@ -43,6 +43,9 @@
         <!-- IviFoundation.Visa is included in KeysightTechnologies.Visa -->
         <PackageReference Include="KeysightTechnologies.Visa" Version="18.6.6" />
       </ItemGroup>
+      <PropertyGroup>
+        <OutputPath>$(MSBuildProjectDirectory)\bin\keysight\</OutputPath>
+      </PropertyGroup>
     </When>
   </Choose>
 
@@ -51,6 +54,9 @@
       <ItemGroup>
         <PackageReference Include="Kelary.Ivi.Visa" Version="7.2.0" />
       </ItemGroup>
+      <PropertyGroup>
+        <OutputPath>$(MSBuildProjectDirectory)\bin\kelary\</OutputPath>
+      </PropertyGroup>
     </When>
   </Choose>
 
@@ -64,6 +70,23 @@
         </Reference>
         -->
       </ItemGroup>
+      <PropertyGroup>
+        <OutputPath>$(MSBuildProjectDirectory)\bin\ivi\</OutputPath>
+      </PropertyGroup>
+    </When>
+  </Choose>
+
+  <Choose>
+    <When Condition="$(DefineConstants.Contains(';NiVisa;'))">
+      <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
+        <PackageReference Include="NationalInstruments.Visa" Version="25.5.0.13" />
+      </ItemGroup>
+      <ItemGroup Condition="'$(TargetFramework)' == 'net48'">
+        <PackageReference Include="IviFoundation.Visa" Version="8.0.2" />
+      </ItemGroup>
+      <PropertyGroup>
+        <OutputPath>$(MSBuildProjectDirectory)\bin\ni\</OutputPath>
+      </PropertyGroup>
     </When>
   </Choose>
 

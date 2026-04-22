@@ -558,4 +558,6 @@ Keithley Instruments Inc., Model 2612A, 1214466, 2.2.6
 [IviFoundation.Visa 8.0.2]: https://www.nuget.org/packages/IviFoundation.Visa/
 [KeysightTechnologies.Visa 18.5.73]: https://www.nuget.org/packages/KeysightTechnologies.Visa/
 [KeysightTechnologies.Visa 18.6.6]: https://www.nuget.org/packages/KeysightTechnologies.Visa/
+[NI-VISA 2026 Q2]: https://www.ni.com/en/support/downloads/drivers/download/packaged.ni-visa.590234.html
+[NationalInstruments.Visa 25.5.0.13]: https://www.nuget.org/packages/NationalInstruments.Visa/
 [Kelary.Ivi.Visa 7.2.0]: https://www.nuget.org/packages/Kelary.Ivi.Visa

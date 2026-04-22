@@ -70,7 +70,7 @@
   </Choose>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="10.0.5" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="10.0.7" />
     <!-- Suppress warning about newton soft 9.0.1 which is part of the .net fx testing extensions code coverage.
       <NuGetAuditSuppress Include="https://github.com/advisories/GHSA-5crp-9r3c-p9vr" />
     -->
@@ -78,7 +78,7 @@
        which does not seem to get updated when the MSTest.SDK package gets updated.
        This results in a warning about the old version of newtonsoft.json.
        The following line does not update the code coverage package to the latest version
-       <PackageReference Update="Microsoft.Testing.Extensions.CodeCoverage" Version="18.5.2" />
+       <PackageReference Update="Microsoft.Testing.Extensions.CodeCoverage" Version="18.6.2" />
     -->
   </ItemGroup>
 
