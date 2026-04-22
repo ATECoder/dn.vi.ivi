@@ -61,11 +61,11 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <DefineConstants>$(DefineConstants);IviVisa;</DefineConstants>
+    <DefineConstants>$(DefineConstants);Ivi;</DefineConstants>
   </PropertyGroup>
 
   <Choose>
-    <When Condition="$(DefineConstants.Contains(';KeysightVisa;'))">
+    <When Condition="$(DefineConstants.Contains(';Keysight;'))">
       <ItemGroup>
         <!-- IviFoundation.Visa is included in KeysightTechnologies.Visa -->
         <PackageReference Include="KeysightTechnologies.Visa" Version="18.6.6" />
@@ -74,7 +74,7 @@
   </Choose>
 
   <Choose>
-    <When Condition="$(DefineConstants.Contains(';KelaryVisa;'))">
+    <When Condition="$(DefineConstants.Contains(';Kelary;'))">
       <ItemGroup>
         <PackageReference Include="Kelary.Ivi.Visa" Version="7.2.0" />
       </ItemGroup>
@@ -82,9 +82,17 @@
   </Choose>
 
   <Choose>
-    <When Condition="$(DefineConstants.Contains(';IviVisa;'))">
+    <When Condition="$(DefineConstants.Contains(';Ivi;'))">
       <ItemGroup>
         <PackageReference Include="IviFoundation.Visa" Version="8.0.2" />
+      </ItemGroup>
+    </When>
+  </Choose>
+
+  <Choose>
+    <When Condition="$(DefineConstants.Contains(';NI;'))">
+      <ItemGroup>
+        <PackageReference Include="NationalInstruments.Visa" Version="25.5.0.13" />
       </ItemGroup>
     </When>
   </Choose>

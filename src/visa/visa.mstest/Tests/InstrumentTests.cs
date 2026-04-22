@@ -304,7 +304,7 @@ public abstract partial class InstrumentTests
         this.ClearWriteState();
         string? textToWrite = string.Empty;
         if ( this.MessageToWrite is not null )
-            textToWrite = Asserts.ReplaceCommonEscapeSequences( this.MessageToWrite! );
+            textToWrite = Asserts.ReplaceCommonEscapeSequences( this.MessageToWrite );
 
         if ( textToWrite is null ) return;
 

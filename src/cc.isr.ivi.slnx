@@ -20,6 +20,5 @@
   <Folder Name="/`build/">
     <File Path="directory.build.props" />
     <File Path="exclusion.dic" />
-    <File Path="global.json" />
   </Folder>
 </Solution>

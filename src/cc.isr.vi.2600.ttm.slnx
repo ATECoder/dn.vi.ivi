@@ -33,7 +33,6 @@
   <Folder Name="/`build/">
     <File Path="directory.build.props" />
     <File Path="exclusion.dic" />
-    <File Path="global.json" />
   </Folder>
   <Folder Name="/`docs/">
     <File Path="../changelog.md" />
