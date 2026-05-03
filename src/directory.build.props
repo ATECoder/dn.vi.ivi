@@ -37,7 +37,6 @@
 
 -->
 
-
  <PropertyGroup Condition="$(DefineConstants.Contains(';GitHub;'))" >
     <GitRepositoryRemoteName>origin</GitRepositoryRemoteName>
     <PackageProjectUrl>https://github.com/ATECoder/dn.vi.ivi</PackageProjectUrl>
