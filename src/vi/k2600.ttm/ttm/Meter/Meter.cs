@@ -1,6 +1,5 @@
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
 using cc.isr.Std.ExceptionExtensions;
 using cc.isr.VI.Pith;
 

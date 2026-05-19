@@ -90,12 +90,6 @@
     <Content Include="cc.isr.VI.SubsystemsWinControls.MSTest.Settings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <!-- The default profile of the MSTest.SDK already included the code coverage package,
-       which does not seem to get updated when the MSTest.SDK package gets updated.
-       This results in a warning about the old version of newtonsoft.json.
-       The following line does not update the code coverage package to the latest version
-       <PackageReference Update="Microsoft.Testing.Extensions.CodeCoverage" Version="18.6.2" />
-    -->
   </ItemGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)'=='net472' or '$(TargetFramework)'=='net48'">
