@@ -1,9 +1,9 @@
 CommitID,LocalRepoName,TargetDirectory
-3c8c20696b0f56e150d56885ea814bde1888bc7c,units.amounts,lib\vs\core
-0b26b7624cb0b13d2f07eafe650341c6e4d52107,enums,lib\vs\core
-fdfdd6c71694521fa8e79a5f4fceb0eec1bbc3a9,json,lib\vs\core
-ef15e5547b890cf1273be871ac5f35fef2630df6,tracing,lib\vs\core
-673a38fc67b3d9b2cb9a597d705e3a78fd46ec0e,std,lib\vs\core
-ef15e5547b890cf1273be871ac5f35fef2630df6,tracing,lib\vs\core
-adaa8e9bff8036888bae46d49ff5b2675b0cf101,vi,lib\vs\vi
+a15b1dd37125a1b89975f43ce7add34e1a8dcd6a,units.amounts,lib\vs\core
+b13812fc6310365406a35d58e8700299394be5b9,enums,lib\vs\core
+f47b8005ea9b228bfd17113428007260f82c3763,json,lib\vs\core
+021aa3894c326ee13aeee9c9dba95408e576c3eb,tracing,lib\vs\core
+07e66d1a7a07dcde5732955884b4d71f6000feb6,std,lib\vs\core
+021aa3894c326ee13aeee9c9dba95408e576c3eb,tracing,lib\vs\core
+5dabffac05a4301817a6d21bb6cd3248f21198d4,vi,lib\vs\vi
 ced724cc3b90b70a6373e1782a79786546f0f098,ide,libraries\vs\core
