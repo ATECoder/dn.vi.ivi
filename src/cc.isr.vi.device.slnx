@@ -53,6 +53,7 @@
     <Project Path="../../../algorithms/numerical/src/optima/optima/cc.isr.Numerical.Optima.csproj" />
   </Folder>
   <Folder Name="/~framework/std/">
+    <Project Path="../../../core/ide/src/my/lib/BuildPackages/BuildPackages.csproj" />
     <Project Path="../../../core/enums/src/enums/enums/cc.isr.Enums.csproj" />
     <Project Path="../../../core/enums/src/win.controls/win.controls/cc.isr.Enums.WinControls.csproj" />
     <Project Path="../../../core/logging/src/serilog/enrichers.demystify/Serilog.Enrichers.Demystify.csproj" />

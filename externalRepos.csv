@@ -6,4 +6,4 @@ dn.logging,tracing,https://git@bitbucket.org/davidhary/dn.logging.git,lib\vs\cor
 dn.std,std,https://git@bitbucket.org/davidhary/dn.std.git,lib\vs\core
 dn.tracing,tracing,https://git@bitbucket.org/davidhary/dn.tracing.git,lib\vs\core
 dn.vi.ivi,vi,https://github.com/ATECoder/dn.vi.ivi.git,lib\vs\vi
-vs.ide,ide,https://git@bitbucket.org/davidhary/vs.ide.git,libraries\vs\core
+vs.ide,ide,https://github.com/ATECoder/vs.ide.git,lib\vs\core

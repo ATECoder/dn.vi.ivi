@@ -36,6 +36,7 @@
     <File Path="visa/isr.visa.changelog.md" />
   </Folder>
   <Folder Name="/`framework/">
+    <Project Path="../../../core/ide/src/my/lib/BuildPackages/BuildPackages.csproj" />
     <Project Path="../../../core/json/src/app.settings/app.settings.view.models/cc.isr.Json.AppSettings.ViewModels.csproj" />
     <Project Path="../../../core/json/src/app.settings/app.settings.win.forms/cc.isr.Json.AppSettings.WinForms.csproj" />
     <Project Path="../../../core/logging/src/orlog/orlog/cc.isr.Logging.Orlog.csproj" />
