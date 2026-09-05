@@ -36,7 +36,7 @@ git clone git@bitbucket.org:davidhary/dn.win.controls.git
 git clone git@bitbucket.org:davidhary/dn.win.forms.git
 git clone git@bitbucket.org:davidhary/dn.automata.git
 git clone git@bitbucket.org:davidhary/cc.isr.UnitsAmounts
-git clone git@bitbucket.org:davidhary/vs.ide.git
+git clone https://github.com/atecoder/vs.ide.git
 git clone git@bitbucket.org:davidhary/vs.wix.git
 git clone https://github.com/atecoder/dn.vi.ivi.git
 git clone git@bitbucket.org:davidhary/dn.visa.git
@@ -53,7 +53,7 @@ Clone the repositories into the following folders (parents of the .git folder):
 %dnlib%\core\win
 %dnlib%\core\win.controls
 %dnlib%\core\win.forms
-%vslib%\core\ide
+%dnlib%\core\ide
 %vslib%\core\wix
 %dnlib%\vi\vi
 %dnlib%\vi\visa
@@ -68,13 +68,13 @@ These files can be found in the [IDE Repository].
 Restoring Editor Configuration:
 ```
 xcopy /Y %my%\.editorconfig %my%\.editorconfig.bak
-xcopy /Y %vslib%\core\ide\code\.editorconfig %my%\.editorconfig
+xcopy /Y %dnlib%\core\ide\code\.editorconfig %my%\.editorconfig
 ```
 
 Restoring Run Settings:
 ```
 xcopy /Y %userprofile%\.runsettings %userprofile%\.runsettings.bak
-xcopy /Y %vslib%\core\ide\code\.runsettings %userprofile%\.runsettings
+xcopy /Y %dnlib%\core\ide\code\.runsettings %userprofile%\.runsettings
 ```
 where %userprofile% is the root user folder.
 
