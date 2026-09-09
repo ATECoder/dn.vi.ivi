@@ -20,18 +20,9 @@
     <!-- This fixed missing property when using from dotnet cli -->
     <SolutionDir Condition="'$(SolutionDir)'==''">$(MSBuildThisFileDirectory)..\..\</SolutionDir>
   </PropertyGroup>
-  
-  <PropertyGroup>
-    <Datestamp>$([System.DateTime]::UtcNow.ToString("yyyy-MM-dd"))</Datestamp>
-    <Timestamp>$([System.DateTime]::UtcNow.ToString("yyyy-MM-ddHHmm"))</Timestamp>
-    <Authors>David Hary</Authors>
-    <Company>isr.cc</Company>
-    <Copyright>(c) 2012 Integrated Scientific Resources, Inc. All rights reserved.</Copyright>
-    <NeutralLanguage>en-US</NeutralLanguage>
-    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
-    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
-  </PropertyGroup>
 
+  <Import Project="items\directory.build.props" />
+  
   <PropertyGroup>
     <!-- NuGet -->
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
