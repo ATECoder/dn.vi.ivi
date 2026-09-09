@@ -1,3 +1,4 @@
 <Project>
   <Import Project="..\..\items\directory.build.props" />
+  <Import Project="c:\my\lib\vs\core\ide\src\my\lib\vs\exe.directory.build.props" />
 </Project>
