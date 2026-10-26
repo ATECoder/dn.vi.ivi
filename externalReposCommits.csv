@@ -1,9 +1,9 @@
 CommitID,LocalRepoName,TargetDirectory
-724ffce638bee85b81c3d0ea2f72c7a26f072d0b,units.amounts,lib\vs\core
+4ff08ddd503642a3f9930d1980279d28200c6120,units.amounts,lib\vs\core
 c323679a76f60a8fcec1718f9533b9db63f019f4,enums,lib\vs\core
-a0f86b06067c4c169ce85911cfae69632175556a,json,lib\vs\core
+fe167b5a64060822c686d11f174e455603648699,json,lib\vs\core
 fc3b76b543449f81149faa46d07f295107e6f60c,tracing,lib\vs\core
-f2639ab529d70f8fd1ba56e566df267ffbb46608,std,lib\vs\core
+a9d3398c9b443141de30679ebcf4bc22b7686459,std,lib\vs\core
 fc3b76b543449f81149faa46d07f295107e6f60c,tracing,lib\vs\core
-fa401e262cf8e4bdc6d2110818ddc8d50c4923bb,vi,lib\vs\vi
-6c062f6dce9ec1a46c5f0795f295d91d1b680c5e,ide,lib\vs\core
+07d549fe5a4dbeb0611a48442418dd648d12b08a,vi,lib\vs\vi
+8ae99d4f83f21dcdfbe7cbe7a9cab9907f4bc609,ide,lib\vs\core
